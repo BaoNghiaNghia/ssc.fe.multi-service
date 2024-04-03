@@ -17,7 +17,7 @@ const AuthLayout = (WraperContent) => {
                 <br />
                 <br />
                 <Heading as="h1">
-                  StrikingDash React <br />
+                  Youtube Dashboard <br />
                   Web Application
                 </Heading>
                 <img

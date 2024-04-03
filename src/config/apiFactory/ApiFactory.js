@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
-import { BASE_URL, TIMEOUT_REQUEST_API } from '../variables/index';
+import { BASE_URL, TIMEOUT_REQUEST_API } from '../../variables/index';
 
 let token = localStorage.getItem('persist:auth');
 axios.defaults.timeout = TIMEOUT_REQUEST_API;

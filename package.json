@@ -1,6 +1,6 @@
 {
-  "name": "strikingDash",
-  "version": "3.0.0",
+  "name": "ssc-subscrbibe",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,6 +14,7 @@
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
     "emoji-picker-react": "^4.0.7",
+    "env-cmd": "^10.1.0",
     "feather-icons-react": "^0.5.0",
     "file-saver": "^2.0.5",
     "firebase": "^7.14.2",
@@ -38,7 +39,6 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-redux-firebase": "^3.3.1",
     "react-fontawesome": "^1.7.1",
     "react-google-charts": "^4.0.0",
     "react-id-swiper": "^4.0.0",
@@ -47,7 +47,8 @@
     "react-masonry-css": "^1.0.16",
     "react-modal-video": "^1.2.10",
     "react-rate": "^0.0.1",
-    "react-redux": "^8.0.4",    
+    "react-redux": "^8.0.4",
+    "react-redux-firebase": "^3.3.1",
     "react-responsive-masonry": "^2.1.6",
     "react-router-dom": "^5.1.2",
     "react-rte": "^0.16.5",
@@ -68,9 +69,12 @@
     "web-vitals": "^2.1.4",
     "xlsx": "^0.17.4"
   },
-  "homepage": "/strikingdash-react",
+  "homepage": "/",
   "scripts": {
-    "start": "craco start",
+    "start": "env-cmd -f .env.${VENDOR} craco start",
+    "start:local": "VENDOR=local npm run start",
+    "start:staging": "VENDOR=staging npm run start",
+    "start:production": "VENDOR=production npm run start",
     "build": "set \"GENERATE_SOURCEMAP=false\" && craco --max-old-space-size=4096 build",
     "test": "craco test",
     "eject": "craco eject"

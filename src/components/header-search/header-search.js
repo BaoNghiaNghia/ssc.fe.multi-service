@@ -30,7 +30,7 @@ const HeaderSearch = ({ darkMode }) => {
           );
         })
       ) : (
-        <NavLink to="#">Data Not found....</NavLink>
+        <NavLink to="#">Không tìm thấy dữ liệu....</NavLink>
       )}
     </div>
   );
@@ -51,7 +51,7 @@ const HeaderSearch = ({ darkMode }) => {
               title="Search List"
               action="focus"
             >
-              <Input placeholder="Search..." onInput={search} />
+              <Input placeholder="Tìm kiếm..." onInput={search} />
             </Popover>
           </Col>
         </Row>
