@@ -20,12 +20,14 @@ const Cards = props => {
     headStyle,
     border,
     bodypadding,
+    gradient
   } = props;
   return (
     <>
       {!headless ? (
         <CardFrame
           size={size}
+          gradient={gradient && gradient}
           title={title}
           bodyStyle={bodyStyle && bodyStyle}
           headStyle={headStyle && headStyle}
@@ -49,6 +51,7 @@ const Cards = props => {
       ) : (
         <CardFrame
           bodypadding={bodypadding && bodypadding}
+          gradient={gradient && gradient}
           bodyStyle={bodyStyle && bodyStyle}
           size={size}
           style={{ width: '100%' }}
@@ -70,6 +73,7 @@ Cards.defaultProps = {
 Cards.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
   size: PropTypes.string,
+  gradient: PropTypes.bool,
   more: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
   bodyStyle: PropTypes.object,
   headStyle: PropTypes.object,

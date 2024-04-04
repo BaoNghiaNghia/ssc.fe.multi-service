@@ -106,7 +106,7 @@ function CashFlow() {
           }
           title={
             <div>
-              Cash Flow <span>Nov 23, 2019 - Nov 29, 2019</span>
+              Thống kê Subscribe <span>Nov 23, 2019 - Nov 29, 2019</span>
             </div>
           }
           size="large"
@@ -120,24 +120,24 @@ function CashFlow() {
             <CardBarChart>
               <div className="card-bar-top d-flex flex-grid">
                 <div className="flex-grid-child">
-                  <p>Current Balance</p>
+                  <p>Hôm nay</p>
                   <Heading as="h3" className="color-primary">
                     ${cashFlowState.current}
                   </Heading>
                 </div>
                 <div className="flex-grid-child">
-                  <p>Cash In</p>
+                  <p>Cao nhất</p>
                   <Heading as="h3">${cashFlowState.in}</Heading>
                 </div>
                 <div className="flex-grid-child">
-                  <p>Cash Out</p>
+                  <p>Thấp nhất</p>
                   <Heading as="h3">${cashFlowState.out}</Heading>
                 </div>
               </div>
               <ChartjsBarChartTransparent
                 labels={cashFlowState.labels}
                 datasets={cashFlowDataset}
-                height={106}
+                height={43}
                 options={{
                   maintainAspectRatio: true,
                   responsive: true,

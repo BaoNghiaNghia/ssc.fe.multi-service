@@ -1,11 +1,10 @@
 import React from 'react';
 import { Row, Col, Progress } from 'antd';
 import FeatherIcon from 'feather-icons-react';
+import Heading from '../../../../components/heading/heading';
 import { Focard, RatioCard } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
-import Heading from '../../../../components/heading/heading';
 import { ChartjsAreaChart } from '../../../../components/charts/chartjs';
-
 import { chartLinearGradient } from '../../../../components/utilities/utilities';
 
 function CardGroup() {
@@ -14,9 +13,9 @@ function CardGroup() {
       <Col md={12}>
         <Focard>
           <div className="forcast-card-box">
-            <Cards headless title="Net Profit">
+            <Cards headless title="Số Subscribe">
               <div className="focard-details growth-downward">
-                <Heading as="h1">$25.3k</Heading>
+                <Heading as="h1">1,716,035</Heading>
                 <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-down" /> 25%
@@ -52,9 +51,9 @@ function CardGroup() {
       <Col md={12}>
         <Focard>
           <div className="forcast-card-box">
-            <Cards headless title="Gross Profit">
+            <Cards headless title="Đơn đang chạy">
               <div className="focard-details growth-upward">
-                <Heading as="h1">$82.24k</Heading>
+                <Heading as="h1">545 đơn</Heading>
                 <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-up" /> 25%
@@ -89,26 +88,20 @@ function CardGroup() {
       </Col>
       <Col md={12} sm={12} xs={24}>
         <RatioCard>
-          <Cards headless title="Quick Ratio">
+          <Cards headless title="Đơn chờ hủy">
             <div className="ratio-content">
-              <Heading as="h1">1.8</Heading>
+              <Heading as="h1">0</Heading>
               <Progress percent={80} className="progress-success" />
-              <p>
-                <strong>1 or higher</strong> quick ratio target
-              </p>
             </div>
           </Cards>
         </RatioCard>
       </Col>
       <Col md={12} sm={12} xs={24}>
         <RatioCard>
-          <Cards headless title="Current Ratio">
+          <Cards headless title="Đơn chờ duyệt">
             <div className="ratio-content">
-              <Heading as="h1">2.4</Heading>
+              <Heading as="h1">0</Heading>
               <Progress percent={72} status="warning" />
-              <p>
-                <strong>3 or higher</strong> current ratio target
-              </p>
             </div>
           </Cards>
         </RatioCard>

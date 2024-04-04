@@ -7,6 +7,7 @@ const galleryFilter = (column, value) => {
   return async (dispatch) => {
     try {
       dispatch(filterGalleryBegin());
+
       setTimeout(() => {
         const data = initialState.filter((item) => {
           if (value !== '') {
@@ -14,8 +15,10 @@ const galleryFilter = (column, value) => {
           }
           return item;
         });
+
         dispatch(filterGallerySuccess(data));
       }, 500);
+
     } catch (err) {
       dispatch(filterGalleryErr(err));
     }

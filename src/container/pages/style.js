@@ -79,7 +79,6 @@ const Badge = Styled.span`
 
 const GalleryNav = Styled.nav`
   background: #fff;
-  margin-bottom: 25px;
   border-radius: 10px;
   padding: 0px 16px;
   @media only screen and (max-width: 767px){
@@ -2228,6 +2227,104 @@ const SupportContentWrap = Styled.div`
   }
 `;
 
+const ProjectPagination = Styled.div`
+    .ant-pagination{
+        display: flex;
+        justify-content: flex-end;
+        @media only screen and (max-width: 767px) {
+            justify-content: center;
+        }
+    }
+`;
+
+const ProjectListTitle = Styled.div`
+    h1{
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        a{
+            color: ${({ theme }) => theme['dark-color']};
+        }
+    }
+    p{
+        margin: 0;
+        font-size: 12px;
+        color: ${({ theme }) => theme['gray-solid']};
+    }
+`;
+
+const ProjectListAssignees = Styled.div`
+    ul{
+        margin: -3px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        li{
+            list-style: none;
+            padding: 3px;
+            img{
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+    }
+`;
+
+const ProjectList = Styled.div`
+
+    .project-list-progress{
+        p{
+            margin: 4px 0 0 0;
+            font-size: 12px;
+            color: ${({ theme }) => theme['gray-solid']};
+        }
+    }
+    .date-started,
+    .date-finished{
+        font-weight: 500;
+    }
+    .ant-table{
+        .ant-table-thead{
+            th{
+                background-color: ${({ theme }) => theme['bg-color-light']};
+            }
+        }
+        .ant-table-tbody{
+            tr{
+                &:hover{
+                    td{
+                        background-color: ${({ theme }) => theme['bg-color-light']};
+                    }
+                }
+            }
+        }
+    }
+    .ant-table-container table > thead > tr th{
+        font-weight: 400;
+        color: ${({ theme }) => theme['light-color']};
+        border-top: 1px solid ${({ theme }) => theme['border-color-light']};
+    }
+    .ant-table-container table > thead > tr th:first-child{
+        border-radius: ${({ theme }) => (theme.rtl ? '0 10px 10px 0' : '10px 0 0 10px')} !important;
+        ${({ theme }) => (!theme.rtl ? 'border-left' : 'border-right')}: 1px solid ${({ theme }) =>
+  theme['border-color-light']};
+    }
+    .ant-table-container table > thead > tr th:last-child{
+        border-radius: ${({ theme }) => (!theme.rtl ? '0 10px 10px 0' : '10px 0 0 10px')} !important;
+        ${({ theme }) => (theme.rtl ? 'border-left' : 'border-right')}: 1px solid ${({ theme }) =>
+  theme['border-color-light']};
+    }
+    .ant-dropdown-trigger{
+        svg{
+            color: ${({ theme }) => theme['extra-light-color']};
+        }
+    }
+`;
+
+
+
 export {
   TestimonialWrapper,
   PricingCard,
@@ -2253,4 +2350,8 @@ export {
   UserCarrdTop,
   SupportTopWrap,
   SupportContentWrap,
+  ProjectPagination,
+  ProjectListTitle,
+  ProjectListAssignees,
+  ProjectList
 };

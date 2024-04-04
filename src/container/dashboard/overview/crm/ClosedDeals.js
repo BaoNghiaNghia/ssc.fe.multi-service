@@ -83,7 +83,7 @@ function ClosedDeals() {
               </ul>
             </div>
           }
-          title="Closed Deals Performance"
+          title="Số subscribe & doanh thu"
           size="large"
         >
           {cdIsLoading ? (
@@ -174,7 +174,7 @@ function ClosedDeals() {
                     ],
                   },
                 }}
-                height={window.innerWidth <= 575 ? 200 : 178}
+                height={window.innerWidth <= 575 ? 200 : 44}
               />
               <ul className="deals-list">
                 {closeDealDatasets &&

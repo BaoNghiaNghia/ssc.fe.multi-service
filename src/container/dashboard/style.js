@@ -5,8 +5,7 @@ const EChartCard = Styled.div`
     flex-wrap: wrap;
     align-items: flex-end;
     .card-chunk{
-        width: 50%;
-        flex: 0 0 50%;
+        width: 100%;
     }
     @media only screen and (max-width: 379px){
         .card-chunk{
@@ -97,7 +96,6 @@ const Focard = Styled.div`
     .focard-details{
         &.growth-downward{
             h1{                
-                font-size: 30px;
                 @media only screen and (max-width: 767px){
                     font-size: 24px;
                 }
@@ -156,9 +154,6 @@ const Focard = Styled.div`
 
     @media (max-width: 1300px){
         .focard-details{
-            h1{
-                font-size: 24px;
-            }
             &.growth-downward{
                 h1{
                     font-size: 24px;
@@ -189,7 +184,7 @@ const Focard = Styled.div`
             }
             h1{
                 padding: 0;
-                font-size: 30px;
+                font-size: 23px;
                 font-weight: 600;
                 margin-bottom: 4px;
                 @media only screen and (max-width: 767px){
@@ -691,7 +686,7 @@ const PerformanceChartWrapper = Styled.div`
         border-radius: 10px;
     }
     .performance-lineChart{
-        margin-top: 20px;
+        margin-top: 10px;
         .chart-label{
             display: none;
         }
@@ -1002,7 +997,8 @@ const CardBarChart2 = Styled.div`
         text-align: center
     }
     h1{
-        margin-bottom: 5px;
+        margin-top: 15px;
+        margin-bottom: 0px;
     }
     @media only screen and (max-width: 1500px){
         h1{
@@ -1121,10 +1117,10 @@ const RatioCard = Styled.div`
         }
         h1{
             margin-bottom: 2px;
-            font-size: 36px;
+            font-size: 23px;
             font-weight: 600;
             @media only screen and (max-width: 767px){
-                font-size: 30px;
+                font-size: 15px;
             }
         }
         .ant-progress{
@@ -1309,7 +1305,6 @@ const RevenueWrapper = Styled.div`
     }
 
     >.ant-card{
-        min-height: 455px;
         @media only screen and (max-width: 1599px){
             min-height: 100%;
         }
@@ -1779,6 +1774,57 @@ const TopSellerWrap = Styled.div`
     }
 `;
 
+const GalleryNav = Styled.nav`
+  background: #fff;
+  margin-left: 15px;
+  border-radius: 5px;
+  padding: 0px 16px;
+  @media only screen and (max-width: 767px){
+    padding: 0 12px;
+  }
+  @media only screen and (max-width: 575px){
+    text-align: center;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    li {
+      display: inline-block;
+      a {
+        position: relative;
+        display: block;
+        font-weight: bold;
+        padding: 7px 20px;
+        margin: 0 12px;
+        color: ${({ theme }) => theme['light-color']};
+        @media only screen and (max-width: 767px){
+          margin: 0 10px;
+        }
+        &:after{
+          position: absolute;
+          ${({ theme }) => (!theme.rtl ? 'left' : 'right')}: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          border-radius: 10px;
+          opacity: 0;
+          visibility: hidden;
+          background: ${({ theme }) => theme['primary-color']};
+          content: "";
+        }
+        &.active{
+          color: ${({ theme }) => theme['primary-color']};
+          &:after{
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+      }
+    }
+  }
+`;
+
 export {
   ChartContainer,
   DashboardBaseStyleWrap,
@@ -1812,4 +1858,5 @@ export {
   SalesTargetWrap,
   SalesGrowthWrap,
   TopSellerWrap,
+  GalleryNav
 };

@@ -73,7 +73,9 @@ const CardFrame = Styled(Card)`
     font-weight: 500;
   }
   .ant-card-body{
-    padding: ${({ bodypadding }) => (bodypadding ? `${bodypadding} !important` : '25px')};
+    padding: ${({ bodypadding }) => (bodypadding ? `${bodypadding} !important` : '14px')};
+    background: ${({ gradient }) => (gradient ? `linear-gradient(${gradient})` : 'none')};
+    border-radius: 10px;
     table{
       .ant-tag{
         line-height: 18px;
@@ -132,7 +134,6 @@ const CardFrame = Styled(Card)`
     bottom: 0;
     ${({ theme }) => (!theme.rtl ? ' left' : ' right')}: 5px;
   }
- 
 `;
 
 export { CardFrame };

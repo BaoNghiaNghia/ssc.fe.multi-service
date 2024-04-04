@@ -217,7 +217,7 @@ function TotalRevenue({ title }) {
                     xAxes: [
                       {
                         gridLines: {
-                          display: true,
+                          display: true, 
                           zeroLineWidth: 2,
                           zeroLineColor: 'transparent',
                           color: 'transparent',
@@ -231,7 +231,7 @@ function TotalRevenue({ title }) {
                     ],
                   },
                 }}
-                height={window.innerWidth <= 575 ? 200 : 82}
+                height={window.innerWidth <= 575 ? 200 : 45}
               />
             </div>
           )}

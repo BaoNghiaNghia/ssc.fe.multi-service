@@ -325,7 +325,7 @@ const Div = Styled.div`
                     }
                 }
                 .ant-menu-item{
-                    .menuItem-iocn{
+                    .menuItem-icon{
                         width: auto;
                     }
                 }

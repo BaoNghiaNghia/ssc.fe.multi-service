@@ -125,7 +125,7 @@ ul {
 }
 
 .ant-card-body {
-  padding: 25px !important;
+  padding: 14px !important;
 }
 
 .ant-card-head {
@@ -1723,9 +1723,11 @@ html[dir='rtl'] .sDash_upload-basic .sDash_upload-browse{
 .ant-menu-submenu-popup .ant-menu-item {
   margin-bottom: 0 !important;
 }
+
 .ant-menu-sub.ant-menu-vertical {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
 .ant-menu-sub.ant-menu-vertical .ant-menu-item a {
   color: #5a5f7d;
 }
@@ -1733,7 +1735,7 @@ html[dir='rtl'] .sDash_upload-basic .sDash_upload-browse{
 /* page heading */
 
 .ant-page-header {
-  padding: 26px 30px 26px 30px !important;
+  padding: 13px 30px 13px 30px !important;
 }
 
 .ant-page-header.header-boxed {

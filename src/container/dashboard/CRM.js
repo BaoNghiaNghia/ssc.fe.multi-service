@@ -57,7 +57,7 @@ function CRM() {
     <>
       <PageHeader
         ghost
-        title="CRM Dashboard"
+        title="Tổng quan"
         buttons={[
           <div key="1" className="page-header-actions">
             <CalendarButtonPageHeader />

@@ -2,10 +2,11 @@ import React from 'react';
 import { Menu } from 'antd';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
+import { FiHome } from "react-icons/fi";
+import { LuServer } from "react-icons/lu";
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
 import { NavTitle } from './style';
-import versions from '../demoData/changelog.json';
 
 const { SubMenu } = Menu;
 
@@ -49,6 +50,37 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       overflowedIndicator={<FeatherIcon icon="more-vertical" />}
       openKeys={openKeys}
     >
+      <Menu.Item
+        icon={
+          !topMenu && (
+            <NavLink className="menuItem-icon" to={`${path}/tong-quan`}>
+              <FiHome fontSize={16} color="gray"/>
+            </NavLink>
+          )
+        }
+        key="tong-quan"
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/tong-quan`}>
+          Tổng quan
+          {/* <span className="badge badge-primary menuItem">{versions[0].version}</span> */}
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item
+        icon={
+          !topMenu && (
+            <NavLink className="menuItem-icon" to={`${path}/quan-ly-may`}>
+              <LuServer fontSize={16} color="gray"/>
+            </NavLink>
+          )
+        }
+        key="quan-ly-may"
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/quan-ly-may`}>
+          Quản lý máy
+          {/* <span className="badge badge-primary menuItem">{versions[0].version}</span> */}
+        </NavLink>
+      </Menu.Item>
+      {!topMenu && <NavTitle className="sidebar-nav-title">BUFF SUBSCRIBE</NavTitle>}
       <SubMenu key="dashboard" icon={!topMenu && <FeatherIcon icon="home" />} title="Dashboard">
         <Menu.Item key="home">
           <NavLink onClick={toggleCollapsed} to={`${path}`}>
@@ -150,22 +182,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           </NavLink>
         </Menu.Item>
       </SubMenu>
-      <Menu.Item
-        icon={
-          !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/changelog`}>
-              <FeatherIcon icon="activity" />
-            </NavLink>
-          )
-        }
-        key="changelog"
-      >
-        <NavLink onClick={toggleCollapsed} to={`${path}/changelog`}>
-          Changelog
-          <span className="badge badge-primary menuItem">{versions[0].version}</span>
-        </NavLink>
-      </Menu.Item>
-      {/* {!topMenu && <NavTitle className="sidebar-nav-title">Applications</NavTitle>} */}
+      {!topMenu && <NavTitle className="sidebar-nav-title">BUFF LIKE</NavTitle>}
       <SubMenu key="email" icon={!topMenu && <FeatherIcon icon="mail" />} title="Email">
         <Menu.Item key="inbox">
           <NavLink onClick={toggleCollapsed} to={`${path}/email/inbox`}>
@@ -181,7 +198,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/main/chat/private/rofiq@gmail.com`}>
+            <NavLink className="menuItem-icon" to={`${path}/main/chat/private/rofiq@gmail.com`}>
               <FeatherIcon icon="message-square" />
             </NavLink>
           )
@@ -192,6 +209,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           Chat
         </NavLink>
       </Menu.Item>
+      {!topMenu && <NavTitle className="sidebar-nav-title">BUFF COMMENT</NavTitle>}
       <SubMenu key="ecommerce" icon={!topMenu && <FeatherIcon icon="shopping-cart" />} title="eCommerce">
         <Menu.Item key="products">
           <NavLink onClick={toggleCollapsed} to={`${path}/ecommerce/products`}>
@@ -253,6 +271,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           </NavLink>
         </Menu.Item>
       </SubMenu>
+      {!topMenu && <NavTitle className="sidebar-nav-title">APPLICATIONS</NavTitle>}
       <SubMenu key="project" icon={!topMenu && <FeatherIcon icon="target" />} title="Project">
         <Menu.Item key="view">
           <NavLink onClick={toggleCollapsed} to={`${path}/project/view/grid`}>
@@ -279,7 +298,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/app/calendar/month`}>
+            <NavLink className="menuItem-icon" to={`${path}/app/calendar/month`}>
               <FeatherIcon icon="calendar" />
             </NavLink>
           )
@@ -349,7 +368,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/app/note/all`}>
+            <NavLink className="menuItem-icon" to={`${path}/app/note/all`}>
               <FeatherIcon icon="file-text" />
             </NavLink>
           )
@@ -364,7 +383,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/app/to-do`}>
+            <NavLink className="menuItem-icon" to={`${path}/app/to-do`}>
               <FeatherIcon icon="check-square" />
             </NavLink>
           )
@@ -846,7 +865,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/editor`}>
+            <NavLink className="menuItem-icon" to={`${path}/editor`}>
               <FeatherIcon icon="edit" />
             </NavLink>
           )
@@ -881,7 +900,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/settings`}>
+            <NavLink className="menuItem-icon" to={`${path}/settings`}>
               <FeatherIcon icon="settings" />
             </NavLink>
           )
@@ -908,7 +927,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/pricing`}>
+            <NavLink className="menuItem-icon" to={`${path}/pricing`}>
               <FeatherIcon icon="dollar-sign" />
             </NavLink>
           )
@@ -922,7 +941,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/banners`}>
+            <NavLink className="menuItem-icon" to={`${path}/banners`}>
               <FeatherIcon icon="cast" />
             </NavLink>
           )
@@ -936,7 +955,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/testimonials`}>
+            <NavLink className="menuItem-icon" to={`${path}/testimonials`}>
               <FeatherIcon icon="book-open" />
             </NavLink>
           )
@@ -950,7 +969,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/faq`}>
+            <NavLink className="menuItem-icon" to={`${path}/faq`}>
               <FeatherIcon icon="help-circle" />
             </NavLink>
           )
@@ -964,7 +983,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/search`}>
+            <NavLink className="menuItem-icon" to={`${path}/search`}>
               <FeatherIcon icon="search" />
             </NavLink>
           )
@@ -978,7 +997,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/starter`}>
+            <NavLink className="menuItem-icon" to={`${path}/starter`}>
               <FeatherIcon icon="circle" />
             </NavLink>
           )
@@ -1032,7 +1051,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/404`}>
+            <NavLink className="menuItem-icon" to={`${path}/404`}>
               <FeatherIcon icon="info" />
             </NavLink>
           )
@@ -1046,7 +1065,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/comingSoon`}>
+            <NavLink className="menuItem-icon" to={`${path}/comingSoon`}>
               <FeatherIcon icon="clock" />
             </NavLink>
           )

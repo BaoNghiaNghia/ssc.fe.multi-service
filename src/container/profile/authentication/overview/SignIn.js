@@ -53,17 +53,26 @@ function SignIn() {
       <div className="auth-contents">
         <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">
           <Heading as="h3">
-            Sign in to <span className="color-secondary">Admin</span>
+            Đăng nhập
           </Heading>
           <Form.Item
             name="username"
-            rules={[{ message: 'Please input your username or Email!', required: true }]}
+            rules={[
+              { message: 'Please input your username or Email!', required: true }
+            ]}
             initialValue="name@example.com"
             label="Username or Email Address"
           >
             <Input />
           </Form.Item>
-          <Form.Item name="password" initialValue="123456" label="Password">
+          <Form.Item 
+            name="password"
+            initialValue="123456"
+            label="Password"
+            rules={[
+              {required: true, message: 'Trường không được trống' }
+            ]}
+          >
             <Input.Password placeholder="Password" />
           </Form.Item>
           <div className="auth-form-action">

@@ -64,7 +64,6 @@ function AccountGroup() {
                     z: 5,
                   },
                 },
-
                 tooltips: {
                   mode: 'label',
                   intersect: false,

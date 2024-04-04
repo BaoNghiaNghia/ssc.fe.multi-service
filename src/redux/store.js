@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import firebase, { storage } from 'firebase';
+import { createLogger } from 'redux-logger'
 
 import { getFirebase } from 'react-redux-firebase';
 import { reduxFirestore, getFirestore, createFirestoreInstance } from 'redux-firestore';
@@ -8,10 +9,12 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './rootReducers';
 import fbConfig from '../config/database/firebase';
 
+const logger = createLogger({});
+
 const reduxDevTool =
   process.env.NODE_ENV === 'development'
     ? composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore, storage })),
+        applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore, storage }), logger),
         reduxFirestore(fbConfig),
       )
     : compose(
