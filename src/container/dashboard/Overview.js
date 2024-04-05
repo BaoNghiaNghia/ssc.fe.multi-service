@@ -121,7 +121,7 @@ function Overview() {
           )}
         </Row>
         <Row gutter={15}>
-          <Col xxl={5} md={12} sm={8} xs={12}>
+          <Col xxl={5} md={8} sm={8} xs={12}>
             <Cards headless gradient='45deg, #FFF9E3, white' border>
               <EChartCard>
                 <div className="card-chunk">
@@ -133,7 +133,7 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
-          <Col xxl={5} md={12} sm={8} xs={12}>
+          <Col xxl={5} md={8} sm={8} xs={12}>
             <Cards headless gradient='45deg, #FFF9E3, white'>
               <EChartCard>
                 <div className="card-chunk">
@@ -145,7 +145,7 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
-          <Col xxl={4} md={12} sm={8} xs={12}>
+          <Col xxl={4} md={8} sm={8} xs={12}>
             <Cards headless gradient='45deg, #FFF9E3, white'>
               <EChartCard>
                 <div className="card-chunk">
@@ -157,7 +157,7 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
-          <Col xxl={5} md={12} sm={8} xs={12}>
+          <Col xxl={5} md={8} sm={8} xs={12}>
             <Cards headless gradient='45deg, #FFF9E3, white'>
               <EChartCard>
                 <div className="card-chunk">
@@ -169,7 +169,7 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
-          <Col xxl={5} md={12} sm={8} xs={12}>
+          <Col xxl={5} md={8} sm={8} xs={12}>
             <Cards headless gradient='45deg, #FFF9E3, white'>
               <EChartCard>
                 <div className="card-chunk">
@@ -217,7 +217,7 @@ function Overview() {
         </Row> */}
 
         <Row gutter={15}>
-          <Col xxl={6} xs={12}>
+          <Col xxl={6} xs={8}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -228,7 +228,7 @@ function Overview() {
               <CardGroup />
             </Suspense>
           </Col>
-          <Col xxl={18} xs={24}>
+          <Col xxl={18} xs={16}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -242,27 +242,27 @@ function Overview() {
         </Row>
 
         <Row gutter={15}>
-          <Col xxl={8} xl={8} lg={8} xs={12}>
+          <Col xxl={6} lg={9} md={10} xs={12}>
             <Row gutter={15}>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='90deg, #eef7ff, white'>
+                <Cards headless gradient='64deg, white, #e5ffc3'>
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tỉ lệ Subscribe</span>
-                        <Heading as="h1">86%</Heading>
+                        <Heading as="h2">86%</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
                 </Cards>
               </Col>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='90deg, #eef7ff, white' >
+                <Cards headless gradient='64deg, white, #e5ffc3' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Quest lỗi/Tổng quest</span>
-                        <Heading as="h1">0/0</Heading>
+                        <Heading as="h2">0/0</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -271,24 +271,24 @@ function Overview() {
             </Row>
             <Row gutter={15}>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='90deg, #eef7ff, white' >
+                <Cards headless gradient='64deg, white, #e5ffc3' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tổng Order hôm nay</span>
-                        <Heading as="h1">13</Heading>
+                        <Heading as="h2">13</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
                 </Cards>
               </Col>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='90deg, #eef7ff, white' >
+                <Cards headless gradient='64deg, white, #e5ffc3' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tổng Sub hôm nay</span>
-                        <Heading as="h1">82,275</Heading>
+                        <Heading as="h2">82,275</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -297,24 +297,24 @@ function Overview() {
             </Row>
             <Row gutter={15}>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='90deg, #eef7ff, white' >
+                <Cards headless gradient='64deg, white, #e5ffc3' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tổng luồng/thiếu</span>
-                        <Heading as="h1">1,330/1,200</Heading>
+                        <Heading as="h2">1,330/1,200</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
                 </Cards>
               </Col>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='90deg, #eef7ff, white'>
+                <Cards headless gradient='64deg, white, #e5ffc3'>
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tổng point hôm nay</span>
-                        <Heading as="h1">5,089,515</Heading>
+                        <Heading as="h2">5,089,515</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -322,7 +322,7 @@ function Overview() {
               </Col>
             </Row>
           </Col>
-          <Col xxl={16} xl={16} lg={16} xs={24}>
+          <Col xxl={18} lg={15} md={14} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>

@@ -993,21 +993,21 @@ const LadingPages = Styled.div`
 `;
 
 const CardBarChart2 = Styled.div`
-    @media only screen and (max-width: 379px){
+    @media only screen and (max-width: 379px) {
         text-align: center
     }
     h1{
-        margin-top: 15px;
+        margin-top: 20px;
         margin-bottom: 0px;
     }
     @media only screen and (max-width: 1500px){
         h1{
-            font-size: 22px;
+            font-size: 20px;
         }
     }
     & > span{
         font-size: 14px;
-        color: ${({ theme }) => theme['light-gray-color']};
+        color: ${({ theme }) => theme['heading-color']};
     }
     p{
         display: flex;

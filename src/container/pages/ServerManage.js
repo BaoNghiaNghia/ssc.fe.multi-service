@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'antd';
-import FeatherIcon from 'feather-icons-react';
+import { Row, Col, Form } from 'antd';
 import { useSelector } from 'react-redux';
 import TableServer from './overview/TableServer';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -8,7 +7,7 @@ import { Main } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
-
+import { Dropdown } from '../../components/dropdown/dropdown';
 
 function ServerManage() {
   const searchData = useSelector((state) => state.headerSearchData);
@@ -42,7 +41,7 @@ function ServerManage() {
               width="100%"
               patterns
             />
-          </div>,
+          </div>
         ]}
       />
       <Main>
@@ -51,12 +50,13 @@ function ServerManage() {
             <Cards 
               title="Danh sách server"
               isbutton={
-                <div className="card-nav">
-                  <Button type="primary">
-                    <FeatherIcon icon="plus" size={14} />
-                    Cập nhật
-                  </Button>
-                </div>
+                <Form name="sDash_vertical-form" layout="inline">
+                  <Dropdown size="small" placement="bottomLeft" >
+                    <Button className="btn-outlined" size="small" outlined type="light">
+                      Cập nhật
+                    </Button>
+                  </Dropdown>
+                </Form>
               }
             >
               <TableServer />

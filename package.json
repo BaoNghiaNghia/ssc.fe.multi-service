@@ -9,7 +9,7 @@
     "antd": "^4.23.4",
     "array-move": "^3.0.1",
     "auth0-lock": "^11.32.1",
-    "axios": "^0.27.2",
+    "axios": "^1.6.8",
     "chart.js": "2.9.4",
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
@@ -75,9 +75,13 @@
   "scripts": {
     "start": "env-cmd -f .env.${VENDOR} craco start",
     "start:local": "VENDOR=local npm run start",
+    "start:pm2": "pm2 start npm --name 'YT Multple Service V2' -- run start:local",
     "start:staging": "VENDOR=staging npm run start",
     "start:production": "VENDOR=production npm run start",
-    "build": "set \"GENERATE_SOURCEMAP=false\" && craco --max-old-space-size=4096 build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && BUILD_PATH=${BUILD} env-cmd -f .env.${VENDOR} craco --max-old-space-size=4096 build",
+    "build:local": "VENDOR=local BUILD='./build_yt_multiple_service_local' npm run build",
+    "build:staging": "VENDOR=staging BUILD='./build_yt_multiple_service_staging' npm run build",
+    "build:production": "VENDOR=production BUILD='./build_yt_multiple_service_production' npm run build",
     "test": "craco test",
     "eject": "craco eject"
   },

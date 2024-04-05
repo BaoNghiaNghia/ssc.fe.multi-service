@@ -144,13 +144,25 @@ function TableServer() {
     },
   ];
 
+  const rowSelection = {
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
   return (
     <Row gutter={25}>
       <Col xs={24}>
         <Cards headless>
           <ProjectList>
             <div className="table-responsive">
-              <Table pagination={false} dataSource={dataSource} columns={columns} />
+              <Table
+                rowSelection={rowSelection}
+                pagination={false}
+                dataSource={dataSource}
+                columns={columns}
+            />
             </div>
           </ProjectList>
         </Cards>

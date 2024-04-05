@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Content, DropdownStyle } from './dropdown-style';
 
 const Dropdown = props => {
-  const { content, placement, title, action, children, style, className } = props;
+  const { content, placement, title, action, children, style, className, ...items } = props;
 
   return (
     <DropdownStyle
@@ -14,6 +14,7 @@ const Dropdown = props => {
       title={title}
       overlay={<Content>{content}</Content>}
       trigger={action}
+      {...items}
     >
       {children}
     </DropdownStyle>
@@ -23,13 +24,10 @@ const Dropdown = props => {
 const content = (
   <>
     <Link to="#">
-      <span>Export to CSV</span>
+      <span>Reset Tool</span>
     </Link>
     <Link to="#">
-      <span>Export to XML</span>
-    </Link>
-    <Link to="#">
-      <span>Export to Drive</span>
+      <span>Update Info</span>
     </Link>
   </>
 );

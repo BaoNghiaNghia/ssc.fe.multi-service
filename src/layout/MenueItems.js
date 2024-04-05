@@ -81,23 +81,23 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         </NavLink>
       </Menu.Item>
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF SUBSCRIBE</NavTitle>}
-      <SubMenu key="dashboard" icon={!topMenu && <FeatherIcon icon="home" />} title="Dashboard">
+      <SubMenu key="dashboard" icon={!topMenu && <FeatherIcon icon="home" />} title="Danh sách đơn">
         <Menu.Item key="home">
           <NavLink onClick={toggleCollapsed} to={`${path}`}>
-            Social Media
+            Chờ duyệt
           </NavLink>
         </Menu.Item>
         <Menu.Item key="business">
           <NavLink onClick={toggleCollapsed} to={`${path}/business`}>
-            Fintech / Business
+            Đang chạy
           </NavLink>
         </Menu.Item>
         <Menu.Item key="performance">
           <NavLink onClick={toggleCollapsed} to={`${path}/performance`}>
-            Site Performance
+            Bảo hành
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="eco">
+        {/* <Menu.Item key="eco">
           <NavLink onClick={toggleCollapsed} to={`${path}/eco`}>
             Ecommerce
           </NavLink>
@@ -111,10 +111,10 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           <NavLink onClick={toggleCollapsed} to={`${path}/sales`}>
             Sales Performance
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </SubMenu>
 
-      <SubMenu key="layout" icon={!topMenu && <FeatherIcon icon="layout" />} title="Layouts">
+      <SubMenu key="layout" icon={!topMenu && <FeatherIcon icon="layout" />} title="Lịch sử đơn">
         <Menu.Item key="light">
           <NavLink
             onClick={() => {
@@ -183,7 +183,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         </Menu.Item>
       </SubMenu>
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF LIKE</NavTitle>}
-      <SubMenu key="email" icon={!topMenu && <FeatherIcon icon="mail" />} title="Email">
+      <SubMenu key="email" icon={!topMenu && <FeatherIcon icon="mail" />} title="Danh sách đơn">
         <Menu.Item key="inbox">
           <NavLink onClick={toggleCollapsed} to={`${path}/email/inbox`}>
             Inbox
@@ -206,11 +206,11 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         key="chat"
       >
         <NavLink onClick={toggleCollapsed} to={`${path}/main/chat/private/rofiq@gmail.com`}>
-          Chat
+          Lịch sử đơn
         </NavLink>
       </Menu.Item>
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF COMMENT</NavTitle>}
-      <SubMenu key="ecommerce" icon={!topMenu && <FeatherIcon icon="shopping-cart" />} title="eCommerce">
+      <SubMenu key="ecommerce" icon={!topMenu && <FeatherIcon icon="shopping-cart" />} title="Danh sách đơn">
         <Menu.Item key="products">
           <NavLink onClick={toggleCollapsed} to={`${path}/ecommerce/products`}>
             Products
@@ -254,7 +254,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           </NavLink>
         </Menu.Item>
       </SubMenu>
-      <SubMenu key="profile" icon={!topMenu && <FeatherIcon icon="aperture" />} title="Social App">
+      <SubMenu key="profile" icon={!topMenu && <FeatherIcon icon="aperture" />} title="Lịch sử đơn">
         <Menu.Item key="myProfile">
           <NavLink onClick={toggleCollapsed} to={`${path}/profile/myProfile/overview`}>
             My Profile
@@ -271,7 +271,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           </NavLink>
         </Menu.Item>
       </SubMenu>
-      {!topMenu && <NavTitle className="sidebar-nav-title">APPLICATIONS</NavTitle>}
+      {!topMenu && <NavTitle className="sidebar-nav-title">APPLICATIONS -------</NavTitle>}
       <SubMenu key="project" icon={!topMenu && <FeatherIcon icon="target" />} title="Project">
         <Menu.Item key="view">
           <NavLink onClick={toggleCollapsed} to={`${path}/project/view/grid`}>
