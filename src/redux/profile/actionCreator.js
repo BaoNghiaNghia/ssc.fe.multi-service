@@ -2,21 +2,21 @@
 import actions from './actions';
 import initialState from '../../demoData/friends.json';
 
-const { profileFriendsBegin, profileFriendsSuccess, profileFriendsErr, postDataBegin, postDataSuccess, postDataErr } =
+const { reportSubscribeBegin, reportSubscribeSuccess, reportSubscribeErr, postDataBegin, postDataSuccess, postDataErr } =
   actions;
 
 const profileFriendsChangeStatus = (key) => {
   return async (dispatch) => {
     try {
-      dispatch(profileFriendsBegin());
+      dispatch(reportSubscribeBegin());
       initialState.map((friend) => {
         if (friend.key === key) {
           return friend.status ? (friend.status = false) : (friend.status = true);
         }
-        return dispatch(profileFriendsSuccess(initialState));
+        return dispatch(reportSubscribeSuccess(initialState));
       });
     } catch (err) {
-      dispatch(profileFriendsErr(err));
+      dispatch(reportSubscribeErr(err));
     }
   };
 };

@@ -1397,7 +1397,8 @@ ul {
 }
 
 .ant-input-affix-wrapper .ant-input-prefix svg {
-  color: #e3e6ef;
+  color: #808080;
+  margin-right: 5px;
 }
 
 /* Space Item */

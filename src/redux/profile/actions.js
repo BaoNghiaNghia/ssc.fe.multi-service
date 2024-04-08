@@ -7,20 +7,20 @@ const actions = {
   POST_DATA_SUCCESS: 'POST_DATA_SUCCESS',
   POST_DATA_ERR: 'POST_DATA_ERR',
 
-  profileFriendsBegin: () => {
+  reportSubscribeBegin: () => {
     return {
       type: actions.PROFILE_FRIENDS_BEGIN,
     };
   },
 
-  profileFriendsSuccess: (data) => {
+  reportSubscribeSuccess: (data) => {
     return {
       type: actions.PROFILE_FRIENDS_SUCCESS,
       data,
     };
   },
 
-  profileFriendsErr: (err) => {
+  reportSubscribeErr: (err) => {
     return {
       type: actions.PROFILE_FRIENDS_ERR,
       err,

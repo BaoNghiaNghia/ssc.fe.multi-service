@@ -1,18 +1,23 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState} from 'react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Image } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
+import { FacebookOutlined, TwitterOutlined, UserOutlined } from '@ant-design/icons';
 import { Auth0Lock } from 'auth0-lock';
+import { MdOutlinePassword } from "react-icons/md";
 import { AuthWrapper } from './style';
-import { login } from '../../../../redux/authentication/actionCreator';
+import actionAuths from '../../../../redux/authentication/actions';
 import { Checkbox } from '../../../../components/checkbox/checkbox';
 import Heading from '../../../../components/heading/heading';
 import { auth0options } from '../../../../config/auth0';
 
+import logoSSC from '../../../../static/img/Logo_Dark.svg';
+
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
+const { loginBegin } = actionAuths;
 
 function SignIn() {
   const history = useHistory();
@@ -26,8 +31,15 @@ function SignIn() {
   const lock = new Auth0Lock(clientId, domain, auth0options);
 
   const handleSubmit = useCallback(() => {
-    dispatch(login());
-    history.push('/admin');
+    const loginAction = loginBegin({
+      request: {
+        username: form.getFieldValue('username'),
+        password: form.getFieldValue('password'),
+      },
+      history
+    });
+
+    dispatch(loginAction);
   }, [history, dispatch]);
 
   const onChange = (checked) => {
@@ -52,6 +64,9 @@ function SignIn() {
       </p>
       <div className="auth-contents">
         <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">
+          <div style={{ marginBottom: '40px' }}>
+            <Image src={logoSSC} preview={false} height="50px"/>
+          </div>
           <Heading as="h3">
             Đăng nhập
           </Heading>
@@ -60,32 +75,30 @@ function SignIn() {
             rules={[
               { message: 'Please input your username or Email!', required: true }
             ]}
-            initialValue="name@example.com"
             label="Username or Email Address"
           >
-            <Input />
+            <Input prefix={<UserOutlined />} placeholder="Nhập tên đăng nhập" />
           </Form.Item>
-          <Form.Item 
+          <Form.Item
             name="password"
-            initialValue="123456"
-            label="Password"
+            label="Mật khẩu"
             rules={[
               {required: true, message: 'Trường không được trống' }
             ]}
           >
-            <Input.Password placeholder="Password" />
+            <Input.Password prefix={<MdOutlinePassword />} placeholder="Mật khẩu" />
           </Form.Item>
           <div className="auth-form-action">
             <Checkbox onChange={onChange} checked={state.checked}>
-              Keep me logged in
+              Giữ đăng nhập
             </Checkbox>
             <NavLink className="forgot-pass-link" to="/forgotPassword">
-              Forgot password?
+              Quên mật khẩu?
             </NavLink>
           </div>
           <Form.Item>
-            <Button className="btn-signin" htmlType="submit" type="primary" size="large">
-              {isLoading ? 'Loading...' : 'Sign In'}
+            <Button loading={isLoading} className="btn-signin" htmlType="submit" type="primary" size="middle">
+              {isLoading ? 'Đang tải...' : 'Đăng nhập'}
             </Button>
           </Form.Item>
           <p className="form-divider">

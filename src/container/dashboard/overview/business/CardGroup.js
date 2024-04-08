@@ -13,9 +13,9 @@ function CardGroup() {
       <Col md={12}>
         <Focard>
           <div className="forcast-card-box">
-            <Cards headless title="Số Subscribe">
+            <Cards headless title="Số Subscribe" gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
-                <Heading as="h1">1,716,035</Heading>
+                <Heading as="h1"><strong>1,716,035</strong></Heading>
                 <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-down" /> 25%

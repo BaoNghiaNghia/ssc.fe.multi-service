@@ -1,5 +1,5 @@
-import React, { lazy, Suspense, useState } from 'react';
-import FeatherIcon from 'feather-icons-react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
+// import FeatherIcon from 'feather-icons-react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Skeleton, Spin } from 'antd';
@@ -11,12 +11,13 @@ import { CardBarChart2, EChartCard, GalleryNav } from './style';
 import { galleryFilter } from '../../redux/gallary/actionCreator';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import { Button } from '../../components/buttons/buttons';
+// import { Button } from '../../components/buttons/buttons';
 import { Main } from '../styled';
 import Heading from '../../components/heading/heading';
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
+// import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
+// import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
+import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
+import actions from '../../redux/reports/actions';
 
 // const TotalRevenue = lazy(() => import('./overview/crm/TotalRevenue'));
 const EfficiencyAction = lazy(() => import('./overview/business/EfficiencyAction'));
@@ -27,6 +28,21 @@ const AnalyseYoutube = lazy(() => import('./overview/business/AnalyseYoutube'));
 
 function Overview() {
   const dispatch = useDispatch();
+
+  const defaultDate = new Date();
+  const [from, setFrom] = useState(defaultDate);
+  const [to, setTo] = useState(defaultDate);
+
+  useEffect(() => {
+    dispatch(actions.reportSubscribeBegin({
+      request: {
+        from: '01-04-2024',
+        to: '08-04-2024',
+      },
+    }));
+  }, []);
+
+  console.log('---- range time ----', from, to);
 
   const { gallery, isLoading } = useSelector((state) => {
     return {
@@ -52,13 +68,16 @@ function Overview() {
         title="Tổng quan"
         buttons={[
           <div key="1" className="page-header-actions">
-            <CalendarButtonPageHeader />
-            <ExportButtonPageHeader />
+            <FilterCalendar
+              setFrom={setFrom}
+              setTo={setTo}
+            />
+            {/* <ExportButtonPageHeader />
             <ShareButtonPageHeader />
             <Button size="small" type="primary">
               <FeatherIcon icon="plus" size={14} />
               Thêm mới
-            </Button>
+            </Button> */}
             <GalleryNav>
               <ul>
                 <li>

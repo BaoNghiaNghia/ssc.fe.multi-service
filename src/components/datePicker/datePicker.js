@@ -8,7 +8,10 @@ import { DatePicker } from 'antd';
 import { ItemWraper, ButtonGroup } from './style';
 import { Button } from '../buttons/buttons';
 
-const DateRangePickerOne = () => {
+const DateRangePickerOne = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { setFrom, setTo } = props;
+
   const [state, setState] = useState({
     datePickerInternational: null,
     dateRangePicker: {
@@ -20,6 +23,10 @@ const DateRangePickerOne = () => {
     },
   });
 
+  const { dateRangePicker } = state;
+  const start = dateRangePicker.selection.startDate.toString().split(' ');
+  const end = dateRangePicker.selection.endDate.toString().split(' ');
+
   const handleRangeChange = which => {
     setState({
       ...state,
@@ -28,11 +35,10 @@ const DateRangePickerOne = () => {
         ...which,
       },
     });
-  };
 
-  const { dateRangePicker } = state;
-  const start = dateRangePicker.selection.startDate.toString().split(' ');
-  const end = dateRangePicker.selection.endDate.toString().split(' ');
+    setFrom(dateRangePicker.selection.startDate.toString().split(' '));
+    setTo(dateRangePicker.selection.endDate.toString().split(' '));
+  };
 
   return (
     <ItemWraper>
@@ -49,10 +55,10 @@ const DateRangePickerOne = () => {
       <ButtonGroup>
         <p>{`${start[1]} ${start[2]} ${start[3]} - ${end[1]} ${end[2]} ${end[3]}`}</p>
         <Button size="small" type="primary">
-          Apply
+          Xác nhận
         </Button>
         <Button size="small" type="white" outlined>
-          Cancel
+          Hủy
         </Button>
       </ButtonGroup>
     </ItemWraper>

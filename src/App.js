@@ -6,7 +6,9 @@ import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { ReactReduxFirebaseProvider, isLoaded } from 'react-redux-firebase';
 import { ConfigProvider, Spin } from 'antd';
-import store, { rrfProps } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { ToastContainer } from 'react-toastify';
+import { persistor, rrfProps, store } from './redux/store';
 import Admin from './routes/admin';
 import Auth from './routes/auth';
 import './static/css/style.css';
@@ -40,6 +42,13 @@ const ProviderConfig = () => {
 
   return (
     <ConfigProvider direction={rtl ? 'rtl' : 'ltr'}>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar="true"
+        limit={2}
+        theme='light'
+      />
       <ThemeProvider theme={{ ...theme, rtl, topMenu, darkMode }}>
         <ReactReduxFirebaseProvider {...rrfProps}>
           {!isLoaded(auth) ? (
@@ -63,7 +72,9 @@ const ProviderConfig = () => {
 function App() {
   return (
     <Provider store={store}>
-      <ProviderConfig />
+      <PersistGate loading={<div>Đang tải...</div>} persistor={persistor}>
+        <ProviderConfig />
+      </PersistGate>
     </Provider>
   );
 }
