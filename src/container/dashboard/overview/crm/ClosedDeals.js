@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Spin } from 'antd';
-import FeatherIcon from 'feather-icons-react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import { ChartjsBarChartTransparent } from '../../../../components/charts/chartjs';
+import ChartSubscribePoint from '../business/ChartSubscribePoint';
 import { closeDealFilterData, closeDealGetData } from '../../../../redux/chartContent/actionCreator';
+import actions from '../../../../redux/reports/actions';
 
-function ClosedDeals() {
+function ClosedDeals(props) {
+  const { title } = props;
   const dispatch = useDispatch();
-  const { closeDealState, cdIsLoading } = useSelector(state => {
+  const { closeDealState, cdIsLoading, fromDate, toDate, subWithPoint } = useSelector(state => {
     return {
       closeDealState: state.chartContent.closeDealData,
       cdIsLoading: state.chartContent.cdLoading,
+      fromDate: state?.reports.filterRange?.from,
+      toDate: state?.reports.filterRange?.to,
+      subWithPoint: state?.reports?.subWithPoint
     };
   });
 
@@ -25,30 +31,50 @@ function ClosedDeals() {
     if (closeDealGetData) {
       dispatch(closeDealGetData());
     }
+
+    dispatch(actions.countProfitDataTodayBegin());
+    dispatch(actions.fetchSubscribeWithPointEverydayBegin({
+      from: fromDate,
+      to: toDate,
+    }));
   }, [dispatch]);
 
   const closeDealDatasets = closeDealState !== null && [
     {
-      data: closeDealState.won,
+      data: subWithPoint?.map(item => Math.abs(item.totalPoint)),
       backgroundColor: '#20C99780',
       hoverBackgroundColor: '#20C997',
-      label: 'Won',
+      label: 'Tổng point',
       average: '50.8',
       maxBarThickness: 10,
       barThickness: 12,
       percent: 49,
     },
     {
-      data: closeDealState.amount,
+      data: subWithPoint?.map(item => Math.abs(item.subOrder)),
       backgroundColor: '#5F63F280',
       hoverBackgroundColor: '#5F63F2',
-      label: 'Amount',
+      label: 'Subscribe yêu cầu',
       average: '$28k',
       maxBarThickness: 10,
       barThickness: 12,
       percent: 60,
     },
   ];
+
+  const chartSubscribePoint = {
+    wave_date: subWithPoint?.map(item => item?.date),
+    wave_timeline: [
+      {
+        name: 'Subscribe yêu cầu',
+        data: subWithPoint?.map(item => Math.abs(item?.subOrder))
+      },
+      {
+        name: 'Tổng point',
+        data: subWithPoint?.map(item => Math.abs(item.totalPoint))
+      }
+    ],
+  }
 
   const handleActiveChangeYoutube = value => {
     setState({
@@ -83,7 +109,7 @@ function ClosedDeals() {
               </ul>
             </div>
           }
-          title="Số subscribe & doanh thu"
+          title={title}
           size="large"
         >
           {cdIsLoading ? (
@@ -92,7 +118,7 @@ function ClosedDeals() {
             </div>
           ) : (
             <CardBarChart>
-              <div className="deals-barChart">
+              {/* <div className="deals-barChart">
                 {closeDealDatasets.map((item, key) => {
                   return (
                     <div key={key + 1} className="card-bar-top">
@@ -109,10 +135,12 @@ function ClosedDeals() {
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
 
-              <ChartjsBarChartTransparent
-                labels={closeDealState.labels}
+              <ChartSubscribePoint loadingChart={false} chartData={chartSubscribePoint || {}} />
+
+              {/* <ChartjsBarChartTransparent
+                labels={subWithPoint?.map(item => item.date)}
                 datasets={closeDealDatasets}
                 options={{
                   maintainAspectRatio: true,
@@ -147,8 +175,8 @@ function ClosedDeals() {
                           beginAtZero: true,
                           fontSize: 12,
                           fontColor: '#182b49',
-                          max: Math.max(...closeDealState.won),
-                          stepSize: Math.max(...closeDealState.won) / 5,
+                          // max: Math.max(...closeDealState.won),
+                          // stepSize: Math.max(...closeDealState.won) / 5,
                           display: true,
                           min: 0,
                           padding: 10,
@@ -174,8 +202,8 @@ function ClosedDeals() {
                     ],
                   },
                 }}
-                height={window.innerWidth <= 575 ? 200 : 44}
-              />
+                height={window.innerWidth <= 575 ? 200 : 65}
+              /> */}
               <ul className="deals-list">
                 {closeDealDatasets &&
                   closeDealDatasets.map((item, key) => {
@@ -198,5 +226,9 @@ function ClosedDeals() {
     </>
   );
 }
+
+ClosedDeals.propTypes = {
+  title: PropTypes.string,
+};
 
 export default ClosedDeals;

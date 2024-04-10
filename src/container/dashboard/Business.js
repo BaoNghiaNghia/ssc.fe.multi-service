@@ -53,7 +53,7 @@ function Business() {
                 </Cards>
               }
             >
-              <CashFlow />
+              <CashFlow title="CashFlow" />
             </Suspense>
           </Col>
           <Col md={24}>
@@ -81,5 +81,6 @@ function Business() {
     </>
   );
 }
+
 
 export default Business;

@@ -25,11 +25,12 @@ import Contact from './contact/reducers';
 import Profile from './profile/reducers';
 import Calender from './calendar/reducers';
 import FileManager from './fileManager/reducers';
-import ReportsDaily from './reports/reducers';
+import ReportsDailyReducer from './reports/reducers';
 import { axiosCrudReducer, axiosSingleCrudReducer } from './crud/axios/reducers';
 
 import { fsCrudReducer, fsSingleCrudReducer } from './firebase/firestore/reducers';
 import firebaseAuth from './firebase/auth/reducers';
+import ServerReducer from './servers/reducers';
 
 const rootReducers = combineReducers({
   fb: firebaseReducer,
@@ -70,7 +71,8 @@ const rootReducers = combineReducers({
   FileManager,
   AxiosCrud: axiosCrudReducer,
   SingleAxiosCrud: axiosSingleCrudReducer,
-  reports: ReportsDaily
+  reports: ReportsDailyReducer,
+  servers: ServerReducer
 });
 
 export default rootReducers;

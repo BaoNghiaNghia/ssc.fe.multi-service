@@ -5,12 +5,14 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import { DatePicker } from 'antd';
+import { useDispatch } from 'react-redux';
+import moment from 'moment';
 import { ItemWraper, ButtonGroup } from './style';
 import { Button } from '../buttons/buttons';
+import actions from '../../redux/reports/actions';
 
-const DateRangePickerOne = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { setFrom, setTo } = props;
+const DateRangePickerOne = () => {
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     datePickerInternational: null,
@@ -36,8 +38,10 @@ const DateRangePickerOne = (props) => {
       },
     });
 
-    setFrom(dateRangePicker.selection.startDate.toString().split(' '));
-    setTo(dateRangePicker.selection.endDate.toString().split(' '));
+    dispatch(actions.setRangeDateFilterBegin({
+      from: moment(dateRangePicker?.selection?.startDate).format("DD-MM-YYYY"),
+      to: moment(dateRangePicker.selection.endDate).format("DD-MM-YYYY")
+    }));
   };
 
   return (

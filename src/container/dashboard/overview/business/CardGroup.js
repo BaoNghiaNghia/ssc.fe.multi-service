@@ -1,13 +1,23 @@
 import React from 'react';
 import { Row, Col, Progress } from 'antd';
 import FeatherIcon from 'feather-icons-react';
+import { useSelector } from 'react-redux';
 import Heading from '../../../../components/heading/heading';
 import { Focard, RatioCard } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import { ChartjsAreaChart } from '../../../../components/charts/chartjs';
 import { chartLinearGradient } from '../../../../components/utilities/utilities';
+import { numberWithCommas } from '../../../../utility/utility';
 
 function CardGroup() {
+  const { reportData } = useSelector((state) => {
+    return {
+      reportData: state?.reports?.subscribeReport?.report
+    }
+  });
+
+  const totalSub = reportData && reportData.map((item) => item.total_run).reduce((partialSum, a) => partialSum + Number(a), 0);
+
   return (
     <Row gutter={25}>
       <Col md={12}>
@@ -15,7 +25,7 @@ function CardGroup() {
           <div className="forcast-card-box">
             <Cards headless title="Số Subscribe" gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
-                <Heading as="h1"><strong>1,716,035</strong></Heading>
+                <Heading as="h1"><strong>{numberWithCommas(totalSub || 0)}</strong></Heading>
                 <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-down" /> 25%

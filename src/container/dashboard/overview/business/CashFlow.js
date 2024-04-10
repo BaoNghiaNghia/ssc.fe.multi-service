@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Spin } from 'antd';
+import PropTypes from 'prop-types';
 import FeatherIcon from 'feather-icons-react';
 import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +11,7 @@ import { ChartjsBarChartTransparent } from '../../../../components/charts/chartj
 
 import { cashFlowGetData, cashFlowFilterData } from '../../../../redux/chartContent/actionCreator';
 
-function CashFlow() {
+function CashFlow(props) {
   const dispatch = useDispatch();
   const { cashFlowState, cfIsLoading } = useSelector(state => {
     return {
@@ -106,7 +107,7 @@ function CashFlow() {
           }
           title={
             <div>
-              Thống kê Subscribe <span>Nov 23, 2019 - Nov 29, 2019</span>
+              {props?.title} <span>Nov 23, 2019 - Nov 29, 2019</span>
             </div>
           }
           size="large"
@@ -224,5 +225,9 @@ function CashFlow() {
       )   
   );
 }
+
+CashFlow.propTypes = {
+  title: PropTypes.string
+};
 
 export default CashFlow;

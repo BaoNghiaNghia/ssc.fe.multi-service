@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Form } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import TableServer from './overview/TableServer';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main } from '../styled';
@@ -8,8 +8,10 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Dropdown } from '../../components/dropdown/dropdown';
+import actions from '../../redux/servers/actions';
 
 function ServerManage() {
+  const dispatch = useDispatch();
   const searchData = useSelector((state) => state.headerSearchData);
   const [state, setState] = useState({
     notData: searchData,
@@ -19,6 +21,10 @@ function ServerManage() {
   });
 
   const { notData } = state;
+
+  useEffect(() => {
+    dispatch(actions.computerDataListBegin());
+  }, []);
 
   const handleSearch = (searchText) => {
     const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));

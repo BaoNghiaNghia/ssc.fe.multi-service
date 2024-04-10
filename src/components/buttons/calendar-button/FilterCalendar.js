@@ -4,17 +4,8 @@ import { Popover } from '../../popup/popup';
 import { DateRangePickerOne } from '../../datePicker/datePicker';
 import { Button } from '../buttons';
 
-const FilterCalendar = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { setFrom, setTo } = props;
-  const content = (
-    <>
-      <DateRangePickerOne
-        setFrom={setFrom}
-        setTo={setTo}
-      />
-    </>
-  );
+const FilterCalendar = () => {
+  const content = (<DateRangePickerOne/>);
 
   return (
     <Popover placement="bottomRight" title="Lọc theo khoảng thời gian" content={content} action="hover">

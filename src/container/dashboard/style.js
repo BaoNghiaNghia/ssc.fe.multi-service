@@ -686,12 +686,10 @@ const PerformanceChartWrapper = Styled.div`
         border-radius: 10px;
     }
     .performance-lineChart{
-        margin-top: 10px;
         .chart-label{
             display: none;
         }
         ul{
-            margin-top: 16px;
             li{
                 &:not(:last-child){
                     ${({ theme }) => (!theme.rtl ? 'margin-right' : 'margin-left')}: 25px;
@@ -992,12 +990,74 @@ const LadingPages = Styled.div`
     }
 `;
 
-const CardBarChart2 = Styled.div`
+const CardBarChartCenter = Styled.div`
     @media only screen and (max-width: 379px) {
-        text-align: center
+        text-align: center !important;
     }
     h1{
-        margin-top: 20px;
+        text-align: center !important;
+        font-weight: bold;
+        font-family: 'Be Vietnam Pro';
+        margin-top: 6px;
+        margin-bottom: 0px;
+    }
+    @media only screen and (max-width: 1500px){
+        text-align: center !important;
+        h1{
+            font-size: 20px;
+        }
+    }
+    & > span {
+        text-align: center !important;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: 'Be Vietnam Pro',
+    }
+    p {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        text-align: center !important;
+        margin: 21px 0 0 0;
+        @media only screen and (max-width: 379px){
+            justify-content: center;
+            text-align: center !important;
+        }
+        .growth-upward, .growth-downward{
+            display: inline-flex;
+            align-items: center;
+            ${({ theme }) => (!theme.rtl ? 'padding-right' : 'padding-left')}: 10px;
+            font-weight: 600;
+
+            svg{
+                width: 15px;
+            }
+        }
+        .growth-upward{
+            color: ${({ theme }) => theme['success-color']};
+            svg{
+                color: ${({ theme }) => theme['success-color']};
+            }
+        }
+        .growth-downward{
+            color: ${({ theme }) => theme['danger-color']};
+            svg{
+                color: ${({ theme }) => theme['danger-color']};
+            }
+        }
+        span{
+            color: ${({ theme }) => theme['light-gray-color']};
+            font-size: 13px;
+            display: inline-block;
+        }
+    }
+`;
+const CardBarChart2 = Styled.div`
+    @media only screen and (max-width: 379px) {
+        text-align: center;
+    }
+    h1{
+        margin-top: 6px;
         margin-bottom: 0px;
     }
     @media only screen and (max-width: 1500px){
@@ -1006,6 +1066,8 @@ const CardBarChart2 = Styled.div`
         }
     }
     & > span{
+        font-weight: 600;
+        font-family: 'Be Vietnam Pro',
         font-size: 14px;
         color: ${({ theme }) => theme['heading-color']};
     }
@@ -1325,7 +1387,7 @@ const RevenueWrapper = Styled.div`
     .custom-label{
         flex-direction: column;
         align-items: flex-start;
-        margin: 25px;
+        margin: 0px 15px 15px 10px;
         .current-amount{
             display: block;
             font-size: 24px;
@@ -1858,5 +1920,6 @@ export {
   SalesTargetWrap,
   SalesGrowthWrap,
   TopSellerWrap,
-  GalleryNav
+  GalleryNav,
+  CardBarChartCenter
 };

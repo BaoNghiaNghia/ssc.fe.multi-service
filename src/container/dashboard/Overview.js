@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { GrNotification } from "react-icons/gr";
-import { CardBarChart2, EChartCard, GalleryNav } from './style';
+import { CardBarChart2, CardBarChartCenter, EChartCard, GalleryNav } from './style';
 import { galleryFilter } from '../../redux/gallary/actionCreator';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
@@ -16,8 +16,10 @@ import { Main } from '../styled';
 import Heading from '../../components/heading/heading';
 // import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
 // import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
+
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 import actions from '../../redux/reports/actions';
+import { numberWithCommas } from '../../utility/utility';
 
 // const TotalRevenue = lazy(() => import('./overview/crm/TotalRevenue'));
 const EfficiencyAction = lazy(() => import('./overview/business/EfficiencyAction'));
@@ -29,27 +31,27 @@ const AnalyseYoutube = lazy(() => import('./overview/business/AnalyseYoutube'));
 function Overview() {
   const dispatch = useDispatch();
 
-  const defaultDate = new Date();
-  const [from, setFrom] = useState(defaultDate);
-  const [to, setTo] = useState(defaultDate);
+  const { fromDate, toDate, gallery, isLoading, todayProfit, ratioSubSvg } = useSelector((state) => {
+    return {
+      fromDate: state?.reports.filterRange?.from,
+      toDate: state?.reports.filterRange?.to,
+      gallery: state?.gallery?.data,
+      isLoading: state?.gallery?.loading,
+      todayProfit: state?.reports?.profitToday,
+      ratioSubSvg: state?.reports?.ratioSubSvg
+    }
+  });
 
   useEffect(() => {
     dispatch(actions.reportSubscribeBegin({
-      request: {
-        from: '01-04-2024',
-        to: '08-04-2024',
-      },
+      from: fromDate,
+      to: toDate,
     }));
-  }, []);
 
-  console.log('---- range time ----', from, to);
-
-  const { gallery, isLoading } = useSelector((state) => {
-    return {
-      gallery: state?.gallery?.data,
-      isLoading: state?.gallery?.loading,
-    };
-  });
+    dispatch(actions.countSuccessSubscribeBegin());
+    dispatch(actions.computerDataListBegin());
+    dispatch(actions.getStatisticsSubscribeReportBegin());
+  }, [dispatch]);
 
   const [state, setState] = useState({
     activeClass: '',
@@ -68,10 +70,7 @@ function Overview() {
         title="Tổng quan"
         buttons={[
           <div key="1" className="page-header-actions">
-            <FilterCalendar
-              setFrom={setFrom}
-              setTo={setTo}
-            />
+            <FilterCalendar />
             {/* <ExportButtonPageHeader />
             <ShareButtonPageHeader />
             <Button size="small" type="primary">
@@ -113,7 +112,7 @@ function Overview() {
         ]}
       />
       <Main>
-        <Row>
+        {/* <Row>
           {isLoading ? (
             <Col xs={24}>
               <div className="spin">
@@ -138,10 +137,10 @@ function Overview() {
               );
             })
           )}
-        </Row>
+        </Row> */}
         <Row gutter={15}>
-          <Col xxl={5} md={8} sm={8} xs={12}>
-            <Cards headless gradient='45deg, #FFF9E3, white' border>
+          <Col xxl={4} md={8} sm={8} xs={12}>
+            <Cards headless gradient='45deg, white, #FFF9E3' border>
               <EChartCard>
                 <div className="card-chunk">
                   <CardBarChart2>
@@ -153,19 +152,7 @@ function Overview() {
             </Cards>
           </Col>
           <Col xxl={5} md={8} sm={8} xs={12}>
-            <Cards headless gradient='45deg, #FFF9E3, white'>
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <span>Tổng point hôm nay</span>
-                    <Heading as="h1">1,394,932</Heading>
-                  </CardBarChart2>
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-          <Col xxl={4} md={8} sm={8} xs={12}>
-            <Cards headless gradient='45deg, #FFF9E3, white'>
+            <Cards headless gradient='45deg, white, #FFF9E3'>
               <EChartCard>
                 <div className="card-chunk">
                   <CardBarChart2>
@@ -176,8 +163,20 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
+          <Col xxl={6} md={8} sm={8} xs={12}>
+            <Cards headless border gradient='45deg, rgb(255 226 0 / 28%), rgb(220 255 244)'>
+              <EChartCard>
+                <div className="card-chunk text-center">
+                  <CardBarChartCenter>
+                    <span>Tổng point hôm nay (đ)</span>
+                    <Heading as="h1">{numberWithCommas(Math.abs(Number(todayProfit?.total_point_today)) || 0)}</Heading>
+                  </CardBarChartCenter>
+                </div>
+              </EChartCard>
+            </Cards>
+          </Col>
           <Col xxl={5} md={8} sm={8} xs={12}>
-            <Cards headless gradient='45deg, #FFF9E3, white'>
+            <Cards headless gradient='45deg, white, #FFF9E3'>
               <EChartCard>
                 <div className="card-chunk">
                   <CardBarChart2>
@@ -188,8 +187,8 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
-          <Col xxl={5} md={8} sm={8} xs={12}>
-            <Cards headless gradient='45deg, #FFF9E3, white'>
+          <Col xxl={4} md={8} sm={8} xs={12}>
+            <Cards headless gradient='45deg, white, #FFF9E3'>
               <EChartCard>
                 <div className="card-chunk">
                   <CardBarChart2>
@@ -255,7 +254,7 @@ function Overview() {
                 </Cards>
               }
             >
-              <AnalyseYoutube />
+              <AnalyseYoutube title="Thống kê Subscribe" />
             </Suspense>
           </Col>
         </Row>
@@ -264,19 +263,19 @@ function Overview() {
           <Col xxl={6} lg={9} md={10} xs={12}>
             <Row gutter={15}>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='64deg, white, #e5ffc3'>
+                <Cards headless gradient='64deg, white, white'>
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tỉ lệ Subscribe</span>
-                        <Heading as="h2">86%</Heading>
+                        <Heading as="h2">{Math.round(ratioSubSvg || 0)} %</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
                 </Cards>
               </Col>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='64deg, white, #e5ffc3' >
+                <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
@@ -290,24 +289,24 @@ function Overview() {
             </Row>
             <Row gutter={15}>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='64deg, white, #e5ffc3' >
+                <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tổng Order hôm nay</span>
-                        <Heading as="h2">13</Heading>
+                        <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
                 </Cards>
               </Col>
               <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='64deg, white, #e5ffc3' >
+                <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Tổng Sub hôm nay</span>
-                        <Heading as="h2">82,275</Heading>
+                        <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -315,8 +314,8 @@ function Overview() {
               </Col>
             </Row>
             <Row gutter={15}>
-              <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='64deg, white, #e5ffc3' >
+              <Col xxl={24} md={24} sm={24} xs={24}>
+                <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
@@ -327,8 +326,8 @@ function Overview() {
                   </EChartCard>
                 </Cards>
               </Col>
-              <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='64deg, white, #e5ffc3'>
+              {/* <Col xxl={12} md={12} sm={12} xs={12}>
+                <Cards headless gradient='64deg, white, white'>
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
@@ -338,7 +337,7 @@ function Overview() {
                     </div>
                   </EChartCard>
                 </Cards>
-              </Col>
+              </Col> */}
             </Row>
           </Col>
           <Col xxl={18} lg={15} md={14} xs={24}>
@@ -355,7 +354,7 @@ function Overview() {
         </Row>
         <Row gutter={15}>
           
-          <Col xxl={12} xs={24}>
+          <Col xxl={14} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -363,10 +362,10 @@ function Overview() {
                 </Cards>
               }
             >
-              <ClosedDeals />
+              <ClosedDeals title="Số subscribe & doanh thu" />
             </Suspense>
           </Col>
-          <Col xxl={12} xs={24}>
+          <Col xxl={10} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>

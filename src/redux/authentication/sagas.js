@@ -10,7 +10,7 @@ function* loginSaga(params) {
     const response = yield call(loginUserApi, params?.payload?.request);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      toast.success('Thành công');
+      toast.success('Đăng nhập thành công');
 
       const tokenLoggged = response?.data?.data?.token;
       Cookies.set('logedIn', tokenLoggged);
@@ -32,7 +32,6 @@ function* loginSaga(params) {
     } else {
       toast.error('Login failed');
     }
-
   } finally { /* empty */ }
 }
 

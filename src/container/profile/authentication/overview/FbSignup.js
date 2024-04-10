@@ -21,6 +21,7 @@ const SignUp = () => {
       isFbAuthenticate: state.fb.auth.uid,
     };
   });
+
   const history = useHistory();
   const dispatch = useDispatch();
   const [state, setState] = useState({

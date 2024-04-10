@@ -7,4 +7,8 @@ const ellipsis = (text, size) => {
   return `${text.split(' ').slice(0, size).join(' ')}...`;
 };
 
-export { ellipsis };
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export { ellipsis , numberWithCommas };

@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Table, Progress, Pagination, Tag } from 'antd';
+import { Row, Col, Table, Pagination, Badge, Tooltip, Dropdown, Button } from 'antd';
+import moment from 'moment';
+import { LuLink2, LuTrash2 } from "react-icons/lu";
+import { FiEdit2 } from "react-icons/fi";
+import { GrPowerReset } from "react-icons/gr";
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import FeatherIcon from 'feather-icons-react';
-import Heading from '../../../components/heading/heading';
+import { CgServer } from "react-icons/cg";
+import { BiLogoGmail } from "react-icons/bi";
 import { Cards } from '../../../components/cards/frame/cards-frame';
 import { ProjectPagination, ProjectListTitle, ProjectListAssignees, ProjectList } from '../style';
-import { Dropdown } from '../../../components/dropdown/dropdown';
 
 function TableServer() {
-  const project = useSelector((state) => state.projects.data);
+  const { project, listServer } = useSelector((state) => {
+    return {
+      project: state?.projects?.data,
+      listServer: state?.servers?.listServer
+    }
+  });
   const [state, setState] = useState({
     projects: project,
     current: 0,
@@ -36,105 +43,194 @@ function TableServer() {
 
   const dataSource = [];
 
-  if (projects.length)
-    projects.map((value) => {
-      const { id, title, status, category, percentage } = value;
-      return dataSource.push({
-        key: id,
-        project: (
-          <ProjectListTitle>
-            <Heading as="h4">
-              <Link to={`/admin/project/projectDetails/${id}`}>{title}</Link>
-            </Heading>
+  const handleDelete = (id) => {
+     
+  }
 
-            <p>{category}</p>
-          </ProjectListTitle>
+  if (listServer.length > 0) {
+    listServer.map((value, index) => {
+      const color = value.run >= 15 ? 'green' : ((value.run < 15 && value.run > 5) ? 'orange' : 'red');
+
+      const colorObj = value.run >= 15 
+        ? { backgroundColor: '#0080001a', border: '2px solid green', color: 'green', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
+        : ((value.run < 15 && value.run > 5) 
+            ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
+            : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' });
+
+      const threadString = `${value?.run  } / ${  value?.thread}`;
+
+      return dataSource.push({
+        key: index,
+        server: value.computer_name,
+        thread: (
+          <span style={colorObj}>
+            <Badge dot color={color} style={{ paddingRight: '5px' }} />
+            {threadString}
+          </span>
         ),
-        startDate: <span className="date-started">26 Dec 2019</span>,
-        deadline: <span className="date-finished">18 Mar 2020</span>,
-        assigned: (
-          <ProjectListAssignees>
-            <ul>
-              <li>
-                <img src={require(`../../../static/img/users/1.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/2.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/3.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/4.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/5.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/6.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/7.png`)} alt="" />
-              </li>
-            </ul>
-          </ProjectListAssignees>
+        limit: (
+          <Tooltip title={(
+            <>
+              <div style={{ marginRight: '12px'}}>Subscribe: {value?.limit_day}</div>
+              <div style={{ marginRight: '12px' }}>Comment: {value?.limit_day}</div>
+              <div style={{ marginRight: '12px' }}>Like: {value?.limit_day}</div>
+            </>
+          )}>
+            <span>
+              <span style={{ marginRight: '12px'}}><CgServer fontSize={17} /> {value?.limit_day}</span>
+              <span style={{ marginRight: '12px',  color: '#EB5757' }}><CgServer fontSize={17} color='#EB5757' /> {value?.limit_day}</span>
+              <span style={{ marginRight: '12px',  color: '#27AE60' }}><CgServer fontSize={17} color='#27AE60' /> {value?.limit_day}</span>
+            </span>
+          </Tooltip>
         ),
-        status: <Tag className={status}>{status}</Tag>,
-        completion: (
-          <div className="project-list-progress">
-            <Progress percent={status === 'complete' ? 100 : percentage} strokeWidth={5} className="progress-primary" />
-            <p>12/15 Task Completed</p>
-          </div>
+        reset: (
+          <span style={{ }}>{value?.reset_time}h</span>
+        ),
+        mail: (
+          <Tooltip title={(
+            <>
+              <div>Mail sống: {value?.account_live}</div>
+              <div>Mail hoạt động: {value?.account_work}</div>
+              <div>Mail chết: {value?.account_die}</div>
+            </>
+          )}>
+            <span>
+              <span style={{ marginRight: '12px', }}><BiLogoGmail style={{ marginBottom: 0 }} fontSize={17} /> {value?.account_live}</span>
+              <span style={{ marginRight: '12px',  color: '#27AE60' }}><BiLogoGmail fontSize={17} color='#27AE60' /> {value?.account_work}</span>
+              <span style={{ marginRight: '12px',  color: '#EB5757' }}><BiLogoGmail fontSize={17} color='#EB5757' /> {value?.account_die}</span>
+            </span>
+          </Tooltip>
+        ),
+        lastReset: (
+          <span>{moment.unix(value.last_action_time).fromNow()}</span>
         ),
         action: (
-          <Dropdown
-            className="wide-dropdwon"
-            content={
-              <>
-                <Link to="#">View</Link>
-                <Link to="#">Edit</Link>
-                <Link to="#">Delete</Link>
-              </>
-            }
-          >
-            <Link to="#">
-              <FeatherIcon icon="more-horizontal" size={18} />
-            </Link>
-          </Dropdown>
+          <div>
+            <Tooltip title="Khởi động lại">
+              <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
+                <GrPowerReset style={{ marginTop: '5px' }}/>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Link">
+              <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
+                <LuLink2 style={{ marginTop: '5px' }} />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Sửa">
+              <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
+                <FiEdit2 style={{ marginTop: '5px' }} />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Xóa">
+              <Button size="default" shape="round" type="default">
+                <LuTrash2 style={{ marginTop: '5px' }} />
+              </Button>
+            </Tooltip>
+          </div>
         ),
       });
     });
+  }
+
+  // if (projects.length)
+  //   projects.map((value) => {
+  //     const { id, title, status, category, percentage } = value;
+  //     return dataSource.push({
+  //       key: id,
+  //       project: (
+  //         <ProjectListTitle>
+  //           <Heading as="h4">
+  //             <Link to={`/admin/project/projectDetails/${id}`}>{title}</Link>
+  //           </Heading>
+
+  //           <p>{category}</p>
+  //         </ProjectListTitle>
+  //       ),
+  //       startDate: <span className="date-started">26 Dec 2019</span>,
+  //       deadline: <span className="date-finished">18 Mar 2020</span>,
+  //       assigned: (
+  //         <ProjectListAssignees>
+  //           <ul>
+  //             <li>
+  //               <img src={require(`../../../static/img/users/1.png`)} alt="" />
+  //             </li>
+  //             <li>
+  //               <img src={require(`../../../static/img/users/2.png`)} alt="" />
+  //             </li>
+  //             <li>
+  //               <img src={require(`../../../static/img/users/3.png`)} alt="" />
+  //             </li>
+  //             <li>
+  //               <img src={require(`../../../static/img/users/4.png`)} alt="" />
+  //             </li>
+  //             <li>
+  //               <img src={require(`../../../static/img/users/5.png`)} alt="" />
+  //             </li>
+  //             <li>
+  //               <img src={require(`../../../static/img/users/6.png`)} alt="" />
+  //             </li>
+  //             <li>
+  //               <img src={require(`../../../static/img/users/7.png`)} alt="" />
+  //             </li>
+  //           </ul>
+  //         </ProjectListAssignees>
+  //       ),
+  //       status: <Tag className={status}>{status}</Tag>,
+  //       completion: (
+  //         <div className="project-list-progress">
+  //           <Progress percent={status === 'complete' ? 100 : percentage} strokeWidth={5} className="progress-primary" />
+  //           <p>12/15 Task Completed</p>
+  //         </div>
+  //       ),
+  //       action: (
+  //         <Dropdown
+  //           className="wide-dropdwon"
+  //           content={
+  //             <>
+  //               <Link to="#">View</Link>
+  //               <Link to="#">Edit</Link>
+  //               <Link to="#">Delete</Link>
+  //             </>
+  //           }
+  //         >
+  //           <Link to="#">
+  //             <FeatherIcon icon="more-horizontal" size={18} />
+  //           </Link>
+  //         </Dropdown>
+  //       ),
+  //     });
+  //   });
 
   const columns = [
     {
-      title: 'Project',
-      dataIndex: 'project',
-      key: 'project',
+      title: 'Máy',
+      dataIndex: 'server',
+      key: 'server',
     },
     {
-      title: 'Start Date',
-      dataIndex: 'startDate',
-      key: 'startDate',
+      title: 'Số luồng',
+      dataIndex: 'thread',
+      key: 'thread',
     },
     {
-      title: 'Deadline',
-      dataIndex: 'deadline',
-      key: 'deadline',
+      title: 'Limit',
+      dataIndex: 'limit',
+      key: 'limit',
     },
     {
-      title: 'Assigned To',
-      dataIndex: 'assigned',
-      key: 'assigned',
+      title: 'Reset',
+      dataIndex: 'reset',
+      key: 'reset',
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: 'Mail',
+      dataIndex: 'mail',
+      key: 'mail',
     },
     {
-      title: 'Completion',
-      dataIndex: 'completion',
-      key: 'completion',
+      title: 'Reset lần cuối',
+      dataIndex: 'lastReset',
+      key: 'lastReset',
     },
 
     {
