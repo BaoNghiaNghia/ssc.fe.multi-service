@@ -9,17 +9,19 @@ import { ShareButtonPageHeader } from '../../components/buttons/share-button/sha
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 
-const CardGroup = lazy(() => import('./overview/business/CardGroup'));
-const CashFlow = lazy(() => import('./overview/business/CashFlow'));
-const IncomeAndExpenses = lazy(() => import('./overview/business/IncomeAndExpenses'));
-const AccountGroup = lazy(() => import('./overview/business/AccountGroup'));
+const DailyOverview = lazy(() => import('./overview/performance/DailyOverview'));
+const WebsitePerformance = lazy(() => import('./overview/performance/WebsitePerformance'));
+const TrafficChannel = lazy(() => import('./overview/performance/TrafficChannel'));
+const SessionsByDevice = lazy(() => import('./overview/performance/SessionsByDevice'));
+const TopLandingPages = lazy(() => import('./overview/performance/TopLandingPages'));
+const SessionsbyRegion = lazy(() => import('./overview/performance/SessionsbyRegion'));
 
-function Business() {
+function SettingAndService() {
   return (
     <>
       <PageHeader
         ghost
-        title="Finance Dashboard"
+        title="Dịch vụ & Cài đặt"
         buttons={[
           <div key="1" className="page-header-actions">
             <CalendarButtonPageHeader />
@@ -33,8 +35,8 @@ function Business() {
         ]}
       />
       <Main>
-        <Row gutter={25}>
-          <Col xxl={12} xs={24}>
+        <Row justify="center" gutter={25}>
+          <Col xxl={8} xl={10} lg={12} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -42,7 +44,51 @@ function Business() {
                 </Cards>
               }
             >
-              <CardGroup />
+              <DailyOverview />
+            </Suspense>
+          </Col>
+          <Col xxl={16} xl={14} lg={12} xs={24}>
+            <Suspense
+              fallback={
+                <Cards headless>
+                  <Skeleton active />
+                </Cards>
+              }
+            >
+              <WebsitePerformance />
+            </Suspense>
+          </Col>
+          <Col xxl={16} xs={24}>
+            <Suspense
+              fallback={
+                <Cards headless>
+                  <Skeleton active />
+                </Cards>
+              }
+            >
+              <TrafficChannel />
+            </Suspense>
+          </Col>
+          <Col xxl={8} xl={8} md={12} xs={24}>
+            <Suspense
+              fallback={
+                <Cards headless>
+                  <Skeleton active />
+                </Cards>
+              }
+            >
+              <SessionsByDevice />
+            </Suspense>
+          </Col>
+          <Col xxl={12} xl={16} md={12} xs={24}>
+            <Suspense
+              fallback={
+                <Cards headless>
+                  <Skeleton active />
+                </Cards>
+              }
+            >
+              <TopLandingPages />
             </Suspense>
           </Col>
           <Col xxl={12} xs={24}>
@@ -53,34 +99,13 @@ function Business() {
                 </Cards>
               }
             >
-              <CashFlow title="CashFlow" />
+              <SessionsbyRegion />
             </Suspense>
           </Col>
-          <Col md={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <IncomeAndExpenses />
-            </Suspense>
-          </Col>
-          <Suspense
-            fallback={
-              <Cards headless>
-                <Skeleton active />
-              </Cards>
-            }
-          >
-            <AccountGroup />
-          </Suspense>
         </Row>
       </Main>
     </>
   );
 }
 
-
-export default Business;
+export default SettingAndService;

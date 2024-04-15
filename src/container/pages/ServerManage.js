@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form } from 'antd';
+import { Row, Col, Form, Badge } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import TableServer from './overview/TableServer';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -12,7 +12,13 @@ import actions from '../../redux/servers/actions';
 
 function ServerManage() {
   const dispatch = useDispatch();
-  const searchData = useSelector((state) => state.headerSearchData);
+  const { searchData, listServer } = useSelector((state) => {
+    return {
+      searchData: state?.headerSearchData,
+      listServer: state?.servers?.listServer
+    }
+  });
+
   const [state, setState] = useState({
     notData: searchData,
     activeClass: 'all',
@@ -37,7 +43,7 @@ function ServerManage() {
   return (
     <>
       <PageHeader
-        title="Quản lý máy"
+        title={`Quản lý máy ${listServer.length > 0 ? `(${  listServer.length  })` : null}`}
         buttons={[
           <div key="search" className="page-header-actions">
             <AutoComplete

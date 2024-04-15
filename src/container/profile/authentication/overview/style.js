@@ -105,7 +105,7 @@ const AuthWrapper = Styled.div`
       h1{
         font-size: 24px;
         font-weight: 600;
-        margin-bottom: 45px;
+        margin-top: 10px;
         @media only screen and (max-width: 767px){
           margin-bottom: 28px;
         }

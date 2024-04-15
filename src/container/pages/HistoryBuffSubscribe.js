@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table } from 'antd';
 import FeatherIcon from 'feather-icons-react';
-import { TopToolBox } from './Style';
+import { TopToolBox } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -14,7 +14,7 @@ import { ShareButtonPageHeader } from '../../components/buttons/share-button/sha
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 
-function Orders() {
+function HistoryBuffSubscribe() {
   const dispatch = useDispatch();
   const { searchData, orders } = useSelector(state => {
     return {
@@ -138,7 +138,7 @@ function Orders() {
     <>
       <PageHeader
         ghost
-        title="Orders"
+        title="Subscribe - Lịch sử"
         buttons={[
           <div key="1" className="page-header-actions">
             <CalendarButtonPageHeader key="1" />
@@ -210,4 +210,4 @@ function Orders() {
   );
 }
 
-export default Orders;
+export default HistoryBuffSubscribe;

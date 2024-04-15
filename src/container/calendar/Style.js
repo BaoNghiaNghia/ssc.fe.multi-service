@@ -47,7 +47,6 @@ const Aside = Styled.aside`
 `;
 
 const CalendarWrapper = Styled.div`
-    
     .react-calendar{
         font-family: 'Inter', sans-serif;
         width: 100%;

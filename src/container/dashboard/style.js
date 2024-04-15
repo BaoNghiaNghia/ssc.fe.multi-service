@@ -960,7 +960,7 @@ const LadingPages = Styled.div`
     .ant-table-tbody{
         .ant-table-cell{
             white-space: normal !important;
-            @media only screen and (max-width: 991px){
+            @media only screen and (max-width: 991px) {
                 white-space: nowrap !important;
             }
         }
@@ -991,6 +991,9 @@ const LadingPages = Styled.div`
 `;
 
 const CardBarChartCenter = Styled.div`
+    .ant-card-body{
+        padding: 10px !important;
+    }
     @media only screen and (max-width: 379px) {
         text-align: center !important;
     }
@@ -998,20 +1001,22 @@ const CardBarChartCenter = Styled.div`
         text-align: center !important;
         font-weight: bold;
         font-family: 'Be Vietnam Pro';
-        margin-top: 6px;
         margin-bottom: 0px;
+        padding-bottom: 0px;
     }
-    @media only screen and (max-width: 1500px){
+    @media only screen and (max-width: 1500px) {
         text-align: center !important;
         h1{
-            font-size: 20px;
+            font-size: 19px;
         }
     }
     & > span {
         text-align: center !important;
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 13px;
+        font-weight: 500;
         font-family: 'Be Vietnam Pro',
+        margin-bottom: 0px;
+        padding-bottom: 0px;
     }
     p {
         display: flex;
@@ -1057,7 +1062,7 @@ const CardBarChart2 = Styled.div`
         text-align: center;
     }
     h1{
-        margin-top: 6px;
+        margin-top: 20px;
         margin-bottom: 0px;
     }
     @media only screen and (max-width: 1500px){

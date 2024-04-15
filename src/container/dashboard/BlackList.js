@@ -51,12 +51,12 @@ const chartOptions = {
   },
 };
 
-function Ecommerce() {
+function BlackList() {
   return (
     <>
       <PageHeader
         ghost
-        title="Ecommerce Dashboard"
+        title="Blacklist"
         buttons={[
           <div key="1" className="page-header-actions">
             <CalendarButtonPageHeader />
@@ -268,4 +268,4 @@ function Ecommerce() {
   );
 }
 
-export default Ecommerce;
+export default BlackList;

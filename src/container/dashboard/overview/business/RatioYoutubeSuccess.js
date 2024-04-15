@@ -6,6 +6,7 @@ import { Spin } from 'antd';
 import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import moment from 'moment';
 import { RevenueWrapper } from '../../style';
 import { ChartjsAreaChart, ChartjsLineChart } from '../../../../components/charts/chartjs';
 import { customTooltips, chartLinearGradient } from '../../../../components/utilities/utilities';
@@ -100,6 +101,8 @@ function RatioYoutubeSuccess({ title }) {
     },
   ];
 
+  const durationReport = countSubscribeSuccess?.map((rp) => rp?.note_date);
+
   const optionTaskSuccess = {
     chart: {
       type: 'line',
@@ -109,7 +112,7 @@ function RatioYoutubeSuccess({ title }) {
       text: '',
     },
     xAxis: {
-      categories: countSubscribeSuccess?.map((rp) => rp.note_date),
+      categories: durationReport,
       title: {
         text: 'Thời gian',
       },
@@ -131,7 +134,7 @@ function RatioYoutubeSuccess({ title }) {
     series: [
       {
         lineWidth: 1,
-        data: countSubscribeSuccess?.map((rp) => rp.count),
+        data: countSubscribeSuccess?.map((rp) => rp?.count),
       },
     ],
     legend: {
@@ -196,7 +199,14 @@ function RatioYoutubeSuccess({ title }) {
             </div>
           }
           more={moreContent}
-          title={title}
+          title={
+            <div>
+              {title}
+              <span>
+                Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong>
+              </span>
+            </div>
+          }
           size="large"
         >
           {preIsLoading ? (
@@ -205,7 +215,7 @@ function RatioYoutubeSuccess({ title }) {
             </div>
           ) : (
             <div className="performance-lineChart">
-              {performanceDatasets &&
+              {/* {performanceDatasets &&
                 performanceDatasets.map((item, key) => {
                   return (
                     <li key={key + 1} className="custom-label">
@@ -220,7 +230,7 @@ function RatioYoutubeSuccess({ title }) {
                       </div>
                     </li>
                   )
-                })}
+                })} */}
 
               <HighchartsReact highcharts={Highcharts} options={optionTaskSuccess} />
             </div>

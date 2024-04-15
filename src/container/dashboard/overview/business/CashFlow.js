@@ -15,8 +15,8 @@ function CashFlow(props) {
   const dispatch = useDispatch();
   const { cashFlowState, cfIsLoading } = useSelector(state => {
     return {
-      cashFlowState: state.chartContent.cashFlowData,
-      cfIsLoading: state.chartContent.cfLoading,
+      cashFlowState: state?.chartContent?.cashFlowData,
+      cfIsLoading: state?.chartContent?.cfLoading,
     };
   });
   const [state, setState] = useState({
@@ -64,7 +64,7 @@ function CashFlow(props) {
 
   const cashFlowDataset = cashFlowState !== null && [
     {
-      data: cashFlowState.dataIn,
+      data: cashFlowState?.dataIn,
       backgroundColor: '#20C99770',
       hoverBackgroundColor: '#20C997',
       label: 'Cash in',
@@ -72,7 +72,7 @@ function CashFlow(props) {
       barThickness: 12,
     },
     {
-      data: cashFlowState.dataOut,
+      data: cashFlowState?.dataOut,
       backgroundColor: '#FF4D4F70',
       hoverBackgroundColor: '#FF4D4F',
       label: 'Cash out',
@@ -200,8 +200,8 @@ function CashFlow(props) {
                 }}
               />
               <ul className="chart-dataIndicator">
-                {cashFlowDataset &&
-                  cashFlowDataset.map((item, key) => {
+                {
+                  cashFlowDataset && cashFlowDataset?.map((item, key) => {
                     return (
                       <li key={key + 1} style={{ display: 'inline-flex', alignItems: 'center' }}>
                         <span
@@ -209,7 +209,7 @@ function CashFlow(props) {
                             width: '10px',
                             height: '10px',
                             display: 'flex',
-                            backgroundColor: item.hoverBackgroundColor,
+                            backgroundColor: item?.hoverBackgroundColor,
                             borderRadius: '50%',
                             margin: '0px 6.5px',
                           }}

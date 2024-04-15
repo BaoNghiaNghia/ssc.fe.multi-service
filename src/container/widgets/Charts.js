@@ -84,7 +84,7 @@ function Widgets() {
             <AccountGroup />
             <Col xl={12} xs={24}>
               <div className="cashflow-wrap">
-                <CashFlow title="CashFlow" />
+                {/* <CashFlow title="CashFlow" /> */}
               </div>
             </Col>
             <Col xl={12} xs={24}>

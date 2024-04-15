@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Table, Pagination, Badge, Tooltip, Dropdown, Button } from 'antd';
+import { Row, Col, Table, Pagination, Badge, Tooltip, Button } from 'antd';
 import moment from 'moment';
 import { LuLink2, LuTrash2 } from "react-icons/lu";
+import { TbServerBolt } from "react-icons/tb";
 import { FiEdit2 } from "react-icons/fi";
 import { GrPowerReset } from "react-icons/gr";
 import { useSelector } from 'react-redux';
 import { CgServer } from "react-icons/cg";
 import { BiLogoGmail } from "react-icons/bi";
 import { Cards } from '../../../components/cards/frame/cards-frame';
-import { ProjectPagination, ProjectListTitle, ProjectListAssignees, ProjectList } from '../style';
+import { ProjectPagination, ProjectList } from '../style';
+import { numberWithCommas } from '../../../utility/utility';
 
 function TableServer() {
   const { project, listServer } = useSelector((state) => {
@@ -37,15 +39,10 @@ function TableServer() {
   };
 
   const onHandleChange = (current, pageSize) => {
-    // You can create pagination in here
     setState({ ...state, current, pageSize });
   };
 
   const dataSource = [];
-
-  const handleDelete = (id) => {
-     
-  }
 
   if (listServer.length > 0) {
     listServer.map((value, index) => {
@@ -61,7 +58,12 @@ function TableServer() {
 
       return dataSource.push({
         key: index,
-        server: value.computer_name,
+        server: (
+          <span style={{ fontWeight: 600, fontSize: '1.1em', display: 'inline-flex', alignItems: 'center' }}>
+            <TbServerBolt fontSize={17} style={{ marginRight: '5px' }} />
+            {value.computer_name}
+          </span>
+        ),
         thread: (
           <span style={colorObj}>
             <Badge dot color={color} style={{ paddingRight: '5px' }} />
@@ -77,14 +79,20 @@ function TableServer() {
             </>
           )}>
             <span>
-              <span style={{ marginRight: '12px'}}><CgServer fontSize={17} /> {value?.limit_day}</span>
-              <span style={{ marginRight: '12px',  color: '#EB5757' }}><CgServer fontSize={17} color='#EB5757' /> {value?.limit_day}</span>
-              <span style={{ marginRight: '12px',  color: '#27AE60' }}><CgServer fontSize={17} color='#27AE60' /> {value?.limit_day}</span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <CgServer fontSize={17} /> {value?.limit_day}
+              </span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <CgServer fontSize={17} color='#EB5757' /> {value?.limit_day}
+              </span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <CgServer fontSize={17} color='#27AE60' /> {value?.limit_day}
+              </span>
             </span>
           </Tooltip>
         ),
         reset: (
-          <span style={{ }}>{value?.reset_time}h</span>
+          <span>{value?.reset_time}h</span>
         ),
         mail: (
           <Tooltip title={(
@@ -95,9 +103,15 @@ function TableServer() {
             </>
           )}>
             <span>
-              <span style={{ marginRight: '12px', }}><BiLogoGmail style={{ marginBottom: 0 }} fontSize={17} /> {value?.account_live}</span>
-              <span style={{ marginRight: '12px',  color: '#27AE60' }}><BiLogoGmail fontSize={17} color='#27AE60' /> {value?.account_work}</span>
-              <span style={{ marginRight: '12px',  color: '#EB5757' }}><BiLogoGmail fontSize={17} color='#EB5757' /> {value?.account_die}</span>
+              <span style={{ marginRight: '12px', fontWeight: 600,display: 'inline-flex', alignItems: 'center' }}>
+                <BiLogoGmail style={{ marginBottom: 0 }} fontSize={19} /> {numberWithCommas(value?.account_live)}
+              </span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <BiLogoGmail fontSize={19} color='#27AE60' /> {numberWithCommas(value?.account_work)}
+              </span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <BiLogoGmail fontSize={19} color='#EB5757' /> {numberWithCommas(value?.account_die)}
+              </span>
             </span>
           </Tooltip>
         ),
@@ -108,22 +122,22 @@ function TableServer() {
           <div>
             <Tooltip title="Khởi động lại">
               <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
-                <GrPowerReset style={{ marginTop: '5px' }}/>
+                <GrPowerReset style={{ marginTop: '4px' }}/>
               </Button>
             </Tooltip>
             <Tooltip title="Link">
               <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
-                <LuLink2 style={{ marginTop: '5px' }} />
+                <LuLink2 style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
             <Tooltip title="Sửa">
               <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
-                <FiEdit2 style={{ marginTop: '5px' }} />
+                <FiEdit2 style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
             <Tooltip title="Xóa">
               <Button size="default" shape="round" type="default">
-                <LuTrash2 style={{ marginTop: '5px' }} />
+                <LuTrash2 style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
           </div>
@@ -131,75 +145,6 @@ function TableServer() {
       });
     });
   }
-
-  // if (projects.length)
-  //   projects.map((value) => {
-  //     const { id, title, status, category, percentage } = value;
-  //     return dataSource.push({
-  //       key: id,
-  //       project: (
-  //         <ProjectListTitle>
-  //           <Heading as="h4">
-  //             <Link to={`/admin/project/projectDetails/${id}`}>{title}</Link>
-  //           </Heading>
-
-  //           <p>{category}</p>
-  //         </ProjectListTitle>
-  //       ),
-  //       startDate: <span className="date-started">26 Dec 2019</span>,
-  //       deadline: <span className="date-finished">18 Mar 2020</span>,
-  //       assigned: (
-  //         <ProjectListAssignees>
-  //           <ul>
-  //             <li>
-  //               <img src={require(`../../../static/img/users/1.png`)} alt="" />
-  //             </li>
-  //             <li>
-  //               <img src={require(`../../../static/img/users/2.png`)} alt="" />
-  //             </li>
-  //             <li>
-  //               <img src={require(`../../../static/img/users/3.png`)} alt="" />
-  //             </li>
-  //             <li>
-  //               <img src={require(`../../../static/img/users/4.png`)} alt="" />
-  //             </li>
-  //             <li>
-  //               <img src={require(`../../../static/img/users/5.png`)} alt="" />
-  //             </li>
-  //             <li>
-  //               <img src={require(`../../../static/img/users/6.png`)} alt="" />
-  //             </li>
-  //             <li>
-  //               <img src={require(`../../../static/img/users/7.png`)} alt="" />
-  //             </li>
-  //           </ul>
-  //         </ProjectListAssignees>
-  //       ),
-  //       status: <Tag className={status}>{status}</Tag>,
-  //       completion: (
-  //         <div className="project-list-progress">
-  //           <Progress percent={status === 'complete' ? 100 : percentage} strokeWidth={5} className="progress-primary" />
-  //           <p>12/15 Task Completed</p>
-  //         </div>
-  //       ),
-  //       action: (
-  //         <Dropdown
-  //           className="wide-dropdwon"
-  //           content={
-  //             <>
-  //               <Link to="#">View</Link>
-  //               <Link to="#">Edit</Link>
-  //               <Link to="#">Delete</Link>
-  //             </>
-  //           }
-  //         >
-  //           <Link to="#">
-  //             <FeatherIcon icon="more-horizontal" size={18} />
-  //           </Link>
-  //         </Dropdown>
-  //       ),
-  //     });
-  //   });
 
   const columns = [
     {

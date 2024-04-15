@@ -11,9 +11,9 @@ import {
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
-const AuthenticateApi = new ApiFactory({ url: process.env.REACT_APP_API_ENDPOINT });
+const ReportAPI = new ApiFactory({ url: process.env.REACT_APP_API_ENDPOINT });
 
-AuthenticateApi.createEntities([
+ReportAPI.createEntities([
     { name: DAILY_REPORT_SUBSCRIBE_ENPOINT },
     { name: REPORT_COUNT_SUCCESS_ENDPOINT },
     { name: COUNT_PROFIT_TODAY_ENDPOINT },
@@ -24,16 +24,16 @@ AuthenticateApi.createEntities([
     { name: RATIO_SUBSCRIBE_AVG_ENDPOINT },
 ]);
 
-const getDailyReportSubscribe = (data) => AuthenticateApi.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENPOINT }).get(data);
-const countSuccessSubscribe = () => AuthenticateApi.createBasicCRUDEndpoints({ name: REPORT_COUNT_SUCCESS_ENDPOINT }).get();
-const countProfitDataToday = () => AuthenticateApi.createBasicCRUDEndpoints({ name: COUNT_PROFIT_TODAY_ENDPOINT}).get();
-const getSubscribeWithPointEveryday = (query) => AuthenticateApi.createBasicCRUDEndpoints({ name: SUBSCRIBE_POINT_EVERYDAY_ENDPOINT }).get(query);
+const getDailyReportSubscribe = (data) => ReportAPI.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENPOINT }).get(data);
+const countSuccessSubscribe = () => ReportAPI.createBasicCRUDEndpoints({ name: REPORT_COUNT_SUCCESS_ENDPOINT }).get();
+const countProfitDataToday = () => ReportAPI.createBasicCRUDEndpoints({ name: COUNT_PROFIT_TODAY_ENDPOINT}).get();
+const getSubscribeWithPointEveryday = (query) => ReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_POINT_EVERYDAY_ENDPOINT }).get(query);
 
-const fetchComputerDataList = () => AuthenticateApi.createBasicCRUDEndpoints({ name: COMPUTER_DATA_LIST_ENDPOINT }).get();
+const fetchComputerDataList = () => ReportAPI.createBasicCRUDEndpoints({ name: COMPUTER_DATA_LIST_ENDPOINT }).get();
 
-const getStatisticSubscribeReport = () => AuthenticateApi.createBasicCRUDEndpoints({ name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT }).get();
-const countErrorSubscribe = () => AuthenticateApi.createBasicCRUDEndpoints({ name: COUNT_ERROR_SUBSCRIBE_ENDPOINT }).get();
-const ratioSubscribeAverage = () => AuthenticateApi.createBasicCRUDEndpoints({ name: RATIO_SUBSCRIBE_AVG_ENDPOINT }).get();
+const getStatisticSubscribeReport = () => ReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT }).get();
+const countErrorSubscribe = () => ReportAPI.createBasicCRUDEndpoints({ name: COUNT_ERROR_SUBSCRIBE_ENDPOINT }).get();
+const ratioSubscribeAverage = () => ReportAPI.createBasicCRUDEndpoints({ name: RATIO_SUBSCRIBE_AVG_ENDPOINT }).get();
 
 export {
     getDailyReportSubscribe,

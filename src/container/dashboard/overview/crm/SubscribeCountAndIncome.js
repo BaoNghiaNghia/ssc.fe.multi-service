@@ -9,14 +9,16 @@ import { ChartjsBarChartTransparent } from '../../../../components/charts/chartj
 import ChartSubscribePoint from '../business/ChartSubscribePoint';
 import { closeDealFilterData, closeDealGetData } from '../../../../redux/chartContent/actionCreator';
 import actions from '../../../../redux/reports/actions';
+import Heading from '../../../../components/heading/heading';
+import { currentDate, findSecondMinimum, numberWithCommas } from '../../../../utility/utility';
 
 function ClosedDeals(props) {
   const { title } = props;
   const dispatch = useDispatch();
   const { closeDealState, cdIsLoading, fromDate, toDate, subWithPoint } = useSelector(state => {
     return {
-      closeDealState: state.chartContent.closeDealData,
-      cdIsLoading: state.chartContent.cdLoading,
+      closeDealState: state?.chartContent?.closeDealData,
+      cdIsLoading: state?.chartContent?.cdLoading,
       fromDate: state?.reports.filterRange?.from,
       toDate: state?.reports.filterRange?.to,
       subWithPoint: state?.reports?.subWithPoint
@@ -41,7 +43,7 @@ function ClosedDeals(props) {
 
   const closeDealDatasets = closeDealState !== null && [
     {
-      data: subWithPoint?.map(item => Math.abs(item.totalPoint)),
+      data: subWithPoint?.map(item => Math.abs(item?.totalPoint)),
       backgroundColor: '#20C99780',
       hoverBackgroundColor: '#20C997',
       label: 'Tổng point',
@@ -51,7 +53,7 @@ function ClosedDeals(props) {
       percent: 49,
     },
     {
-      data: subWithPoint?.map(item => Math.abs(item.subOrder)),
+      data: subWithPoint?.map(item => Math.abs(item?.subOrder)),
       backgroundColor: '#5F63F280',
       hoverBackgroundColor: '#5F63F2',
       label: 'Subscribe yêu cầu',
@@ -62,8 +64,14 @@ function ClosedDeals(props) {
     },
   ];
 
+  // eslint-disable-next-line no-unsafe-optional-chaining
+  const totalPoint = subWithPoint?.map(item => item?.totalPoint*(-1)) || [];
+  const arrWaveDate = subWithPoint?.map(item => item?.date);
+
+  const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? totalPoint[arrWaveDate?.indexOf(currentDate)] : 0;
+
   const chartSubscribePoint = {
-    wave_date: subWithPoint?.map(item => item?.date),
+    wave_date: arrWaveDate,
     wave_timeline: [
       {
         name: 'Subscribe yêu cầu',
@@ -71,7 +79,7 @@ function ClosedDeals(props) {
       },
       {
         name: 'Tổng point',
-        data: subWithPoint?.map(item => Math.abs(item.totalPoint))
+        data: totalPoint
       }
     ],
   }
@@ -109,7 +117,11 @@ function ClosedDeals(props) {
               </ul>
             </div>
           }
-          title={title}
+          title={
+            <div>
+              {title} <span>Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong></span>
+            </div>
+          }
           size="large"
         >
           {cdIsLoading ? (
@@ -136,6 +148,27 @@ function ClosedDeals(props) {
                   );
                 })}
               </div> */}
+
+              <div className="card-bar-top d-flex flex-grid">
+                {
+                  totalSubToday > 0 ? (
+                    <div className="flex-grid-child">
+                      <p>Hôm nay (đ)</p>
+                      <Heading as="h3" className="color-primary">
+                        {numberWithCommas(totalPoint?.at(-1) || 0)}
+                      </Heading>
+                    </div>
+                  ) : null
+                }
+                <div className="flex-grid-child">
+                  <p>Doanh thu cao nhất (đ)</p>
+                  <Heading as="h3">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
+                </div>
+                <div className="flex-grid-child">
+                  <p>Doanh thu thấp nhất (đ)</p>
+                  <Heading as="h3">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
+                </div>
+              </div>
 
               <ChartSubscribePoint loadingChart={false} chartData={chartSubscribePoint || {}} />
 

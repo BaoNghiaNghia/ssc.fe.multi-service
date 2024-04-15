@@ -25,54 +25,59 @@ import Contact from './contact/reducers';
 import Profile from './profile/reducers';
 import Calender from './calendar/reducers';
 import FileManager from './fileManager/reducers';
-import ReportsDailyReducer from './reports/reducers';
 import { axiosCrudReducer, axiosSingleCrudReducer } from './crud/axios/reducers';
 
 import { fsCrudReducer, fsSingleCrudReducer } from './firebase/firestore/reducers';
 import firebaseAuth from './firebase/auth/reducers';
+
+import ReportsDailyReducer from './reports/reducers';
 import ServerReducer from './servers/reducers';
+import BuffSubscribeReducer from './buffSubscribe/reducers';
 
 const rootReducers = combineReducers({
+  // fs: firestoreReducer,
+  // message: readMessageReducer,
+  // notification: readNotificationReducer,
+  // sellers: sellersReducer,
+  // users: userReducer,
+  // userGroup: userGroupReducer,
+  // team: teamReducer,
+  // gallery: galleryReducer,
+  // email: emailReducer,
+  // emailSingle: SingleEmailReducer,
+  // products: productReducer,
+  // product: SingleProductReducer,
+  // chatSingle: SingleChatReducer,
+  // chatSingleGroup: SingleChatGroupReducer,
+  // chat: chatReducer,
+  // groupChat: groupChatReducer,
+  // crud: fsCrudReducer,
+  // singleCrud: fsSingleCrudReducer,
+  // cart: cartData,
+  // Todo,
+  // Note,
+  // Task,
+  // Contact,
+  // Profile,
+  // Calender,
+  // firebaseAuth,
+  // FileManager,
+  // AxiosCrud: axiosCrudReducer,
+  // SingleAxiosCrud: axiosSingleCrudReducer,
+  // project: SingleProjectReducer,
+  
+  orders: orderReducer,
+  projects: projectReducer,
+
   fb: firebaseReducer,
-  fs: firestoreReducer,
   themeUsers: themeUsersReducer,
   headerSearchData: headerSearchReducer,
-  message: readMessageReducer,
-  notification: readNotificationReducer,
-  orders: orderReducer,
-  sellers: sellersReducer,
-  users: userReducer,
-  userGroup: userGroupReducer,
-  team: teamReducer,
   auth: authReducer,
-  gallery: galleryReducer,
-  email: emailReducer,
-  emailSingle: SingleEmailReducer,
-  products: productReducer,
-  product: SingleProductReducer,
-  chatSingle: SingleChatReducer,
-  chatSingleGroup: SingleChatGroupReducer,
-  chat: chatReducer,
-  groupChat: groupChatReducer,
-  projects: projectReducer,
-  project: SingleProjectReducer,
-  ChangeLayoutMode,
   chartContent: chartContentReducer,
-  crud: fsCrudReducer,
-  singleCrud: fsSingleCrudReducer,
-  cart: cartData,
-  Todo,
-  Note,
-  Task,
-  Contact,
-  Profile,
-  Calender,
-  firebaseAuth,
-  FileManager,
-  AxiosCrud: axiosCrudReducer,
-  SingleAxiosCrud: axiosSingleCrudReducer,
+  ChangeLayoutMode,
   reports: ReportsDailyReducer,
-  servers: ServerReducer
+  servers: ServerReducer,
+  buffSubscribe: BuffSubscribeReducer
 });
 
 export default rootReducers;

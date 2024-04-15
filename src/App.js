@@ -36,6 +36,7 @@ const ProviderConfig = () => {
     if (!unmounted) {
       setPath(window.location.pathname);
     }
+    
     // eslint-disable-next-line no-return-assign
     return () => (unmounted = true);
   }, [setPath]);

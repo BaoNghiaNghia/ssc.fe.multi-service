@@ -1,6 +1,6 @@
 import React, { useCallback, useState} from 'react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
-import { Form, Input, Button, Image } from 'antd';
+import { Form, Input, Button, Image, Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { FacebookOutlined, TwitterOutlined, UserOutlined } from '@ant-design/icons';
@@ -64,12 +64,14 @@ function SignIn() {
       </p>
       <div className="auth-contents">
         <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">
-          <div style={{ marginBottom: '40px' }}>
-            <Image src={logoSSC} preview={false} height="50px"/>
-          </div>
-          <Heading as="h3">
-            Đăng nhập
-          </Heading>
+          <Row justify="space-around" style={{ marginBottom: '40px' }}>
+            <Col md={16} sm={16} xs={16}>
+              <Heading as="h2">Đăng nhập</Heading>
+            </Col>
+            <Col md={8} sm={8} xs={8} >
+              <Image src={logoSSC} preview={false} height="45px"/>
+            </Col>
+          </Row>
           <Form.Item
             name="username"
             rules={[
@@ -97,7 +99,7 @@ function SignIn() {
             </NavLink>
           </div>
           <Form.Item>
-            <Button loading={isLoading} className="btn-signin" htmlType="submit" type="primary" size="middle">
+            <Button loading={isLoading} className="btn-signin" htmlType="submit" style={{ width: '100%' }} type="primary" size="large">
               {isLoading ? 'Đang tải...' : 'Đăng nhập'}
             </Button>
           </Form.Item>
@@ -106,7 +108,7 @@ function SignIn() {
           </p>
           <ul className="social-login">
             <li>
-              <Link className="google-signup" to="#">
+              <Link className="google-signup" to="#" style={{ width: '100%' }}>
                 <img src={require('../../../../static/img/google.png')} alt="" />
                 <span>Sign in with Google</span>
               </Link>
@@ -123,10 +125,10 @@ function SignIn() {
             </li>
           </ul>
           <div className="auth0-login">
-            <Link to="#" onClick={() => lock.show()}>
+            <Link to="#" onClick={() => lock.show()} style={{ width: '100%' }}>
               Sign In with Auth0
             </Link>
-            <Link to="/fbSignIn">Sign In With Firebase</Link>
+            <Link to="/fbSignIn" style={{ width: '100%' }}>Sign In With Firebase</Link>
           </div>
         </Form>
       </div>

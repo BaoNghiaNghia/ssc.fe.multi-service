@@ -1,13 +1,11 @@
 import moment from 'moment';
 import actions from './actions';
-
-const currentDate = moment(new Date()).format("DD-MM-YYYY");
-const previos7Date = moment().subtract(7,'d').format('DD-MM-YYYY');
+import { currentDate, previousDate } from '../../utility/utility';
 
 const initialState = {
   subscribeReport: {},
   filterRange: {
-    from: previos7Date,
+    from: previousDate(7),
     to: currentDate
   },
   reportCountSuccess: [],

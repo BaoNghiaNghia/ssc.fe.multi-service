@@ -34,6 +34,7 @@ const moreContent = (
     </NavLink>
   </>
 );
+
 function EfficiencyAction({ title }) {
   const dispatch = useDispatch();
   const { performanceState, preIsLoading } = useSelector(state => {
@@ -212,7 +213,7 @@ function EfficiencyAction({ title }) {
                     ],
                   },
                 }}
-                height={window.innerWidth <= 575 ? 200 : 85}
+                height={ window.innerWidth <= 575 ? 200 : 120 }
               />
             </div>
           )}
