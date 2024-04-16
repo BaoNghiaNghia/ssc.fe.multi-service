@@ -1,0 +1,1 @@
+export const FETCH_USER_LIST_ENDPOINT = 'api/v2/user/list';

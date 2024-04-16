@@ -1,20 +1,14 @@
-import React, { lazy, Suspense } from 'react';
-import { Row, Col, Skeleton } from 'antd';
+import React from 'react';
+import { Row, Col, Badge, List } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
-
-const DailyOverview = lazy(() => import('./overview/performance/DailyOverview'));
-const WebsitePerformance = lazy(() => import('./overview/performance/WebsitePerformance'));
-const TrafficChannel = lazy(() => import('./overview/performance/TrafficChannel'));
-const SessionsByDevice = lazy(() => import('./overview/performance/SessionsByDevice'));
-const TopLandingPages = lazy(() => import('./overview/performance/TopLandingPages'));
-const SessionsbyRegion = lazy(() => import('./overview/performance/SessionsbyRegion'));
+import { ListGroup, PricingCard } from '../pages/style';
+import Heading from '../../components/heading/heading';
 
 function SettingAndService() {
   return (
@@ -35,72 +29,91 @@ function SettingAndService() {
         ]}
       />
       <Main>
-        <Row justify="center" gutter={25}>
-          <Col xxl={8} xl={10} lg={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <DailyOverview />
-            </Suspense>
+      <Row gutter={25} justify="center">
+          <Col xxl={6} lg={8} sm={12} xs={24}>
+            <PricingCard style={{ marginBottom: 30 }}>
+              <Badge className="pricing-badge" type="dark">
+                Free Forever
+              </Badge>
+              <Heading className="pricing-title" as="h3">
+                Free
+              </Heading>
+              <span className="package-user-type">For Individuals</span>
+              <ListGroup>
+                <List text="100MB File Space" />
+                <List text="2 Active Projects" />
+                <List text="Limited Boards" />
+                <List text="Basic Project Management" />
+              </ListGroup>
+              <Button size="default" type="white">
+                Current Plan
+              </Button>
+            </PricingCard>
           </Col>
-          <Col xxl={16} xl={14} lg={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <WebsitePerformance />
-            </Suspense>
+          <Col xxl={6} lg={8} sm={12} xs={24}>
+            <PricingCard style={{ marginBottom: 30 }}>
+              <Badge className="pricing-badge" type="primary">
+                Basic Plan
+              </Badge>
+              <Heading className="price-amount" as="h3">
+                <sup className="currency">$</sup>19 <sub className="pricing-validity">Per month</sub>
+              </Heading>
+              <span className="package-user-type">For 2 Users</span>
+              <ListGroup>
+                <List text="100GB File Space" />
+                <List text="300 Projects" />
+                <List text="Limited Boards" />
+                <List text="Basic Project Management" />
+                <List text="Custom Post Types" />
+              </ListGroup>
+              <Button size="default" type="primary">
+                Get Started
+              </Button>
+            </PricingCard>
           </Col>
-          <Col xxl={16} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <TrafficChannel />
-            </Suspense>
+          <Col xxl={6} lg={8} sm={12} xs={24}>
+            <PricingCard style={{ marginBottom: 30 }}>
+              <Badge className="pricing-badge" type="secondary">
+                Business
+              </Badge>
+              <Heading className="price-amount" as="h3">
+                <sup className="currency">$</sup>39 <sub className="pricing-validity">Per month</sub>
+              </Heading>
+              <span className="package-user-type">For 10 Users</span>
+              <ListGroup>
+                <List text="100GB File Space" />
+                <List text="300 Projects" />
+                <List text="Limited Boards" />
+                <List text="Basic Project Management" />
+                <List text="Custom Post Types" />
+                <List text="Subtasks" />
+              </ListGroup>
+              <Button size="default" type="secondary">
+                Get Started
+              </Button>
+            </PricingCard>
           </Col>
-          <Col xxl={8} xl={8} md={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <SessionsByDevice />
-            </Suspense>
-          </Col>
-          <Col xxl={12} xl={16} md={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <TopLandingPages />
-            </Suspense>
-          </Col>
-          <Col xxl={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <SessionsbyRegion />
-            </Suspense>
+          <Col xxl={6} lg={8} sm={12} xs={24}>
+            <PricingCard style={{ marginBottom: 30 }}>
+              <Badge className="pricing-badge" type="success">
+                Enterprise
+              </Badge>
+              <Heading className="price-amount" as="h3">
+                <sup className="currency">$</sup>79 <sub className="pricing-validity">Per month</sub>
+              </Heading>
+              <span className="package-user-type">For 50 Users</span>
+              <ListGroup>
+                <List text="100GB File Space" />
+                <List text="300 Projects" />
+                <List text="Limited Boards" />
+                <List text="Basic Project Management" />
+                <List text="Custom Post Types" />
+                <List text="Subtasks" />
+              </ListGroup>
+              <Button size="default" type="success">
+                Get Started
+              </Button>
+            </PricingCard>
           </Col>
         </Row>
       </Main>

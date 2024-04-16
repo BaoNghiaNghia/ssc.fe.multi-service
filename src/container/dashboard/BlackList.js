@@ -1,68 +1,150 @@
-import React, { lazy, Suspense } from 'react';
-import { Row, Col, Skeleton } from 'antd';
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col, Radio, Table, Tooltip, Image } from 'antd';
 import FeatherIcon from 'feather-icons-react';
-import { CardBarChart2, EChartCard } from './style';
+import { TopToolBox } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { Cards } from '../../components/cards/frame/cards-frame';
+import { Main, TableWrapper } from '../styled';
+import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
-import { Main } from '../styled';
-import Heading from '../../components/heading/heading';
-import { ChartjsBarChartTransparent } from '../../components/charts/chartjs';
+import { Cards } from '../../components/cards/frame/cards-frame';
+import { orderFilter } from '../../redux/orders/actionCreator';
+
 import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
+import actions from '../../redux/blacklist/actions';
 
-const TotalRevenue = lazy(() => import('./overview/ecommerce/TotalRevenue'));
-const RevenueGenerated = lazy(() => import('./overview/ecommerce/RevenueGenerated'));
-const TopSellingProduct = lazy(() => import('./overview/ecommerce/TopSellingProduct'));
-const SalesByLocation = lazy(() => import('./overview/ecommerce/SalesByLocation'));
-const RevenueByDevice = lazy(() => import('./overview/ecommerce/RevenueByDevice'));
-
-const chartOptions = {
-  legend: {
-    display: false,
-    labels: {
-      display: false,
-    },
-  },
-  scales: {
-    yAxes: [
-      {
-        stacked: true,
-        gridLines: {
-          display: false,
-        },
-        ticks: {
-          display: false,
-        },
-      },
-    ],
-    xAxes: [
-      {
-        stacked: true,
-        gridLines: {
-          display: false,
-        },
-        ticks: {
-          display: false,
-        },
-      },
-    ],
-  },
-};
+import BlackListImg from '../../static/img/block_icon.png.png'
 
 function BlackList() {
+  const dispatch = useDispatch();
+  const { searchData, orders, blackListChannel } = useSelector(state => {
+    return {
+      searchData: state.headerSearchData,
+      orders: state.orders.data,
+      blackListChannel: state?.blackList?.blackListChannel
+    };
+  });
+
+  const [state, setState] = useState({
+    notData: searchData,
+    item: orders,
+    selectedRowKeys: [],
+  });
+
+  const { notData, item, selectedRowKeys } = state;
+  const filterKey = ['Shipped', 'Awaiting Shipment', 'Canceled'];
+
+  useEffect(() => {
+    if (orders) {
+      setState({
+        item: orders,
+        selectedRowKeys,
+      });
+    }
+  }, [orders, selectedRowKeys]);
+
+  useEffect(() => {
+    dispatch(actions.fetchBlackListChannelBegin());
+  }, [dispatch]);
+
+  const handleSearch = searchText => {
+    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    setState({
+      ...state,
+      notData: data,
+    });
+  };
+
+  const handleChangeForFilter = e => {
+    dispatch(orderFilter('status', e.target.value));
+  };
+
+  const dataSource = [];
+  
+  if (blackListChannel?.length) {
+    blackListChannel?.map((value, key) => {
+      const { id, channel_id, reason, time } = value;
+      return dataSource.push({
+        key: key + 1,
+        id: <span className="customer-name">{id}</span>,
+        channel_id: (
+          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <Image preview={false} 
+              style={{ paddingRight: '10px', filter: 'grayscale(30)' }} height="30px"
+              src={BlackListImg}
+            />
+            <a href={`https://www.youtube.com/channel/${  channel_id}`} target="_blank" rel="noopener noreferrer">
+              <span className="order-id">{channel_id}</span>
+            </a>
+          </div>
+        ),
+        time: <span className="customer-name">{time}</span>,
+        reason: <span className="ordered-date">{reason}</span>,
+        action: (
+          <div className="table-actions">
+            <Tooltip title="Xóa">
+              <Button className="btn-icon" type="danger" to="#" shape="circle">
+                <FeatherIcon icon="trash-2" size={16} />
+              </Button>
+            </Tooltip>
+          </div>
+        ),
+      });
+    });
+  }
+
+  const columns = [
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Channel ID',
+      dataIndex: 'channel_id',
+      key: 'channel_id',
+    },
+    {
+      title: 'Thời gian',
+      dataIndex: 'time',
+      key: 'time',
+    },
+    {
+      title: 'Lí do',
+      dataIndex: 'reason',
+      key: 'reason',
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
+    },
+  ];
+
+  const onSelectChange = selectedRowKey => {
+    setState({ ...state, selectedRowKeys: selectedRowKey });
+  };
+
+  const rowSelection = {
+    onChange: (srk) => {
+      onSelectChange(srk);
+    },
+  };
+
   return (
     <>
       <PageHeader
         ghost
-        title="Blacklist"
+        title="BlackList"
         buttons={[
           <div key="1" className="page-header-actions">
-            <CalendarButtonPageHeader />
-            <ExportButtonPageHeader />
-            <ShareButtonPageHeader />
-            <Button size="small" type="primary">
+            <CalendarButtonPageHeader key="1" />
+            <ExportButtonPageHeader key="2" />
+            <ShareButtonPageHeader key="3" />
+            <Button size="small" key="4" type="primary">
               <FeatherIcon icon="plus" size={14} />
               Add New
             </Button>
@@ -70,199 +152,59 @@ function BlackList() {
         ]}
       />
       <Main>
-        <Row gutter={25}>
-          <Col xxl={6} md={12} sm={12} xs={24}>
-            <Cards headless>
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <Heading as="h1">7,461</Heading>
-                    <span>Orders</span>
-                    <p>
-                      <span className="growth-upward">
-                        <FeatherIcon icon="arrow-up" /> 25%
-                      </span>
-                      <span>Since last week</span>
-                    </p>
-                  </CardBarChart2>
-                </div>
-                <div className="card-chunk">
-                  <ChartjsBarChartTransparent
-                    labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']}
-                    datasets={[
-                      {
-                        data: [20, 60, 50, 45, 50, 60, 70],
-                        backgroundColor: '#EFEFFE',
-                        hoverBackgroundColor: '#5F63F2',
-                        label: 'Orders',
-                        barPercentage: 1,
-                      },
-                    ]}
-                    options={chartOptions}
-                  />
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-          <Col xxl={6} md={12} sm={12} xs={24}>
-            <Cards headless>
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <Heading as="h1">$28,947</Heading>
-                    <span>Revenue</span>
-                    <p>
-                      <span className="growth-downward">
-                        <FeatherIcon icon="arrow-down" /> 25%
-                      </span>
-                      <span>Since last week</span>
-                    </p>
-                  </CardBarChart2>
-                </div>
-                <div className="card-chunk">
-                  <ChartjsBarChartTransparent
-                    labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']}
-                    datasets={[
-                      {
-                        data: [20, 60, 50, 45, 50, 60, 70],
-                        backgroundColor: '#FFF0F6',
-                        hoverBackgroundColor: '#FF69A5',
-                        label: 'Revenue',
-                        barPercentage: 1,
-                      },
-                    ]}
-                    options={chartOptions}
-                  />
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-
-          <Col xxl={6} md={12} sm={12} xs={24}>
-            <Cards headless>
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <Heading as="h1">$3,241</Heading>
-                    <span>Avg. order value</span>
-                    <p>
-                      <span className="growth-upward">
-                        <FeatherIcon icon="arrow-up" /> 25%
-                      </span>
-                      <span>Since last week</span>
-                    </p>
-                  </CardBarChart2>
-                </div>
-                <div className="card-chunk">
-                  <ChartjsBarChartTransparent
-                    labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']}
-                    datasets={[
-                      {
-                        data: [20, 60, 50, 45, 50, 60, 70],
-                        backgroundColor: '#E8FAF4',
-                        hoverBackgroundColor: '#20C997',
-                        label: 'Avg Orders',
-                        barPercentage: 1,
-                      },
-                    ]}
-                    options={chartOptions}
-                  />
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-          <Col xxl={6} md={12} sm={12} xs={24}>
-            <Cards headless>
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <Heading as="h1">45.2k</Heading>
-                    <span>Unique visitors</span>
-                    <p>
-                      <span className="growth-upward">
-                        <FeatherIcon icon="arrow-up" /> 25%
-                      </span>
-                      <span>Since last week</span>
-                    </p>
-                  </CardBarChart2>
-                </div>
-                <div className="card-chunk">
-                  <ChartjsBarChartTransparent
-                    labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']}
-                    datasets={[
-                      {
-                        data: [20, 60, 50, 45, 50, 60, 70],
-                        backgroundColor: '#E9F5FF',
-                        hoverBackgroundColor: '#2C99FF',
-                        label: 'Visitors',
-                        barPercentage: 1,
-                      },
-                    ]}
-                    options={chartOptions}
-                  />
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-        </Row>
-
-        <Row gutter={25}>
-          <Col xxl={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <TotalRevenue />
-            </Suspense>
-          </Col>
-          <Col xxl={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <RevenueGenerated />
-            </Suspense>
-          </Col>
-          <Col xxl={8} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <TopSellingProduct />
-            </Suspense>
-          </Col>
-          <Col xxl={8} md={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <SalesByLocation />
-            </Suspense>
-          </Col>
-          <Col xxl={8} md={12} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
-              <RevenueByDevice />
-            </Suspense>
-          </Col>
-        </Row>
+        <Cards headless>
+          <Row gutter={15}>
+            <Col xs={24}>
+              <TopToolBox>
+                <Row gutter={15} className="justify-content-center">
+                  <Col lg={6} xs={24}>
+                    <div className="table-search-box">
+                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                    </div>
+                  </Col>
+                  <Col xxl={14} lg={16} xs={24}>
+                    <div className="table-toolbox-menu">
+                      <span className="toolbox-menu-title"> Status:</span>
+                      <Radio.Group onChange={handleChangeForFilter} defaultValue="">
+                        <Radio.Button value="">All</Radio.Button>
+                        {item.length &&
+                          [...new Set(filterKey)].map(value => {
+                            return (
+                              <Radio.Button key={value} value={value}>
+                                {value}
+                              </Radio.Button>
+                            );
+                          })}
+                      </Radio.Group>
+                    </div>
+                  </Col>
+                  <Col xxl={4} xs={24}>
+                    <div className="table-toolbox-actions">
+                      <Button size="small" type="secondary" transparented>
+                        Export
+                      </Button>
+                      <Button size="small" type="primary">
+                        <FeatherIcon icon="plus" size={12} /> Add Order
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+              </TopToolBox>
+            </Col>
+          </Row>
+          <Row gutter={15}>
+            <Col md={24}>
+              <TableWrapper className="table-order table-responsive">
+                <Table
+                  rowSelection={rowSelection}
+                  dataSource={dataSource}
+                  columns={columns}
+                  pagination={{ pageSize: 20, showSizeChanger: true, total: blackListChannel.length }}
+                />
+              </TableWrapper>
+            </Col>
+          </Row>
+        </Cards>
       </Main>
     </>
   );

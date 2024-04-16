@@ -92,8 +92,9 @@ function Overview() {
                     className={state.activeClass === '' ? 'active' : 'deactivate'}
                     onClick={() => handleChange('')}
                     to="#"
+                    style={{ display: 'inline-flex', alignItems: 'center' }}
                   >
-                    <GrNotification fontSize={15} className='mr-3'/> Subscribe
+                    <GrNotification fontSize={15} className='pr-3'/> <span>Subscribe</span>
                   </Link>
                 </li>
                 <li>
@@ -102,7 +103,7 @@ function Overview() {
                     onClick={() => handleChange('webDesign')}
                     to="#"
                   >
-                    <FaRegCommentDots fontSize={15} className='mr-3'/> Comment
+                    <FaRegCommentDots fontSize={15} className='mr-3'/> <span>Comment</span>
                   </Link>
                 </li>
                 <li>
@@ -111,7 +112,7 @@ function Overview() {
                     onClick={() => handleChange('uiDesign')}
                     to="#"
                   >
-                    <AiOutlineLike fontSize={17} className='mr-3'/> Like
+                    <AiOutlineLike fontSize={17} className='mr-3'/> <span>Like</span>
                   </Link>
                 </li>
               </ul>
@@ -188,7 +189,7 @@ function Overview() {
                     <span style={{ fontWeight: 600 }}>
                       Tổng point hôm nay (đ)
                     </span>
-                    <Heading as="h1">{numberWithCommas(todayPoint)}</Heading>
+                    <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
                     <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
                       <span style={{ marginRight: '23px' }}>
                         Subscribe: <strong>{numberWithCommas(todaySubscribePoint)}</strong>

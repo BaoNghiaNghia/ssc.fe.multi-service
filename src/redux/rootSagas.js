@@ -1,7 +1,9 @@
 import { all } from 'redux-saga/effects';
+
 import { 
     loginWatcherSaga, logoutWatcherSaga
 } from './authentication/sagas';
+
 import {
     countProfitDataTodayWatcherSaga,
     countSuccessSubscribeWatcherSaga,
@@ -23,6 +25,13 @@ import {
     fetchUserListWatcherSaga
 } from './buffSubscribe/sagas';
 
+import {
+    fetchBlackListChannelWatcherSaga
+} from './blacklist/sagas';
+
+import {
+    fetchUserListMemberWatcherSaga
+} from './member/sagas';
 
 export default function* rootSaga() {
     return yield all([
@@ -39,6 +48,8 @@ export default function* rootSaga() {
         fetchAdminSettingWatcherSaga(),
         fetchListOrderSubscribeWatcherSaga(),
         fetchServicePackageListWatcherSaga(),
-        fetchUserListWatcherSaga()
+        fetchUserListWatcherSaga(),
+        fetchBlackListChannelWatcherSaga(),
+        fetchUserListMemberWatcherSaga()
     ]);
 }

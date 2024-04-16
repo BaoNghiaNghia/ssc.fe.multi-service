@@ -14,8 +14,8 @@ function NotFound() {
           404
         </Heading>
         <p>Sorry! the page you are looking for does n`t exist.</p>
-        <NavLink to="/admin">
-          <Button size="default" type="primary" to="/admin">
+        <NavLink to="/admin/tong-quan">
+          <Button size="default" type="primary" to="/admin/tong-quan">
             Return Home
           </Button>
         </NavLink>

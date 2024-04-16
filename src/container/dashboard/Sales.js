@@ -33,7 +33,7 @@ function Sales() {
               <FeatherIcon icon="plus" size={14} />
               Add New
             </Button>
-          </div>,
+          </div>
         ]}
       />
       <Main className="grid-boxed">

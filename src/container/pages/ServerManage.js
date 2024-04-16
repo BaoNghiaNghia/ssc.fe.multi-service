@@ -83,6 +83,7 @@ function ServerManage() {
         <Row gutter={25}>
           <Col xxl={24} md={24} xs={24}>
             <Cards 
+              // title="Danh sách server"
               title="Danh sách server"
               isbutton={
                 <Form name="sDash_vertical-form" layout="inline">

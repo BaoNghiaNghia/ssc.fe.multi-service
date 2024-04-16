@@ -30,6 +30,9 @@ import { axiosCrudReducer, axiosSingleCrudReducer } from './crud/axios/reducers'
 import { fsCrudReducer, fsSingleCrudReducer } from './firebase/firestore/reducers';
 import firebaseAuth from './firebase/auth/reducers';
 
+import BlackListReducer from './blacklist/reducers';
+import MemberReducer from './member/reducers';
+
 import ReportsDailyReducer from './reports/reducers';
 import ServerReducer from './servers/reducers';
 import BuffSubscribeReducer from './buffSubscribe/reducers';
@@ -77,7 +80,9 @@ const rootReducers = combineReducers({
   ChangeLayoutMode,
   reports: ReportsDailyReducer,
   servers: ServerReducer,
-  buffSubscribe: BuffSubscribeReducer
+  buffSubscribe: BuffSubscribeReducer,
+  blackList: BlackListReducer,
+  member: MemberReducer,
 });
 
 export default rootReducers;
