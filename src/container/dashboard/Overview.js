@@ -387,7 +387,7 @@ function Overview() {
           </Col>
         </Row>
         <Row gutter={15}>
-          <Col xxl={14} xs={24}>
+          <Col xxl={24} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -398,7 +398,7 @@ function Overview() {
               <RatioYoutubeSuccess title={`Tỉ lệ ${typeService} thành công`} />
             </Suspense>
           </Col>
-          <Col xxl={10} xs={24}>
+          {/* <Col xxl={10} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -408,7 +408,7 @@ function Overview() {
             >
               <EfficiencySubscribe title={`Hiệu suất ${typeService}`} />
             </Suspense>
-          </Col>
+          </Col> */}
         </Row>
       </Main>
     </>

@@ -218,25 +218,25 @@ function PendingBuffSubscribe() {
     return true
   });
 
-  // remapOrders.sort((a, b) => {
-  //   if(order_by === 0){
-  //     return a.order_id - b.order_id
-  //   }else if (order_by === 1) {
-  //     return b.running - a.running;
-  //   } else if (order_by === 2) {
-  //     return a.running - b.running;
-  //   } else if (order_by === 3) {
-  //     return (b.current_sub - b.start_sub)/b.runed   - (a.current_sub - a.start_sub)/a.runed;
-  //   } else if (order_by === 4) {
-  //     return (a.current_sub - a.start_sub)/a.runed  - (b.current_sub - b.start_sub)/b.runed;
-  //   } else if (order_by === 5) {
-  //     return (a.sub_need - (a.current_sub - a.start_sub)) - (b.sub_need - (b.current_sub - b.start_sub));
-  //   } else if (order_by === 6) {
-  //     return (b.sub_need - (b.current_sub - b.start_sub)) - (a.sub_need - (a.current_sub - a.start_sub));
-  //   } else {
-  //     return a.running - b.running;
-  //   }
-  // });
+  remapOrders.sort((a, b) => {
+    if(order_by === 0){
+      return a.order_id - b.order_id
+    } if (order_by === 1) {
+      return b.running - a.running;
+    } if (order_by === 2) {
+      return a.running - b.running;
+    } if (order_by === 3) {
+      return (b.current_sub - b.start_sub)/b.runed   - (a.current_sub - a.start_sub)/a.runed;
+    } if (order_by === 4) {
+      return (a.current_sub - a.start_sub)/a.runed  - (b.current_sub - b.start_sub)/b.runed;
+    } if (order_by === 5) {
+      return (a.sub_need - (a.current_sub - a.start_sub)) - (b.sub_need - (b.current_sub - b.start_sub));
+    } if (order_by === 6) {
+      return (b.sub_need - (b.current_sub - b.start_sub)) - (a.sub_need - (a.current_sub - a.start_sub));
+    } 
+      return a.running - b.running;
+    
+  });
 
 
   let totalThieu = 0
@@ -344,13 +344,7 @@ function PendingBuffSubscribe() {
       render: (value, item, index) => {
         const subNeedRun = item.sub_need - (item.current_sub - item.start_sub);
         return (
-          <span
-            style={{ fontSize: '12px' }}
-            className={
-              ` fw-bold  d-block font-size-10 ${ 
-              subNeedRun > 0 ? 'text-warning' : 'text-primary'}`
-            }
-          >
+          <span className={`${subNeedRun > 0 ? 'text-warning' : 'text-primary'}`}>
             {`${numberWithCommas(Math.abs(subNeedRun) || 0)  }/${  numberWithCommas(item?.sub_need || 0)}`}
           </span>
         )
@@ -370,12 +364,18 @@ function PendingBuffSubscribe() {
       width: 200,
       render: (value, record, index) => {
         const increase = record.current_sub - record.start_sub;
-        const number = Number(((increase / record.runed) * 100).toFixed(2));
+        const number = `${Number(((increase / record.runed) * 100).toFixed(2))  }%`;
         const result = number >= 80 ? 'c-order__rate c-order__rate--green' < 80 && number > 50 ? 'c-order__rate c-order__rate--yellow' : 'c-order__rate c-order__rate--red' : 'null';
         return (
           <div>
-            <p>{ numberWithCommas(record.runed) }/{ numberWithCommas(increase) }</p>
-            <p>{ increase && record.runed ? <span className={result}>{ `${number  } %`}</span> : <span>0 %</span> }</p>
+            <p style={{ margin: 0, padding: 0, borderTop: '1px solid green' }}>{ numberWithCommas(record.runed) }/{ numberWithCommas(increase) }</p>
+            <p>
+              { 
+                increase && record?.runed ? (
+                  <Badge style={{ borderRadius: '4px' }} color='green' count={number} overflowCount={10000000000}/>
+                ): <span>0 %</span>
+              }
+            </p>
           </div>
         )
       }
@@ -386,21 +386,27 @@ function PendingBuffSubscribe() {
       key: 'running',
       width: 100,
       render: (value, record, index) => {
-        return `${record.running}/${record.max_thread}`
+        return `${record?.running}/${record?.max_thread}`
       }
     },
     {
       title: 'Sub chờ',
       key: 'sub_wait',
       width: 100,
-      dataIndex: 'sub_wait'
+      render: (value, record, index) => {
+        return (
+          <>
+            {numberWithCommas(record?.sub_wait)}
+          </>
+        )
+      }
     },
     {
       title: 'Lần cuối',
       width: 100,
       key: 'last_get',
       render: (value, record, index) => {
-        return `${moment(record.last_get, "yyyy-MM-DD HH:mm:ss").local().format('DD/MM HH:mm')}`
+        return `${moment(record?.last_get, "yyyy-MM-DD HH:mm:ss").local().format('DD/MM HH:mm')}`
       },
     },
     {
@@ -408,7 +414,7 @@ function PendingBuffSubscribe() {
       key: 'last_update',
       width: 100,
       render: (value, record, index) => {
-        return `${moment.unix(record.last_update).format('DD/MM HH:mm')}`
+        return `${moment.unix(record?.last_update).format('DD/MM HH:mm')}`
       },
     },
     {
@@ -425,15 +431,13 @@ function PendingBuffSubscribe() {
     },
     {
       width: 90,
-      title: '---',
-    
+      title: 'Hành động',
       key: 'running',
       render: (value, record, index) => {
         if (state === "pending") {
           return (
             <Button
-              onClick={() => clickCancelAndRefund(record.order_id)}
-              className='c-order__btn c-order__btn--trash'
+              onClick={() => clickCancelAndRefund(record?.order_id)}
             >
               Hủy & hoàn tiền
             </Button>
@@ -442,7 +446,6 @@ function PendingBuffSubscribe() {
         if (state === "wait") {
           return <Button
             onClick={() => clickCancelHandler(record)}
-            className='c-order__btn c-order__btn--trash'
           >
             <i className="feather icon-trash-2" /> Hủy
           </Button>
@@ -450,8 +453,7 @@ function PendingBuffSubscribe() {
         if (state === "cancel") {
           return (
             <Button
-              onClick={() => setCurrentCancelChannel(record.order_id)}
-              className='c-order__btn c-order__btn--trash'
+              onClick={() => setCurrentCancelChannel(record?.order_id)}
             >
               Duyệt hủy
             </Button>
@@ -460,19 +462,19 @@ function PendingBuffSubscribe() {
         return (
           <div>
             <Button onClick={() => clickShowListVideo(record)}>
-              <i className="feather icon-completed" /> List video
+              List video
             </Button>
             <Button onClick={() => clickShowSubEveryday(record)}>
-              <i className="feather icon-completed" /> Số sub chạy
+              Số sub chạy
             </Button>
             <Button onClick={() => clickCompleteHandler(record)}>
-              <i className="feather icon-completed" /> Hoàn Thành
+              Hoàn Thành
             </Button>
             <Button onClick={() => clickShowOrderPerformance(record)}>
-              <i className="feather icon-completed" /> Hiệu suất
+              Hiệu suất
             </Button>
             <Button onClick={() => setCurrentCancelChannel(record.order_id)}>
-              <i className="feather icon-trash-2" /> Hủy
+              Hủy
             </Button>
           </div>
         )
