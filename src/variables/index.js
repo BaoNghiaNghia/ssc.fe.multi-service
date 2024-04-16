@@ -3,6 +3,18 @@ export const TIMEOUT_REQUEST_API = 70000;
 
 export const BASE_URL=process.env.REACT_APP_API_URL;
 
+export const SERVICE_TYPE = {
+  'SUBSCRIBE': {
+      title: 'subscribe',
+  },
+  'COMMENT': {
+      title: 'comment',
+  },
+  'LIKE': {
+      title: 'like',
+  },
+}
+
 export const MESSSAGE_STATUS_CODE = {
     SUCCESS: {
         code: 200,

@@ -7,7 +7,6 @@ import Masonry from 'react-masonry-css';
 import { GalleryNav } from './style';
 import { Main } from '../styled';
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { galleryFilter } from '../../redux/gallary/actionCreator';
 import { Button } from '../../components/buttons/buttons';
 import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
@@ -20,7 +19,7 @@ function GalleryTwo() {
   });
 
   const handleChange = (value) => {
-    dispatch(galleryFilter('category', value));
+    // dispatch(changeServiceType('category', value));
     setState({
       ...state,
       activeClass: value,

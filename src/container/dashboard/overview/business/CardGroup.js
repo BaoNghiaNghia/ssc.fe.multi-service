@@ -10,9 +10,10 @@ import { chartLinearGradient } from '../../../../components/utilities/utilities'
 import { numberWithCommas } from '../../../../utility/utility';
 
 function CardGroup() {
-  const { reportData } = useSelector((state) => {
+  const { reportData, typeService } = useSelector((state) => {
     return {
-      reportData: state?.reports?.subscribeReport?.report
+      reportData: state?.reports?.subscribeReport?.report,
+      typeService: state?.reports?.typeService
     }
   });
 
@@ -23,7 +24,7 @@ function CardGroup() {
       <Col md={12}>
         <Focard>
           <div className="forcast-card-box">
-            <Cards bodypadding="5px" headless title="Số Subscribe" gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
+            <Cards bodypadding="5px" headless title={`Số ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
                 <Heading as="h1"><strong>{numberWithCommas(totalSub || 0)}</strong></Heading>
                 <p className="focard-status">

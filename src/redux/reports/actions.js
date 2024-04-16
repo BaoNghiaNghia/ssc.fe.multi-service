@@ -31,6 +31,31 @@ const actions = {
   COUNT_ERROR_SUBSCRIBE_SUCCESS: 'COUNT_ERROR_SUBSCRIBE_SUCCESS',
   COUNT_ERROR_SUBSCRIBE_ERR: 'COUNT_ERROR_SUBSCRIBE_ERR',
 
+  CHANGE_SERVICE_TYPE_BEGIN: 'CHANGE_SERVICE_TYPE_BEGIN',
+  CHANGE_SERVICE_TYPE_SUCCESS: 'CHANGE_SERVICE_TYPE_SUCCESS',
+  CHANGE_SERVICE_TYPE_ERR: 'CHANGE_SERVICE_TYPE_ERR',
+
+  changeServiceTypeBegin: (payload) => {
+    return {
+      type: actions.CHANGE_SERVICE_TYPE_BEGIN,
+      payload
+    };
+  },
+
+  changeServiceTypeSuccess: (data) => {
+    return {
+      type: actions.CHANGE_SERVICE_TYPE_SUCCESS,
+      data,
+    };
+  },
+
+  changeServiceTypeErr: (err) => {
+    return {
+      type: actions.CHANGE_SERVICE_TYPE_ERR,
+      err,
+    };
+  },
+
   countErrorSubscribeBegin: (payload) => {
     return {
       type: actions.COUNT_ERROR_SUBSCRIBE_BEGIN,

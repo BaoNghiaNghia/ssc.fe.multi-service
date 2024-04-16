@@ -145,7 +145,7 @@ function ServerManage() {
                   role="button"
                   tabIndex="0"
                 >
-                  <p style={{ fontWeight: 700 }}>Tổng Mail</p>
+                  <p style={{ fontWeight: 700 }}><span>Tổng Mail</span></p>
                   <Heading as="h1">
                     {accountTotal || 0}
                   </Heading>
@@ -155,7 +155,7 @@ function ServerManage() {
                   role="button"
                   tabIndex="0"
                 >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginBottom: 0 }} fontSize={19} /> Mail sống</p>
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} /><span>Mail sống</span></p>
                   <Heading as="h1">
                     {accountAlive || 0}
                   </Heading>
@@ -165,7 +165,7 @@ function ServerManage() {
                   role="button"
                   tabIndex="0"
                 >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail fontSize={19} color='#27AE60' /> Mail hoạt động</p>
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#27AE60' /><span>Mail hoạt động</span></p>
                   <Heading as="h1">
                     {accountWork || 0}
                   </Heading>
@@ -175,7 +175,7 @@ function ServerManage() {
                   role="button"
                   tabIndex="0"
                 >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail fontSize={19} color='#EB5757' /> Mail chết</p>
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#EB5757' /><span>Mail chết</span></p>
                   <Heading as="h1">
                     {accountDie || 0}
                   </Heading>

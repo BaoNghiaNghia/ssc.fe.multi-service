@@ -22,6 +22,7 @@ function* fetchUserListFunc() {
     );
   }
 }
+
 export function* fetchUserListMemberWatcherSaga() {
   yield takeLatest(actions.FETCH_USER_LIST_BEGIN, fetchUserListFunc);
 }

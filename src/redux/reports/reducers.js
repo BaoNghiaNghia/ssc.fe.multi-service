@@ -1,6 +1,7 @@
 import moment from 'moment';
 import actions from './actions';
 import { currentDate, previousDate } from '../../utility/utility';
+import { SERVICE_TYPE } from '../../variables';
 
 const initialState = {
   subscribeReport: {},
@@ -15,6 +16,7 @@ const initialState = {
   statisticSubscribe: {},
   ratioSubSvg: 0,
   countError: {},
+  typeService: SERVICE_TYPE.SUBSCRIBE.title,
   loading: false,
   error: null
 };
@@ -50,12 +52,37 @@ const {
 
     GET_STATISTICS_SUBSCRIBE_REPORT_BEGIN,
     GET_STATISTICS_SUBSCRIBE_REPORT_SUCCESS,
-    GET_STATISTICS_SUBSCRIBE_REPORT_ERR
+    GET_STATISTICS_SUBSCRIBE_REPORT_ERR,
+
+    CHANGE_SERVICE_TYPE_BEGIN,
+    CHANGE_SERVICE_TYPE_SUCCESS,
+    CHANGE_SERVICE_TYPE_ERR,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case CHANGE_SERVICE_TYPE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CHANGE_SERVICE_TYPE_SUCCESS:
+      console.log(' --- service type: ------ ', data);
+      return {
+        ...state,
+        loading: false,
+        typeService: data,
+      };
+
+    case CHANGE_SERVICE_TYPE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case GET_STATISTICS_SUBSCRIBE_REPORT_BEGIN:
       return {
         ...state,

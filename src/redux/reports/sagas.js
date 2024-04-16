@@ -154,6 +154,18 @@ function* getStatisticsSubscribeFunc() {
     )
   }
 }
+ 
+function* changeServiceTypeFunc(params) {
+  try {
+    yield put(
+      actions.changeServiceTypeSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.changeServiceTypeErr({ error: err || 'Count error subscribe failed' })
+    )
+  }
+}
 
 export function* resportSubscribeWatcherSaga() {
   yield takeLatest(actions.FETCH_DAILY_SUBSCRIBE_RESPORT_BEGIN, reportDataSubscribeFunc);
@@ -183,6 +195,10 @@ export function* countErrorSubscribeWatcherSaga() {
   yield takeLatest(actions.COUNT_ERROR_SUBSCRIBE_BEGIN, countErrorSubscribeFunc);
 }
 
-export function* getStatisticsSubscribeReporWatcherSage() {
+export function* getStatisticsSubscribeReporWatcherSaga() {
   yield takeLatest(actions.GET_STATISTICS_SUBSCRIBE_REPORT_BEGIN, getStatisticsSubscribeFunc);
+}
+
+export function* changeServiceTypeWatcherSaga() {
+  yield takeLatest(actions.CHANGE_SERVICE_TYPE_BEGIN, changeServiceTypeFunc);
 }

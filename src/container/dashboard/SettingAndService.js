@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Badge, List } from 'antd';
+import { Row, Col, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main } from '../styled';
@@ -9,6 +9,7 @@ import { ExportButtonPageHeader } from '../../components/buttons/export-button/e
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 import { ListGroup, PricingCard } from '../pages/style';
 import Heading from '../../components/heading/heading';
+import { List } from '../../components/pricing/pricing';
 
 function SettingAndService() {
   return (

@@ -11,7 +11,8 @@ import {
     setRangeDateFilterWatcherSaga,
     fetchSubscribeWithPointEverydayWatcherSaga,
     countErrorSubscribeWatcherSaga,
-    getStatisticsSubscribeReporWatcherSage
+    getStatisticsSubscribeReporWatcherSaga,
+    changeServiceTypeWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -44,12 +45,13 @@ export default function* rootSaga() {
         fetchSubscribeWithPointEverydayWatcherSaga(),
         fetchComputerDataListWatcherSaga(),
         countErrorSubscribeWatcherSaga(),
-        getStatisticsSubscribeReporWatcherSage(),
+        getStatisticsSubscribeReporWatcherSaga(),
         fetchAdminSettingWatcherSaga(),
         fetchListOrderSubscribeWatcherSaga(),
         fetchServicePackageListWatcherSaga(),
         fetchUserListWatcherSaga(),
         fetchBlackListChannelWatcherSaga(),
-        fetchUserListMemberWatcherSaga()
+        fetchUserListMemberWatcherSaga(),
+        changeServiceTypeWatcherSaga()
     ]);
 }

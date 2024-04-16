@@ -70,7 +70,7 @@ function AutoCompletess() {
               <Cards title="Customize Input Component">
                 <div className="auto-complete-input">
                   <AutoComplete
-                    customComponent={<TextArea placeholder="input here" className="custom" style={{ height: 50 }} />}
+                    customComponent={<TextArea placeholder="Tìm kiếm" className="custom" style={{ height: 50 }} />}
                     dataSource={dataSource}
                     onSearch={onSearch}
                   />

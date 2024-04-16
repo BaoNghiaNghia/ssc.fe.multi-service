@@ -17,14 +17,15 @@ function AnalyseYoutube(props) {
   const { title } = props;
 
   const dispatch = useDispatch();
-  const { cashFlowState, cfIsLoading, avgPerformance, reportChart, isLoading, filterRange } = useSelector(state => {
+  const { cashFlowState, cfIsLoading, avgPerformance, reportChart, isLoading, filterRange, typeService } = useSelector(state => {
     return {
       cashFlowState: state?.chartContent?.cashFlowData,
       cfIsLoading: state?.chartContent?.cfLoading,
       isLoading: state?.reports?.loading,
       avgPerformance: state?.reports?.subscribeReport?.avg_performance,
       reportChart: state?.reports?.subscribeReport?.report,
-      filterRange: state?.reports?.filterRange
+      filterRange: state?.reports?.filterRange,
+      typeService: state?.reports?.typeService
     };
   });
 
@@ -84,7 +85,7 @@ function AnalyseYoutube(props) {
       data: avgPerformance && reportChart?.map(item => item?.total_run),
       backgroundColor: '#ff880070',
       hoverBackgroundColor: '#ff8800',
-      label: 'Tổng sub chạy',
+      label: `Tổng ${  typeService  } chạy`,
       maxBarThickness: 10,
       barThickness: 12,
     },

@@ -1,8 +1,10 @@
 import actions from './actions';
 import staticData from '../../demoData/gallery.json';
+import { SERVICE_TYPE } from '../../variables';
 
 const initialState = {
   data: staticData,
+  type: SERVICE_TYPE.SUBSCRIBE.title,
   loading: false,
   error: null,
 };
@@ -17,9 +19,12 @@ const galleryReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+
     case FILTER_GALLERY_SUCCESS:
+      console.log('---- data erorororor -----', data);
       return {
         ...state,
+        type: data.type,
         data,
         loading: false,
       };

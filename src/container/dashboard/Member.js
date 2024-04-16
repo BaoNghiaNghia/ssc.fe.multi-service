@@ -20,11 +20,12 @@ import { numberWithCommas } from '../../utility/utility';
 
 function Member() {
   const dispatch = useDispatch();
-  const { searchData, orders, userList } = useSelector(state => {
+  const { searchData, orders, userList, isLoading } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
-      userList: state?.member?.userList
+      userList: state?.member?.userList,
+      isLoading: state?.member?.loading
     };
   });
 
@@ -221,6 +222,7 @@ function Member() {
                 <Table
                   rowSelection={rowSelection}
                   dataSource={dataSource}
+                  loading={isLoading}
                   columns={columns}
                   pagination={{ pageSize: 20, showSizeChanger: true, total: userList.length }}
                 />

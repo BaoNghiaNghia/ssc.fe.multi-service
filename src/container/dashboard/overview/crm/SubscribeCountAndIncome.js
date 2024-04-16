@@ -15,13 +15,14 @@ import { currentDate, findSecondMinimum, numberWithCommas } from '../../../../ut
 function ClosedDeals(props) {
   const { title } = props;
   const dispatch = useDispatch();
-  const { closeDealState, cdIsLoading, fromDate, toDate, subWithPoint } = useSelector(state => {
+  const { closeDealState, cdIsLoading, fromDate, toDate, subWithPoint, typeService } = useSelector(state => {
     return {
       closeDealState: state?.chartContent?.closeDealData,
       cdIsLoading: state?.chartContent?.cdLoading,
       fromDate: state?.reports.filterRange?.from,
       toDate: state?.reports.filterRange?.to,
-      subWithPoint: state?.reports?.subWithPoint
+      subWithPoint: state?.reports?.subWithPoint,
+      typeService: state?.reports?.typeService
     };
   });
 
@@ -56,7 +57,7 @@ function ClosedDeals(props) {
       data: subWithPoint?.map(item => Math.abs(item?.subOrder)),
       backgroundColor: '#5F63F280',
       hoverBackgroundColor: '#5F63F2',
-      label: 'Subscribe yêu cầu',
+      label: `${typeService} yêu cầu`,
       average: '$28k',
       maxBarThickness: 10,
       barThickness: 12,
@@ -74,7 +75,7 @@ function ClosedDeals(props) {
     wave_date: arrWaveDate,
     wave_timeline: [
       {
-        name: 'Subscribe yêu cầu',
+        name: `${typeService} yêu cầu`,
         data: subWithPoint?.map(item => Math.abs(item?.subOrder))
       },
       {

@@ -45,7 +45,7 @@ const rootReducers = combineReducers({
   // users: userReducer,
   // userGroup: userGroupReducer,
   // team: teamReducer,
-  // gallery: galleryReducer,
+  gallery: galleryReducer,
   // email: emailReducer,
   // emailSingle: SingleEmailReducer,
   // products: productReducer,

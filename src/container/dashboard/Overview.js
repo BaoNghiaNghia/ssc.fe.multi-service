@@ -9,7 +9,6 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
 import { CardBarChart2, CardBarChartCenter, EChartCard, GalleryNav } from './style';
-import { galleryFilter } from '../../redux/gallary/actionCreator';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
@@ -17,6 +16,7 @@ import Heading from '../../components/heading/heading';
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 import actions from '../../redux/reports/actions';
 import { numberWithCommas } from '../../utility/utility';
+import { SERVICE_TYPE } from '../../variables';
 
 const EfficiencySubscribe = lazy(() => import('./overview/business/EfficiencyAction'));
 const RatioYoutubeSuccess = lazy(() => import('./overview/business/RatioYoutubeSuccess'));
@@ -28,13 +28,13 @@ const CardGroup = lazy(() => import('./overview/business/CardGroup'));
 function Overview() {
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, todayProfit, ratioSubSvg } = useSelector((state) => {
+  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
       todayProfit: state?.reports?.profitToday,
       ratioSubSvg: state?.reports?.ratioSubSvg,
-      
+      typeService: state?.reports?.typeService
     }
   });
 
@@ -50,11 +50,12 @@ function Overview() {
   }, [dispatch]);
 
   const [state, setState] = useState({
-    activeClass: '',
+    activeClass: SERVICE_TYPE.SUBSCRIBE.title,
   });
 
   const handleChange = (value) => {
-    dispatch(galleryFilter('category', value));
+    console.log('---- check type ------', value);
+    dispatch(actions.changeServiceTypeBegin(value));
     setState({ ...state, activeClass: value });
   };
 
@@ -89,8 +90,8 @@ function Overview() {
               <ul>
                 <li>
                   <Link
-                    className={state.activeClass === '' ? 'active' : 'deactivate'}
-                    onClick={() => handleChange('')}
+                    className={state.activeClass === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.SUBSCRIBE.title)}
                     to="#"
                     style={{ display: 'inline-flex', alignItems: 'center' }}
                   >
@@ -99,8 +100,8 @@ function Overview() {
                 </li>
                 <li>
                   <Link
-                    className={state.activeClass === 'webDesign' ? 'active' : 'deactivate'}
-                    onClick={() => handleChange('webDesign')}
+                    className={state.activeClass === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.COMMENT.title)}
                     to="#"
                   >
                     <FaRegCommentDots fontSize={15} className='mr-3'/> <span>Comment</span>
@@ -108,8 +109,8 @@ function Overview() {
                 </li>
                 <li>
                   <Link
-                    className={state.activeClass === 'uiDesign' ? 'active' : 'deactivate'}
-                    onClick={() => handleChange('uiDesign')}
+                    className={state.activeClass === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.LIKE.title)}
                     to="#"
                   >
                     <AiOutlineLike fontSize={17} className='mr-3'/> <span>Like</span>
@@ -287,7 +288,7 @@ function Overview() {
                 </Cards>
               }
             >
-              <AnalyseYoutube title="Thống kê Subscribe" />
+              <AnalyseYoutube title={`Thống kê ${typeService}`} />
             </Suspense>
           </Col>
         </Row>
@@ -300,7 +301,7 @@ function Overview() {
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
-                        <span>Tỉ lệ Subscribe</span>
+                        <span>Tỉ lệ {typeService}</span>
                         <Heading as="h2">{Math.round(ratioSubSvg || 0)} %</Heading>
                       </CardBarChart2>
                     </div>
@@ -338,7 +339,7 @@ function Overview() {
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
-                        <span>Tổng Sub hôm nay</span>
+                        <span>Tổng {typeService} hôm nay</span>
                         <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                       </CardBarChart2>
                     </div>
@@ -381,7 +382,7 @@ function Overview() {
                 </Cards>
               }
             >
-              <SubscribeCountAndIncome title="Số subscribe & doanh thu" />
+              <SubscribeCountAndIncome title={`Số ${typeService} & doanh thu`} />
             </Suspense>
           </Col>
         </Row>
@@ -394,7 +395,7 @@ function Overview() {
                 </Cards>
               }
             >
-              <RatioYoutubeSuccess title="Tỉ lệ Subscribe thành công" />
+              <RatioYoutubeSuccess title={`Tỉ lệ ${typeService} thành công`} />
             </Suspense>
           </Col>
           <Col xxl={10} xs={24}>
@@ -405,7 +406,7 @@ function Overview() {
                 </Cards>
               }
             >
-              <EfficiencySubscribe title="Hiệu suất subscribe" />
+              <EfficiencySubscribe title={`Hiệu suất ${typeService}`} />
             </Suspense>
           </Col>
         </Row>

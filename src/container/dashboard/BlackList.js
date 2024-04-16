@@ -20,11 +20,12 @@ import BlackListImg from '../../static/img/block_icon.png.png'
 
 function BlackList() {
   const dispatch = useDispatch();
-  const { searchData, orders, blackListChannel } = useSelector(state => {
+  const { searchData, orders, blackListChannel, isLoading } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
-      blackListChannel: state?.blackList?.blackListChannel
+      blackListChannel: state?.blackList?.blackListChannel,
+      isLoading: state?.blackList?.loading
     };
   });
 
@@ -199,6 +200,7 @@ function BlackList() {
                   rowSelection={rowSelection}
                   dataSource={dataSource}
                   columns={columns}
+                  loading={isLoading}
                   pagination={{ pageSize: 20, showSizeChanger: true, total: blackListChannel.length }}
                 />
               </TableWrapper>
