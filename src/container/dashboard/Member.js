@@ -70,7 +70,7 @@ function Member() {
       return dataSource.push({
         key: key + 1,
         username: <span className="order-id">{username}</span>,
-        point: <span className="customer-name">{numberWithCommas(point)}</span>,
+        point: <span className="customer-name">{numberWithCommas(point)} (đ)</span>,
         discount: (
           <span>
             {discount}
@@ -80,7 +80,7 @@ function Member() {
         api_key: <span className="ordered-date">{api_key}</span>,
         last_order_time: (last_order_time === 0) ? 'Chưa có đơn' : moment(item.last_order_time).format('DD/MM HH:mm'),
         order_running: <span className="ordered-date">{order_running}</span>,
-        sub_order: <span className="ordered-date">{(sub_order)}</span>,
+        sub_order: <span className="ordered-date">{numberWithCommas(sub_order)}</span>,
         action: (
           <div className="table-actions">
             <>

@@ -449,8 +449,12 @@ const Div = Styled.div`
                     }
                     &.ant-menu-item-selected{
                         svg,
-                        i{
-                            color: ${({ theme }) => theme['primary-color']};
+                        i {
+                            color: ${({ theme }) => theme['primary-color']} !important;
+                            font-weight: 700;
+                        }
+                        span {
+                            font-weight: 700;
                         }
                     }
                 }
@@ -460,6 +464,9 @@ const Div = Styled.div`
                     
                     &.ant-menu-item-selected{
                         border-radius: 4px;
+                        background-color: #e3e3e3;
+                        border: 1px solid #c9c7c7;
+
                         &:after{
                             content: none;
                         }
