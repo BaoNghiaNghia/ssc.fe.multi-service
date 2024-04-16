@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Badge } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { BiLogoGmail } from 'react-icons/bi';
+import { TbServerBolt } from 'react-icons/tb';
 import TableServer from './overview/TableServer';
+import { Pstates } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main } from '../styled';
 import { Button } from '../../components/buttons/buttons';
@@ -9,15 +12,26 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Dropdown } from '../../components/dropdown/dropdown';
 import actions from '../../redux/servers/actions';
+import Heading from '../../components/heading/heading';
+import { numberWithCommas } from '../../utility/utility';
 
 function ServerManage() {
   const dispatch = useDispatch();
-  const { searchData, listServer } = useSelector((state) => {
+  const { searchData, listServer, performanceState } = useSelector((state) => {
     return {
       searchData: state?.headerSearchData,
-      listServer: state?.servers?.listServer
+      listServer: state?.servers?.listServer,
+      performanceState: state.chartContent.performanceData,
+      preIsLoading: state.chartContent.perLoading,
     }
   });
+
+  const [stateTab, setStateTab] = useState({
+    performance: 'year',
+    performanceTab: 'users',
+  });
+
+  const { performance, performanceTab } = stateTab;
 
   const [state, setState] = useState({
     notData: searchData,
@@ -40,10 +54,19 @@ function ServerManage() {
     });
   };
 
+  const fullThreadServer = listServer.filter(item => item?.run >=15).length;
+  const nonFullThreadServer = listServer?.filter(item => item?.run < 15 && item?.run > 5).length;
+  const aBitThreadServer = listServer?.filter(item => item?.run <= 5).length;
+
+  const accountTotal = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountAlive = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountWork = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountDie = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
+
   return (
     <>
       <PageHeader
-        title={`Quản lý máy ${listServer.length > 0 ? `(${  listServer.length  })` : null}`}
+        title="Quản lý Server"
         buttons={[
           <div key="search" className="page-header-actions">
             <AutoComplete
@@ -71,6 +94,92 @@ function ServerManage() {
                 </Form>
               }
             >
+              <Pstates>
+                <div
+                  // onClick={() => onPerformanceTab('users')}
+                  className={`growth-upward ${performanceTab === 'users' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ fontWeight: 700 }}>Servers</p>
+                  <Heading as="h1">
+                    {listServer.length}
+                  </Heading>
+                </div>
+                <div
+                  // onClick={() => onPerformanceTab('sessions')}
+                  className={`growth-upward ${performanceTab === 'sessions' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
+                  <Heading as="h1" >
+                    <span style={{ color: 'green !important' }}>{fullThreadServer}</span>
+                  </Heading>
+                </div>
+                <div
+                  // onClick={() => onPerformanceTab('bounce')}
+                  className={`growth-downward ${performanceTab === 'bounce' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
+                  <Heading as="h1">
+                    {nonFullThreadServer}
+                  </Heading>
+                </div>
+                <div
+                  // onClick={() => onPerformanceTab('duration')}
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luổng thiếu</p>
+                  <Heading as="h1">
+                    {aBitThreadServer}
+                  </Heading>
+                </div>
+                <div
+                  className="growth-upward active"
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ fontWeight: 700 }}>Tổng Mail</p>
+                  <Heading as="h1">
+                    {accountTotal || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginBottom: 0 }} fontSize={19} /> Mail sống</p>
+                  <Heading as="h1">
+                    {accountAlive || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail fontSize={19} color='#27AE60' /> Mail hoạt động</p>
+                  <Heading as="h1">
+                    {accountWork || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail fontSize={19} color='#EB5757' /> Mail chết</p>
+                  <Heading as="h1">
+                    {accountDie || 0}
+                  </Heading>
+                </div>
+              </Pstates>
               <TableServer />
             </Cards>
           </Col>

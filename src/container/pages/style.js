@@ -2576,6 +2576,53 @@ const TopToolBox = Styled.div`
     }
 `;
 
+const Pstates = Styled.div`
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: 10px;
+    @media only screen and (max-width: 767px){
+        margin: -19px 0 25px;
+        flex-flow: column;
+    }
+    >div{
+        transition: 0.3s ease;
+        padding: 20px;
+        @media only screen and (max-width: 1599px){
+            flex: 0 0 25%;
+        }
+        &:hover{
+            box-shadow: 0 15px 30px rgba(146,153,184,0.15);
+            border-radius: 10px;
+            p{
+                font-weight: 700;
+                color: ${({ theme }) => theme['primary-color']};
+            }
+        }
+        &.active{
+            background: ${({ theme }) => theme['bg-color-light']};
+            &:hover{
+                box-shadow: 0 15px 30px #fff;
+            }
+        }
+    }
+    .growth-upward,
+    .growth-downward{
+        cursor: pointer;
+        &:focus{
+            outline: none
+        }
+        h1{
+            font-size: 24px;
+            sub{
+                span{
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+`;
+
 export {
   TestimonialWrapper,
   PricingCard,
@@ -2605,5 +2652,6 @@ export {
   ProjectListTitle,
   ProjectListAssignees,
   ProjectList,
-  TopToolBox
+  TopToolBox,
+  Pstates
 };

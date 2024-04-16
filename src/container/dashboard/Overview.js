@@ -68,10 +68,16 @@ function Overview() {
     <>
       <PageHeader
         ghost
-        title="Tổng quan"
+        title={(
+          <span>
+            Tổng quan
+          </span>
+        )}
         buttons={[
           <div key="1" className="page-header-actions">
-            <span style={{ marginRight: '20px' }}>Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong></span>
+            <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
+              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
+            </span>
             <FilterCalendar />
             {/* <ExportButtonPageHeader />
             <ShareButtonPageHeader />
