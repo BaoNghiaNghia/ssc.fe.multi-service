@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Row, Col, Radio, Table } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './style';
@@ -9,17 +10,18 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { orderFilter } from '../../redux/orders/actionCreator';
-
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
+import actions from '../../redux/buffSubscribe/actions';
+import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 
 function HistoryBuffSubscribe() {
   const dispatch = useDispatch();
-  const { searchData, orders } = useSelector(state => {
+  const { searchData, orders, fromDate, toDate } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
+      orderHistory: state?.buffSubscribe?.orderSubHistory,
+      fromDate: state?.buffSubscribe?.filterRange?.from,
+      toDate: state?.buffSubscribe?.filterRange?.to,
     };
   });
 
@@ -30,6 +32,7 @@ function HistoryBuffSubscribe() {
   });
 
   const { notData, item, selectedRowKeys } = state;
+
   const filterKey = ['Shipped', 'Awaiting Shipment', 'Canceled'];
 
   useEffect(() => {
@@ -40,6 +43,15 @@ function HistoryBuffSubscribe() {
       });
     }
   }, [orders, selectedRowKeys]);
+
+  useEffect(() => {
+    dispatch(actions.fetchOrderHistoryBegin({
+      fromDay: '14-04-2024',
+      toDay: '17-04-2024',
+      user_id: '-1',
+      cancel: 0
+    }));
+  }, [dispatch]);
 
   const handleSearch = searchText => {
     const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
@@ -62,11 +74,7 @@ function HistoryBuffSubscribe() {
         id: <span className="order-id">{orderId}</span>,
         customer: <span className="customer-name">{customers}</span>,
         status: (
-          <span
-            className={`status ${
-              status === 'Shipped' ? 'Success' : status === 'Awaiting Shipment' ? 'warning' : 'error'
-            }`}
-          >
+          <span className={`status ${status === 'Shipped' ? 'Success' : status === 'Awaiting Shipment' ? 'warning' : 'error'}`}>
             {status}
           </span>
         ),
@@ -134,6 +142,10 @@ function HistoryBuffSubscribe() {
     },
   };
 
+  const handleChange = (value) => {
+    console.log('---- check type ------', value);
+  };
+
   return (
     <>
       <PageHeader
@@ -141,13 +153,10 @@ function HistoryBuffSubscribe() {
         title="Subscribe - Lịch sử"
         buttons={[
           <div key="1" className="page-header-actions">
-            <CalendarButtonPageHeader key="1" />
-            <ExportButtonPageHeader key="2" />
-            <ShareButtonPageHeader key="3" />
-            <Button size="small" key="4" type="primary">
-              <FeatherIcon icon="plus" size={14} />
-              Add New
-            </Button>
+            <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
+              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
+            </span>
+            <FilterCalendar actionPicker={actions.setRangeDateOrderHistoryBegin}/>
           </div>,
         ]}
       />

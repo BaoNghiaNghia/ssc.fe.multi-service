@@ -1,6 +1,7 @@
 // eslint-disable-next-line max-classes-per-file
 import React, { useState } from 'react';
 import { addDays } from 'date-fns';
+import PropTypes from 'prop-types';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
@@ -9,9 +10,8 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { ItemWraper, ButtonGroup } from './style';
 import { Button } from '../buttons/buttons';
-import actions from '../../redux/reports/actions';
 
-const DateRangePickerOne = () => {
+const DateRangePickerOne = ({ actionPicker }) => {
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
@@ -38,7 +38,7 @@ const DateRangePickerOne = () => {
       },
     });
 
-    dispatch(actions.setRangeDateFilterBegin({
+    dispatch(actionPicker({
       from: moment(dateRangePicker?.selection?.startDate).format("DD-MM-YYYY"),
       to: moment(dateRangePicker.selection.endDate).format("DD-MM-YYYY")
     }));
@@ -148,5 +148,9 @@ class CustomDateRange extends React.Component {
     );
   }
 }
+
+DateRangePickerOne.propTypes = {
+  actionPicker: PropTypes.func,
+};
 
 export { DateRangePickerOne, CustomDateRange };

@@ -189,7 +189,7 @@ const UserDropDwon = Styled.div`
             border-radius: 8px;
             margin-bottom: 12px;
             background: ${({ theme }) => theme['bg-color-normal']};
-            img{
+            .avatar{
                 ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 15px;
             }
             figcaption{

@@ -22,10 +22,13 @@ import {
 } from './servers/sagas';
 
 import {
+    changeOrderHistoryTypeWatcherSaga,
     fetchAdminSettingWatcherSaga,
     fetchListOrderSubscribeWatcherSaga,
+    fetchOrderHistoryWatcherSaga,
     fetchServicePackageListWatcherSaga,
-    fetchUserListWatcherSaga
+    fetchUserListWatcherSaga,
+    setRangeDateOrderHistoryWatcherSaga
 } from './buffSubscribe/sagas';
 
 import {
@@ -55,6 +58,9 @@ export default function* rootSaga() {
         fetchUserListWatcherSaga(),
         fetchBlackListChannelWatcherSaga(),
         fetchUserListMemberWatcherSaga(),
-        changeServiceTypeWatcherSaga()
+        changeServiceTypeWatcherSaga(),
+        fetchOrderHistoryWatcherSaga(),
+        setRangeDateOrderHistoryWatcherSaga(),
+        changeOrderHistoryTypeWatcherSaga()
     ]);
 }

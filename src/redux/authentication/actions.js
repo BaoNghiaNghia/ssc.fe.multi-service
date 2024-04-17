@@ -13,7 +13,7 @@ const actions = {
 
   fetchUserProfileBegin: (payload) => {
     return {
-      type: actions.FETCH_USER_PROFILE__BEGIN,
+      type: actions.FETCH_USER_PROFILE_BEGIN,
       payload
     };
   },

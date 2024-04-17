@@ -35,27 +35,6 @@ function* reportDataSubscribeFunc(params) {
   } finally { /* empty */ }
 }
 
-function* setRangeDateFilterFunc(params) {
-  try {
-    yield put(
-      actions.setRangeDateFilterSuccess(params?.payload)
-    );
-
-    yield put(
-      actions.reportSubscribeBegin(params?.payload)
-    );
-
-    yield put(
-      actions.fetchSubscribeWithPointEverydayBegin(params?.payload)
-    );
-
-  } catch (err) {
-    yield put(
-      actions.setRangeDateFilterErr({ error: err || 'Set range filter failed' })
-    );
-  }
-}
-
 function* countSuccessSubscribeFunc() {
   try {
     const response = yield call(countSuccessSubscribe, {});
@@ -167,12 +146,37 @@ function* changeServiceTypeFunc(params) {
   }
 }
 
+function* setRangeDateFilterFunc(params) {
+  try {
+    yield put(
+      actions.setRangeDateFilterSuccess(params?.payload)
+    );
+
+    yield put(
+      actions.reportSubscribeBegin(params?.payload)
+    );
+
+    yield put(
+      actions.fetchSubscribeWithPointEverydayBegin(params?.payload)
+    );
+
+  } catch (err) {
+    yield put(
+      actions.setRangeDateFilterErr({ error: err || 'Set range filter failed' })
+    );
+  }
+}
+
 export function* resportSubscribeWatcherSaga() {
   yield takeLatest(actions.FETCH_DAILY_SUBSCRIBE_RESPORT_BEGIN, reportDataSubscribeFunc);
 }
 
 export function* setRangeDateFilterWatcherSaga() {
   yield takeLatest(actions.SET_RANGE_DATE_FILTER_BEGIN, setRangeDateFilterFunc);
+}
+
+export function* changeServiceTypeWatcherSaga() {
+  yield takeLatest(actions.CHANGE_SERVICE_TYPE_BEGIN, changeServiceTypeFunc);
 }
 
 export function* countSuccessSubscribeWatcherSaga() {
@@ -197,8 +201,4 @@ export function* countErrorSubscribeWatcherSaga() {
 
 export function* getStatisticsSubscribeReporWatcherSaga() {
   yield takeLatest(actions.GET_STATISTICS_SUBSCRIBE_REPORT_BEGIN, getStatisticsSubscribeFunc);
-}
-
-export function* changeServiceTypeWatcherSaga() {
-  yield takeLatest(actions.CHANGE_SERVICE_TYPE_BEGIN, changeServiceTypeFunc);
 }

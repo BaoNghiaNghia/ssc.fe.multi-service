@@ -4,6 +4,7 @@ import actions from "./actions";
 import {
   fetchAdminSettingAPI,
   fetchListOrderSubscribeAPI,
+  fetchOrderHistoryAPI,
   fetchServicePackageListAPI,
   fetchUserListAPI
 } from '../../config/apiFactory/BuffSubscribe/index';
@@ -89,6 +90,56 @@ function* fetchUserListFunc() {
   }
 }
 
+function* fetchListOrderHistoryFunc(params) { 
+  try {
+    const response = yield call(fetchOrderHistoryAPI,  params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchOrderHistorySuccess(response?.data?.data)
+      );
+    }
+
+  } catch (err) {
+    yield put(
+      actions.fetchOrderHistoryErr({ error: err || 'Fetch list order history failed' })
+    );
+  }
+}
+
+function* changeOrderHistoryTypeFunc(params) {
+  try {
+    yield put(
+      actions.changeOrderHistoryTypeSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.changeOrderHistoryTypeErr({ error: err || 'Count error subscribe failed' })
+    )
+  }
+}
+
+function* setRangeDateOrderHistoryFunc(params) {
+  try {
+    yield put(
+      actions.setRangeDateFilterSuccess(params?.payload)
+    );
+
+    yield put(
+      actions.reportSubscribeBegin(params?.payload)
+    );
+
+    yield put(
+      actions.fetchSubscribeWithPointEverydayBegin(params?.payload)
+    );
+
+  } catch (err) {
+    yield put(
+      actions.setRangeDateFilterErr({ error: err || 'Set range filter failed' })
+    );
+  }
+}
+
 export function* fetchAdminSettingWatcherSaga() {
   yield takeLatest(actions.FETCH_ADMIN_SETTING_BEGIN, fetchAdminSettingFunc);
 }
@@ -103,4 +154,16 @@ export function* fetchServicePackageListWatcherSaga() {
 
 export function* fetchUserListWatcherSaga() {
   yield takeLatest(actions.FETCH_USER_LIST_BEGIN, fetchUserListFunc);
+}
+
+export function* fetchOrderHistoryWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_ORDER_HISTORY_BEGIN, fetchListOrderHistoryFunc);
+}
+
+export function* setRangeDateOrderHistoryWatcherSaga() {
+  yield takeLatest(actions.SET_RANGE_DATE_ORDER_HISTORY_BEGIN, setRangeDateOrderHistoryFunc);
+}
+
+export function* changeOrderHistoryTypeWatcherSaga() {
+  yield takeLatest(actions.CHANGE_ORDER_HISTORY_TYPE_BEGIN, changeOrderHistoryTypeFunc);
 }

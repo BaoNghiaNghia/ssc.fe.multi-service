@@ -79,7 +79,7 @@ function Overview() {
             <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
               Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
             </span>
-            <FilterCalendar />
+            <FilterCalendar actionPicker={actions.setRangeDateFilterBegin}/>
             {/* <ExportButtonPageHeader />
             <ShareButtonPageHeader />
             <Button size="small" type="primary">

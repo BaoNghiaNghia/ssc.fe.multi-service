@@ -9,6 +9,7 @@ const initialState = {
     from: previousDate(7),
     to: currentDate
   },
+  typeService: SERVICE_TYPE.SUBSCRIBE.title,
   reportCountSuccess: [],
   subWithPoint: [],
   profitToday: {},
@@ -16,7 +17,6 @@ const initialState = {
   statisticSubscribe: {},
   ratioSubSvg: 0,
   countError: {},
-  typeService: SERVICE_TYPE.SUBSCRIBE.title,
   loading: false,
   error: null
 };

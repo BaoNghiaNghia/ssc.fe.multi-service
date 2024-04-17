@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
+import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { InfoWraper, NavAuth, UserDropDwon } from './auth-info-style';
 import Message from './message';
 import Notification from './notification';
@@ -19,12 +19,12 @@ function AuthInfo() {
   const { isAuthenticate, userInfo } = useSelector(state => {
     return {
       isAuthenticate: state.fb.auth.uid,
-      // userInfo: state?.
+      userInfo: state?.auth?.userInfo
     };
   });
 
   const [state, setState] = useState({
-    flag: 'english',
+    flag: 'vietnam',
   });
   const { flag } = state;
 
@@ -40,11 +40,11 @@ function AuthInfo() {
   const userContent = (
     <UserDropDwon>
       <div className="user-dropdwon">
-        <figure className="user-dropdwon__info">
-          <img src={require('../../../static/img/avatar/chat-auth.png')} alt="" />
+        <figure className="user-dropdwon__info" >
+          <ReactNiceAvatar className='avatar' style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(userInfo?.username)} />
           <figcaption>
-            <Heading as="h5">Abdullah Bin Talha</Heading>
-            <p>UI Expert</p>
+            <Heading as="h5">{userInfo?.username}</Heading>
+            <p>{userInfo?.role}</p>
           </figcaption>
         </figure>
         <ul className="user-dropdwon__links">
@@ -65,7 +65,7 @@ function AuthInfo() {
           </li>
         </ul>
         <Link className="user-dropdwon__bottomAction" onClick={SignOut} to="#">
-          <FeatherIcon icon="log-out" /> Sign Out
+          <FeatherIcon icon="log-out" /> Đăng xuất
         </Link>
       </div>
     </UserDropDwon>
@@ -84,17 +84,9 @@ function AuthInfo() {
         <img src={require('../../../static/img/flag/english.png')} alt="" />
         <span>English</span>
       </Link>
-      <Link onClick={() => onFlagChangeHandle('germany')} to="#">
-        <img src={require('../../../static/img/flag/germany.png')} alt="" />
-        <span>Germany</span>
-      </Link>
-      <Link onClick={() => onFlagChangeHandle('spain')} to="#">
-        <img src={require('../../../static/img/flag/spain.png')} alt="" />
-        <span>Spain</span>
-      </Link>
-      <Link onClick={() => onFlagChangeHandle('turky')} to="#">
-        <img src={require('../../../static/img/flag/turky.png')} alt="" />
-        <span>Turky</span>
+      <Link onClick={() => onFlagChangeHandle('vietnam')} to="#">
+        <img src={require('../../../static/img/flag/vietnam.png')} alt="" />
+        <span>Tiếng Việt</span>
       </Link>
     </NavAuth>
   );
@@ -117,7 +109,7 @@ function AuthInfo() {
       <div className="nav-author">
         <Popover placement="bottomRight" content={userContent} action="click">
           <Link to="#" className="head-example">
-            <Avatar src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" />
+            <ReactNiceAvatar className='avatar' style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(userInfo?.username)} />
           </Link>
         </Popover>
       </div>
