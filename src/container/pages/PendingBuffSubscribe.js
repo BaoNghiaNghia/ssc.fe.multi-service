@@ -1,9 +1,12 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table, Tooltip, Badge } from 'antd';
+import { Row, Col, Radio, Table, Tooltip, Badge, Dropdown, Menu } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { TiVideo } from "react-icons/ti";
+import { RiRefund2Line } from "react-icons/ri";
 import { TopToolBox } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -30,6 +33,13 @@ function PendingBuffSubscribe() {
   const [priority, setPriority] = useState(-1)
   const [currentChannelID, setCurrentChannelID] = useState('');
   const [currentOrderID, setCurrentOrderID] = useState(0);
+
+  const [current, setCurrent] = useState('mail');
+
+  const onClickMenu = e => {
+    console.log('click ', e);
+    setCurrent(e.key);
+  };
 
   const { searchData, orders, listOrderSubscribe } = useSelector(state => {
     return {
@@ -60,7 +70,7 @@ function PendingBuffSubscribe() {
   useEffect(() => {
     dispatch(actions.fetchAdminSettingBegin());
     dispatch(actions.fetchListOrderSubscribeBegin({ 
-      // state: 'pending' 
+      state: 'pending'
     }));
     dispatch(actions.fetchServicePackageListBegin());
     dispatch(actions.fetchUserListBegin());
@@ -368,18 +378,24 @@ function PendingBuffSubscribe() {
         const result = number >= 80 ? 'c-order__rate c-order__rate--green' < 80 && number > 50 ? 'c-order__rate c-order__rate--yellow' : 'c-order__rate c-order__rate--red' : 'null';
         return (
           <div>
-            <p style={{ margin: 0, padding: 0, borderTop: '1px solid green' }}>{ numberWithCommas(record.runed) }/{ numberWithCommas(increase) }</p>
+            <p style={{ 
+              margin: 0,
+              padding: 0,
+              borderTop: '1px solid green',
+              textAlign: 'center'
+            }}>
+              { numberWithCommas(record.runed) }/{ numberWithCommas(increase) }
+            </p>
             <p>
               { 
                 increase && record?.runed ? (
                   <Badge style={{ borderRadius: '4px' }} color='green' count={number} overflowCount={10000000000}/>
-                ): <span>0 %</span>
+                ): <Badge style={{ borderRadius: '4px' }} color='orange' count="0 %" overflowCount={10000000000}/>
               }
             </p>
           </div>
         )
       }
-
     },
     {
       title: 'Luồng',
@@ -459,24 +475,21 @@ function PendingBuffSubscribe() {
             </Button>
           )
         }
+
+        const menuDropdown = (
+          <Menu>
+            <Menu.Item onClick={() => clickShowListVideo(record)}>
+              <div style={{ display:'inline-flex', alignItems: 'center' }}>
+                <RiRefund2Line fontSize={19}  style={{ marginRight: '9px' }}/> <span>Hủy & Hoàn tiền</span>
+              </div>
+            </Menu.Item>
+          </Menu>
+        );
+
         return (
-          <div>
-            <Button onClick={() => clickShowListVideo(record)}>
-              List video
-            </Button>
-            <Button onClick={() => clickShowSubEveryday(record)}>
-              Số sub chạy
-            </Button>
-            <Button onClick={() => clickCompleteHandler(record)}>
-              Hoàn Thành
-            </Button>
-            <Button onClick={() => clickShowOrderPerformance(record)}>
-              Hiệu suất
-            </Button>
-            <Button onClick={() => setCurrentCancelChannel(record.order_id)}>
-              Hủy
-            </Button>
-          </div>
+          <Dropdown overlay={menuDropdown} >
+            <HiOutlineDotsHorizontal fontSize={30} style={{ border: '1px solid #dfdfdf', padding: '4px', borderRadius: '5px' }}/>
+          </Dropdown>
         )
       },
     },

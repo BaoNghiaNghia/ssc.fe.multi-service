@@ -1503,7 +1503,7 @@ html[dir='rtl'] .sDash_upload-basic .sDash_upload-browse{
   box-shadow: 0 5px 20px #9299b820;
   background: #fff;
   border-radius: 6px;
-  padding: 15px 0 !important;
+  /* padding: 15px 0 !important; */
   border: 0 none;
 }
 

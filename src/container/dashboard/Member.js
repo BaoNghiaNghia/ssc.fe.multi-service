@@ -78,7 +78,21 @@ function Member() {
         ),
         max_threads: <span className="ordered-amount">{max_threads}</span>,
         api_key: <span className="ordered-date">{api_key}</span>,
-        last_order_time: (last_order_time === 0) ? 'Chưa có đơn' : moment(item.last_order_time).format('DD/MM HH:mm'),
+        last_order_time: (
+          <>
+            {
+              last_order_time === 0 ? (
+                <span style={{ color: 'gray' }}>Chưa có đơn hàng</span>
+              ) : (
+                <span style={{ fontWeight: 'bold' }}>
+                  {
+                    moment(last_order_time).format('DD/MM HH:mm')
+                  }
+                </span>
+              )
+            }
+          </>
+        ),
         order_running: <span className="ordered-date">{order_running}</span>,
         sub_order: <span className="ordered-date">{numberWithCommas(sub_order)}</span>,
         action: (
