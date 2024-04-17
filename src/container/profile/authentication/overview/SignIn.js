@@ -28,7 +28,7 @@ function SignIn() {
     checked: null,
   });
 
-  const lock = new Auth0Lock(clientId, domain, auth0options);
+  // const lock = new Auth0Lock(clientId, domain, auth0options);
 
   const handleSubmit = useCallback(() => {
     const loginAction = loginBegin({
@@ -46,16 +46,16 @@ function SignIn() {
     setState({ ...state, checked });
   };
 
-  lock.on('authenticated', authResult => {
-    lock.getUserInfo(authResult.accessToken, error => {
-      if (error) {
-        return;
-      }
+  // lock.on('authenticated', authResult => {
+  //   lock.getUserInfo(authResult.accessToken, error => {
+  //     if (error) {
+  //       return;
+  //     }
 
-      handleSubmit();
-      lock.hide();
-    });
-  });
+  //     handleSubmit();
+  //     lock.hide();
+  //   });
+  // });
 
   return (
     <AuthWrapper>
@@ -124,12 +124,12 @@ function SignIn() {
               </Link>
             </li>
           </ul>
-          <div className="auth0-login">
+          {/* <div className="auth0-login">
             <Link to="#" onClick={() => lock.show()} style={{ width: '100%' }}>
               Sign In with Auth0
             </Link>
             <Link to="/fbSignIn" style={{ width: '100%' }}>Sign In With Firebase</Link>
-          </div>
+          </div> */}
         </Form>
       </div>
     </AuthWrapper>

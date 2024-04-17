@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
+import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TopToolBox } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -69,8 +70,17 @@ function Member() {
       const { api_key, discount, id, last_order_time, max_threads, order_running, point, sub_order, total_order_runed, username } = value;
       return dataSource.push({
         key: key + 1,
-        username: <span className="order-id">{username}</span>,
-        point: <span className="customer-name">{numberWithCommas(point)} (đ)</span>,
+        username: (
+          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <ReactNiceAvatar style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(username)} />
+            <span style={{ marginLeft: '8px' }}>{username}</span>
+          </span>
+        ),
+        point: (
+          <span className="customer-name" style={{ color: 'green', fontWeight: 700 }}>
+            {numberWithCommas(point)} (đ)
+          </span>
+        ),
         discount: (
           <span>
             {discount}
@@ -82,7 +92,7 @@ function Member() {
           <>
             {
               last_order_time === 0 ? (
-                <span style={{ color: 'gray' }}>Chưa có đơn hàng</span>
+                <span style={{ color: '#bdbdbd' }}>Chưa có đơn hàng</span>
               ) : (
                 <span style={{ fontWeight: 'bold' }}>
                   {

@@ -1,10 +1,21 @@
 import Cookies from 'js-cookie';
 import actions from './actions';
 
-const { LOGIN_BEGIN, LOGIN_SUCCESS, LOGIN_ERR, LOGOUT_BEGIN, LOGOUT_SUCCESS, LOGOUT_ERR } = actions;
+const { 
+  LOGIN_BEGIN,
+  LOGIN_SUCCESS,
+  LOGIN_ERR,
+  LOGOUT_BEGIN,
+  LOGOUT_SUCCESS,
+  LOGOUT_ERR,
+  FETCH_USER_PROFILE_BEGIN,
+  FETCH_USER_PROFILE_SUCCESS,
+  FETCH_USER_PROFILE_ERR,
+} = actions;
 
 const initState = {
   login: Cookies.get('logedIn'),
+  userInfo: Cookies.get('userInfo') && JSON.parse(Cookies.get('userInfo')),
   loading: false,
   error: null,
 };
@@ -16,6 +27,23 @@ const initState = {
 const AuthReducer = (state = initState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case FETCH_USER_PROFILE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_USER_PROFILE_SUCCESS:
+      return {
+        ...state,
+        userInfo: data,
+        loading: false,
+      };
+    case FETCH_USER_PROFILE_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
     case LOGIN_BEGIN:
       return {
         ...state,

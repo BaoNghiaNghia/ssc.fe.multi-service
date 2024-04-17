@@ -2,10 +2,10 @@ import Cookies from 'js-cookie';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
-import { loginUserApi } from '../../config/apiFactory/Auth/index';
+import { loginUserApi, fetchProfileDetail } from '../../config/apiFactory/Auth/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
-function* loginSaga(params) {
+function* loginSagaFunc(params) {
   try {
     const response = yield call(loginUserApi, params?.payload?.request);
     
@@ -17,6 +17,10 @@ function* loginSaga(params) {
 
       yield put(
         actions.loginSuccess(tokenLoggged)
+      );
+
+      yield put(
+        actions.fetchUserProfileBegin(params?.payload)
       );
 
       params?.payload?.history.push('/admin/tong-quan');
@@ -35,9 +39,10 @@ function* loginSaga(params) {
   } finally { /* empty */ }
 }
 
-function* logoutSaga() {
+function* logoutSagaFunc() {
   try {
     Cookies.remove('logedIn');
+    Cookies.remove('userInfo');
 
     yield put(
       actions.logoutSuccess(null)
@@ -49,10 +54,35 @@ function* logoutSaga() {
   }
 }
 
+function* fetchUserProfilSagaFunc() {
+  try {
+    const response = yield call(fetchProfileDetail, {});
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      const userInfo = response?.data?.data;
+
+      Cookies.set('userInfo', JSON.stringify(userInfo));
+
+      yield put(
+        actions.fetchUserProfileSuccess(null)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.fetchUserProfileErr({ error: errorMessage || 'Fetch profile user failed' })
+    );
+  } finally { /* empty */ }
+}
+
 export function* logoutWatcherSaga() {
-  yield takeLatest(actions.LOGOUT_BEGIN, logoutSaga);
+  yield takeLatest(actions.LOGOUT_BEGIN, logoutSagaFunc);
 }
 
 export function* loginWatcherSaga() {
-  yield takeLatest(actions.LOGIN_BEGIN, loginSaga);
+  yield takeLatest(actions.LOGIN_BEGIN, loginSagaFunc);
+}
+
+export function* fetchUserProfileSaga() {
+  yield takeLatest(actions.FETCH_USER_PROFILE_BEGIN, fetchUserProfilSagaFunc);
 }

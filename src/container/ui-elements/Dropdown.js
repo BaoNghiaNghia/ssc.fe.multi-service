@@ -47,7 +47,7 @@ function Dropdowns() {
               <Dropdown action={['hover']} placement="bottomLeft">
                 <Link to="#">hover me </Link>
               </Dropdown>
-              <Dropdown action={['click']} placement="bottomCenter">
+              <Dropdown action={['click']} placement="bottom">
                 <Link to="#">click </Link>
               </Dropdown>
               <Dropdown action={['contextMenu']} placement="bottomRight">
@@ -62,7 +62,7 @@ function Dropdowns() {
                   Bottom Left
                 </Button>
               </Dropdown>
-              <Dropdown placement="bottomCenter">
+              <Dropdown placement="bottom">
                 <Button className="btn-outlined" size="small" outlined type="light">
                   Bottom Center
                 </Button>

@@ -115,7 +115,7 @@ function Single(props) {
                   <div>
                     <Heading as="h4">{email.userName}</Heading>
                     <Dropdown
-                      placement="bottomCenter"
+                      placement="bottom"
                       content={
                         <ul className="mail-props">
                           <li>

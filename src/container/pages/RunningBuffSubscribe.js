@@ -10,6 +10,7 @@ import { TiVideo } from "react-icons/ti";
 import { CgPerformance } from "react-icons/cg";
 import { MdClear } from "react-icons/md";
 import { IoMdDoneAll } from "react-icons/io";
+import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TopToolBox } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -44,11 +45,12 @@ function RunningBuffSubscribe() {
     setCurrent(e.key);
   };
 
-  const { searchData, orders, listOrderSubscribe } = useSelector(state => {
+  const { searchData, orders, listOrderSubscribe, isLoading } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
-      listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe
+      listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe,
+      isLoading: state?.buffSubscribe?.loading
     };
   });
 
@@ -305,30 +307,31 @@ function RunningBuffSubscribe() {
       render: (value, item, index) => {
 
         return (
-          <div className='text-center'>
-            {item.user_id !== 1 && (
-             <span>{item.username}</span>
-            )}{' '}
-          </div>
+          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <ReactNiceAvatar style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(item?.username)} />
+            {item.user_id !== 1 && (<span style={{ marginLeft: '8px' }}>{item?.username}</span>)}{' '}
+          </span>
         )
       },
     },
     {
-      title: `UID`,
+      title: `Channel ID`,
       key: 'channel_id',
       dataIndex: 'channel_id',
       width: 50,
       render: (value, item, index) => {
         return (
-          <div>
-            <a
-              href={item.channel_id  ? `https://www.youtube.com/channel/${  item.channel_id}` : item.order_link   }
-              className='text-dark fw-bolder text-hover-primary caption' data-title={item.order_link}
-              target='_blank' rel="noreferrer"
-            >
-              {item.channel_id  ? item.channel_id : item.order_link}
-            </a>
-          </div>
+          <Tooltip title="Đến kênh Youtube">
+            <div>
+              <a
+                href={item.channel_id  ? `https://www.youtube.com/channel/${  item.channel_id}` : item.order_link   }
+                className='text-dark fw-bolder text-hover-primary caption' data-title={item.order_link}
+                target='_blank' rel="noreferrer"
+              >
+                {item.channel_id  ? item.channel_id : item.order_link}
+              </a>
+            </div>
+          </Tooltip>
         )
       },
     },
@@ -595,6 +598,7 @@ function RunningBuffSubscribe() {
             <Col md={24}>
               <TableWrapper className="table-order table-responsive">
                 <Table
+                  loading={isLoading}
                   rowSelection={rowSelection}
                   dataSource={listOrderSubscribe}
                   columns={columns}

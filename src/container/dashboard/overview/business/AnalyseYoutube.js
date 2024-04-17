@@ -94,7 +94,7 @@ function AnalyseYoutube(props) {
   const chartBar = (
     <ChartjsBarChartTransparent
       labels={avgPerformance?.map(item => item?.date)}
-      datasets={cashFlowDataset}
+      datasets={cashFlowDataset || []}
       height={43}
       options={{
         maintainAspectRatio: true,

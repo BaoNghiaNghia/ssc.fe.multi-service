@@ -304,7 +304,7 @@ function SingleGroupChat({ match }) {
                                     </ul>
                                   </div>
                                 }
-                                placement="bottomCenter"
+                                placement="bottom"
                               >
                                 <Link to="#">
                                   <SmileOutlined />
@@ -333,7 +333,7 @@ function SingleGroupChat({ match }) {
                                     </ul>
                                   </div>
                                 }
-                                placement="bottomCenter"
+                                placement="bottom"
                               >
                                 <Link to="#">
                                   <FeatherIcon icon="more-horizontal" size={16} />
@@ -367,7 +367,7 @@ function SingleGroupChat({ match }) {
                                     </ul>
                                   </div>
                                 }
-                                placement="bottomCenter"
+                                placement="bottom"
                               >
                                 <Link to="#">
                                   <FeatherIcon icon="more-horizontal" size={16} />
@@ -401,7 +401,7 @@ function SingleGroupChat({ match }) {
                                     </ul>
                                   </div>
                                 }
-                                placement="bottomCenter"
+                                placement="bottom"
                               >
                                 <Link to="#">
                                   <SmileOutlined />

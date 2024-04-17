@@ -7,6 +7,30 @@ const actions = {
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   LOGOUT_ERR: 'LOGOUT_ERR',
 
+  FETCH_USER_PROFILE_BEGIN: 'FETCH_USER_PROFILE_BEGIN',
+  FETCH_USER_PROFILE_SUCCESS: 'FETCH_USER_PROFILE_SUCCESS',
+  FETCH_USER_PROFILE_ERR: 'FETCH_USER_PROFILE_ERR',
+
+  fetchUserProfileBegin: (payload) => {
+    return {
+      type: actions.FETCH_USER_PROFILE__BEGIN,
+      payload
+    };
+  },
+
+  fetchUserProfileSuccess: (data) => {
+    return {
+      type: actions.FETCH_USER_PROFILE_SUCCESS,
+      data,
+    };
+  },
+
+  fetchUserProfileErr: (err) => {
+    return {
+      type: actions.FETCH_USER_PROFILE_ERR,
+      err,
+    };
+  },
   loginBegin: (payload) => {
     return {
       type: actions.LOGIN_BEGIN,

@@ -16,9 +16,10 @@ import Heading from '../../heading/heading';
 
 function AuthInfo() {
   const dispatch = useDispatch();
-  const { isAuthenticate } = useSelector(state => {
+  const { isAuthenticate, userInfo } = useSelector(state => {
     return {
       isAuthenticate: state.fb.auth.uid,
+      // userInfo: state?.
     };
   });
 
@@ -49,27 +50,17 @@ function AuthInfo() {
         <ul className="user-dropdwon__links">
           <li>
             <Link to="#">
-              <FeatherIcon icon="user" /> Profile
+              <FeatherIcon icon="user" /> Thông tin cá nhân
             </Link>
           </li>
           <li>
             <Link to="#">
-              <FeatherIcon icon="settings" /> Settings
+              <FeatherIcon icon="settings" /> Cài đặt
             </Link>
           </li>
           <li>
             <Link to="#">
-              <FeatherIcon icon="dollar-sign" /> Billing
-            </Link>
-          </li>
-          <li>
-            <Link to="#">
-              <FeatherIcon icon="users" /> Activity
-            </Link>
-          </li>
-          <li>
-            <Link to="#">
-              <FeatherIcon icon="bell" /> Help
+              <FeatherIcon icon="dollar-sign" /> Thanh toán
             </Link>
           </li>
         </ul>

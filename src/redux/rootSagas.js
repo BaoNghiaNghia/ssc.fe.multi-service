@@ -1,7 +1,9 @@
 import { all } from 'redux-saga/effects';
 
 import { 
-    loginWatcherSaga, logoutWatcherSaga
+    fetchUserProfileSaga,
+    loginWatcherSaga,
+    logoutWatcherSaga
 } from './authentication/sagas';
 
 import {
@@ -38,6 +40,7 @@ export default function* rootSaga() {
     return yield all([
         loginWatcherSaga(),
         logoutWatcherSaga(),
+        fetchUserProfileSaga(),
         resportSubscribeWatcherSaga(),
         setRangeDateFilterWatcherSaga(),
         countSuccessSubscribeWatcherSaga(),

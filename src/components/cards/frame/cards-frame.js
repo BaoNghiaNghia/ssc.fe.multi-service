@@ -36,7 +36,7 @@ const Cards = props => {
           extra={
             <>
               {more && (
-                <Dropdown content={more} placement="bottomCenter">
+                <Dropdown content={more} placement="bottom">
                   <NavLink to="#">{!moreText ? <FeatherIcon icon="more-horizontal" /> : 'More'}</NavLink>
                 </Dropdown>
               )}

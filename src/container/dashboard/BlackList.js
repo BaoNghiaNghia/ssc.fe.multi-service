@@ -72,15 +72,17 @@ function BlackList() {
         key: key + 1,
         id: <span className="customer-name">{id}</span>,
         channel_id: (
-          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-            <Image preview={false} 
-              style={{ paddingRight: '10px', filter: 'grayscale(30)' }} height="30px"
-              src={BlackListImg}
-            />
-            <a href={`https://www.youtube.com/channel/${  channel_id}`} target="_blank" rel="noopener noreferrer">
-              <span className="order-id">{channel_id}</span>
-            </a>
-          </div>
+          <Tooltip title="Đến kênh Youtube">
+            <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <Image preview={false} 
+                style={{ paddingRight: '10px', filter: 'grayscale(30)' }} height="30px"
+                src={BlackListImg}
+              />
+              <a href={`https://www.youtube.com/channel/${  channel_id}`} target="_blank" rel="noopener noreferrer">
+                <span className="order-id">{channel_id}</span>
+              </a>
+            </div>
+          </Tooltip>
         ),
         time: <span className="customer-name">{time}</span>,
         reason: <span className="ordered-date">{reason}</span>,

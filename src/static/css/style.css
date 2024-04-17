@@ -2709,3 +2709,8 @@ html[dir='rtl'] .ant-menu-vertical .ant-menu-submenu-title {
 li.active > .display {
   display: block;
 }
+
+
+.ant-table-tbody > tr > td {
+  padding: 12px !important;
+}
