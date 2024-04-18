@@ -82,11 +82,27 @@ function Member() {
           </span>
         ),
         discount: (
-          <span>
-            {discount}
-          </span>
+          <>
+            {
+              discount === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <span>{discount}</span>
+              )
+            }
+          </>
         ),
-        max_threads: <span className="ordered-amount">{max_threads}</span>,
+        max_threads: (
+          <>
+            {
+              max_threads === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <span>{max_threads}</span>
+              )
+            }
+          </>
+        ),
         api_key: <span className="ordered-date">{api_key}</span>,
         last_order_time: (
           <>
@@ -103,8 +119,28 @@ function Member() {
             }
           </>
         ),
-        order_running: <span className="ordered-date">{order_running}</span>,
-        sub_order: <span className="ordered-date">{numberWithCommas(sub_order)}</span>,
+        order_running: (
+          <>
+            {
+              order_running === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <span className="ordered-date">{order_running}</span>
+              )
+            }
+          </>
+        ),
+        sub_order: (
+          <>
+            {
+              sub_order === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <span className="ordered-date">{numberWithCommas(sub_order)}</span>
+              )
+            }
+          </>
+        ),
         action: (
           <div className="table-actions">
             <>
