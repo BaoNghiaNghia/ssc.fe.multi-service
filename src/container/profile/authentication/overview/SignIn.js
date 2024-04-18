@@ -25,7 +25,7 @@ function SignIn() {
   const isLoading = useSelector((state) => state.auth.loading);
   const [form] = Form.useForm();
   const [state, setState] = useState({
-    checked: null,
+    checked: true,
   });
 
   // const lock = new Auth0Lock(clientId, domain, auth0options);
@@ -66,7 +66,7 @@ function SignIn() {
         <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">
           <Row justify="space-around" style={{ marginBottom: '40px' }}>
             <Col md={16} sm={16} xs={16}>
-              <Heading as="h2">Đăng nhập</Heading>
+              <Heading as="h1">Đăng nhập</Heading>
             </Col>
             <Col md={8} sm={8} xs={8} >
               <Image src={logoSSC} preview={false} height="45px"/>
@@ -77,7 +77,7 @@ function SignIn() {
             rules={[
               { message: 'Please input your username or Email!', required: true }
             ]}
-            label="Username or Email Address"
+            label="Người dùng"
           >
             <Input prefix={<UserOutlined />} placeholder="Nhập tên đăng nhập" />
           </Form.Item>
@@ -108,12 +108,12 @@ function SignIn() {
           </p>
           <ul className="social-login">
             <li>
-              <Link className="google-signup" to="#" style={{ width: '100%' }}>
+              <Link className="google-signup" to="#">
                 <img src={require('../../../../static/img/google.png')} alt="" />
                 <span>Sign in with Google</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link className="facebook-sign" to="#">
                 <FacebookOutlined />
               </Link>
@@ -122,7 +122,7 @@ function SignIn() {
               <Link className="twitter-sign" to="#">
                 <TwitterOutlined />
               </Link>
-            </li>
+            </li> */}
           </ul>
           {/* <div className="auth0-login">
             <Link to="#" onClick={() => lock.show()} style={{ width: '100%' }}>

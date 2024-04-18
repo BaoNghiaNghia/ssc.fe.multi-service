@@ -45,7 +45,7 @@ const ChartYoutubeAnalyse = ({
                 }
             }
         },
-        colors: ["#20C997", "#ff8800"],
+        colors: ["#005473", "#ff8800"],
         stroke: {
             curve: 'smooth'
         },

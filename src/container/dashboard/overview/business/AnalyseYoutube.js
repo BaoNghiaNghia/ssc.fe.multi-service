@@ -75,9 +75,9 @@ function AnalyseYoutube(props) {
   const cashFlowDataset = cashFlowState !== null && [
     {
       data: avgPerformance && avgPerformance?.map(item => item?.performance),
-      backgroundColor: '#20C99770',
-      hoverBackgroundColor: '#20C997',
-      label: 'Tỉ lệ thành công',
+      backgroundColor: '#00547370',
+      hoverBackgroundColor: '#005473',
+      label: 'Tỉ lệ thành công (%)',
       maxBarThickness: 10,
       barThickness: 12,
     },

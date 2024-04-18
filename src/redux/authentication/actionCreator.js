@@ -8,7 +8,7 @@ const login = () => {
     try {
       dispatch(loginBegin());
       setTimeout(() => {
-        Cookies.set('logedIn', true);
+        localStorage.setItem('logedIn', true);
         return dispatch(loginSuccess(true));
       }, 1000);
     } catch (err) {
@@ -21,7 +21,7 @@ const logOut = () => {
   return async (dispatch) => {
     try {
       dispatch(logoutBegin());
-      Cookies.remove('logedIn');
+      localStorage.removeItem('logedIn');
       dispatch(logoutSuccess(null));
     } catch (err) {
       dispatch(logoutErr(err));

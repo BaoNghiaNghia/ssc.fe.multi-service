@@ -293,7 +293,7 @@ function PendingBuffSubscribe() {
       },
     },
     {
-      title: 'ROLE',
+      title: 'Thành viên',
       key: 'order_id',
       dataIndex: 'order_id',
       width: 100,
@@ -301,7 +301,7 @@ function PendingBuffSubscribe() {
 
         return (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
-            <ReactNiceAvatar style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(item?.username)} />
+            <ReactNiceAvatar style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(item?.username.charAt(0))} />
             {item.user_id !== 1 && (<span style={{ marginLeft: '8px' }}>{item?.username}</span>)}{' '}
           </span>
         )
@@ -352,8 +352,9 @@ function PendingBuffSubscribe() {
       width: 150,
       render: (value, item, index) => {
         const subNeedRun = item.sub_need - (item.current_sub - item.start_sub);
+        const checkEqual = item?.sub_need === Math.abs(subNeedRun);
         return (
-          <span className={`${subNeedRun > 0 ? 'text-warning' : 'text-primary'}`}>
+          <span className={`${subNeedRun > 0 ? 'text-warning' : 'text-primary'}`} style={{ color: checkEqual ? 'green' : 'black', fontWeight: checkEqual ? 900 : 300 }}>
             {`${numberWithCommas(Math.abs(subNeedRun) || 0)  }/${  numberWithCommas(item?.sub_need || 0)}`}
           </span>
         )
@@ -364,7 +365,14 @@ function PendingBuffSubscribe() {
       key: 'sub_start',
       width: 200,
       render: (value, record, index) => {
-        return `${numberWithCommas(record?.start_sub || 0)}/${numberWithCommas(record?.current_sub || 0)}`
+        const checkEqual = record?.start_sub === record?.current_sub;
+        return (
+          <span style={{ color: checkEqual ? 'green' : 'black', fontWeight: checkEqual ? 900 : 300 }}>
+            {
+              `${numberWithCommas(record?.start_sub || 0)}/${numberWithCommas(record?.current_sub || 0)}`
+            }
+          </span>
+        );
       }
     },
     {

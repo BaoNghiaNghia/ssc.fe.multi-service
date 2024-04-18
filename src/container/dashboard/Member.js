@@ -72,7 +72,7 @@ function Member() {
         key: key + 1,
         username: (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
-            <ReactNiceAvatar style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(username)} />
+            <ReactNiceAvatar style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(username.charAt(0))} />
             <span style={{ marginLeft: '8px' }}>{username}</span>
           </span>
         ),

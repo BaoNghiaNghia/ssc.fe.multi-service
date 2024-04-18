@@ -13,7 +13,7 @@ function* loginSagaFunc(params) {
       toast.success('Đăng nhập thành công');
 
       const tokenLoggged = response?.data?.data?.token;
-      Cookies.set('logedIn', tokenLoggged);
+      localStorage.setItem('logedIn', tokenLoggged);
 
       yield put(
         actions.loginSuccess(tokenLoggged)
@@ -41,8 +41,8 @@ function* loginSagaFunc(params) {
 
 function* logoutSagaFunc() {
   try {
-    Cookies.remove('logedIn');
-    Cookies.remove('userInfo');
+    localStorage.removeItem('logedIn');
+    localStorage.removeItem('userInfo');
 
     yield put(
       actions.logoutSuccess(null)
@@ -61,7 +61,7 @@ function* fetchUserProfilSagaFunc() {
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       const userInfo = response?.data?.data;
 
-      Cookies.set('userInfo', JSON.stringify(userInfo));
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
       yield put(
         actions.fetchUserProfileSuccess(null)

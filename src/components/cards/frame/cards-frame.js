@@ -73,7 +73,7 @@ Cards.defaultProps = {
 Cards.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
   size: PropTypes.string,
-  gradient: PropTypes.bool,
+  gradient: PropTypes.string,
   more: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
   bodyStyle: PropTypes.object,
   headStyle: PropTypes.object,

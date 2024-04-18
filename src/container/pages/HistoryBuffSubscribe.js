@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Row, Col, Radio, Table } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './style';
@@ -15,13 +14,13 @@ import { FilterCalendar } from '../../components/buttons/calendar-button/FilterC
 
 function HistoryBuffSubscribe() {
   const dispatch = useDispatch();
-  const { searchData, orders, fromDate, toDate } = useSelector(state => {
+  const { searchData, orders, fromDay, toDay } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
       orderHistory: state?.buffSubscribe?.orderSubHistory,
-      fromDate: state?.buffSubscribe?.filterRange?.from,
-      toDate: state?.buffSubscribe?.filterRange?.to,
+      fromDay: state?.buffSubscribe?.filterRange?.from,
+      toDay: state?.buffSubscribe?.filterRange?.to,
     };
   });
 
@@ -46,8 +45,8 @@ function HistoryBuffSubscribe() {
 
   useEffect(() => {
     dispatch(actions.fetchOrderHistoryBegin({
-      fromDay: '14-04-2024',
-      toDay: '17-04-2024',
+      fromDay,
+      toDay,
       user_id: '-1',
       cancel: 0
     }));
@@ -154,7 +153,7 @@ function HistoryBuffSubscribe() {
         buttons={[
           <div key="1" className="page-header-actions">
             <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
-              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
+              Từ <strong>{fromDay}</strong> đến <strong>{toDay}</strong>
             </span>
             <FilterCalendar actionPicker={actions.setRangeDateOrderHistoryBegin}/>
           </div>,

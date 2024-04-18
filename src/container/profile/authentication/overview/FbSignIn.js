@@ -94,16 +94,6 @@ const SignIn = () => {
                 <span>Sign in with Google</span>
               </Link>
             </li>
-            <li>
-              <Link onClick={() => dispatch(fbAuthLoginWithFacebook())} className="facebook-sign" to="#">
-                <FacebookOutlined />
-              </Link>
-            </li>
-            <li>
-              <Link className="twitter-sign" to="#">
-                <TwitterOutlined />
-              </Link>
-            </li>
           </ul>
         </Form>
       </div>

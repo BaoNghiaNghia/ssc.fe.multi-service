@@ -100,10 +100,11 @@ const AuthWrapper = Styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
     form{
       width: 420px;
       h1{
-        font-size: 24px;
+        font-size: 28px;
         font-weight: 600;
         margin-top: 10px;
         @media only screen and (max-width: 767px){
@@ -175,6 +176,7 @@ const AuthWrapper = Styled.div`
       }
       li{
         padding:6px;
+        width: 100%;
         a{
           display: flex;
           align-items: center;

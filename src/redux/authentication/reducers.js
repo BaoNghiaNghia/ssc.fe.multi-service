@@ -14,8 +14,8 @@ const {
 } = actions;
 
 const initState = {
-  login: Cookies.get('logedIn'),
-  userInfo: Cookies.get('userInfo') && JSON.parse(Cookies.get('userInfo')),
+  login: localStorage.getItem('logedIn'),
+  userInfo: localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')),
   loading: false,
   error: null,
 };

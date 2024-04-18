@@ -41,7 +41,7 @@ function AuthInfo() {
     <UserDropDwon>
       <div className="user-dropdwon">
         <figure className="user-dropdwon__info" >
-          <ReactNiceAvatar className='avatar' style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(userInfo?.username)} />
+          <ReactNiceAvatar className='avatar' style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(userInfo?.username.charAt(0))} />
           <figcaption>
             <Heading as="h5">{userInfo?.username}</Heading>
             <p>{userInfo?.role}</p>
@@ -109,7 +109,7 @@ function AuthInfo() {
       <div className="nav-author">
         <Popover placement="bottomRight" content={userContent} action="click">
           <Link to="#" className="head-example">
-            <ReactNiceAvatar className='avatar' style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(userInfo?.username)} />
+            <ReactNiceAvatar className='avatar' style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(userInfo?.username.charAt(0))} />
           </Link>
         </Popover>
       </div>

@@ -46,8 +46,8 @@ function ClosedDeals(props) {
     {
       data: subWithPoint?.map(item => Math.abs(item?.totalPoint)),
       backgroundColor: '#20C99780',
-      hoverBackgroundColor: '#20C997',
-      label: 'Tổng point',
+      hoverBackgroundColor: '#000',
+      label: 'Tổng point (đ)',
       average: '50.8',
       maxBarThickness: 10,
       barThickness: 12,

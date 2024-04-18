@@ -17,8 +17,8 @@ const AuthLayout = (WraperContent) => {
                 <br />
                 <br />
                 <Heading as="h1">
-                  Youtube Dashboard <br />
-                  Web Application
+                  Youtube  <br />
+                  Subscribe - Comment - Like
                 </Heading>
                 <img
                   className="auth-content-figure"
