@@ -97,7 +97,7 @@ const Focard = Styled.div`
         &.growth-downward{
             h1{                
                 @media only screen and (max-width: 767px){
-                    font-size: 24px;
+                    font-size: 23px;
                 }
             }
             .focard-status{
@@ -120,7 +120,7 @@ const Focard = Styled.div`
             margin-bottom: 2px;
         }
         .subtitle{
-            font-size: 14px;
+            font-size: 20px;
             color: #868EAE;
             margin-bottom: 10px;
         }
@@ -1063,7 +1063,9 @@ const CardBarChartCenter = Styled.div`
 const CardBarChart2 = Styled.div`
     @media only screen and (max-width: 379px) {
         text-align: center;
-        font-size: 30px;
+        span {
+            font-size: 25px !important;
+        }
     }
     h1{
         margin-top: 20px;
@@ -1073,11 +1075,13 @@ const CardBarChart2 = Styled.div`
         h1{
             font-size: 25px;
         }
+        span {
+            font-size: 16px !important;
+        }
     }
     & > span{
         font-weight: 600;
         font-family: 'Be Vietnam Pro',
-        font-size: 14px;
         color: ${({ theme }) => theme['heading-color']};
     }
     p{
@@ -1174,8 +1178,8 @@ const RatioCard = Styled.div`
     }
     .ant-card-body{
         h1{
-            font-size: 20px;
-            font-weight: 500;
+            font-size: 16px;
+            font-weight: 700;
         }
     }
     .ratio-content{

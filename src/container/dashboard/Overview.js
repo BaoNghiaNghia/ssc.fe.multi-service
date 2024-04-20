@@ -74,13 +74,13 @@ function Overview() {
             <span style={{ marginRight: '20px' }}>
               Tổng quan
             </span>
-            <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px', fontSize: '0.7em' }}>
-              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
-            </span>
           </>
         )}
-        buttons={[
+        buttons={[ 
           <div key="1" className="page-header-actions">
+            <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
+              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
+            </span>
             <FilterCalendar actionPicker={actions.setRangeDateFilterBegin}/>
             <GalleryNav>
               <ul>
@@ -158,7 +158,7 @@ function Overview() {
                 <div className="card-chunk text-center">
                   <CardBarChartCenter>
                     <span style={{ fontWeight: 600 }}>
-                      Tổng point hôm nay (đ)
+                      Tổng point hôm nay (đ)545 đơn
                     </span>
                     <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
                     <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
@@ -230,9 +230,9 @@ function Overview() {
         </Row>
 
         <Row gutter={15}>
-          <Col xxl={6} lg={9} md={10} xs={24}>
-            <Row gutter={15}>
-              <Col xxl={12} md={12} sm={12} xs={12}>
+          <Col xxl={6} lg={9} md={24} xs={24}>
+            <Row gutter={10}>
+              <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
                 <Cards headless gradient='64deg, white, white'>
                   <EChartCard>
                     <div className="card-chunk">
@@ -244,21 +244,19 @@ function Overview() {
                   </EChartCard>
                 </Cards>
               </Col>
-              <Col xxl={12} md={12} sm={12} xs={12}>
+              <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
                 <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
                         <span>Quest Lỗi/Tổng Quest</span>
-                        <Heading as="h2"><span style={{ color: 'red' }}>0</span>/<span>0</span></Heading>
+                        <Heading as="h2">0/0</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
                 </Cards>
               </Col>
-            </Row>
-            <Row gutter={15}>
-              <Col xxl={12} md={12} sm={12} xs={12}>
+              <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
                 <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
@@ -270,7 +268,7 @@ function Overview() {
                   </EChartCard>
                 </Cards>
               </Col>
-              <Col xxl={12} md={12} sm={12} xs={12}>
+              <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
                 <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
@@ -282,9 +280,7 @@ function Overview() {
                   </EChartCard>
                 </Cards>
               </Col>
-            </Row>
-            <Row gutter={15}>
-              <Col xxl={24} md={24} sm={24} xs={24}>
+              <Col xxl={24} md={24} sm={24} xs={12} style={{ display: 'flex' }}>
                 <Cards headless gradient='64deg, white, white' >
                   <EChartCard>
                     <div className="card-chunk">
@@ -296,21 +292,9 @@ function Overview() {
                   </EChartCard>
                 </Cards>
               </Col>
-              {/* <Col xxl={12} md={12} sm={12} xs={12}>
-                <Cards headless gradient='64deg, white, white'>
-                  <EChartCard>
-                    <div className="card-chunk">
-                      <CardBarChart2>
-                        <span>Tổng point hôm nay</span>
-                        <Heading as="h2">5,089,515</Heading>
-                      </CardBarChart2>
-                    </div>
-                  </EChartCard>
-                </Cards>
-              </Col> */}
             </Row>
           </Col>
-          <Col xxl={18} lg={15} md={14} xs={24}>
+          <Col xxl={18} lg={15} md={24} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>
