@@ -70,22 +70,18 @@ function Overview() {
       <PageHeader
         ghost
         title={(
-          <span>
-            Tổng quan
-          </span>
+          <>
+            <span style={{ marginRight: '20px' }}>
+              Tổng quan
+            </span>
+            <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px', fontSize: '0.7em' }}>
+              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
+            </span>
+          </>
         )}
         buttons={[
           <div key="1" className="page-header-actions">
-            <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
-              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
-            </span>
             <FilterCalendar actionPicker={actions.setRangeDateFilterBegin}/>
-            {/* <ExportButtonPageHeader />
-            <ShareButtonPageHeader />
-            <Button size="small" type="primary">
-              <FeatherIcon icon="plus" size={14} />
-              Thêm mới
-            </Button> */}
             <GalleryNav>
               <ul>
                 <li>
@@ -122,34 +118,8 @@ function Overview() {
         ]}
       />
       <Main>
-        {/* <Row>
-          {isLoading ? (
-            <Col xs={24}>
-              <div className="spin">
-                <Spin />
-              </div>
-            </Col>
-          ) : (
-            gallery.map((item) => {
-              const { id } = item;
-              return (
-                <Col key={id} xxl={1} lg={8} sm={12} xs={24}>
-                  <Suspense
-                    fallback={
-                      <Cards headless>
-                        <Skeleton active />
-                      </Cards>
-                    }
-                  >
-                    <p>{item?.type}</p>
-                  </Suspense>
-                </Col>
-              );
-            })
-          )}
-        </Row> */}
         <Row gutter={12}>
-          <Col xxl={4} md={8} sm={8} xs={12}>
+          <Col xxl={4} md={8} sm={12} xs={12}>
             <Cards headless 
               // gradient='45deg, white, #FFF9E3'
               border
@@ -164,7 +134,7 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
-          <Col xxl={4} md={8} sm={8} xs={12}>
+          <Col xxl={4} md={8} sm={12} xs={12}>
             <Cards headless 
               gradient='0deg, white, #ffeee3'
             >
@@ -178,7 +148,7 @@ function Overview() {
               </EChartCard>
             </Cards>
           </Col>
-          <Col xxl={8} md={8} sm={8} xs={12}>
+          <Col xxl={8} md={8} sm={24} xs={24}>
             <Cards headless border 
               gradient={
                 todayPoint >= 0 ? '0deg, rgb(255 226 0 / 28%), rgb(220 255 244)' : '0deg, #fff6d947, #ffac8d'
@@ -234,42 +204,8 @@ function Overview() {
             </Cards>
           </Col>
         </Row>
-        {/* <Row>
-          <GalleryNav>
-            <ul>
-              <li>
-                <Link
-                  className={state.activeClass === '' ? 'active' : 'deactivate'}
-                  onClick={() => handleChange('')}
-                  to="#"
-                >
-                  Subscribe
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={state.activeClass === 'webDesign' ? 'active' : 'deactivate'}
-                  onClick={() => handleChange('webDesign')}
-                  to="#"
-                >
-                  Comment
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={state.activeClass === 'uiDesign' ? 'active' : 'deactivate'}
-                  onClick={() => handleChange('uiDesign')}
-                  to="#"
-                >
-                  Like
-                </Link>
-              </li>
-            </ul>
-          </GalleryNav>
-        </Row> */}
-
         <Row gutter={15}>
-          <Col xxl={6} xs={8}>
+          <Col xxl={6} md={6} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -280,7 +216,7 @@ function Overview() {
               <CardGroup />
             </Suspense>
           </Col>
-          <Col xxl={18} xs={16}>
+          <Col xxl={18} md={18} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -294,7 +230,7 @@ function Overview() {
         </Row>
 
         <Row gutter={15}>
-          <Col xxl={6} lg={9} md={10} xs={12}>
+          <Col xxl={6} lg={9} md={10} xs={24}>
             <Row gutter={15}>
               <Col xxl={12} md={12} sm={12} xs={12}>
                 <Cards headless gradient='64deg, white, white'>

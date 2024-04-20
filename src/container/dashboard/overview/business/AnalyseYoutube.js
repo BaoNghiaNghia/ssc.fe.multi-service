@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Spin } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import FeatherIcon from 'feather-icons-react';
 import { NavLink, Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ import Heading from '../../../../components/heading/heading';
 import { ChartjsBarChartTransparent } from '../../../../components/charts/chartjs';
 
 import { cashFlowGetData, cashFlowFilterData } from '../../../../redux/chartContent/actionCreator';
-import { currentDate, findSecondMinimum, numberWithCommas } from '../../../../utility/utility';
+import { currentDate, numberWithCommas } from '../../../../utility/utility';
 
 function AnalyseYoutube(props) {
   const { title } = props;
@@ -242,24 +242,33 @@ function AnalyseYoutube(props) {
           ) : (
             <CardBarChart>
               <div className="card-bar-top d-flex flex-grid">
-                {
-                  totalSubToday > 0 ? (
+                <Row>
+                  <Col xxl={8} md={8} sm={8} xs={8}>
+                    {
+                      totalSubToday > 0 ? (
+                        <div className="flex-grid-child">
+                          <p>Hôm nay (sub)</p>
+                          <Heading as="h3" className="color-primary">
+                            {numberWithCommas(arrTotalSub?.at(-1) || 0)}
+                          </Heading>
+                        </div>
+                      ) : null
+                    }
+
+                  </Col>
+                  <Col xxl={8} md={8} sm={8} xs={8}>
                     <div className="flex-grid-child">
-                      <p>Hôm nay (sub)</p>
-                      <Heading as="h3" className="color-primary">
-                        {numberWithCommas(arrTotalSub?.at(-1) || 0)}
-                      </Heading>
+                      <p>Cao nhất (sub)</p>
+                      <Heading as="h3">{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
                     </div>
-                  ) : null
-                }
-                <div className="flex-grid-child">
-                  <p>Cao nhất (sub)</p>
-                  <Heading as="h3">{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
-                </div>
-                <div className="flex-grid-child">
-                  <p>Thấp nhất (sub)</p>
-                  <Heading as="h3">{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
-                </div>
+                  </Col>
+                  <Col xxl={8} md={8} sm={8} xs={8}>
+                    <div className="flex-grid-child">
+                      <p>Thấp nhất (sub)</p>
+                      <Heading as="h3">{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
+                    </div>
+                  </Col>
+                </Row>
               </div>
 
               {/* {chartBar} */}

@@ -63,6 +63,11 @@ const BtnWraper = theme => `
 const CardFrame = Styled(Card)`
   ${({ isbutton, theme }) => isbutton && BtnWraper(theme)}
   margin-bottom: 25px !important;
+
+  @media only screen and (max-width:320px) {
+    
+  }
+
   .ant-card-head{
     border-color: #F1F2F6;
   }

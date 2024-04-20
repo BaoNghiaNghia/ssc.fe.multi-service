@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Spin } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -131,44 +131,33 @@ function ClosedDeals(props) {
             </div>
           ) : (
             <CardBarChart>
-              {/* <div className="deals-barChart">
-                {closeDealDatasets.map((item, key) => {
-                  return (
-                    <div key={key + 1} className="card-bar-top">
-                      <h4>
-                        {item.label}
-                        <p className={item.percent >= 50 ? 'growth-up' : 'growth-down'}>
-                          <span className="deal-value">{item.average}</span>
-                          <span className="deal-percentage">
-                            <FeatherIcon icon={item.percent >= 50 ? 'arrow-up' : 'arrow-down'} size={14} />
-                            {item.percent}%
-                          </span>
-                        </p>
-                      </h4>
-                    </div>
-                  );
-                })}
-              </div> */}
-
               <div className="card-bar-top d-flex flex-grid">
-                {
-                  totalSubToday > 0 ? (
+                <Row gutter={15}>
+                  <Col xxl={8} md={8} sm={8} xs={8}>
+                    {
+                      totalSubToday > 0 ? (
+                        <div className="flex-grid-child">
+                          <p>Hôm nay (đ)</p>
+                          <Heading as="h3" className="color-primary">
+                            {numberWithCommas(totalPoint?.at(-1) || 0)}
+                          </Heading>
+                        </div>
+                      ) : null
+                    }  
+                  </Col>
+                  <Col xxl={8} md={8} sm={8} xs={8}>
                     <div className="flex-grid-child">
-                      <p>Hôm nay (đ)</p>
-                      <Heading as="h3" className="color-primary">
-                        {numberWithCommas(totalPoint?.at(-1) || 0)}
-                      </Heading>
+                      <p>Doanh thu cao nhất (đ)</p>
+                      <Heading as="h3">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
                     </div>
-                  ) : null
-                }
-                <div className="flex-grid-child">
-                  <p>Doanh thu cao nhất (đ)</p>
-                  <Heading as="h3">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
-                </div>
-                <div className="flex-grid-child">
-                  <p>Doanh thu thấp nhất (đ)</p>
-                  <Heading as="h3">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
-                </div>
+                  </Col>
+                  <Col xxl={8} md={8} sm={8} xs={8}>
+                    <div className="flex-grid-child">
+                      <p>Doanh thu thấp nhất (đ)</p>
+                      <Heading as="h3">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
+                    </div>
+                  </Col>
+                </Row>
               </div>
 
               <ChartSubscribePoint loadingChart={false} chartData={chartSubscribePoint || {}} />

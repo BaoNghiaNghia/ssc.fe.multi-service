@@ -21,7 +21,7 @@ function CardGroup() {
 
   return (
     <Row gutter={25}>
-      <Col md={12}>
+      <Col md={12} xs={12}>
         <Focard>
           <div className="forcast-card-box">
             <Cards bodypadding="5px" headless title={`Số ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
@@ -59,7 +59,7 @@ function CardGroup() {
           </div>
         </Focard>
       </Col>
-      <Col md={12}>
+      <Col md={12} xs={12}>
         <Focard>
           <div className="forcast-card-box">
             <Cards headless title="Đơn đang chạy">
@@ -97,7 +97,7 @@ function CardGroup() {
           </div>
         </Focard>
       </Col>
-      <Col md={12} sm={12} xs={24}>
+      <Col md={12} sm={12} xs={12}>
         <RatioCard>
           <Cards headless title="Đơn chờ hủy">
             <div className="ratio-content">
@@ -107,7 +107,7 @@ function CardGroup() {
           </Cards>
         </RatioCard>
       </Col>
-      <Col md={12} sm={12} xs={24}>
+      <Col md={12} sm={12} xs={12}>
         <RatioCard>
           <Cards headless title="Đơn chờ duyệt">
             <div className="ratio-content">

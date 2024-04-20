@@ -1005,9 +1005,12 @@ const CardBarChartCenter = Styled.div`
         padding-bottom: 0px;
     }
     @media only screen and (max-width: 1500px) {
+        .ant-card-body{
+            padding: 7px !important;
+        }
         text-align: center !important;
         h1{
-            font-size: 19px;
+            font-size: 30px;
         }
     }
     & > span {
@@ -1060,6 +1063,7 @@ const CardBarChartCenter = Styled.div`
 const CardBarChart2 = Styled.div`
     @media only screen and (max-width: 379px) {
         text-align: center;
+        font-size: 30px;
     }
     h1{
         margin-top: 20px;
@@ -1067,7 +1071,7 @@ const CardBarChart2 = Styled.div`
     }
     @media only screen and (max-width: 1500px){
         h1{
-            font-size: 20px;
+            font-size: 25px;
         }
     }
     & > span{
@@ -1167,38 +1171,26 @@ const LineChartWrapper = Styled.div`
 const RatioCard = Styled.div`
     >.ant-card{
         ${({ theme }) => (theme.topMenu ? 'min-height: 225px' : 'min-height: 100%')};
-        @media only screen and (max-width: 1599px){
-            min-height: 225px;
-        }
     }
     .ant-card-body{
         h1{
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 500;
         }
     }
     .ratio-content{
-        margin-top: 30px
-        @media only screen and (max-width: 767px){
-            margin-top: 25px;
-        }
         h1{
             margin-bottom: 2px;
             font-size: 23px;
             font-weight: 600;
-            @media only screen and (max-width: 767px){
-                font-size: 15px;
-            }
         }
         .ant-progress{
-            margin-bottom: 12px;
             .ant-progress-bg{
                 height: 6px !important;
             }
             .ant-progress-text{
                 position: absolute;
                 ${({ theme }) => (theme.rtl ? 'left' : 'right')}: 0;
-                bottom: 26px;
                 font-weight: 500;
             }
             &.progress-success{
