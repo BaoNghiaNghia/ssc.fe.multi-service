@@ -46,30 +46,16 @@ function SignIn() {
     setState({ ...state, checked });
   };
 
-  // lock.on('authenticated', authResult => {
-  //   lock.getUserInfo(authResult.accessToken, error => {
-  //     if (error) {
-  //       return;
-  //     }
-
-  //     handleSubmit();
-  //     lock.hide();
-  //   });
-  // });
-
   return (
     <AuthWrapper>
       <p className="auth-notice">
-        Don&rsquo;t have an account? <NavLink to="/register">Sign up now</NavLink>
+        Chưa có tài khoản? <NavLink to="/register">Đăng ký ngay</NavLink>
       </p>
       <div className="auth-contents">
         <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">
           <Row justify="space-around" style={{ marginBottom: '40px' }}>
-            <Col md={16} sm={16} xs={16}>
-              <Heading as="h1">Đăng nhập</Heading>
-            </Col>
-            <Col md={8} sm={8} xs={8} >
-              <Image src={logoSSC} preview={false} height="45px"/>
+            <Col md={24} sm={24} xs={24}>
+              <Heading as="h2" weight="700">ĐĂNG NHẬP</Heading>
             </Col>
           </Row>
           <Form.Item
@@ -113,23 +99,7 @@ function SignIn() {
                 <span>Sign in with Google</span>
               </Link>
             </li>
-            {/* <li>
-              <Link className="facebook-sign" to="#">
-                <FacebookOutlined />
-              </Link>
-            </li>
-            <li>
-              <Link className="twitter-sign" to="#">
-                <TwitterOutlined />
-              </Link>
-            </li> */}
           </ul>
-          {/* <div className="auth0-login">
-            <Link to="#" onClick={() => lock.show()} style={{ width: '100%' }}>
-              Sign In with Auth0
-            </Link>
-            <Link to="/fbSignIn" style={{ width: '100%' }}>Sign In With Firebase</Link>
-          </div> */}
         </Form>
       </div>
     </AuthWrapper>

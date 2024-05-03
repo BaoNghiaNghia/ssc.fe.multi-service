@@ -23,7 +23,7 @@ function SignUp() {
   return (
     <AuthWrapper>
       <p className="auth-notice">
-        Already have an account? <NavLink to="/">Sign In</NavLink>
+        Đã có tài khoản? <NavLink to="/">Đăng nhập</NavLink>
       </p>
       <div className="auth-contents">
         <Form name="register" onFinish={handleSubmit} layout="vertical">

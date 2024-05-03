@@ -136,7 +136,7 @@ function Overview() {
           </Col>
           <Col xxl={4} md={8} sm={12} xs={12}>
             <Cards headless 
-              gradient='0deg, white, #ffeee3'
+              // gradient='0deg, white, #ffeee3'
             >
               <EChartCard>
                 <div className="card-chunk">
@@ -158,7 +158,7 @@ function Overview() {
                 <div className="card-chunk text-center">
                   <CardBarChartCenter>
                     <span style={{ fontWeight: 600 }}>
-                      Tổng point hôm nay (đ)545 đơn
+                      Tổng point hôm nay (đ)
                     </span>
                     <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
                     <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
@@ -179,7 +179,7 @@ function Overview() {
           </Col>
           <Col xxl={4} md={8} sm={8} xs={12}>
             <Cards headless
-              gradient='0deg, white, #ffeee3'
+              // gradient='0deg, white, #ffeee3'
             >
               <EChartCard>
                 <div className="card-chunk">
@@ -192,7 +192,10 @@ function Overview() {
             </Cards>
           </Col>
           <Col xxl={4} md={8} sm={8} xs={12}>
-            <Cards headless gradient='0deg, white, #e3ffb7'>
+            <Cards
+              headless 
+              // gradient='0deg, white, #e3ffb7'
+            >
               <EChartCard>
                 <div className="card-chunk">
                   <CardBarChart2>

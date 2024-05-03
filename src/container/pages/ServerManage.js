@@ -17,11 +17,10 @@ import { numberWithCommas } from '../../utility/utility';
 
 function ServerManage() {
   const dispatch = useDispatch();
-  const { searchData, listServer, performanceState } = useSelector((state) => {
+  const { searchData, listServer } = useSelector((state) => {
     return {
       searchData: state?.headerSearchData,
       listServer: state?.servers?.listServer,
-      performanceState: state.chartContent.performanceData,
       preIsLoading: state.chartContent.perLoading,
     }
   });
@@ -58,6 +57,8 @@ function ServerManage() {
   const nonFullThreadServer = listServer?.filter(item => item?.run < 15 && item?.run > 5).length;
   const aBitThreadServer = listServer?.filter(item => item?.run <= 5).length;
 
+  const totalThread = listServer?.reduce((total, comp) => total + comp.run, 0) || 0;
+
   const accountTotal = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
   const accountAlive = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
   const accountWork = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
@@ -83,7 +84,6 @@ function ServerManage() {
         <Row gutter={25}>
           <Col xxl={24} md={24} xs={24}>
             <Cards 
-              // title="Danh sách server"
               title="Danh sách server"
               isbutton={
                 <Form name="sDash_vertical-form" layout="inline">
@@ -93,7 +93,7 @@ function ServerManage() {
                     </Button>
                   </Dropdown>
                 </Form>
-              }
+              } 
             >
               <Pstates>
                 <div
@@ -111,7 +111,7 @@ function ServerManage() {
                   // onClick={() => onPerformanceTab('sessions')}
                   className={`growth-upward ${performanceTab === 'sessions' && 'active'}`}
                   role="button"
-                  tabIndex="0"
+                  tabIndex=""
                 >
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
                   <Heading as="h1" >
@@ -178,6 +178,16 @@ function ServerManage() {
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#EB5757' /><span>Mail chết</span></p>
                   <Heading as="h1">
                     {accountDie || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'users' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ fontWeight: 700 }}>Tổng Luồng</p>
+                  <Heading as="h1">
+                    {totalThread}
                   </Heading>
                 </div>
               </Pstates>

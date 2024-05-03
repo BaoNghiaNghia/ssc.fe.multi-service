@@ -4,7 +4,7 @@ const Aside = Styled.aside`
   width: 100%;
   height: 100vh;
   position: relative;
-  background-image: url("${require('../../../../static/img/auth/BG.png')}");
+  background-image: url("${require('../../../../static/img/back_youtube_1.png')}");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: left top;
@@ -24,6 +24,11 @@ const Aside = Styled.aside`
     //width: 400px;
   }
   .auth-side-content{
+    @media only screen and (min-width: 991px){
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
     @media only screen and (max-width: 991px){
       h1{
         font-size: 20px;

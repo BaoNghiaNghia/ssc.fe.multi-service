@@ -2588,7 +2588,7 @@ const Pstates = Styled.div`
     >div{
         transition: 0.3s ease;
         padding: 20px;
-        @media only screen and (max-width: 1599px){
+        @media only screen and (max-width: 1599px) {
             flex: 0 0 25%;
         }
         &:hover{

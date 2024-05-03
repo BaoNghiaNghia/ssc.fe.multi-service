@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import * as headings from './style';
 
 const Heading = props => {
-  const { as, children, className, id, color } = props;
+  const { as, children, className, id, color, weight } = props;
   const StyledHeading = as ? headings[as.toUpperCase()] : headings.H1;
 
   return (
-    <StyledHeading style={{ color: color || 'black' }} className={className} id={id}>
+    <StyledHeading style={{ color: color || 'black', fontWeight: weight || 500, fontFamily: 'Be Vietnam Pro' }} className={className} id={id}>
       {children}
     </StyledHeading>
   );
@@ -23,6 +23,7 @@ Heading.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
   id: PropTypes.string,
+  weight: PropTypes.number
 };
 
 export default Heading;
