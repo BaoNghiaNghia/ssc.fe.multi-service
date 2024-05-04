@@ -23,7 +23,7 @@ Heading.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
   id: PropTypes.string,
-  weight: PropTypes.number
+  weight: PropTypes.string
 };
 
 export default Heading;

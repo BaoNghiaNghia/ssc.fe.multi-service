@@ -1,21 +1,14 @@
 import React, { useCallback, useState} from 'react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
-import { Form, Input, Button, Image, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { FacebookOutlined, TwitterOutlined, UserOutlined } from '@ant-design/icons';
-import { Auth0Lock } from 'auth0-lock';
+import { UserOutlined } from '@ant-design/icons';
 import { MdOutlinePassword } from "react-icons/md";
 import { AuthWrapper } from './style';
 import actionAuths from '../../../../redux/authentication/actions';
 import { Checkbox } from '../../../../components/checkbox/checkbox';
 import Heading from '../../../../components/heading/heading';
-import { auth0options } from '../../../../config/auth0';
-
-import logoSSC from '../../../../static/img/Logo_Dark.svg';
-
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 const { loginBegin } = actionAuths;
 
@@ -28,12 +21,10 @@ function SignIn() {
     checked: true,
   });
 
-  // const lock = new Auth0Lock(clientId, domain, auth0options);
-
   const handleSubmit = useCallback(() => {
     const loginAction = loginBegin({
       request: {
-        username: form.getFieldValue('username'),
+        email: form.getFieldValue('username'),
         password: form.getFieldValue('password'),
       },
       history
@@ -61,7 +52,7 @@ function SignIn() {
           <Form.Item
             name="username"
             rules={[
-              { message: 'Please input your username or Email!', required: true }
+              { message: 'Vui lòng nhập tên người dùng hoặc Email!', required: true }
             ]}
             label="Người dùng"
           >

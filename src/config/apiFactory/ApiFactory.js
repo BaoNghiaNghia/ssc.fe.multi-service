@@ -33,7 +33,7 @@ class ApiFactory {
    * @param {A entity Object} entity
    */
   createBasicCRUDEndpoints({ name }) {
-    var endpoints = {}
+    var endpoints = {};
 
     const resourceURL = `${this.url}/${name}`
 

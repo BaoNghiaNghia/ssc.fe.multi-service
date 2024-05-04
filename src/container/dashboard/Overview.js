@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 // import FeatherIcon from 'feather-icons-react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Skeleton, Spin } from 'antd';
+import { Row, Col, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
@@ -18,7 +18,6 @@ import actions from '../../redux/reports/actions';
 import { numberWithCommas } from '../../utility/utility';
 import { SERVICE_TYPE } from '../../variables';
 
-const EfficiencySubscribe = lazy(() => import('./overview/business/EfficiencyAction'));
 const RatioYoutubeSuccess = lazy(() => import('./overview/business/RatioYoutubeSuccess'));
 const SubscribeCountAndIncome = lazy(() => import('./overview/crm/SubscribeCountAndIncome'));
 const AnalyseYoutube = lazy(() => import('./overview/business/AnalyseYoutube'));

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Badge } from 'antd';
+import { Row, Col, Form } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt } from 'react-icons/tb';

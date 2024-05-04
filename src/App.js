@@ -18,6 +18,8 @@ import 'antd/dist/antd.less';
 
 const { theme } = config;
 
+const publicPath = process.env.PUBLIC_URL;
+
 const ProviderConfig = () => {
   const { rtl, isLoggedIn, topMenu, darkMode, auth } = useSelector(state => {
     return {
@@ -57,9 +59,9 @@ const ProviderConfig = () => {
               <Spin />
             </div>
           ) : (
-            <Router basename={process.env.PUBLIC_URL}>
+            <Router basename={publicPath}>
               {!isLoggedIn ? <Route path="/" component={Auth} /> : <ProtectedRoute path="/admin" component={Admin} />}
-              {isLoggedIn && (path === process.env.PUBLIC_URL || path === `${process.env.PUBLIC_URL}/`) && (
+              {isLoggedIn && (path === publicPath || path === `${publicPath}/`) && (
                 <Redirect to="/admin/tong-quan" />
               )}
             </Router>

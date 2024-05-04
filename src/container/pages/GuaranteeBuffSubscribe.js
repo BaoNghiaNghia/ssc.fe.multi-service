@@ -29,12 +29,12 @@ function GuaranteeBuffSubscribe() {
   const dispatch = useDispatch();
   const [currentCancelChannel, setCurrentCancelChannel] = useState(-1);
 
-  const [currentGroup, setCurrentGroup] = useState()
-  const [order_by, setOrder_by] = useState(0)
+  const [currentGroup, setCurrentGroup] = useState();
+  const [order_by, setOrder_by] = useState(0);
   const [currentUser, setCurrentUser] = useState();
   const [currentService, setCurrentService] = useState();
-  const [valueService, setValueService] = useState(0)
-  const [priority, setPriority] = useState(-1)
+  const [valueService, setValueService] = useState(0);
+  const [priority, setPriority] = useState(-1);
   const [currentChannelID, setCurrentChannelID] = useState('');
   const [currentOrderID, setCurrentOrderID] = useState(0);
 
@@ -97,6 +97,7 @@ function GuaranteeBuffSubscribe() {
   if (listOrderSubscribe.length) {
     listOrderSubscribe.map((value, key) => {
       const { status, order_id, customers, amount, date } = value;
+
       return dataSource.push({
         key: key + 1,
         order_id: <span className="order-id">{order_id}</span>,
@@ -134,6 +135,7 @@ function GuaranteeBuffSubscribe() {
   const clickUpdateHandler = (item) => {
     dispatch(actions.showcurrentOrder(item))
   }
+
   const clickShowListVideo = async (item) => {
     // const res = await getListVideo(item.channel_id)
     
@@ -154,7 +156,6 @@ function GuaranteeBuffSubscribe() {
     //   setDataSubOfVideo(res.data.data)
     // }
   }
-
   
   const clickCompleteHandler = async (item) => {
     // if (window.confirm('bạn có chắc chắn muốn hoàn thành đơn này') === true) {
@@ -304,7 +305,6 @@ function GuaranteeBuffSubscribe() {
       dataIndex: 'order_id',
       width: 100,
       render: (value, item, index) => {
-
         return (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
             <ReactNiceAvatar style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }} {...genConfig(item?.username.charAt(0))} />
