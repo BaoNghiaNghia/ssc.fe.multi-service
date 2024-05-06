@@ -12,16 +12,18 @@ function* loginSagaFunc(params) {
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       toast.success('Đăng nhập thành công');
 
-      const tokenLoggged = response?.data?.data?.token;
-      localStorage.setItem('logedIn', tokenLoggged);
+      const respLoggged = response?.data?.data;
+
+      localStorage.setItem('logedIn', respLoggged?.token);
+      localStorage.setItem('userInfo', JSON.stringify(respLoggged?.user));
 
       yield put(
-        actions.loginSuccess(tokenLoggged)
+        actions.loginSuccess(respLoggged)
       );
 
-      yield put(
-        actions.fetchUserProfileBegin(params?.payload)
-      );
+      // yield put(
+      //   actions.fetchUserProfileBegin(params?.payload)
+      // );
 
       params?.payload?.history.push('/admin/tong-quan');
     }

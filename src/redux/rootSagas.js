@@ -39,6 +39,11 @@ import {
     fetchUserListMemberWatcherSaga
 } from './member/sagas';
 
+import { 
+    createServicesWatcherSaga,
+    fetchListServicesWatcherSaga
+} from './serviceSettings/sagas';
+
 export default function* rootSaga() {
     return yield all([
         loginWatcherSaga(),
@@ -61,6 +66,8 @@ export default function* rootSaga() {
         changeServiceTypeWatcherSaga(),
         fetchOrderHistoryWatcherSaga(),
         setRangeDateOrderHistoryWatcherSaga(),
-        changeOrderHistoryTypeWatcherSaga()
+        changeOrderHistoryTypeWatcherSaga(),
+        fetchListServicesWatcherSaga(),
+        createServicesWatcherSaga()
     ]);
 }

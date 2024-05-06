@@ -1471,6 +1471,11 @@ const TableWrapper = Styled.div`
                     .customer-name{
                         min-width: 174px;
                     }
+                    .currency::after {
+                        margin-left: 3px;
+                        content: ' đ';
+                        margin-top: -6px;
+                    }
                     .status{
                         min-width: 175px;
                     }

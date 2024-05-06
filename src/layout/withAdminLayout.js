@@ -334,7 +334,7 @@ const ThemeLayout = (WrappedComponent) => {
               </Layout>
             </Layout>
           </Layout>
-          <Link
+          {/* <Link
             to="#"
             className="customizer-trigger"
             onClick={() => {
@@ -342,7 +342,7 @@ const ThemeLayout = (WrappedComponent) => {
             }}
           >
             <FeatherIcon icon="settings" />
-          </Link>
+          </Link> */}
           <div className={`${customizerAction ? 'customizer-wrapper show' : 'customizer-wrapper'}`}>
             <div className="customizer">
               <div className="customizer__head">

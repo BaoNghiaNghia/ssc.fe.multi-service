@@ -881,7 +881,6 @@ const RegionList = Styled.div`
             }
         }
     }
-
 `;
 
 const RegionMap = Styled.div`

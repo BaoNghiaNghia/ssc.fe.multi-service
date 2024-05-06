@@ -31,6 +31,7 @@ const actions = {
       err,
     };
   },
+
   loginBegin: (payload) => {
     return {
       type: actions.LOGIN_BEGIN,
