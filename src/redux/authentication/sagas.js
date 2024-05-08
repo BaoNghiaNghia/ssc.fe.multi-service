@@ -26,6 +26,7 @@ function* loginSagaFunc(params) {
       // );
 
       params?.payload?.history.push('/admin/tong-quan');
+      window.location.reload();
     }
   } catch (error) {
     const errorMessage = error;

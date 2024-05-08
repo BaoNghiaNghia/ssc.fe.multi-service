@@ -5,6 +5,7 @@ import { Row, Col, Radio, Table } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import DetailMember from './component/DetailMember';
 import { TopToolBox } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -12,10 +13,6 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { orderFilter } from '../../redux/orders/actionCreator';
-
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 import actions from '../../redux/member/actions';
 import { numberWithCommas } from '../../utility/utility';
 
@@ -31,6 +28,7 @@ function Member() {
   });
 
   const [state, setState] = useState({
+    isModalDetail: false,
     notData: searchData,
     item: orders,
     selectedRowKeys: [],
@@ -65,23 +63,27 @@ function Member() {
   };
 
   const dataSource = [];
-  if (userList.length) {
-    userList.map((value, key) => {
-      const { api_key, discount, id, last_order_time, max_threads, order_running, point, sub_order, total_order_runed, username } = value;
+  if (userList?.length) {
+    userList?.map((value, key) => {
+      const { api_key, discount, id, last_order_time, max_threads, order_running, credit, sub_order, total_order_runed, fullname, email, credit_used, phone } = value;
       return dataSource.push({
         key: key + 1,
         username: (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
             <ReactNiceAvatar
-              style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }}
-              {...genConfig(username.charAt(0))}
+              style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }}
+              {...genConfig(fullname?.charAt(0))}
             />
-            <span style={{ marginLeft: '8px' }}>{username}</span>
+            <span style={{ marginLeft: '8px' }}>
+              <p style={{ margin: '0px', fontWeight: '700' }}>{fullname}</p>
+              <p style={{ margin: '0px', fontSize: '0.7em' }}>{email}</p>
+              <p style={{ margin: '0px', fontSize: '0.7em' }}>{phone}</p>
+            </span>
           </span>
         ),
         point: (
           <span className="customer-name" style={{ color: 'green', fontWeight: 700 }}>
-            {numberWithCommas(point)} (đ)
+            {numberWithCommas(credit_used)} / {numberWithCommas(credit)} (đ)
           </span>
         ),
         discount: (
@@ -147,7 +149,7 @@ function Member() {
         action: (
           <div className="table-actions">
             <>
-              <Button className="btn-icon" type="primary" to="#" shape="circle">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => setState({ isModalDetail: true })}>
                 <FeatherIcon icon="eye" size={16} />
               </Button>
               <Button className="btn-icon" type="info" to="#" shape="circle">
@@ -221,22 +223,25 @@ function Member() {
     },
   };
 
+  const { isModalDetail } = state;
+
   return (
     <>
+      <DetailMember
+        isOpen={isModalDetail}
+        setState={setState}
+      />
       <PageHeader
         ghost
         title="Thành viên"
-        buttons={[
-          <div key="1" className="page-header-actions">
-            <CalendarButtonPageHeader key="1" />
-            <ExportButtonPageHeader key="2" />
-            <ShareButtonPageHeader key="3" />
-            <Button size="small" key="4" type="primary">
-              <FeatherIcon icon="plus" size={14} />
-              Add New
-            </Button>
-          </div>,
-        ]}
+        // buttons={[
+        //   <div key="1" className="page-header-actions">
+        //     <Button size="small" key="4" type="primary">
+        //       <FeatherIcon icon="plus" size={14} />
+        //       Thêm mới
+        //     </Button>
+        //   </div>,
+        // ]}
       />
       <Main>
         <Cards headless>
@@ -251,10 +256,10 @@ function Member() {
                   </Col>
                   <Col xxl={14} lg={16} xs={24}>
                     <div className="table-toolbox-menu">
-                      <span className="toolbox-menu-title"> Status:</span>
+                      <span className="toolbox-menu-title"> Trạng thái:</span>
                       <Radio.Group onChange={handleChangeForFilter} defaultValue="">
                         <Radio.Button value="">All</Radio.Button>
-                        {item.length &&
+                        {item?.length &&
                           [...new Set(filterKey)].map(value => {
                             return (
                               <Radio.Button key={value} value={value}>
@@ -267,11 +272,8 @@ function Member() {
                   </Col>
                   <Col xxl={4} xs={24}>
                     <div className="table-toolbox-actions">
-                      <Button size="small" type="secondary" transparented>
-                        Export
-                      </Button>
                       <Button size="small" type="primary">
-                        <FeatherIcon icon="plus" size={12} /> Add Order
+                        <FeatherIcon icon="plus" size={12} /> Thêm mới
                       </Button>
                     </div>
                   </Col>
@@ -287,7 +289,7 @@ function Member() {
                   dataSource={dataSource}
                   loading={isLoading}
                   columns={columns}
-                  pagination={{ pageSize: 20, showSizeChanger: true, total: userList.length }}
+                  pagination={{ pageSize: 20, showSizeChanger: true, total: userList?.length }}
                 />
               </TableWrapper>
             </Col>

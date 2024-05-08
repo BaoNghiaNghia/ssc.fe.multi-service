@@ -4,17 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
+import { LuTrash2 } from "react-icons/lu";
+import { FiEdit2 } from "react-icons/fi";
 import AddService from './component/AddService';
+import EditService from './component/EditService';
+import DelService from './component/DelService';
 import { PageHeader } from '../../components/page-headers/page-headers';
+import { numberWithCommas } from '../../utility/utility';
 import { Main, TableWrapper } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 import actions from '../../redux/serviceSettings/actions';
-
 
 function SettingAndService() {
   const dispatch = useDispatch();
@@ -32,6 +32,8 @@ function SettingAndService() {
 
   const [state, setState] = useState({
     isOpenAdd: false,
+    isOpenEdit: false,
+    isOpenDel: false,
     notData: searchData,
     item: orders,
     selectedRowKeys: [],
@@ -120,16 +122,28 @@ function SettingAndService() {
           </Row>
         </>,
         range: <>
-          <span className="customer-name">{min} - {max}</span>
+          <span className="customer-name">{numberWithCommas(min || 0)} - {numberWithCommas(max || 0)}</span>
         </>,
         price: <>
-          <span className="currency" style={{ display: 'inline-flex', fontWeight: '800', color: 'green' }}>{price_per_10}</span>
+          <span className="currency" style={{ display: 'inline-flex', fontWeight: '800', color: 'green' }}>{numberWithCommas(price_per_10 || 0)}</span>
         </>,
         threads: <>
           <Tooltip title={
             <span className="customer-name">{max_threads} / {max_threads_3000} / {max_threads_5000}</span>
           }>
             <span className="customer-name">{max_threads} / {max_threads_3000} / {max_threads_5000}</span>
+          </Tooltip>
+        </>,
+        action: <>
+          <Tooltip title="Sửa dịch vụ">
+            <Button size="default" type="default" style={{ marginRight: '5px' }} onClick={() => setState({ isOpenEdit: true })}>
+              <FiEdit2 style={{ marginTop: '4px' }} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa dịch vụ">
+            <Button size="default" type="default" onClick={() => setState({ isOpenDel: true })}>
+              <LuTrash2 style={{ marginTop: '4px' }} />
+            </Button>
           </Tooltip>
         </>
       });
@@ -162,14 +176,29 @@ function SettingAndService() {
       dataIndex: 'price',
       key: 'price',
     },
+    {
+      title: 'action',
+      dataIndex: 'action',
+      key: 'action',
+    },
   ];
 
-  const { isOpenAdd } = state;
+  const { isOpenAdd, isOpenEdit, isOpenDel } = state;
 
   return (
     <>
       <AddService
         isOpen={isOpenAdd}
+        setState={setState}
+      />
+
+      <EditService
+        isOpen={isOpenEdit}
+        setState={setState}
+      />
+
+      <DelService
+        isOpen={isOpenDel}
         setState={setState}
       />
 
@@ -179,7 +208,6 @@ function SettingAndService() {
         buttons={[
           <div key="1" className="page-header-actions">
             <Button size="small" key="4" type="primary" onClick={() => {
-              console.log('--- open modal ---');
               setState({
                 isOpenAdd: true,
               });
@@ -204,7 +232,6 @@ function SettingAndService() {
                   dataSource={dataSource}
                   columns={columns}
                   pagination={{ hideOnSinglePage: true }}
-                  // pagination={{ pageSize: 7, showSizeChanger: true, total: orders.length }}
                 />
               </TableWrapper>
             </Col>

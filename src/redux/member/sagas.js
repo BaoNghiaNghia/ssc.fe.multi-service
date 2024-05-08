@@ -12,7 +12,7 @@ function* fetchUserListFunc() {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.fetchUserListSuccess(response?.data?.data)
+        actions.fetchUserListSuccess(response?.data?.data?.users)
       );
     }
 

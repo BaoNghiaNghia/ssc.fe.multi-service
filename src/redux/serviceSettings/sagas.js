@@ -38,24 +38,34 @@ function* fetchListServicesFunc(params) {
 
 function* createServicesFunc(params) {
     try {
-        const response = yield call(fetchListServiceAPI, params?.payload);
-        
-        if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-          yield put(
-            actions.fetchListServiceSuccess(response?.data?.data)
-          );
-        }
+      console.log('--- create new services ---', params);
+      const response = yield call(createServiceAPI, params?.payload);
+      
+      if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+        yield put(
+          actions.createServiceSuccess(response?.data?.data)
+        );
 
+        yield put(
+          actions.fetchListServiceBegin()
+        );
+
+        toast.success(response?.data?.message);
+      }
     } catch (error) {
         const errorMessage = error;
         yield put(
-          actions.fetchListServiceErr({ error: errorMessage || 'Create services list failed' })
+          actions.createServiceErr({ error: errorMessage || 'Create services list failed' })
         );
+
+        console.log('------ error ------', errorMessage)
     
         if (errorMessage?.response?.data?.data?.error) {
           toast.error(errorMessage?.response?.data?.data?.error);
+        } else if (errorMessage?.response?.data?.message) {
+          toast.error(errorMessage?.response?.data?.message);
         } else {
-          toast.error('Fetch report failed');
+          toast.error('Create services list failed');
         }
 
     } finally { /* empty */ }
@@ -68,3 +78,4 @@ export function* fetchListServicesWatcherSaga() {
 export function* createServicesWatcherSaga() {
   yield takeLatest(actions.CREATE_SERVICES_BEGIN, createServicesFunc);
 }
+

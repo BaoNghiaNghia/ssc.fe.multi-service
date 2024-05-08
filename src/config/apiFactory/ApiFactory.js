@@ -5,6 +5,11 @@ import { BASE_URL, TIMEOUT_REQUEST_API } from '../../variables/index';
 let token = localStorage.getItem('logedIn');
 axios.defaults.timeout = TIMEOUT_REQUEST_API;
 
+axios.defaults.headers = {
+  'Content-Type': 'application/json;charset=UTF-8',
+  "Access-Control-Allow-Origin": "*",
+}
+
 class ApiFactory {
 
   constructor({ url }) {

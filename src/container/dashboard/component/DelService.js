@@ -11,7 +11,7 @@ import actions from '../../../redux/serviceSettings/actions';
 
 const { Option } = Select;
 
-function AddService({ isOpen, setState }) {
+function DelService({ isOpen, setState }) {
   const dispatch = useDispatch();
 
   const { postLoading } = useSelector(state => {
@@ -85,8 +85,8 @@ function AddService({ isOpen, setState }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm dịch vụ</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho dịch vụ mới</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Xóa dịch vụ</p>
+                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Xóa toàn bộ thông tin của dịch vụ này</p>
               </div>
             </div>
           </>
@@ -265,9 +265,9 @@ function AddService({ isOpen, setState }) {
   );
 }
 
-AddService.propTypes = {
+DelService.propTypes = {
   isOpen: PropTypes.bool,
   setState: PropTypes.func
 };
 
-export default AddService;
+export default DelService;
