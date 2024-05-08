@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
+import AddService from './component/AddService';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { Button } from '../../components/buttons/buttons';
@@ -13,6 +14,7 @@ import { ShareButtonPageHeader } from '../../components/buttons/share-button/sha
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 import actions from '../../redux/serviceSettings/actions';
+
 
 function SettingAndService() {
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ function SettingAndService() {
   }, [dispatch]);
 
   const [state, setState] = useState({
+    isOpenAdd: false,
     notData: searchData,
     item: orders,
     selectedRowKeys: [],
@@ -105,10 +108,16 @@ function SettingAndService() {
           </Row>
         </>,
         category: <>
-          <span className="customer-name">{category}</span>
-        </>,
-        type: <>
-          <span className="customer-name">{type}</span>
+          <Row>
+            <Col>
+              <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{category}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <span className="customer-name" style={{ color: 'gray', fontSize: '0.7em' }}>{type}</span>
+            </Col>
+          </Row>
         </>,
         range: <>
           <span className="customer-name">{min} - {max}</span>
@@ -144,11 +153,6 @@ function SettingAndService() {
       key: 'category',
     },
     {
-      title: 'type',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
       title: 'threads',
       dataIndex: 'threads',
       key: 'threads',
@@ -160,19 +164,28 @@ function SettingAndService() {
     },
   ];
 
+  const { isOpenAdd } = state;
+
   return (
     <>
+      <AddService
+        isOpen={isOpenAdd}
+        setState={setState}
+      />
+
       <PageHeader
         ghost
         title="Dịch vụ & Cài đặt"
         buttons={[
           <div key="1" className="page-header-actions">
-            <CalendarButtonPageHeader key="1" />
-            <ExportButtonPageHeader key="2" />
-            <ShareButtonPageHeader key="3" />
-            <Button size="small" key="4" type="primary">
+            <Button size="small" key="4" type="primary" onClick={() => {
+              console.log('--- open modal ---');
+              setState({
+                isOpenAdd: true,
+              });
+            }}>
               <FeatherIcon icon="plus" size={14} />
-              Add New
+              Thêm dịch vụ
             </Button>
           </div>,
         ]}
@@ -190,6 +203,7 @@ function SettingAndService() {
                   showHeader={false}
                   dataSource={dataSource}
                   columns={columns}
+                  pagination={{ hideOnSinglePage: true }}
                   // pagination={{ pageSize: 7, showSizeChanger: true, total: orders.length }}
                 />
               </TableWrapper>
