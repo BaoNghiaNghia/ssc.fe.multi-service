@@ -11,35 +11,29 @@ import actions from '../../../redux/serviceSettings/actions';
 
 const { Option } = Select;
 
-function EditService({ isOpen, setState }) {
+function EditService({ isOpen, setState, state }) {
   const dispatch = useDispatch();
+  const [formCreateService] = Form.useForm();
 
-  const { postLoading } = useSelector(state => {
+  const { postLoading, detailService } = useSelector(item => {
     return {
-      postLoading: state.settingService.postLoading,
+      postLoading: item?.settingService?.postLoading,
+      detailService: item?.settingService?.detailService,
     };
   });
 
-  const [formCreateService] = Form.useForm();
-
-  const [state, setStateModal] = useState({
-    tags: ['UI/UX', 'Branding', 'Product Design', 'Web Design'],
-    values: null,
-  });
-
-  const handleSubmit = (values) => {
-    setStateModal({ ...state, values: { ...values, tags: state.tags } });
-  };
-
   useEffect(() => {
-    dispatch(actions.fetchListServiceBegin({}));
-  }, [dispatch]);
+    formCreateService.setFieldsValue(detailService);
+    formCreateService.setFieldValue('priority', String(detailService?.priority));
+    formCreateService.setFieldValue('type', detailService?.type);
+  });
 
   const handleOk = () => {
     try {
       formCreateService.validateFields();
   
-      const requestData = {// {
+      const requestData = {
+        id: detailService.id,
         category: formCreateService.getFieldValue('category'),
         platform: formCreateService.getFieldValue('platform') || 'Youtube',
         service_type: formCreateService.getFieldValue('service_type'),
@@ -56,7 +50,7 @@ function EditService({ isOpen, setState }) {
         priority: formCreateService.getFieldValue('priority') === 'true'
       }
   
-      dispatch(actions.createServiceBegin(requestData));
+      dispatch(actions.updateServiceBegin(requestData));
 
       setState({
         isOpenAdd: false,
@@ -64,6 +58,10 @@ function EditService({ isOpen, setState }) {
 
       formCreateService.resetFields();
     } catch (err) {
+      setState({
+        isOpenAdd: false,
+      });
+      formCreateService.resetFields();
       console.log(err);
     }
 
@@ -73,6 +71,7 @@ function EditService({ isOpen, setState }) {
     setState({
       isOpenAdd: false,
     });
+    formCreateService.resetFields();
   }
 
   return (
@@ -102,17 +101,17 @@ function EditService({ isOpen, setState }) {
           </Button>
         ]}
       >
-        <Form name="add_service" layout="vertical" form={formCreateService} onFinish={handleSubmit}>
+        <Form name="add_service" layout="vertical" form={formCreateService} onFinish={handleOk}>
           <Row gutter="10">
             <Col sm={12}>
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
                 <span style={{ marginRight: '15px' }}>Platform: </span>
                 <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
+                <span style={{ fontSize: '16px', fontWeight: '700' }}>{state?.category}</span>
               </div>
             </Col>
             <Col sm={12}>
-              <Form.Item name="category" initialValue="Subscribes" bordered rules={[{
+              <Form.Item name="category"  bordered rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -143,14 +142,15 @@ function EditService({ isOpen, setState }) {
             <Col sm={24}>
               <Form.Item 
                 name="name" 
-                label="Tên dịch vụ" 
+                label="Tên dịch vụ"
+                
                 style={{ marginBottom: '7px' }} 
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' placeholder='Tên dịch vụ'/>
+                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ'/>
               </Form.Item>
             </Col>
           </Row>
@@ -160,7 +160,7 @@ function EditService({ isOpen, setState }) {
               <Form.Item
                 name="description"
                 label="Mô tả"
-                style={{ marginBottom: '7px' }} 
+                style={{ marginBottom: '7px', fontStyle: 'italic' }} 
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
@@ -173,7 +173,7 @@ function EditService({ isOpen, setState }) {
 
           <Row gutter="10">
             <Col sm={9}>
-              <Form.Item name="service_type" initialValue="ytbsubscribe" label="Loại dịch vụ" rules={[{
+              <Form.Item name="service_type"  label="Loại dịch vụ" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -193,7 +193,7 @@ function EditService({ isOpen, setState }) {
               </Form.Item>
             </Col>
             <Col sm={6}>
-              <Form.Item name="priority" initialValue="false" label="Ưu tiên" rules={[{
+              <Form.Item name="priority"  label="Ưu tiên" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -209,7 +209,7 @@ function EditService({ isOpen, setState }) {
 
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="max_threads"  label="Luồng < 3000" rules={[{
+              <Form.Item name="max_threads" initialValue={ state?.max_threads } label="Luồng < 3000" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -217,7 +217,7 @@ function EditService({ isOpen, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max_threads_3000" label="3000 < Luồng < 5000" rules={[{
+              <Form.Item name="max_threads_3000"  label="3000 < Luồng < 5000" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -235,7 +235,7 @@ function EditService({ isOpen, setState }) {
           </Row>
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="min"  label="Số sub order min" rules={[{
+              <Form.Item name="min" style={{ margin: '0px' }}  label="Số sub order min" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -243,7 +243,7 @@ function EditService({ isOpen, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max" label="Số Sub (order max)" rules={[{
+              <Form.Item name="max" style={{ margin: '0px' }}  label="Số Sub (order max)" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -251,7 +251,7 @@ function EditService({ isOpen, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="price_per_10" label="Prices / 10 Subs" rules={[{
+              <Form.Item name="price_per_10" style={{ margin: '0px' }}  label="Prices / 10 Subs" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -267,7 +267,8 @@ function EditService({ isOpen, setState }) {
 
 EditService.propTypes = {
   isOpen: PropTypes.bool,
-  setState: PropTypes.func
+  setState: PropTypes.func,
+  state: PropTypes.object
 };
 
 export default EditService;

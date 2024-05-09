@@ -4,6 +4,8 @@ const initialState = {
   listService: [],
   response: null,
   postLoading: false,
+  isOpenModalEdit: false,
+  detailService: {},
   loading: false,
   error: null
 };
@@ -19,7 +21,11 @@ const {
 
     UPDATE_SERVICES_BEGIN,
     UPDATE_SERVICES_ERR,
-    UPDATE_SERVICES_SUCCESS
+    UPDATE_SERVICES_SUCCESS,
+
+    MODAL_DETAIL_SERVICE_BEGIN,
+    MODAL_DETAIL_SERVICE_ERR,
+    MODAL_DETAIL_SERVICE_SUCCESS
 } = actions;
 
 const reducers = (state = initialState, action) => {
@@ -82,6 +88,24 @@ const reducers = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        error: err
+      };
+
+    case MODAL_DETAIL_SERVICE_BEGIN:
+      return {
+        ...state,
+      };
+
+    case MODAL_DETAIL_SERVICE_SUCCESS:
+      return {
+        ...state,
+        detailService: data
+      };
+
+    case MODAL_DETAIL_SERVICE_ERR:
+      return {
+        ...state,
+        isOpenModalEdit: false,
         error: err
       };
 

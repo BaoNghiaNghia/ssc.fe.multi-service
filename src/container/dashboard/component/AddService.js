@@ -150,7 +150,7 @@ function AddService({ isOpen, setState }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' placeholder='Tên dịch vụ'/>
+                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ'/>
               </Form.Item>
             </Col>
           </Row>
@@ -235,7 +235,7 @@ function AddService({ isOpen, setState }) {
           </Row>
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="min"  label="Số sub order min" rules={[{
+              <Form.Item style={{ margin: '0px' }} name="min"  label="Số sub order min" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -243,7 +243,7 @@ function AddService({ isOpen, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max" label="Số Sub (order max)" rules={[{
+              <Form.Item style={{ margin: '0px' }} name="max" label="Số Sub (order max)" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -251,7 +251,7 @@ function AddService({ isOpen, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="price_per_10" label="Prices / 10 Subs" rules={[{
+              <Form.Item style={{ margin: '0px' }} name="price_per_10" label="Prices / 10 Subs" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>

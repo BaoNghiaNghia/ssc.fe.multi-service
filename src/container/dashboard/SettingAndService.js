@@ -34,6 +34,7 @@ function SettingAndService() {
     isOpenAdd: false,
     isOpenEdit: false,
     isOpenDel: false,
+    selectedRowData: {},
     notData: searchData,
     item: orders,
     selectedRowKeys: [],
@@ -122,7 +123,9 @@ function SettingAndService() {
           </Row>
         </>,
         range: <>
-          <span className="customer-name">{numberWithCommas(min || 0)} - {numberWithCommas(max || 0)}</span>
+          <span style={{ display: 'inline-flex', justifyContent: 'space-between' }}>
+            <span className='index-above-left'>{numberWithCommas(min || 0)}</span> &nbsp; - &nbsp; <span className='index-above-right'>{numberWithCommas(max || 0)}</span>
+          </span>
         </>,
         price: <>
           <span className="currency" style={{ display: 'inline-flex', fontWeight: '800', color: 'green' }}>{numberWithCommas(price_per_10 || 0)}</span>
@@ -136,7 +139,12 @@ function SettingAndService() {
         </>,
         action: <>
           <Tooltip title="Sửa dịch vụ">
-            <Button size="default" type="default" style={{ marginRight: '5px' }} onClick={() => setState({ isOpenEdit: true })}>
+            <Button size="default" type="default" style={{ marginRight: '5px' }} onClick={() => {
+              console.log('----- type nè ------', value);
+
+              setState({ isOpenEdit: true, selectedRowData: value });
+              dispatch(actions.modalDetailServiceBegin(value));
+            }}>
               <FiEdit2 style={{ marginTop: '4px' }} />
             </Button>
           </Tooltip>
@@ -194,6 +202,7 @@ function SettingAndService() {
 
       <EditService
         isOpen={isOpenEdit}
+        state={state}
         setState={setState}
       />
 
@@ -229,9 +238,9 @@ function SettingAndService() {
                 </div>
                 <Table
                   showHeader={false}
+                  pagination={false}
                   dataSource={dataSource}
                   columns={columns}
-                  pagination={{ hideOnSinglePage: true }}
                 />
               </TableWrapper>
             </Col>

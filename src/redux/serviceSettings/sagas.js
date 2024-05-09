@@ -4,6 +4,7 @@ import actions from "./actions";
 
 import {
   createServiceAPI,
+  updateServiceAPI,
   fetchListServiceAPI
 } from '../../config/apiFactory/ServiceSetting/index';
 
@@ -12,7 +13,6 @@ import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 function* fetchListServicesFunc(params) {
   try {
-    console.log('--- check list services ----');
     const response = yield call(fetchListServiceAPI, params);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
@@ -71,6 +71,56 @@ function* createServicesFunc(params) {
     } finally { /* empty */ }
 }
 
+function* updateServicesFunc(params) {
+  try {
+    console.log('--- update services ---', params);
+
+    const response = yield call(updateServiceAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateServiceSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListServiceBegin()
+      );
+
+      toast.success(response?.data?.message);
+    }
+  } catch (error) {
+      const errorMessage = error;
+      yield put(
+        actions.updateServiceErr({ error: errorMessage || 'Update services list failed' })
+      );
+
+      console.log('------ error ------', errorMessage)
+  
+      if (errorMessage?.response?.data?.data?.error) {
+        toast.error(errorMessage?.response?.data?.data?.error);
+      } else if (errorMessage?.response?.data?.message) {
+        toast.error(errorMessage?.response?.data?.message);
+      } else {
+        toast.error('Update services list failed');
+      }
+
+  } finally { /* empty */ }
+}
+
+export function* modalDetailServiceFunc(params) {
+  try {
+    yield put(
+      actions.modalDetailServiceSuccess(params?.payload)
+    );
+  } catch (error) {
+      const errorMessage = error;
+
+      yield put(
+        actions.modalDetailServiceErr({ error: errorMessage || 'Update services list failed' })
+      );
+  } finally { /* empty */ }
+}
+
 export function* fetchListServicesWatcherSaga() {
   yield takeLatest(actions.FETCH_LIST_SERVICES_BEGIN, fetchListServicesFunc);
 }
@@ -79,3 +129,10 @@ export function* createServicesWatcherSaga() {
   yield takeLatest(actions.CREATE_SERVICES_BEGIN, createServicesFunc);
 }
 
+export function* updateServicesWatcherSaga() {
+  yield takeLatest(actions.UPDATE_SERVICES_BEGIN, updateServicesFunc);
+}
+
+export function* modalDetailServiceWatcherSaga() {
+  yield takeLatest(actions.MODAL_DETAIL_SERVICE_BEGIN, modalDetailServiceFunc);
+}

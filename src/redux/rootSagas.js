@@ -41,7 +41,9 @@ import {
 
 import { 
     createServicesWatcherSaga,
-    fetchListServicesWatcherSaga
+    fetchListServicesWatcherSaga,
+    modalDetailServiceWatcherSaga,
+    updateServicesWatcherSaga
 } from './serviceSettings/sagas';
 
 export default function* rootSaga() {
@@ -68,6 +70,8 @@ export default function* rootSaga() {
         setRangeDateOrderHistoryWatcherSaga(),
         changeOrderHistoryTypeWatcherSaga(),
         fetchListServicesWatcherSaga(),
-        createServicesWatcherSaga()
+        createServicesWatcherSaga(),
+        updateServicesWatcherSaga(),
+        modalDetailServiceWatcherSaga()
     ]);
 }

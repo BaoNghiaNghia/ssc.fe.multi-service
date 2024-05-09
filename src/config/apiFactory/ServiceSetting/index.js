@@ -13,9 +13,11 @@ import {
  const fetchListServiceAPI = (query) => ServiceAPI.createBasicCRUDEndpoints({ name: GENERAL_SERVICES_ENDPOINT }).get(query);
 
  const createServiceAPI = (params) => ServiceAPI.createBasicCRUDEndpoints({ name: GENERAL_SERVICES_ENDPOINT }).post(params);
+ const updateServiceAPI = (params) => ServiceAPI.createBasicCRUDEndpoints({ name: GENERAL_SERVICES_ENDPOINT }).update(params);
  
  export {
     fetchListServiceAPI,
-    createServiceAPI
+    createServiceAPI, 
+    updateServiceAPI
  }
  

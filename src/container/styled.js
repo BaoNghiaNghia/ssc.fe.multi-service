@@ -1476,6 +1476,21 @@ const TableWrapper = Styled.div`
                         content: ' đ';
                         margin-top: -6px;
                     }
+                    .index-above-left::before {
+                        margin-right: 3px;
+                        content: 'Min ';
+                        color: #bbbbbb;
+                        margin-top: -10px;
+                        top: -10;
+                        font-size: 9px;
+                    }
+                    .index-above-right::before {
+                        margin-right: 3px;
+                        content: ' Max';
+                        color: #bbbbbb;
+                        margin-top: -6px !important;;
+                        font-size: 9px;
+                    }
                     .status{
                         min-width: 175px;
                     }
