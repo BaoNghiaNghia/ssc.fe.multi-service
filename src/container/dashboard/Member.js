@@ -1,41 +1,111 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table } from 'antd';
+import { Row, Col, Table, Tooltip, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import { Link } from 'react-router-dom';
+import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { IoPeopleOutline } from "react-icons/io5";
 import DetailMember from './component/DetailMember';
-import { TopToolBox } from './style';
+import AddTopup from './component/AddTopup';
+import { GalleryNav, TopToolBox } from './style';
+import EditMember from './component/EditMember';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import { orderFilter } from '../../redux/orders/actionCreator';
 import actions from '../../redux/member/actions';
 import { numberWithCommas } from '../../utility/utility';
+import { MEMBER_TABLE_TYPE } from '../../variables';
+
+const columnsMember = [
+  {
+    title: 'Họ tên',
+    dataIndex: 'username',
+    key: 'username',
+  },
+  {
+    title: 'Số tiền',
+    dataIndex: 'point',
+    key: 'point',
+  },
+  {
+    title: 'Giảm giá',
+    dataIndex: 'discount',
+    key: 'discount',
+  },
+  {
+    title: 'Đơn cuối',
+    dataIndex: 'last_order_time',
+    key: 'last_order_time',
+  },
+  {
+    title: 'Hành động',
+    dataIndex: 'action',
+    key: 'action',
+  },
+];
+
+const columnsToup = [
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
+    title: 'Số tiền',
+    dataIndex: 'amount',
+    key: 'amount',
+  },
+  {
+    title: 'Người nạp tiền',
+    dataIndex: 'user_id',
+    key: 'user_id',
+  },
+  {
+    title: 'Người xác nhận',
+    dataIndex: 'confirmed_by',
+    key: 'confirmed_by',
+  },
+  {
+    title: 'Thời gian xác nhận',
+    dataIndex: 'confirmed_at',
+    key: 'confirmed_at',
+  },
+  {
+    title: 'Trạng thái',
+    dataIndex: 'confirmed',
+    key: 'confirmed',
+  },
+];
 
 function Member() {
   const dispatch = useDispatch();
-  const { searchData, orders, userList, isLoading } = useSelector(state => {
+
+  const { searchData, orders, userList, isLoading, typeTable, topupList } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
       userList: state?.member?.userList,
-      isLoading: state?.member?.loading
+      isLoading: state?.member?.loading,
+      typeTable: state?.member?.typeTable,
+      topupList: state?.member?.topupList?.topups
     };
   });
 
   const [state, setState] = useState({
-    isModalDetail: false,
+    isModalDetailMem: false,
+    isModalAddTopup: false,
+    isModalEditMem: false,
     notData: searchData,
     item: orders,
     selectedRowKeys: [],
   });
 
   const { notData, item, selectedRowKeys } = state;
-  const filterKey = ['Shipped', 'Awaiting Shipment', 'Canceled'];
 
   useEffect(() => {
     if (orders) {
@@ -57,12 +127,9 @@ function Member() {
       notData: data,
     });
   };
-
-  const handleChangeForFilter = e => {
-    dispatch(orderFilter('status', e.target.value));
-  };
-
   const dataSource = [];
+  const dataSourceTopup = [];
+
   if (userList?.length) {
     userList?.map((value, key) => {
       const { api_key, discount, id, last_order_time, max_threads, order_running, credit, sub_order, total_order_runed, fullname, email, credit_used, phone } = value;
@@ -148,70 +215,100 @@ function Member() {
         ),
         action: (
           <div className="table-actions">
-            <>
-              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => setState({ isModalDetail: true })}>
+            <Tooltip title="Chi tiết">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                onClick={() => {
+                  dispatch(actions.detailUserAdminBegin({ id }));
+                  setState({ isModalDetailMem: true });
+                }}
+              >
                 <FeatherIcon icon="eye" size={16} />
               </Button>
-              <Button className="btn-icon" type="info" to="#" shape="circle">
+            </Tooltip>
+            <Tooltip title="Tạo Topup">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
+                dispatch(actions.detailUserAdminBegin({ id }));
+                setState({ isModalAddTopup: true });
+              }}>
+                <FaMoneyBillTransfer  fontSize={15}/>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Cập nhật">
+              <Button className="btn-icon" type="info" to="#" shape="circle" onClick={() => {
+                dispatch(actions.detailUserAdminBegin({ id }));
+                setState({ isModalEditMem: true });
+              }}>
                 <FeatherIcon icon="edit" size={16} />
               </Button>
-              <Button className="btn-icon" type="danger" to="#" shape="circle">
-                <FeatherIcon icon="trash-2" size={16} />
+            </Tooltip>
+          </div>
+        ),
+      });
+    });
+  }
+  
+
+  if (topupList?.length) {
+    topupList?.map((value, key) => {
+      const { amount, confirmed, confirmed_at, confirmed_by, created_at, id, user_id } = value;
+      const findUser = userList.filter((item) => item.id === user_id);
+      console.log('---- user fine ----', findUser);
+      return dataSourceTopup.push({
+        key: key + 1,
+        id: <span>{ id || '...'}</span>,
+        amount: <span>{numberWithCommas(amount || 0)}</span>,
+        user_id: <>
+          <span style={{ margin: '0px', fontWeight: '700' }}>{ findUser[0]?.fullname }</span>
+          <span style={{ margin: '0px', fontSize: '0.7em' }}>{ findUser[0]?.email }</span>
+        </>,
+        confirmed_by: <>
+          <span style={{ margin: '0px', fontWeight: '700' }}>{ confirmed_by ? userList.filter((item) => item.id === confirmed_by)[0]?.fullname : '...' }</span>
+          <span style={{ margin: '0px', fontSize: '0.7em' }}>{ confirmed_by ? userList.filter((item) => item.id === confirmed_by)[0]?.email : '' }</span>
+        </>,
+        confirmed_at: <span>{confirmed_at  || '...'}</span>,
+        confirmed: <>{
+          confirmed 
+            ? <><Badge color='green' count='Đã xác nhận' /></>
+            : <><Badge color='orange' count='Chưa xác nhận'/></>
+          }</>,
+        action: (
+          <div className="table-actions">
+            <Tooltip title="Chi tiết">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                onClick={() => {
+                  dispatch(actions.detailUserAdminBegin({ id }));
+                  setState({ isModalDetailMem: true });
+                }}
+              >
+                <FeatherIcon icon="eye" size={16} />
               </Button>
-            </>
+            </Tooltip>
+            <Tooltip title="Tạo Topup">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
+                dispatch(actions.detailUserAdminBegin({ id }));
+                setState({ isModalDetailMem: true });
+              }}>
+                <FaMoneyBillTransfer  fontSize={15}/>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Cập nhật">
+              <Button className="btn-icon" type="info" to="#" shape="circle" onClick={() => {
+                dispatch(actions.detailUserAdminBegin({ id }));
+                setState({ isModalEditMem: true });
+              }}>
+                <FeatherIcon icon="edit" size={16} />
+              </Button>
+            </Tooltip>
           </div>
         ),
       });
     });
   }
 
-  const columns = [
-    {
-      title: 'Họ tên',
-      dataIndex: 'username',
-      key: 'username',
-    },
-    {
-      title: 'Số tiền',
-      dataIndex: 'point',
-      key: 'point',
-    },
-    {
-      title: 'Giảm giá',
-      dataIndex: 'discount',
-      key: 'discount',
-    },
-    {
-      title: 'Luồng max',
-      dataIndex: 'max_threads',
-      key: 'max_threads',
-    },
-    {
-      title: 'KEY_API',
-      dataIndex: 'api_key',
-      key: 'api_key',
-    },
-    {
-      title: 'Đơn cuối',
-      dataIndex: 'last_order_time',
-      key: 'last_order_time',
-    },
-    {
-      title: 'Đơn đang chạy',
-      dataIndex: 'order_running',
-      key: 'order_running',
-    },
-    {
-      title: 'Subscribe order',
-      dataIndex: 'sub_order',
-      key: 'sub_order',
-    },
-    {
-      title: 'Hành động',
-      dataIndex: 'action',
-      key: 'action',
-    },
-  ];
+  const handleChange = (value) => {
+    dispatch(actions.changeTypeTableBegin(value));
+    setState({ ...state, activeClass: value });
+  };
 
   const onSelectChange = selectedRowKey => {
     setState({ ...state, selectedRowKeys: selectedRowKey });
@@ -223,25 +320,51 @@ function Member() {
     },
   };
 
-  const { isModalDetail } = state;
+  const { isModalDetailMem, isModalEditMem, isModalAddTopup } = state;
 
   return (
     <>
+      <AddTopup
+        isOpen={isModalAddTopup}
+        setState={setState}
+      />
       <DetailMember
-        isOpen={isModalDetail}
+        isOpen={isModalDetailMem}
+        setState={setState}
+      />
+      <EditMember
+        isOpen={isModalEditMem}
         setState={setState}
       />
       <PageHeader
         ghost
-        title="Thành viên"
-        // buttons={[
-        //   <div key="1" className="page-header-actions">
-        //     <Button size="small" key="4" type="primary">
-        //       <FeatherIcon icon="plus" size={14} />
-        //       Thêm mới
-        //     </Button>
-        //   </div>,
-        // ]}
+        title="Thành viên & Thanh toán"
+        buttons={[
+          <GalleryNav>
+            <ul>
+              <li>
+                <Link
+                  className={typeTable === MEMBER_TABLE_TYPE.MEMBER.title ? 'active' : 'deactivate'}
+                  onClick={() => handleChange(MEMBER_TABLE_TYPE.MEMBER.title)}
+                  to="#"
+                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
+                >
+                  <IoPeopleOutline  fontSize={15}/> <span>Thành viên</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={typeTable === MEMBER_TABLE_TYPE.TOPUP.title ? 'active' : 'deactivate'}
+                  onClick={() => handleChange(MEMBER_TABLE_TYPE.TOPUP.title)}
+                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
+                  to="#"
+                >
+                  <FaMoneyBillTransfer  fontSize={15}/> <span>Nạp tiền</span>
+                </Link>
+              </li>
+            </ul>
+          </GalleryNav>,
+        ]}
       />
       <Main>
         <Cards headless>
@@ -255,7 +378,7 @@ function Member() {
                     </div>
                   </Col>
                   <Col xxl={14} lg={16} xs={24}>
-                    <div className="table-toolbox-menu">
+                    {/* <div className="table-toolbox-menu">
                       <span className="toolbox-menu-title"> Trạng thái:</span>
                       <Radio.Group onChange={handleChangeForFilter} defaultValue="">
                         <Radio.Button value="">All</Radio.Button>
@@ -268,14 +391,14 @@ function Member() {
                             );
                           })}
                       </Radio.Group>
-                    </div>
+                    </div> */}
                   </Col>
                   <Col xxl={4} xs={24}>
-                    <div className="table-toolbox-actions">
+                    {/* <div className="table-toolbox-actions">
                       <Button size="small" type="primary">
                         <FeatherIcon icon="plus" size={12} /> Thêm mới
                       </Button>
-                    </div>
+                    </div> */}
                   </Col>
                 </Row>
               </TopToolBox>
@@ -284,13 +407,25 @@ function Member() {
           <Row gutter={15}>
             <Col md={24}>
               <TableWrapper className="table-order table-responsive">
-                <Table
-                  rowSelection={rowSelection}
-                  dataSource={dataSource}
-                  loading={isLoading}
-                  columns={columns}
-                  pagination={{ pageSize: 20, showSizeChanger: true, total: userList?.length }}
-                />
+                {
+                  typeTable === MEMBER_TABLE_TYPE.MEMBER.title ? (
+                    <Table
+                      rowSelection={rowSelection}
+                      dataSource={dataSource}
+                      loading={isLoading}
+                      columns={columnsMember}
+                      pagination={{ pageSize: 20, showSizeChanger: true, total: userList?.length }}
+                    />
+                  ) : (
+                    <Table
+                      rowSelection={rowSelection}
+                      dataSource={dataSourceTopup}
+                      loading={isLoading}
+                      columns={columnsToup}
+                      pagination={{ pageSize: 20, showSizeChanger: true, total: userList?.length }}
+                    />
+                  )
+                }
               </TableWrapper>
             </Col>
           </Row>

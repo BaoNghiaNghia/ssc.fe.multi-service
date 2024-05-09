@@ -71,6 +71,22 @@ class ApiFactory {
     }
 
     /**
+     * SUBMIT GET
+     */
+    endpoints.submitGet = (toSubmit, config) => {
+      const customHeaders = config && config.headers && { ...config.headers };
+      console.log('---- resource url -----', resourceURL.replace("id", toSubmit), toSubmit);
+
+      return axios.get(resourceURL.replace("id", toSubmit), toSubmit, {
+        ...config,
+        headers: {
+          authorization: token ? `Bearer ${token}` : null,
+          ...customHeaders
+        }
+      });
+    }
+
+    /**
      * GET/{:ID}
      */
     endpoints.getOne = (id, config = { headers: { authorization: token ? `Bearer ${token}` : null } }) =>

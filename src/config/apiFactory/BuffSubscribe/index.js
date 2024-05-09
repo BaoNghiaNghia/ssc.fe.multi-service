@@ -21,7 +21,6 @@ BuffSubscribeAPI.createEntities([
 const fetchAdminSettingAPI = () => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: FETCH_ADMIN_SETTING_ENDPOINT }).get();
 const fetchListOrderSubscribeAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: FETCH_LIST_ORDER_SUBSCRIBE_ENDPOINT }).get(query);
 const fetchServicePackageListAPI = () => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: FETCH_SERVICE_PACKAGE_LIST_ENDPOINT }).get();
-const fetchUserListAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: FETCH_USER_LIST_ENDPOINT }).get(query);
 
 const fetchOrderHistoryAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: FETCH_LIST_ORDER_HISTORY_ENDPOINT }).get(query);
 
@@ -29,6 +28,5 @@ export {
     fetchAdminSettingAPI,
     fetchListOrderSubscribeAPI,
     fetchServicePackageListAPI,
-    fetchUserListAPI,
     fetchOrderHistoryAPI
 }

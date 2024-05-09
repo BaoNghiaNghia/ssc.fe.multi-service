@@ -16,6 +16,34 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/serviceSettings/actions';
 
+const badgeGreenStyle = {
+  border: '1.3px solid #00ab00',
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: '#00ab00',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+const badgeRedStyle = {
+  border: '1.3px solid red',
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'red',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
 function SettingAndService() {
   const dispatch = useDispatch();
   const { searchData, orders, listService } = useSelector(state => {
@@ -34,6 +62,7 @@ function SettingAndService() {
     isOpenAdd: false,
     isOpenEdit: false,
     isOpenDel: false,
+    selectedService: '',
     selectedRowData: {},
     notData: searchData,
     item: orders,
@@ -47,34 +76,6 @@ function SettingAndService() {
       });
     }
   }, [orders]);
-
-  const badgeGreenStyle = {
-    border: '1.3px solid #00ab00',
-    fontFamily: 'Be Vietnam Pro',
-    borderRadius: '7px ',
-    padding: '2px 7px',
-    fontSize: '0.7em',
-    color: '#00ab00',
-    fontWeight: 'bold',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '5px'
-  }
-
-  const badgeRedStyle = {
-    border: '1.3px solid red',
-    fontFamily: 'Be Vietnam Pro',
-    borderRadius: '7px ',
-    padding: '2px 7px',
-    fontSize: '0.7em',
-    color: 'red',
-    fontWeight: 'bold',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '5px'
-  }
 
   const dataSource = [];
   if (listService?.length) {

@@ -139,17 +139,14 @@ function PendingBuffComment() {
       <PageHeader
         ghost
         title="Comment - Chờ duyệt"
-        buttons={[
-          <div key="1" className="page-header-actions">
-            <CalendarButtonPageHeader key="1" />
-            <ExportButtonPageHeader key="2" />
-            <ShareButtonPageHeader key="3" />
-            <Button size="small" key="4" type="primary">
-              <FeatherIcon icon="plus" size={14} />
-              Add New
-            </Button>
-          </div>,
-        ]}
+        // buttons={[
+        //   <div key="1" className="page-header-actions">
+        //     <Button size="small" key="4" type="primary">
+        //       <FeatherIcon icon="plus" size={14} />
+        //       Add New
+        //     </Button>
+        //   </div>,
+        // ]}
       />
       <Main>
         <Cards headless>
@@ -163,7 +160,7 @@ function PendingBuffComment() {
                     </div>
                   </Col>
                   <Col xxl={14} lg={16} xs={24}>
-                    <div className="table-toolbox-menu">
+                    {/* <div className="table-toolbox-menu">
                       <span className="toolbox-menu-title"> Status:</span>
                       <Radio.Group onChange={handleChangeForFilter} defaultValue="">
                         <Radio.Button value="">All</Radio.Button>
@@ -176,15 +173,12 @@ function PendingBuffComment() {
                             );
                           })}
                       </Radio.Group>
-                    </div>
+                    </div> */}
                   </Col>
                   <Col xxl={4} xs={24}>
                     <div className="table-toolbox-actions">
-                      <Button size="small" type="secondary" transparented>
-                        Export
-                      </Button>
                       <Button size="small" type="primary">
-                        <FeatherIcon icon="plus" size={12} /> Add Order
+                        <FeatherIcon icon="plus" size={12} /> Thêm mới
                       </Button>
                     </div>
                   </Col>

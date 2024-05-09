@@ -2,10 +2,6 @@ const actions = {
     FETCH_LIST_ORDER_SUBSCRIBE_BEGIN: 'FETCH_LIST_ORDER_SUBSCRIBE_BEGIN',
     FETCH_LIST_ORDER_SUBSCRIBE_SUCCESS: 'FETCH_LIST_ORDER_SUBSCRIBE_SUCCESS',
     FETCH_LIST_ORDER_SUBSCRIBE_ERR: 'FETCH_LIST_ORDER_SUBSCRIBE_ERR',
-    
-    FETCH_USER_LIST_BEGIN: 'FETCH_USER_LIST_BEGIN',
-    FETCH_USER_LIST_SUCCESS: 'FETCH_USER_LIST_SUCCESS',
-    FETCH_USER_LIST_ERR: 'FETCH_USER_LIST_ERR',
 
     FETCH_ADMIN_SETTING_BEGIN: 'FETCH_ADMIN_SETTING_BEGIN',
     FETCH_ADMIN_SETTING_SUCCESS: 'FETCH_ADMIN_SETTING_SUCCESS',
@@ -148,27 +144,6 @@ const actions = {
     fetchServicePackageListErr: (err) => {
       return {
         type: actions.FETCH_SERVICE_PACKAGE_LIST_ERR,
-        err,
-      };
-    },
-  
-    fetchUserListBegin: (payload) => {
-      return {
-        type: actions.FETCH_USER_LIST_BEGIN,
-        payload
-      };
-    },
-  
-    fetchUserListSuccess: (data) => {
-      return {
-        type: actions.FETCH_USER_LIST_SUCCESS,
-        data,
-      };
-    },
-  
-    fetchUserListErr: (err) => {
-      return {
-        type: actions.FETCH_USER_LIST_ERR,
         err,
       };
     },

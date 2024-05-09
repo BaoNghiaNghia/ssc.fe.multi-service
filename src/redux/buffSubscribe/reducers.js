@@ -29,10 +29,6 @@ const {
     FETCH_SERVICE_PACKAGE_LIST_ERR,
     FETCH_SERVICE_PACKAGE_LIST_SUCCESS,
 
-    FETCH_USER_LIST_BEGIN,
-    FETCH_USER_LIST_ERR,
-    FETCH_USER_LIST_SUCCESS,
-
     FETCH_LIST_ORDER_HISTORY_BEGIN,
     FETCH_LIST_ORDER_HISTORY_ERR,
     FETCH_LIST_ORDER_HISTORY_SUCCESS,
@@ -161,26 +157,6 @@ const ReportsReducer = (state = initialState, action) => {
       };
 
     case FETCH_SERVICE_PACKAGE_LIST_ERR:
-      return {
-        ...state,
-        error: err,
-        loading: false,
-      };
-
-    case FETCH_USER_LIST_BEGIN:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case FETCH_USER_LIST_SUCCESS:
-      return {
-        ...state,
-        userList: data,
-        loading: false,
-      };
-
-    case FETCH_USER_LIST_ERR:
       return {
         ...state,
         error: err,

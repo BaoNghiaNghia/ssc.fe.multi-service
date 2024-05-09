@@ -8,7 +8,7 @@ import actions from '../../../redux/member/actions';
 
 const { Option } = Select;
 
-function DetailMember({ isOpen, setState }) {
+function AddTopup({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formDetailMember] = Form.useForm();
 
@@ -23,9 +23,28 @@ function DetailMember({ isOpen, setState }) {
     formDetailMember.setFieldValue('role', detailUser?.group?.role);
   });
 
+  const handleOk = () => {
+    try {
+      formDetailMember.validateFields();
+  
+      const requestData = {}
+  
+      dispatch(actions.updateUserAdminBegin(requestData));
+
+      setState({
+        isModalAddTopup: false,
+      });
+
+      formDetailMember.resetFields();
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+
   const handleCancel = () => {
     setState({
-      isModalDetailMem: false,
+      isModalAddTopup: false,
     });
   }
 
@@ -39,16 +58,24 @@ function DetailMember({ isOpen, setState }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Chi tiết thành viên</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Thông tin chi tiết thành viên</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Nạp tiền</p>
+                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Nạp thêm tiền vào tài khoản thành viên</p>
               </div>
             </div>
           </>
         }
+        onOk={handleOk}
         onCancel={handleCancel}
-        footer={null}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Hủy
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleOk}>
+            Cập nhật
+          </Button>
+        ]}
       >
-        <Form name="detail_member" layout="vertical" form={formDetailMember}>
+        <Form name="detail_member" layout="vertical" form={formDetailMember} onFinish={handleOk}>
           <Row gutter="10">
             <Col sm={12}>
               <Form.Item name="fullname" label="Họ tên" rules={[{
@@ -120,9 +147,9 @@ function DetailMember({ isOpen, setState }) {
   );
 }
 
-DetailMember.propTypes = {
+AddTopup.propTypes = {
   isOpen: PropTypes.bool,
   setState: PropTypes.func
 };
 
-export default DetailMember;
+export default AddTopup;

@@ -27,7 +27,6 @@ import {
     fetchListOrderSubscribeWatcherSaga,
     fetchOrderHistoryWatcherSaga,
     fetchServicePackageListWatcherSaga,
-    fetchUserListWatcherSaga,
     setRangeDateOrderHistoryWatcherSaga
 } from './buffSubscribe/sagas';
 
@@ -36,7 +35,12 @@ import {
 } from './blacklist/sagas';
 
 import {
-    fetchUserListMemberWatcherSaga
+    fetchUserListMemberWatcherSaga,
+    detailUserAdminMemberWatcherSaga,
+    updateUserAdminMemberWatcherSaga,
+    changeTableTypeMemberWatcherSaga,
+    createTopupItemWatcherSaga,
+    fetchTopupListMemberWatcherSaga
 } from './member/sagas';
 
 import { 
@@ -62,7 +66,6 @@ export default function* rootSaga() {
         fetchAdminSettingWatcherSaga(),
         fetchListOrderSubscribeWatcherSaga(),
         fetchServicePackageListWatcherSaga(),
-        fetchUserListWatcherSaga(),
         fetchBlackListChannelWatcherSaga(),
         fetchUserListMemberWatcherSaga(),
         changeServiceTypeWatcherSaga(),
@@ -72,6 +75,11 @@ export default function* rootSaga() {
         fetchListServicesWatcherSaga(),
         createServicesWatcherSaga(),
         updateServicesWatcherSaga(),
-        modalDetailServiceWatcherSaga()
+        modalDetailServiceWatcherSaga(),
+        detailUserAdminMemberWatcherSaga(),
+        updateUserAdminMemberWatcherSaga(),
+        changeTableTypeMemberWatcherSaga(),
+        createTopupItemWatcherSaga(),
+        fetchTopupListMemberWatcherSaga()
     ]);
 }

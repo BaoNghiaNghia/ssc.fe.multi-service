@@ -8,12 +8,13 @@ import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
+import { FixedServiceTemp } from '../../../variables/index';
 
 const { Option } = Select;
 
 function EditService({ isOpen, setState, state }) {
   const dispatch = useDispatch();
-  const [formCreateService] = Form.useForm();
+  const [formUpdateService] = Form.useForm();
 
   const { postLoading, detailService } = useSelector(item => {
     return {
@@ -23,31 +24,31 @@ function EditService({ isOpen, setState, state }) {
   });
 
   useEffect(() => {
-    formCreateService.setFieldsValue(detailService);
-    formCreateService.setFieldValue('priority', String(detailService?.priority));
-    formCreateService.setFieldValue('type', detailService?.type);
+    formUpdateService.setFieldsValue(detailService);
+    formUpdateService.setFieldValue('priority', String(detailService?.priority));
+    formUpdateService.setFieldValue('type', detailService?.type);
   });
 
   const handleOk = () => {
     try {
-      formCreateService.validateFields();
+      formUpdateService.validateFields();
   
       const requestData = {
         id: detailService.id,
-        category: formCreateService.getFieldValue('category'),
-        platform: formCreateService.getFieldValue('platform') || 'Youtube',
-        service_type: formCreateService.getFieldValue('service_type'),
-        type: formCreateService.getFieldValue('type'),
-        description: formCreateService.getFieldValue('description'),
+        category: formUpdateService.getFieldValue('category'),
+        platform: formUpdateService.getFieldValue('platform') || 'Youtube',
+        service_type: formUpdateService.getFieldValue('service_type'),
+        type: formUpdateService.getFieldValue('type'),
+        description: formUpdateService.getFieldValue('description'),
         enabled: true,
-        min: formCreateService.getFieldValue('min'),
-        max: formCreateService.getFieldValue('max'),
-        max_threads: formCreateService.getFieldValue('max_threads'),
-        max_threads_3000: formCreateService.getFieldValue('max_threads_3000'),
-        max_threads_5000: formCreateService.getFieldValue('max_threads_5000'),
-        name: formCreateService.getFieldValue('name'),
-        price_per_10: formCreateService.getFieldValue('price_per_10'),
-        priority: formCreateService.getFieldValue('priority') === 'true'
+        min: formUpdateService.getFieldValue('min'),
+        max: formUpdateService.getFieldValue('max'),
+        max_threads: formUpdateService.getFieldValue('max_threads'),
+        max_threads_3000: formUpdateService.getFieldValue('max_threads_3000'),
+        max_threads_5000: formUpdateService.getFieldValue('max_threads_5000'),
+        name: formUpdateService.getFieldValue('name'),
+        price_per_10: formUpdateService.getFieldValue('price_per_10'),
+        priority: formUpdateService.getFieldValue('priority') === 'true'
       }
   
       dispatch(actions.updateServiceBegin(requestData));
@@ -56,12 +57,12 @@ function EditService({ isOpen, setState, state }) {
         isOpenAdd: false,
       });
 
-      formCreateService.resetFields();
+      formUpdateService.resetFields();
     } catch (err) {
       setState({
         isOpenAdd: false,
       });
-      formCreateService.resetFields();
+      formUpdateService.resetFields();
       console.log(err);
     }
 
@@ -71,7 +72,8 @@ function EditService({ isOpen, setState, state }) {
     setState({
       isOpenAdd: false,
     });
-    formCreateService.resetFields();
+
+    formUpdateService.resetFields();
   }
 
   return (
@@ -97,38 +99,56 @@ function EditService({ isOpen, setState, state }) {
             Hủy
           </Button>,
           <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-            Thêm mới
+            Cập nhật
           </Button>
         ]}
       >
-        <Form name="add_service" layout="vertical" form={formCreateService} onFinish={handleOk}>
-          <Row gutter="10">
+        <Form name="add_service" layout="vertical" form={formUpdateService} onFinish={handleOk}>
+          <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
             <Col sm={12}>
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
-                <span style={{ marginRight: '15px' }}>Platform: </span>
+                <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
                 <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>{state?.category}</span>
+                <span style={{ fontSize: '16px', fontWeight: '700' }}>{detailService?.platform}</span>
               </div>
             </Col>
             <Col sm={12}>
-              <Form.Item name="category"  bordered rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Select style={{ width: '100%', margin: '0px', padding: '0px' }} bordered={false} initialValue="Comments" size='small'>                    
+              <Form.Item
+                name="category"
+                style={{ margin: '0px' }}
+                bordered 
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Select
+                  style={{ width: '100%', margin: '0px', padding: '0px' }}
+                  bordered={false}
+                  initialValue="Comments"
+                  size='small'
+                  onClick={(value) => {
+                    const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
+
+                    if (selectedService?.length > 0) {
+                      formUpdateService.setFieldValue('type', selectedService[0]?.type);
+                      formUpdateService.setFieldValue('service_type', selectedService[0]?.service_type);
+                    }
+                  }}
+                >                    
                   <Option value="Comments">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comment</span>
+                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
                     </div>
                   </Option>
                   <Option value="Likes">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Like</span>
+                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Likes</span>
                     </div>
                   </Option>
-                  <Option value="Subscribes">
+                  <Option value="Subscribers">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribe</span>
+                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribers</span>
                     </div>
                   </Option>
                 </Select>
@@ -136,14 +156,13 @@ function EditService({ isOpen, setState, state }) {
             </Col>
           </Row>
 
-          <Divider plain style={{ margin: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Thông tin dịch vụ</Divider>
+          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
             <Col sm={24}>
               <Form.Item 
                 name="name" 
                 label="Tên dịch vụ"
-                
                 style={{ marginBottom: '7px' }} 
                 rules={[{
                   required: true,
@@ -177,7 +196,7 @@ function EditService({ isOpen, setState, state }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Select style={{ width: '100%' }} initialValue='ytbsubscribe' size='small'>
+                <Select disabled style={{ width: '100%' }} initialValue='ytbsubscribe' size='small'>
                   <Option value="ytbsubscribe">Subscribe</Option>
                   <Option value="ytbcomment">Comment</Option>
                   <Option value="ytblike">Like</Option>
@@ -189,7 +208,7 @@ function EditService({ isOpen, setState, state }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' placeholder="Thêm loại"/>
+                <Input size='small' disabled placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={6}>

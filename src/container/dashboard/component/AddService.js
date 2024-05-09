@@ -8,6 +8,7 @@ import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
+import { FixedServiceTemp } from '../../../variables';
 
 const { Option } = Select;
 
@@ -103,33 +104,47 @@ function AddService({ isOpen, setState }) {
         ]}
       >
         <Form name="add_service" layout="vertical" form={formCreateService} onFinish={handleSubmit}>
-          <Row gutter="10">
+          <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
             <Col sm={12}>
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
-                <span style={{ marginRight: '15px' }}>Platform: </span>
+                <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
                 <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
                 <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
               </div>
             </Col>
             <Col sm={12}>
-              <Form.Item name="category" initialValue="Subscribes" bordered rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
+              <Form.Item 
+                name="category"
+                style={{ margin: '0px' }}
+                initialValue="Subscribers"
+                bordered
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+                onClick={(value) => {
+                  const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
+
+                  if (selectedService?.length > 0) {
+                    formCreateService.setFieldValue('type', selectedService[0]?.type);
+                    formCreateService.setFieldValue('service_type', selectedService[0]?.service_type);
+                  }
+                }}
+              >
                 <Select style={{ width: '100%', margin: '0px', padding: '0px' }} bordered={false} initialValue="Comments" size='small'>                    
                   <Option value="Comments">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comment</span>
+                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
                     </div>
                   </Option>
                   <Option value="Likes">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Like</span>
+                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Likes</span>
                     </div>
                   </Option>
-                  <Option value="Subscribes">
+                  <Option value="Subscribers">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribe</span>
+                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribers</span>
                     </div>
                   </Option>
                 </Select>
@@ -137,7 +152,7 @@ function AddService({ isOpen, setState }) {
             </Col>
           </Row>
 
-          <Divider plain style={{ margin: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Thông tin dịch vụ</Divider>
+          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
             <Col sm={24}>
@@ -177,7 +192,7 @@ function AddService({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Select style={{ width: '100%' }} initialValue='ytbsubscribe' size='small'>
+                <Select style={{ width: '100%' }} disabled initialValue='ytbsubscribe' size='small'>
                   <Option value="ytbsubscribe">Subscribe</Option>
                   <Option value="ytbcomment">Comment</Option>
                   <Option value="ytblike">Like</Option>
@@ -189,7 +204,7 @@ function AddService({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' placeholder="Thêm loại"/>
+                <Input size='small' disabled placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={6}>

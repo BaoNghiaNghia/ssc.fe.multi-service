@@ -15,6 +15,36 @@ export const SERVICE_TYPE = {
   },
 }
 
+export const MEMBER_TABLE_TYPE = {
+  'MEMBER': {
+      title: 'member',
+  },
+  'TOPUP': {
+      title: 'topup',
+  },
+}
+
+export const FixedServiceTemp = [
+  {
+    'platform': 'Youtube',
+    'category': 'Comments',
+    'type': 'Custom Comments',
+    'service_type': 'ytbcomment',
+  },
+  {
+    'platform': 'Youtube',
+    'category': 'Likes',
+    'type': 'Custom Likes',
+    'service_type': 'ytblike',
+  },
+  {
+    'platform': 'Youtube',
+    'category': 'Subscribers',
+    'type': 'Default',
+    'service_type': 'ytbsubscribe',
+  },
+]
+
 export const MESSSAGE_STATUS_CODE = {
     SUCCESS: {
         code: 200,

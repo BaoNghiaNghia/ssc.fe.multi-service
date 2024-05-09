@@ -53,7 +53,6 @@ function Overview() {
   });
 
   const handleChange = (value) => {
-    console.log('---- check type ------', value);
     dispatch(actions.changeServiceTypeBegin(value));
     setState({ ...state, activeClass: value });
   };

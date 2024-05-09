@@ -6,7 +6,6 @@ import {
   fetchListOrderSubscribeAPI,
   fetchOrderHistoryAPI,
   fetchServicePackageListAPI,
-  fetchUserListAPI
 } from '../../config/apiFactory/BuffSubscribe/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
@@ -73,23 +72,6 @@ function* fetchServicePackageListFunc() {
   }
 }
 
-function* fetchUserListFunc() {
-  try {
-    const response = yield call(fetchUserListAPI, {});
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.fetchUserListSuccess(response?.data?.data)
-      );
-    }
-
-  } catch (err) {
-    yield put(
-      actions.fetchUserListErr({ error: err || 'Fetch service package failed' })
-    );
-  }
-}
-
 function* fetchListOrderHistoryFunc(params) { 
   try {
     const response = yield call(fetchOrderHistoryAPI,  params?.payload);
@@ -150,10 +132,6 @@ export function* fetchListOrderSubscribeWatcherSaga() {
 
 export function* fetchServicePackageListWatcherSaga() {
   yield takeLatest(actions.FETCH_SERVICE_PACKAGE_LIST_BEGIN, fetchServicePackageListFunc);
-}
-
-export function* fetchUserListWatcherSaga() {
-  yield takeLatest(actions.FETCH_USER_LIST_BEGIN, fetchUserListFunc);
 }
 
 export function* fetchOrderHistoryWatcherSaga() {
