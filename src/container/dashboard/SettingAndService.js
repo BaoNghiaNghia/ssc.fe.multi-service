@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Tooltip, Badge } from 'antd';
+import { Row, Col, Table, Tooltip, Badge, Switch } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
 import { LuTrash2 } from "react-icons/lu";
@@ -181,8 +181,8 @@ function SettingAndService() {
               <FiEdit2 style={{ marginTop: '4px' }} />
             </Button>
           </Tooltip>
-          <Tooltip title="Tắt dịch vụ">
-            <Button
+          <Tooltip title={`${ enabled ? 'Tắt' : 'Bật' } dịch vụ`}>
+            {/* <Button
               size="default"
               type="default"
               onClick={() => {
@@ -193,7 +193,13 @@ function SettingAndService() {
               }}
             >
               <LuTrash2 style={{ marginTop: '4px' }} />
-            </Button>
+            </Button> */}
+            <Switch checked={enabled} onChange={() => {
+                setState({
+                  isOpenDel: true
+                });
+                dispatch(actions.modalDetailServiceBegin(value));
+              }} />
           </Tooltip>
         </>
       });

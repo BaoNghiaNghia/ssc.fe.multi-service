@@ -15,6 +15,7 @@ import MemberReducer from './member/reducers';
 import ReportsDailyReducer from './reports/reducers';
 import ServerReducer from './servers/reducers';
 import BuffSubscribeReducer from './buffSubscribe/reducers';
+import BuffCommentReducer from './buffComment/reducers';
 import SettingsServiceReducer from './serviceSettings/reducers';
 
 const rootReducers = combineReducers({
@@ -32,6 +33,7 @@ const rootReducers = combineReducers({
   reports: ReportsDailyReducer,
   servers: ServerReducer,
   buffSubscribe: BuffSubscribeReducer,
+  buffComment: BuffCommentReducer,
   blackList: BlackListReducer,
   member: MemberReducer,
   settingService: SettingsServiceReducer,

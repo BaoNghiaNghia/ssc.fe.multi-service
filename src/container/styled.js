@@ -841,9 +841,6 @@ const AutoCompleteWrapper = Styled.div`
 `;
 
 const CalendarWrapper = Styled.div`
-    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
-        height: 30px !important;
-    }
     .ant-select-single .ant-select-selector .ant-select-selection-item,
     .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
         line-height: 28px !important;

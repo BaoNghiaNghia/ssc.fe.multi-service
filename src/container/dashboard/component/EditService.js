@@ -23,10 +23,12 @@ function EditService({ isOpen, setState, state }) {
     };
   });
 
+  const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);
+
   useEffect(() => {
     formUpdateService.setFieldsValue(detailService);
     formUpdateService.setFieldValue('priority', String(detailService?.priority));
-    formUpdateService.setFieldValue('type', detailService?.type);
+    formUpdateService.setFieldValue('type', initCategory[0]?.type);
   });
 
   const handleOk = () => {
@@ -36,20 +38,20 @@ function EditService({ isOpen, setState, state }) {
         .then((values) => {
           const requestData = {
             id: detailService.id,
-            category: formUpdateService.getFieldValue('category'),
-            platform: formUpdateService.getFieldValue('platform') || 'Youtube',
-            service_type: formUpdateService.getFieldValue('service_type'),
-            type: formUpdateService.getFieldValue('type'),
-            description: formUpdateService.getFieldValue('description'),
-            enabled: true,
-            min: formUpdateService.getFieldValue('min'),
-            max: formUpdateService.getFieldValue('max'),
-            max_threads: formUpdateService.getFieldValue('max_threads'),
-            max_threads_3000: formUpdateService.getFieldValue('max_threads_3000'),
-            max_threads_5000: formUpdateService.getFieldValue('max_threads_5000'),
-            name: formUpdateService.getFieldValue('name'),
-            price_per_10: formUpdateService.getFieldValue('price_per_10'),
-            priority: formUpdateService.getFieldValue('priority') === 'true'
+            category: values?.category,
+            platform: values?.platform || 'Youtube',
+            service_type: values?.service_type,
+            type: values?.type,
+            description: values?.description,
+            enabled: detailService?.enabled,
+            min: values?.min,
+            max: values?.max,
+            max_threads: values?.max_threads,
+            max_threads_3000: values?.max_threads_3000,
+            max_threads_5000: values?.max_threads_5000,
+            name: values?.name,
+            price_per_10: values?.price_per_10,
+            priority: values?.priority === 'true'
           }
       
           dispatch(actions.updateServiceBegin(requestData));
@@ -80,8 +82,6 @@ function EditService({ isOpen, setState, state }) {
 
     formUpdateService.resetFields();
   }
-
-  const initCategory = FixedServiceTemp.filter(item => item?.category === formUpdateService.getFieldValue('category'));
 
   return (
     <>

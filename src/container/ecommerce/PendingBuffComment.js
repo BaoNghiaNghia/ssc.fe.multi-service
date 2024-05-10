@@ -1,45 +1,61 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table } from 'antd';
+import { Row, Col, Radio, Table, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
+import { FaLocationArrow } from "react-icons/fa6";
+import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TopToolBox } from './Style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import { orderFilter } from '../../redux/orders/actionCreator';
+import actions from '../../redux/buffComment/actions';
+import userActions from '../../redux/member/actions';
+import serviceActions from '../../redux/serviceSettings/actions';
+import { STATUS_COMMENT_ENUM } from '../../variables';
 
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
+
+const badgeOrangeStyle = {
+  border: `1.3px solid orange`,
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'red',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+};
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
-  const { searchData, orders } = useSelector(state => {
+  const { searchData,  listOrderComment, userList, listService } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
-      orders: state.orders.data,
+      listOrderComment: state?.buffComment?.listOrderComment,
+      userList: state?.member?.userList,
+      listService: state?.settingService?.listService?.items
     };
   });
 
   const [state, setState] = useState({
     notData: searchData,
-    item: orders,
+    item: listOrderComment,
     selectedRowKeys: [],
   });
 
-  const { notData, item, selectedRowKeys } = state;
-  const filterKey = ['Shipped', 'Awaiting Shipment', 'Canceled'];
+  const { notData } = state;
 
   useEffect(() => {
-    if (orders) {
-      setState({
-        item: orders,
-        selectedRowKeys,
-      });
-    }
-  }, [orders, selectedRowKeys]);
+    dispatch(actions.fetchListOrderCommentBegin());
+    dispatch(userActions.fetchUserListBegin());
+    dispatch(serviceActions.fetchListServiceBegin({}));
+  }, [dispatch]);
 
   const handleSearch = searchText => {
     const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
@@ -49,26 +65,92 @@ function PendingBuffComment() {
     });
   };
 
-  const handleChangeForFilter = e => {
-    dispatch(orderFilter('status', e.target.value));
-  };
-
   const dataSource = [];
-  if (orders.length) {
-    orders.map((value, key) => {
-      const { status, orderId, customers, amount, date } = value;
+  if (listOrderComment?.items?.length) {
+    listOrderComment?.items?.map((value, key) => {
+      const { status, order_id, amount, date, user_id, link, video_id, quantity, priority, service_id, performance, max_thread } = value;
+
+      const findUser = userList?.filter((item) => item.id === user_id);
+      const findService = listService?.filter((item) => item.service_id === service_id);
+
       return dataSource.push({
         key: key + 1,
-        id: <span className="order-id">{orderId}</span>,
-        customer: <span className="customer-name">{customers}</span>,
-        status: (
-          <span
-            className={`status ${
-              status === 'Shipped' ? 'Success' : status === 'Awaiting Shipment' ? 'warning' : 'error'
-            }`}
-          >
-            {status}
+        order_id: <span className="order-id">{order_id}</span>,
+        user_id: (
+          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <ReactNiceAvatar
+              style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }}
+              {...genConfig(findUser[0]?.fullname?.charAt(0))}
+            />
+            <span style={{ marginLeft: '8px' }}>
+              <p style={{ margin: '0px', fontWeight: '700' }}>{findUser[0]?.fullname}</p>
+              <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.email}</p>
+              <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.phone}</p>
+            </span>
           </span>
+        ),
+        video_id: (
+          <>
+            <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+              {
+                priority ? (
+                  <span className="label" style={badgeOrangeStyle}>
+                    <FaLocationArrow color='red' style={{ marginRight: '5px' }} />
+                    Ưu tiên
+                  </span>
+                ) : <></>
+              }
+              <Tooltip title="Xem Video" placement='topLeft'>
+                <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
+                  <span className="customer-name">{ `${link.substring(0, 40)  }...` }</span>
+                </a>
+              </Tooltip>
+            </div>
+            <span style={{ fontSize: '0.8em' }}><strong>Video ID:</strong> {video_id}</span>
+          </>
+        ),
+        quantity: (
+          <>
+            {
+              quantity === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <span><strong>{quantity}</strong></span>
+              )
+            }
+          </>
+        ),
+        thread: (
+          <>
+            {
+              max_thread === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <span><strong>{max_thread}</strong></span>
+              )
+            }
+          </>
+        ),
+        service: (
+          <>
+            {
+              findService?.length > 0 ? (
+                <>
+                  <span style={{ margin: '0px', fontWeight: '700' }}>{findService[0]?.name}</span>
+                  <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Platform: </strong>{findService[0]?.platform}</span>
+                  <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>
+                </>
+              ) : (
+                '...'
+              )
+            }
+          </>
+        ),
+        performance: (
+          <span>{performance} %</span>
+        ),
+        status: (
+          <span>{STATUS_COMMENT_ENUM.find(item => item.status === status)?.title}</span>
         ),
         amount: <span className="ordered-amount">{amount}</span>,
         date: <span className="ordered-date">{date}</span>,
@@ -93,35 +175,46 @@ function PendingBuffComment() {
 
   const columns = [
     {
-      title: 'Order Id',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'Người dùng',
+      dataIndex: 'user_id',
+      key: 'user_id',
     },
     {
-      title: 'customer',
-      dataIndex: 'customer',
-      key: 'customer',
+      title: 'Video',
+      dataIndex: 'video_id',
+      key: 'video_id',
     },
     {
-      title: 'Status',
+      title: 'Order ID',
+      dataIndex: 'order_id',
+      key: 'order_id',
+    },
+    {
+      title: 'Số lượng comment',
+      dataIndex: 'quantity',
+      key: 'quantity',
+    },
+    {
+      title: 'Luồng tối đa',
+      dataIndex: 'thread',
+      key: 'thread',
+    },
+    {
+      title: 'Loại dịch vụ',
+      dataIndex: 'service',
+      key: 'service',
+    },
+    {
+      title: 'Tiến trình',
+      dataIndex: 'performance',
+      key: 'performance',
+    },
+    {
+      title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
     },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
-    },
+
   ];
 
   const onSelectChange = selectedRowKey => {
@@ -139,14 +232,6 @@ function PendingBuffComment() {
       <PageHeader
         ghost
         title="Comment - Chờ duyệt"
-        // buttons={[
-        //   <div key="1" className="page-header-actions">
-        //     <Button size="small" key="4" type="primary">
-        //       <FeatherIcon icon="plus" size={14} />
-        //       Add New
-        //     </Button>
-        //   </div>,
-        // ]}
       />
       <Main>
         <Cards headless>
@@ -193,7 +278,7 @@ function PendingBuffComment() {
                   rowSelection={rowSelection}
                   dataSource={dataSource}
                   columns={columns}
-                  pagination={{ pageSize: 7, showSizeChanger: true, total: orders.length }}
+                  pagination={{ pageSize: 7, showSizeChanger: true, total: listOrderComment?.items?.length }}
                 />
               </TableWrapper>
             </Col>

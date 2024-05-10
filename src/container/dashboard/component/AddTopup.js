@@ -7,12 +7,15 @@ import { MdAddchart } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { numberWithCommas } from '../../../utility/utility';
 import actions from '../../../redux/member/actions';
+import { COLOR_GENERAL } from '../../../variables';
 
 const { Option } = Select;
 
 function AddTopup({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formTopupAdd] = Form.useForm();
+
+  const [amountChange, setAmountChange] = useState(0);
 
   const { userList, detailUser } = useSelector(state => {
     return {
@@ -63,7 +66,7 @@ function AddTopup({ isOpen, setState }) {
   }
 
   const selectAfter = (
-    <Select defaultValue="VND" style={{ width: 60 }}>
+    <Select defaultValue="VND">
       <Option value="VND">đ</Option>
     </Select>
   );
@@ -106,7 +109,7 @@ function AddTopup({ isOpen, setState }) {
                       return (
                         <Option value={itemUser?.id}>
                           <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                            <FaRegUserCircle color='gray' fontSize={20} style={{ marginRight: '10px', marginTop: '8px' }}/> 
+                            <FaRegUserCircle color='gray' fontSize={20} style={{ marginRight: '10px', marginTop: '5px' }}/> 
                             <span>
                               <p style={{ margin: '0px', padding: '0px', fontWeight: '800' }}>{itemUser?.fullname}</p>
                               <p style={{ margin: '0px', padding: '0px', fontSize: '0.7em' }}>{itemUser?.email}</p>
@@ -134,12 +137,17 @@ function AddTopup({ isOpen, setState }) {
                 <InputNumber 
                   style={{ width: '100%' }}
                   size='small'
-                  // type='number'
+                  type='number'
                   placeholder="Nhập số tiền cần nạp"
                   addonAfter={selectAfter}
-                  formatter={(value) => numberWithCommas(value)}
-                  parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                  onChange={(value) => {
+                    setAmountChange(value)
+                    formTopupAdd.setFieldsValue({
+                      amount: value
+                    });
+                  }}
                 />
+                <span style={{ fontSize: '0.7em', fontWeight: 'bold', color: COLOR_GENERAL.primary }}>{numberWithCommas(amountChange || 0)} đ</span>
               </Form.Item>
             </Col>
           </Row>

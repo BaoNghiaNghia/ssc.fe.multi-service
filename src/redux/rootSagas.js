@@ -51,6 +51,10 @@ import {
     modalDetailServiceWatcherSaga,
     updateServicesWatcherSaga
 } from './serviceSettings/sagas';
+import {
+    fetchListOrderCommentWatcherSaga,
+    detailOrderCommentWatcherSaga
+} from './buffComment/sagas';
 
 export default function* rootSaga() {
     return yield all([
@@ -84,6 +88,8 @@ export default function* rootSaga() {
         createTopupItemWatcherSaga(),
         fetchTopupListMemberWatcherSaga(),
         detailTopupItemWatcherSaga(),
-        confirmTopupItemWatcherSaga()
+        confirmTopupItemWatcherSaga(),
+        fetchListOrderCommentWatcherSaga(),
+        detailOrderCommentWatcherSaga()
     ]);
 }

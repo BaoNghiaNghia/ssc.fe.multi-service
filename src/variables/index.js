@@ -7,6 +7,25 @@ export const COLOR_GENERAL = {
   'primary': '#26695c'
 }
 
+export const STATUS_COMMENT_ENUM = [
+  {
+    'status': 0,
+    'title': 'Pending'
+  },
+  {
+    'status': -1,
+    'title': 'Disabled'
+  },
+  {
+    'status': 1,
+    'title': 'Enable'
+  },
+  {
+    'status': -2,
+    'title': 'Cancelled'
+  }
+];
+
 export const SERVICE_TYPE = {
   'SUBSCRIBE': {
       title: 'subscribe',

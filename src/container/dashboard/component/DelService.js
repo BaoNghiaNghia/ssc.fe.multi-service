@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Select, Button, Modal,  Typography } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
-import { COLOR_GENERAL } from '../../../variables';
+import { COLOR_GENERAL, FixedServiceTemp } from '../../../variables';
 
-const { Option } = Select;
 const { Paragraph, Text } = Typography;
 
 function DelService({ isOpen, setState }) {
   const dispatch = useDispatch();
+  const [formDelService] = Form.useForm();
 
   const { postLoading, detailService } = useSelector(state => {
     return {
@@ -20,16 +20,9 @@ function DelService({ isOpen, setState }) {
     };
   });
 
-  const [formCreateService] = Form.useForm();
+  const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);
 
-  const [state, setStateModal] = useState({
-    tags: ['UI/UX', 'Branding', 'Product Design', 'Web Design'],
-    values: null,
-  });
-
-  const handleSubmit = (values) => {
-    setStateModal({ ...state, values: { ...values, tags: state.tags } });
-  };
+  const currentStateWorking = detailService?.enabled;
 
   useEffect(() => {
     dispatch(actions.fetchListServiceBegin({}));
@@ -37,34 +30,43 @@ function DelService({ isOpen, setState }) {
 
   const handleOk = () => {
     try {
-      formCreateService.validateFields();
-  
       const requestData = {
         id: detailService.id,
-        enabled: false,
+        category: detailService?.category,
+        platform: detailService?.platform || 'Youtube',
+        service_type: detailService?.service_type,
+        type: initCategory[0]?.type,
+        description: detailService?.description,
+        enabled: !detailService?.enabled,
+        min: detailService?.min,
+        max: detailService?.max,
+        max_threads: detailService?.max_threads,
+        max_threads_3000: detailService?.max_threads_3000,
+        max_threads_5000: detailService?.max_threads_5000,
+        name: detailService?.name,
+        price_per_10: detailService?.price_per_10,
+        priority: detailService?.priority === 'true'
       }
   
       dispatch(actions.updateServiceBegin(requestData));
 
       setState({
-        isOpenAdd: false,
+        isOpenDel: false,
       });
-
-      formCreateService.resetFields();
     } catch (err) {
       console.log(err);
       setState({
-        isOpenAdd: false,
+        isOpenDel: false,
       });
 
-      formCreateService.resetFields();
+      formDelService.resetFields();
     }
 
   };
 
   const handleCancel = () => {
     setState({
-      isOpenAdd: false,
+      isOpenDel: false,
     });
   }
 
@@ -79,8 +81,8 @@ function DelService({ isOpen, setState }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Tắt dịch vụ</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Ngừng sử dụng dịch vụ </p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>{ currentStateWorking ? 'Tắt' : 'Bật' } dịch vụ</p>
+                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>{ currentStateWorking ? 'Ngừng' : 'Tiếp tục' } sử dụng dịch vụ </p>
               </div>
             </div>
           </>
@@ -96,7 +98,7 @@ function DelService({ isOpen, setState }) {
           </Button>
         ]}
       >
-        <Form name="add_service" layout="vertical" form={formCreateService} onFinish={handleSubmit}>
+        <Form name="add_service" layout="vertical" form={formDelService}>
           <Row gutter="10">
             <Col sm={24}>
             <Paragraph>
@@ -107,7 +109,7 @@ function DelService({ isOpen, setState }) {
                     fontWeight: '400'
                   }}
                 >
-                  Xác nhận tắt dịch vụ <span style={{ color: COLOR_GENERAL.primary }}>{detailService?.name}</span> ?
+                  Xác nhận { currentStateWorking ? 'tắt' : 'bật' } dịch vụ <span style={{ color: COLOR_GENERAL.primary }}>{detailService?.name}</span> ?
                 </Text>
               </Paragraph>
             </Col>
