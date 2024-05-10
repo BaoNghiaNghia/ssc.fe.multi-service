@@ -178,7 +178,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         icon={
           !topMenu && (
             <NavLink className="menuItem-icon" to={`${path}/blacklist`}>
-              <FeatherIcon icon="calendar" />
+              <FeatherIcon icon="slash" />
             </NavLink>
           )
         }
@@ -191,8 +191,22 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
+            <NavLink className="menuItem-icon" to={`${path}/proxy`}>
+              <FeatherIcon icon="command" />
+            </NavLink>
+          )
+        }
+        key="proxy"
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/proxy`}>
+          Proxy
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item
+        icon={
+          !topMenu && (
             <NavLink className="menuItem-icon" to={`${path}/thanh-vien`}>
-              <FeatherIcon icon="calendar" />
+              <FeatherIcon icon="users" />
             </NavLink>
           )
         }
@@ -206,7 +220,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         icon={
           !topMenu && (
             <NavLink className="menuItem-icon" to={`${path}/dich-vu-cai-dat`}>
-              <FeatherIcon icon="calendar" />
+              <FeatherIcon icon="tool" />
             </NavLink>
           )
         }

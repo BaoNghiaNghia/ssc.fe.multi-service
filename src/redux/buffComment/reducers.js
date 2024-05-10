@@ -3,6 +3,7 @@ import actions from './actions';
 const initialState = {
   listOrderComment: [],
   detailOrderComment: {},
+  commentInOrder: {},
   loading: false,
   error: null
 };
@@ -14,7 +15,11 @@ const {
 
     DETAIL_ORDER_COMMENT_BEGIN,
     DETAIL_ORDER_COMMENT_ERR,
-    DETAIL_ORDER_COMMENT_SUCCESS
+    DETAIL_ORDER_COMMENT_SUCCESS,
+
+    COMMENT_IN_ORDER_COMMENT_BEGIN,
+    COMMENT_IN_ORDER_COMMENT_ERR,
+    COMMENT_IN_ORDER_COMMENT_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
@@ -54,6 +59,26 @@ const ReportsReducer = (state = initialState, action) => {
       };
 
     case DETAIL_ORDER_COMMENT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case COMMENT_IN_ORDER_COMMENT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_IN_ORDER_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentInOrder: data,
+      };
+
+    case COMMENT_IN_ORDER_COMMENT_ERR:
       return {
         ...state,
         loading: false,

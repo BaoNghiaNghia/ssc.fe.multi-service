@@ -53,7 +53,8 @@ import {
 } from './serviceSettings/sagas';
 import {
     fetchListOrderCommentWatcherSaga,
-    detailOrderCommentWatcherSaga
+    detailOrderCommentWatcherSaga,
+    commentInOrderCommentWatcherSaga
 } from './buffComment/sagas';
 
 export default function* rootSaga() {
@@ -90,6 +91,7 @@ export default function* rootSaga() {
         detailTopupItemWatcherSaga(),
         confirmTopupItemWatcherSaga(),
         fetchListOrderCommentWatcherSaga(),
-        detailOrderCommentWatcherSaga()
+        detailOrderCommentWatcherSaga(),
+        commentInOrderCommentWatcherSaga()
     ]);
 }

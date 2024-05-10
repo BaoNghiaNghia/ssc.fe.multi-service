@@ -44,10 +44,32 @@ function* detailOrderCommentFunc(params) {
   } finally { /* empty */ }
 }
 
+function* commentInOrderCommentFunc(params) {
+  try {
+    console.log('---- comment order -----', params?.payload);
+    const response = yield call(commentOrderCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentOrderCommentSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.commentOrderCommentErr({ error: errorMessage || 'Detail order comment failed' })
+    );
+  } finally { /* empty */ }
+}
+
 export function* fetchListOrderCommentWatcherSaga() {
   yield takeLatest(actions.FETCH_LIST_ORDER_COMMENT_BEGIN, fetchListOrderCommentFunc);
 }
 
 export function* detailOrderCommentWatcherSaga() {
-  yield takeLatest(actions.FETCH_LIST_ORDER_COMMENT_BEGIN, detailOrderCommentFunc);
+  yield takeLatest(actions.DETAIL_ORDER_COMMENT_BEGIN, detailOrderCommentFunc);
+}
+
+export function* commentInOrderCommentWatcherSaga() {
+  yield takeLatest(actions.COMMENT_IN_ORDER_COMMENT_BEGIN, commentInOrderCommentFunc);
 }

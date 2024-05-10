@@ -1,11 +1,14 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table, Tooltip } from 'antd';
+import { Row, Col, Radio, Table, Tooltip, Progress } from 'antd';
 import FeatherIcon from 'feather-icons-react';
+import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TopToolBox } from './Style';
+import DetailOrder from './components/DetailOrder';
+import ListCommentOfOrder from './components/ListComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -44,6 +47,8 @@ function PendingBuffComment() {
   });
 
   const [state, setState] = useState({
+    isDetailOrderModal: false,
+    isListCommentModal: false,
     notData: searchData,
     item: listOrderComment,
     selectedRowKeys: [],
@@ -102,7 +107,7 @@ function PendingBuffComment() {
               }
               <Tooltip title="Xem Video" placement='topLeft'>
                 <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
-                  <span className="customer-name">{ `${link.substring(0, 40)  }...` }</span>
+                  <span className="customer-name">{ `${link.substring(0, 30)  }...` }</span>
                 </a>
               </Tooltip>
             </div>
@@ -136,9 +141,11 @@ function PendingBuffComment() {
             {
               findService?.length > 0 ? (
                 <>
-                  <span style={{ margin: '0px', fontWeight: '700' }}>{findService[0]?.name}</span>
-                  <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Platform: </strong>{findService[0]?.platform}</span>
-                  <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>
+                  <Tooltip title={findService[0]?.name} placement='topLeft'>
+                    <span style={{ margin: '0px', fontWeight: '700' }}>{ `${findService[0]?.name?.substring(0, 20)  }...` }</span>
+                    <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Platform: </strong>{findService[0]?.platform}</span>
+                    <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>
+                  </Tooltip>
                 </>
               ) : (
                 '...'
@@ -147,7 +154,10 @@ function PendingBuffComment() {
           </>
         ),
         performance: (
-          <span>{performance} %</span>
+          <>
+            <span>{performance} %</span>
+            <Progress percent={performance}  style={{ margin: '0px', padding: '0px' }} size="small" />
+          </>
         ),
         status: (
           <span>{STATUS_COMMENT_ENUM.find(item => item.status === status)?.title}</span>
@@ -156,17 +166,28 @@ function PendingBuffComment() {
         date: <span className="ordered-date">{date}</span>,
         action: (
           <div className="table-actions">
-            <>
-              <Button className="btn-icon" type="primary" to="#" shape="circle">
+            <Tooltip title="Chi tiết">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                onClick={() => {
+                  dispatch(actions.detailOrderCommentBegin({
+                    ...value,
+                    userDetail: findUser,
+                    serviceDetail: findService
+                  }));
+                  setState({ isDetailOrderModal: true });
+                }}
+              >
                 <FeatherIcon icon="eye" size={16} />
               </Button>
-              <Button className="btn-icon" type="info" to="#" shape="circle">
-                <FeatherIcon icon="edit" size={16} />
+            </Tooltip>
+            <Tooltip title="Danh sách comment">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
+                dispatch(actions.commentOrderCommentBegin({ id: order_id }));
+                setState({ isListCommentModal: true });
+              }}>
+                <FaRegCommentDots fontSize={15}/>
               </Button>
-              <Button className="btn-icon" type="danger" to="#" shape="circle">
-                <FeatherIcon icon="trash-2" size={16} />
-              </Button>
-            </>
+            </Tooltip>
           </div>
         ),
       });
@@ -214,6 +235,11 @@ function PendingBuffComment() {
       dataIndex: 'status',
       key: 'status',
     },
+    {
+      title: 'Hành động',
+      dataIndex: 'action',
+      key: 'action',
+    },
 
   ];
 
@@ -227,8 +253,18 @@ function PendingBuffComment() {
     },
   };
 
+  const { isDetailOrderModal, isListCommentModal } = state;
+
   return (
     <>
+      <DetailOrder
+        isOpen={isDetailOrderModal}
+        setState={setState}
+      />
+      <ListCommentOfOrder
+        isOpen={isListCommentModal}
+        setState={setState}
+      />
       <PageHeader
         ghost
         title="Comment - Chờ duyệt"

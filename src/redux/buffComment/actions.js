@@ -6,6 +6,10 @@ const actions = {
     DETAIL_ORDER_COMMENT_BEGIN: 'DETAIL_ORDER_COMMENT_BEGIN',
     DETAIL_ORDER_COMMENT_SUCCESS: 'DETAIL_ORDER_COMMENT_SUCCESS',
     DETAIL_ORDER_COMMENT_ERR: 'DETAIL_ORDER_COMMENT_ERR',
+
+    COMMENT_IN_ORDER_COMMENT_BEGIN: 'COMMENT_IN_ORDER_COMMENT_BEGIN',
+    COMMENT_IN_ORDER_COMMENT_SUCCESS: 'COMMENT_IN_ORDER_COMMENT_SUCCESS',
+    COMMENT_IN_ORDER_COMMENT_ERR: 'COMMENT_IN_ORDER_COMMENT_ERR',
     
 
     fetchListOrderCommentBegin: (payload) => {
@@ -46,6 +50,27 @@ const actions = {
     detailOrderCommentErr: (err) => {
         return {
             type: actions.DETAIL_ORDER_COMMENT_ERR,
+            err,
+        };
+    },
+
+    commentOrderCommentBegin: (payload) => {
+        return {
+            type: actions.COMMENT_IN_ORDER_COMMENT_BEGIN,
+            payload
+        };
+    },
+
+    commentOrderCommentSuccess: (data) => {
+        return {
+            type: actions.COMMENT_IN_ORDER_COMMENT_SUCCESS,
+            data,
+        };
+    },
+
+    commentOrderCommentErr: (err) => {
+        return {
+            type: actions.COMMENT_IN_ORDER_COMMENT_ERR,
             err,
         };
     },
