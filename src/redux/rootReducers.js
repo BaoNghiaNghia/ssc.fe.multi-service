@@ -17,6 +17,7 @@ import ServerReducer from './servers/reducers';
 import BuffSubscribeReducer from './buffSubscribe/reducers';
 import BuffCommentReducer from './buffComment/reducers';
 import SettingsServiceReducer from './serviceSettings/reducers';
+import ProxyReducer from './proxy/reducers';
 
 const rootReducers = combineReducers({
   gallery: galleryReducer,
@@ -36,6 +37,7 @@ const rootReducers = combineReducers({
   buffComment: BuffCommentReducer,
   blackList: BlackListReducer,
   member: MemberReducer,
+  proxy: ProxyReducer,
   settingService: SettingsServiceReducer,
 });
 

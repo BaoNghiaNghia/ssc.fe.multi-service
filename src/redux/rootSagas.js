@@ -51,11 +51,19 @@ import {
     modalDetailServiceWatcherSaga,
     updateServicesWatcherSaga
 } from './serviceSettings/sagas';
+
 import {
     fetchListOrderCommentWatcherSaga,
     detailOrderCommentWatcherSaga,
     commentInOrderCommentWatcherSaga
 } from './buffComment/sagas';
+
+import {
+    createDomainWatcherSaga,
+    deleteDomainWatcherSaga,
+    getListProxyInDomainWatcherSaga,
+    listGeneralDomainWatcherSaga
+} from './proxy/sagas'
 
 export default function* rootSaga() {
     return yield all([
@@ -92,6 +100,10 @@ export default function* rootSaga() {
         confirmTopupItemWatcherSaga(),
         fetchListOrderCommentWatcherSaga(),
         detailOrderCommentWatcherSaga(),
-        commentInOrderCommentWatcherSaga()
+        commentInOrderCommentWatcherSaga(),
+        createDomainWatcherSaga(),
+        deleteDomainWatcherSaga(),
+        getListProxyInDomainWatcherSaga(),
+        listGeneralDomainWatcherSaga()
     ]);
 }

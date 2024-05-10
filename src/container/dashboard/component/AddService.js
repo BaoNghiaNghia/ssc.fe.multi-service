@@ -229,7 +229,7 @@ function AddService({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' addonAfter="" size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
             <Col sm={8}>
