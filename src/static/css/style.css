@@ -1267,7 +1267,7 @@ ul {
   min-height: 40px;
   padding: 6px 20px;
   font-size: 14px;
-  color: #5a5f7d;
+  color: #565758;
   background-color: #fff;
   border-radius: 3px;
   display: flex;
@@ -1278,6 +1278,7 @@ ul {
 
 .ant-tooltip .ant-tooltip-arrow {
   /* position: relative; */
+  display: none;;
 }
 
 .ant-tooltip .ant-tooltip-arrow:after {
@@ -1288,6 +1289,7 @@ ul {
   width: 13px;
   height: 13px;
   background: #fff;
+
   content: '';
 }
 
@@ -1299,10 +1301,12 @@ ul {
 
 .ant-tooltip-placement-bottom .ant-tooltip-arrow .ant-tooltip-arrow-content {
   border: 1px solid #f1f2f6;
+  background: #fff;
   box-shadow: 0 0;
 }
 
 .ant-tooltip-placement-bottom .ant-tooltip-arrow {
+  background: #fff;
   top: -4.071068px;
 }
 

@@ -40,7 +40,9 @@ import {
     updateUserAdminMemberWatcherSaga,
     changeTableTypeMemberWatcherSaga,
     createTopupItemWatcherSaga,
-    fetchTopupListMemberWatcherSaga
+    fetchTopupListMemberWatcherSaga,
+    detailTopupItemWatcherSaga,
+    confirmTopupItemWatcherSaga
 } from './member/sagas';
 
 import { 
@@ -80,6 +82,8 @@ export default function* rootSaga() {
         updateUserAdminMemberWatcherSaga(),
         changeTableTypeMemberWatcherSaga(),
         createTopupItemWatcherSaga(),
-        fetchTopupListMemberWatcherSaga()
+        fetchTopupListMemberWatcherSaga(),
+        detailTopupItemWatcherSaga(),
+        confirmTopupItemWatcherSaga()
     ]);
 }

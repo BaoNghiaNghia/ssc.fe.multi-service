@@ -34,6 +34,7 @@ function DetailMember({ isOpen, setState }) {
       <Modal
         width='600px'
         open={isOpen}
+        centered
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>

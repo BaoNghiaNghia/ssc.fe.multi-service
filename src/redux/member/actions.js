@@ -15,6 +15,10 @@ const actions = {
     DETAIL_USER_ADMIN_SUCCESS: 'DETAIL_USER_ADMIN_SUCCESS',
     DETAIL_USER_ADMIN_ERR: 'DETAIL_USER_ADMIN_ERR',
 
+    DETAIL_TOPUP_ITEM_BEGIN: 'DETAIL_TOPUP_ITEM_BEGIN',
+    DETAIL_TOPUP_ITEM_SUCCESS: 'DETAIL_TOPUP_ITEM_SUCCESS',
+    DETAIL_TOPUP_ITEM_ERR: 'DETAIL_TOPUP_ITEM_ERR',
+
     UPDATE_USER_ADMIN_BEGIN: 'UPDATE_USER_ADMIN_BEGIN',
     UPDATE_USER_ADMIN_SUCCESS: 'UPDATE_USER_ADMIN_SUCCESS',
     UPDATE_USER_ADMIN_ERR: 'UPDATE_USER_ADMIN_ERR',
@@ -22,7 +26,11 @@ const actions = {
     CHANGE_TYPE_TABLE_BEGIN: 'CHANGE_TYPE_TABLE_BEGIN',
     CHANGE_TYPE_TABLE_SUCCESS: 'CHANGE_TYPE_TABLE_SUCCESS',
     CHANGE_TYPE_TABLE_ERR: 'CHANGE_TYPE_TABLE_ERR',
-  
+
+    CONFIRM_TOPUP_BEGIN: 'CONFIRM_TOPUP_BEGIN',
+    CONFIRM_TOPUP_SUCCESS: 'CONFIRM_TOPUP_SUCCESS',
+    CONFIRM_TOPUP_ERR: 'CONFIRM_TOPUP_ERR',
+
     fetchUserListBegin: (payload) => {
       return {
         type: actions.FETCH_USER_LIST_BEGIN,
@@ -65,6 +73,7 @@ const actions = {
       };
     },
 
+    
     createTopupItemBegin: (payload) => {
       return {
         type: actions.CREATE_TOPUP_ITEM_BEGIN,
@@ -145,6 +154,48 @@ const actions = {
     changeTypeTableErr: (err) => {
       return {
         type: actions.CHANGE_TYPE_TABLE_ERR,
+        err,
+      };
+    },
+
+    confirmTopupBegin: (payload) => {
+      return {
+        type: actions.CONFIRM_TOPUP_BEGIN,
+        payload
+      };
+    },
+  
+    confirmTopupSuccess: (data) => {
+      return {
+        type: actions.CONFIRM_TOPUP_SUCCESS,
+        data,
+      };
+    },
+  
+    confirmTopupErr: (err) => {
+      return {
+        type: actions.CONFIRM_TOPUP_ERR,
+        err,
+      };
+    },
+
+    detailTopupBegin: (payload) => {
+      return {
+        type: actions.DETAIL_TOPUP_ITEM_BEGIN,
+        payload
+      };
+    },
+  
+    detailTopupSuccess: (data) => {
+      return {
+        type: actions.DETAIL_TOPUP_ITEM_SUCCESS,
+        data,
+      };
+    },
+  
+    detailTopupErr: (err) => {
+      return {
+        type: actions.DETAIL_TOPUP_ITEM_ERR,
         err,
       };
     },

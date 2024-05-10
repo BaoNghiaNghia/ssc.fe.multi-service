@@ -1,11 +1,12 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Tooltip } from 'antd';
+import { Row, Col, Table, Tooltip, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
 import { LuTrash2 } from "react-icons/lu";
 import { FiEdit2 } from "react-icons/fi";
+import { FaLocationArrow } from "react-icons/fa6";
 import AddService from './component/AddService';
 import EditService from './component/EditService';
 import DelService from './component/DelService';
@@ -26,6 +27,22 @@ const badgeGreenStyle = {
   fontWeight: 'bold',
   display: 'inline-flex',
   alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+const badgeOrangeStyle = {
+  border: '1.3px solid orange',
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'orange',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px'
 }
@@ -40,6 +57,7 @@ const badgeRedStyle = {
   fontWeight: 'bold',
   display: 'inline-flex',
   alignItems: 'center',
+  alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px'
 }
@@ -96,16 +114,27 @@ function SettingAndService() {
           </Row>
           <Row>
             <Col>
+              {
+                enabled ? (
+                  <span className="label" style={badgeGreenStyle}>
+                    <Badge color='green' dot style={{ marginRight: '5px' }}/>
+                    Đang hoạt động
+                  </span>
+                ) : (
+                  <span className="label" style={badgeRedStyle}>
+                    <Badge color='red' dot style={{ marginRight: '5px' }}/>
+                    Đang tắt
+                  </span>
+                )
+              }
               <span className="label" style={badgeGreenStyle}>Bảo hành</span>
               <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
               {
                 priority ? (
-                  <span className="label" style={badgeRedStyle}>Ưu tiên</span>
-                ) : <></>
-              }
-              {
-                enabled ? (
-                  <span className="label" style={badgeRedStyle}>Đang hoạt động</span>
+                  <span className="label" style={badgeOrangeStyle}>
+                    <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
+                    Ưu tiên
+                  </span>
                 ) : <></>
               }
             </Col>
@@ -140,17 +169,29 @@ function SettingAndService() {
         </>,
         action: <>
           <Tooltip title="Sửa dịch vụ">
-            <Button size="default" type="default" style={{ marginRight: '5px' }} onClick={() => {
-              console.log('----- type nè ------', value);
-
-              setState({ isOpenEdit: true, selectedRowData: value });
-              dispatch(actions.modalDetailServiceBegin(value));
-            }}>
+            <Button 
+              size="default"
+              type="default"
+              style={{ marginRight: '5px' }}
+              onClick={() => {
+                setState({ isOpenEdit: true });
+                dispatch(actions.modalDetailServiceBegin(value));
+              }}
+            >
               <FiEdit2 style={{ marginTop: '4px' }} />
             </Button>
           </Tooltip>
-          <Tooltip title="Xóa dịch vụ">
-            <Button size="default" type="default" onClick={() => setState({ isOpenDel: true })}>
+          <Tooltip title="Tắt dịch vụ">
+            <Button
+              size="default"
+              type="default"
+              onClick={() => {
+                setState({
+                  isOpenDel: true
+                });
+                dispatch(actions.modalDetailServiceBegin(value));
+              }}
+            >
               <LuTrash2 style={{ marginTop: '4px' }} />
             </Button>
           </Tooltip>

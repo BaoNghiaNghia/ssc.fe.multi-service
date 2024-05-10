@@ -31,7 +31,7 @@ function* fetchUserListFunc() {
 function* detailUserAdminFunc(params) {
   try {
     const response = yield call(detailUserAdminMemberAPI, params?.payload?.id);
-    
+
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
         actions.detailUserAdminSuccess(response?.data?.data)
@@ -44,18 +44,56 @@ function* detailUserAdminFunc(params) {
   }
 }
 
+function* detailTopupItemFunc(params) {
+  try {
+    yield put(
+      actions.detailTopupSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.detailTopupErr({ error: err || 'Detail topup item failed' })
+    );
+  }
+}
+
 function* createTopupItemFunc(params) {
   try {
     const response = yield call(createTopupAdminMemberAPI, params?.payload);
+    console.log('----- response saga topup nè -----', response);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
         actions.createTopupItemSuccess(response?.data?.data)
       );
+
+      toast.success('Tạo đơn topup thành công');
     }
   } catch (err) {
     yield put(
       actions.createTopupItemErr({ error: err || 'Fetch member failed' })
+    );
+  }
+}
+
+function* confirmTopupItemFunc(params) {
+  try {
+    const response = yield call(topupAdminConfirmMemberAPI, params?.payload);
+    console.log('----- response saga confirm topup nè -----', response);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.confirmTopupSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchTopupListBegin()
+      );
+
+      toast.success('Xác nhận nạp tiền thành công');
+    }
+  } catch (err) {
+    yield put(
+      actions.confirmTopupErr({ error: err || 'Confirm topup failed' })
     );
   }
 }
@@ -129,8 +167,16 @@ export function* createTopupItemWatcherSaga() {
   yield takeLatest(actions.CREATE_TOPUP_ITEM_BEGIN, createTopupItemFunc);
 }
 
+export function* confirmTopupItemWatcherSaga() {
+  yield takeLatest(actions.CONFIRM_TOPUP_BEGIN, confirmTopupItemFunc);
+}
+
 export function* detailUserAdminMemberWatcherSaga() {
   yield takeLatest(actions.DETAIL_USER_ADMIN_BEGIN, detailUserAdminFunc);
+}
+
+export function* detailTopupItemWatcherSaga() {
+  yield takeLatest(actions.DETAIL_TOPUP_ITEM_BEGIN, detailTopupItemFunc);
 }
 
 export function* updateUserAdminMemberWatcherSaga() {

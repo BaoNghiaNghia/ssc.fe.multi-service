@@ -31,33 +31,38 @@ function EditService({ isOpen, setState, state }) {
 
   const handleOk = () => {
     try {
-      formUpdateService.validateFields();
-  
-      const requestData = {
-        id: detailService.id,
-        category: formUpdateService.getFieldValue('category'),
-        platform: formUpdateService.getFieldValue('platform') || 'Youtube',
-        service_type: formUpdateService.getFieldValue('service_type'),
-        type: formUpdateService.getFieldValue('type'),
-        description: formUpdateService.getFieldValue('description'),
-        enabled: true,
-        min: formUpdateService.getFieldValue('min'),
-        max: formUpdateService.getFieldValue('max'),
-        max_threads: formUpdateService.getFieldValue('max_threads'),
-        max_threads_3000: formUpdateService.getFieldValue('max_threads_3000'),
-        max_threads_5000: formUpdateService.getFieldValue('max_threads_5000'),
-        name: formUpdateService.getFieldValue('name'),
-        price_per_10: formUpdateService.getFieldValue('price_per_10'),
-        priority: formUpdateService.getFieldValue('priority') === 'true'
-      }
-  
-      dispatch(actions.updateServiceBegin(requestData));
 
-      setState({
-        isOpenAdd: false,
-      });
-
-      formUpdateService.resetFields();
+      formUpdateService.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: detailService.id,
+            category: formUpdateService.getFieldValue('category'),
+            platform: formUpdateService.getFieldValue('platform') || 'Youtube',
+            service_type: formUpdateService.getFieldValue('service_type'),
+            type: formUpdateService.getFieldValue('type'),
+            description: formUpdateService.getFieldValue('description'),
+            enabled: true,
+            min: formUpdateService.getFieldValue('min'),
+            max: formUpdateService.getFieldValue('max'),
+            max_threads: formUpdateService.getFieldValue('max_threads'),
+            max_threads_3000: formUpdateService.getFieldValue('max_threads_3000'),
+            max_threads_5000: formUpdateService.getFieldValue('max_threads_5000'),
+            name: formUpdateService.getFieldValue('name'),
+            price_per_10: formUpdateService.getFieldValue('price_per_10'),
+            priority: formUpdateService.getFieldValue('priority') === 'true'
+          }
+      
+          dispatch(actions.updateServiceBegin(requestData));
+    
+          setState({
+            isOpenAdd: false,
+          });
+    
+          formUpdateService.resetFields();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
     } catch (err) {
       setState({
         isOpenAdd: false,
@@ -76,11 +81,14 @@ function EditService({ isOpen, setState, state }) {
     formUpdateService.resetFields();
   }
 
+  const initCategory = FixedServiceTemp.filter(item => item?.category === formUpdateService.getFieldValue('category'));
+
   return (
     <>
       <Modal
         width='600px'
         open={isOpen}
+        centered
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
@@ -135,7 +143,7 @@ function EditService({ isOpen, setState, state }) {
                       formUpdateService.setFieldValue('service_type', selectedService[0]?.service_type);
                     }
                   }}
-                >                    
+                >
                   <Option value="Comments">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                       <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
@@ -204,11 +212,16 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={9}>
-              <Form.Item name="type" label="Loại" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Input size='small' disabled placeholder="Thêm loại"/>
+              <Form.Item
+                name="type"
+                label="Loại"
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+                initialValue={initCategory[0]?.type}
+              >
+                <Input size='small' readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={6}>

@@ -5,6 +5,7 @@ const initialState = {
   userList: [],
   loading: false,
   detailUser: {},
+  detailTopup: {},
   //  member or topup
   typeTable: MEMBER_TABLE_TYPE.MEMBER.title,
   topupList: [],
@@ -23,6 +24,14 @@ const {
     DETAIL_USER_ADMIN_BEGIN,
     DETAIL_USER_ADMIN_ERR,
     DETAIL_USER_ADMIN_SUCCESS,
+
+    CONFIRM_TOPUP_BEGIN,
+    CONFIRM_TOPUP_ERR,
+    CONFIRM_TOPUP_SUCCESS,
+
+    DETAIL_TOPUP_ITEM_BEGIN,
+    DETAIL_TOPUP_ITEM_ERR,
+    DETAIL_TOPUP_ITEM_SUCCESS,
 
     UPDATE_USER_ADMIN_BEGIN,
     UPDATE_USER_ADMIN_ERR,
@@ -69,6 +78,7 @@ const ReportsReducer = (state = initialState, action) => {
     case CREATE_TOPUP_ITEM_SUCCESS:
       return {
         ...state,
+        response: data,
         loading: false,
       };
 
@@ -153,6 +163,45 @@ const ReportsReducer = (state = initialState, action) => {
       };
 
     case CHANGE_TYPE_TABLE_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case CONFIRM_TOPUP_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CONFIRM_TOPUP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case CONFIRM_TOPUP_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case DETAIL_TOPUP_ITEM_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_TOPUP_ITEM_SUCCESS:
+      return {
+        ...state,
+        detailTopup: data,
+        loading: false,
+      };
+
+    case DETAIL_TOPUP_ITEM_ERR:
       return {
         ...state,
         error: err,

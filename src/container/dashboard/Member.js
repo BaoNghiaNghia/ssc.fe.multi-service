@@ -5,6 +5,7 @@ import { Row, Col, Table, Tooltip, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import { MdVerifiedUser } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { IoPeopleOutline } from "react-icons/io5";
@@ -12,6 +13,7 @@ import DetailMember from './component/DetailMember';
 import AddTopup from './component/AddTopup';
 import { GalleryNav, TopToolBox } from './style';
 import EditMember from './component/EditMember';
+import ConfirmTopup from './component/ConfirmTopup';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -28,7 +30,7 @@ const columnsMember = [
     key: 'username',
   },
   {
-    title: 'Số tiền',
+    title: 'Số tiền hiện tại',
     dataIndex: 'point',
     key: 'point',
   },
@@ -51,19 +53,19 @@ const columnsMember = [
 
 const columnsToup = [
   {
+    title: 'Người nạp tiền',
+    dataIndex: 'user_id',
+    key: 'user_id',
+  },
+  {
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
   },
   {
-    title: 'Số tiền',
+    title: 'Số tiền nạp',
     dataIndex: 'amount',
     key: 'amount',
-  },
-  {
-    title: 'Người nạp tiền',
-    dataIndex: 'user_id',
-    key: 'user_id',
   },
   {
     title: 'Người xác nhận',
@@ -79,6 +81,7 @@ const columnsToup = [
     title: 'Trạng thái',
     dataIndex: 'confirmed',
     key: 'confirmed',
+    width: '30px',
   },
 ];
 
@@ -99,6 +102,7 @@ function Member() {
   const [state, setState] = useState({
     isModalDetailMem: false,
     isModalAddTopup: false,
+    isModalConfirmTopup: false,
     isModalEditMem: false,
     notData: searchData,
     item: orders,
@@ -149,7 +153,7 @@ function Member() {
           </span>
         ),
         point: (
-          <span className="customer-name" style={{ color: 'green', fontWeight: 700 }}>
+          <span style={{ color: 'green', fontWeight: 700 }}>
             {numberWithCommas(credit_used)} / {numberWithCommas(credit)} (đ)
           </span>
         ),
@@ -159,7 +163,7 @@ function Member() {
               discount === 0 ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
-                <span>{discount}</span>
+                <span>{discount} %</span>
               )
             }
           </>
@@ -252,15 +256,37 @@ function Member() {
     topupList?.map((value, key) => {
       const { amount, confirmed, confirmed_at, confirmed_by, created_at, id, user_id } = value;
       const findUser = userList.filter((item) => item.id === user_id);
-      console.log('---- user fine ----', findUser);
+
       return dataSourceTopup.push({
         key: key + 1,
         id: <span>{ id || '...'}</span>,
-        amount: <span>{numberWithCommas(amount || 0)}</span>,
-        user_id: <>
-          <span style={{ margin: '0px', fontWeight: '700' }}>{ findUser[0]?.fullname }</span>
-          <span style={{ margin: '0px', fontSize: '0.7em' }}>{ findUser[0]?.email }</span>
-        </>,
+        amount: (
+          <>
+            {
+              amount === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <span style={{ color: 'green', fontWeight: 700 }}>{numberWithCommas(amount)} (đ)</span>
+              )
+            }
+
+            
+          </>
+        ),
+        user_id: (
+          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <ReactNiceAvatar
+              style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }}
+              {...genConfig(findUser[0]?.fullname?.charAt(0))}
+            />
+            <span style={{ marginLeft: '8px' }}>
+              <p style={{ margin: '0px', fontWeight: '700' }}>{findUser[0]?.fullname}</p>
+              <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.email}</p>
+              <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.phone}</p>
+            </span>
+          </span>
+        ),
+        
         confirmed_by: <>
           <span style={{ margin: '0px', fontWeight: '700' }}>{ confirmed_by ? userList.filter((item) => item.id === confirmed_by)[0]?.fullname : '...' }</span>
           <span style={{ margin: '0px', fontSize: '0.7em' }}>{ confirmed_by ? userList.filter((item) => item.id === confirmed_by)[0]?.email : '' }</span>
@@ -268,39 +294,21 @@ function Member() {
         confirmed_at: <span>{confirmed_at  || '...'}</span>,
         confirmed: <>{
           confirmed 
-            ? <><Badge color='green' count='Đã xác nhận' /></>
-            : <><Badge color='orange' count='Chưa xác nhận'/></>
+            ? <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}><Badge color='green' count='Đã xác nhận' /></div>
+            : <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                <Badge color='orange' count='Chưa xác nhận'/>
+                <Tooltip title="Tiến hành xác nhận" placement='leftTop'>
+                  <Button type="default" size="small" to="#"
+                    onClick={() => {
+                      dispatch(actions.detailTopupBegin(value));
+                      setState({ isModalConfirmTopup: true });
+                    }}
+                  >
+                    <MdVerifiedUser fontSize={24} />
+                  </Button>
+                </Tooltip>
+              </div>
           }</>,
-        action: (
-          <div className="table-actions">
-            <Tooltip title="Chi tiết">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" 
-                onClick={() => {
-                  dispatch(actions.detailUserAdminBegin({ id }));
-                  setState({ isModalDetailMem: true });
-                }}
-              >
-                <FeatherIcon icon="eye" size={16} />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Tạo Topup">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.detailUserAdminBegin({ id }));
-                setState({ isModalDetailMem: true });
-              }}>
-                <FaMoneyBillTransfer  fontSize={15}/>
-              </Button>
-            </Tooltip>
-            <Tooltip title="Cập nhật">
-              <Button className="btn-icon" type="info" to="#" shape="circle" onClick={() => {
-                dispatch(actions.detailUserAdminBegin({ id }));
-                setState({ isModalEditMem: true });
-              }}>
-                <FeatherIcon icon="edit" size={16} />
-              </Button>
-            </Tooltip>
-          </div>
-        ),
       });
     });
   }
@@ -320,7 +328,7 @@ function Member() {
     },
   };
 
-  const { isModalDetailMem, isModalEditMem, isModalAddTopup } = state;
+  const { isModalDetailMem, isModalEditMem, isModalAddTopup, isModalConfirmTopup } = state;
 
   return (
     <>
@@ -336,6 +344,11 @@ function Member() {
         isOpen={isModalEditMem}
         setState={setState}
       />
+      <ConfirmTopup
+        isOpen={isModalConfirmTopup}
+        setState={setState}
+      />
+
       <PageHeader
         ghost
         title="Thành viên & Thanh toán"
@@ -349,7 +362,7 @@ function Member() {
                   to="#"
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
                 >
-                  <IoPeopleOutline  fontSize={15}/> <span>Thành viên</span>
+                  <IoPeopleOutline fontSize={15}/> <span>Thành viên</span>
                 </Link>
               </li>
               <li>

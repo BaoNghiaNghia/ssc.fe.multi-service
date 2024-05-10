@@ -73,8 +73,6 @@ function* createServicesFunc(params) {
 
 function* updateServicesFunc(params) {
   try {
-    console.log('--- update services ---', params);
-
     const response = yield call(updateServiceAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {

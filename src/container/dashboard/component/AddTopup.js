@@ -4,42 +4,56 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
+import { FaRegUserCircle } from "react-icons/fa";
+import { numberWithCommas } from '../../../utility/utility';
 import actions from '../../../redux/member/actions';
 
 const { Option } = Select;
 
 function AddTopup({ isOpen, setState }) {
   const dispatch = useDispatch();
-  const [formDetailMember] = Form.useForm();
+  const [formTopupAdd] = Form.useForm();
 
-  const { detailUser } = useSelector(state => {
+  const { userList, detailUser } = useSelector(state => {
     return {
-      detailUser: state?.member?.detailUser,
+      userList: state?.member?.userList,
+      detailUser: state?.member?.detailUser
     };
   });
 
   useEffect(() => {
-    formDetailMember.setFieldsValue(detailUser);
-    formDetailMember.setFieldValue('role', detailUser?.group?.role);
+    formTopupAdd.setFieldsValue({
+      user_id: detailUser?.id,
+    });
   });
 
   const handleOk = () => {
     try {
-      formDetailMember.validateFields();
-  
-      const requestData = {}
-  
-      dispatch(actions.updateUserAdminBegin(requestData));
+      formTopupAdd.validateFields()
+        .then((values) => {
+          console.log("handle submit Values:", values);
 
+          const requestData = {
+            user_id: values?.user_id,
+            amount: values?.amount,
+          }
+      
+          dispatch(actions.createTopupItemBegin(requestData));
+
+          setState({ isModalAddTopup: false });
+          formTopupAdd.resetFields();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    } catch (err) {
       setState({
         isModalAddTopup: false,
       });
 
-      formDetailMember.resetFields();
-    } catch (err) {
+      formTopupAdd.resetFields();
       console.log(err);
     }
-
   };
 
   const handleCancel = () => {
@@ -48,96 +62,84 @@ function AddTopup({ isOpen, setState }) {
     });
   }
 
+  const selectAfter = (
+    <Select defaultValue="VND" style={{ width: 60 }}>
+      <Option value="VND">đ</Option>
+    </Select>
+  );
+
   return (
     <>
       <Modal
-        width='600px'
+        width='300px'
+        centered
         open={isOpen}
         title={
-          <>
-            <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-              <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Nạp tiền</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Nạp thêm tiền vào tài khoản thành viên</p>
-              </div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+            <div>
+              <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Nạp tiền</p>
+              <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Nạp thêm tiền vào tài khoản thành viên</p>
             </div>
-          </>
+          </div>
         }
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           <Button key="back" onClick={handleCancel}>
             Hủy
           </Button>,
           <Button key="submit" type="primary" onClick={handleOk}>
-            Cập nhật
+            Nạp tiền
           </Button>
         ]}
       >
-        <Form name="detail_member" layout="vertical" form={formDetailMember} onFinish={handleOk}>
+        <Form layout="vertical" form={formTopupAdd}>
           <Row gutter="10">
-            <Col sm={12}>
-              <Form.Item name="fullname" label="Họ tên" rules={[{
+            <Col sm={24}>
+              <Form.Item name="user_id" style={{ margin: '0px' }} label="Họ tên" rules={[{
                 required: true,
-                message: 'Trường không được trống'
+                message: 'Chưa chọn người dùng'
               }]}>
-                <Input size='small' placeholder="Thêm loại"/>
+                <Select disabled defaultActiveFirstOption style={{ width: '100%', margin: '0px', padding: '0px' }} size='small' placeholder='Chọn người dùng'>
+                  {
+                    userList.map(itemUser => {
+                      return (
+                        <Option value={itemUser?.id}>
+                          <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                            <FaRegUserCircle color='gray' fontSize={20} style={{ marginRight: '10px', marginTop: '8px' }}/> 
+                            <span>
+                              <p style={{ margin: '0px', padding: '0px', fontWeight: '800' }}>{itemUser?.fullname}</p>
+                              <p style={{ margin: '0px', padding: '0px', fontSize: '0.7em' }}>{itemUser?.email}</p>
+                            </span>
+                          </div>
+                        </Option>
+                      )
+                    })
+                  }
+                </Select>
               </Form.Item>
             </Col>
-            <Col sm={12}>
-              <Form.Item name="email" label="Email" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Input size='small' placeholder="Thêm loại"/>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '10px', margin: '0px' }}>Thông tin cơ bản</Divider>
-
-          <Row gutter="10">
-            <Col sm={12}>
-              <Form.Item name="phone" label="Điện thoại" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
-              </Form.Item>
-            </Col>
-            <Col sm={12}>
-              <Form.Item name="role" label="Nhóm người dùng" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Input size='small' placeholder="Chọn người dùng"/>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter="10">
-            <Col sm={8}>
-              <Form.Item name="discount" style={{ margin: '0px' }} label="Discount" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
-              </Form.Item>
-            </Col>
-            <Col sm={8}>
-              <Form.Item name="credit_used" style={{ margin: '0px' }} label="Credit đã dùng" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Credit đã dùng"/>
-              </Form.Item>
-            </Col>
-            <Col sm={8}>
-              <Form.Item name="credit" style={{ margin: '0px' }} label="Tổng Credit" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm credit"/>
+            <Col sm={24}>
+              <Form.Item
+                name="amount"
+                style={{ margin: '0px' }}
+                label="Số tiền" 
+                rules={[
+                  {
+                    required: true,
+                    message: "Chưa nhập số tiền"
+                  }
+                ]}
+              >
+                <InputNumber 
+                  style={{ width: '100%' }}
+                  size='small'
+                  // type='number'
+                  placeholder="Nhập số tiền cần nạp"
+                  addonAfter={selectAfter}
+                  formatter={(value) => numberWithCommas(value)}
+                  parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>

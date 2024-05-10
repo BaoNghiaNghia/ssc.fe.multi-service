@@ -3,6 +3,10 @@ export const TIMEOUT_REQUEST_API = 70000;
 
 export const BASE_URL=process.env.REACT_APP_API_ENDPOINT;
 
+export const COLOR_GENERAL = {
+  'primary': '#26695c'
+}
+
 export const SERVICE_TYPE = {
   'SUBSCRIBE': {
       title: 'subscribe',
@@ -43,7 +47,7 @@ export const FixedServiceTemp = [
     'type': 'Default',
     'service_type': 'ytbsubscribe',
   },
-]
+];
 
 export const MESSSAGE_STATUS_CODE = {
     SUCCESS: {

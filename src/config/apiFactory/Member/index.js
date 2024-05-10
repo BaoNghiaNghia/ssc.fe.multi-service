@@ -21,7 +21,7 @@ const updateUserAdminMemberAPI = (query) => MemberAPI.createBasicCRUDEndpoints({
 
 const listTopupAdminMemberAPI = (query) => MemberAPI.createBasicCRUDEndpoints({ name: TOPUP_ADMIN_ENVPOINT }).get(query);
 
-const createTopupAdminMemberAPI = (query) => MemberAPI.createBasicCRUDEndpoints({ name: TOPUP_ADMIN_ENVPOINT }).update(query);
+const createTopupAdminMemberAPI = (query) => MemberAPI.createBasicCRUDEndpoints({ name: TOPUP_ADMIN_ENVPOINT }).post(query);
 
 const topupAdminConfirmMemberAPI = (query) => MemberAPI.createBasicCRUDEndpoints({ name: TOPUP_ADMIN_CONFIRM_ENVPOINT }).submitPut(query);
 
