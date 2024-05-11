@@ -45,7 +45,7 @@ function DelService({ isOpen, setState }) {
         max_threads_5000: detailService?.max_threads_5000,
         name: detailService?.name,
         price_per_10: detailService?.price_per_10,
-        priority: detailService?.priority === 'true'
+        priority: detailService?.priority
       }
   
       dispatch(actions.updateServiceBegin(requestData));

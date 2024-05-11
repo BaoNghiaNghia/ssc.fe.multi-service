@@ -117,7 +117,7 @@ function AddService({ isOpen, setState }) {
               <Form.Item 
                 name="category"
                 style={{ margin: '0px' }}
-                initialValue="Subscribers"
+                initialValue="Comments"
                 bordered
                 rules={[{
                   required: true,
@@ -138,7 +138,7 @@ function AddService({ isOpen, setState }) {
                       <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
                     </div>
                   </Option>
-                  <Option value="Likes">
+                  {/* <Option value="Likes">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                       <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Likes</span>
                     </div>
@@ -147,7 +147,7 @@ function AddService({ isOpen, setState }) {
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                       <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribers</span>
                     </div>
-                  </Option>
+                  </Option> */}
                 </Select>
               </Form.Item>
             </Col>

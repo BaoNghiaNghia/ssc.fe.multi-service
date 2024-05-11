@@ -78,12 +78,7 @@ function ProxyManage() {
         total: <span className="customer-name">{total}</span>,
         used_count: <span className="customer-name">{used_count}</span>,
         enable: (
-          <Switch checked={enable} onChange={() => {
-            setState({
-              isOpenDel: true
-            });
-            dispatch(actions.modalDetailServiceBegin(value));
-          }} />
+          <Switch checked={enable} />
         )
       });
     });
