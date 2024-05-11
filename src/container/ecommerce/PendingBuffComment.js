@@ -27,7 +27,7 @@ const badgeOrangeStyle = {
   borderRadius: '7px ',
   padding: '2px 7px',
   fontSize: '0.7em',
-  color: 'red',
+  color: 'orange',
   fontWeight: 'bold',
   display: 'inline-flex',
   alignItems: 'center',
@@ -86,6 +86,10 @@ function PendingBuffComment() {
       const findUser = userList?.filter((item) => item.id === user_id);
       const findService = listService?.filter((item) => item.service_id === service_id);
 
+      const checkUpdateOrder = ['OrderStatusPending', 'OrderStatusProcessing', 'OrderStatusDisable'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
+      const checkInsuranceOrder = ['OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
+      const checkRefundOrder = ['OrderStatusPending', 'OrderStatusProcessing', 'OrderStatusDisable', 'OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
+
       return dataSource.push({
         key: key + 1,
         order_id: <span className="order-id">{order_id}</span>,
@@ -118,7 +122,7 @@ function PendingBuffComment() {
               {
                 priority ? (
                   <span className="label" style={badgeOrangeStyle}>
-                    <FaLocationArrow color='red' style={{ marginRight: '5px' }} />
+                    <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
                     Ưu tiên
                   </span>
                 ) : <></>
@@ -191,6 +195,60 @@ function PendingBuffComment() {
         date: <span className="ordered-date">{date}</span>,
         action: (
           <div className="table-actions">
+            {
+              checkUpdateOrder ? (
+                <Tooltip title="Chỉnh sửa">
+                  <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                    onClick={() => {
+                      dispatch(actions.detailOrderCommentBegin({
+                        ...value,
+                        userDetail: findUser,
+                        serviceDetail: findService
+                      }));
+                      setState({ ...state, isDetailOrderModal: true });
+                    }}
+                  >
+                    <FeatherIcon icon="edit" size={16} />
+                  </Button>
+                </Tooltip>
+              ) : <></>
+            }
+            {
+              checkInsuranceOrder ? (
+                <Tooltip title="Bảo hành">
+                  <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                    onClick={() => {
+                      dispatch(actions.detailOrderCommentBegin({
+                        ...value,
+                        userDetail: findUser,
+                        serviceDetail: findService
+                      }));
+                      setState({ ...state, isDetailOrderModal: true });
+                    }}
+                  >
+                    <FeatherIcon icon="shield" size={16} />
+                  </Button>
+                </Tooltip>
+              ) : <></>
+            }
+            {
+              checkRefundOrder ? (
+                <Tooltip title="Hủy & Hoàn tiền">
+                  <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                    onClick={() => {
+                      dispatch(actions.detailOrderCommentBegin({
+                        ...value,
+                        userDetail: findUser,
+                        serviceDetail: findService
+                      }));
+                      setState({ ...state, isDetailOrderModal: true });
+                    }}
+                  >
+                    <FeatherIcon icon="anchor" size={16} />
+                  </Button>
+                </Tooltip>
+              ) : <></>
+            }
             <Tooltip title="Chi tiết">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
