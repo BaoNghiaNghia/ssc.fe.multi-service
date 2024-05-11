@@ -12,7 +12,7 @@ BuffCommentAPI.createEntities([
     { name: COMMENT_IN_ORDER_COMMENT_ENDPOINT },
 ]);
 
-const fetchListOrderCommentAPI = () => BuffCommentAPI.createBasicCRUDEndpoints({ name: FETCH_LIST_ORDER_COMMENT_ENDPOINT }).get();
+const fetchListOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: FETCH_LIST_ORDER_COMMENT_ENDPOINT }).get(query);
 
 const commentOrderCommentAPI = (id) => BuffCommentAPI.createBasicCRUDEndpoints({ name: COMMENT_IN_ORDER_COMMENT_ENDPOINT }).submitGet(id);
 

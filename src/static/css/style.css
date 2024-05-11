@@ -161,12 +161,6 @@ ul {
   resize: none;
 }
 
-/* ant radio group */
-
-.ant-radio-button-wrapper-checked {
-  color: #fff !important;
-}
-
 /* card nav */
 
 .card-nav ul {
@@ -525,8 +519,9 @@ ul {
 }
 
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  background: #fff !important;
-  color: #5f63f2 !important;
+  background: #e6e6e6 !important;
+  font-weight: 700;
+  color: #000000 !important;
 }
 
 /* pagination */

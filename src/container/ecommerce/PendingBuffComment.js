@@ -245,8 +245,44 @@ function PendingBuffComment() {
       dataIndex: 'action',
       key: 'action',
     },
-
   ];
+
+  const ORDER_YOUTUBE_STATUS = [
+    {
+      name: "OrderStatusCancel",
+      label: 'Đã hủy',
+      icon: '',
+      value: -2
+    },
+    {
+      name: "OrderStatusDisable",
+      label: 'Tạm dừng',
+      icon: '',
+      value: -1
+    },
+    {
+      name: "OrderStatusPending",
+      label: 'Đang chờ',
+      icon: '',
+      value: 0
+    },
+    {
+      name: "OrderStatusProcessing",
+      label: 'Đang xử lý',
+      icon: '',
+      value: 1
+    },
+    {
+      name: "OrderStatusDone",
+      label: 'Hoàn thành',
+      icon: '',
+      value: 2
+    },
+  ];
+
+  const handleChangeForFilter = e => {
+    dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value }));
+  };
 
   const onSelectChange = selectedRowKey => {
     setState({ ...state, selectedRowKeys: selectedRowKey });
@@ -282,26 +318,27 @@ function PendingBuffComment() {
                 <Row gutter={15} className="justify-content-center">
                   <Col lg={6} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={handleSearch} dataSource={notData} patterns />
                     </div>
                   </Col>
-                  <Col xxl={14} lg={16} xs={24}>
-                    {/* <div className="table-toolbox-menu">
-                      <span className="toolbox-menu-title"> Status:</span>
-                      <Radio.Group onChange={handleChangeForFilter} defaultValue="">
-                        <Radio.Button value="">All</Radio.Button>
-                        {item.length &&
-                          [...new Set(filterKey)].map(value => {
+                  <Col xxl={16} xs={24}>
+                    <div className="table-toolbox-menu">
+                      <span className="toolbox-menu-title"> Trạng thái:</span>
+                      <Radio.Group buttonStyle="outline" optionType="button" onChange={handleChangeForFilter} defaultValue="">
+                        <Radio.Button value="">Tất cả</Radio.Button>
+                        { 
+                          ORDER_YOUTUBE_STATUS.map(status => {
                             return (
-                              <Radio.Button key={value} value={value}>
-                                {value}
+                              <Radio.Button key={status?.name} value={status?.value}>
+                                {status?.label}
                               </Radio.Button>
                             );
-                          })}
+                          })
+                        }
                       </Radio.Group>
-                    </div> */}
+                    </div>
                   </Col>
-                  <Col xxl={4} xs={24}>
+                  <Col xxl={2} xs={24}>
                     <div className="table-toolbox-actions">
                       <Button size="small" type="primary">
                         <FeatherIcon icon="plus" size={12} /> Thêm mới

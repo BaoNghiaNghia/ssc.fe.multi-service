@@ -10,6 +10,7 @@ import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 function* fetchListOrderCommentFunc(params) {
   try {
+    console.log('--- query nè 000 ----', params);
     const response = yield call(fetchListOrderCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
@@ -46,7 +47,6 @@ function* detailOrderCommentFunc(params) {
 
 function* commentInOrderCommentFunc(params) {
   try {
-    console.log('---- comment order -----', params?.payload);
     const response = yield call(commentOrderCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {

@@ -144,24 +144,20 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         </NavLink>
       </Menu.Item>
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF COMMENT</NavTitle>}
-      <SubMenu key="buff-comment" icon={!topMenu && <FeatherIcon icon="shopping-cart" />} title="Danh sách đơn"> 
-        <Menu.Item key="buff-comment-cho-duyet">
-          <NavLink onClick={toggleCollapsed} to={`${path}/comment/cho-duyet`}>
-            Chờ duyệt
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="buff-comment-dang-chay">
-          <NavLink onClick={toggleCollapsed} to={`${path}/comment/dang-chay`}>
-            Đang chạy
-          </NavLink>
-        </Menu.Item>
-
-        <Menu.Item key="buff-comment-bao-hanh">
-          <NavLink onClick={toggleCollapsed} to={`${path}/comment/bao-hanh`}>
-            Bảo hành
-          </NavLink>
-        </Menu.Item>
-      </SubMenu>
+      <Menu.Item
+        icon={
+          !topMenu && (
+            <NavLink className="menuItem-icon" to={`${path}/comment/cho-duyet`}>
+              <FeatherIcon icon="archive" />
+            </NavLink>
+          )
+        }
+        key="buff-comment-cho-duyet"
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/comment/cho-duyet`}>
+          Danh sách đơn
+        </NavLink>
+      </Menu.Item>
       <Menu.Item
         icon={
           !topMenu && (

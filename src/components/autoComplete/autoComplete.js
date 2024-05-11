@@ -57,7 +57,7 @@ const AutoComplete = props => {
       className="certain-category-search"
       popupClassName="certain-category-search-dropdown"
       dropdownMatchSelectWidth={false}
-      dropdownStyle={{ width: 300 }}
+      // dropdownStyle={{ width: 300 }}
       style={{ width }}
       options={content}
       placeholder={placeholder}
@@ -87,7 +87,6 @@ const AutoComplete = props => {
 };
 
 AutoComplete.defaultProps = {
-  width: '350px',
   placeholder: 'Tìm kiếm',
 };
 
