@@ -51,7 +51,7 @@ function AuthInfo() {
             <p>{userInfo?.group?.role}</p>
           </figcaption>
         </figure>
-        <ul className="user-dropdwon__links">
+        {/* <ul className="user-dropdwon__links">
           <li>
             <Link to="#">
               <FeatherIcon icon="user" /> Thông tin cá nhân
@@ -67,7 +67,7 @@ function AuthInfo() {
               <FeatherIcon icon="dollar-sign" /> Thanh toán
             </Link>
           </li>
-        </ul>
+        </ul> */}
         <Link className="user-dropdwon__bottomAction" onClick={SignOut} to="#">
           <FeatherIcon icon="log-out" /> Đăng xuất
         </Link>
