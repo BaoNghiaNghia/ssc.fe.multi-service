@@ -19,6 +19,10 @@ function* createDomainFunc(params) {
         actions.createDomainSuccess(response?.data?.data)
       );
     }
+
+    yield put(
+      actions.listAllDomainBegin()
+    );
   } catch (error) {
     const errorMessage = error;
     yield put(

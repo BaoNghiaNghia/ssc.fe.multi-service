@@ -2,80 +2,50 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Progress } from 'antd';
+import { Row, Col, Form, Select, Button, Modal, Table, Badge, Tooltip } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
-import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
-import actions from '../../../redux/serviceSettings/actions';
-import { FixedServiceTemp, STATUS_COMMENT_ENUM } from '../../../variables/index';
 
-const { Option } = Select;
+const badgeGreenStyle = {
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: '#00ab00',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+const badgeRedStyle = {
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'gray',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+
 
 function ListCommentOfOrder({ isOpen, setState, state }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
-  const { postLoading, detailService, detailOrderComment, commentInOrder } = useSelector(item => {
+  const { commentInOrder } = useSelector(item => {
     return {
-      postLoading: item?.settingService?.postLoading,
-      detailService: item?.settingService?.detailService,
-      detailOrderComment: item?.buffComment?.detailOrderComment,
       commentInOrder: item?.buffComment?.commentInOrder
     };
   });
 
-  useEffect(() => {
-    formUpdateService.setFieldsValue(detailOrderComment);
-    formUpdateService.setFieldValue('category', detailOrderComment?.serviceDetail && detailOrderComment?.serviceDetail[0]?.category);
-    formUpdateService.setFieldValue('user_name', detailOrderComment?.userDetail && detailOrderComment?.userDetail[0]?.fullname);
-    formUpdateService.setFieldValue('user_email', detailOrderComment?.userDetail && detailOrderComment?.userDetail[0]?.email);
-    formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
-    formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderComment?.status)?.title);
-  });
-
   const handleOk = () => {
-    try {
-
-      formUpdateService.validateFields()
-        .then((values) => {
-          const requestData = {
-            id: detailService.id,
-            category: values?.category,
-            platform: values?.platform || 'Youtube',
-            service_type: values?.service_type,
-            type: values?.type,
-            description: values?.description,
-            enabled: detailService?.enabled,
-            min: values?.min,
-            max: values?.max,
-            max_threads: values?.max_threads,
-            max_threads_3000: values?.max_threads_3000,
-            max_threads_5000: values?.max_threads_5000,
-            name: values?.name,
-            price_per_10: values?.price_per_10,
-            priority: values?.priority === 'true'
-          }
-      
-          dispatch(actions.updateServiceBegin(requestData));
-    
-          setState({
-            isListCommentModal: false,
-          });
-    
-          formUpdateService.resetFields();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
-    } catch (err) {
-      setState({
-        isListCommentModal: false,
-      });
-      formUpdateService.resetFields();
-      console.log(err);
-    }
-
   };
 
   const handleCancel = () => {
@@ -86,11 +56,67 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
     formUpdateService.resetFields();
   }
 
+  const dataSource = [];
+  if (commentInOrder?.items?.length) {
+    commentInOrder?.items?.map((value, key) => {
+      const { status, id, order_id, message } = value;
+
+      return dataSource.push({
+        key: key + 1,
+        message: <span className="order-id">{message}</span>,
+        id: (
+          <>
+            <span style={{ fontWeight: '700' }}><strong>ID: </strong>{id}</span>
+            <span style={{ fontSize: '0.7em' }}><strong>Order ID: </strong>{order_id}</span>
+          </>
+        ),
+        status: (
+          <>
+            {
+              status ? (
+                <Tooltip title="Đã chạy">
+                  <span className="label" style={badgeGreenStyle}>
+                    <Badge color='green' dot style={{ marginRight: '5px' }}/>
+                    
+                  </span>
+                </Tooltip>
+              ) : (
+                <Tooltip title="Chưa chạy">
+                  <span className="label" style={badgeRedStyle}>
+                    <Badge color='gray' dot style={{ marginRight: '5px' }}/>
+                  </span>
+                </Tooltip>
+              )
+            }
+          </>
+        ),
+      });
+    });
+  }
+
+  const columns = [
+    {
+      title: 'Comment',
+      dataIndex: 'message',
+      key: 'message',
+    },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
+    }
+  ];
+
   return (
     <>
       <Modal
-        width='600px'
         open={isOpen}
+        width="600px"
         centered
         title={
           <>
@@ -105,201 +131,16 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
         }
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Hủy
-          </Button>,
-          <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-            Cập nhật
-          </Button>
-        ]}
+        footer={null}
       >
-        <Form name="add_service" layout="vertical" form={formUpdateService} onFinish={handleOk}>
-          <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
-            <Col sm={12}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
-                <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
-                <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>{detailOrderComment?.serviceDetail && detailOrderComment?.serviceDetail[0]?.platform}</span>
-              </div>
-            </Col>
-            <Col sm={12}>
-              <Form.Item
-                name="category"
-                style={{ margin: '0px' }}
-                bordered 
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Select
-                  style={{ width: '100%', margin: '0px', padding: '0px' }}
-                  bordered={false}
-                  initialValue="Comments"
-                  size='small'
-                  disabled
-                  onClick={(value) => {
-                    const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
-                    if (selectedService?.length > 0) {
-                      formUpdateService.setFieldValue('type', selectedService[0]?.type);
-                      formUpdateService.setFieldValue('service_type', selectedService[0]?.service_type);
-                    }
-                  }}
-                >
-                  <Option value="Comments">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
-                    </div>
-                  </Option>
-                  <Option value="Likes">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Likes</span>
-                    </div>
-                  </Option>
-                  <Option value="Subscribers">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribers</span>
-                    </div>
-                  </Option>
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider style={{ fontSize: '0.9em', color: 'gray', padding: '10px 0px', margin: '0px' }}>Thông tin Khách</Divider>
-          <Row gutter="10">
-            <Col sm={12}>
-              <Form.Item
-                name="user_name"
-                label="Họ tên"
-                style={{ margin: '0px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Input size='small' readOnly placeholder="Nhập tên"/>
-              </Form.Item>
-            </Col>
-            <Col sm={12}>
-              <Form.Item
-                name="user_email"
-                style={{ margin: '0px' }}
-                label="Email"
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Input size='small' readOnly placeholder="Nhập email"/>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider style={{ fontSize: '0.9em', color: 'gray', padding: '10px 0px', margin: '0px' }}>Thông tin video</Divider>
-
-          <Row gutter="10">
-            <Col sm={16}>
-              <Form.Item 
-                name="link" 
-                label="Đường dẫn"
-                style={{ marginBottom: '7px' }} 
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Đường dẫn video'/>
-              </Form.Item>
-            </Col>
-            <Col sm={8}>
-              <Form.Item 
-                name="video_id" 
-                label="ID Video"
-                style={{ marginBottom: '7px' }} 
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='ID của video'/>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter="10">
-            <Col sm={8}>
-              <Form.Item
-                name="quantity"
-                label="Lượng comment"
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
-              </Form.Item>
-            </Col>
-            <Col sm={8}>
-              <Form.Item
-                name="processing_count"
-                label="Đang chạy"
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
-              </Form.Item>
-            </Col>
-            <Col sm={8}>
-              <Form.Item
-                name="performance"
-                label="Tiến trình"
-                style={{ margin: '0px', padding: '0px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Input size='small' addonAfter="%" readOnly placeholder="Thêm loại"/>
-              </Form.Item>
-              <Progress percent={formUpdateService.getFieldValue('performance')}  style={{ margin: '0px', padding: '0px' }} size="small" />
-            </Col>
-          </Row>
-
-          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
-
-          <Row gutter="10">
-            <Col sm={8}>
-              <Form.Item name="max_thread" initialValue={ state?.max_threads } label="Số luồng tối đa" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào số luồng tối đa' />
-              </Form.Item>
-            </Col>
-            <Col sm={8}>
-              <Form.Item name="priority"  label="Ưu tiên" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Select style={{ width: '100%' }} size='small'>
-                  <Option value="false">Không</Option>
-                  <Option value="true">Có</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col sm={8}>
-              <Form.Item name="status"  label="Trạng thái" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Input size='small' />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
+        <Table
+          style={{ margin: '0px !important', padding: '0px !important' }}
+          className='table-fill-modal'
+          dataSource={dataSource}
+          size='small'
+          columns={columns}
+          pagination={{ pageSize: 10, showSizeChanger: true, total: commentInOrder?.items?.length }}
+        />
       </Modal>
     </>
   );

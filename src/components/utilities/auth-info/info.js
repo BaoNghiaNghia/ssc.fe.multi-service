@@ -85,11 +85,11 @@ function AuthInfo() {
   const country = (
     <NavAuth>
       <Link onClick={() => onFlagChangeHandle('english')} to="#">
-        <img src={require('../../../static/img/flag/english.png')} alt="" />
+        <img src={require('../../../static/img/flag/us.png')} alt="" />
         <span>English</span>
       </Link>
       <Link onClick={() => onFlagChangeHandle('vietnam')} to="#">
-        <img src={require('../../../static/img/flag/vietnam.png')} alt="" />
+        <img src={require('../../../static/img/flag/vn.png')} alt="" />
         <span>Tiếng Việt</span>
       </Link>
     </NavAuth>

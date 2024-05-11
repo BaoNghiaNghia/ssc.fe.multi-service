@@ -1,42 +1,37 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table, Tooltip, Image } from 'antd';
+import { Row, Col, Table, Switch } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './style';
+import AddDomain from './component/AddDomain';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import { orderFilter } from '../../redux/orders/actionCreator';
+import actions from '../../redux/proxy/actions';
 
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
-import actions from '../../redux/blacklist/actions';
-
-import BlackListImg from '../../static/img/block_icon.png.png'
 
 function ProxyManage() {
   const dispatch = useDispatch();
-  const { searchData, orders, blackListChannel, isLoading } = useSelector(state => {
+  const { searchData, orders, isLoading, listDomain } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
-      blackListChannel: state?.blackList?.blackListChannel,
-      isLoading: state?.blackList?.loading
+      isLoading: state?.proxy?.loading,
+      listDomain: state?.proxy?.listDomain
     };
   });
 
   const [state, setState] = useState({
     notData: searchData,
+    isAddDomainModal: false,
     item: orders,
     selectedRowKeys: [],
   });
 
   const { notData, item, selectedRowKeys } = state;
-  const filterKey = ['Shipped', 'Awaiting Shipment', 'Canceled'];
 
   useEffect(() => {
     if (orders) {
@@ -48,7 +43,7 @@ function ProxyManage() {
   }, [orders, selectedRowKeys]);
 
   useEffect(() => {
-    dispatch(actions.fetchBlackListChannelBegin());
+    dispatch(actions.listAllDomainBegin());
   }, [dispatch]);
 
   const handleSearch = searchText => {
@@ -59,71 +54,71 @@ function ProxyManage() {
     });
   };
 
-  const handleChangeForFilter = e => {
-    dispatch(orderFilter('status', e.target.value));
-  };
-
   const dataSource = [];
   
-  if (blackListChannel?.length) {
-    blackListChannel?.map((value, key) => {
-      const { id, channel_id, reason, time } = value;
+  if (listDomain?.items?.length) {
+    listDomain?.items?.map((value, key) => {
+      const { id, port_start, geo, domain, used_count, total, enable } = value;
       return dataSource.push({
         key: key + 1,
         id: <span className="customer-name">{id}</span>,
-        channel_id: (
-          <Tooltip title="Đến kênh Youtube">
-            <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <Image preview={false} 
-                style={{ paddingRight: '10px', filter: 'grayscale(30)' }} height="30px"
-                src={BlackListImg}
-              />
-              <a href={`https://www.youtube.com/channel/${  channel_id}`} target="_blank" rel="noopener noreferrer">
-                <span className="order-id">{channel_id}</span>
-              </a>
-            </div>
-          </Tooltip>
+        domain: (
+          <>
+            <span className="customer-name" style={{ fontWeight: '700' }}>{domain}</span>
+            <span className="customer-name" style={{ fontSize: '0.7em' }}>ID: {id}</span>
+          </>
         ),
-        time: <span className="customer-name">{time}</span>,
-        reason: <span className="ordered-date">{reason}</span>,
-        action: (
-          <div className="table-actions">
-            <Tooltip title="Xóa">
-              <Button className="btn-icon" type="danger" to="#" shape="circle">
-                <FeatherIcon icon="trash-2" size={16} />
-              </Button>
-            </Tooltip>
+        geo: (
+          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+            <img src={require(`../../static/img/flag/${geo}.png`)} alt="" />
+            <span style={{ marginLeft: '5px' }}>{geo.toUpperCase()}</span>
           </div>
         ),
+        port_start: <span className="customer-name">{port_start}</span>,
+        total: <span className="customer-name">{total}</span>,
+        used_count: <span className="customer-name">{used_count}</span>,
+        enable: (
+          <Switch checked={enable} onChange={() => {
+            setState({
+              isOpenDel: true
+            });
+            dispatch(actions.modalDetailServiceBegin(value));
+          }} />
+        )
       });
     });
   }
 
   const columns = [
     {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'Domain',
+      dataIndex: 'domain',
+      key: 'domain',
     },
     {
-      title: 'Channel ID',
-      dataIndex: 'channel_id',
-      key: 'channel_id',
+      title: 'GEO',
+      dataIndex: 'geo',
+      key: 'geo',
     },
     {
-      title: 'Thời gian',
-      dataIndex: 'time',
-      key: 'time',
+      title: 'Port',
+      dataIndex: 'port_start',
+      key: 'port_start',
     },
     {
-      title: 'Lí do',
-      dataIndex: 'reason',
-      key: 'reason',
+      title: 'Số lượng',
+      dataIndex: 'total',
+      key: 'total',
     },
     {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
+      title: 'Đã sử dụng',
+      dataIndex: 'used_count',
+      key: 'used_count',
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'enable',
+      key: 'enable',
     },
   ];
 
@@ -137,8 +132,14 @@ function ProxyManage() {
     },
   };
 
+  const { isAddDomainModal } = state;
+
   return (
     <>
+      <AddDomain
+        isOpen={isAddDomainModal}
+        setState={setState}
+      />
       <PageHeader
         ghost
         title="Quản lý proxy"
@@ -154,25 +155,17 @@ function ProxyManage() {
                       <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
-                  <Col xxl={14} lg={16} xs={24}>
-                    <div className="table-toolbox-menu">
-                      <span className="toolbox-menu-title"> Status:</span>
-                      <Radio.Group onChange={handleChangeForFilter} defaultValue="">
-                        <Radio.Button value="">All</Radio.Button>
-                        {item.length &&
-                          [...new Set(filterKey)].map(value => {
-                            return (
-                              <Radio.Button key={value} value={value}>
-                                {value}
-                              </Radio.Button>
-                            );
-                          })}
-                      </Radio.Group>
-                    </div>
-                  </Col>
-                  <Col xxl={4} xs={24}>
+                  <Col xxl={18} xs={24}>
                     <div className="table-toolbox-actions">
-                      <Button size="small" type="primary">
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => {
+                          setState({
+                            isAddDomainModal: true,
+                          });
+                        }}
+                      >
                         <FeatherIcon icon="plus" size={12} /> Thêm Proxy
                       </Button>
                     </div>
@@ -186,10 +179,11 @@ function ProxyManage() {
               <TableWrapper className="table-order table-responsive">
                 <Table
                   rowSelection={rowSelection}
+                  size='small'
                   dataSource={dataSource}
                   columns={columns}
                   loading={isLoading}
-                  pagination={{ pageSize: 20, showSizeChanger: true, total: blackListChannel.length }}
+                  pagination={{ pageSize: 20, showSizeChanger: true, total: listDomain.length }}
                 />
               </TableWrapper>
             </Col>

@@ -182,18 +182,6 @@ function SettingAndService() {
             </Button>
           </Tooltip>
           <Tooltip title={`${ enabled ? 'Tắt' : 'Bật' } dịch vụ`}>
-            {/* <Button
-              size="default"
-              type="default"
-              onClick={() => {
-                setState({
-                  isOpenDel: true
-                });
-                dispatch(actions.modalDetailServiceBegin(value));
-              }}
-            >
-              <LuTrash2 style={{ marginTop: '4px' }} />
-            </Button> */}
             <Switch checked={enabled} onChange={() => {
                 setState({
                   isOpenDel: true
@@ -285,6 +273,7 @@ function SettingAndService() {
                   <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
                 </div>
                 <Table
+                  size='small'
                   showHeader={false}
                   pagination={false}
                   dataSource={dataSource}

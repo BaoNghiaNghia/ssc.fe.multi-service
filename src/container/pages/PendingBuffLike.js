@@ -199,7 +199,7 @@ function PendingBuffLike() {
                   rowSelection={rowSelection}
                   dataSource={dataSource}
                   columns={columns}
-                  pagination={{ pageSize: 7, showSizeChanger: true, total: orders.length }}
+                  pagination={{ pageSize: 10, showSizeChanger: true, total: orders.length }}
                 />
               </TableWrapper>
             </Col>

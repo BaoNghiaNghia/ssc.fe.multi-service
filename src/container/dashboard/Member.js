@@ -424,6 +424,7 @@ function Member() {
                   typeTable === MEMBER_TABLE_TYPE.MEMBER.title ? (
                     <Table
                       rowSelection={rowSelection}
+                      size='small'
                       dataSource={dataSource}
                       loading={isLoading}
                       columns={columnsMember}
@@ -432,6 +433,7 @@ function Member() {
                   ) : (
                     <Table
                       rowSelection={rowSelection}
+                      size='small'
                       dataSource={dataSourceTopup}
                       loading={isLoading}
                       columns={columnsToup}

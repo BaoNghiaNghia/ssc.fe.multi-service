@@ -73,7 +73,7 @@ function PendingBuffComment() {
   const dataSource = [];
   if (listOrderComment?.items?.length) {
     listOrderComment?.items?.map((value, key) => {
-      const { status, order_id, amount, date, user_id, link, video_id, quantity, priority, service_id, performance, max_thread } = value;
+      const { status, order_id, amount, date, user_id, link, video_id, quantity, priority, service_id, performance, max_thread, id } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
       const findService = listService?.filter((item) => item.service_id === service_id);
@@ -182,7 +182,7 @@ function PendingBuffComment() {
             </Tooltip>
             <Tooltip title="Danh sách comment">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.commentOrderCommentBegin({ id: order_id }));
+                dispatch(actions.commentOrderCommentBegin({ id }));
                 setState({ isListCommentModal: true });
               }}>
                 <FaRegCommentDots fontSize={15}/>
@@ -312,9 +312,10 @@ function PendingBuffComment() {
               <TableWrapper className="table-order table-responsive">
                 <Table
                   rowSelection={rowSelection}
+                  size='small'
                   dataSource={dataSource}
                   columns={columns}
-                  pagination={{ pageSize: 7, showSizeChanger: true, total: listOrderComment?.items?.length }}
+                  pagination={{ pageSize: 10, showSizeChanger: true, total: listOrderComment?.items?.length }}
                 />
               </TableWrapper>
             </Col>
