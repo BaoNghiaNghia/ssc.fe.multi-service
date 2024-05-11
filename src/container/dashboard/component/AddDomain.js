@@ -21,15 +21,6 @@ function AddDomain({ isOpen, setState }) {
 
   const [formCreateService] = Form.useForm();
 
-  const [state, setStateModal] = useState({
-    tags: ['UI/UX', 'Branding', 'Product Design', 'Web Design'],
-    values: null,
-  });
-
-  const handleSubmit = (values) => {
-    setStateModal({ ...state, values: { ...values, tags: state.tags } });
-  };
-
   const handleOk = () => {
     try {
       formCreateService.validateFields()
@@ -94,7 +85,7 @@ function AddDomain({ isOpen, setState }) {
           </Button>
         ]}
       >
-        <Form name="add_service" layout="vertical" form={formCreateService} onFinish={handleSubmit}>
+        <Form name="add_service" layout="vertical" form={formCreateService}>
           <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin Domain</Divider>
 
           <Row gutter="10">

@@ -255,18 +255,54 @@ function AddService({ isOpen, setState }) {
           </Row>
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item style={{ margin: '0px' }} name="min" label="Số sub order min" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
+              <Form.Item 
+                style={{ margin: '0px' }}
+                name="min" 
+                label="Số sub order min"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Trường không được trống'
+                  },
+                  {
+                    validator: async (_, min) => {
+                      const max = formCreateService.getFieldValue("max");
+                      if (max != null && min != null) {
+                        if (max <= min) {
+                          // eslint-disable-next-line prefer-promise-reject-errors
+                          return Promise.reject( `Phải nhỏ hơn ${  max} (Sub order max)`);
+                        }
+                      }
+                    },
+                  }
+                ]}
+              >
                 <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item style={{ margin: '0px' }} name="max" label="Số Sub (order max)" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
+              <Form.Item
+                style={{ margin: '0px' }}
+                name="max"
+                label="Số Sub (order max)"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Trường không được trống'
+                  },
+                  {
+                    validator: async (_, max) => {
+                      const min = formCreateService.getFieldValue("min");
+                      if (max != null && min != null) {
+                        if (max <= min) {
+                          // eslint-disable-next-line prefer-promise-reject-errors
+                          return Promise.reject( `Phải lớn hơn ${  min} (Sub order min)`);
+                        }
+                      }
+                    },
+                  }
+                ]}
+                >
                 <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>

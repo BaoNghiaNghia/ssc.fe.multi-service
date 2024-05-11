@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Switch } from 'antd';
+import { Row, Col, Table, Switch, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './style';
 import AddDomain from './component/AddDomain';
@@ -11,6 +11,7 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/proxy/actions';
+import { numberWithCommas } from '../../utility/utility';
 
 
 function ProxyManage() {
@@ -71,14 +72,23 @@ function ProxyManage() {
         geo: (
           <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
             <img src={require(`../../static/img/flag/${geo}.png`)} alt="" />
-            <span style={{ marginLeft: '5px' }}>{geo.toUpperCase()}</span>
+            <span style={{ marginLeft: '8px' }}>{geo.toUpperCase()}</span>
           </div>
         ),
         port_start: <span className="customer-name">{port_start}</span>,
-        total: <span className="customer-name">{total}</span>,
-        used_count: <span className="customer-name">{used_count}</span>,
+        total: <span className="customer-name">{numberWithCommas(total || 0)}</span>,
+        used_count: <span className="customer-name">{numberWithCommas(used_count || 0)}</span>,
         enable: (
           <Switch checked={enable} />
+        ),
+        action: (
+          <div className="table-actions">
+            <Tooltip title="Xóa">
+              <Button className="btn-icon" type="danger" to="#" shape="circle">
+                <FeatherIcon icon="trash-2" size={16} />
+              </Button>
+            </Tooltip>
+          </div>
         )
       });
     });
@@ -114,6 +124,11 @@ function ProxyManage() {
       title: 'Trạng thái',
       dataIndex: 'enable',
       key: 'enable',
+    },
+    {
+      title: 'Hành động',
+      dataIndex: 'action',
+      key: 'action',
     },
   ];
 

@@ -21,7 +21,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
     !topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : [],
   );
 
-  const pendingBadge = <Badge count="Pending" size='small' status='success' color={COLOR_GENERAL.primary}/>;
+  const pendingBadge = <Badge count="Coming" size='small' status='success' color={COLOR_GENERAL.primary}/>;
 
   const onOpenChange = (keys) => {
     setOpenKeys(keys[keys.length - 1] !== 'recharts' ? [keys.length && keys[keys.length - 1]] : keys);
