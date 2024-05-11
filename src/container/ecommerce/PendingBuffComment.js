@@ -73,7 +73,7 @@ function PendingBuffComment() {
   const dataSource = [];
   if (listOrderComment?.items?.length) {
     listOrderComment?.items?.map((value, key) => {
-      const { status, order_id, amount, date, user_id, link, video_id, quantity, priority, service_id, performance, max_thread, id } = value;
+      const { status, order_id, amount, date, user_id, link, video_id, quantity, priority, service_id, performance, max_thread, id, processing_count } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
       const findService = listService?.filter((item) => item.service_id === service_id);
@@ -131,7 +131,7 @@ function PendingBuffComment() {
               max_thread === 0 ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
-                <span><strong>{max_thread}</strong></span>
+                <span><strong>{processing_count} / {max_thread}</strong></span>
               )
             }
           </>
@@ -225,11 +225,11 @@ function PendingBuffComment() {
       dataIndex: 'service',
       key: 'service',
     },
-    {
-      title: 'Tiến trình',
-      dataIndex: 'performance',
-      key: 'performance',
-    },
+    // {
+    //   title: 'Tiến trình',
+    //   dataIndex: 'performance',
+    //   key: 'performance',
+    // },
     {
       title: 'Trạng thái',
       dataIndex: 'status',

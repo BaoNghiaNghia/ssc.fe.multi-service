@@ -115,6 +115,7 @@ function AddDomain({ isOpen, setState }) {
               <Form.Item 
                 name="geo" 
                 label="Geo"
+                initialValue="vn"
                 style={{ marginBottom: '7px' }} 
                 rules={[{
                   required: true,

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Badge, Menu } from 'antd';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { FiHome } from "react-icons/fi";
 import { LuServer } from "react-icons/lu";
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
 import { NavTitle } from './style';
+import { COLOR_GENERAL } from '../variables';
 
 const { SubMenu } = Menu;
 
@@ -19,6 +20,8 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
   const [openKeys, setOpenKeys] = React.useState(
     !topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : [],
   );
+
+  const pendingBadge = <Badge count="Pending" size='small' status='success' color={COLOR_GENERAL.primary}/>;
 
   const onOpenChange = (keys) => {
     setOpenKeys(keys[keys.length - 1] !== 'recharts' ? [keys.length && keys[keys.length - 1]] : keys);
@@ -59,7 +62,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         key="tong-quan"
       >
         <NavLink onClick={toggleCollapsed} to={`${path}/tong-quan`}>
-          Tổng quan
+          Tổng quan {pendingBadge}
         </NavLink>
       </Menu.Item>
       <Menu.Item
@@ -73,7 +76,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         key="quan-ly-may"
       >
         <NavLink onClick={toggleCollapsed} to={`${path}/quan-ly-may`}>
-          Quản lý máy
+          Quản lý máy {pendingBadge}
         </NavLink>
       </Menu.Item>
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF SUBSCRIBE</NavTitle>}
@@ -141,7 +144,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         </NavLink>
       </Menu.Item>
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF COMMENT</NavTitle>}
-      <SubMenu key="buff-comment" icon={!topMenu && <FeatherIcon icon="shopping-cart" />} title="Danh sách đơn">
+      <SubMenu key="buff-comment" icon={!topMenu && <FeatherIcon icon="shopping-cart" />} title="Danh sách đơn"> 
         <Menu.Item key="buff-comment-cho-duyet">
           <NavLink onClick={toggleCollapsed} to={`${path}/comment/cho-duyet`}>
             Chờ duyệt
@@ -185,7 +188,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         key="black-list"
       >
         <NavLink onClick={toggleCollapsed} to={`${path}/blacklist`}>
-          BlackList
+          BlackList {pendingBadge}
         </NavLink>
       </Menu.Item>
       <Menu.Item
