@@ -67,8 +67,8 @@ function DelDomain({ isOpen, setState }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>{ currentStateWorking ? 'Tắt' : 'Bật' } domain</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>{ currentStateWorking ? 'Ngừng' : 'Tiếp tục' } sử dụng domain </p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Xóa domain</p>
+                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Xóa sử dụng domain </p>
               </div>
             </div>
           </>
@@ -80,7 +80,7 @@ function DelDomain({ isOpen, setState }) {
             Hủy
           </Button>,
           <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-            { currentStateWorking ? 'Tắt' : 'Bật' }
+            Xóa
           </Button>
         ]}
       >
@@ -95,7 +95,7 @@ function DelDomain({ isOpen, setState }) {
                     fontWeight: '400'
                   }}
                 >
-                  Xác nhận { currentStateWorking ? 'tắt' : 'bật' } domain <span style={{ color: COLOR_GENERAL.primary }}>{detailDomain?.domain}</span> ?
+                  Xác nhận xóa domain <span style={{ color: COLOR_GENERAL.primary }}>{detailDomain?.domain}</span> ?
                 </Text>
               </Paragraph>
             </Col>
