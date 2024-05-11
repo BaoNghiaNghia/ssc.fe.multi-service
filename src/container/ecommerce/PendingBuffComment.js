@@ -281,7 +281,11 @@ function PendingBuffComment() {
   ];
 
   const handleChangeForFilter = e => {
-    dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value }));
+    if (e.target.value) {
+      dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value }));
+    } else {
+      dispatch(actions.fetchListOrderCommentBegin());
+    }
   };
 
   const onSelectChange = selectedRowKey => {
