@@ -81,14 +81,15 @@ function ListProxyInDomain({ isOpen, setState }) {
       return dataSource.push({
         key: key + 1,
         id: <span className="customer-name">{id}</span>,
-        domain: (
-          <>
-            <p style={{ fontWeight: '700', padding: 0, margin: 0 }}>{domain}</p>
-          </>
-        ),
         proxy_string: (
           <>
-            <p style={{ fontWeight: '700', padding: 0, margin: 0 }}>{proxy_string}</p>
+            {
+              using ? <>
+                <p style={{ fontWeight: '700', padding: 0, margin: 0 }}>{proxy_string}</p>
+              </> : <>
+                <p style={{ fontWeight: '700', padding: 0, margin: 0 }}>{proxy_string}</p>
+              </>
+            }
             <span style={{ fontSize: '0.8em', }}>
               {
                 using ? <>
@@ -105,14 +106,7 @@ function ListProxyInDomain({ isOpen, setState }) {
             </span>
           </>
         ),
-        geo: (
-          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-            <img src={require(`../../../static/img/flag/${geo}.png`)} alt="" />
-            <span style={{ marginLeft: '8px' }}>{geo.toUpperCase()}</span>
-          </div>
-        ),
         port_start: <span className="customer-name">{port_start}</span>,
-        total: <span className="customer-name">{numberWithCommas(total || 0)}</span>,
         used_count: <span className="customer-name">{numberWithCommas(used_count || 0)}</span>,
         enable: (
           <Switch checked={enable} />
@@ -121,34 +115,11 @@ function ListProxyInDomain({ isOpen, setState }) {
     });
   }
 
-//   {
-//     "used_count": 0,
-//     "using": false,
-//     "enable": true,
-//     "created_at": "2024-05-11 09:31:32",
-//     "updated_at": "2024-05-11 09:31:32"
-// }
-
   const columns = [
-    {
-      title: 'Domain',
-      dataIndex: 'domain',
-      key: 'domain',
-    },
-    {
-      title: 'GEO',
-      dataIndex: 'geo',
-      key: 'geo',
-    },
     {
       title: 'Proxy',
       dataIndex: 'proxy_string',
       key: 'proxy_string',
-    },
-    {
-      title: 'Số lượng',
-      dataIndex: 'total',
-      key: 'total',
     },
     {
       title: 'Sử dụng',
@@ -172,9 +143,19 @@ function ListProxyInDomain({ isOpen, setState }) {
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-              <div>
+              <div >
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách Proxy</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Danh sách proxy thuộc domain</p>
+                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <span style={{ fontWeight: '700', padding: 0, margin: 0, fontSize: '0.85em' }}>
+                    <span style={{ fontSize: '0.6em', marginRight: '10px' }}>DOMAIN  </span>
+                    <span>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.domain}</span>
+                  </span>
+                  <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '30px' }}>
+                    <span style={{ fontSize: '0.6em', marginRight: '10px' }}>GEO  </span>
+                    <img src={require(`../../../static/img/flag/${listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo}.png`)} alt="" width="18px" height="18px" />
+                    <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo.toUpperCase()}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </>

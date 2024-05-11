@@ -98,7 +98,7 @@ function ProxyManage() {
                   setState({ ...state, isListProxyModal: true });
                 }}
               >
-                <FeatherIcon icon="eye" size={16} />
+                <FeatherIcon icon="repeat" size={16} />
               </Button>
             </Tooltip>
             <Tooltip title="Xóa">
