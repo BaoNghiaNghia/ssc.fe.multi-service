@@ -17,7 +17,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/buffComment/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { STATUS_COMMENT_ENUM } from '../../variables';
+import { LIMIT_ITEM_REQUEST_API, STATUS_COMMENT_ENUM } from '../../variables';
 
 
 const badgeOrangeStyle = {
@@ -57,7 +57,7 @@ function PendingBuffComment() {
   const { notData } = state;
 
   useEffect(() => {
-    dispatch(actions.fetchListOrderCommentBegin());
+    dispatch(actions.fetchListOrderCommentBegin({ limit: LIMIT_ITEM_REQUEST_API }));
     dispatch(userActions.fetchUserListBegin());
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
@@ -249,18 +249,6 @@ function PendingBuffComment() {
 
   const ORDER_YOUTUBE_STATUS = [
     {
-      name: "OrderStatusCancel",
-      label: 'Đã hủy',
-      icon: '',
-      value: -2
-    },
-    {
-      name: "OrderStatusDisable",
-      label: 'Tạm dừng',
-      icon: '',
-      value: -1
-    },
-    {
       name: "OrderStatusPending",
       label: 'Đang chờ',
       icon: '',
@@ -273,6 +261,18 @@ function PendingBuffComment() {
       value: 1
     },
     {
+      name: "OrderStatusDisable",
+      label: 'Tạm dừng',
+      icon: '',
+      value: -1
+    },
+    {
+      name: "OrderStatusCancel",
+      label: 'Đã hủy',
+      icon: '',
+      value: -2
+    },
+    {
       name: "OrderStatusDone",
       label: 'Hoàn thành',
       icon: '',
@@ -282,9 +282,9 @@ function PendingBuffComment() {
 
   const handleChangeForFilter = e => {
     if (e.target.value) {
-      dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value }));
+      dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value, limit: LIMIT_ITEM_REQUEST_API }));
     } else {
-      dispatch(actions.fetchListOrderCommentBegin());
+      dispatch(actions.fetchListOrderCommentBegin({ limit: LIMIT_ITEM_REQUEST_API }));
     }
   };
 
