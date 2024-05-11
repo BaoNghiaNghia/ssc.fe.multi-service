@@ -25,17 +25,21 @@ function EditMember({ isOpen, setState }) {
 
   const handleOk = () => {
     try {
-      formDetailMember.validateFields();
+      formDetailMember.validateFields()
+      .then((values) => {
+        const requestData = {}
   
-      const requestData = {}
-  
-      dispatch(actions.updateUserAdminBegin(requestData));
+        dispatch(actions.updateUserAdminBegin(requestData));
 
-      setState({
-        isModalEditMem: false,
+        setState({
+          isModalEditMem: false,
+        });
+
+        formDetailMember.resetFields();
+      })
+      .catch((err) => {
+        console.error("handle Real Error: ", err);
       });
-
-      formDetailMember.resetFields();
     } catch (err) {
       console.log(err);
     }

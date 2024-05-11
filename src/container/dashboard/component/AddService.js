@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
@@ -38,32 +38,36 @@ function AddService({ isOpen, setState }) {
 
   const handleOk = () => {
     try {
-      formCreateService.validateFields();
-  
-      const requestData = {// {
-        category: formCreateService.getFieldValue('category'),
-        platform: formCreateService.getFieldValue('platform') || 'Youtube',
-        service_type: formCreateService.getFieldValue('service_type'),
-        type: formCreateService.getFieldValue('type'),
-        description: formCreateService.getFieldValue('description'),
-        enabled: true,
-        min: formCreateService.getFieldValue('min'),
-        max: formCreateService.getFieldValue('max'),
-        max_threads: formCreateService.getFieldValue('max_threads'),
-        max_threads_3000: formCreateService.getFieldValue('max_threads_3000'),
-        max_threads_5000: formCreateService.getFieldValue('max_threads_5000'),
-        name: formCreateService.getFieldValue('name'),
-        price_per_10: formCreateService.getFieldValue('price_per_10'),
-        priority: formCreateService.getFieldValue('priority') === 'true'
-      }
-  
-      dispatch(actions.createServiceBegin(requestData));
+      formCreateService.validateFields()
+        .then((values) => {
+          const requestData = {// {
+            category: formCreateService.getFieldValue('category'),
+            platform: formCreateService.getFieldValue('platform') || 'Youtube',
+            service_type: formCreateService.getFieldValue('service_type'),
+            type: formCreateService.getFieldValue('type'),
+            description: formCreateService.getFieldValue('description'),
+            enabled: true,
+            min: formCreateService.getFieldValue('min'),
+            max: formCreateService.getFieldValue('max'),
+            max_threads: formCreateService.getFieldValue('max_threads'),
+            max_threads_3000: formCreateService.getFieldValue('max_threads_3000'),
+            max_threads_5000: formCreateService.getFieldValue('max_threads_5000'),
+            name: formCreateService.getFieldValue('name'),
+            price_per_10: formCreateService.getFieldValue('price_per_10'),
+            priority: formCreateService.getFieldValue('priority') === 'true'
+          }
 
-      setState({
-        isOpenAdd: false,
-      });
+          dispatch(actions.createServiceBegin(requestData));
 
-      formCreateService.resetFields();
+          setState({
+            isOpenAdd: false,
+          });
+
+          formCreateService.resetFields();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
     } catch (err) {
       console.log(err);
     }
@@ -109,12 +113,12 @@ function AddService({ isOpen, setState }) {
             <Col sm={12}>
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
                 <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
-                <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
+                <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }} />
                 <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
               </div>
             </Col>
             <Col sm={12}>
-              <Form.Item 
+              <Form.Item
                 name="category"
                 style={{ margin: '0px' }}
                 initialValue="Comments"
@@ -132,10 +136,10 @@ function AddService({ isOpen, setState }) {
                   }
                 }}
               >
-                <Select style={{ width: '100%', margin: '0px', padding: '0px' }} bordered={false} initialValue="Comments" size='small'>                    
+                <Select style={{ width: '100%', margin: '0px', padding: '0px' }} bordered={false} initialValue="Comments" size='small'>
                   <Option value="Comments">
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
+                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }} /> <span style={{ fontWeight: '800' }}>Comments</span>
                     </div>
                   </Option>
                   {/* <Option value="Likes">
@@ -157,16 +161,16 @@ function AddService({ isOpen, setState }) {
 
           <Row gutter="10">
             <Col sm={24}>
-              <Form.Item 
-                name="name" 
-                label="Tên dịch vụ" 
-                style={{ marginBottom: '7px' }} 
+              <Form.Item
+                name="name"
+                label="Tên dịch vụ"
+                style={{ marginBottom: '7px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ'/>
+                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ' />
               </Form.Item>
             </Col>
           </Row>
@@ -176,7 +180,7 @@ function AddService({ isOpen, setState }) {
               <Form.Item
                 name="description"
                 label="Mô tả"
-                style={{ marginBottom: '7px' }} 
+                style={{ marginBottom: '7px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
@@ -205,7 +209,7 @@ function AddService({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' disabled placeholder="Thêm loại"/>
+                <Input size='small' disabled placeholder="Thêm loại" />
               </Form.Item>
             </Col>
             <Col sm={6}>
@@ -225,7 +229,7 @@ function AddService({ isOpen, setState }) {
 
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="max_threads"  label="Luồng < 3000" rules={[{
+              <Form.Item name="max_threads" label="Luồng < 3000" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -237,21 +241,21 @@ function AddService({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small'style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max_threads_5000"  label="5000 < Luồng" rules={[{
+              <Form.Item name="max_threads_5000" label="5000 < Luồng" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000'/>
+                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item style={{ margin: '0px' }} name="min"  label="Số sub order min" rules={[{
+              <Form.Item style={{ margin: '0px' }} name="min" label="Số sub order min" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
