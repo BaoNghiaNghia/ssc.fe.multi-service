@@ -145,17 +145,21 @@ function ListProxyInDomain({ isOpen, setState }) {
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div >
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách Proxy</p>
-                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                  <span style={{ fontWeight: '700', padding: 0, margin: 0, fontSize: '0.85em' }}>
-                    <span style={{ fontSize: '0.6em', marginRight: '10px' }}>DOMAIN  </span>
-                    <span>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.domain}</span>
-                  </span>
-                  <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '30px' }}>
-                    <span style={{ fontSize: '0.6em', marginRight: '10px' }}>GEO  </span>
-                    <img src={require(`../../../static/img/flag/${listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo}.png`)} alt="" width="18px" height="18px" />
-                    <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo.toUpperCase()}</span>
-                  </div>
-                </div>
+                {
+                  listProxyInDomain?.items ? (
+                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                      <span style={{ fontWeight: '700', padding: 0, margin: 0, fontSize: '0.85em' }}>
+                        <span style={{ fontSize: '0.6em', marginRight: '10px' }}>DOMAIN  </span>
+                        <span>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.domain}</span>
+                      </span>
+                      <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '30px' }}>
+                        <span style={{ fontSize: '0.6em', marginRight: '10px' }}>GEO  </span>
+                        <img src={require(`../../../static/img/flag/${listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo}.png`)} alt="" width="18px" height="18px" />
+                        <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo.toUpperCase()}</span>
+                      </div>
+                    </div>
+                  ) : <></>
+                }
               </div>
             </div>
           </>
