@@ -94,7 +94,7 @@ function DelService({ isOpen, setState }) {
             Hủy
           </Button>,
           <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-            Tắt
+            { currentStateWorking ? 'Tắt' : 'Bật' }
           </Button>
         ]}
       >
