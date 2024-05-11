@@ -4,7 +4,7 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Select, Button, Modal,  Typography, Table, Switch, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import actions from '../../../redux/serviceSettings/actions';
+import actions from '../../../redux/proxy/actions';
 import { COLOR_GENERAL, FixedServiceTemp } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
 
@@ -14,21 +14,16 @@ function ListProxyInDomain({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formDelService] = Form.useForm();
 
-  const { postLoading, detailService, listProxyInDomain } = useSelector(state => {
+  const { postLoading, detailService, listProxyInDomain, isLoading } = useSelector(state => {
     return {
       postLoading: state?.settingService?.postLoading,
       detailService: state?.settingService?.detailService,
-      listProxyInDomain: state?.proxy?.listProxyInDomain
+      listProxyInDomain: state?.proxy?.listProxyInDomain,
+      isLoading: state?.proxy?.loading
     };
   });
 
   const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);
-
-  const currentStateWorking = detailService?.enabled;
-
-  useEffect(() => {
-    dispatch(actions.fetchListServiceBegin({}));
-  }, [dispatch]);
 
   const handleOk = () => {
     try {
@@ -68,9 +63,10 @@ function ListProxyInDomain({ isOpen, setState }) {
 
   const handleCancel = () => {
     setState({
-      
       isListProxyModal: false,
     });
+
+    dispatch(actions.getListProxyInDomainBegin({}))
   }
 
   const dataSource = [];
@@ -152,11 +148,15 @@ function ListProxyInDomain({ isOpen, setState }) {
                         <span style={{ fontSize: '0.6em', marginRight: '10px' }}>DOMAIN  </span>
                         <span>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.domain}</span>
                       </span>
-                      <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '30px' }}>
-                        <span style={{ fontSize: '0.6em', marginRight: '10px' }}>GEO  </span>
-                        <img src={require(`../../../static/img/flag/${listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo}.png`)} alt="" width="18px" height="18px" />
-                        <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo.toUpperCase()}</span>
-                      </div>
+                      {
+                        listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo ? (
+                          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '30px' }}>
+                            <span style={{ fontSize: '0.6em', marginRight: '10px' }}>GEO  </span>
+                            <img src={require(`../../../static/img/flag/${listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo}.png`)} alt="" width="18px" height="18px" />
+                            <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo.toUpperCase()}</span>
+                          </div>
+                        ) : <></>
+                      }
                     </div>
                   ) : <></>
                 }
@@ -173,6 +173,7 @@ function ListProxyInDomain({ isOpen, setState }) {
             <Col sm={24}>
               <Table
                 size='small'
+                loading={isLoading}
                 dataSource={dataSource}
                 columns={columns}
                 pagination={{ pageSize: 10, showSizeChanger: true, total: listProxyInDomain?.items?.length }}
