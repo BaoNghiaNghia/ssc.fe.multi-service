@@ -61,6 +61,7 @@ import {
 import {
     createDomainWatcherSaga,
     deleteDomainWatcherSaga,
+    detailDomainWatcherSaga,
     getListProxyInDomainWatcherSaga,
     listGeneralDomainWatcherSaga
 } from './proxy/sagas'
@@ -104,6 +105,7 @@ export default function* rootSaga() {
         createDomainWatcherSaga(),
         deleteDomainWatcherSaga(),
         getListProxyInDomainWatcherSaga(),
-        listGeneralDomainWatcherSaga()
+        listGeneralDomainWatcherSaga(),
+        detailDomainWatcherSaga()
     ]);
 }

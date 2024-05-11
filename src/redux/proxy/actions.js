@@ -14,7 +14,32 @@ const actions = {
     LIST_ALL_DOMAIN_BEGIN: 'LIST_ALL_DOMAIN_BEGIN',
     LIST_ALL_DOMAIN_SUCCESS: 'LIST_ALL_DOMAIN_SUCCESS',
     LIST_ALL_DOMAIN_ERR: 'LIST_ALL_DOMAIN_ERR',
+
+    DETAIL_DOMAIN_BEGIN: 'DETAIL_DOMAIN_BEGIN',
+    DETAIL_DOMAIN_SUCCESS: 'DETAIL_DOMAIN_SUCCESS',
+    DETAIL_DOMAIN_ERR: 'DETAIL_DOMAIN_ERR',
     
+
+    detailDomainBegin: (payload) => {
+        return {
+            type: actions.DETAIL_DOMAIN_BEGIN,
+            payload
+        };
+    },
+
+    detailDomainSuccess: (data) => {
+        return {
+            type: actions.DETAIL_DOMAIN_SUCCESS,
+            data,
+        };
+    },
+
+    detailDomainErr: (err) => {
+        return {
+            type: actions.DETAIL_DOMAIN_ERR,
+            err,
+        };
+    },
 
     createDomainBegin: (payload) => {
         return {

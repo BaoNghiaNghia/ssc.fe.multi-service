@@ -90,6 +90,7 @@ function SettingAndService() {
   useEffect(() => {
     if (orders) {
       setState({
+        ...state,
         item: orders,
       });
     }
@@ -174,7 +175,7 @@ function SettingAndService() {
               type="default"
               style={{ marginRight: '5px' }}
               onClick={() => {
-                setState({ isOpenEdit: true });
+                setState({ ...state,isOpenEdit: true });
                 dispatch(actions.modalDetailServiceBegin(value));
               }}
             >
@@ -184,6 +185,7 @@ function SettingAndService() {
           <Tooltip title={`${ enabled ? 'Tắt' : 'Bật' } dịch vụ`}>
             <Switch checked={enabled} onChange={() => {
                 setState({
+                  ...state,
                   isOpenDel: true
                 });
                 dispatch(actions.modalDetailServiceBegin(value));

@@ -179,7 +179,7 @@ function PendingBuffComment() {
                     userDetail: findUser,
                     serviceDetail: findService
                   }));
-                  setState({ isDetailOrderModal: true });
+                  setState({ ...state, isDetailOrderModal: true });
                 }}
               >
                 <FeatherIcon icon="eye" size={16} />
@@ -188,7 +188,7 @@ function PendingBuffComment() {
             <Tooltip title="Danh sách comment">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
                 dispatch(actions.commentOrderCommentBegin({ id }));
-                setState({ isListCommentModal: true });
+                setState({ ...state, isListCommentModal: true });
               }}>
                 <FaRegCommentDots fontSize={15}/>
               </Button>

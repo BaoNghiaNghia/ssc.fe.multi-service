@@ -3,6 +3,7 @@ import actions from './actions';
 const initialState = {
   listDomain: [],
   listProxyInDomain: [],
+  detailDomain:{},
   loading: false,
   error: null
 };
@@ -23,11 +24,35 @@ const {
     LIST_ALL_DOMAIN_BEGIN,
     LIST_ALL_DOMAIN_ERR,
     LIST_ALL_DOMAIN_SUCCESS,
+
+    DETAIL_DOMAIN_BEGIN,
+    DETAIL_DOMAIN_ERR,
+    DETAIL_DOMAIN_SUCCESS,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case DETAIL_DOMAIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_DOMAIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailDomain: data
+      };
+
+    case DETAIL_DOMAIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+    
     case CREATE_DOMAIN_BEGIN:
       return {
         ...state,

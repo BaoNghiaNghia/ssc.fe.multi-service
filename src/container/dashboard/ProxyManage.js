@@ -5,6 +5,8 @@ import { Row, Col, Table, Switch, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './style';
 import AddDomain from './component/AddDomain';
+import DelDomain from './component/DelDomain';
+import ListProxyInDomain from './component/ListProxyInDomain';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -28,6 +30,8 @@ function ProxyManage() {
   const [state, setState] = useState({
     notData: searchData,
     isAddDomainModal: false,
+    isDelDomainModal: false,
+    isListProxyModal: false,
     item: orders,
     selectedRowKeys: [],
   });
@@ -37,6 +41,7 @@ function ProxyManage() {
   useEffect(() => {
     if (orders) {
       setState({
+        ...state,
         item: orders,
         selectedRowKeys,
       });
@@ -83,8 +88,29 @@ function ProxyManage() {
         ),
         action: (
           <div className="table-actions">
+            <Tooltip title="Danh sách proxy">
+              <Button 
+                className="btn-icon"
+                type="danger" 
+                shape="circle"
+                onClick={() => {
+                  dispatch(actions.getListProxyInDomainBegin(value));
+                  setState({ ...state, isListProxyModal: true });
+                }}
+              >
+                <FeatherIcon icon="eye" size={16} />
+              </Button>
+            </Tooltip>
             <Tooltip title="Xóa">
-              <Button className="btn-icon" type="danger" to="#" shape="circle">
+              <Button 
+                className="btn-icon"
+                type="danger" 
+                shape="circle"
+                onClick={() => {
+                  dispatch(actions.detailDomainBegin(value));
+                  setState({ ...state, isDelDomainModal: true });
+                }}
+              >
                 <FeatherIcon icon="trash-2" size={16} />
               </Button>
             </Tooltip>
@@ -142,12 +168,20 @@ function ProxyManage() {
     },
   };
 
-  const { isAddDomainModal } = state;
+  const { isAddDomainModal, isDelDomainModal, isListProxyModal } = state;
 
   return (
     <>
       <AddDomain
         isOpen={isAddDomainModal}
+        setState={setState}
+      />
+      <DelDomain
+        isOpen={isDelDomainModal}
+        setState={setState}
+      />
+      <ListProxyInDomain
+        isOpen={isListProxyModal}
         setState={setState}
       />
       <PageHeader
@@ -172,6 +206,7 @@ function ProxyManage() {
                         type="primary"
                         onClick={() => {
                           setState({
+                            ...state,
                             isAddDomainModal: true,
                           });
                         }}

@@ -114,6 +114,7 @@ function Member() {
   useEffect(() => {
     if (orders) {
       setState({
+        ...state,
         item: orders,
         selectedRowKeys,
       });
@@ -223,7 +224,7 @@ function Member() {
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
                   dispatch(actions.detailUserAdminBegin({ id }));
-                  setState({ isModalDetailMem: true });
+                  setState({ ...state, isModalDetailMem: true });
                 }}
               >
                 <FeatherIcon icon="eye" size={16} />
@@ -232,7 +233,7 @@ function Member() {
             <Tooltip title="Tạo Topup">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
                 dispatch(actions.detailUserAdminBegin({ id }));
-                setState({ isModalAddTopup: true });
+                setState({ ...state, isModalAddTopup: true });
               }}>
                 <FaMoneyBillTransfer  fontSize={15}/>
               </Button>
@@ -240,7 +241,7 @@ function Member() {
             <Tooltip title="Cập nhật">
               <Button className="btn-icon" type="info" to="#" shape="circle" onClick={() => {
                 dispatch(actions.detailUserAdminBegin({ id }));
-                setState({ isModalEditMem: true });
+                setState({ ...state, isModalEditMem: true });
               }}>
                 <FeatherIcon icon="edit" size={16} />
               </Button>
@@ -301,7 +302,7 @@ function Member() {
                   <Button type="default" size="small" to="#"
                     onClick={() => {
                       dispatch(actions.detailTopupBegin(value));
-                      setState({ isModalConfirmTopup: true });
+                      setState({ ...state,isModalConfirmTopup: true });
                     }}
                   >
                     <MdVerifiedUser fontSize={24} />

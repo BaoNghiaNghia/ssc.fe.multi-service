@@ -10,6 +10,19 @@ import {
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 
+function* detailDomainFunc(params) {
+  try {
+    yield put(
+      actions.detailDomainSuccess(params?.payload)
+    );
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.detailDomainErr({ error: errorMessage || 'Create proxy failed' })
+    );
+  } finally { /* empty */ }
+}
+
 function* createDomainFunc(params) {
   try {
     const response = yield call(createDomainAPI, params?.payload);
@@ -18,11 +31,13 @@ function* createDomainFunc(params) {
       yield put(
         actions.createDomainSuccess(response?.data?.data)
       );
+      yield put(
+        actions.listAllDomainBegin()
+      );
+  
+      toast.success('Tạo mới domain thành công');
     }
 
-    yield put(
-      actions.listAllDomainBegin()
-    );
   } catch (error) {
     const errorMessage = error;
     yield put(
@@ -45,6 +60,11 @@ function* deleteDomainFunc(params) {
       yield put(
         actions.deleteDomainSuccess(response?.data?.data)
       );
+      yield put(
+        actions.listAllDomainBegin()
+      );
+  
+      toast.success('Xóa domain thành công');
     }
   } catch (error) {
     const errorMessage = error;
@@ -107,6 +127,9 @@ function* listGeneralDomainFunc(params) {
 }
 
 
+export function* detailDomainWatcherSaga() {
+  yield takeLatest(actions.DETAIL_DOMAIN_BEGIN, detailDomainFunc);
+}
 export function* createDomainWatcherSaga() {
   yield takeLatest(actions.CREATE_DOMAIN_BEGIN, createDomainFunc);
 }
