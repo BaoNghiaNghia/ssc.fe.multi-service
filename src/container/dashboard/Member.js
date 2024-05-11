@@ -21,7 +21,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/member/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { MEMBER_TABLE_TYPE } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE } from '../../variables';
 
 const columnsMember = [
   {
@@ -98,6 +98,9 @@ function Member() {
       topupList: state?.member?.topupList?.topups
     };
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   const [state, setState] = useState({
     isModalDetailMem: false,
@@ -429,7 +432,27 @@ function Member() {
                       dataSource={dataSource}
                       loading={isLoading}
                       columns={columnsMember}
-                      pagination={{ pageSize: 20, showSizeChanger: true, total: userList?.length }}
+                      pagination={{
+                        current: userList?.meta?.current_page,
+                        defaultPageSize: userList?.meta?.count,
+                        pageSize: userList?.meta?.per_page,
+                        total: userList?.meta?.total,
+                        showSizeChanger: true,
+                        pageSizeOptions: DEFAULT_PAGESIZE,
+                        onChange(page, pageSize) {
+                            setCurrentPage(page);
+                            setLimitPage(pageSize)
+                        },
+                        position: ['bottomCenter'],
+                        responsive: true,
+                        showTotal(total, range) {
+                            return <>
+                                <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> người dùng</p>
+                            </>
+                        },
+                        totalBoundaryShowSizeChanger: 100,
+                        size: "small"
+                      }}
                     />
                   ) : (
                     <Table
@@ -438,7 +461,27 @@ function Member() {
                       dataSource={dataSourceTopup}
                       loading={isLoading}
                       columns={columnsToup}
-                      pagination={{ pageSize: 20, showSizeChanger: true, total: userList?.length }}
+                      pagination={{
+                        current: topupList?.meta?.current_page,
+                        defaultPageSize: topupList?.meta?.count,
+                        pageSize: topupList?.meta?.per_page,
+                        total: topupList?.meta?.total,
+                        showSizeChanger: true,
+                        pageSizeOptions: DEFAULT_PAGESIZE,
+                        onChange(page, pageSize) {
+                            setCurrentPage(page);
+                            setLimitPage(pageSize)
+                        },
+                        position: ['bottomCenter'],
+                        responsive: true,
+                        showTotal(total, range) {
+                            return <>
+                                <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> topup</p>
+                            </>
+                        },
+                        totalBoundaryShowSizeChanger: 100,
+                        size: "small"
+                      }}
                     />
                   )
                 }

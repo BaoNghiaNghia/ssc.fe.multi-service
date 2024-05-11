@@ -17,7 +17,8 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/buffComment/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { LIMIT_ITEM_REQUEST_API, STATUS_COMMENT_ENUM } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIMIT_ITEM_REQUEST_API, ORDER_YOUTUBE_STATUS } from '../../variables';
+import { numberWithCommas } from '../../utility/utility';
 
 
 const badgeOrangeStyle = {
@@ -37,8 +38,9 @@ const badgeOrangeStyle = {
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
-  const { searchData,  listOrderComment, userList, listService } = useSelector(state => {
+  const { searchData,  listOrderComment, userList, listService, isLoading } = useSelector(state => {
     return {
+      isLoading: state?.buffComment?.loading,
       searchData: state.headerSearchData,
       listOrderComment: state?.buffComment?.listOrderComment,
       userList: state?.member?.userList,
@@ -54,10 +56,13 @@ function PendingBuffComment() {
     selectedRowKeys: [],
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
+
   const { notData } = state;
 
   useEffect(() => {
-    dispatch(actions.fetchListOrderCommentBegin({ limit: LIMIT_ITEM_REQUEST_API }));
+    dispatch(actions.fetchListOrderCommentBegin());
     dispatch(userActions.fetchUserListBegin());
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
@@ -90,9 +95,19 @@ function PendingBuffComment() {
               {...genConfig(findUser[0]?.fullname?.charAt(0))}
             />
             <span style={{ marginLeft: '8px' }}>
-              <p style={{ margin: '0px', fontWeight: '700' }}>{findUser[0]?.fullname}</p>
-              <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.email}</p>
-              <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.phone}</p>
+              {
+                findUser?.length > 0 ? (
+                  <span >
+                    <p style={{ margin: '0px', fontWeight: '700' }}>{findUser[0]?.fullname}</p>
+                    <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.email}</p>
+                    <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.phone}</p>
+                  </span>
+                ) : (
+                  <span>
+                    <p style={{ margin: '0px'}}>.....</p>
+                  </span>
+                )
+              }
             </span>
           </span>
         ),
@@ -123,8 +138,10 @@ function PendingBuffComment() {
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
                 <span>
-                  <p style={{ margin: '0px', padding: '0px' }}><strong>{done_count} / {quantity}</strong></p>
-                  <Progress percent={performance} size="small" />
+                  <Tooltip title="Đã chạy / Tổng số lượng">
+                    <p style={{ margin: '0px', padding: '0px' }}><strong>{numberWithCommas(done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></p>
+                    <Progress percent={performance} size="small" />
+                  </Tooltip>
                 </span>
               )
             }
@@ -136,7 +153,9 @@ function PendingBuffComment() {
               max_thread === 0 ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
-                <span><strong>{processing_count} / {max_thread}</strong></span>
+                <Tooltip title="Đang chạy / Mức cao nhất">
+                  <span><strong>{numberWithCommas(processing_count || 0)} / {numberWithCommas(max_thread || 0)}</strong></span>
+                </Tooltip>
               )
             }
           </>
@@ -165,7 +184,7 @@ function PendingBuffComment() {
           </>
         ),
         status: (
-          <span>{STATUS_COMMENT_ENUM.find(item => item.status === status)?.title}</span>
+          <span>{ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === status)]?.label}</span>
         ),
         amount: <span className="ordered-amount">{amount}</span>,
         date: <span className="ordered-date">{date}</span>,
@@ -230,11 +249,6 @@ function PendingBuffComment() {
       dataIndex: 'service',
       key: 'service',
     },
-    // {
-    //   title: 'Tiến trình',
-    //   dataIndex: 'performance',
-    //   key: 'performance',
-    // },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
@@ -247,44 +261,11 @@ function PendingBuffComment() {
     },
   ];
 
-  const ORDER_YOUTUBE_STATUS = [
-    {
-      name: "OrderStatusPending",
-      label: 'Đang chờ',
-      icon: '',
-      value: 0
-    },
-    {
-      name: "OrderStatusProcessing",
-      label: 'Đang xử lý',
-      icon: '',
-      value: 1
-    },
-    {
-      name: "OrderStatusDisable",
-      label: 'Tạm dừng',
-      icon: '',
-      value: -1
-    },
-    {
-      name: "OrderStatusCancel",
-      label: 'Đã hủy',
-      icon: '',
-      value: -2
-    },
-    {
-      name: "OrderStatusDone",
-      label: 'Hoàn thành',
-      icon: '',
-      value: 2
-    },
-  ];
-
   const handleChangeForFilter = e => {
-    if (e.target.value) {
-      dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value, limit: LIMIT_ITEM_REQUEST_API }));
+    if (e.target.value !== "all") {
+      dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value }));
     } else {
-      dispatch(actions.fetchListOrderCommentBegin({ limit: LIMIT_ITEM_REQUEST_API }));
+      dispatch(actions.fetchListOrderCommentBegin());
     }
   };
 
@@ -329,9 +310,9 @@ function PendingBuffComment() {
                     <div className="table-toolbox-menu">
                       <span className="toolbox-menu-title"> Trạng thái:</span>
                       <Radio.Group buttonStyle="outline" optionType="button" onChange={handleChangeForFilter} defaultValue="">
-                        <Radio.Button value="">Tất cả</Radio.Button>
+                        <Radio.Button value="all">Tất cả</Radio.Button>
                         { 
-                          ORDER_YOUTUBE_STATUS.map(status => {
+                          ORDER_YOUTUBE_STATUS?.map(status => {
                             return (
                               <Radio.Button key={status?.name} value={status?.value}>
                                 {status?.label}
@@ -357,11 +338,33 @@ function PendingBuffComment() {
             <Col md={24}>
               <TableWrapper className="table-order table-responsive">
                 <Table
+                  loading={isLoading}
                   rowSelection={rowSelection}
                   size='small'
                   dataSource={dataSource}
                   columns={columns}
-                  pagination={{ pageSize: 10, showSizeChanger: true, total: listOrderComment?.items?.length }}
+                  // pagination={{ pageSize: 10, showSizeChanger: true, total: listOrderComment?.items?.length }}
+                  pagination={{
+                    current: listOrderComment?.meta?.current_page,
+                    defaultPageSize: listOrderComment?.meta?.count,
+                    pageSize: listOrderComment?.meta?.per_page,
+                    total: listOrderComment?.meta?.total,
+                    showSizeChanger: true,
+                    pageSizeOptions: DEFAULT_PAGESIZE,
+                    onChange(page, pageSize) {
+                        setCurrentPage(page);
+                        setLimitPage(pageSize)
+                    },
+                    position: ['bottomCenter'],
+                    responsive: true,
+                    showTotal(total, range) {
+                        return <>
+                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> order</p>
+                        </>
+                    },
+                    totalBoundaryShowSizeChanger: 100,
+                    size: "small"
+                  }}
                 />
               </TableWrapper>
             </Col>

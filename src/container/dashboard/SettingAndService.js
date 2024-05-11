@@ -16,6 +16,7 @@ import { Main, TableWrapper } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/serviceSettings/actions';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -71,6 +72,9 @@ function SettingAndService() {
       listService: state?.settingService?.listService?.items
     };
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   useEffect(() => {
     dispatch(actions.fetchListServiceBegin({}));
@@ -277,9 +281,29 @@ function SettingAndService() {
                 <Table
                   size='small'
                   showHeader={false}
-                  pagination={false}
                   dataSource={dataSource}
                   columns={columns}
+                  pagination={{
+                    current: listService?.meta?.current_page,
+                    defaultPageSize: listService?.meta?.count,
+                    pageSize: listService?.meta?.per_page,
+                    total: listService?.meta?.total,
+                    showSizeChanger: true,
+                    pageSizeOptions: DEFAULT_PAGESIZE,
+                    onChange(page, pageSize) {
+                        setCurrentPage(page);
+                        setLimitPage(pageSize)
+                    },
+                    position: ['bottomCenter'],
+                    responsive: true,
+                    showTotal(total, range) {
+                        return <>
+                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
+                        </>
+                    },
+                    totalBoundaryShowSizeChanger: 100,
+                    size: "small"
+                  }}
                 />
               </TableWrapper>
             </Col>

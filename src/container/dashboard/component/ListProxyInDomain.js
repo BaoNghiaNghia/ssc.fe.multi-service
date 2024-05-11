@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Select, Button, Modal,  Typography, Table, Switch, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/proxy/actions';
-import { COLOR_GENERAL, FixedServiceTemp } from '../../../variables';
+import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, FixedServiceTemp } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
 
 const { Paragraph, Text } = Typography;
@@ -22,6 +22,9 @@ function ListProxyInDomain({ isOpen, setState }) {
       isLoading: state?.proxy?.loading
     };
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);
 
@@ -150,10 +153,18 @@ function ListProxyInDomain({ isOpen, setState }) {
                       </span>
                       {
                         listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo ? (
-                          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '30px' }}>
+                          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '40px' }}>
                             <span style={{ fontSize: '0.6em', marginRight: '10px' }}>GEO  </span>
                             <img src={require(`../../../static/img/flag/${listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo}.png`)} alt="" width="18px" height="18px" />
                             <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo.toUpperCase()}</span>
+                          </div>
+                        ) : <></>
+                      }
+                      {
+                        listProxyInDomain?.meta ? (
+                          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '40px' }}>
+                            <span style={{ fontSize: '0.6em' }}>Số lượng:  </span>
+                            <span style={{ marginLeft: '8px',  }}>{numberWithCommas(listProxyInDomain?.meta?.total || 0)} <span style={{ fontSize: '0.6em' }}>proxies</span></span>
                           </div>
                         ) : <></>
                       }
@@ -176,7 +187,28 @@ function ListProxyInDomain({ isOpen, setState }) {
                 loading={isLoading}
                 dataSource={dataSource}
                 columns={columns}
-                pagination={{ pageSize: 10, showSizeChanger: true, total: listProxyInDomain?.items?.length }}
+                // pagination={{ pageSize: 10, showSizeChanger: true, total: listProxyInDomain?.items?.length }}
+                pagination={{
+                  current: listProxyInDomain?.meta?.current_page,
+                  defaultPageSize: listProxyInDomain?.meta?.count,
+                  pageSize: listProxyInDomain?.meta?.per_page,
+                  total: listProxyInDomain?.meta?.total,
+                  showSizeChanger: true,
+                  pageSizeOptions: DEFAULT_PAGESIZE,
+                  onChange(page, pageSize) {
+                      setCurrentPage(page);
+                      setLimitPage(pageSize)
+                  },
+                  position: ['bottomCenter'],
+                  responsive: true,
+                  showTotal(total, range) {
+                      return <>
+                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
+                      </>
+                  },
+                  totalBoundaryShowSizeChanger: 100,
+                  size: "small"
+                }}
               />
             </Col>
           </Row>

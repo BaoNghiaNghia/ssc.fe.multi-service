@@ -14,6 +14,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/proxy/actions';
 import { numberWithCommas } from '../../utility/utility';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIMIT_ITEM_REQUEST_API } from '../../variables';
 
 
 function ProxyManage() {
@@ -26,6 +27,9 @@ function ProxyManage() {
       listDomain: state?.proxy?.listDomain
     };
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   const [state, setState] = useState({
     notData: searchData,
@@ -94,7 +98,10 @@ function ProxyManage() {
                 type="danger" 
                 shape="circle"
                 onClick={() => {
-                  dispatch(actions.getListProxyInDomainBegin(value));
+                  dispatch(actions.getListProxyInDomainBegin({
+                    ...value,
+                    limit: LIMIT_ITEM_REQUEST_API
+                  }));
                   setState({ ...state, isListProxyModal: true });
                 }}
               >
@@ -228,7 +235,27 @@ function ProxyManage() {
                   dataSource={dataSource}
                   columns={columns}
                   loading={isLoading}
-                  pagination={{ pageSize: 20, showSizeChanger: true, total: listDomain.length }}
+                  pagination={{
+                    current: listDomain?.meta?.current_page,
+                    defaultPageSize: listDomain?.meta?.count,
+                    pageSize: listDomain?.meta?.per_page,
+                    total: listDomain?.meta?.total,
+                    showSizeChanger: true,
+                    pageSizeOptions: DEFAULT_PAGESIZE,
+                    onChange(page, pageSize) {
+                        setCurrentPage(page);
+                        setLimitPage(pageSize)
+                    },
+                    position: ['bottomCenter'],
+                    responsive: true,
+                    showTotal(total, range) {
+                        return <>
+                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
+                        </>
+                    },
+                    totalBoundaryShowSizeChanger: 100,
+                    size: "small"
+                  }}
                 />
               </TableWrapper>
             </Col>

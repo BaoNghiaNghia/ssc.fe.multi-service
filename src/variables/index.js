@@ -9,6 +9,42 @@ export const COLOR_GENERAL = {
   'primary': '#26695c'
 }
 
+export const DEFAULT_PERPAGE = 50;
+export const DEFAULT_PAGESIZE = [50, 100, 200, 300];
+
+export const ORDER_YOUTUBE_STATUS = [
+  {
+    name: "OrderStatusPending",
+    label: 'Đang chờ',
+    icon: '',
+    value: 0
+  },
+  {
+    name: "OrderStatusProcessing",
+    label: 'Đang xử lý',
+    icon: '',
+    value: 1
+  },
+  {
+    name: "OrderStatusDisable",
+    label: 'Tạm dừng',
+    icon: '',
+    value: -1
+  },
+  {
+    name: "OrderStatusCancel",
+    label: 'Đã hủy',
+    icon: '',
+    value: -2
+  },
+  {
+    name: "OrderStatusDone",
+    label: 'Hoàn thành',
+    icon: '',
+    value: 2
+  },
+];
+
 export const STATUS_COMMENT_ENUM = [
   {
     'status': 0,
