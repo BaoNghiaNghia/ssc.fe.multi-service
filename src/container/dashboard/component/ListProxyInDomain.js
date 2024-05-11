@@ -84,7 +84,7 @@ function ListProxyInDomain({ isOpen, setState }) {
           <>
             {
               using ? <>
-                <p style={{ fontWeight: '700', padding: 0, margin: 0 }}>{proxy_string}</p>
+                <p style={{ fontWeight: '700', padding: 0, margin: 0, color: '#538d81' }}>{proxy_string}</p>
               </> : <>
                 <p style={{ fontWeight: '700', padding: 0, margin: 0 }}>{proxy_string}</p>
               </>
@@ -106,7 +106,15 @@ function ListProxyInDomain({ isOpen, setState }) {
           </>
         ),
         port_start: <span className="customer-name">{port_start}</span>,
-        used_count: <span className="customer-name">{numberWithCommas(used_count || 0)}</span>,
+        used_count: <>
+          {
+            used_count ? <>
+              <span style={{ fontWeight: '700' }}>{numberWithCommas(used_count || 0)}</span>
+            </> : <>
+              <span style={{ color: 'gray' }}>0</span>
+            </>
+          }
+        </>,
         enable: (
           <Switch checked={enable} />
         ),

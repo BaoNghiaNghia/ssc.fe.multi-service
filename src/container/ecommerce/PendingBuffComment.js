@@ -51,6 +51,7 @@ function PendingBuffComment() {
   const [state, setState] = useState({
     isDetailOrderModal: false,
     isListCommentModal: false,
+    statusNumber: 'all',
     notData: searchData,
     item: listOrderComment,
     selectedRowKeys: [],
@@ -261,7 +262,12 @@ function PendingBuffComment() {
     },
   ];
 
-  const handleChangeForFilter = e => {
+  const handleChangeForFilter = (e) => {
+    setState({
+      ...state,
+      statusNumber: e.target.value
+    })
+
     if (e.target.value !== "all") {
       dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value }));
     } else {
@@ -309,7 +315,7 @@ function PendingBuffComment() {
                   <Col xxl={16} xs={24}>
                     <div className="table-toolbox-menu">
                       <span className="toolbox-menu-title"> Trạng thái:</span>
-                      <Radio.Group buttonStyle="outline" optionType="button" onChange={handleChangeForFilter} defaultValue="">
+                      <Radio.Group buttonStyle="outline" optionType="button" onChange={handleChangeForFilter} defaultValue="all">
                         <Radio.Button value="all">Tất cả</Radio.Button>
                         { 
                           ORDER_YOUTUBE_STATUS?.map(status => {
@@ -343,7 +349,6 @@ function PendingBuffComment() {
                   size='small'
                   dataSource={dataSource}
                   columns={columns}
-                  // pagination={{ pageSize: 10, showSizeChanger: true, total: listOrderComment?.items?.length }}
                   pagination={{
                     current: listOrderComment?.meta?.current_page,
                     defaultPageSize: listOrderComment?.meta?.count,

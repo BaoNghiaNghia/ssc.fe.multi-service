@@ -86,7 +86,15 @@ function ProxyManage() {
         ),
         port_start: <span className="customer-name">{port_start}</span>,
         total: <span className="customer-name">{numberWithCommas(total || 0)}</span>,
-        used_count: <span className="customer-name">{numberWithCommas(used_count || 0)}</span>,
+        used_count: <>
+          {
+            used_count ? <>
+              <span style={{ fontWeight: '700' }}>{numberWithCommas(used_count || 0)}</span>
+            </> : <>
+              <span style={{ color: 'gray' }}>0</span>
+            </>
+          }
+        </>,
         enable: (
           <Switch checked={enable} />
         ),
