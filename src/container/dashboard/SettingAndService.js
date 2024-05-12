@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip, Badge, Switch } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
-import { LuTrash2 } from "react-icons/lu";
 import { FiEdit2 } from "react-icons/fi";
 import { FaLocationArrow } from "react-icons/fa6";
 import AddService from './component/AddService';

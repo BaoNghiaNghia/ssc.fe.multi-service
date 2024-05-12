@@ -5,6 +5,8 @@ export const LIMIT_ITEM_REQUEST_API = 500000;
 
 export const BASE_URL=process.env.REACT_APP_API_ENDPOINT;
 
+export const VIETNAMES_CURRENCY = 'VND';
+
 export const COLOR_GENERAL = {
   'primary': '#26695c'
 }

@@ -161,6 +161,20 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       <Menu.Item
         icon={
           !topMenu && (
+            <NavLink className="menuItem-icon" to={`${path}/comment/dang-chay`}>
+              <FeatherIcon icon="hard-drive" />
+            </NavLink>
+          )
+        }
+        key="buff-comment-dang-chay"
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/comment/dang-chay`}>
+          Máy comment
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item
+        icon={
+          !topMenu && (
             <NavLink className="menuItem-icon" to={`${path}/comment/lich-su-don`}>
               <FeatherIcon icon="message-square" />
             </NavLink>

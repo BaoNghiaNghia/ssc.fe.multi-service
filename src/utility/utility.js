@@ -13,6 +13,16 @@ const numberWithCommas = (x) => {
   return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export const validateYouTubeUrl = (urlToParse) => {
+  if (urlToParse) {
+      const regExp = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+      if (urlToParse.match(regExp)) {
+          return true;
+      }
+  }
+  return false;
+}
+
 function findSecondMinimum(arr) {
   if (!Array.isArray(arr) || arr.length < 2) {
     return [];

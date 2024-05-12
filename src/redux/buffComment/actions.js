@@ -10,7 +10,32 @@ const actions = {
     COMMENT_IN_ORDER_COMMENT_BEGIN: 'COMMENT_IN_ORDER_COMMENT_BEGIN',
     COMMENT_IN_ORDER_COMMENT_SUCCESS: 'COMMENT_IN_ORDER_COMMENT_SUCCESS',
     COMMENT_IN_ORDER_COMMENT_ERR: 'COMMENT_IN_ORDER_COMMENT_ERR',
+
+    CREATE_ORDER_COMMENT_ADMIN_BEGIN: 'CREATE_ORDER_COMMENT_ADMIN_BEGIN',
+    CREATE_ORDER_COMMENT_ADMIN_SUCCESS: 'CREATE_ORDER_COMMENT_ADMIN_SUCCESS',
+    CREATE_ORDER_COMMENT_ADMIN_ERR: 'CREATE_ORDER_COMMENT_ADMIN_ERR',
     
+
+    createOrderCommentAdminBegin: (payload) => {
+        return {
+            type: actions.CREATE_ORDER_COMMENT_ADMIN_BEGIN,
+            payload
+        };
+    },
+
+    createOrderCommentAdminSuccess: (data) => {
+        return {
+            type: actions.CREATE_ORDER_COMMENT_ADMIN_SUCCESS,
+            data,
+        };
+    },
+
+    createOrderCommentAdminErr: (err) => {
+        return {
+            type: actions.CREATE_ORDER_COMMENT_ADMIN_ERR,
+            err,
+        };
+    },
 
     fetchListOrderCommentBegin: (payload) => {
         return {

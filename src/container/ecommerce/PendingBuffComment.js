@@ -9,6 +9,7 @@ import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListComment';
+import AddOrderComment from './components/AddOrderComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -51,6 +52,7 @@ function PendingBuffComment() {
   const [state, setState] = useState({
     isDetailOrderModal: false,
     isListCommentModal: false,
+    isCreateCommentOrderModal: false,
     statusNumber: 'all',
     notData: searchData,
     item: listOrderComment,
@@ -79,7 +81,20 @@ function PendingBuffComment() {
   const dataSource = [];
   if (listOrderComment?.items?.length) {
     listOrderComment?.items?.map((value, key) => {
-      const { status, order_id, amount, date, user_id, link, video_id, quantity, priority, service_id, performance, max_thread, id, processing_count,
+      const { status, 
+        order_id, 
+        amount, 
+        date, 
+        user_id, 
+        link, 
+        video_id, 
+        quantity, 
+        priority, 
+        service_id, 
+        performance, 
+        max_thread, 
+        id, 
+        processing_count,
         done_count
        } = value;
 
@@ -343,7 +358,7 @@ function PendingBuffComment() {
     },
   };
 
-  const { isDetailOrderModal, isListCommentModal } = state;
+  const { isDetailOrderModal, isListCommentModal, isCreateCommentOrderModal } = state;
 
   return (
     <>
@@ -355,9 +370,13 @@ function PendingBuffComment() {
         isOpen={isListCommentModal}
         setState={setState}
       />
+      <AddOrderComment
+        isOpen={isCreateCommentOrderModal}
+        setState={setState}
+      />
       <PageHeader
         ghost
-        title="Comment - Chờ duyệt"
+        title="Đơn Comment"
       />
       <Main>
         <Cards headless>
@@ -389,8 +408,14 @@ function PendingBuffComment() {
                   </Col>
                   <Col xxl={2} xs={24}>
                     <div className="table-toolbox-actions">
-                      <Button size="small" type="primary">
-                        <FeatherIcon icon="plus" size={12} /> Thêm mới
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => {
+                          setState({...state, isCreateCommentOrderModal: true });
+                        }}
+                      >
+                        <FeatherIcon icon="plus" size={12} /> Đặt hàng
                       </Button>
                     </div>
                   </Col>

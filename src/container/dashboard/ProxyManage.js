@@ -226,7 +226,7 @@ function ProxyManage() {
                           });
                         }}
                       >
-                        <FeatherIcon icon="plus" size={12} /> Thêm Proxy
+                        <FeatherIcon icon="plus" size={12} /> Thêm Domain
                       </Button>
                     </div>
                   </Col>

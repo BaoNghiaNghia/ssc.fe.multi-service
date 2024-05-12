@@ -7,7 +7,7 @@ import { MdAddchart } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { numberWithCommas } from '../../../utility/utility';
 import actions from '../../../redux/member/actions';
-import { COLOR_GENERAL } from '../../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
 
 const { Option } = Select;
 
@@ -35,7 +35,6 @@ function AddTopup({ isOpen, setState }) {
       formTopupAdd.validateFields()
         .then((values) => {
           console.log("handle submit Values:", values);
-
           const requestData = {
             user_id: values?.user_id,
             amount: values?.amount,
@@ -147,7 +146,7 @@ function AddTopup({ isOpen, setState }) {
                     });
                   }}
                 />
-                <span style={{ fontSize: '0.7em', fontWeight: 'bold', color: COLOR_GENERAL.primary }}>{numberWithCommas(amountChange || 0)} đ</span>
+                <span style={{ fontSize: '0.7em', fontWeight: 'bold', color: COLOR_GENERAL.primary }}>{numberWithCommas(amountChange || 0)} {VIETNAMES_CURRENCY}</span>
               </Form.Item>
             </Col>
           </Row>

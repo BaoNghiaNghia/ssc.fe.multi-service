@@ -55,7 +55,8 @@ import {
 import {
     fetchListOrderCommentWatcherSaga,
     detailOrderCommentWatcherSaga,
-    commentInOrderCommentWatcherSaga
+    commentInOrderCommentWatcherSaga,
+    createOrderCommentWatcherSaga
 } from './buffComment/sagas';
 
 import {
@@ -106,6 +107,7 @@ export default function* rootSaga() {
         deleteDomainWatcherSaga(),
         getListProxyInDomainWatcherSaga(),
         listGeneralDomainWatcherSaga(),
-        detailDomainWatcherSaga()
+        detailDomainWatcherSaga(),
+        createOrderCommentWatcherSaga()
     ]);
 }

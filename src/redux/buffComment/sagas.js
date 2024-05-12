@@ -3,14 +3,42 @@ import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
     commentOrderCommentAPI,
-    fetchListOrderCommentAPI
+    fetchListOrderCommentAPI,
+    createOrderCommentAPI
 } from '../../config/apiFactory/BuffComment/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 
+function* createOrderCommentFunc(params) {
+  try {
+    const response = yield call(createOrderCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.createOrderCommentAdminSuccess(response?.data?.data)
+      );
+      yield put(
+        actions.fetchListOrderCommentBegin()
+      );
+
+      toast.success('Tạo order comment thành công');
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.createOrderCommentAdminErr({ error: errorMessage || 'Create order comment failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Create order comment failed');
+    }
+  } finally { /* empty */ }
+}
+
 function* fetchListOrderCommentFunc(params) {
   try {
-    console.log('--- query nè 000 ----', params);
     const response = yield call(fetchListOrderCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
@@ -60,6 +88,10 @@ function* commentInOrderCommentFunc(params) {
       actions.commentOrderCommentErr({ error: errorMessage || 'Detail order comment failed' })
     );
   } finally { /* empty */ }
+}
+
+export function* createOrderCommentWatcherSaga() {
+  yield takeLatest(actions.CREATE_ORDER_COMMENT_ADMIN_BEGIN, createOrderCommentFunc);
 }
 
 export function* fetchListOrderCommentWatcherSaga() {

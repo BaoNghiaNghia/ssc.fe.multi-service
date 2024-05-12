@@ -19,12 +19,35 @@ const {
 
     COMMENT_IN_ORDER_COMMENT_BEGIN,
     COMMENT_IN_ORDER_COMMENT_ERR,
-    COMMENT_IN_ORDER_COMMENT_SUCCESS
+    COMMENT_IN_ORDER_COMMENT_SUCCESS,
+
+    CREATE_ORDER_COMMENT_ADMIN_BEGIN,
+    CREATE_ORDER_COMMENT_ADMIN_ERR,
+    CREATE_ORDER_COMMENT_ADMIN_SUCCESS,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case CREATE_ORDER_COMMENT_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CREATE_ORDER_COMMENT_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case CREATE_ORDER_COMMENT_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case FETCH_LIST_ORDER_COMMENT_BEGIN:
       return {
         ...state,

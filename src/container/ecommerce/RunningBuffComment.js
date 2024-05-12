@@ -1,196 +1,200 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table } from 'antd';
-import FeatherIcon from 'feather-icons-react';
-import { TopToolBox } from './Style';
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Form } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { BiLogoGmail } from 'react-icons/bi';
+import { TbServerBolt } from 'react-icons/tb';
+import { Pstates } from './Style';
+import TableServer from '../pages/overview/TableServer';
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { Main, TableWrapper } from '../styled';
-import { AutoComplete } from '../../components/autoComplete/autoComplete';
+import { Main } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import { orderFilter } from '../../redux/orders/actionCreator';
-
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
+import { AutoComplete } from '../../components/autoComplete/autoComplete';
+import { Dropdown } from '../../components/dropdown/dropdown';
+import actions from '../../redux/servers/actions';
+import Heading from '../../components/heading/heading';
+import { numberWithCommas } from '../../utility/utility';
 
 function RunningBuffComment() {
   const dispatch = useDispatch();
-  const { searchData, orders } = useSelector(state => {
+  const { searchData, listServer } = useSelector((state) => {
     return {
-      searchData: state.headerSearchData,
-      orders: state.orders.data,
-    };
+      searchData: state?.headerSearchData,
+      listServer: state?.servers?.listServer,
+      preIsLoading: state.chartContent.perLoading,
+    }
   });
+
+  const [stateTab, setStateTab] = useState({
+    performance: 'year',
+    performanceTab: 'users',
+  });
+
+  const { performance, performanceTab } = stateTab;
 
   const [state, setState] = useState({
     notData: searchData,
-    item: orders,
-    selectedRowKeys: [],
+    activeClass: 'all',
+    current: 0,
+    pageSize: 0,
   });
 
-  const { notData, item, selectedRowKeys } = state;
-  const filterKey = ['Shipped', 'Awaiting Shipment', 'Canceled'];
+  const { notData } = state;
 
   useEffect(() => {
-    if (orders) {
-      setState({
-        item: orders,
-        selectedRowKeys,
-      });
-    }
-  }, [orders, selectedRowKeys]);
+    dispatch(actions.computerDataListBegin());
+  }, []);
 
-  const handleSearch = searchText => {
-    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
+  const handleSearch = (searchText) => {
+    const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
     setState({
       ...state,
       notData: data,
     });
   };
 
-  const handleChangeForFilter = e => {
-    dispatch(orderFilter('status', e.target.value));
-  };
+  const fullThreadServer = listServer.filter(item => item?.run >=15).length;
+  const nonFullThreadServer = listServer?.filter(item => item?.run < 15 && item?.run > 5).length;
+  const aBitThreadServer = listServer?.filter(item => item?.run <= 5).length;
 
-  const dataSource = [];
-  if (orders.length) {
-    orders.map((value, key) => {
-      const { status, orderId, customers, amount, date } = value;
-      return dataSource.push({
-        key: key + 1,
-        id: <span className="order-id">{orderId}</span>,
-        customer: <span className="customer-name">{customers}</span>,
-        status: (
-          <span
-            className={`status ${
-              status === 'Shipped' ? 'Success' : status === 'Awaiting Shipment' ? 'warning' : 'error'
-            }`}
-          >
-            {status}
-          </span>
-        ),
-        amount: <span className="ordered-amount">{amount}</span>,
-        date: <span className="ordered-date">{date}</span>,
-        action: (
-          <div className="table-actions">
-            <>
-              <Button className="btn-icon" type="primary" to="#" shape="circle">
-                <FeatherIcon icon="eye" size={16} />
-              </Button>
-              <Button className="btn-icon" type="info" to="#" shape="circle">
-                <FeatherIcon icon="edit" size={16} />
-              </Button>
-              <Button className="btn-icon" type="danger" to="#" shape="circle">
-                <FeatherIcon icon="trash-2" size={16} />
-              </Button>
-            </>
-          </div>
-        ),
-      });
-    });
-  }
+  const totalThread = listServer?.reduce((total, comp) => total + comp.run, 0) || 0;
 
-  const columns = [
-    {
-      title: 'Order Id',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'customer',
-      dataIndex: 'customer',
-      key: 'customer',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-    },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
-    },
-  ];
-
-  const onSelectChange = selectedRowKey => {
-    setState({ ...state, selectedRowKeys: selectedRowKey });
-  };
-
-  const rowSelection = {
-    onChange: (srk) => {
-      onSelectChange(srk);
-    },
-  };
+  const accountTotal = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountAlive = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountWork = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountDie = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
 
   return (
     <>
       <PageHeader
-        ghost
-        title="Comment - Đang chạy"
+        title="Quản lý Server"
+        buttons={[
+          <div key="search" className="page-header-actions">
+            <AutoComplete
+              onSearch={handleSearch}
+              dataSource={notData}
+              placeholder="Nhập và tìm server"
+              width="100%"
+              patterns
+            />
+          </div>
+        ]}
       />
       <Main>
-        <Cards headless>
-          <Row gutter={15}>
-            <Col xs={24}>
-              <TopToolBox>
-                <Row gutter={15} className="justify-content-center">
-                  <Col lg={6} xs={24}>
-                    <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
-                    </div>
-                  </Col>
-                  <Col xxl={14} lg={16} xs={24}>
-                    {/* <div className="table-toolbox-menu">
-                      <span className="toolbox-menu-title"> Status:</span>
-                      <Radio.Group onChange={handleChangeForFilter} defaultValue="">
-                        <Radio.Button value="">All</Radio.Button>
-                        {item.length &&
-                          [...new Set(filterKey)].map(value => {
-                            return (
-                              <Radio.Button key={value} value={value}>
-                                {value}
-                              </Radio.Button>
-                            );
-                          })}
-                      </Radio.Group>
-                    </div> */}
-                  </Col>
-                  <Col xxl={4} xs={24}>
-                    {/* <div className="table-toolbox-actions">
-                      <Button size="small" type="primary">
-                        <FeatherIcon icon="plus" size={12} /> Add Order
-                      </Button>
-                    </div> */}
-                  </Col>
-                </Row>
-              </TopToolBox>
-            </Col>
-          </Row>
-          <Row gutter={15}>
-            <Col md={24}>
-              <TableWrapper className="table-order table-responsive">
-                <Table
-                  rowSelection={rowSelection}
-                  dataSource={dataSource}
-                  columns={columns}
-                  pagination={{ pageSize: 10, showSizeChanger: true, total: orders.length }}
-                />
-              </TableWrapper>
-            </Col>
-          </Row>
-        </Cards>
+        <Row gutter={25}>
+          <Col xxl={24} md={24} xs={24}>
+            <Cards 
+              title="Danh sách server"
+              isbutton={
+                <Form name="sDash_vertical-form" layout="inline">
+                  <Dropdown size="small" placement="bottomLeft" >
+                    <Button className="btn-outlined" size="small" outlined type="light">
+                      Cập nhật
+                    </Button>
+                  </Dropdown>
+                </Form>
+              } 
+            >
+              <Pstates>
+                <div
+                  // onClick={() => onPerformanceTab('users')}
+                  className={`growth-upward ${performanceTab === 'users' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ fontWeight: 700 }}>Servers</p>
+                  <Heading as="h1">
+                    {listServer.length}
+                  </Heading>
+                </div>
+                <div
+                  // onClick={() => onPerformanceTab('sessions')}
+                  className={`growth-upward ${performanceTab === 'sessions' && 'active'}`}
+                  role="button"
+                  tabIndex=""
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
+                  <Heading as="h1" >
+                    <span style={{ color: 'green !important' }}>{fullThreadServer}</span>
+                  </Heading>
+                </div>
+                <div
+                  // onClick={() => onPerformanceTab('bounce')}
+                  className={`growth-downward ${performanceTab === 'bounce' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
+                  <Heading as="h1">
+                    {nonFullThreadServer}
+                  </Heading>
+                </div>
+                <div
+                  // onClick={() => onPerformanceTab('duration')}
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luổng thiếu</p>
+                  <Heading as="h1">
+                    {aBitThreadServer}
+                  </Heading>
+                </div>
+                <div
+                  className="growth-upward active"
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ fontWeight: 700 }}><span>Tổng Mail</span></p>
+                  <Heading as="h1">
+                    {accountTotal || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} /><span>Mail sống</span></p>
+                  <Heading as="h1">
+                    {accountAlive || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#27AE60' /><span>Mail hoạt động</span></p>
+                  <Heading as="h1">
+                    {accountWork || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#EB5757' /><span>Mail chết</span></p>
+                  <Heading as="h1">
+                    {accountDie || 0}
+                  </Heading>
+                </div>
+                <div
+                  className={`growth-upward ${performanceTab === 'users' && 'active'}`}
+                  role="button"
+                  tabIndex="0"
+                >
+                  <p style={{ fontWeight: 700 }}>Tổng Luồng</p>
+                  <Heading as="h1">
+                    {totalThread}
+                  </Heading>
+                </div>
+              </Pstates>
+              <TableServer />
+            </Cards>
+          </Col>
+        </Row>
       </Main>
     </>
   );
