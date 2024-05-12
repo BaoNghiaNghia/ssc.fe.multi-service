@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table, Tooltip, Progress } from 'antd';
+import { Row, Col, Radio, Table, Tooltip, Progress, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
@@ -204,7 +204,10 @@ function PendingBuffComment() {
           </>
         ),
         status: (
-          <span>{ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === status)]?.label}</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <Badge style={{ marginRight: '5px' }} dot color={ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === status)]?.color} />
+            <span>{ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === status)]?.label}</span>
+          </div>
         ),
         amount: <span className="ordered-amount">{amount}</span>,
         date: <span className="ordered-date">{date}</span>,
@@ -395,10 +398,11 @@ function PendingBuffComment() {
                       <Radio.Group buttonStyle="outline" optionType="button" onChange={handleChangeForFilter} defaultValue="all">
                         <Radio.Button value="all">Tất cả</Radio.Button>
                         { 
-                          ORDER_YOUTUBE_STATUS?.map(status => {
+                          ORDER_YOUTUBE_STATUS?.map(state => {
                             return (
-                              <Radio.Button key={status?.name} value={status?.value}>
-                                {status?.label}
+                              <Radio.Button key={state?.name} value={state?.value}>
+                                <Badge style={{ marginRight: '5px' }} dot color={ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === state?.value)]?.color} />
+                                {state?.label}
                               </Radio.Button>
                             );
                           })

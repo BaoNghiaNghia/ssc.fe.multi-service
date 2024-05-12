@@ -19,30 +19,35 @@ export const ORDER_YOUTUBE_STATUS = [
     name: "OrderStatusPending",
     label: 'Đang chờ',
     icon: '',
+    color: 'gray',
     value: 0
   },
   {
     name: "OrderStatusProcessing",
     label: 'Đang xử lý',
     icon: '',
+    color: 'blue',
     value: 1
   },
   {
     name: "OrderStatusDisable",
     label: 'Tạm dừng',
     icon: '',
+    color: 'orange',
     value: -1
   },
   {
     name: "OrderStatusCancel",
     label: 'Đã hủy',
     icon: '',
+    color: 'red',
     value: -2
   },
   {
     name: "OrderStatusDone",
     label: 'Hoàn thành',
     icon: '',
+    color: 'green',
     value: 2
   },
 ];
