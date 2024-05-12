@@ -172,7 +172,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           Máy comment
         </NavLink>
       </Menu.Item>
-      <Menu.Item
+      {/* <Menu.Item
         icon={
           !topMenu && (
             <NavLink className="menuItem-icon" to={`${path}/comment/lich-su-don`}>
@@ -185,7 +185,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         <NavLink onClick={toggleCollapsed} to={`${path}/comment/lich-su-don`}>
           Lịch sử đơn
         </NavLink>
-      </Menu.Item>
+      </Menu.Item> */}
       {!topMenu && <NavTitle className="sidebar-nav-title">ADD-ON</NavTitle>}
       <Menu.Item
         icon={

@@ -80,6 +80,19 @@ function AddService({ isOpen, setState }) {
     });
   }
 
+  const iconService = (service) => {
+    switch (service?.category) {
+      case 'Comments':
+        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Likes':
+        return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Subscribers':
+        return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      default:
+        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+    }
+  }
+
   return (
     <>
       <Modal
@@ -137,21 +150,18 @@ function AddService({ isOpen, setState }) {
                 }}
               >
                 <Select style={{ width: '100%', margin: '0px', padding: '0px' }} bordered={false} initialValue="Comments" size='small'>
-                  <Option value="Comments">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }} /> <span style={{ fontWeight: '800' }}>Comments</span>
-                    </div>
-                  </Option>
-                  {/* <Option value="Likes">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Likes</span>
-                    </div>
-                  </Option>
-                  <Option value="Subscribers">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribers</span>
-                    </div>
-                  </Option> */}
+                 {
+                    FixedServiceTemp?.map(service => {
+                      return (
+                        <Option key={service?.category} value={service?.category}>
+                          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                            { iconService(service) }
+                            <span style={{ fontWeight: '800' }}>{service?.category}</span>
+                          </div>
+                        </Option>
+                      )
+                    })
+                  }
                 </Select>
               </Form.Item>
             </Col>

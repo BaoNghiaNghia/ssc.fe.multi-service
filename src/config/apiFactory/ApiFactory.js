@@ -198,8 +198,18 @@ class ApiFactory {
     /**
      * PATCH
      */
-    endpoints.patch = ({ id }, toPatch, config = { headers: { authorization: token ? `Bearer ${token}` : null } }) =>
-      axios.patch(`${resourceURL}/${id}`, toPatch, { ...config })
+    endpoints.patch = (toPatch, config) => {
+      const customHeaders = config && config.headers && { ...config.headers };
+      const id = toPatch && (toPatch.id || toPatch.get('id'));
+
+      return axios.patch(`${resourceURL}/${id}`, toPatch, {
+        ...config,
+        headers: {
+          authorization: token ? `Bearer ${token}` : null,
+          ...customHeaders
+        }
+      })
+    }
 
     /**
      * DELETE

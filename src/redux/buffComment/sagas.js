@@ -4,10 +4,40 @@ import actions from "./actions";
 import {
     commentOrderCommentAPI,
     fetchListOrderCommentAPI,
-    createOrderCommentAPI
+    createOrderCommentAPI,
+    getOneOrderCommentAPI,
+    updateOneOrderCommentAPI
 } from '../../config/apiFactory/BuffComment/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
+
+function* updateOrderCommentFunc(params) {
+  try {
+    const response = yield call(updateOneOrderCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateOrderCommentAdminSuccess(response?.data?.data)
+      );
+      yield put(
+        actions.fetchListOrderCommentBegin()
+      );
+
+      toast.success('Cập nhật order comment thành công');
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.updateOrderCommentAdminErr({ error: errorMessage || 'Update order comment failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Update order comment failed');
+    }
+  } finally { /* empty */ }
+}
 
 function* createOrderCommentFunc(params) {
   try {
@@ -62,9 +92,16 @@ function* fetchListOrderCommentFunc(params) {
 
 function* detailOrderCommentFunc(params) {
   try {
-    yield put(
-        actions.detailOrderCommentSuccess(params?.payload)
-    );
+    const response = yield call(getOneOrderCommentAPI, params?.payload?.id);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.detailOrderCommentSuccess(response?.data?.data)
+      );
+    }
+    // yield put(
+    //     actions.detailOrderCommentSuccess(params?.payload)
+    // );
   } catch (error) {
     const errorMessage = error;
     yield put(
@@ -88,6 +125,10 @@ function* commentInOrderCommentFunc(params) {
       actions.commentOrderCommentErr({ error: errorMessage || 'Detail order comment failed' })
     );
   } finally { /* empty */ }
+}
+
+export function* updateOrderCommentWatcherSaga() {
+  yield takeLatest(actions.UPDATE_ORDER_COMMENT_ADMIN_BEGIN, updateOrderCommentFunc);
 }
 
 export function* createOrderCommentWatcherSaga() {

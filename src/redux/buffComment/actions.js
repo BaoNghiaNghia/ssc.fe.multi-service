@@ -14,7 +14,57 @@ const actions = {
     CREATE_ORDER_COMMENT_ADMIN_BEGIN: 'CREATE_ORDER_COMMENT_ADMIN_BEGIN',
     CREATE_ORDER_COMMENT_ADMIN_SUCCESS: 'CREATE_ORDER_COMMENT_ADMIN_SUCCESS',
     CREATE_ORDER_COMMENT_ADMIN_ERR: 'CREATE_ORDER_COMMENT_ADMIN_ERR',
+
+    DETAIL_ORDER_COMMENT_ADMIN_BEGIN: 'DETAIL_ORDER_COMMENT_ADMIN_BEGIN',
+    DETAIL_ORDER_COMMENT_ADMIN_SUCCESS: 'DETAIL_ORDER_COMMENT_ADMIN_SUCCESS',
+    DETAIL_ORDER_COMMENT_ADMIN_ERR: 'DETAIL_ORDER_COMMENT_ADMIN_ERR',
+
+    UPDATE_ORDER_COMMENT_ADMIN_BEGIN: 'UPDATE_ORDER_COMMENT_ADMIN_BEGIN',
+    UPDATE_ORDER_COMMENT_ADMIN_SUCCESS: 'UPDATE_ORDER_COMMENT_ADMIN_SUCCESS',
+    UPDATE_ORDER_COMMENT_ADMIN_ERR: 'UPDATE_ORDER_COMMENT_ADMIN_ERR',
     
+
+    detailOrderCommentAdminBegin: (payload) => {
+        return {
+            type: actions.DETAIL_ORDER_COMMENT_ADMIN_BEGIN,
+            payload
+        };
+    },
+
+    detailOrderCommentAdminSuccess: (data) => {
+        return {
+            type: actions.DETAIL_ORDER_COMMENT_ADMIN_SUCCESS,
+            data,
+        };
+    },
+
+    detailOrderCommentAdminErr: (err) => {
+        return {
+            type: actions.DETAIL_ORDER_COMMENT_ADMIN_ERR,
+            err,
+        };
+    },
+
+    updateOrderCommentAdminBegin: (payload) => {
+        return {
+            type: actions.UPDATE_ORDER_COMMENT_ADMIN_BEGIN,
+            payload
+        };
+    },
+
+    updateOrderCommentAdminSuccess: (data) => {
+        return {
+            type: actions.UPDATE_ORDER_COMMENT_ADMIN_SUCCESS,
+            data,
+        };
+    },
+
+    updateOrderCommentAdminErr: (err) => {
+        return {
+            type: actions.UPDATE_ORDER_COMMENT_ADMIN_ERR,
+            err,
+        };
+    },
 
     createOrderCommentAdminBegin: (payload) => {
         return {

@@ -61,7 +61,7 @@ const badgeRedStyle = {
 const { Option } = Select;
 
 
-function AddOrderComment({ isOpen, setState }) {
+function CancelAndRefundOrderComment({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formCreateService] = Form.useForm();
 
@@ -92,7 +92,7 @@ function AddOrderComment({ isOpen, setState }) {
         .then((values) => {
           dispatch(actions.createOrderCommentAdminBegin(values));
 
-          setState({ isCreateCommentOrderModal: false });
+          setState({ isCancelRefundCommentOrderModal: false });
           formCreateService.resetFields();
         })
         .catch((err) => {
@@ -105,7 +105,7 @@ function AddOrderComment({ isOpen, setState }) {
 
   const handleCancel = () => {
     setState({
-      isCreateCommentOrderModal: false,
+      isCancelRefundCommentOrderModal: false,
     });
   }
 
@@ -120,8 +120,8 @@ function AddOrderComment({ isOpen, setState }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm Comment Order</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho order comment</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Hủy & Hoàn tiền</p>
+                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Hủy đơn order comment và hoàn tiền cho người dùng</p>
               </div>
             </div>
           </>
@@ -133,7 +133,7 @@ function AddOrderComment({ isOpen, setState }) {
             Hủy
           </Button>,
           <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-            Đặt hàng
+            Thêm mới
           </Button>
         ]}
       >
@@ -267,9 +267,9 @@ function AddOrderComment({ isOpen, setState }) {
   );
 }
 
-AddOrderComment.propTypes = {
+CancelAndRefundOrderComment.propTypes = {
   isOpen: PropTypes.bool,
   setState: PropTypes.func
 };
 
-export default AddOrderComment;
+export default CancelAndRefundOrderComment;

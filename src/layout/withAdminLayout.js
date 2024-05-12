@@ -319,11 +319,13 @@ const ThemeLayout = (WrappedComponent) => {
                   <Footer className="admin-footer" style={footerStyle}>
                     <Row>
                       <Col md={12} xs={24}>
-                        <span className="admin-footer__copyright">{new Date().getFullYear()} © SSC</span>
+                        <span className="admin-footer__copyright">{new Date().getFullYear()} © SSC - SMM Panel - Social Services</span>
                       </Col>
                       <Col md={12} xs={24}>
                         <div className="admin-footer__links">
+                          <NavLink to="#">Về chúng tôi</NavLink>
                           <NavLink to="#">Dịch vụ</NavLink>
+                          <NavLink to="#">Cài đặt</NavLink>
                         </div>
                       </Col>
                     </Row>

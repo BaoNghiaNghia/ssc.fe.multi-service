@@ -7,89 +7,62 @@ import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
-import actions from '../../../redux/serviceSettings/actions';
+import userActions from '../../../redux/member/actions';
+import serviceActions from '../../../redux/serviceSettings/actions';
+import commentActions from '../../../redux/buffComment/actions';
 import { FixedServiceTemp, STATUS_COMMENT_ENUM } from '../../../variables/index';
 
 const { Option } = Select;
 
-function DetailOrder({ isOpen, setState, state }) {
-  const dispatch = useDispatch();
+function DetailOrder({ setState, state }) {
   const [formUpdateService] = Form.useForm();
 
-  const { postLoading, detailService, detailOrderComment } = useSelector(item => {
+  const { postLoading, detailOrderComment, userList, listService } = useSelector(state => {
     return {
-      postLoading: item?.settingService?.postLoading,
-      detailService: item?.settingService?.detailService,
-      detailOrderComment: item?.buffComment?.detailOrderComment
+      postLoading: state?.buffComment?.loading,
+      detailOrderComment: state?.buffComment?.detailOrderComment,
+      userList: state?.member?.userList,
+      listService: state?.settingService?.listService?.items
     };
   });
 
+  const findUser = userList?.filter((item) => item.id === detailOrderComment?.user_id);
+  const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
+
   useEffect(() => {
     formUpdateService.setFieldsValue(detailOrderComment);
-    formUpdateService.setFieldValue('category', detailOrderComment?.serviceDetail && detailOrderComment?.serviceDetail[0]?.category);
-    formUpdateService.setFieldValue('user_name', detailOrderComment?.userDetail && detailOrderComment?.userDetail[0]?.fullname);
-    formUpdateService.setFieldValue('user_email', detailOrderComment?.userDetail && detailOrderComment?.userDetail[0]?.email);
+    formUpdateService.setFieldValue('category', findService && findService[0]?.category);
+    formUpdateService.setFieldValue('user_name', findUser && findUser[0]?.fullname);
+    formUpdateService.setFieldValue('user_email', findUser && findUser[0]?.email);
     formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
     formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderComment?.status)?.title);
   });
-
-  const handleOk = () => {
-    try {
-
-      formUpdateService.validateFields()
-        .then((values) => {
-          const requestData = {
-            id: detailService.id,
-            category: values?.category,
-            platform: values?.platform || 'Youtube',
-            service_type: values?.service_type,
-            type: values?.type,
-            description: values?.description,
-            enabled: detailService?.enabled,
-            min: values?.min,
-            max: values?.max,
-            max_threads: values?.max_threads,
-            max_threads_3000: values?.max_threads_3000,
-            max_threads_5000: values?.max_threads_5000,
-            name: values?.name,
-            price_per_10: values?.price_per_10,
-            priority: values?.priority === 'true'
-          }
-      
-          dispatch(actions.updateServiceBegin(requestData));
-    
-          setState({
-            isDetailOrderModal: false,
-          });
-    
-          formUpdateService.resetFields();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
-    } catch (err) {
-      setState({
-        isDetailOrderModal: false,
-      });
-      formUpdateService.resetFields();
-      console.log(err);
-    }
-
-  };
 
   const handleCancel = () => {
     setState({
       isDetailOrderModal: false,
     });
-
     formUpdateService.resetFields();
+  }
+
+  const iconService = (service) => {
+    switch (service?.category) {
+      case 'Comments':
+        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Likes':
+        return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Subscribers':
+        return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      default:
+        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+    }
   }
 
   return (
     <>
       <Modal
         width='600px'
-        open={isOpen}
+        open={state?.isDetailOrderModal}
         centered
         title={
           <>
@@ -102,24 +75,16 @@ function DetailOrder({ isOpen, setState, state }) {
             </div>
           </>
         }
-        onOk={handleOk}
         onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Hủy
-          </Button>,
-          <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-            Cập nhật
-          </Button>
-        ]}
+        footer={null}
       >
-        <Form name="add_service" layout="vertical" form={formUpdateService} onFinish={handleOk}>
+        <Form name="add_service" layout="vertical" form={formUpdateService}>
           <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
             <Col sm={12}>
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
                 <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
                 <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>{detailOrderComment?.serviceDetail && detailOrderComment?.serviceDetail[0]?.platform}</span>
+                <span style={{ fontSize: '16px', fontWeight: '700' }}>{findService && findService[0]?.platform}</span>
               </div>
             </Col>
             <Col sm={12}>
@@ -137,7 +102,6 @@ function DetailOrder({ isOpen, setState, state }) {
                   bordered={false}
                   initialValue="Comments"
                   size='small'
-                  disabled
                   onClick={(value) => {
                     const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
 
@@ -147,27 +111,25 @@ function DetailOrder({ isOpen, setState, state }) {
                     }
                   }}
                 >
-                  <Option value="Comments">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
-                    </div>
-                  </Option>
-                  <Option value="Likes">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Likes</span>
-                    </div>
-                  </Option>
-                  <Option value="Subscribers">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribers</span>
-                    </div>
-                  </Option>
+                  {
+                    FixedServiceTemp?.map(service => {
+                      return (
+                        <Option key={service?.category} value={service?.category}>
+                          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                            { iconService(service) }
+                            <span style={{ fontWeight: '800' }}>{service?.category}</span>
+                          </div>
+                        </Option>
+                      )
+                    })
+                  }
                 </Select>
               </Form.Item>
             </Col>
           </Row>
 
           <Divider style={{ fontSize: '0.9em', color: 'gray', padding: '10px 0px', margin: '0px' }}>Thông tin Khách</Divider>
+
           <Row gutter="10">
             <Col sm={12}>
               <Form.Item
@@ -263,9 +225,9 @@ function DetailOrder({ isOpen, setState, state }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="%" readOnly placeholder="Thêm loại"/>
+                {/* <Input size='small' addonAfter="%" readOnly placeholder="Tiến trình"/> */}
+                <Progress percent={formUpdateService.getFieldValue('performance')}  style={{ margin: '0px', padding: '0px' }} size="small" />
               </Form.Item>
-              <Progress percent={formUpdateService.getFieldValue('performance')}  style={{ margin: '0px', padding: '0px' }} size="small" />
             </Col>
           </Row>
 
@@ -307,7 +269,6 @@ function DetailOrder({ isOpen, setState, state }) {
 }
 
 DetailOrder.propTypes = {
-  isOpen: PropTypes.bool,
   setState: PropTypes.func,
   state: PropTypes.object
 };

@@ -6,10 +6,14 @@ import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import { TbCreditCardRefund } from "react-icons/tb";
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
+
 import ListCommentOfOrder from './components/ListComment';
 import AddOrderComment from './components/AddOrderComment';
+import CancelAndRefundOrderComment from './components/CancelAndRefundOrderComment';
+import UpdateOrderComment from './components/UpdateOrderComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -53,6 +57,8 @@ function PendingBuffComment() {
     isDetailOrderModal: false,
     isListCommentModal: false,
     isCreateCommentOrderModal: false,
+    isUpdateCommentOrderModal: false,
+    isCancelRefundCommentOrderModal: false,
     statusNumber: 'all',
     notData: searchData,
     item: listOrderComment,
@@ -223,7 +229,7 @@ function PendingBuffComment() {
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isDetailOrderModal: true });
+                      setState({ ...state, isUpdateCommentOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="edit" size={16} />
@@ -259,10 +265,10 @@ function PendingBuffComment() {
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isDetailOrderModal: true });
+                      setState({ ...state, isCancelRefundCommentOrderModal: true });
                     }}
                   >
-                    <FeatherIcon icon="anchor" size={16} />
+                    <TbCreditCardRefund style={{ fontSize: '1em' }} />
                   </Button>
                 </Tooltip>
               ) : <></>
@@ -272,10 +278,11 @@ function PendingBuffComment() {
                 onClick={() => {
                   dispatch(actions.detailOrderCommentBegin({
                     ...value,
-                    userDetail: findUser,
-                    serviceDetail: findService
                   }));
-                  setState({ ...state, isDetailOrderModal: true });
+                  setState({ 
+                    ...state, 
+                    isDetailOrderModal: true
+                  });
                 }}
               >
                 <FeatherIcon icon="eye" size={16} />
@@ -361,12 +368,12 @@ function PendingBuffComment() {
     },
   };
 
-  const { isDetailOrderModal, isListCommentModal, isCreateCommentOrderModal } = state;
+  const { isListCommentModal, isCreateCommentOrderModal, isUpdateCommentOrderModal, isCancelRefundCommentOrderModal } = state;
 
   return (
     <>
       <DetailOrder
-        isOpen={isDetailOrderModal}
+        state={state}
         setState={setState}
       />
       <ListCommentOfOrder
@@ -375,6 +382,14 @@ function PendingBuffComment() {
       />
       <AddOrderComment
         isOpen={isCreateCommentOrderModal}
+        setState={setState}
+      />
+      <UpdateOrderComment
+        state={state}
+        setState={setState}
+      />
+      <CancelAndRefundOrderComment
+        isOpen={isCancelRefundCommentOrderModal}
         setState={setState}
       />
       <PageHeader

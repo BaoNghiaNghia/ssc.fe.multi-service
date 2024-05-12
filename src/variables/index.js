@@ -98,18 +98,24 @@ export const FixedServiceTemp = [
     'category': 'Comments',
     'type': 'Custom Comments',
     'service_type': 'ytbcomment',
+    'icon': 'FaRegCommentDots',
+    'disabled': false
   },
   {
     'platform': 'Youtube',
     'category': 'Likes',
     'type': 'Custom Likes',
     'service_type': 'ytblike',
+    'icon': 'AiOutlineLike',
+    'disabled': true
   },
   {
     'platform': 'Youtube',
     'category': 'Subscribers',
     'type': 'Default',
     'service_type': 'ytbsubscribe',
+    'icon': 'GrNotification',
+    'disabled': true
   },
 ];
 

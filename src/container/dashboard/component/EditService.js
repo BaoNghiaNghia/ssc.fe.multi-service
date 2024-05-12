@@ -83,6 +83,19 @@ function EditService({ isOpen, setState, state }) {
     formUpdateService.resetFields();
   }
 
+  const iconService = (service) => {
+    switch (service?.category) {
+      case 'Comments':
+        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Likes':
+        return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Subscribers':
+        return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      default:
+        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+    }
+  }
+
   return (
     <>
       <Modal
@@ -100,7 +113,6 @@ function EditService({ isOpen, setState, state }) {
             </div>
           </>
         }
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           <Button key="back" onClick={handleCancel}>
@@ -111,7 +123,7 @@ function EditService({ isOpen, setState, state }) {
           </Button>
         ]}
       >
-        <Form name="add_service" layout="vertical" form={formUpdateService} onFinish={handleOk}>
+        <Form name="add_service" layout="vertical" form={formUpdateService}>
           <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
             <Col sm={12}>
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
@@ -144,21 +156,18 @@ function EditService({ isOpen, setState, state }) {
                     }
                   }}
                 >
-                  <Option value="Comments">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Comments</span>
-                    </div>
-                  </Option>
-                  <Option value="Likes">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <AiOutlineLike color='red' fontSize={17} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Likes</span>
-                    </div>
-                  </Option>
-                  <Option value="Subscribers">
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> <span style={{ fontWeight: '800' }}>Subscribers</span>
-                    </div>
-                  </Option>
+                  {
+                    FixedServiceTemp?.map(service => {
+                      return (
+                        <Option key={service?.category} value={service?.category}>
+                          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                            { iconService(service) }
+                            <span style={{ fontWeight: '800' }}>{service?.category}</span>
+                          </div>
+                        </Option>
+                      )
+                    })
+                  }
                 </Select>
               </Form.Item>
             </Col>
