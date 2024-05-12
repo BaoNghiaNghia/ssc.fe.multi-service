@@ -22,7 +22,32 @@ const actions = {
     UPDATE_ORDER_COMMENT_ADMIN_BEGIN: 'UPDATE_ORDER_COMMENT_ADMIN_BEGIN',
     UPDATE_ORDER_COMMENT_ADMIN_SUCCESS: 'UPDATE_ORDER_COMMENT_ADMIN_SUCCESS',
     UPDATE_ORDER_COMMENT_ADMIN_ERR: 'UPDATE_ORDER_COMMENT_ADMIN_ERR',
+
+    LIST_COMPUTER_RUN_COMMENT_BEGIN: 'LIST_COMPUTER_RUN_COMMENT_BEGIN',
+    LIST_COMPUTER_RUN_COMMENT_SUCCESS: 'LIST_COMPUTER_RUN_COMMENT_SUCCESS',
+    LIST_COMPUTER_RUN_COMMENT_ERR: 'LIST_COMPUTER_RUN_COMMENT_ERR',
     
+
+    listComputerRunCommentBegin: (payload) => {
+        return {
+            type: actions.LIST_COMPUTER_RUN_COMMENT_BEGIN,
+            payload
+        };
+    },
+
+    listComputerRunCommentSuccess: (data) => {
+        return {
+            type: actions.LIST_COMPUTER_RUN_COMMENT_SUCCESS,
+            data,
+        };
+    },
+
+    listComputerRunCommentErr: (err) => {
+        return {
+            type: actions.LIST_COMPUTER_RUN_COMMENT_ERR,
+            err,
+        };
+    },
 
     detailOrderCommentAdminBegin: (payload) => {
         return {

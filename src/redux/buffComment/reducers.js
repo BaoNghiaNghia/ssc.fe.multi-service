@@ -3,6 +3,7 @@ import actions from './actions';
 const initialState = {
   listOrderComment: [],
   detailOrderComment: {},
+  listComputer: {},
   commentInOrder: {},
   loading: false,
   error: null
@@ -32,11 +33,74 @@ const {
     UPDATE_ORDER_COMMENT_ADMIN_BEGIN,
     UPDATE_ORDER_COMMENT_ADMIN_ERR,
     UPDATE_ORDER_COMMENT_ADMIN_SUCCESS,
+
+    LIST_COMPUTER_RUN_COMMENT_BEGIN,
+    LIST_COMPUTER_RUN_COMMENT_ERR,
+    LIST_COMPUTER_RUN_COMMENT_SUCCESS,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case LIST_COMPUTER_RUN_COMMENT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LIST_COMPUTER_RUN_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listComputer: data
+      };
+
+    case LIST_COMPUTER_RUN_COMMENT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case DETAIL_ORDER_COMMENT_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_ORDER_COMMENT_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailOrderComment: data
+      };
+
+    case DETAIL_ORDER_COMMENT_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case UPDATE_ORDER_COMMENT_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_ORDER_COMMENT_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_ORDER_COMMENT_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case CREATE_ORDER_COMMENT_ADMIN_BEGIN:
       return {
         ...state,

@@ -6,10 +6,34 @@ import {
     fetchListOrderCommentAPI,
     createOrderCommentAPI,
     getOneOrderCommentAPI,
-    updateOneOrderCommentAPI
+    updateOneOrderCommentAPI,
+    listComputerRunCommentAPI
 } from '../../config/apiFactory/BuffComment/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
+
+function* listComputerRunCommentFunc(params) {
+  try {
+    const response = yield call(listComputerRunCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.listComputerRunCommentSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.listComputerRunCommentErr({ error: errorMessage || 'Update order comment failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Update order comment failed');
+    }
+  } finally { /* empty */ }
+}
 
 function* updateOrderCommentFunc(params) {
   try {
@@ -129,6 +153,9 @@ function* commentInOrderCommentFunc(params) {
 
 export function* updateOrderCommentWatcherSaga() {
   yield takeLatest(actions.UPDATE_ORDER_COMMENT_ADMIN_BEGIN, updateOrderCommentFunc);
+}
+export function* listComputerRunCommentWatcherSaga() {
+  yield takeLatest(actions.LIST_COMPUTER_RUN_COMMENT_BEGIN, listComputerRunCommentFunc);
 }
 
 export function* createOrderCommentWatcherSaga() {

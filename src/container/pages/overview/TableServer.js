@@ -16,7 +16,7 @@ function TableServer() {
   const { project, listServer } = useSelector((state) => {
     return {
       project: state?.projects?.data,
-      listServer: state?.servers?.listServer
+      listServer: state?.buffComment?.listComputer?.items,
     }
   });
   const [state, setState] = useState({
@@ -44,8 +44,8 @@ function TableServer() {
 
   const dataSource = [];
 
-  if (listServer.length > 0) {
-    listServer.map((value, index) => {
+  if (listServer?.length > 0) {
+    listServer?.map((value, index) => {
       const color = value.run >= 15 ? 'green' : ((value.run < 15 && value.run > 5) ? 'orange' : 'red');
 
       const colorObj = value.run >= 15 
@@ -54,15 +54,24 @@ function TableServer() {
             ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
             : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' });
 
-      const threadString = `${value?.run  } / ${  value?.thread}`;
+      const threadString = `${value?.run || 0  } / ${  value?.thread}`;
 
       return dataSource.push({
         key: index,
         server: (
-          <span style={{ fontWeight: 600, fontSize: '1.1em', display: 'inline-flex', alignItems: 'center' }}>
+          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'center' }}>
             <TbServerBolt fontSize={17} style={{ marginRight: '5px' }} />
-            {value.computer_name}
+            <div>
+              <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name}</p>
+              <p style={{ fontSize: '0.7em' }}>{value?.link}</p>
+            </div>
           </span>
+        ),
+        configuration: (
+          <>
+            <div style={{ margin: 0, padding: 0 }}>CPU: {value?.cpu}</div>
+            <div style={{ margin: 0, padding: 0 }}>Ram: {value?.ram}</div>
+          </>
         ),
         thread: (
           <span style={colorObj}>
@@ -73,26 +82,18 @@ function TableServer() {
         limit: (
           <Tooltip title={(
             <>
-              <div style={{ marginRight: '12px'}}>Subscribe: {value?.limit_day}</div>
-              <div style={{ marginRight: '12px' }}>Comment: {value?.limit_day}</div>
-              <div style={{ marginRight: '12px' }}>Like: {value?.limit_day}</div>
+              <div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>
             </>
           )}>
             <span>
               <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <CgServer fontSize={17} /> {value?.limit_day}
-              </span>
-              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <CgServer fontSize={17} color='#EB5757' /> {value?.limit_day}
-              </span>
-              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <CgServer fontSize={17} color='#27AE60' /> {value?.limit_day}
+                <CgServer fontSize={17} /> {value?.limit_per_day}
               </span>
             </span>
           </Tooltip>
         ),
         reset: (
-          <span>{value?.reset_time}h</span>
+          <span>{value?.reset_hour} h</span>
         ),
         mail: (
           <Tooltip title={(
@@ -116,7 +117,7 @@ function TableServer() {
           </Tooltip>
         ),
         lastReset: (
-          <span>{moment.unix(value.last_action_time).fromNow()}</span>
+          <span>{value?.last_action_at}</span>
         ),
         action: (
           <div>
@@ -151,6 +152,11 @@ function TableServer() {
       title: 'Máy',
       dataIndex: 'server',
       key: 'server',
+    },
+    {
+      title: 'Cấu hình',
+      dataIndex: 'configuration',
+      key: 'configuration',
     },
     {
       title: 'Số luồng',
@@ -210,7 +216,7 @@ function TableServer() {
       </Col>
       <Col xs={24} className="pb-30">
         <ProjectPagination>
-          {projects.length ? (
+          {projects?.length ? (
             <Pagination
               onChange={onHandleChange}
               showSizeChanger

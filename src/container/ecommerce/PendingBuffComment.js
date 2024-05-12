@@ -14,6 +14,7 @@ import ListCommentOfOrder from './components/ListComment';
 import AddOrderComment from './components/AddOrderComment';
 import CancelAndRefundOrderComment from './components/CancelAndRefundOrderComment';
 import UpdateOrderComment from './components/UpdateOrderComment';
+import InsuranceOrderComment from './components/InsuranceOrderComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -59,6 +60,7 @@ function PendingBuffComment() {
     isCreateCommentOrderModal: false,
     isUpdateCommentOrderModal: false,
     isCancelRefundCommentOrderModal: false,
+    isInsuranceCommentOrderModal: false,
     statusNumber: 'all',
     notData: searchData,
     item: listOrderComment,
@@ -247,7 +249,7 @@ function PendingBuffComment() {
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isDetailOrderModal: true });
+                      setState({ ...state, isInsuranceCommentOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="shield" size={16} />
@@ -390,6 +392,10 @@ function PendingBuffComment() {
       />
       <CancelAndRefundOrderComment
         isOpen={isCancelRefundCommentOrderModal}
+        setState={setState}
+      />
+      <InsuranceOrderComment
+        state={state}
         setState={setState}
       />
       <PageHeader

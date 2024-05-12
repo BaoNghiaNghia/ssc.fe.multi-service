@@ -63,11 +63,15 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
 
       return dataSource.push({
         key: key + 1,
-        message: <span className="order-id">{message}</span>,
+        message: <span className="order-id">{
+          message ? (
+            <span>{message}</span>
+          ) : "..."
+        }</span>,
         id: (
           <>
-            <span style={{ fontWeight: '700' }}><strong>ID: </strong>{id}</span>
-            <span style={{ fontSize: '0.7em' }}><strong>Order ID: </strong>{order_id}</span>
+            <p style={{ fontWeight: '700', margin: 0, padding: 0, display: 'inline-flex', alignItems: 'center' }}><strong>ID: </strong>{id}</p>
+            <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><strong>Order ID: </strong>{order_id}</p>
           </>
         ),
         status: (
@@ -116,7 +120,7 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
     <>
       <Modal
         open={isOpen}
-        width="600px"
+        width="700px"
         centered
         title={
           <>

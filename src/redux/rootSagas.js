@@ -57,7 +57,8 @@ import {
     detailOrderCommentWatcherSaga,
     commentInOrderCommentWatcherSaga,
     createOrderCommentWatcherSaga,
-    updateOrderCommentWatcherSaga
+    updateOrderCommentWatcherSaga,
+    listComputerRunCommentWatcherSaga
 } from './buffComment/sagas';
 
 import {
@@ -110,6 +111,7 @@ export default function* rootSaga() {
         listGeneralDomainWatcherSaga(),
         detailDomainWatcherSaga(),
         createOrderCommentWatcherSaga(),
-        updateOrderCommentWatcherSaga()
+        updateOrderCommentWatcherSaga(),
+        listComputerRunCommentWatcherSaga()
     ]);
 }

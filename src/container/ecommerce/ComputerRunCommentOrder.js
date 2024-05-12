@@ -11,16 +11,16 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Dropdown } from '../../components/dropdown/dropdown';
-import actions from '../../redux/servers/actions';
+import actions from '../../redux/buffComment/actions';
 import Heading from '../../components/heading/heading';
 import { numberWithCommas } from '../../utility/utility';
 
-function RunningBuffComment() {
+function ComputerRunCommentOrder() {
   const dispatch = useDispatch();
   const { searchData, listServer } = useSelector((state) => {
     return {
       searchData: state?.headerSearchData,
-      listServer: state?.servers?.listServer,
+      listServer: state?.buffComment?.listComputer?.items,
       preIsLoading: state.chartContent.perLoading,
     }
   });
@@ -42,27 +42,27 @@ function RunningBuffComment() {
   const { notData } = state;
 
   useEffect(() => {
-    dispatch(actions.computerDataListBegin());
+    dispatch(actions.listComputerRunCommentBegin());
   }, []);
 
   const handleSearch = (searchText) => {
-    const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    const data = searchData?.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
     setState({
       ...state,
       notData: data,
     });
   };
 
-  const fullThreadServer = listServer.filter(item => item?.run >=15).length;
-  const nonFullThreadServer = listServer?.filter(item => item?.run < 15 && item?.run > 5).length;
-  const aBitThreadServer = listServer?.filter(item => item?.run <= 5).length;
+  const fullThreadServer = listServer?.filter(item => item?.run >=15)?.length;
+  const nonFullThreadServer = listServer?.filter(item => item?.run < 15 && item?.run > 5)?.length;
+  const aBitThreadServer = listServer?.filter(item => item?.run <= 5)?.length;
 
   const totalThread = listServer?.reduce((total, comp) => total + comp.run, 0) || 0;
 
-  const accountTotal = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountAlive = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountWork = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountDie = (listServer.length > 0) && numberWithCommas(listServer?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountTotal = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountAlive = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountWork = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountDie = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
 
   return (
     <>
@@ -104,7 +104,7 @@ function RunningBuffComment() {
                 >
                   <p style={{ fontWeight: 700 }}>Servers</p>
                   <Heading as="h1">
-                    {listServer.length}
+                    {listServer?.length}
                   </Heading>
                 </div>
                 <div
@@ -200,4 +200,4 @@ function RunningBuffComment() {
   );
 }
 
-export default RunningBuffComment;
+export default ComputerRunCommentOrder;
