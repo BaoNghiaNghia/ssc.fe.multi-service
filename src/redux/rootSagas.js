@@ -49,6 +49,7 @@ import {
     changeTabTypeMemberWatcherSaga,
     createServicesWatcherSaga,
     fetchListServicesWatcherSaga,
+    fetchListSettingsWatcherSaga,
     modalDetailServiceWatcherSaga,
     updateServicesWatcherSaga
 } from './serviceSettings/sagas';
@@ -114,6 +115,7 @@ export default function* rootSaga() {
         createOrderCommentWatcherSaga(),
         updateOrderCommentWatcherSaga(),
         listComputerRunCommentWatcherSaga(),
-        changeTabTypeMemberWatcherSaga()
+        changeTabTypeMemberWatcherSaga(),
+        fetchListSettingsWatcherSaga()
     ]);
 }

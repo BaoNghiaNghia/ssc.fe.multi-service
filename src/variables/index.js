@@ -37,11 +37,18 @@ export const ORDER_YOUTUBE_STATUS = [
     value: -1
   },
   {
-    name: "OrderStatusCancel",
+    name: "OrderStatusCancelNoRefund",
     label: 'Đã hủy',
     icon: '',
     color: 'red',
     value: -2
+  },
+  {
+    name: "OrderStatusCancelRefund",
+    label: 'Đã hủy + Hoàn tiền',
+    icon: '',
+    color: 'red',
+    value: -3
   },
   {
     name: "OrderStatusDone",

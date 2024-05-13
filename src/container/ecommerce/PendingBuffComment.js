@@ -166,9 +166,12 @@ function PendingBuffComment() {
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
                 <span>
-                  <Tooltip title="Đã chạy / Tổng số lượng">
+                  <Tooltip title={<>
+                    <p>Đã chạy / Tổng số lượng</p>
+                    <p>Hiệu suất</p>
+                  </>}>
                     <p style={{ margin: '0px', padding: '0px' }}><strong>{numberWithCommas(done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></p>
-                    <Progress percent={performance} size="small" />
+                    <Progress percent={Math.floor(performance, 1)} size="small" />
                   </Tooltip>
                 </span>
               )

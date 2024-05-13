@@ -5,7 +5,8 @@ import actions from "./actions";
 import {
   createServiceAPI,
   updateServiceAPI,
-  fetchListServiceAPI
+  fetchListServiceAPI,
+  fetchListSettingAPI
 } from '../../config/apiFactory/ServiceSetting/index';
 
 import { MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
@@ -13,18 +14,18 @@ import { MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
 
 function* fetchListSettingsFunc(params) {
   try {
-    const response = yield call(fetchListServiceAPI, params);
+    const response = yield call(fetchListSettingAPI, params);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.fetchListServiceSuccess(response?.data?.data)
+        actions.fetchListSettingsSuccess(response?.data?.data)
       );
     }
 
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.fetchListServiceErr({ error: errorMessage || 'Fetch services list failed' })
+      actions.fetchListSettingsErr({ error: errorMessage || 'Fetch services list failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -171,7 +172,7 @@ export function* fetchListServicesWatcherSaga() {
 }
 
 export function* fetchListSettingsWatcherSaga() {
-  yield takeLatest(actions.FETCH_LIST_SERVICES_BEGIN, fetchListSettingsFunc);
+  yield takeLatest(actions.FETCH_LIST_SETTINGS_BEGIN, fetchListSettingsFunc);
 }
 
 export function* createServicesWatcherSaga() {

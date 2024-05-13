@@ -7,7 +7,8 @@ import { FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FiEdit2 } from "react-icons/fi";
 import { FaLocationArrow, FaMoneyBillTransfer } from "react-icons/fa6";
-import { IoPeopleOutline } from "react-icons/io5";
+import { TbServicemark } from "react-icons/tb";
+import { IoSettingsOutline } from "react-icons/io5";
 import AddService from './component/AddService';
 import EditService from './component/EditService';
 import DelService from './component/DelService';
@@ -247,12 +248,9 @@ function SettingAndService() {
 
   const handleChange = (value) => {
     dispatch(actions.changeTypeTabBegin(value));
-    // setState({ ...state, typeTab: value });
   };
 
   const { isOpenAdd, isOpenEdit, isOpenDel, notData } = state;
-
-  console.log('--- type tab ---', typeTab);
 
   return (
     <>
@@ -260,18 +258,15 @@ function SettingAndService() {
         isOpen={isOpenAdd}
         setState={setState}
       />
-
       <EditService
         isOpen={isOpenEdit}
         state={state}
         setState={setState}
       />
-
       <DelService
         isOpen={isOpenDel}
         setState={setState}
       />
-
       <PageHeader
         ghost
         title="Dịch vụ & Cài đặt"
@@ -285,7 +280,7 @@ function SettingAndService() {
                   to="#"
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
                 >
-                  <IoPeopleOutline fontSize={15}/> <span>Dịch vụ</span>
+                  <TbServicemark fontSize={25} style={{ margin: '0 5px 0 0', padding: 0 }}/> <span>Dịch vụ</span>
                 </Link>
               </li>
               <li>
@@ -295,7 +290,7 @@ function SettingAndService() {
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
                   to="#"
                 >
-                  <FaMoneyBillTransfer  fontSize={15}/> <span>Cài đặt</span>
+                  <IoSettingsOutline  fontSize={18} style={{ marginRight: '5px' }}/> <span>Cài đặt</span>
                 </Link>
               </li>
             </ul>
