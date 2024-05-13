@@ -118,7 +118,7 @@ function DetailMember({ isOpen, setState }) {
           </Row>
           <Row gutter={10}>
               <Col sm={24}>
-                <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Tổng Credit" rules={[{
+                <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Key API" rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}>
@@ -126,7 +126,7 @@ function DetailMember({ isOpen, setState }) {
                     type='number'
                     size='small'
                     style={{ width: '100%' }}
-                    placeholder="Thêm credit"
+                    placeholder="Key API"
                   />
                 </Form.Item>
               </Col>
