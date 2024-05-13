@@ -97,7 +97,7 @@ function SettingAndService() {
     selectedService: '',
     selectedRowData: {},
     notData: searchData,
-    checkBlockVideo: formUpdateSettings.getFieldValue('block_video'),
+    checkBlockVideo: listSettings?.block_video,
     item: orders,
     selectedRowKeys: [],
   });
@@ -274,7 +274,32 @@ function SettingAndService() {
     }
   }
 
-  const { isOpenAdd, isOpenEdit, isOpenDel, notData } = state;
+  const handleSwitchBlockVideo = (valueBlockVideo) => {
+    try {
+      formUpdateSettings.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettings?.id,
+            account_delay_time: values?.account_delay_time,
+            block_video: valueBlockVideo,
+            computer_reset_time: values?.computer_reset_time,
+            max_order: values?.max_order,
+            max_random_time: values?.max_random_time,
+            min_random_time: values?.min_random_time,
+            min_video_time: values?.min_video_time
+        }
+
+        dispatch(actions.updateListSettingsBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const { isOpenAdd, isOpenEdit, isOpenDel, notData, checkBlockVideo } = state;
 
   return (
     <>
@@ -436,7 +461,6 @@ function SettingAndService() {
                           <Form.Item
                             name="block_video"
                             label="Màn hình đen"
-                            initialValue="vn"
                             style={{ marginBottom: '7px' }}
                             rules={[{
                               required: true,
@@ -444,13 +468,8 @@ function SettingAndService() {
                             }]}
                           >
                             <Switch
-                              checked={state?.checkBlockVideo}
-                              onClick={(value) => {
-                                setState({
-                                  ...state,
-                                  checkBlockVideo: value
-                                });
-                              }}
+                              checked={listSettings?.block_video}
+                              onChange={(value) => handleSwitchBlockVideo(value)}
                             />
                           </Form.Item>
                         </Col>
