@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/member/actions';
+import { VIETNAMES_CURRENCY } from '../../../variables';
 
 const { Option } = Select;
 
@@ -95,7 +96,7 @@ function DetailMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
+                <InputNumber type='number' addonAfter="%" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -103,7 +104,7 @@ function DetailMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Credit đã dùng"/>
+                <InputNumber type='number' addonAfter={VIETNAMES_CURRENCY} size='small' style={{ width: '100%' }} placeholder="Credit đã dùng"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -111,9 +112,24 @@ function DetailMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm credit"/>
+                <InputNumber type='number' addonAfter={VIETNAMES_CURRENCY} size='small' style={{ width: '100%' }} placeholder="Thêm credit"/>
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={10}>
+              <Col sm={24}>
+                <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Tổng Credit" rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}>
+                  <Input.Password 
+                    type='number'
+                    size='small'
+                    style={{ width: '100%' }}
+                    placeholder="Thêm credit"
+                  />
+                </Form.Item>
+              </Col>
           </Row>
         </Form>
       </Modal>

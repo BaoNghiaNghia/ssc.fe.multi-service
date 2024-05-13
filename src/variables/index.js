@@ -92,6 +92,15 @@ export const MEMBER_TABLE_TYPE = {
   },
 }
 
+export const SERVICE_SETTING_TYPE = {
+  'SERVICE': {
+      title: 'service',
+  },
+  'SETTING': {
+      title: 'setting',
+  },
+}
+
 export const FixedServiceTemp = [
   {
     'platform': 'Youtube',

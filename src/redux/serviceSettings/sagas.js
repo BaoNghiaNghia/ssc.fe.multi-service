@@ -8,8 +8,32 @@ import {
   fetchListServiceAPI
 } from '../../config/apiFactory/ServiceSetting/index';
 
-import { MESSSAGE_STATUS_CODE } from '../../variables';
+import { MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
 
+
+function* fetchListSettingsFunc(params) {
+  try {
+    const response = yield call(fetchListServiceAPI, params);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchListServiceSuccess(response?.data?.data)
+      );
+    }
+
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.fetchListServiceErr({ error: errorMessage || 'Fetch services list failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch report failed');
+    }
+  } finally { /* empty */ }
+}
 
 function* fetchListServicesFunc(params) {
   try {
@@ -119,8 +143,35 @@ export function* modalDetailServiceFunc(params) {
   } finally { /* empty */ }
 }
 
+function* changeTabTypeFunc(params) {
+  try {
+    if (params?.payload === SERVICE_SETTING_TYPE.SERVICE.title) {
+      yield put(
+        actions.fetchListServiceBegin()
+      );
+    } else {
+      yield put(
+        actions.fetchListSettingsBegin()
+      );
+    }
+
+    yield put(
+      actions.changeTypeTabSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.changeTypeTabErr({ error: err || 'Update member failed' })
+    );
+  }
+}
+
+
 export function* fetchListServicesWatcherSaga() {
   yield takeLatest(actions.FETCH_LIST_SERVICES_BEGIN, fetchListServicesFunc);
+}
+
+export function* fetchListSettingsWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_SERVICES_BEGIN, fetchListSettingsFunc);
 }
 
 export function* createServicesWatcherSaga() {
@@ -133,4 +184,8 @@ export function* updateServicesWatcherSaga() {
 
 export function* modalDetailServiceWatcherSaga() {
   yield takeLatest(actions.MODAL_DETAIL_SERVICE_BEGIN, modalDetailServiceFunc);
+}
+
+export function* changeTabTypeMemberWatcherSaga() {
+  yield takeLatest(actions.CHANGE_TYPE_TAB_BEGIN, changeTabTypeFunc);
 }

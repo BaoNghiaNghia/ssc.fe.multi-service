@@ -46,6 +46,7 @@ import {
 } from './member/sagas';
 
 import { 
+    changeTabTypeMemberWatcherSaga,
     createServicesWatcherSaga,
     fetchListServicesWatcherSaga,
     modalDetailServiceWatcherSaga,
@@ -112,6 +113,7 @@ export default function* rootSaga() {
         detailDomainWatcherSaga(),
         createOrderCommentWatcherSaga(),
         updateOrderCommentWatcherSaga(),
-        listComputerRunCommentWatcherSaga()
+        listComputerRunCommentWatcherSaga(),
+        changeTabTypeMemberWatcherSaga()
     ]);
 }

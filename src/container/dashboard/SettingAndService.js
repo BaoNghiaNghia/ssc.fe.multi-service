@@ -4,18 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip, Badge, Switch } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 import { FiEdit2 } from "react-icons/fi";
-import { FaLocationArrow } from "react-icons/fa6";
+import { FaLocationArrow, FaMoneyBillTransfer } from "react-icons/fa6";
+import { IoPeopleOutline } from "react-icons/io5";
 import AddService from './component/AddService';
 import EditService from './component/EditService';
 import DelService from './component/DelService';
+import { GalleryNav, TopToolBox } from './style';
+import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { numberWithCommas } from '../../utility/utility';
 import { Main, TableWrapper } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_SETTING_TYPE } from '../../variables';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -64,11 +68,12 @@ const badgeRedStyle = {
 
 function SettingAndService() {
   const dispatch = useDispatch();
-  const { searchData, orders, listService } = useSelector(state => {
+  const { searchData, orders, listService, typeTab } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
-      listService: state?.settingService?.listService?.items
+      listService: state?.settingService?.listService?.items,
+      typeTab: state?.settingService?.typeTab,
     };
   });
 
@@ -98,6 +103,14 @@ function SettingAndService() {
       });
     }
   }, [orders]);
+
+  const handleSearch = searchText => {
+    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    setState({
+      ...state,
+      notData: data,
+    });
+  };
 
   const dataSource = [];
   if (listService?.length) {
@@ -232,7 +245,14 @@ function SettingAndService() {
     },
   ];
 
-  const { isOpenAdd, isOpenEdit, isOpenDel } = state;
+  const handleChange = (value) => {
+    dispatch(actions.changeTypeTabBegin(value));
+    // setState({ ...state, typeTab: value });
+  };
+
+  const { isOpenAdd, isOpenEdit, isOpenDel, notData } = state;
+
+  console.log('--- type tab ---', typeTab);
 
   return (
     <>
@@ -256,20 +276,59 @@ function SettingAndService() {
         ghost
         title="Dịch vụ & Cài đặt"
         buttons={[
-          <div key="1" className="page-header-actions">
-            <Button size="small" key="4" type="primary" onClick={() => {
-              setState({
-                isOpenAdd: true,
-              });
-            }}>
-              <FeatherIcon icon="plus" size={14} />
-              Thêm dịch vụ
-            </Button>
-          </div>,
+          <GalleryNav>
+            <ul>
+              <li>
+                <Link
+                  className={typeTab === SERVICE_SETTING_TYPE.SERVICE.title ? 'active' : 'deactivate'}
+                  onClick={() => handleChange(SERVICE_SETTING_TYPE.SERVICE.title)}
+                  to="#"
+                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
+                >
+                  <IoPeopleOutline fontSize={15}/> <span>Dịch vụ</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={typeTab === SERVICE_SETTING_TYPE.SETTING.title ? 'active' : 'deactivate'}
+                  onClick={() => handleChange(SERVICE_SETTING_TYPE.SETTING.title)}
+                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
+                  to="#"
+                >
+                  <FaMoneyBillTransfer  fontSize={15}/> <span>Cài đặt</span>
+                </Link>
+              </li>
+            </ul>
+          </GalleryNav>,
         ]}
       />
       <Main>
         <Cards headless>
+          <Row gutter={15}>
+            <Col xs={24}>
+              <TopToolBox>
+                <Row gutter={15} className="justify-content-center">
+                  <Col lg={6} xs={24}>
+                    <div className="table-search-box">
+                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch v" />
+                    </div>
+                  </Col>
+                  <Col xxl={18} xs={24}>
+                    <div className="table-toolbox-actions">
+                      <Button size="small" key="4" type="primary" onClick={() => {
+                        setState({
+                          isOpenAdd: true,
+                        });
+                      }}>
+                        <FeatherIcon icon="plus" size={14} />
+                        Thêm dịch vụ
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+              </TopToolBox>
+            </Col>
+          </Row>
           <Row gutter={15}>
             <Col md={24}>
               <TableWrapper className="table-order table-responsive">
