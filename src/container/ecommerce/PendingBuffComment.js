@@ -103,7 +103,8 @@ function PendingBuffComment() {
         max_thread, 
         id, 
         processing_count,
-        done_count
+        done_count,
+        note
        } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
@@ -238,7 +239,17 @@ function PendingBuffComment() {
           </div>
         ),
         amount: <span className="ordered-amount">{amount}</span>,
-        date: <span className="ordered-date">{date}</span>,
+        note: (
+          <>
+            {
+              note ? (
+                <Tooltip title={note} placement='Top'>
+                  <span className="ordered-amount">{ note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}</span>
+                </Tooltip>
+              ) : <>...</>
+            }
+          </>
+        ),
         action: (
           <div className="table-actions">
             {
@@ -359,6 +370,11 @@ function PendingBuffComment() {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
+    },
+    {
+      title: 'Ghi chú',
+      dataIndex: 'note',
+      key: 'note',
     },
     {
       title: 'Hành động',

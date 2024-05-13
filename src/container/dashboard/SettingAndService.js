@@ -299,7 +299,7 @@ function SettingAndService() {
     }
   }
 
-  const { isOpenAdd, isOpenEdit, isOpenDel, notData, checkBlockVideo } = state;
+  const { isOpenAdd, isOpenEdit, isOpenDel, notData } = state;
 
   return (
     <>

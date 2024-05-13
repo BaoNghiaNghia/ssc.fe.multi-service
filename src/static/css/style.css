@@ -2717,3 +2717,16 @@ li.active > .display {
 .ant-table-tbody > tr > td {
   padding: 10px !important;
 }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #6e6e6e2d;
+  border-radius: 50px;
+}
+
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: #3d8f7f13;
+}
