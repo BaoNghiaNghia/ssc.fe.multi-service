@@ -15,6 +15,10 @@ const actions = {
     UPDATE_SERVICES_SUCCESS: 'UPDATE_SERVICES_SUCCESS',
     UPDATE_SERVICES_ERR: 'UPDATE_SERVICES_ERR',
 
+    UPDATE_SETTING_BEGIN: 'UPDATE_SETTING_BEGIN',
+    UPDATE_SETTING_SUCCESS: 'UPDATE_SETTING_SUCCESS',
+    UPDATE_SETTING_ERR: 'UPDATE_SETTING_ERR',
+
     MODAL_DETAIL_SERVICE_BEGIN: 'MODAL_DETAIL_SERVICE_BEGIN',
     MODAL_DETAIL_SERVICE_SUCCESS: 'MODAL_DETAIL_SERVICE_SUCCESS',
     MODAL_DETAIL_SERVICE_ERR: 'MODAL_DETAIL_SERVICE_ERR',
@@ -23,6 +27,27 @@ const actions = {
     CHANGE_TYPE_TAB_SUCCESS: 'CHANGE_TYPE_TAB_SUCCESS',
     CHANGE_TYPE_TAB_ERR: 'CHANGE_TYPE_TAB_ERR',
 
+
+    updateListSettingsBegin: (payload) => {
+        return {
+            type: actions.UPDATE_SETTING_BEGIN,
+            payload
+        };
+    },
+
+    updateListSettingsSuccess: (data) => {
+        return {
+            type: actions.UPDATE_SETTING_SUCCESS,
+            data,
+        };
+    },
+
+    updateListSettingsErr: (err) => {
+        return {
+            type: actions.UPDATE_SETTING_ERR,
+            err,
+        };
+    },
 
     fetchListSettingsBegin: (payload) => {
         return {

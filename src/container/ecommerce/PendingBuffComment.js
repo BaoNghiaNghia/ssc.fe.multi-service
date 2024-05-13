@@ -23,7 +23,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/buffComment/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIMIT_ITEM_REQUEST_API, ORDER_YOUTUBE_STATUS } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIMIT_ITEM_REQUEST_API, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
 import { numberWithCommas } from '../../utility/utility';
 
 
@@ -166,10 +166,12 @@ function PendingBuffComment() {
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
                 <span>
-                  <Tooltip title={<>
+                  <Tooltip title={
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <p>Đã chạy / Tổng số lượng</p>
                     <p>Hiệu suất</p>
-                  </>}>
+                  </div>
+                }>
                     <p style={{ margin: '0px', padding: '0px' }}><strong>{numberWithCommas(done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></p>
                     <Progress percent={Math.floor(performance, 1)} size="small" />
                   </Tooltip>
@@ -196,7 +198,22 @@ function PendingBuffComment() {
             {
               findService?.length > 0 ? (
                 <>
-                  <Tooltip title={findService[0]?.name} placement='topLeft'>
+                  <Tooltip 
+                    title={
+                      <div>
+                        <span style={{ fontWeight: 'bold' }}>
+                          {findService[0]?.service_id}
+                        </span>
+                        <span>
+                          {` - ${findService[0]?.name} - `}
+                        </span>
+                        <span style={{ fontWeight: 'bold' }}>
+                          {numberWithCommas(findService[0]?.price_per_10 || 0)} {VIETNAMES_CURRENCY}
+                        </span>
+                      </div>
+                    }
+                    placement='topLeft'
+                  >
                     <span style={{ margin: '0px', fontWeight: '700' }}>{ `${findService[0]?.name?.substring(0, 20)  }...` }</span>
                     <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Platform: </strong>{findService[0]?.platform}</span>
                     <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>

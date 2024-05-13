@@ -132,8 +132,6 @@ function* fetchTopupListFunc(params) {
 
 function* changeTableTypeFunc(params) {
   try {
-    console.log( '------- params table type --------', params?.payload);
-
     if (params?.payload === MEMBER_TABLE_TYPE.MEMBER.title) {
       yield put(
         actions.fetchUserListBegin()

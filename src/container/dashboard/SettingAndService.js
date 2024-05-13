@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Tooltip, Badge, Switch } from 'antd';
+import { Row, Col, Table, Tooltip, Badge, Switch, Form, InputNumber } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FiEdit2 } from "react-icons/fi";
-import { FaLocationArrow, FaMoneyBillTransfer } from "react-icons/fa6";
+import { FaLocationArrow } from "react-icons/fa6";
 import { TbServicemark } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import AddService from './component/AddService';
@@ -69,12 +69,16 @@ const badgeRedStyle = {
 
 function SettingAndService() {
   const dispatch = useDispatch();
-  const { searchData, orders, listService, typeTab } = useSelector(state => {
+
+  const [formUpdateSettings] = Form.useForm();
+
+  const { searchData, orders, listService, typeTab, listSettings } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
       listService: state?.settingService?.listService?.items,
       typeTab: state?.settingService?.typeTab,
+      listSettings: state?.settingService?.listSettings
     };
   });
 
@@ -83,6 +87,7 @@ function SettingAndService() {
 
   useEffect(() => {
     dispatch(actions.fetchListServiceBegin({}));
+    dispatch(actions.fetchListSettingsBegin({}));
   }, [dispatch]);
 
   const [state, setState] = useState({
@@ -92,18 +97,10 @@ function SettingAndService() {
     selectedService: '',
     selectedRowData: {},
     notData: searchData,
+    checkBlockVideo: formUpdateSettings.getFieldValue('block_video'),
     item: orders,
     selectedRowKeys: [],
   });
-
-  useEffect(() => {
-    if (orders) {
-      setState({
-        ...state,
-        item: orders,
-      });
-    }
-  }, [orders]);
 
   const handleSearch = searchText => {
     const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
@@ -135,12 +132,12 @@ function SettingAndService() {
               {
                 enabled ? (
                   <span className="label" style={badgeGreenStyle}>
-                    <Badge color='green' dot style={{ marginRight: '5px' }}/>
+                    <Badge color='green' dot style={{ marginRight: '5px' }} />
                     Đang hoạt động
                   </span>
                 ) : (
                   <span className="label" style={badgeRedStyle}>
-                    <Badge color='red' dot style={{ marginRight: '5px' }}/>
+                    <Badge color='red' dot style={{ marginRight: '5px' }} />
                     Đang tắt
                   </span>
                 )
@@ -158,18 +155,20 @@ function SettingAndService() {
             </Col>
           </Row>
         </>,
-        category: <>
-          <Row>
-            <Col>
-              <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{category}</span>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <span className="customer-name" style={{ color: 'gray', fontSize: '0.7em' }}>{type}</span>
-            </Col>
-          </Row>
-        </>,
+        category: (
+          <>
+            <Row>
+              <Col>
+                <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{category}</span>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <span className="customer-name" style={{ color: 'gray', fontSize: '0.7em' }}>{type}</span>
+              </Col>
+            </Row>
+          </>
+        ),
         range: <>
           <span style={{ display: 'inline-flex', justifyContent: 'space-between' }}>
             <span className='index-above-left'>{numberWithCommas(min || 0)}</span> &nbsp; - &nbsp; <span className='index-above-right'>{numberWithCommas(max || 0)}</span>
@@ -185,30 +184,30 @@ function SettingAndService() {
             <span className="customer-name">{max_threads} / {max_threads_3000} / {max_threads_5000}</span>
           </Tooltip>
         </>,
-        action: <>
+        action: <div style={{ display: 'inline-flex', alignItems: 'center' }}>
           <Tooltip title="Sửa dịch vụ">
-            <Button 
-              size="default"
-              type="default"
-              style={{ marginRight: '5px' }}
+            <Button
+              size="small"
+              className="btn-icon"
+              style={{ marginRight: '5px', background: 'none' }}
               onClick={() => {
-                setState({ ...state,isOpenEdit: true });
+                setState({ ...state, isOpenEdit: true });
                 dispatch(actions.modalDetailServiceBegin(value));
               }}
             >
               <FiEdit2 style={{ marginTop: '4px' }} />
             </Button>
           </Tooltip>
-          <Tooltip title={`${ enabled ? 'Tắt' : 'Bật' } dịch vụ`}>
+          <Tooltip title={`${enabled ? 'Tắt' : 'Bật'} dịch vụ`}>
             <Switch checked={enabled} onChange={() => {
-                setState({
-                  ...state,
-                  isOpenDel: true
-                });
-                dispatch(actions.modalDetailServiceBegin(value));
-              }} />
+              setState({
+                ...state,
+                isOpenDel: true
+              });
+              dispatch(actions.modalDetailServiceBegin(value));
+            }} />
           </Tooltip>
-        </>
+        </div>
       });
     });
   }
@@ -250,6 +249,31 @@ function SettingAndService() {
     dispatch(actions.changeTypeTabBegin(value));
   };
 
+  const handleUpdateSetting = () => {
+    try {
+      formUpdateSettings.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettings?.id,
+            account_delay_time: values?.account_delay_time,
+            block_video: values?.block_video,
+            computer_reset_time: values?.computer_reset_time,
+            max_order: values?.max_order,
+            max_random_time: values?.max_random_time,
+            min_random_time: values?.min_random_time,
+            min_video_time: values?.min_video_time
+        }
+
+        dispatch(actions.updateListSettingsBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const { isOpenAdd, isOpenEdit, isOpenDel, notData } = state;
 
   return (
@@ -278,19 +302,25 @@ function SettingAndService() {
                   className={typeTab === SERVICE_SETTING_TYPE.SERVICE.title ? 'active' : 'deactivate'}
                   onClick={() => handleChange(SERVICE_SETTING_TYPE.SERVICE.title)}
                   to="#"
-                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
+                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                 >
-                  <TbServicemark fontSize={25} style={{ margin: '0 5px 0 0', padding: 0 }}/> <span>Dịch vụ</span>
+                  <TbServicemark fontSize={25} style={{ margin: '0 5px 0 0', padding: 0 }} /> <span>Dịch vụ</span>
                 </Link>
               </li>
               <li>
                 <Link
                   className={typeTab === SERVICE_SETTING_TYPE.SETTING.title ? 'active' : 'deactivate'}
-                  onClick={() => handleChange(SERVICE_SETTING_TYPE.SETTING.title)}
-                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center'}}
+                  onClick={() => {
+                    handleChange(SERVICE_SETTING_TYPE.SETTING.title);
+
+                    if (listSettings) {
+                      formUpdateSettings.setFieldsValue(listSettings);
+                    }
+                  }}
+                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"
                 >
-                  <IoSettingsOutline  fontSize={18} style={{ marginRight: '5px' }}/> <span>Cài đặt</span>
+                  <IoSettingsOutline fontSize={18} style={{ marginRight: '5px' }} /> <span>Cài đặt</span>
                 </Link>
               </li>
             </ul>
@@ -298,70 +328,227 @@ function SettingAndService() {
         ]}
       />
       <Main>
-        <Cards headless>
-          <Row gutter={15}>
-            <Col xs={24}>
-              <TopToolBox>
-                <Row gutter={15} className="justify-content-center">
-                  <Col lg={6} xs={24}>
-                    <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch v" />
+        {
+          typeTab === SERVICE_SETTING_TYPE.SERVICE.title ? (
+
+            <Cards headless>
+              <Row gutter={15}>
+                <Col xs={24}>
+                  <TopToolBox>
+                    <Row gutter={15} className="justify-content-center">
+                      <Col lg={6} xs={24}>
+                        <div className="table-search-box">
+                          <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch v" />
+                        </div>
+                      </Col>
+                      <Col xxl={18} xs={24}>
+                        <div className="table-toolbox-actions">
+                          <Button size="small" key="4" type="primary" onClick={() => {
+                            setState({
+                              isOpenAdd: true,
+                            });
+                          }}>
+                            <FeatherIcon icon="plus" size={14} />
+                            Thêm dịch vụ
+                          </Button>
+                        </div>
+                      </Col>
+                    </Row>
+                  </TopToolBox>
+                </Col>
+              </Row>
+              <Row gutter={15}>
+                <Col md={24}>
+                  <TableWrapper className="table-order table-responsive">
+                    <div style={{ display: 'inline-flex' }}>
+                      <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                      <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
                     </div>
+                    <Table
+                      size='small'
+                      showHeader={false}
+                      dataSource={dataSource}
+                      columns={columns}
+                      pagination={{
+                        current: listService?.meta?.current_page,
+                        defaultPageSize: listService?.meta?.count,
+                        pageSize: listService?.meta?.per_page,
+                        total: listService?.meta?.total,
+                        showSizeChanger: true,
+                        pageSizeOptions: DEFAULT_PAGESIZE,
+                        onChange(page, pageSize) {
+                          setCurrentPage(page);
+                          setLimitPage(pageSize)
+                        },
+                        position: ['bottomCenter'],
+                        responsive: true,
+                        showTotal(total, range) {
+                          return <>
+                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
+                          </>
+                        },
+                        totalBoundaryShowSizeChanger: 100,
+                        size: "small"
+                      }}
+                    />
+                  </TableWrapper>
+                </Col>
+              </Row>
+            </Cards>
+          ) : (
+            <div>
+              <Cards headless>
+                <TopToolBox>
+                  <Row gutter={15} className="justify-content-center">
+                    <Col lg={6} xs={24}>
+                      <div style={{ display: 'inline-flex' }}>
+                        <span style={{ fontSize: '16px', fontWeight: '700' }}>Cài đặt chung</span>
+                      </div>
+                    </Col>
+                    <Col xxl={18} xs={24}>
+                      <div className="table-toolbox-actions">
+                        <Button size="small" key="4" type="primary" onClick={handleUpdateSetting}>
+                          <FeatherIcon icon="save" size={14} />
+                          Cập nhật
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </TopToolBox>
+                <Row gutter={50}>
+                  <Col xs={12}>
+                    <Form name='form-update-settings' layout="vertical" form={formUpdateSettings}>
+                      <Row gutter="15">
+                        <Col sm={12}>
+                          <Form.Item
+                            name="account_delay_time"
+                            label="Thời gian bốc lại account"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                              required: true,
+                              message: 'Trường không được trống'
+                            }]}
+                          >
+                            <InputNumber size='small' addonAfter="phút" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                          </Form.Item>
+                        </Col>
+                        <Col sm={12}>
+                          <Form.Item
+                            name="block_video"
+                            label="Màn hình đen"
+                            initialValue="vn"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                              required: true,
+                              message: 'Trường không được trống'
+                            }]}
+                          >
+                            <Switch
+                              checked={state?.checkBlockVideo}
+                              onClick={(value) => {
+                                setState({
+                                  ...state,
+                                  checkBlockVideo: value
+                                });
+                              }}
+                            />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                      <Row gutter="15">
+                        <Col sm={12}>
+                          <Form.Item
+                            name="computer_reset_time"
+                            label="Thời gian reset luồng sau khi OFF"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                              required: true,
+                              message: 'Trường không được trống'
+                            }]}
+                          >
+                            <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                          </Form.Item>
+                        </Col>
+                        <Col sm={12}>
+                          <Form.Item
+                            name="max_order"
+                            label="Số luồng tối đa hệ thống"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                              required: true,
+                              message: 'Trường không được trống'
+                            }]}
+                          >
+                            <InputNumber addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                    </Form>
                   </Col>
-                  <Col xxl={18} xs={24}>
-                    <div className="table-toolbox-actions">
-                      <Button size="small" key="4" type="primary" onClick={() => {
-                        setState({
-                          isOpenAdd: true,
-                        });
-                      }}>
-                        <FeatherIcon icon="plus" size={14} />
-                        Thêm dịch vụ
-                      </Button>
-                    </div>
+                  <Col xs={12}>
+                    <Form layout="vertical" form={formUpdateSettings}>
+                      <Row gutter="15">
+                        <Col sm={12}>
+                          <Form.Item
+                            name="max_random_time"
+                            label="Thời gian xem tối đa"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                              required: true,
+                              message: 'Trường không được trống'
+                            }]}
+                          >
+                            <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                          </Form.Item>
+                        </Col>
+                        <Col sm={12}>
+                          <Form.Item
+                            name="min_random_time"
+                            label="Thời gian xem tối thiểu"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                              required: true,
+                              message: 'Trường không được trống'
+                            }]}
+                          >
+                            <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+
+                      <Row gutter="15">
+                        <Col sm={12}>
+                          <Form.Item
+                            name="min_video_time"
+                            label="Số phút tối đa lấy video"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                              required: true,
+                              message: 'Trường không được trống'
+                            }]}
+                          >
+                            <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                    </Form>
                   </Col>
                 </Row>
-              </TopToolBox>
-            </Col>
-          </Row>
-          <Row gutter={15}>
-            <Col md={24}>
-              <TableWrapper className="table-order table-responsive">
-                <div style={{ display: 'inline-flex' }}>
-                  <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }}/>
-                  <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
-                </div>
-                <Table
-                  size='small'
-                  showHeader={false}
-                  dataSource={dataSource}
-                  columns={columns}
-                  pagination={{
-                    current: listService?.meta?.current_page,
-                    defaultPageSize: listService?.meta?.count,
-                    pageSize: listService?.meta?.per_page,
-                    total: listService?.meta?.total,
-                    showSizeChanger: true,
-                    pageSizeOptions: DEFAULT_PAGESIZE,
-                    onChange(page, pageSize) {
-                        setCurrentPage(page);
-                        setLimitPage(pageSize)
-                    },
-                    position: ['bottomCenter'],
-                    responsive: true,
-                    showTotal(total, range) {
-                        return <>
-                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
-                        </>
-                    },
-                    totalBoundaryShowSizeChanger: 100,
-                    size: "small"
-                  }}
-                />
-              </TableWrapper>
-            </Col>
-          </Row>
-        </Cards>
+              </Cards>
+              {/* <Cards headless>
+                <TopToolBox>
+                  <Row gutter={15} className="justify-content-center">
+                    <Col lg={24} xs={24}>
+                      <div style={{ display: 'inline-flex' }}>
+                        <span style={{ fontSize: '16px', fontWeight: '700' }}>Cài đặt khác</span>
+                      </div>
+                    </Col>
+                  </Row>
+                </TopToolBox>
+              </Cards> */}
+            </div>
+          )
+        }
       </Main>
     </>
   );

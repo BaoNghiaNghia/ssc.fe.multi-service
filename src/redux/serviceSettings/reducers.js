@@ -36,12 +36,35 @@ const {
 
     FETCH_LIST_SETTINGS_BEGIN,
     FETCH_LIST_SETTINGS_ERR,
-    FETCH_LIST_SETTINGS_SUCCESS
+    FETCH_LIST_SETTINGS_SUCCESS,
+
+    UPDATE_SETTING_BEGIN,
+    UPDATE_SETTING_ERR,
+    UPDATE_SETTING_SUCCESS,
 } = actions;
 
 const reducers = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case UPDATE_SETTING_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_SETTING_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_SETTING_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
     case FETCH_LIST_SETTINGS_BEGIN:
       return {
         ...state,

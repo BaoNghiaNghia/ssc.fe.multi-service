@@ -6,7 +6,8 @@ import {
   createServiceAPI,
   updateServiceAPI,
   fetchListServiceAPI,
-  fetchListSettingAPI
+  fetchListSettingAPI,
+  updateSettingAPI
 } from '../../config/apiFactory/ServiceSetting/index';
 
 import { MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
@@ -21,7 +22,6 @@ function* fetchListSettingsFunc(params) {
         actions.fetchListSettingsSuccess(response?.data?.data)
       );
     }
-
   } catch (error) {
     const errorMessage = error;
     yield put(
@@ -94,6 +94,37 @@ function* createServicesFunc(params) {
         }
 
     } finally { /* empty */ }
+}
+
+function* updateSettingFunc(params) {
+  try {
+    const response = yield call(updateSettingAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateListSettingsSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListSettingsBegin()
+      );
+
+      toast.success(response?.data?.message);
+    }
+  } catch (error) {
+      const errorMessage = error;
+      yield put(
+        actions.updateListSettingsErr({ error: errorMessage || 'Update settings list failed' })
+      );
+  
+      if (errorMessage?.response?.data?.data?.error) {
+        toast.error(errorMessage?.response?.data?.data?.error);
+      } else if (errorMessage?.response?.data?.message) {
+        toast.error(errorMessage?.response?.data?.message);
+      } else {
+        toast.error('Update settings list failed');
+      }
+  } finally { /* empty */ }
 }
 
 function* updateServicesFunc(params) {
@@ -177,6 +208,10 @@ export function* fetchListSettingsWatcherSaga() {
 
 export function* createServicesWatcherSaga() {
   yield takeLatest(actions.CREATE_SERVICES_BEGIN, createServicesFunc);
+}
+
+export function* updateSettingWatcherSaga() {
+  yield takeLatest(actions.UPDATE_SETTING_BEGIN, updateSettingFunc);
 }
 
 export function* updateServicesWatcherSaga() {

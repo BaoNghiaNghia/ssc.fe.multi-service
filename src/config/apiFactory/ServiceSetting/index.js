@@ -17,11 +17,13 @@ import {
 
  const createServiceAPI = (params) => ServiceAPI.createBasicCRUDEndpoints({ name: GENERAL_SERVICES_ENDPOINT }).post(params);
  const updateServiceAPI = (params) => ServiceAPI.createBasicCRUDEndpoints({ name: GENERAL_SERVICES_ENDPOINT }).update(params);
+ const updateSettingAPI = (params) => ServiceAPI.createBasicCRUDEndpoints({ name: GENERAL_SETTINGS_ENDPOINT }).update(params);
  
  export {
     fetchListServiceAPI,
     createServiceAPI, 
     updateServiceAPI,
-    fetchListSettingAPI
+    fetchListSettingAPI,
+    updateSettingAPI
  }
  

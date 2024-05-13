@@ -96,7 +96,9 @@ function ProxyManage() {
           }
         </>,
         enable: (
-          <Switch checked={enable} />
+          <Tooltip title={enable ? 'Đang hoạt động' : 'Ngừng hoạt động'}>
+            <Switch checked={enable} />
+          </Tooltip>
         ),
         action: (
           <div className="table-actions">
