@@ -93,7 +93,6 @@ function* createOrderCommentFunc(params) {
 
 function* fetchListOrderCommentFunc(params) {
   try {
-    console.log('----- Fetching order comment -----', params);
     const response = yield call(fetchListOrderCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {

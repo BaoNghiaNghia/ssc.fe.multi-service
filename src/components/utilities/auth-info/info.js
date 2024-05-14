@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import { Button } from 'antd';
 import { InfoWraper, NavAuth, UserDropDwon } from './auth-info-style';
 import Message from './message';
 import Notification from './notification';
@@ -97,11 +98,20 @@ function AuthInfo() {
 
   return (
     <InfoWraper>
-      <Message />
+      <Button
+        type="primary"
+        style={{ marginRight: "20px" }}
+        onClick={() => {
+          console.log("----- Đặt hàng nè ------");
+        }}
+      >
+        <FeatherIcon icon="plus" size={12} style={{ marginRight: '5px' }} /> Đặt hàng
+      </Button>
+      {/* <Message />
       <Notification />
 
-      <Settings />
-      <Support />
+      <Settings /> */}
+      {/* <Support /> */}
       <div className="nav-author">
         <Dropdown placement="bottomRight" content={country} trigger="click">
           <Link to="#" className="head-example">

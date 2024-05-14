@@ -15,7 +15,7 @@ import { MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
 
 function* fetchListSettingsFunc(params) {
   try {
-    const response = yield call(fetchListSettingAPI, params);
+    const response = yield call(fetchListSettingAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -63,7 +63,6 @@ function* fetchListServicesFunc(params) {
 
 function* createServicesFunc(params) {
     try {
-      console.log('--- create new services ---', params);
       const response = yield call(createServiceAPI, params?.payload);
       
       if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {

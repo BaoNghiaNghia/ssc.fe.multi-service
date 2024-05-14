@@ -88,10 +88,10 @@ function PendingBuffComment() {
 
     if (arraySearchValidate && arraySearchValidate.length > 0) {
       setTimeout(() => {
-        console.log('--- search data nè ---', arraySearchValidate);
+        console.log('--- search data nè ---', arraySearchValidate.join(""));
   
         const pattern = /^\d+\.?\d*$/;
-        if (pattern.test(arraySearchValidate.toString())) {
+        if (pattern.test(arraySearchValidate.join(""))) {
           dispatch(actions.fetchListOrderCommentBegin({
             order_ids: arraySearchValidate.join(",")
           }));

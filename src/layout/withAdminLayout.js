@@ -228,9 +228,12 @@ const ThemeLayout = (WrappedComponent) => {
                   </Link>
                 </Col>
                 <Col lg={!topMenu ? 14 : 15} md={8} sm={0} xs={0}>
-                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : <HeaderSearch rtl={rtl} darkMode={darkMode} />}
+                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : (
+                    <>
+                      <HeaderSearch rtl={rtl} darkMode={darkMode} />
+                    </>
+                  )}
                 </Col>
-
                 <Col lg={6} md={10} sm={0} xs={0}>
                   {topMenu && window.innerWidth > 991 ? (
                     <TopMenuSearch>
