@@ -238,7 +238,7 @@ function CreditHistoryMember({ isOpen, setState }) {
     },
   ];
 
-  const findUser = userList?.filter((item) => item.id === creditHistory?.items[0]?.user_id);
+  const findUser = creditHistory?.items?.length > 0 ? userList?.filter((item) => item.id === creditHistory?.items[0]?.user_id) : [];
 
   return (
     <>
@@ -253,10 +253,10 @@ function CreditHistoryMember({ isOpen, setState }) {
               <div >
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách Proxy</p>
                 {
-                  findUser ? (
+                  findUser?.length > 0 ? (
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                      <span style={{ margin: '0px', fontWeight: '700', fontSize: '0.7em', marginRight: '25px' }}>Họ tên: { findUser?.length && findUser[0]?.fullname }</span>
-                      <span style={{ margin: '0px', fontSize: '0.7em' }}>Email: { findUser?.length && findUser[0]?.email }</span>
+                      <span style={{ margin: '0px', fontWeight: '700', fontSize: '0.7em', marginRight: '25px' }}>Họ tên: { findUser[0]?.fullname }</span>
+                      <span style={{ margin: '0px', fontSize: '0.7em' }}>Email: { findUser[0]?.email }</span>
                     </div>
                   ) : null
                 }
