@@ -7,7 +7,6 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund } from "react-icons/tb";
-import { debounce } from 'lodash';
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListComment';
@@ -39,7 +38,7 @@ const badgeOrangeStyle = {
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
-  marginRight: '5px'
+  marginRight: '5px',
 };
 
 function PendingBuffComment() {
@@ -190,8 +189,38 @@ function PendingBuffComment() {
                     <p>Hiệu suất</p>
                   </div>
                 }>
-                    <p style={{ margin: '0px', padding: '0px' }}><strong>{numberWithCommas(done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></p>
-                    <Progress percent={Math.floor(performance, 1)} size="small" />
+                  <div style={{ alignContent: 'center' }}>
+                    <p style={{ margin: '5px 0px', padding: '0px' }}><strong>{numberWithCommas(done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></p>
+                    {
+                      performance !== 0 ? (
+                        <span
+                          style={{ 
+                            fontSize: '0.8em',
+                            fontWeight: 700,
+                            padding:'0 5px',
+                            borderRadius: '5px',
+                            border: '1px solid orange',
+                            backgroundColor: '#ffdfa5'
+                          }}
+                        >
+                          Hiệu suất: {numberWithCommas(Math.floor(performance, 1) || 0)} %
+                        </span>
+                      ) : (
+                        <span
+                          style={{ 
+                            fontSize: '0.8em',
+                            fontWeight: 700,
+                            padding:'0 5px',
+                            borderRadius: '5px',
+                            border: '1px solid gray',
+                            backgroundColor: '#ebebeb'
+                          }}
+                        >
+                          Hiệu suất: {numberWithCommas(Math.floor(performance, 1) || 0)} %
+                        </span>
+                      )
+                    }
+                  </div>
                   </Tooltip>
                 </span>
               )

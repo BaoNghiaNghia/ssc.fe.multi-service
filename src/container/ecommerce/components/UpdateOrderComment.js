@@ -33,6 +33,7 @@ function UpdateOrderComment({ setState, state }) {
     formUpdateService.setFieldsValue(detailOrderComment);
     formUpdateService.setFieldValue('category', findService && findService[0]?.category);
     formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
+    formUpdateService.setFieldValue('note', detailOrderComment?.note);
   });
 
   const handleCancel = () => {
@@ -55,13 +56,16 @@ function UpdateOrderComment({ setState, state }) {
           }));
 
           setState({ isUpdateCommentOrderModal: false });
+
           formUpdateService.resetFields();
         })
         .catch((err) => {
-          console.error("handle Real Error: ", err);
+          console.error("Handle Real Error: ", err);
         });
     } catch (err) {
       console.log(err);
+      setState({ isUpdateCommentOrderModal: false });
+      formUpdateService.resetFields();
     }
   };
 
@@ -195,10 +199,6 @@ function UpdateOrderComment({ setState, state }) {
                 name="note"
                 label="Ghi chú"
                 style={{ margin: '0px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
               >
                 <Input.TextArea placeholder='Thêm ghi chú cho đơn' rows={2} />
               </Form.Item>

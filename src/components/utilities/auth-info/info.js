@@ -52,23 +52,18 @@ function AuthInfo() {
             <p>{userInfo?.group?.role}</p>
           </figcaption>
         </figure>
-        {/* <ul className="user-dropdwon__links">
+        <ul className="user-dropdwon__links">
           <li>
-            <Link to="#">
+            <Link to="/admin/thong-tin-ca-nhan">
               <FeatherIcon icon="user" /> Thông tin cá nhân
             </Link>
           </li>
           <li>
-            <Link to="#">
+            <Link to="/admin/dich-vu-cai-dat">
               <FeatherIcon icon="settings" /> Cài đặt
             </Link>
           </li>
-          <li>
-            <Link to="#">
-              <FeatherIcon icon="dollar-sign" /> Thanh toán
-            </Link>
-          </li>
-        </ul> */}
+        </ul>
         <Link className="user-dropdwon__bottomAction" onClick={SignOut} to="#">
           <FeatherIcon icon="log-out" /> Đăng xuất
         </Link>
@@ -99,7 +94,7 @@ function AuthInfo() {
   return (
     <InfoWraper>
       <Button
-        type="primary"
+        type="default"
         style={{ marginRight: "20px" }}
         onClick={() => {
           console.log("----- Đặt hàng nè ------");

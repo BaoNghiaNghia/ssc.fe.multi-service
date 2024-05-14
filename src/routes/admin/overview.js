@@ -6,6 +6,7 @@ const BlackList = lazy(() => import('../../container/dashboard/BlackList'));
 const ProxyManage = lazy(() => import('../../container/dashboard/ProxyManage'));
 const Member = lazy(() => import('../../container/dashboard/Member'));
 const SettingAndService = lazy(() => import('../../container/dashboard/SettingAndService'));
+const UserProfile = lazy(() => import('../../container/dashboard/UserProfile'));
 const Overview = lazy(() => import('../../container/dashboard/Overview'));
 const ServerManage = lazy(() => import('../../container/pages/ServerManage'));
 
@@ -20,6 +21,7 @@ function DashboardRoutes() {
       <Route exact path={`${path}/proxy`} component={ProxyManage} />
       <Route exact path={`${path}/thanh-vien`} component={Member} />
       <Route exact path={`${path}/dich-vu-cai-dat`} component={SettingAndService} />
+      <Route exact path={`${path}/thong-tin-ca-nhan`} component={UserProfile} />
     </Switch>
   );
 }

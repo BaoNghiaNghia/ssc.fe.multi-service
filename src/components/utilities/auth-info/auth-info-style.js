@@ -17,7 +17,7 @@ const InfoWraper = Styled.div`
     }
     .ant-badge{
         .ant-badge-dot{
-            ${({ theme }) => (theme.rtl ? 'left' : 'right')}: 50% !important;
+            ${({ theme }) => (theme?.rtl ? 'left' : 'right')}: 50% !important;
         }
     }
     .flag-select{
@@ -141,11 +141,11 @@ const SettingDropdwon = Styled.div`
                 color: ${({ theme }) => theme['gray-solid']};
             }
             img{
-                ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 16px;
-                transform: ${({ theme }) => (theme.rtl ? 'rotatey(180deg)' : 'rotatey(0deg)')};
+                ${({ theme }) => (theme?.rtl ? 'margin-left' : 'margin-right')}: 16px;
+                transform: ${({ theme }) => (theme?.rtl ? 'rotatey(180deg)' : 'rotatey(0deg)')};
             }
             figcaption{
-                text-align: ${({ theme }) => (!theme.rtl ? 'left' : 'right')}
+                text-align: ${({ theme }) => (!theme?.rtl ? 'left' : 'right')}
             }
         }
     }
@@ -154,7 +154,7 @@ const SettingDropdwon = Styled.div`
 const NestedDropdwon = Styled.div`
     .support-dropdwon{
         padding: 10px 15px;
-        text-align: ${({ theme }) => (!theme.rtl ? 'left' : 'right')};
+        text-align: ${({ theme }) => (!theme?.rtl ? 'left' : 'right')};
         ul{
             &:not(:last-child){
                 margin-bottom: 16px;
@@ -190,7 +190,7 @@ const UserDropDwon = Styled.div`
             margin-bottom: 12px;
             background: ${({ theme }) => theme['bg-color-normal']};
             .avatar{
-                ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 15px;
+                ${({ theme }) => (theme?.rtl ? 'margin-left' : 'margin-right')}: 15px;
             }
             figcaption{
                 h1{
@@ -206,25 +206,20 @@ const UserDropDwon = Styled.div`
             }
         }
         .user-dropdwon__links{
+            margin: 0px;
             a{
-                width: calc(100% + 30px);
-                left: -15px;
-                right: -15px;
                 display: inline-flex;
                 align-items: center;
-                padding: 10px 12px;
+                padding: 7px 12px;
                 font-size: 14px;
+                font-weight: 700;
                 transition: .3s;
                 color: ${({ theme }) => theme['light-color']};
-                &:hover{
-                    background: ${({ theme }) => theme['primary-color']}05;
-                    color: ${({ theme }) => theme['primary-color']};
-                    ${({ theme }) => (theme.rtl ? 'padding-right' : 'padding-left')}: 22px;
-                }
+                background: transparent;
                 svg{
                     width: 16px;
-                    transform: ${({ theme }) => (theme.rtl ? 'rotateY(180deg)' : 'rotateY(0deg)')};
-                    ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 14px;
+                    transform: ${({ theme }) => (theme?.rtl ? 'rotateY(180deg)' : 'rotateY(0deg)')};
+                    ${({ theme }) => (theme?.rtl ? 'margin-left' : 'margin-right')}: 14px;
                 }
             }
         }
@@ -248,7 +243,7 @@ const UserDropDwon = Styled.div`
             svg{
                 width: 15px;
                 height: 15px;
-                ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 8px;
+                ${({ theme }) => (theme?.rtl ? 'margin-left' : 'margin-right')}: 8px;
             }
         }
     }
@@ -256,16 +251,16 @@ const UserDropDwon = Styled.div`
 
 const AtbdTopDropdwon = Styled.div`
     .atbd-top-dropdwon__title .title-text {        
-        ${({ theme }) => (!theme.rtl ? 'margin-right' : 'margin-left')}: 10px;
+        ${({ theme }) => (!theme?.rtl ? 'margin-right' : 'margin-left')}: 10px;
     }
     .atbd-top-dropdwon__content figcaption .atbd-top-dropdwonText {
         min-width: 216px;
-        ${({ theme }) => (!theme.rtl ? 'margin-right' : 'margin-left')}: 15px;
+        ${({ theme }) => (!theme?.rtl ? 'margin-right' : 'margin-left')}: 15px;
     }
     .atbd-top-dropdwon__content .notification-icon {
         width: 39.2px;
         height: 32px;
-        ${({ theme }) => (!theme.rtl ? 'margin-right' : 'margin-left')}: 15px;
+        ${({ theme }) => (!theme?.rtl ? 'margin-right' : 'margin-left')}: 15px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -291,7 +286,7 @@ const AtbdTopDropdwon = Styled.div`
     }  
 
     .atbd-top-dropdwon__content figcaption span {
-        ${({ theme }) => (theme.rtl ? 'padding-right' : 'padding-left')}: 0;
+        ${({ theme }) => (theme?.rtl ? 'padding-right' : 'padding-left')}: 0;
     }
 
     .notification-text h1 {
@@ -304,20 +299,20 @@ const AtbdTopDropdwon = Styled.div`
     .notification-text h1 span {
         color: #5F63F2;
         font-weight: 500;
-        ${({ theme }) => (theme.rtl ? 'padding-right' : 'padding-left')}: 0;
+        ${({ theme }) => (theme?.rtl ? 'padding-right' : 'padding-left')}: 0;
     }
 
     .notification-text p {
         font-size: 12px;
         color: #ADB4D2;
         margin-bottom: 0;
-        text-align: ${({ theme }) => (!theme.rtl ? 'left' : 'right')}
+        text-align: ${({ theme }) => (!theme?.rtl ? 'left' : 'right')}
     }
 `;
 
 const NavAuth = Styled.span`
     i, svg, img {
-        ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 8px;
+        ${({ theme }) => (theme?.rtl ? 'margin-left' : 'margin-right')}: 8px;
     }
 `;
 
