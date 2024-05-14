@@ -65,8 +65,6 @@ function UpdateOrderComment({ setState, state }) {
     }
   };
 
-  console.log('---- user detail -----', userList, listService);
-
   const iconService = (service) => {
     switch (service?.category) {
       case 'Comments':

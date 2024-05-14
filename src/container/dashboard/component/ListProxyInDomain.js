@@ -1,22 +1,21 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Select, Button, Modal,  Typography, Table, Switch, Badge } from 'antd';
+import { Row, Col, Form, Modal,  Table, Switch, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/proxy/actions';
-import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, FixedServiceTemp } from '../../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, FixedServiceTemp } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
 
-const { Paragraph, Text } = Typography;
-
-function ListProxyInDomain({ isOpen, setState }) {
+function ListProxyInDomain({ currentState, setState }) {
   const dispatch = useDispatch();
   const [formDelService] = Form.useForm();
 
-  const { postLoading, detailService, listProxyInDomain, isLoading } = useSelector(state => {
+  const { isListProxyModal } = currentState;
+
+  const { detailService, listProxyInDomain, isLoading } = useSelector(state => {
     return {
-      postLoading: state?.settingService?.postLoading,
       detailService: state?.settingService?.detailService,
       listProxyInDomain: state?.proxy?.listProxyInDomain,
       isLoading: state?.proxy?.loading
@@ -58,10 +57,8 @@ function ListProxyInDomain({ isOpen, setState }) {
       setState({
         isListProxyModal: false,
       });
-
       formDelService.resetFields();
     }
-
   };
 
   const handleCancel = () => {
@@ -144,7 +141,7 @@ function ListProxyInDomain({ isOpen, setState }) {
     <>
       <Modal
         width='800px'
-        open={isOpen}
+        open={isListProxyModal}
         centered
         title={
           <>
@@ -227,7 +224,7 @@ function ListProxyInDomain({ isOpen, setState }) {
 }
 
 ListProxyInDomain.propTypes = {
-  isOpen: PropTypes.bool,
+  currentState: PropTypes.object,
   setState: PropTypes.func
 };
 

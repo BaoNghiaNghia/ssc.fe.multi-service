@@ -4,10 +4,8 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FaYoutube } from "react-icons/fa";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { Row, Col, Form, Modal, Table, Badge, Tooltip } from 'antd';
+import { Row, Col, Form, Modal, Table, Tooltip } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
-import actions from '../../../redux/member/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, FixedServiceTemp, VIETNAMES_CURRENCY } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
@@ -24,7 +22,8 @@ const badgeGreenStyle = {
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
-  marginRight: '5px'
+  marginRight: '5px',
+  width: '73px'
 }
 
 const badgeRedStyle = {
@@ -39,14 +38,15 @@ const badgeRedStyle = {
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
-  marginRight: '5px'
+  marginRight: '5px',
+  width: '73px'
 }
 
 function CreditHistoryMember({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formDelService] = Form.useForm();
 
-  const { detailService, isLoading, creditHistory, listService, userList } = useSelector(state => {
+  const { isLoading, creditHistory, listService, userList } = useSelector(state => {
     return {
       detailService: state?.settingService?.detailService,
       isLoading: state?.member?.loading,
@@ -62,8 +62,6 @@ function CreditHistoryMember({ isOpen, setState }) {
   useEffect(() => {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
-
-  const initCategory = FixedServiceTemp?.filter(item => item?.category === detailService?.category);
 
   const handleCancel = () => {
     setState({
@@ -222,7 +220,7 @@ function CreditHistoryMember({ isOpen, setState }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div >
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách Proxy</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách Transaction</p>
                 {
                   findUser?.length > 0 ? (
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>

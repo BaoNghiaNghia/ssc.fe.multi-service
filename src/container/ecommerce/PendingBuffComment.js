@@ -7,9 +7,9 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund } from "react-icons/tb";
+import { debounce } from 'lodash';
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
-
 import ListCommentOfOrder from './components/ListComment';
 import AddOrderComment from './components/AddOrderComment';
 import CancelAndRefundOrderComment from './components/CancelAndRefundOrderComment';
@@ -23,7 +23,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/buffComment/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIMIT_ITEM_REQUEST_API, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
 import { numberWithCommas } from '../../utility/utility';
 
 
@@ -73,17 +73,35 @@ function PendingBuffComment() {
   const { notData } = state;
 
   useEffect(() => {
-    dispatch(actions.fetchListOrderCommentBegin());
+    dispatch(actions.fetchListOrderCommentBegin({ page: currentPage }));
+
     dispatch(userActions.fetchUserListBegin());
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
-  const handleSearch = searchText => {
-    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
+  const handleSearch = (searchText) => {
+    if (!searchText) {
+      dispatch(actions.fetchListOrderCommentBegin({}));
+    }
+
+    const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
+
+    if (arraySearchValidate && arraySearchValidate.length > 0) {
+      setTimeout(() => {
+        console.log('--- search data nè ---', arraySearchValidate);
+  
+        const pattern = /^\d+\.?\d*$/;
+        if (pattern.test(arraySearchValidate.toString())) {
+          dispatch(actions.fetchListOrderCommentBegin({
+            order_ids: arraySearchValidate.join(",")
+          }));
+        } else {
+          dispatch(actions.fetchListOrderCommentBegin({
+            video_ids: arraySearchValidate.join(",")
+          }));
+        }
+      }, 500);
+    }
   };
 
   const dataSource = [];

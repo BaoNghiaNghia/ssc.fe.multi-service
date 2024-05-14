@@ -24,7 +24,6 @@ function UserCards({ user }) {
               </Heading>
               <p className="card__designation">{designation}</p>
             </div>
-
             <div className="card__actions">
               <Button size="default" type="white">
                 <FeatherIcon icon="mail" size={14} />

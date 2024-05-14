@@ -58,14 +58,12 @@ function InsuranceOrderComment({ setState, state }) {
           formUpdateService.resetFields();
         })
         .catch((err) => {
-          console.error("handle Real Error: ", err);
+          console.error("Handle Real Error: ", err);
         });
     } catch (err) {
       console.log(err);
     }
   };
-
-  console.log('---- user detail -----', userList, listService);
 
   const iconService = (service) => {
     switch (service?.category) {

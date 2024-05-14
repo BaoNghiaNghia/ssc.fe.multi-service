@@ -185,7 +185,7 @@ function ProxyManage() {
     },
   };
 
-  const { isAddDomainModal, isDelDomainModal, isListProxyModal } = state;
+  const { isAddDomainModal, isDelDomainModal } = state;
 
   return (
     <>
@@ -198,7 +198,7 @@ function ProxyManage() {
         setState={setState}
       />
       <ListProxyInDomain
-        isOpen={isListProxyModal}
+        currentState={state}
         setState={setState}
       />
       <PageHeader

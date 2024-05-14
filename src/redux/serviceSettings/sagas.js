@@ -38,7 +38,7 @@ function* fetchListSettingsFunc(params) {
 
 function* fetchListServicesFunc(params) {
   try {
-    const response = yield call(fetchListServiceAPI, params);
+    const response = yield call(fetchListServiceAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
