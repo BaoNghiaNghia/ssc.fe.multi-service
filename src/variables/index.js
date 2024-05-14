@@ -309,3 +309,24 @@ export const MESSSAGE_STATUS_CODE = {
       message: 'Video is dowloading'
     }
 }
+
+export const ROLE_DETAIL = {
+  'user': {
+      title: 'Người dùng',
+      status: 'gray'
+  },
+  'admin': {
+      title: 'Trưởng nhóm',
+      status: '#ef9d00'
+  },
+  'superadmin': {
+      title: 'Quảng lý cấp cao',
+      status: 'orangered'
+  }
+}
+
+export const ROLE_GENERAL = {
+  USER_DEFAULT: 'user',
+  ADMIN: 'admin',
+  SUPER_ADMIN: 'superadmin'
+}

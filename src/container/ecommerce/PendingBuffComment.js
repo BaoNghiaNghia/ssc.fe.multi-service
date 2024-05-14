@@ -22,7 +22,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/buffComment/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, ROLE_GENERAL, VIETNAMES_CURRENCY } from '../../variables';
 import { numberWithCommas } from '../../utility/utility';
 
 
@@ -30,7 +30,7 @@ const badgeOrangeStyle = {
   border: `1.3px solid orange`,
   fontFamily: 'Be Vietnam Pro',
   borderRadius: '7px ',
-  padding: '2px 7px',
+  padding: '1px 7px',
   fontSize: '0.7em',
   color: 'orange',
   fontWeight: 'bold',
@@ -43,13 +43,14 @@ const badgeOrangeStyle = {
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
-  const { searchData,  listOrderComment, userList, listService, isLoading } = useSelector(state => {
+  const { searchData,  listOrderComment, userList, listService, isLoading, userInfo } = useSelector(state => {
     return {
       isLoading: state?.buffComment?.loading,
       searchData: state.headerSearchData,
       listOrderComment: state?.buffComment?.listOrderComment,
       userList: state?.member?.userList,
-      listService: state?.settingService?.listService?.items
+      listService: state?.settingService?.listService?.items,
+      userInfo: state?.auth?.userInfo
     };
   });
 
@@ -103,6 +104,8 @@ function PendingBuffComment() {
     }
   };
 
+  const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
+
   const dataSource = [];
   if (listOrderComment?.items?.length) {
     listOrderComment?.items?.map((value, key) => {
@@ -111,8 +114,8 @@ function PendingBuffComment() {
         amount,
         user_id, 
         link, 
-        video_id, 
-        quantity, 
+        video_id,
+        quantity,
         priority, 
         service_id, 
         performance, 
@@ -120,7 +123,9 @@ function PendingBuffComment() {
         id, 
         processing_count,
         done_count,
-        note
+        note,
+        video_title,
+        video_duration
        } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
@@ -158,16 +163,17 @@ function PendingBuffComment() {
         ),
         video_id: (
           <>
-            <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
               {
                 priority ? (
-                  <span className="label" style={badgeOrangeStyle}>
+                  <span style={badgeOrangeStyle}>
                     <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
                     Ưu tiên
                   </span>
                 ) : <></>
               }
               <Tooltip title="Xem Video" placement='topLeft'>
+                <span style={{ margin: 0, padding: 0 }}>{ `${video_title.substring(0, 30)  }...` }</span>
                 <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
                   <span className="customer-name">{ `${link.substring(0, 30)  }...` }</span>
                 </a>

@@ -304,7 +304,6 @@ const ThemeLayout = (WrappedComponent) => {
                       renderView={renderView}
                       renderTrackVertical={renderTrackVertical}
                     >
-                      <p className="sidebar-nav-title">TỔNG QUAN</p>
                       <MenueItems
                         topMenu={topMenu}
                         rtl={rtl}

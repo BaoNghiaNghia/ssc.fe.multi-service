@@ -82,9 +82,19 @@ function CreditHistoryMember({ isOpen, setState }) {
         id: <span className="customer-name">{id}</span>,
         order_id: <span className="customer-name">{order_id}</span>,
         amount: (
-          <span style={{ color: 'gray', fontWeight: 700 }}>
-            {numberWithCommas(amount)} (đ)
-          </span>
+          <>
+            {
+              income === true ? (
+                <span style={{ color: 'green', fontWeight: 700 }}>
+                   + {numberWithCommas(amount)} (đ)
+                </span>
+              ) : (
+                <span style={{ color: 'red', fontWeight: 700 }}>
+                   - {numberWithCommas(amount)} (đ)
+                </span>
+              )
+            }
+          </>
         ),
         current_credit: (
           <span style={{ color: 'green', fontWeight: 800 }}>
@@ -148,23 +158,23 @@ function CreditHistoryMember({ isOpen, setState }) {
             }
           </>
         ),
-        income: (
-          <>
-            {
-              income ? (
-                <span className="label" style={badgeGreenStyle}>
-                  <BiMoneyWithdraw size={14} style={{ marginRight: '5px' }}/>
-                  Cộng tiền
-                </span>
-              ) : (
-                <span className="label" style={badgeRedStyle}>
-                  <BiMoneyWithdraw size={14} style={{ marginRight: '5px' }}/>
-                  Trừ tiền
-                </span>
-              )
-            }
-          </>
-        ),
+        // income: (
+        //   <>
+        //     {
+        //       income ? (
+        //         <span className="label" style={badgeGreenStyle}>
+        //           <BiMoneyWithdraw size={14} style={{ marginRight: '5px' }}/>
+        //           Cộng tiền
+        //         </span>
+        //       ) : (
+        //         <span className="label" style={badgeRedStyle}>
+        //           <BiMoneyWithdraw size={14} style={{ marginRight: '5px' }}/>
+        //           Trừ tiền
+        //         </span>
+        //       )
+        //     }
+        //   </>
+        // ),
       });
     });
   }
@@ -190,21 +200,21 @@ function CreditHistoryMember({ isOpen, setState }) {
       dataIndex: 'quantity',
       key: 'quantity',
     },
-    {
-      title: 'Dịch vụ',
-      dataIndex: 'service',
-      key: 'service',
-    },
+    // {
+    //   title: 'Dịch vụ',
+    //   dataIndex: 'service',
+    //   key: 'service',
+    // },
     {
       title: 'Nội dung thanh toán',
       dataIndex: 'note',
       key: 'note',
     },
-    {
-      title: 'Thu nhập',
-      dataIndex: 'income',
-      key: 'income',
-    },
+    // {
+    //   title: 'Thu nhập',
+    //   dataIndex: 'income',
+    //   key: 'income',
+    // },
   ];
 
   const findUser = creditHistory?.items?.length > 0 ? userList?.filter((item) => item.id === creditHistory?.items[0]?.user_id) : [];
