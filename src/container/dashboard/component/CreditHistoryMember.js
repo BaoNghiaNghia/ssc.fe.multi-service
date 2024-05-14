@@ -7,7 +7,7 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { Row, Col, Form, Modal, Table, Badge, Tooltip } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
-import actions from '../../../redux/proxy/actions';
+import actions from '../../../redux/member/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, FixedServiceTemp, VIETNAMES_CURRENCY } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
@@ -46,11 +46,10 @@ function CreditHistoryMember({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formDelService] = Form.useForm();
 
-  const { postLoading, detailService, isLoading, creditHistory, listService, userList } = useSelector(state => {
+  const { detailService, isLoading, creditHistory, listService, userList } = useSelector(state => {
     return {
-      postLoading: state?.member?.loading,
       detailService: state?.settingService?.detailService,
-      isLoading: state?.proxy?.loading,
+      isLoading: state?.member?.loading,
       creditHistory: state?.member?.creditHistory,
       listService: state?.settingService?.listService?.items,
       userList: state?.member?.userList,
@@ -66,55 +65,17 @@ function CreditHistoryMember({ isOpen, setState }) {
 
   const initCategory = FixedServiceTemp?.filter(item => item?.category === detailService?.category);
 
-  const handleOk = () => {
-    try {
-      const requestData = {
-        id: detailService.id,
-        category: detailService?.category,
-        platform: detailService?.platform || 'Youtube',
-        service_type: detailService?.service_type,
-        type: initCategory?.length && initCategory[0]?.type,
-        description: detailService?.description,
-        enabled: !detailService?.enabled,
-        min: detailService?.min,
-        max: detailService?.max,
-        max_threads: detailService?.max_threads,
-        max_threads_3000: detailService?.max_threads_3000,
-        max_threads_5000: detailService?.max_threads_5000,
-        name: detailService?.name,
-        price_per_10: detailService?.price_per_10,
-        priority: detailService?.priority
-      }
-  
-      dispatch(actions.updateServiceBegin(requestData));
-
-      setState({
-        isModalCreditHistory: false,
-      });
-    } catch (err) {
-      console.log(err);
-      setState({
-        isModalCreditHistory: false,
-      });
-
-      formDelService.resetFields();
-    }
-
-  };
-
   const handleCancel = () => {
     setState({
       isModalCreditHistory: false,
     });
-
-    dispatch(actions.getListProxyInDomainBegin({}))
   }
 
   const dataSource = [];
   
   if (creditHistory?.items?.length) {
     creditHistory?.items?.map((value, key) => {
-      const { id, amount, quantity, service_id, order_id, income, note } = value;
+      const { id, amount, quantity, service_id, order_id, income, note, current_credit } = value;
 
       const findService = listService?.filter((item) => item.service_id === service_id);
 
@@ -123,8 +84,13 @@ function CreditHistoryMember({ isOpen, setState }) {
         id: <span className="customer-name">{id}</span>,
         order_id: <span className="customer-name">{order_id}</span>,
         amount: (
-          <span style={{ color: 'green', fontWeight: 700 }}>
+          <span style={{ color: 'gray', fontWeight: 700 }}>
             {numberWithCommas(amount)} (đ)
+          </span>
+        ),
+        current_credit: (
+          <span style={{ color: 'green', fontWeight: 800 }}>
+            {numberWithCommas(current_credit)} (đ)
           </span>
         ),
         quantity: (
@@ -217,6 +183,11 @@ function CreditHistoryMember({ isOpen, setState }) {
       key: 'amount',
     },
     {
+      title: 'Số dư sau thanh toán',
+      dataIndex: 'current_credit',
+      key: 'current_credit',
+    },
+    {
       title: 'Số lượng order',
       dataIndex: 'quantity',
       key: 'quantity',
@@ -264,7 +235,6 @@ function CreditHistoryMember({ isOpen, setState }) {
             </div>
           </>
         }
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
