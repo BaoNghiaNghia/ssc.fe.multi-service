@@ -59,6 +59,37 @@ export const ORDER_YOUTUBE_STATUS = [
   },
 ];
 
+export const FILTER_ORDER_COMMENT = [
+  {
+    label: 'ID đơn hàng (Order ID)',
+    value: 'started_at desc'
+  },
+  {
+      label: 'Số luồng, giảm dần',
+      value: 'started_at asc'
+  },
+  {
+    label: 'Số luồng, tăng dần',
+    value: 'ended_at desc'
+  },
+  {
+      label: 'Hiệu suất, giảm dần',
+      value: 'ended_at asc'
+  },
+  {
+    label: 'Hiệu suất, tăng dần',
+    value: 'created_at desc'
+  },
+  {
+      label: 'Sub còn thiếu, giảm dần',
+      value: 'created_at asc'
+  },
+  {
+      label: 'Sub còn thiếu, giảm dần',
+      value: 'created_at asc'
+  }
+];
+
 export const STATUS_COMMENT_ENUM = [
   {
     'status': 0,

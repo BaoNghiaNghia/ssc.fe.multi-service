@@ -7,6 +7,7 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund } from "react-icons/tb";
+import { LuListFilter } from "react-icons/lu";
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListComment';
@@ -14,6 +15,7 @@ import AddOrderComment from './components/AddOrderComment';
 import CancelAndRefundOrderComment from './components/CancelAndRefundOrderComment';
 import UpdateOrderComment from './components/UpdateOrderComment';
 import InsuranceOrderComment from './components/InsuranceOrderComment';
+import FilterOrderComment from './components/FilterOrderComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -23,7 +25,7 @@ import actions from '../../redux/buffComment/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, ROLE_GENERAL, VIETNAMES_CURRENCY } from '../../variables';
-import { numberWithCommas } from '../../utility/utility';
+import { convertSeconds, numberWithCommas } from '../../utility/utility';
 
 
 const badgeOrangeStyle = {
@@ -61,6 +63,7 @@ function PendingBuffComment() {
     isUpdateCommentOrderModal: false,
     isCancelRefundCommentOrderModal: false,
     isInsuranceCommentOrderModal: false,
+    isFilterCommentOrderModal: false,
     statusNumber: 'all',
     notData: searchData,
     item: listOrderComment,
@@ -172,14 +175,21 @@ function PendingBuffComment() {
                   </span>
                 ) : <></>
               }
+
               <Tooltip title="Xem Video" placement='topLeft'>
-                <span style={{ margin: 0, padding: 0 }}>{ `${video_title.substring(0, 30)  }...` }</span>
                 <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
-                  <span className="customer-name">{ `${link.substring(0, 30)  }...` }</span>
+                  <span style={{ margin: 0, padding: 0, color: 'black !important' }}>{ `${video_title?.substring(0, 30)  }...` }</span>
                 </a>
               </Tooltip>
             </div>
-            <span style={{ fontSize: '0.8em' }}><strong>Video ID:</strong> {video_id}</span>
+
+            <span style={{ fontSize: '0.8em' }}>
+              <strong>Video ID: </strong> {video_id}
+            </span>
+
+            <span style={{ fontSize: '0.8em' }}>
+              <strong>Thời lượng: </strong> {convertSeconds(video_duration || 0)}
+            </span>
           </>
         ),
         quantity: (
@@ -486,6 +496,10 @@ function PendingBuffComment() {
         state={state}
         setState={setState}
       />
+      <FilterOrderComment
+        orderState={state}
+        setState={setState}
+      />
       <PageHeader
         ghost
         title="Đơn Comment"
@@ -521,6 +535,15 @@ function PendingBuffComment() {
                   </Col>
                   <Col xxl={2} xs={24}>
                     <div className="table-toolbox-actions">
+                      <Button
+                        size="small"
+                        type="default"
+                        onClick={() => {
+                          setState({...state, isFilterCommentOrderModal: true });
+                        }}
+                      >
+                        <LuListFilter icon="plus" size={15} color='black' /> Bộ lọc
+                      </Button>
                       <Button
                         size="small"
                         type="primary"
