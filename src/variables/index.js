@@ -62,31 +62,31 @@ export const ORDER_YOUTUBE_STATUS = [
 export const FILTER_ORDER_COMMENT = [
   {
     label: 'ID đơn hàng (Order ID)',
-    value: 'started_at desc'
+    value: 'order_id desc'
   },
   {
       label: 'Số luồng, giảm dần',
-      value: 'started_at asc'
+      value: 'current_count asc'
   },
   {
     label: 'Số luồng, tăng dần',
-    value: 'ended_at desc'
+    value: 'current_count desc'
   },
   {
       label: 'Hiệu suất, giảm dần',
-      value: 'ended_at asc'
+      value: 'performance asc'
   },
   {
     label: 'Hiệu suất, tăng dần',
-    value: 'created_at desc'
+    value: 'performance desc'
   },
   {
       label: 'Sub còn thiếu, giảm dần',
-      value: 'created_at asc'
+      value: 'remain_count asc'
   },
   {
-      label: 'Sub còn thiếu, giảm dần',
-      value: 'created_at asc'
+      label: 'Sub còn thiếu, tăng dần',
+      value: 'remain_count desc'
   }
 ];
 

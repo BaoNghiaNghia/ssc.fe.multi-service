@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable camelcase */
@@ -91,7 +92,18 @@ function FilterOrderComment({ orderState, setState }) {
     try {
       formCreateService.validateFields()
         .then((values) => {
-          dispatch(actions.createOrderCommentAdminBegin(values));
+          Object.keys(values).forEach(key => values[key] === undefined && delete values[key]);
+
+          const { order_type, priority, ...rest } = values;
+          if (order_type) {
+            const type = order_type.split(' ');
+            rest.order = type[0];
+            rest.sort = type[1];
+            rest.priority = priority === "true";
+          }
+          console.log('------ values filter comment order ----', rest);
+
+          dispatch(actions.fetchListOrderCommentBegin(values));
 
           setState({ isFilterCommentOrderModal: false });
           formCreateService.resetFields();
@@ -101,6 +113,8 @@ function FilterOrderComment({ orderState, setState }) {
         });
     } catch (err) {
       console.log(err);
+      setState({ isFilterCommentOrderModal: false });
+        formCreateService.resetFields();
     }
   };
 
@@ -142,20 +156,18 @@ function FilterOrderComment({ orderState, setState }) {
           <Row gutter="10">
             <Col sm={14}>
               <Form.Item
-                name="order"
+                name="order_type"
                 label="Sắp xếp"
               >
                 <Select
                   style={{ width: '100%', margin: '0px', padding: '0px' }}
-                  defaultValue={-1}
-                  dropdownMatchSelectWidth
+                  dropdownMatchSelectWidth={false}
                   defaultActiveFirstOption
                 >
-                  <Option value={-1}>Mặc định</Option>
                   {
-                    FILTER_ORDER_COMMENT?.map((item) => (
-                      <Option key={item.value} value={item.value} style={{ margin: 0, padding: 0 }}>
-                          {item.label}
+                    FILTER_ORDER_COMMENT?.map((item, index) => (
+                      <Option key={index} value={item?.value} style={{ margin: 0, padding: 0 }}>
+                          {item?.label}
                       </Option>
                     ))
                   }
@@ -167,10 +179,7 @@ function FilterOrderComment({ orderState, setState }) {
                 name="priority"
                 label="Ưu tiên"
               >
-                <Select
-                  dropdownMatchSelectWidth
-                  defaultValue="false"
-                >
+                <Select dropdownMatchSelectWidth={false}>
                   <Option key="priority_true" value="true" style={{ margin: 0, padding: 0 }}>Có</Option>
                   <Option key="priority_false" value="false" style={{ margin: 0, padding: 0 }}>Không</Option>
                 </Select>
@@ -187,9 +196,9 @@ function FilterOrderComment({ orderState, setState }) {
                   placeholder='Chọn người dùng'
                 >
                   {
-                    userList.map((itemUser) => {
+                    userList.map((itemUser, index) => {
                       return (
-                        <Option value={itemUser?.id}>
+                        <Option value={itemUser?.id} key={index}>
                           <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                             <FaRegUserCircle color='gray' fontSize={20} style={{ marginRight: '10px', marginTop: '5px' }}/> 
                             <span>
