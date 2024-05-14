@@ -97,16 +97,15 @@ function FilterOrderComment({ orderState, setState }) {
           const { order_type, priority, ...rest } = values;
           if (order_type) {
             const type = order_type.split(' ');
-            rest.order = type[0];
-            rest.sort = type[1];
+            rest[type[0]] = type[1];
             rest.priority = priority === "true";
           }
           console.log('------ values filter comment order ----', rest);
 
-          dispatch(actions.fetchListOrderCommentBegin(values));
+          dispatch(actions.fetchListOrderCommentBegin(rest));
 
           setState({ isFilterCommentOrderModal: false });
-          formCreateService.resetFields();
+          // formCreateService.resetFields();
         })
         .catch((err) => {
           console.error("handle Real Error: ", err);
@@ -163,6 +162,8 @@ function FilterOrderComment({ orderState, setState }) {
                   style={{ width: '100%', margin: '0px', padding: '0px' }}
                   dropdownMatchSelectWidth={false}
                   defaultActiveFirstOption
+                  placeholder="Chọn kiểu lọc"
+                  allowClear
                 >
                   {
                     FILTER_ORDER_COMMENT?.map((item, index) => (
@@ -179,7 +180,7 @@ function FilterOrderComment({ orderState, setState }) {
                 name="priority"
                 label="Ưu tiên"
               >
-                <Select dropdownMatchSelectWidth={false}>
+                <Select dropdownMatchSelectWidth={false} allowClear>
                   <Option key="priority_true" value="true" style={{ margin: 0, padding: 0 }}>Có</Option>
                   <Option key="priority_false" value="false" style={{ margin: 0, padding: 0 }}>Không</Option>
                 </Select>
@@ -194,6 +195,7 @@ function FilterOrderComment({ orderState, setState }) {
                   style={{ width: '100%', margin: '0px', padding: '0px' }}
                   size='small'
                   placeholder='Chọn người dùng'
+                  allowClear
                 >
                   {
                     userList.map((itemUser, index) => {
@@ -219,7 +221,7 @@ function FilterOrderComment({ orderState, setState }) {
                 label="Dịch vụ"
                 style={{ marginTop: '7px', marginBottom: 0 }}
               >
-                <Select style={{ width: '100%', marginBottom: 0 }} defaultActiveFirstOption size='small'>
+                <Select style={{ width: '100%', marginBottom: 0 }} defaultActiveFirstOption allowClear size='small'>
                   {
                     listService?.map((itemService, index) => {
                       return (
