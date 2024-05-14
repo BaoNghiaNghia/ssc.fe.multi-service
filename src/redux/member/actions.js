@@ -31,6 +31,31 @@ const actions = {
     CONFIRM_TOPUP_SUCCESS: 'CONFIRM_TOPUP_SUCCESS',
     CONFIRM_TOPUP_ERR: 'CONFIRM_TOPUP_ERR',
 
+    GET_CREDIT_HISTORY_MEMBER_BEGIN: 'GET_CREDIT_HISTORY_MEMBER_BEGIN',
+    GET_CREDIT_HISTORY_MEMBER_SUCCESS: 'GET_CREDIT_HISTORY_MEMBER_SUCCESS',
+    GET_CREDIT_HISTORY_MEMBER_ERR: 'GET_CREDIT_HISTORY_MEMBER_ERR',
+
+    getCreditHistoryMemberBegin: (payload) => {
+      return {
+        type: actions.GET_CREDIT_HISTORY_MEMBER_BEGIN,
+        payload
+      };
+    },
+  
+    getCreditHistoryMemberSuccess: (data) => {
+      return {
+        type: actions.GET_CREDIT_HISTORY_MEMBER_SUCCESS,
+        data,
+      };
+    },
+  
+    getCreditHistoryMemberErr: (err) => {
+      return {
+        type: actions.GET_CREDIT_HISTORY_MEMBER_ERR,
+        err,
+      };
+    },
+
     fetchUserListBegin: (payload) => {
       return {
         type: actions.FETCH_USER_LIST_BEGIN,

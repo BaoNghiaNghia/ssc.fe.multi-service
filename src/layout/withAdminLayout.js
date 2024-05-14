@@ -275,7 +275,7 @@ const ThemeLayout = (WrappedComponent) => {
             </Header>
             <div className="header-more">
               <Row>
-                <Col md={0} sm={24} xs={24}>
+                <Col md={0} sm={12} xs={12}>
                   <div className="small-screen-headerRight">
                     <SmallScreenSearch hide={searchHide} darkMode={darkMode}>
                       <HeaderSearch rtl={rtl} />

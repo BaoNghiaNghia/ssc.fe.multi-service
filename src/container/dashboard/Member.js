@@ -9,11 +9,13 @@ import { MdVerifiedUser } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { IoPeopleOutline } from "react-icons/io5";
+import { AiOutlineTransaction } from "react-icons/ai";
 import DetailMember from './component/DetailMember';
 import AddTopup from './component/AddTopup';
 import { GalleryNav, TopToolBox } from './style';
 import EditMember from './component/EditMember';
 import ConfirmTopup from './component/ConfirmTopup';
+import CreditHistoryMember from './component/CreditHistoryMember';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -107,6 +109,7 @@ function Member() {
     isModalAddTopup: false,
     isModalConfirmTopup: false,
     isModalEditMem: false,
+    isModalCreditHistory: false,
     notData: searchData,
     item: orders,
     selectedRowKeys: [],
@@ -140,7 +143,7 @@ function Member() {
 
   if (userList?.length) {
     userList?.map((value, key) => {
-      const { api_key, discount, id, last_order_time, max_threads, order_running, credit, sub_order, total_order_runed, fullname, email, credit_used, phone } = value;
+      const { api_key, discount, id, last_order_time, max_threads, order_running, credit, sub_order, fullname, email, credit_used, phone } = value;
       return dataSource.push({
         key: key + 1,
         username: (
@@ -233,6 +236,17 @@ function Member() {
                 <FeatherIcon icon="eye" size={16} />
               </Button>
             </Tooltip>
+            <Tooltip title="Credit Transaction">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
+                dispatch(actions.getCreditHistoryMemberBegin({ 
+                  id
+                }));
+
+                setState({ ...state, isModalCreditHistory: true });
+              }}>
+                <AiOutlineTransaction fontSize={18}/>
+              </Button>
+            </Tooltip>
             <Tooltip title="Tạo Topup">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
                 dispatch(actions.detailUserAdminBegin({ id }));
@@ -254,12 +268,13 @@ function Member() {
       });
     });
   }
-  
 
   if (topupList?.length) {
     topupList?.map((value, key) => {
       const { amount, confirmed, confirmed_at, confirmed_by, created_at, id, user_id } = value;
       const findUser = userList.filter((item) => item.id === user_id);
+
+      const confirmUser = userList?.filter((item) => item.id === confirmed_by);
 
       return dataSourceTopup.push({
         key: key + 1,
@@ -291,10 +306,19 @@ function Member() {
           </span>
         ),
         
-        confirmed_by: <>
-          <span style={{ margin: '0px', fontWeight: '700' }}>{ confirmed_by ? userList.filter((item) => item.id === confirmed_by)[0]?.fullname : '...' }</span>
-          <span style={{ margin: '0px', fontSize: '0.7em' }}>{ confirmed_by ? userList.filter((item) => item.id === confirmed_by)[0]?.email : '' }</span>
-        </>,
+        confirmed_by: (
+          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <ReactNiceAvatar
+              isGradient
+              style={{ width: '2.3rem', height: '2.3rem' }}
+              {...genConfig(confirmUser[0]?.fullname?.charAt(0))}
+            />
+            <div style={{ marginLeft: '8px' }}>
+              <span style={{ margin: '0px', fontWeight: '700' }}>{ confirmed_by ? confirmUser[0]?.fullname : '...' }</span>
+              <span style={{ margin: '0px', fontSize: '0.7em' }}>{ confirmed_by ? confirmUser[0]?.email : '' }</span>
+            </div>
+          </div>
+        ),
         confirmed_at: <span>{confirmed_at  || '...'}</span>,
         confirmed: <>{
           confirmed 
@@ -332,7 +356,7 @@ function Member() {
     },
   };
 
-  const { isModalDetailMem, isModalEditMem, isModalAddTopup, isModalConfirmTopup } = state;
+  const { isModalDetailMem, isModalEditMem, isModalAddTopup, isModalConfirmTopup, isModalCreditHistory } = state;
 
   return (
     <>
@@ -350,6 +374,10 @@ function Member() {
       />
       <ConfirmTopup
         isOpen={isModalConfirmTopup}
+        setState={setState}
+      />
+      <CreditHistoryMember
+        isOpen={isModalCreditHistory}
         setState={setState}
       />
 

@@ -42,7 +42,8 @@ import {
     createTopupItemWatcherSaga,
     fetchTopupListMemberWatcherSaga,
     detailTopupItemWatcherSaga,
-    confirmTopupItemWatcherSaga
+    confirmTopupItemWatcherSaga,
+    getCreditHistoryMemberWatcherSaga
 } from './member/sagas';
 
 import { 
@@ -118,6 +119,7 @@ export default function* rootSaga() {
         listComputerRunCommentWatcherSaga(),
         changeTabTypeMemberWatcherSaga(),
         fetchListSettingsWatcherSaga(),
-        updateSettingWatcherSaga()
+        updateSettingWatcherSaga(),
+        getCreditHistoryMemberWatcherSaga()
     ]);
 }

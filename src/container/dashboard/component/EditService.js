@@ -228,7 +228,7 @@ function EditService({ isOpen, setState, state }) {
                   required: true,
                   message: 'Trường không được trống'
                 }]}
-                initialValue={initCategory[0]?.type}
+                initialValue={initCategory?.length && initCategory[0]?.type}
               >
                 <Input size='small' readOnly placeholder="Thêm loại"/>
               </Form.Item>

@@ -35,7 +35,7 @@ function ListProxyInDomain({ isOpen, setState }) {
         category: detailService?.category,
         platform: detailService?.platform || 'Youtube',
         service_type: detailService?.service_type,
-        type: initCategory[0]?.type,
+        type: initCategory?.length && initCategory[0]?.type,
         description: detailService?.description,
         enabled: !detailService?.enabled,
         min: detailService?.min,

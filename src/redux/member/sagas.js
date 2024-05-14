@@ -7,9 +7,27 @@ import {
   updateUserAdminMemberAPI,
   topupAdminConfirmMemberAPI,
   listTopupAdminMemberAPI,
-  createTopupAdminMemberAPI
+  createTopupAdminMemberAPI,
+  getListCreditHistoryMemberAPI
 } from '../../config/apiFactory/Member/index';
 import { MESSSAGE_STATUS_CODE, MEMBER_TABLE_TYPE } from '../../variables';
+
+function* getCreditHistoryMemberFunc(params) {
+  try {
+    const response = yield call(getListCreditHistoryMemberAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.getCreditHistoryMemberSuccess(response?.data?.data)
+      );
+    }
+
+  } catch (err) {
+    yield put(
+      actions.getCreditHistoryMemberErr({ error: err || 'Fetch member failed' })
+    );
+  }
+}
 
 function* fetchUserListFunc() {
   try {
@@ -152,6 +170,10 @@ function* changeTableTypeFunc(params) {
   }
 }
 
+
+export function* getCreditHistoryMemberWatcherSaga() {
+  yield takeLatest(actions.GET_CREDIT_HISTORY_MEMBER_BEGIN, getCreditHistoryMemberFunc);
+}
 
 export function* fetchUserListMemberWatcherSaga() {
   yield takeLatest(actions.FETCH_USER_LIST_BEGIN, fetchUserListFunc);

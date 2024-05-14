@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   detailUser: {},
   detailTopup: {},
+  creditHistory: {},
   //  member or topup
   typeTable: MEMBER_TABLE_TYPE.MEMBER.title,
   topupList: [],
@@ -43,12 +44,36 @@ const {
 
     CREATE_TOPUP_ITEM_BEGIN,
     CREATE_TOPUP_ITEM_ERR,
-    CREATE_TOPUP_ITEM_SUCCESS
+    CREATE_TOPUP_ITEM_SUCCESS,
+
+    GET_CREDIT_HISTORY_MEMBER_BEGIN,
+    GET_CREDIT_HISTORY_MEMBER_ERR,
+    GET_CREDIT_HISTORY_MEMBER_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case GET_CREDIT_HISTORY_MEMBER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_CREDIT_HISTORY_MEMBER_SUCCESS:
+      return {
+        ...state,
+        creditHistory: data,
+        loading: false,
+      };
+
+    case GET_CREDIT_HISTORY_MEMBER_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+    
     case FETCH_USER_LIST_BEGIN:
       return {
         ...state,

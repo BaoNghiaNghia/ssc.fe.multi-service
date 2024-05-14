@@ -91,8 +91,7 @@ function PendingBuffComment() {
     listOrderComment?.items?.map((value, key) => {
       const { status, 
         order_id, 
-        amount, 
-        date, 
+        amount,
         user_id, 
         link, 
         video_id, 
@@ -242,7 +241,7 @@ function PendingBuffComment() {
         note: (
           <>
             {
-              note ? (
+              note?.length > 0 ? (
                 <Tooltip title={note} placement='Top'>
                   <span className="ordered-amount">{ note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}</span>
                 </Tooltip>
