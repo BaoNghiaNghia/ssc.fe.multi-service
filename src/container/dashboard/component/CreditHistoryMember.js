@@ -238,7 +238,7 @@ function CreditHistoryMember({ isOpen, setState }) {
     },
   ];
 
-  const findUser = userList.filter((item) => item.id === creditHistory?.items[0]?.user_id);
+  const findUser = userList?.filter((item) => item.id === creditHistory?.items[0]?.user_id);
 
   return (
     <>

@@ -132,7 +132,7 @@ function Member() {
   }, [dispatch]);
 
   const handleSearch = searchText => {
-    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    const data = searchData?.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
     setState({
       ...state,
       notData: data,
@@ -272,7 +272,7 @@ function Member() {
   if (topupList?.length) {
     topupList?.map((value, key) => {
       const { amount, confirmed, confirmed_at, confirmed_by, created_at, id, user_id } = value;
-      const findUser = userList.filter((item) => item.id === user_id);
+      const findUser = userList?.filter((item) => item.id === user_id);
 
       const confirmUser = userList?.filter((item) => item.id === confirmed_by);
 
