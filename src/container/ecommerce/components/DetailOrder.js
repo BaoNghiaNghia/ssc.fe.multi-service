@@ -36,9 +36,15 @@ function DetailOrder({ setState, state }) {
 
   useEffect(() => {
     formUpdateService.setFieldsValue(detailOrderComment);
-    formUpdateService.setFieldValue('category', findService[0]?.category);
-    formUpdateService.setFieldValue('user_name', findUser && findUser[0]?.fullname);
-    formUpdateService.setFieldValue('user_email', findUser && findUser[0]?.email);
+    if (findService?.length > 0) {
+      formUpdateService.setFieldValue('category', findService[0]?.category);
+    }
+
+    if (findUser?.length > 0) {
+      formUpdateService.setFieldValue('user_name', findUser[0]?.fullname);
+      formUpdateService.setFieldValue('user_email', findUser[0]?.email);
+    }
+
     formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
     formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderComment?.status)?.title);
   });
