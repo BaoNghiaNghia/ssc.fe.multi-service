@@ -6,8 +6,6 @@ import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } fr
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/member/actions';
 
-const { Option } = Select;
-
 function EditMember({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formDetailMember] = Form.useForm();

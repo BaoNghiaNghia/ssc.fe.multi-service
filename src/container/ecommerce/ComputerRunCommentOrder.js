@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { Row, Col, Table, Badge, Tooltip, Button, Form } from 'antd';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt } from 'react-icons/tb';
-import { Pstates } from './Style';
-import TableServer from '../pages/overview/TableServer';
+import FeatherIcon from 'feather-icons-react';
+import { CgServer } from "react-icons/cg";
+
+import { Pstates, TopToolBox } from './Style';
+import DetailCommentComputer from './components/DetailCommentComputer';
+import EditCommentComputer from './components/EditCommentComputer';
+import BatchUpdateComputerComment from './components/BatchUpdateComputerComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main } from '../styled';
-import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
-import { Dropdown } from '../../components/dropdown/dropdown';
 import actions from '../../redux/buffComment/actions';
 import Heading from '../../components/heading/heading';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PERPAGE } from '../../variables';
+import { ProjectList } from '../pages/style';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 function ComputerRunCommentOrder() {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
+
   const { searchData, listServer } = useSelector((state) => {
     return {
       searchData: state?.headerSearchData,
@@ -29,21 +34,18 @@ function ComputerRunCommentOrder() {
     }
   });
 
-  const [stateTab, setStateTab] = useState({
-    performance: 'year',
-    performanceTab: 'users',
-  });
-
-  const { performance, performanceTab } = stateTab;
-
   const [state, setState] = useState({
+    isEditCommentServer: false,
+    isDetailCommentServer: false,
+    isBatchUpdateCommentServer: false,
     notData: searchData,
     activeClass: 'all',
     current: 0,
     pageSize: 0,
+    selectedRowKeys: [],
   });
 
-  const { notData } = state;
+  const { notData, selectedRowKeys, isEditCommentServer, isDetailCommentServer } = state;
 
   useEffect(() => {
     dispatch(actions.listComputerRunCommentBegin({
@@ -61,7 +63,7 @@ function ComputerRunCommentOrder() {
     });
   };
 
-  const fullThreadServer = listServer?.filter(item => item?.run >=15)?.length;
+  const fullThreadServer = listServer?.filter(item => item?.run >= 15)?.length;
   const nonFullThreadServer = listServer?.filter(item => item?.run < 15 && item?.run > 5)?.length;
   const aBitThreadServer = listServer?.filter(item => item?.run <= 5)?.length;
 
@@ -72,8 +74,218 @@ function ComputerRunCommentOrder() {
   const accountWork = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
   const accountDie = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
 
+  const columns = [
+    {
+      title: 'Máy',
+      dataIndex: 'server',
+      key: 'server',
+    },
+    {
+      title: 'Cấu hình',
+      dataIndex: 'configuration',
+      key: 'configuration',
+    },
+    {
+      title: 'Số luồng',
+      dataIndex: 'thread',
+      key: 'thread',
+    },
+    {
+      title: 'Limit',
+      dataIndex: 'limit',
+      key: 'limit',
+    },
+    {
+      title: 'Reset',
+      dataIndex: 'reset',
+      key: 'reset',
+    },
+    {
+      title: 'Mail',
+      dataIndex: 'mail',
+      key: 'mail',
+    },
+    {
+      title: 'Reset lần cuối',
+      dataIndex: 'lastReset',
+      key: 'lastReset',
+    },
+
+    {
+      title: 'Hành động',
+      dataIndex: 'action',
+      key: 'action',
+    },
+  ];
+
+  const dataSource = [];
+
+  if (listServer?.length > 0) {
+    listServer?.map((value, index) => {
+      const color = value.run >= 15 ? 'green' : ((value.run < 15 && value.run > 5) ? 'orange' : 'red');
+
+      const colorObj = value.run >= 15
+        ? { backgroundColor: '#0080001a', border: '2px solid green', color: 'green', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
+        : ((value.run < 15 && value.run > 5)
+          ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
+          : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' });
+
+      const threadString = `${value?.run || 0} / ${value?.thread}`;
+
+      return dataSource.push({
+        key: value?.id,
+        server: (
+          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
+            <TbServerBolt fontSize={17} style={{ marginRight: '5px', marginTop: '5px' }} />
+            <div style={{ margin: 0, padding: 0 }}>
+              <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name}</p>
+              <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><span style={{ fontWeight: "700" }}>Link: </span> {value?.link}</p>
+              <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><span style={{ fontWeight: "700" }}>IP: </span> {value?.ip}</p>
+            </div>
+          </span>
+        ),
+        configuration: (
+          <>
+            <div style={{ margin: 0, padding: 0 }}>CPU: {value?.cpu}</div>
+            <div style={{ margin: 0, padding: 0 }}>Ram: {value?.ram}</div>
+          </>
+        ),
+        thread: (
+          <span style={colorObj}>
+            <Badge dot color={color} style={{ paddingRight: '5px' }} />
+            {threadString}
+          </span>
+        ),
+        limit: (
+          <Tooltip title={(
+            <>
+              <div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>
+            </>
+          )}>
+            <span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <CgServer fontSize={17} /> {value?.limit_per_day}
+              </span>
+            </span>
+          </Tooltip>
+        ),
+        reset: (
+          <span>{value?.reset_hour} h</span>
+        ),
+        mail: (
+          <Tooltip title={(
+            <>
+              <div>Mail sống: {value?.account_live}</div>
+              <div>Mail hoạt động: {value?.account_work}</div>
+              <div>Mail chết: {value?.account_die}</div>
+            </>
+          )}>
+            <span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <BiLogoGmail style={{ marginBottom: 0 }} fontSize={19} /> {numberWithCommas(value?.account_live)}
+              </span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <BiLogoGmail fontSize={19} color='#27AE60' /> {numberWithCommas(value?.account_work)}
+              </span>
+              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                <BiLogoGmail fontSize={19} color='#EB5757' /> {numberWithCommas(value?.account_die)}
+              </span>
+            </span>
+          </Tooltip>
+        ),
+        lastReset: (
+          <>
+            <span>
+              {
+                value?.last_action_at ? (
+                  <span style={{ fontWeight: '700' }}>{value?.last_action_at}</span>
+                ) : (
+                  <span style={{ color: '#cdcdcd' }}>Chưa reset</span>
+                )
+              }
+            </span>
+          </>
+        ),
+        action: (
+          <div className="table-actions">
+            {/* <Tooltip title="Khởi động lại">
+              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }} className="btn-icon">
+                <GrPowerReset style={{ marginTop: '4px' }}/>
+              </Button>
+            </Tooltip> */}
+            {/* <Tooltip title="Link">
+              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }}  className="btn-icon">
+                <LuLink2 style={{ marginTop: '4px' }} />
+              </Button>
+            </Tooltip> */}
+            <Tooltip title="Sửa">
+              <Button
+                size="default"
+                shape="circle"
+                type="default"
+                to="#"
+                style={{ marginRight: '5px' }}
+                className="btn-icon"
+                onClick={() => {
+                  setState({
+                    ...state,
+                    isEditCommentServer: true
+                  })
+                }}
+              >
+                <FeatherIcon icon="edit" size={16} style={{ marginTop: '4px' }} />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Chi tiết">
+              <Button
+                size="default"
+                shape="circle"
+                type="default"
+                to="#"
+                style={{ marginRight: '5px' }}
+                className="btn-icon"
+                onClick={() => {
+                  setState({
+                    ...state,
+                    isDetailCommentServer: true
+                  })
+                }}
+              >
+                <FeatherIcon icon="eye" size={16} style={{ marginTop: '4px' }} />
+              </Button>
+            </Tooltip>
+            {/* <Tooltip title="Xóa">
+              <Button size="default" shape="circle" type="default" to="#" className="btn-icon">
+                <LuTrash2 style={{ marginTop: '4px' }} />
+              </Button>
+            </Tooltip> */}
+          </div>
+        ),
+      });
+    });
+  }
+
+  const rowSelection = {
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      name: record.name,
+    }),
+  };
+
   return (
     <>
+      <BatchUpdateComputerComment
+        computerState={state}
+        setState={setState}
+      />
+      <DetailCommentComputer
+        computerState={state}
+        setState={setState}
+      />
+      <EditCommentComputer
+        computerState={state}
+        setState={setState}
+      />
       <PageHeader
         title="Quản lý Server"
         buttons={[
@@ -89,24 +301,45 @@ function ComputerRunCommentOrder() {
         ]}
       />
       <Main>
-        <Row gutter={25}>
+        <Row gutter={25} >
           <Col xxl={24} md={24} xs={24}>
-            <Cards 
-              title="Danh sách server"
-              isbutton={
-                <Form name="sDash_vertical-form" layout="inline">
-                  <Dropdown size="small" placement="bottomLeft" >
-                    <Button className="btn-outlined" size="small" outlined type="light">
-                      Cập nhật
-                    </Button>
-                  </Dropdown>
-                </Form>
-              } 
-            >
+            <Cards headless>
+              <Row gutter={15}>
+                <Col xs={24}>
+                  <TopToolBox>
+                    <Row gutter={15} className="justify-content-center">
+                      <Col lg={6} xs={24}>
+                        <div className="table-search-box">
+                          <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                        </div>
+                      </Col>
+                      <Col xxl={18} xs={24}>
+                        <div className="table-toolbox-actions">
+                          {
+                            selectedRowKeys?.length > 0 ? (
+                              <Button
+                                size="small"
+                                type="primary"
+                                onClick={() => {
+                                  setState({
+                                    ...state,
+                                    isAddDomainModal: true,
+                                  });
+                                }}
+                              >
+                                <FeatherIcon icon="plus" size={12} /> Cập nhật ({selectedRowKeys.length})
+                              </Button>
+                            ) : null
+                          }
+                        </div>
+                      </Col>
+                    </Row>
+                  </TopToolBox>
+                </Col>
+              </Row>
               <Pstates>
                 <div
-                  // onClick={() => onPerformanceTab('users')}
-                  className={`growth-upward ${performanceTab === 'users' && 'active'}`}
+                  className="growth-upward"
                   role="button"
                   tabIndex="0"
                 >
@@ -116,8 +349,7 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
                 <div
-                  // onClick={() => onPerformanceTab('sessions')}
-                  className={`growth-upward ${performanceTab === 'sessions' && 'active'}`}
+                  className="growth-upward"
                   role="button"
                   tabIndex=""
                 >
@@ -127,8 +359,7 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
                 <div
-                  // onClick={() => onPerformanceTab('bounce')}
-                  className={`growth-downward ${performanceTab === 'bounce' && 'active'}`}
+                  className="growth-downward"
                   role="button"
                   tabIndex="0"
                 >
@@ -138,8 +369,7 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
                 <div
-                  // onClick={() => onPerformanceTab('duration')}
-                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  className="growth-upward"
                   role="button"
                   tabIndex="0"
                 >
@@ -159,7 +389,7 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
                 <div
-                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  className="growth-upward"
                   role="button"
                   tabIndex="0"
                 >
@@ -169,7 +399,7 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
                 <div
-                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  className="growth-upward"
                   role="button"
                   tabIndex="0"
                 >
@@ -179,7 +409,7 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
                 <div
-                  className={`growth-upward ${performanceTab === 'duration' && 'active'}`}
+                  className="growth-upward"
                   role="button"
                   tabIndex="0"
                 >
@@ -189,7 +419,7 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
                 <div
-                  className={`growth-upward ${performanceTab === 'users' && 'active'}`}
+                  className="growth-upward"
                   role="button"
                   tabIndex="0"
                 >
@@ -199,7 +429,38 @@ function ComputerRunCommentOrder() {
                   </Heading>
                 </div>
               </Pstates>
-              <TableServer />
+            </Cards>
+          </Col>
+        </Row>
+        <Row>
+          <Col xxl={24} md={24} xs={24}>
+            <Cards headless>
+              <ProjectList>
+                <div className="table-responsive">
+                  <Table
+                    rowSelection={rowSelection}
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination={{
+                      current: listServer?.meta?.current_page,
+                      defaultPageSize: listServer?.meta?.count,
+                      pageSize: listServer?.meta?.per_page,
+                      total: listServer?.meta?.total,
+                      showSizeChanger: true,
+                      pageSizeOptions: DEFAULT_PAGESIZE,
+                      onChange(page, pageSize) {
+                        setCurrentPage(page);
+                        setLimitPage(pageSize)
+                      },
+                      position: ['bottomCenter'],
+                      responsive: true,
+                      showTotal(total, range) { return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p> },
+                      totalBoundaryShowSizeChanger: 100,
+                      size: "small"
+                    }}
+                  />
+                </div>
+              </ProjectList>
             </Cards>
           </Col>
         </Row>

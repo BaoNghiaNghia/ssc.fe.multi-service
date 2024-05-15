@@ -10,7 +10,7 @@ import {
     listComputerRunCommentAPI,
     updateManyOrderCommentAPI
 } from '../../config/apiFactory/BuffComment/index';
-import { MESSSAGE_STATUS_CODE } from '../../variables';
+import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE } from '../../variables';
 
 
 function* listComputerRunCommentFunc(params) {
@@ -46,7 +46,10 @@ function* updateOrderCommentFunc(params) {
         actions.updateOrderCommentAdminSuccess(response?.data?.data)
       );
       yield put(
-        actions.fetchListOrderCommentBegin()
+        actions.fetchListOrderCommentBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
       );
 
       toast.success('Cập nhật order comment thành công');
@@ -74,7 +77,10 @@ function* updateManyOrderCommentFunc(params) {
         actions.updateManyOrderCommentAdminSuccess(response?.data?.data)
       );
       yield put(
-        actions.fetchListOrderCommentBegin()
+        actions.fetchListOrderCommentBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
       );
 
       toast.success('Cập nhật nhiều order comment thành công');
@@ -101,7 +107,10 @@ function* createOrderCommentFunc(params) {
         actions.createOrderCommentAdminSuccess(response?.data?.data)
       );
       yield put(
-        actions.fetchListOrderCommentBegin()
+        actions.fetchListOrderCommentBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
       );
 
       toast.success('Tạo order comment thành công');

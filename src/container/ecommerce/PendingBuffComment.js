@@ -125,14 +125,14 @@ function PendingBuffComment() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { notData } = state;
+  const { isListCommentModal, isCreateCommentOrderModal, isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
 
   useEffect(() => {
     dispatch(actions.fetchListOrderCommentBegin({
       page: currentPage,
       limit: limitPage,
     }));
-  }, [dispatch, currentPage, limitPage]);
+  }, [dispatch, currentPage, limitPage, selectedRowKeys]);
 
   useEffect(() => {
     dispatch(userActions.fetchUserListBegin());
@@ -148,8 +148,6 @@ function PendingBuffComment() {
 
     if (arraySearchValidate && arraySearchValidate.length > 0) {
       setTimeout(() => {
-        console.log('--- search data nè ---', arraySearchValidate.join(""));
-  
         const pattern = /^\d+\.?\d*$/;
         if (pattern.test(arraySearchValidate.join(""))) {
           dispatch(actions.fetchListOrderCommentBegin({
@@ -383,8 +381,6 @@ function PendingBuffComment() {
                     onClick={() => {
                       dispatch(actions.detailOrderCommentBegin({
                         ...value,
-                        // userDetail: findUser,
-                        // serviceDetail: findService
                       }));
                       setState({ ...state, isUpdateCommentOrderModal: true });
                     }}
@@ -492,8 +488,6 @@ function PendingBuffComment() {
       onSelectChange(srk);
     },
   };
-
-  const { isListCommentModal, isCreateCommentOrderModal, isCancelRefundCommentOrderModal, selectedRowKeys } = state;
 
   return (
     <>

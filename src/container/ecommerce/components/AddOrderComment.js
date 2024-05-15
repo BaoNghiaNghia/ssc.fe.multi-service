@@ -68,7 +68,7 @@ function AddOrderComment({ isOpen, setState }) {
   const { postLoading, listService } = useSelector(state => {
     return {
       postLoading: state.settingService.postLoading,
-      listService: state?.settingService?.listService?.items
+      listService: state?.settingService?.listService?.items,
     };
   });
 

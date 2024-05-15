@@ -3,6 +3,7 @@ import { Row, Col, Table, Pagination, Badge, Tooltip, Button } from 'antd';
 import moment from 'moment';
 import { LuLink2, LuTrash2 } from "react-icons/lu";
 import { TbServerBolt } from "react-icons/tb";
+import FeatherIcon from 'feather-icons-react';
 import { FiEdit2 } from "react-icons/fi";
 import { GrPowerReset } from "react-icons/gr";
 import { useSelector } from 'react-redux';
@@ -11,36 +12,64 @@ import { BiLogoGmail } from "react-icons/bi";
 import { Cards } from '../../../components/cards/frame/cards-frame';
 import { ProjectPagination, ProjectList } from '../style';
 import { numberWithCommas } from '../../../utility/utility';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../../variables';
+
 
 function TableServer() {
-  const { project, listServer } = useSelector((state) => {
+  const { listServer } = useSelector((state) => {
     return {
-      project: state?.projects?.data,
       listServer: state?.buffComment?.listComputer?.items,
     }
   });
+
   const [state, setState] = useState({
-    projects: project,
     current: 0,
     pageSize: 0,
   });
-  const { projects } = state;
 
-  useEffect(() => {
-    if (project) {
-      setState({
-        projects: project,
-      });
-    }
-  }, [project]);
-
-  const onShowSizeChange = (current, pageSize) => {
-    setState({ ...state, current, pageSize });
-  };
-
-  const onHandleChange = (current, pageSize) => {
-    setState({ ...state, current, pageSize });
-  };
+  const columns = [
+    {
+      title: 'Máy',
+      dataIndex: 'server',
+      key: 'server',
+    },
+    {
+      title: 'Cấu hình',
+      dataIndex: 'configuration',
+      key: 'configuration',
+    },
+    {
+      title: 'Số luồng',
+      dataIndex: 'thread',
+      key: 'thread',
+    },
+    {
+      title: 'Limit',
+      dataIndex: 'limit',
+      key: 'limit',
+    },
+    {
+      title: 'Reset',
+      dataIndex: 'reset',
+      key: 'reset',
+    },
+    {
+      title: 'Mail',
+      dataIndex: 'mail',
+      key: 'mail',
+    },
+    {
+      title: 'Reset lần cuối',
+      dataIndex: 'lastReset',
+      key: 'lastReset',
+    },
+  
+    {
+      title: 'Hành động',
+      dataIndex: 'action',
+      key: 'action',
+    },
+  ];
 
   const dataSource = [];
 
@@ -59,11 +88,12 @@ function TableServer() {
       return dataSource.push({
         key: index,
         server: (
-          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'center' }}>
-            <TbServerBolt fontSize={17} style={{ marginRight: '5px' }} />
-            <div>
+          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
+            <TbServerBolt fontSize={17} style={{ marginRight: '5px', marginTop: '5px' }} />
+            <div style={{ margin: 0, padding: 0 }}>
               <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name}</p>
-              <p style={{ fontSize: '0.7em' }}>{value?.link}</p>
+              <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><span style={{ fontWeight: "700" }}>Link: </span> {value?.link}</p>
+              <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><span style={{ fontWeight: "700" }}>IP: </span> {value?.ip}</p>
             </div>
           </span>
         ),
@@ -117,83 +147,54 @@ function TableServer() {
           </Tooltip>
         ),
         lastReset: (
-          <span>{value?.last_action_at}</span>
+          <>
+            <span>
+              {
+                value?.last_action_at ? (
+                  <span style={{ fontWeight: '700' }}>{value?.last_action_at}</span>
+                ) : (
+                  <span style={{ color: '#cdcdcd' }}>Chưa reset</span>
+                )
+              }
+            </span>
+          </>
         ),
         action: (
-          <div>
-            <Tooltip title="Khởi động lại">
-              <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
+          <div className="table-actions">
+            {/* <Tooltip title="Khởi động lại">
+              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }} className="btn-icon">
                 <GrPowerReset style={{ marginTop: '4px' }}/>
               </Button>
-            </Tooltip>
-            <Tooltip title="Link">
-              <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
+            </Tooltip> */}
+            {/* <Tooltip title="Link">
+              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }}  className="btn-icon">
                 <LuLink2 style={{ marginTop: '4px' }} />
               </Button>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title="Sửa">
-              <Button size="default" shape="round" type="default" style={{ marginRight: '5px' }}>
-                <FiEdit2 style={{ marginTop: '4px' }} />
+              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }}  className="btn-icon">
+                <FeatherIcon icon="edit" size={16} style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
-            <Tooltip title="Xóa">
-              <Button size="default" shape="round" type="default">
+            <Tooltip title="Chi tiết">
+              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }}  className="btn-icon">
+                <FeatherIcon icon="eye" size={16} style={{ marginTop: '4px' }} />
+              </Button>
+            </Tooltip>
+            {/* <Tooltip title="Xóa">
+              <Button size="default" shape="circle" type="default" to="#" className="btn-icon">
                 <LuTrash2 style={{ marginTop: '4px' }} />
               </Button>
-            </Tooltip>
+            </Tooltip> */}
           </div>
         ),
       });
     });
   }
 
-  const columns = [
-    {
-      title: 'Máy',
-      dataIndex: 'server',
-      key: 'server',
-    },
-    {
-      title: 'Cấu hình',
-      dataIndex: 'configuration',
-      key: 'configuration',
-    },
-    {
-      title: 'Số luồng',
-      dataIndex: 'thread',
-      key: 'thread',
-    },
-    {
-      title: 'Limit',
-      dataIndex: 'limit',
-      key: 'limit',
-    },
-    {
-      title: 'Reset',
-      dataIndex: 'reset',
-      key: 'reset',
-    },
-    {
-      title: 'Mail',
-      dataIndex: 'mail',
-      key: 'mail',
-    },
-    {
-      title: 'Reset lần cuối',
-      dataIndex: 'lastReset',
-      key: 'lastReset',
-    },
-
-    {
-      title: '',
-      dataIndex: 'action',
-      key: 'action',
-    },
-  ];
-
   const rowSelection = {
     getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      disabled: record.name === 'Disabled User',
       name: record.name,
     }),
   };
@@ -206,27 +207,29 @@ function TableServer() {
             <div className="table-responsive">
               <Table
                 rowSelection={rowSelection}
-                pagination={false}
                 dataSource={dataSource}
                 columns={columns}
+                pagination={{
+                  current: listServer?.meta?.current_page,
+                  defaultPageSize: listServer?.meta?.count,
+                  pageSize: listServer?.meta?.per_page,
+                  total: listServer?.meta?.total,
+                  showSizeChanger: true,
+                  pageSizeOptions: DEFAULT_PAGESIZE,
+                  position: ['bottomCenter'],
+                  responsive: true,
+                  showTotal(total, range) {
+                      return <>
+                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p>
+                      </>
+                  },
+                  totalBoundaryShowSizeChanger: 100,
+                  size: "small"
+                }}
             />
             </div>
           </ProjectList>
         </Cards>
-      </Col>
-      <Col xs={24} className="pb-30">
-        <ProjectPagination>
-          {projects?.length ? (
-            <Pagination
-              onChange={onHandleChange}
-              showSizeChanger
-              onShowSizeChange={onShowSizeChange}
-              pageSize={10}
-              defaultCurrent={1}
-              total={40}
-            />
-          ) : null}
-        </ProjectPagination>
       </Col>
     </Row>
   );

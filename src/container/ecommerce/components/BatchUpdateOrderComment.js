@@ -69,7 +69,7 @@ function BatchUpdateOrderComment({ setState, orderState }) {
           setState({
             ...orderState,
             isBatchUpdateCommentOrderModal: false,
-            selectedRowKeys: []
+            // selectedRowKeys: []
           });
 
           formUpdateService.resetFields();
