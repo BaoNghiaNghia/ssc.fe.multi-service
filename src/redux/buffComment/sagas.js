@@ -7,7 +7,8 @@ import {
     createOrderCommentAPI,
     getOneOrderCommentAPI,
     updateOneOrderCommentAPI,
-    listComputerRunCommentAPI
+    listComputerRunCommentAPI,
+    updateManyOrderCommentAPI
 } from '../../config/apiFactory/BuffComment/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
@@ -23,6 +24,7 @@ function* listComputerRunCommentFunc(params) {
     }
   } catch (error) {
     const errorMessage = error;
+
     yield put(
       actions.listComputerRunCommentErr({ error: errorMessage || 'Update order comment failed' })
     );
@@ -63,6 +65,33 @@ function* updateOrderCommentFunc(params) {
   } finally { /* empty */ }
 }
 
+function* updateManyOrderCommentFunc(params) {
+  try {
+    const response = yield call(updateManyOrderCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateManyOrderCommentAdminSuccess(response?.data?.data)
+      );
+      yield put(
+        actions.fetchListOrderCommentBegin()
+      );
+
+      toast.success('Cập nhật nhiều order comment thành công');
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.updateManyOrderCommentAdminErr({ error: errorMessage || 'Update many order comment failed' })
+    );
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Update many order comment failed');
+    }
+  } finally { /* empty */ }
+}
+
 function* createOrderCommentFunc(params) {
   try {
     const response = yield call(createOrderCommentAPI, params?.payload);
@@ -79,6 +108,7 @@ function* createOrderCommentFunc(params) {
     }
   } catch (error) {
     const errorMessage = error;
+
     yield put(
       actions.createOrderCommentAdminErr({ error: errorMessage || 'Create order comment failed' })
     );
@@ -151,6 +181,10 @@ function* commentInOrderCommentFunc(params) {
   } finally { /* empty */ }
 }
 
+
+export function* updateManyOrderCommentWatcherSaga() {
+  yield takeLatest(actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN, updateManyOrderCommentFunc);
+}
 
 export function* updateOrderCommentWatcherSaga() {
   yield takeLatest(actions.UPDATE_ORDER_COMMENT_ADMIN_BEGIN, updateOrderCommentFunc);

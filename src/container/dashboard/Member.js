@@ -424,7 +424,7 @@ function Member() {
                     </div>
                   </Col>
                   <Col xxl={18} xs={24}>
-                    <div className="table-toolbox-actions">
+                    {/* <div className="table-toolbox-actions">
                       <Button
                         size="small"
                         type="primary"
@@ -437,7 +437,7 @@ function Member() {
                       >
                         <FeatherIcon icon="plus" size={12} /> Thêm tài khoản
                       </Button>
-                    </div>
+                    </div> */}
                   </Col>
                 </Row>
               </TopToolBox>

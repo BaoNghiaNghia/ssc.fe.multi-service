@@ -23,6 +23,10 @@ const actions = {
     UPDATE_ORDER_COMMENT_ADMIN_SUCCESS: 'UPDATE_ORDER_COMMENT_ADMIN_SUCCESS',
     UPDATE_ORDER_COMMENT_ADMIN_ERR: 'UPDATE_ORDER_COMMENT_ADMIN_ERR',
 
+    UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN',
+    UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS',
+    UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR',
+
     LIST_COMPUTER_RUN_COMMENT_BEGIN: 'LIST_COMPUTER_RUN_COMMENT_BEGIN',
     LIST_COMPUTER_RUN_COMMENT_SUCCESS: 'LIST_COMPUTER_RUN_COMMENT_SUCCESS',
     LIST_COMPUTER_RUN_COMMENT_ERR: 'LIST_COMPUTER_RUN_COMMENT_ERR',
@@ -65,6 +69,27 @@ const actions = {
     detailOrderCommentAdminErr: (err) => {
         return {
             type: actions.DETAIL_ORDER_COMMENT_ADMIN_ERR,
+            err,
+        };
+    },
+
+    updateManyOrderCommentAdminBegin: (payload) => {
+        return {
+            type: actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN,
+            payload
+        };
+    },
+
+    updateManyOrderCommentAdminSuccess: (data) => {
+        return {
+            type: actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS,
+            data,
+        };
+    },
+
+    updateManyOrderCommentAdminErr: (err) => {
+        return {
+            type: actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR,
             err,
         };
     },

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import moment from "moment";
 
 /**
@@ -56,11 +57,22 @@ const convertSeconds = (seconds) => {
   return secondString;
 }
 
+const isEmptyObject = (obj) => {
+  for (const prop in obj) {
+    if (Object.hasOwn(obj, prop)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export {
   ellipsis,
   numberWithCommas,
   findSecondMinimum,
   currentDate,
   previousDate,
-  convertSeconds
+  convertSeconds,
+  isEmptyObject
 };

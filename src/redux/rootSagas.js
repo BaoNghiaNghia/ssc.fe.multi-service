@@ -62,7 +62,8 @@ import {
     commentInOrderCommentWatcherSaga,
     createOrderCommentWatcherSaga,
     updateOrderCommentWatcherSaga,
-    listComputerRunCommentWatcherSaga
+    listComputerRunCommentWatcherSaga,
+    updateManyOrderCommentWatcherSaga
 } from './buffComment/sagas';
 
 import {
@@ -120,6 +121,7 @@ export default function* rootSaga() {
         changeTabTypeMemberWatcherSaga(),
         fetchListSettingsWatcherSaga(),
         updateSettingWatcherSaga(),
-        getCreditHistoryMemberWatcherSaga()
+        getCreditHistoryMemberWatcherSaga(),
+        updateManyOrderCommentWatcherSaga()
     ]);
 }

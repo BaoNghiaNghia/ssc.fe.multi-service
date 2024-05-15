@@ -37,11 +37,34 @@ const {
     LIST_COMPUTER_RUN_COMMENT_BEGIN,
     LIST_COMPUTER_RUN_COMMENT_ERR,
     LIST_COMPUTER_RUN_COMMENT_SUCCESS,
+
+    UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN,
+    UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR,
+    UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case LIST_COMPUTER_RUN_COMMENT_BEGIN:
       return {
         ...state,

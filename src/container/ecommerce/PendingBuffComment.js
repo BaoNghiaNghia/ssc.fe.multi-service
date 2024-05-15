@@ -6,7 +6,7 @@ import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
-import { TbCreditCardRefund } from "react-icons/tb";
+import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
 import { LuListFilter } from "react-icons/lu";
 import { TopToolBox } from './Style';
@@ -17,6 +17,7 @@ import CancelAndRefundOrderComment from './components/CancelAndRefundOrderCommen
 import UpdateOrderComment from './components/UpdateOrderComment';
 import InsuranceOrderComment from './components/InsuranceOrderComment';
 import FilterOrderComment from './components/FilterOrderComment';
+import BatchUpdateOrderComment from './components/BatchUpdateOrderComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -113,6 +114,7 @@ function PendingBuffComment() {
     isCancelRefundCommentOrderModal: false,
     isInsuranceCommentOrderModal: false,
     isFilterCommentOrderModal: false,
+    isBatchUpdateCommentOrderModal: false,
     statusNumber: 'all',
     notData: searchData,
     rowData: {},
@@ -162,7 +164,7 @@ function PendingBuffComment() {
     }
   };
 
-  const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
+  // const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
 
   const dataSource = [];
   if (listOrderComment?.items?.length) {
@@ -194,7 +196,7 @@ function PendingBuffComment() {
       const checkRefundOrder = ['OrderStatusPending', 'OrderStatusProcessing', 'OrderStatusDisable', 'OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
 
       return dataSource.push({
-        key: key + 1,
+        key: id,
         order_id: <span className="order-id">{order_id}</span>,
         user_id: (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -481,6 +483,7 @@ function PendingBuffComment() {
   const onSelectChange = (selectedRowKey) => {
     console.log('---- selected row key nè -----', selectedRowKey);
 
+
     setState({ ...state, selectedRowKeys: selectedRowKey });
   };
 
@@ -490,7 +493,7 @@ function PendingBuffComment() {
     },
   };
 
-  const { isListCommentModal, isCreateCommentOrderModal, isCancelRefundCommentOrderModal } = state;
+  const { isListCommentModal, isCreateCommentOrderModal, isCancelRefundCommentOrderModal, selectedRowKeys } = state;
 
   return (
     <>
@@ -505,6 +508,10 @@ function PendingBuffComment() {
       />
       <AddOrderComment
         isOpen={isCreateCommentOrderModal}
+        setState={setState}
+      />
+      <BatchUpdateOrderComment
+        orderState={state}
         setState={setState}
       />
       <UpdateOrderComment
@@ -566,15 +573,32 @@ function PendingBuffComment() {
                       >
                         <LuListFilter icon="plus" size={15} color='black' /> Bộ lọc
                       </Button>
-                      <Button
-                        size="small"
-                        type="primary"
-                        onClick={() => {
-                          setState({...state, isCreateCommentOrderModal: true });
-                        }}
-                      >
-                        <FeatherIcon icon="plus" size={12} /> Đặt hàng
-                      </Button>
+                      {
+                        selectedRowKeys?.length > 0 ? (
+                          <Button
+                            size="small"
+                            type="primary"
+                            onClick={() => {
+                              setState({
+                                ...state,
+                                isBatchUpdateCommentOrderModal: true
+                              });
+                            }}
+                          >
+                            <TbShoppingBagEdit icon="plus" size={12} /> Cập nhật ({selectedRowKeys?.length})
+                          </Button>
+                        ) : (
+                          <Button
+                            size="small"
+                            type="primary"
+                            onClick={() => {
+                              setState({...state, isCreateCommentOrderModal: true });
+                            }}
+                          >
+                            <FeatherIcon icon="plus" size={12} /> Đặt hàng
+                          </Button>
+                        )
+                      }
                     </div>
                   </Col>
                 </Row>

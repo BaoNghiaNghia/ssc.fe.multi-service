@@ -3,7 +3,8 @@ import {
     GENERAL_ORDER_COMMENT_ENDPOINT,
     COMMENT_IN_ORDER_COMMENT_ENDPOINT,
     CREATE_COMMENT_COMMENT_ENDPOINT,
-    LIST_COMPUTER_COMMENT_ENDPOINT
+    LIST_COMPUTER_COMMENT_ENDPOINT,
+    UPDATE_MANY_ORDER_COMMENT_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -14,12 +15,14 @@ BuffCommentAPI.createEntities([
     { name: COMMENT_IN_ORDER_COMMENT_ENDPOINT },
     { name: CREATE_COMMENT_COMMENT_ENDPOINT },
     { name: LIST_COMPUTER_COMMENT_ENDPOINT },
+    { name: UPDATE_MANY_ORDER_COMMENT_ENDPOINT },
 ]);
 
 const fetchListOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_ORDER_COMMENT_ENDPOINT }).get(query);
 
 const getOneOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_ORDER_COMMENT_ENDPOINT }).getOne(query);
 const updateOneOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_ORDER_COMMENT_ENDPOINT }).patch(query);
+const updateManyOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_ORDER_COMMENT_ENDPOINT }).patchMultiple(query);
 
 const commentOrderCommentAPI = (id) => BuffCommentAPI.createBasicCRUDEndpoints({ name: COMMENT_IN_ORDER_COMMENT_ENDPOINT }).submitGet(id);
 const createOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: CREATE_COMMENT_COMMENT_ENDPOINT }).post(query);
@@ -32,5 +35,6 @@ export {
     createOrderCommentAPI,
     getOneOrderCommentAPI,
     updateOneOrderCommentAPI,
-    listComputerRunCommentAPI
+    listComputerRunCommentAPI,
+    updateManyOrderCommentAPI
 }
