@@ -1905,7 +1905,7 @@ const TopToolBox = Styled.div`
         .ant-radio-button-wrapper{
             height: 40px;
             line-height: 40px;
-            padding: 0 12.5px;
+            padding: 0 8px;
             &.active{
                 span{
                     color: ${({ theme }) => theme['primary-color']};
@@ -1989,7 +1989,7 @@ const TopToolBox = Styled.div`
             padding: 0 7.5px;
         }
         @media only screen and (max-width: 1599px){
-            padding: 0 12.5px;
+            padding: 0 8px;
         }
         &.ant-radio-button-wrapper-checked{
             &:focus-within{

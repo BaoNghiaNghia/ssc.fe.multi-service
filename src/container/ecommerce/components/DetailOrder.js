@@ -90,54 +90,59 @@ function DetailOrder({ setState, state }) {
         footer={null}
       >
         <Form name="add_service" layout="vertical" form={formUpdateService}>
-          <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
-            <Col sm={12}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
-                <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
-                <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>{findService && findService[0]?.platform}</span>
-              </div>
-            </Col>
-            <Col sm={12}>
-              <Form.Item
-                name="category"
-                style={{ margin: '0px' }}
-                bordered 
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <Select
-                  style={{ width: '100%', margin: '0px', padding: '0px' }}
-                  bordered={false}
-                  initialValue="Comments"
-                  size='small'
-                  onClick={(value) => {
-                    const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
+          {
+            findService?.length > 0 ? (
+              <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
+                <Col sm={12}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
+                    <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
+                    <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
+                    <span style={{ fontSize: '16px', fontWeight: '700' }}>{findService && findService[0]?.platform}</span>
+                  </div>
+                </Col>
+                <Col sm={12}>
+                  <Form.Item
+                    name="category"
+                    style={{ margin: '0px' }}
+                    bordered 
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <Select
+                      style={{ width: '100%', margin: '0px', padding: '0px' }}
+                      bordered={false}
+                      initialValue="Comments"
+                      disabled
+                      size='small'
+                      onClick={(value) => {
+                        const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
 
-                    if (selectedService?.length > 0) {
-                      formUpdateService.setFieldValue('type', selectedService[0]?.type);
-                      formUpdateService.setFieldValue('service_type', selectedService[0]?.service_type);
-                    }
-                  }}
-                >
-                  {
-                    FixedServiceTemp?.map(service => {
-                      return (
-                        <Option key={service?.category} value={service?.category}>
-                          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                            { iconService(service) }
-                            <span style={{ fontWeight: '800' }}>{service?.category}</span>
-                          </div>
-                        </Option>
-                      )
-                    })
-                  }
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
+                        if (selectedService?.length > 0) {
+                          formUpdateService.setFieldValue('type', selectedService[0]?.type);
+                          formUpdateService.setFieldValue('service_type', selectedService[0]?.service_type);
+                        }
+                      }}
+                    >
+                      {
+                        FixedServiceTemp?.map(service => {
+                          return (
+                            <Option key={service?.category} value={service?.category}>
+                              <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                { iconService(service) }
+                                <span style={{ fontWeight: '800' }}>{service?.category}</span>
+                              </div>
+                            </Option>
+                          )
+                        })
+                      }
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+            ) : null
+          }
 
           <Divider style={{ fontSize: '0.9em', color: 'gray', padding: '10px 0px', margin: '0px' }}>Thông tin Khách</Divider>
 
@@ -165,7 +170,7 @@ function DetailOrder({ setState, state }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' readOnly placeholder="Nhập email"/>
+                <Input size='small'  readOnly placeholder="Nhập email"/>
               </Form.Item>
             </Col>
           </Row>
@@ -183,7 +188,7 @@ function DetailOrder({ setState, state }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Đường dẫn video'/>
+                <Input size='small' disabled style={{ fontWeight: 'bold' }} placeholder='Đường dẫn video'/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -196,7 +201,7 @@ function DetailOrder({ setState, state }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='ID của video'/>
+                <Input size='small' disabled style={{ fontWeight: 'bold' }} placeholder='ID của video'/>
               </Form.Item>
             </Col>
           </Row>
@@ -211,7 +216,7 @@ function DetailOrder({ setState, state }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' disabled addonAfter="comment" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -223,7 +228,7 @@ function DetailOrder({ setState, state }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' disabled addonAfter="comment" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -279,7 +284,7 @@ function DetailOrder({ setState, state }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào số luồng tối đa' />
+                <InputNumber disabled type='number' addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào số luồng tối đa' />
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -287,7 +292,7 @@ function DetailOrder({ setState, state }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Select style={{ width: '100%' }} size='small'>
+                <Select style={{ width: '100%' }} disabled size='small'>
                   <Option value="false">Không</Option>
                   <Option value="true">Có</Option>
                 </Select>
@@ -298,7 +303,7 @@ function DetailOrder({ setState, state }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' />
+                <Input disabled size='small' />
               </Form.Item>
             </Col>
           </Row>

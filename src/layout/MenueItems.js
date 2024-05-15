@@ -195,7 +195,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             key="buff-comment-dang-chay"
           >
             <NavLink onClick={toggleCollapsed} to={`${path}/comment/dang-chay`}>
-              Máy comment
+              Danh sách máy
             </NavLink>
           </Menu.Item>
         ) : <></>

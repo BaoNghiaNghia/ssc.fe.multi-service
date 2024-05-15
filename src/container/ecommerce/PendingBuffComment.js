@@ -533,20 +533,19 @@ function PendingBuffComment() {
             <Col xs={24}>
               <TopToolBox>
                 <Row gutter={15} className="justify-content-center">
-                  <Col lg={6} xs={24}>
+                  <Col lg={6} xs={6}>
                     <div className="table-search-box">
                       <AutoComplete onSearch={handleSearch} dataSource={notData} patterns />
                     </div>
                   </Col>
-                  <Col xxl={16} xs={24}>
+                  <Col xxl={16} xs={16}>
                     <div className="table-toolbox-menu">
-                      <span className="toolbox-menu-title"> Trạng thái:</span>
-                      <Radio.Group buttonStyle="outline" optionType="button" onChange={handleChangeForFilter} defaultValue="all">
+                      <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue="all">
                         <Radio.Button value="all">Tất cả</Radio.Button>
-                        { 
-                          ORDER_YOUTUBE_STATUS?.map(state => {
+                        {
+                          ORDER_YOUTUBE_STATUS?.map((state) => {
                             return (
-                              <Radio.Button key={state?.name} value={state?.value}>
+                              <Radio.Button  key={state?.name} value={state?.value}>
                                 <Badge style={{ marginRight: '5px' }} dot color={ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === state?.value)]?.color} />
                                 {state?.label}
                               </Radio.Button>
