@@ -73,14 +73,18 @@ class ApiFactory {
      * SUBMIT GET
      */
     endpoints.submitGet = (toSubmit, config) => {
+      const { id, ...query } = toSubmit;
+
       const headers = {
         ...config,
+        params: { ...query },
         headers: {
           authorization: token ? `Bearer ${token}` : null,
           ...{ ...config?.headers }
         }
       }
-      return axios.get(resourceURL.replace("id", toSubmit.id), headers);
+      
+      return axios.get(resourceURL.replace("id", id), headers);
     }
 
     /**

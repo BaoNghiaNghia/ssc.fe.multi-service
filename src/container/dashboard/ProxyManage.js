@@ -36,6 +36,7 @@ function ProxyManage() {
     isAddDomainModal: false,
     isDelDomainModal: false,
     isListProxyModal: false,
+    dataRow: {},
     item: orders,
     selectedRowKeys: [],
   });
@@ -110,9 +111,14 @@ function ProxyManage() {
                 onClick={() => {
                   dispatch(actions.getListProxyInDomainBegin({
                     ...value,
-                    limit: LIMIT_ITEM_REQUEST_API
+                    page: 1,
+                    limit: DEFAULT_PERPAGE
                   }));
-                  setState({ ...state, isListProxyModal: true });
+                  setState({
+                    ...state,
+                    isListProxyModal: true,
+                    dataRow: value
+                  });
                 }}
               >
                 <FeatherIcon icon="repeat" size={16} />

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Modal,  Table, Switch, Badge } from 'antd';
@@ -12,9 +12,11 @@ function ListProxyInDomain({ currentState, setState }) {
   const dispatch = useDispatch();
   const [formDelService] = Form.useForm();
 
-  const { isListProxyModal } = currentState;
+  const { isListProxyModal, dataRow } = currentState;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { detailService, listProxyInDomain, isLoading } = useSelector(state => {
+  const { detailService, listProxyInDomain, isLoading } = useSelector((state) => {
     return {
       detailService: state?.settingService?.detailService,
       listProxyInDomain: state?.proxy?.listProxyInDomain,
@@ -22,8 +24,14 @@ function ListProxyInDomain({ currentState, setState }) {
     };
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
+  useEffect(() => {
+    dispatch(actions.getListProxyInDomainBegin({
+      page: currentPage,
+      limit: limitPage,
+      id: dataRow?.id
+    }));
+
+  }, [dispatch, currentPage, limitPage]);
 
   const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);
 
@@ -46,10 +54,11 @@ function ListProxyInDomain({ currentState, setState }) {
         price_per_10: detailService?.price_per_10,
         priority: detailService?.priority
       }
-  
+
       dispatch(actions.updateServiceBegin(requestData));
 
       setState({
+        ...currentState,
         isListProxyModal: false,
       });
     } catch (err) {
@@ -63,10 +72,9 @@ function ListProxyInDomain({ currentState, setState }) {
 
   const handleCancel = () => {
     setState({
+      ...currentState,
       isListProxyModal: false,
     });
-
-    dispatch(actions.getListProxyInDomainBegin({}))
   }
 
   const dataSource = [];

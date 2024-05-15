@@ -11,8 +11,8 @@ export const COLOR_GENERAL = {
   'primary': '#26695c'
 }
 
-export const DEFAULT_PERPAGE = 50;
-export const DEFAULT_PAGESIZE = [50, 100, 200, 300];
+export const DEFAULT_PERPAGE = 20;
+export const DEFAULT_PAGESIZE = [20, 50, 100, 200, 300];
 
 export const ORDER_YOUTUBE_STATUS = [
   {

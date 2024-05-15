@@ -502,7 +502,7 @@ function PendingBuffComment() {
       />
       <PageHeader
         ghost
-        title="Đơn Comment"
+        title="Danh sách đơn Comment"
       />
       <Main>
         <Cards headless>

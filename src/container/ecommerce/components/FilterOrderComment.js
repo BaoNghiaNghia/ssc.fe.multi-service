@@ -80,13 +80,13 @@ function FilterOrderComment({ orderState, setState }) {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
 
-  const validatedServiceComment = listService?.filter(itemService => {
-    return itemService?.enabled && itemService?.category === "Comments"
-  });
+  // const validatedServiceComment = listService?.filter(itemService => {
+  //   return itemService?.enabled && itemService?.category === "Comments"
+  // });
 
-  if (validatedServiceComment?.length > 0) {
-    formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
-  }
+  // if (validatedServiceComment?.length > 0) {
+  //   formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
+  // }
 
   const handleOk = () => {
     try {
@@ -221,7 +221,7 @@ function FilterOrderComment({ orderState, setState }) {
                 label="Dịch vụ"
                 style={{ marginTop: '7px', marginBottom: 0 }}
               >
-                <Select style={{ width: '100%', marginBottom: 0 }} defaultActiveFirstOption allowClear size='small'>
+                <Select style={{ width: '100%', marginBottom: 0 }} placeholder="Chọn dịch vụ" allowClear size='small'>
                   {
                     listService?.map((itemService, index) => {
                       return (

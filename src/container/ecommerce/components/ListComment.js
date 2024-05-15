@@ -81,7 +81,6 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
                 <Tooltip title="Đã chạy">
                   <span className="label" style={badgeGreenStyle}>
                     <Badge color='green' dot style={{ marginRight: '5px' }}/>
-                    
                   </span>
                 </Tooltip>
               ) : (

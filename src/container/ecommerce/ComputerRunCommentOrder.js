@@ -14,9 +14,13 @@ import { Dropdown } from '../../components/dropdown/dropdown';
 import actions from '../../redux/buffComment/actions';
 import Heading from '../../components/heading/heading';
 import { numberWithCommas } from '../../utility/utility';
+import { DEFAULT_PERPAGE } from '../../variables';
 
 function ComputerRunCommentOrder() {
   const dispatch = useDispatch();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
   const { searchData, listServer } = useSelector((state) => {
     return {
       searchData: state?.headerSearchData,
@@ -42,8 +46,12 @@ function ComputerRunCommentOrder() {
   const { notData } = state;
 
   useEffect(() => {
-    dispatch(actions.listComputerRunCommentBegin());
-  }, []);
+    dispatch(actions.listComputerRunCommentBegin({
+      page: currentPage,
+      limit: limitPage,
+    }));
+
+  }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = (searchText) => {
     const data = searchData?.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
