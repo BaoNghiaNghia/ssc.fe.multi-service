@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BsPersonCheck } from "react-icons/bs";
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/member/actions';
@@ -39,7 +40,7 @@ function DetailMember({ isOpen, setState }) {
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+              <BsPersonCheck fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Chi tiết thành viên</p>
                 <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Thông tin chi tiết thành viên</p>

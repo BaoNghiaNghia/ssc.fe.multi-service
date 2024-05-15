@@ -27,11 +27,15 @@ function UpdateOrderComment({ setState, state }) {
     };
   });
 
+  useEffect(() => {
+    dispatch(serviceActions.fetchListServiceBegin());
+  }, [dispatch]);
+
   const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
 
   useEffect(() => {
     formUpdateService.setFieldsValue(detailOrderComment);
-    formUpdateService.setFieldValue('category', findService && findService[0]?.category);
+    formUpdateService.setFieldValue('category', findService[0]?.category);
     formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
     formUpdateService.setFieldValue('note', detailOrderComment?.note);
   });

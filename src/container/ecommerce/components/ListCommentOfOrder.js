@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Select, Button, Modal, Table, Badge, Tooltip } from 'antd';
+import { Form, Modal, Table, Badge, Tooltip } from 'antd';
 import { MdAddchart } from "react-icons/md";
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../../variables';
+import { numberWithCommas } from '../../../utility/utility';
+import commentActions from '../../../redux/buffComment/actions';
 
 const badgeGreenStyle = {
   fontFamily: 'Be Vietnam Pro',
@@ -33,11 +36,14 @@ const badgeRedStyle = {
   marginRight: '5px'
 }
 
-
-
-function ListCommentOfOrder({ isOpen, setState, state }) {
+function ListCommentOfOrder({ isOpen, setState, orderState }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
+
+  const { rowData } = orderState;
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   const { commentInOrder } = useSelector(item => {
     return {
@@ -45,14 +51,18 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
     };
   });
 
-  const handleOk = () => {
-  };
+  useEffect(() => {
+    dispatch(commentActions.commentOrderCommentBegin({
+      page: currentPage,
+      limit: limitPage,
+      id: rowData?.id,
+    }));
+  }, [dispatch, currentPage, limitPage]);
 
   const handleCancel = () => {
     setState({
       isListCommentModal: false,
     });
-
     formUpdateService.resetFields();
   }
 
@@ -132,7 +142,6 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
             </div>
           </>
         }
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
@@ -142,7 +151,28 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
           dataSource={dataSource}
           size='small'
           columns={columns}
-          pagination={{ pageSize: 10, showSizeChanger: true, total: commentInOrder?.items?.length }}
+          // pagination={{ pageSize: 10, showSizeChanger: true, total: commentInOrder?.items?.length }}
+          pagination={{
+            current: commentInOrder?.meta?.current_page,
+            defaultPageSize: commentInOrder?.meta?.count,
+            pageSize: commentInOrder?.meta?.per_page,
+            total: commentInOrder?.meta?.total,
+            showSizeChanger: true,
+            pageSizeOptions: DEFAULT_PAGESIZE,
+            onChange(page, pageSize) {
+                setCurrentPage(page);
+                setLimitPage(pageSize)
+            },
+            position: ['bottomCenter'],
+            responsive: true,
+            showTotal(total, range) {
+                return <>
+                    <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> comment</p>
+                </>
+            },
+            totalBoundaryShowSizeChanger: 100,
+            size: "small"
+          }}
         />
       </Modal>
     </>
@@ -152,7 +182,7 @@ function ListCommentOfOrder({ isOpen, setState, state }) {
 ListCommentOfOrder.propTypes = {
   isOpen: PropTypes.bool,
   setState: PropTypes.func,
-  state: PropTypes.object
+  orderState: PropTypes.object
 };
 
 export default ListCommentOfOrder;

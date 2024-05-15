@@ -3,44 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FaYoutube } from "react-icons/fa";
-import { BiMoneyWithdraw } from "react-icons/bi";
+import { GrTransaction } from "react-icons/gr";
 import { Row, Col, Form, Modal, Table, Tooltip } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import serviceActions from '../../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, FixedServiceTemp, VIETNAMES_CURRENCY } from '../../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, VIETNAMES_CURRENCY } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
-
-const badgeGreenStyle = {
-  border: '1.3px solid #00ab00',
-  fontFamily: 'Be Vietnam Pro',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: '#00ab00',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px',
-  width: '73px'
-}
-
-const badgeRedStyle = {
-  border: '1.3px solid red',
-  fontFamily: 'Be Vietnam Pro',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: 'red',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px',
-  width: '73px'
-}
 
 function CreditHistoryMember({ isOpen, setState }) {
   const dispatch = useDispatch();
@@ -228,9 +196,10 @@ function CreditHistoryMember({ isOpen, setState }) {
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+              <GrTransaction fontSize={40} color='#a1a1a1' style={{ margin: '0 20px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div >
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách Transaction</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách giao dịch</p>
+                <p style={{ fontSize: '0.7em', marginBottom: '2px', fontWeight: '700' }}>Thông kê toàn bộ giao dịch của khách hàng</p>
                 {
                   findUser?.length > 0 ? (
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -269,7 +238,7 @@ function CreditHistoryMember({ isOpen, setState }) {
                   responsive: true,
                   showTotal(total, range) {
                       return <>
-                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
+                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> giao dịch</p>
                       </>
                   },
                   totalBoundaryShowSizeChanger: 100,

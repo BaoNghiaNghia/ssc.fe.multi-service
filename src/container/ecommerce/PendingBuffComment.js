@@ -10,7 +10,7 @@ import { TbCreditCardRefund } from "react-icons/tb";
 import { LuListFilter } from "react-icons/lu";
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
-import ListCommentOfOrder from './components/ListComment';
+import ListCommentOfOrder from './components/ListCommentOfOrder';
 import AddOrderComment from './components/AddOrderComment';
 import CancelAndRefundOrderComment from './components/CancelAndRefundOrderComment';
 import UpdateOrderComment from './components/UpdateOrderComment';
@@ -43,6 +43,54 @@ const badgeOrangeStyle = {
   marginRight: '5px',
 };
 
+const columns = [
+  {
+    title: 'Người dùng',
+    dataIndex: 'user_id',
+    key: 'user_id',
+  },
+  {
+    title: 'Video',
+    dataIndex: 'video_id',
+    key: 'video_id',
+  },
+  {
+    title: 'Order ID',
+    dataIndex: 'order_id',
+    key: 'order_id',
+  },
+  {
+    title: 'Số lượng comment',
+    dataIndex: 'quantity',
+    key: 'quantity',
+  },
+  {
+    title: 'Luồng tối đa',
+    dataIndex: 'thread',
+    key: 'thread',
+  },
+  {
+    title: 'Loại dịch vụ',
+    dataIndex: 'service',
+    key: 'service',
+  },
+  {
+    title: 'Trạng thái',
+    dataIndex: 'status',
+    key: 'status',
+  },
+  {
+    title: 'Ghi chú',
+    dataIndex: 'note',
+    key: 'note',
+  },
+  {
+    title: 'Hành động',
+    dataIndex: 'action',
+    key: 'action',
+  },
+];
+
 function PendingBuffComment() {
   const dispatch = useDispatch();
   const { searchData,  listOrderComment, userList, listService, isLoading, userInfo } = useSelector(state => {
@@ -66,6 +114,7 @@ function PendingBuffComment() {
     isFilterCommentOrderModal: false,
     statusNumber: 'all',
     notData: searchData,
+    rowData: {},
     item: listOrderComment,
     selectedRowKeys: [],
   });
@@ -76,8 +125,13 @@ function PendingBuffComment() {
   const { notData } = state;
 
   useEffect(() => {
-    dispatch(actions.fetchListOrderCommentBegin({ page: currentPage }));
+    dispatch(actions.fetchListOrderCommentBegin({
+      page: currentPage,
+      limit: limitPage,
+    }));
+  }, [dispatch, currentPage, limitPage]);
 
+  useEffect(() => {
     dispatch(userActions.fetchUserListBegin());
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
@@ -143,10 +197,14 @@ function PendingBuffComment() {
         order_id: <span className="order-id">{order_id}</span>,
         user_id: (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
-            <ReactNiceAvatar
-              style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }}
-              {...genConfig(findUser[0]?.fullname?.charAt(0))}
-            />
+            {
+                findUser?.length > 0 ? (
+                  <ReactNiceAvatar
+                    style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }}
+                    {...genConfig(findUser[0]?.fullname?.charAt(0))}
+                  />
+                ) : <></>
+            }
             <span style={{ marginLeft: '8px' }}>
               {
                 findUser?.length > 0 ? (
@@ -385,8 +443,16 @@ function PendingBuffComment() {
             </Tooltip>
             <Tooltip title="Danh sách comment">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.commentOrderCommentBegin({ id }));
-                setState({ ...state, isListCommentModal: true });
+                dispatch(actions.commentOrderCommentBegin({
+                  id,
+                  page: 1,
+                  limit: DEFAULT_PERPAGE
+                }));
+                setState({
+                  ...state,
+                  rowData: value,
+                  isListCommentModal: true
+                });
               }}>
                 <FaRegCommentDots fontSize={15}/>
               </Button>
@@ -396,54 +462,6 @@ function PendingBuffComment() {
       });
     });
   }
-
-  const columns = [
-    {
-      title: 'Người dùng',
-      dataIndex: 'user_id',
-      key: 'user_id',
-    },
-    {
-      title: 'Video',
-      dataIndex: 'video_id',
-      key: 'video_id',
-    },
-    {
-      title: 'Order ID',
-      dataIndex: 'order_id',
-      key: 'order_id',
-    },
-    {
-      title: 'Số lượng comment',
-      dataIndex: 'quantity',
-      key: 'quantity',
-    },
-    {
-      title: 'Luồng tối đa',
-      dataIndex: 'thread',
-      key: 'thread',
-    },
-    {
-      title: 'Loại dịch vụ',
-      dataIndex: 'service',
-      key: 'service',
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
-    },
-    {
-      title: 'Ghi chú',
-      dataIndex: 'note',
-      key: 'note',
-    },
-    {
-      title: 'Hành động',
-      dataIndex: 'action',
-      key: 'action',
-    },
-  ];
 
   const handleChangeForFilter = (e) => {
     setState({
@@ -477,6 +495,7 @@ function PendingBuffComment() {
         setState={setState}
       />
       <ListCommentOfOrder
+        orderState={state}
         isOpen={isListCommentModal}
         setState={setState}
       />

@@ -180,7 +180,7 @@ function FilterOrderComment({ orderState, setState }) {
                 name="priority"
                 label="Ưu tiên"
               >
-                <Select dropdownMatchSelectWidth={false} allowClear>
+                <Select dropdownMatchSelectWidth={false} allowClear placeholder="Chọn trạng thái ưu tiên">
                   <Option key="priority_true" value="true" style={{ margin: 0, padding: 0 }}>Có</Option>
                   <Option key="priority_false" value="false" style={{ margin: 0, padding: 0 }}>Không</Option>
                 </Select>

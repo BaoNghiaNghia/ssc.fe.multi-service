@@ -110,7 +110,7 @@ function ProxyManage() {
                 shape="circle"
                 onClick={() => {
                   dispatch(actions.getListProxyInDomainBegin({
-                    ...value,
+                    id: value?.id,
                     page: 1,
                     limit: DEFAULT_PERPAGE
                   }));
