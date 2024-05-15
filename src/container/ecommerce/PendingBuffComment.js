@@ -7,6 +7,7 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund } from "react-icons/tb";
+import { MdBlock } from "react-icons/md";
 import { LuListFilter } from "react-icons/lu";
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
@@ -341,7 +342,10 @@ function PendingBuffComment() {
                   </Tooltip>
                 </>
               ) : (
-                '...'
+                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <MdBlock color='red' style={{ marginRight: '5px' }}/>
+                  <span style={{ color: '#b99696' }}>Dịch vụ không tồn tại</span>
+                </div>
               )
             }
           </>
@@ -379,8 +383,8 @@ function PendingBuffComment() {
                     onClick={() => {
                       dispatch(actions.detailOrderCommentBegin({
                         ...value,
-                        userDetail: findUser,
-                        serviceDetail: findService
+                        // userDetail: findUser,
+                        // serviceDetail: findService
                       }));
                       setState({ ...state, isUpdateCommentOrderModal: true });
                     }}
