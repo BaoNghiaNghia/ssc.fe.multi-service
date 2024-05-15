@@ -35,7 +35,9 @@ function UpdateOrderComment({ setState, state }) {
 
   useEffect(() => {
     formUpdateService.setFieldsValue(detailOrderComment);
-    formUpdateService.setFieldValue('category', findService[0]?.category);
+    if (findService?.length > 0) {
+      formUpdateService.setFieldValue('category', findService[0]?.category);
+    }
     formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
     formUpdateService.setFieldValue('note', detailOrderComment?.note);
   });
