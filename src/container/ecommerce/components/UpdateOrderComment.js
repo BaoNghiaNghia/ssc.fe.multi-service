@@ -46,6 +46,7 @@ function UpdateOrderComment({ setState, state }) {
     setState({
       isUpdateCommentOrderModal: false,
     });
+
     formUpdateService.resetFields();
   }
 
@@ -117,45 +118,6 @@ function UpdateOrderComment({ setState, state }) {
         ]}
       >
         <Form name="add_service" layout="vertical" form={formUpdateService}>
-          <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
-            <Col sm={12}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
-                <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px' }}>Platform: </span>
-                <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }}/>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>{findService && findService[0]?.platform}</span>
-              </div>
-            </Col>
-            <Col sm={12}>
-              <Form.Item
-                name="category"
-                style={{ margin: '0px' }}
-                bordered 
-              >
-                <Select
-                  style={{ width: '100%', margin: '0px', padding: '0px' }}
-                  bordered={false}
-                  size='small'
-                  disabled
-                >
-                  {
-                    FixedServiceTemp?.map(service => {
-                      return (
-                        <Option key={service?.category} value={service?.category}>
-                          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                            { iconService(service) }
-                            <span style={{ fontWeight: '800' }}>{service?.category}</span>
-                          </div>
-                        </Option>
-                      )
-                    })
-                  }
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider plain style={{ marginTop: '10px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
-
           <Row gutter="10">
             <Col sm={8}>
               <Form.Item name="max_thread" initialValue={ state?.max_threads } label="Số luồng tối đa" rules={[{

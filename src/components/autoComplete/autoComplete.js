@@ -64,6 +64,7 @@ const AutoComplete = props => {
       onSearch={onSearching}
     >
       <Input
+        allowClear
         suffix={
           patternButtons ? (
             <Button className="search-btn" style={{ [rtl ? 'marginLeft' : 'marginRight']: -20 }} type="primary">

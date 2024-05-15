@@ -212,7 +212,6 @@ function PendingBuffComment() {
                   <span >
                     <p style={{ margin: '0px', fontWeight: '700' }}>{findUser[0]?.fullname}</p>
                     <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.email}</p>
-                    <p style={{ margin: '0px', fontSize: '0.7em' }}>{findUser[0]?.phone}</p>
                   </span>
                 ) : (
                   <span>
@@ -337,7 +336,6 @@ function PendingBuffComment() {
                     placement='topLeft'
                   >
                     <span style={{ margin: '0px', fontWeight: '700' }}>{ `${findService[0]?.name?.substring(0, 20)  }...` }</span>
-                    <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Platform: </strong>{findService[0]?.platform}</span>
                     <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>
                   </Tooltip>
                 </>
@@ -480,7 +478,9 @@ function PendingBuffComment() {
     }
   };
 
-  const onSelectChange = selectedRowKey => {
+  const onSelectChange = (selectedRowKey) => {
+    console.log('---- selected row key nè -----', selectedRowKey);
+
     setState({ ...state, selectedRowKeys: selectedRowKey });
   };
 
@@ -490,7 +490,7 @@ function PendingBuffComment() {
     },
   };
 
-  const { isListCommentModal, isCreateCommentOrderModal, isUpdateCommentOrderModal, isCancelRefundCommentOrderModal } = state;
+  const { isListCommentModal, isCreateCommentOrderModal, isCancelRefundCommentOrderModal } = state;
 
   return (
     <>

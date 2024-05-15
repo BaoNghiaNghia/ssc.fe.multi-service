@@ -109,6 +109,7 @@ function Member() {
     isModalAddTopup: false,
     isModalConfirmTopup: false,
     isModalEditMem: false,
+    isModalAddAccount: false,
     isModalCreditHistory: false,
     notData: searchData,
     item: orders,
@@ -422,28 +423,21 @@ function Member() {
                       <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
-                  <Col xxl={14} lg={16} xs={24}>
-                    {/* <div className="table-toolbox-menu">
-                      <span className="toolbox-menu-title"> Trạng thái:</span>
-                      <Radio.Group onChange={handleChangeForFilter} defaultValue="">
-                        <Radio.Button value="">All</Radio.Button>
-                        {item?.length &&
-                          [...new Set(filterKey)].map(value => {
-                            return (
-                              <Radio.Button key={value} value={value}>
-                                {value}
-                              </Radio.Button>
-                            );
-                          })}
-                      </Radio.Group>
-                    </div> */}
-                  </Col>
-                  <Col xxl={4} xs={24}>
-                    {/* <div className="table-toolbox-actions">
-                      <Button size="small" type="primary">
-                        <FeatherIcon icon="plus" size={12} /> Thêm mới
+                  <Col xxl={18} xs={24}>
+                    <div className="table-toolbox-actions">
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => {
+                          setState({
+                            ...state,
+                            isAddDomainModal: true,
+                          });
+                        }}
+                      >
+                        <FeatherIcon icon="plus" size={12} /> Thêm tài khoản
                       </Button>
-                    </div> */}
+                    </div>
                   </Col>
                 </Row>
               </TopToolBox>
