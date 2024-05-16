@@ -193,6 +193,12 @@ function PendingBuffComment() {
       const checkInsuranceOrder = ['OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
       const checkRefundOrder = ['OrderStatusPending', 'OrderStatusProcessing', 'OrderStatusDisable', 'OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
 
+      const performanceColor = (performance !== 0) 
+        ? (performance >= 0.8 ? 'green' : ((performance < 0.8 && performance > 0.5) ? 'yellow' : ((performance < 0.5 && performance > 0.3) ? 'red' : 'gray'))) : 'gray';
+
+      const performanceColorBack = (performance !== 0) 
+        ? (performance >= 0.8 ? '#84d984' : ((performance < 0.8 && performance > 0.5) ? '#ffdfa5' : ((performance < 0.5 && performance > 0.3) ? '#f9c1c1' : '#e7e7e7'))) : '#e7e7e7';
+
       return dataSource.push({
         key: id,
         order_id: <span className="order-id">{order_id}</span>,
@@ -273,8 +279,8 @@ function PendingBuffComment() {
                             fontWeight: 700,
                             padding:'0 5px',
                             borderRadius: '5px',
-                            border: '1px solid orange',
-                            backgroundColor: '#ffdfa5'
+                            border: `1px solid ${performanceColor}`,
+                            backgroundColor: performanceColorBack
                           }}
                         >
                           Hiệu suất: {numberWithCommas(Math.floor(performance, 1) || 0)} %

@@ -105,17 +105,12 @@ function BatchUpdateComputerComment({ setState, computerState }) {
                                 <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
 
                                 <Row gutter="10">
-                                    <Col sm={8}>
-                                        <Form.Item name="thread" label="Số luồng">
-                                            <InputNumber type="number" size='small' style={{ width: '100%' }} placeholder='Số luồng' />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col sm={8}>
+                                    <Col sm={12}>
                                         <Form.Item name="cpu" label="CPU">
                                             <Input size='small' style={{ width: '100%' }} placeholder='CPU của server' />
                                         </Form.Item>
                                     </Col>
-                                    <Col sm={8}>
+                                    <Col sm={12}>
                                         <Form.Item name="ram" label="Ram">
                                             <Input size='small' style={{ width: '100%' }} placeholder='Ram của server' />
                                         </Form.Item>
@@ -123,8 +118,8 @@ function BatchUpdateComputerComment({ setState, computerState }) {
                                 </Row>
                                 <Row gutter="10">
                                     <Col sm={8}>
-                                        <Form.Item name="current_thread" style={{ margin: 0 }} label="Luồng hiện tại">
-                                            <InputNumber type='number' addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Số luồng hiện tại' />
+                                        <Form.Item name="thread" label="Số luồng" style={{ margin: 0 }}>
+                                            <InputNumber type="number" addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Số luồng' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>

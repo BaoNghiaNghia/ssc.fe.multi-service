@@ -1,17 +1,14 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
-import { useDispatch , useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BsPersonCheck } from "react-icons/bs";
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
-import { MdAddchart } from "react-icons/md";
-import actions from '../../../redux/member/actions';
 import { VIETNAMES_CURRENCY } from '../../../variables';
 
 const { Option } = Select;
 
 function DetailMember({ isOpen, setState }) {
-  const dispatch = useDispatch();
   const [formDetailMember] = Form.useForm();
 
   const { detailUser } = useSelector(state => {
@@ -29,6 +26,7 @@ function DetailMember({ isOpen, setState }) {
     setState({
       isModalDetailMem: false,
     });
+    formDetailMember.resetFields();
   }
 
   return (
@@ -117,21 +115,25 @@ function DetailMember({ isOpen, setState }) {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={10}>
-              <Col sm={24}>
-                <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Key API" rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}>
-                  <Input.Password 
-                    type='number'
-                    size='small'
-                    style={{ width: '100%' }}
-                    placeholder="Key API"
-                  />
-                </Form.Item>
-              </Col>
-          </Row>
+          {
+            detailUser?.api_key ? (
+              <Row gutter={10}>
+                  <Col sm={24}>
+                    <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Key API" rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}>
+                      <Input.Password 
+                        type='number'
+                        size='small'
+                        style={{ width: '100%' }}
+                        placeholder="Key API"
+                      />
+                    </Form.Item>
+                  </Col>
+              </Row>
+            ) : null
+          }
         </Form>
       </Modal>
     </>

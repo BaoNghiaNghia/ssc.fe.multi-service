@@ -21,6 +21,50 @@ import Heading from '../../components/heading/heading';
 import { numberWithCommas } from '../../utility/utility';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
+const columns = [
+  {
+    title: 'Máy',
+    dataIndex: 'server',
+    key: 'server',
+  },
+  {
+    title: 'Cấu hình',
+    dataIndex: 'configuration',
+    key: 'configuration',
+  },
+  {
+    title: 'Số luồng',
+    dataIndex: 'thread',
+    key: 'thread',
+  },
+  {
+    title: 'Limit',
+    dataIndex: 'limit',
+    key: 'limit',
+  },
+  {
+    title: 'Reset',
+    dataIndex: 'reset',
+    key: 'reset',
+  },
+  {
+    title: 'Mail',
+    dataIndex: 'mail',
+    key: 'mail',
+  },
+  {
+    title: 'Reset lần cuối',
+    dataIndex: 'lastReset',
+    key: 'lastReset',
+  },
+
+  {
+    title: 'Hành động',
+    dataIndex: 'action',
+    key: 'action',
+  },
+];
+
 function ComputerRunCommentOrder() {
   const dispatch = useDispatch();
 
@@ -64,6 +108,15 @@ function ComputerRunCommentOrder() {
     });
   };
 
+  const handleResetComputer = (values) => {
+    const requestData = {
+      id: values?.id,
+      action: "reset",
+    };
+
+  dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
+  }
+
   const fullThreadServer = listServer?.items?.filter(item => item?.run >= 15)?.length;
   const nonFullThreadServer = listServer?.items?.filter(item => item?.run < 15 && item?.run > 5)?.length;
   const aBitThreadServer = listServer?.items?.filter(item => item?.run <= 5)?.length;
@@ -75,63 +128,21 @@ function ComputerRunCommentOrder() {
   const accountWork = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
   const accountDie = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
 
-  const columns = [
-    {
-      title: 'Máy',
-      dataIndex: 'server',
-      key: 'server',
-    },
-    {
-      title: 'Cấu hình',
-      dataIndex: 'configuration',
-      key: 'configuration',
-    },
-    {
-      title: 'Số luồng',
-      dataIndex: 'thread',
-      key: 'thread',
-    },
-    {
-      title: 'Limit',
-      dataIndex: 'limit',
-      key: 'limit',
-    },
-    {
-      title: 'Reset',
-      dataIndex: 'reset',
-      key: 'reset',
-    },
-    {
-      title: 'Mail',
-      dataIndex: 'mail',
-      key: 'mail',
-    },
-    {
-      title: 'Reset lần cuối',
-      dataIndex: 'lastReset',
-      key: 'lastReset',
-    },
-
-    {
-      title: 'Hành động',
-      dataIndex: 'action',
-      key: 'action',
-    },
-  ];
-
   const dataSource = [];
-
   if (listServer?.items?.length > 0) {
     listServer?.items?.map((value, index) => {
-      const color = value?.current_thread >= 15 ? 'green' : ((value?.current_thread < 15 && value?.current_thread > 5) ? 'orange' : 'red');
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      const percentThread = (value?.current_thread > 0 && value?.thread > 0) ? value?.current_thread/value?.thread : 0;
+      const color = (value.thread !== 0) ? (percentThread >= 0.7 ? 'green' : ((percentThread < 0.7 && percentThread > 0.3) ? 'orange' : 'red')) : 'gray';
 
       const fixedStyle = { display: 'inline-flex', alignItems: 'center', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
 
-      const colorObj = value?.current_thread >= 15
+      const colorObj = (value.thread !== 0) ? (percentThread >= 0.7
         ? { backgroundColor: '#0080001a', border: '2px solid green', color: 'green', ...fixedStyle }
-        : ((value?.current_thread < 15 && value?.current_thread > 5)
+        : ((percentThread < 0.7 && percentThread > 0.3)
           ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', ...fixedStyle }
-          : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', ...fixedStyle });
+          : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', ...fixedStyle })) 
+          : { backgroundColor: '#efefef', border: '2px solid gray', color: 'gray', ...fixedStyle };
 
       const styleMail = { marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' };
 
@@ -143,16 +154,16 @@ function ComputerRunCommentOrder() {
           <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
             <TbServerBolt fontSize={17} style={{ marginRight: '5px', marginTop: '5px' }} />
             <div style={{ margin: 0, padding: 0 }}>
-              <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}</p>
-              <a href={value?.link} target="_blank" rel="noopener noreferrer">
-                <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
+              <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || '...'}</p>
+              <a href={value?.link} target="_blank" rel="noopener noreferrer" style={{ margin: 0, padding: 0 }}>
+                <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'inline-flex', alignItems: 'center' }}>
                   <LuLink2 style={{ fontWeight: 700, marginRight: '5px' }}/>
-                  {value?.link || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+                  {value?.link || '...'}
                 </div>
               </a>
               <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
                 <MdOutlineNumbers style={{ fontWeight: 700, marginRight: '5px' }} />
-                {value?.ip || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+                {<strong>{value?.ip}</strong> || '...'}
               </div>
             </div>
           </span>
@@ -160,10 +171,10 @@ function ComputerRunCommentOrder() {
         configuration: (
           <>
             <div style={{ margin: 0, padding: 0 }}>
-              CPU: {value?.cpu || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+              CPU: {value?.cpu ? <strong>{value?.cpu}</strong> : '...'}
             </div>
             <div style={{ margin: 0, padding: 0 }}>
-              Ram: {value?.ram || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+              Ram: {value?.ram ? <strong>{value?.ram}</strong> : '...'}
             </div>
           </>
         ),
@@ -224,16 +235,6 @@ function ComputerRunCommentOrder() {
         ),
         action: (
           <div className="table-actions">
-            {/* <Tooltip title="Khởi động lại">
-              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }} className="btn-icon">
-                <GrPowerReset style={{ marginTop: '4px' }}/>
-              </Button>
-            </Tooltip> */}
-            {/* <Tooltip title="Link">
-              <Button size="default" shape="circle" type="default" to="#" style={{ marginRight: '5px' }}  className="btn-icon">
-                <LuLink2 style={{ marginTop: '4px' }} />
-              </Button>
-            </Tooltip> */}
             <Tooltip title="Reset Computer">
               <Button
                 size="default"
@@ -242,13 +243,9 @@ function ComputerRunCommentOrder() {
                 to="#"
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
-                onClick={() => {
-                  dispatch(actions.detailComputerRunCommentBegin({
-                    id: value?.id
-                  }));
-                }}
+                onClick={() => handleResetComputer(value)}
               >
-                <FeatherIcon icon="reset" size={16} style={{ marginTop: '4px' }} />
+                <FeatherIcon icon="rotate-ccw" size={16} style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
             <Tooltip title="Sửa">
@@ -293,11 +290,6 @@ function ComputerRunCommentOrder() {
                 <FeatherIcon icon="eye" size={16} style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
-            {/* <Tooltip title="Xóa">
-              <Button size="default" shape="circle" type="default" to="#" className="btn-icon">
-                <LuTrash2 style={{ marginTop: '4px' }} />
-              </Button>
-            </Tooltip> */}
           </div>
         ),
       });

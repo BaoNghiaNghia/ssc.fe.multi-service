@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Button } from 'antd';
 import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
-import serviceActions from '../../../redux/serviceSettings/actions';
-import { STATUS_COMMENT_ENUM } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
 import actions from '../../../redux/buffComment/actions';
 
@@ -38,7 +36,6 @@ function EditCommentComputer({ setState, computerState }) {
                         action: values?.action,
                         cpu: values?.cpu,
                         ip: values?.ip,
-                        current_thread: values?.current_thread,
                         limit_per_day: values?.limit_per_day,
                         link: values?.link,
                         ram: values?.ram,
@@ -117,15 +114,8 @@ function EditCommentComputer({ setState, computerState }) {
                                 <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
 
                                 <Row gutter="10">
-                                    <Col sm={8}>
-                                        <Form.Item name="thread" label="Số luồng" rules={[{
-                                            required: true,
-                                            message: 'Trường không được trống'
-                                        }]}>
-                                            <InputNumber type="number" size='small' style={{ width: '100%' }} placeholder='Số luồng' />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col sm={8}>
+                                    
+                                    <Col sm={12}>
                                         <Form.Item name="cpu" label="CPU" rules={[{
                                             required: true,
                                             message: 'Trường không được trống'
@@ -133,7 +123,7 @@ function EditCommentComputer({ setState, computerState }) {
                                             <Input size='small' style={{ width: '100%' }} placeholder='CPU của server' />
                                         </Form.Item>
                                     </Col>
-                                    <Col sm={8}>
+                                    <Col sm={12}>
                                         <Form.Item name="ram" label="Ram" rules={[{
                                             required: true,
                                             message: 'Trường không được trống'
@@ -144,11 +134,11 @@ function EditCommentComputer({ setState, computerState }) {
                                 </Row>
                                 <Row gutter="10">
                                     <Col sm={8}>
-                                        <Form.Item name="current_thread" style={{ margin: 0 }} label="Luồng hiện tại" rules={[{
+                                        <Form.Item name="thread" style={{ margin: 0 }}  label="Số luồng" rules={[{
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <InputNumber type='number' addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Số luồng hiện tại' />
+                                            <InputNumber type="number" addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Số luồng' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>
@@ -165,6 +155,7 @@ function EditCommentComputer({ setState, computerState }) {
                                             message: 'Trường không được trống'
                                         }]}>
                                             <Select style={{ width: '100%' }} placeholder="Chọn hành động" size='small'>
+                                                <Option value="" />
                                                 <Option value="reset">Reset</Option>
                                             </Select>
                                         </Form.Item>
@@ -175,7 +166,6 @@ function EditCommentComputer({ setState, computerState }) {
                             <div>Đang tải</div>
                         )
                     }
-
                 </Form>
             </Modal>
         </>
