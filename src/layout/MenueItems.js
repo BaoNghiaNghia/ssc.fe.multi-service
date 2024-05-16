@@ -133,14 +133,14 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             icon={
               !topMenu && (
                 <NavLink className="menuItem-icon" to={`${path}/subscribe/lich-su-don`}>
-                  <FeatherIcon icon="calendar" />
+                  <FeatherIcon icon="hard-drive" />
                 </NavLink>
               )
             }
             key="subscribe-lich-su-don"
           >
             <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/lich-su-don`}>
-              Lịch sử đơn {pendingBadge}
+              Danh sách máy {pendingBadge}
             </NavLink>
           </Menu.Item>
         ) : <></>
@@ -183,14 +183,14 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             icon={
               !topMenu && (
                 <NavLink className="menuItem-icon" to={`${path}/like/lich-su-don`}>
-                  <FeatherIcon icon="message-square" />
+                  <FeatherIcon icon="hard-drive" />
                 </NavLink>
               )
             }
             key="buff-like-lich-su-don"
           >
             <NavLink onClick={toggleCollapsed} to={`${path}/like/lich-su-don`}>
-              Lịch sử đơn {pendingBadge}
+              Danh sách máy {pendingBadge}
             </NavLink>
           </Menu.Item>
         ) : <></>

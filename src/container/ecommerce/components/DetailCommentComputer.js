@@ -1,73 +1,38 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Progress, Tooltip } from 'antd';
-import { MdAddchart } from "react-icons/md";
-import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
-import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
+import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider } from 'antd';
+import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
+import { LuLink2 } from 'react-icons/lu';
 import serviceActions from '../../../redux/serviceSettings/actions';
-import { FixedServiceTemp, STATUS_COMMENT_ENUM } from '../../../variables/index';
-import { numberWithCommas } from '../../../utility/utility';
-
-const { Option } = Select;
+import { STATUS_COMMENT_ENUM } from '../../../variables/index';
+import { isEmptyObject } from '../../../utility/utility';
 
 function DetailCommentComputer({ setState, computerState }) {
-    const dispatch = useDispatch();
-
     const { isDetailCommentServer } = computerState;
 
-    const [formUpdateService] = Form.useForm();
+    const [formDetailComputerCmt] = Form.useForm();
 
-    const { detailOrderComment, userList, listService } = useSelector(state => {
+    const { isLoading, detailComputerComment } = useSelector(state => {
         return {
-            detailOrderComment: state?.buffComment?.detailOrderComment,
-            userList: state?.member?.userList,
-            listService: state?.settingService?.listService?.items,
+            isLoading: state?.buffComment?.loading,
+            detailComputerComment: state?.buffComment?.detailComputerComment
         };
     });
 
     useEffect(() => {
-        dispatch(serviceActions.fetchListServiceBegin({}));
-    }, [dispatch]);
-
-    const findUser = userList?.filter((item) => item.id === detailOrderComment?.user_id);
-    const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
-
-    useEffect(() => {
-        formUpdateService.setFieldsValue(detailOrderComment);
-        if (findService?.length > 0) {
-            formUpdateService.setFieldValue('category', findService[0]?.category);
+        if (!isEmptyObject(detailComputerComment)) {
+            formDetailComputerCmt.setFieldsValue(detailComputerComment);
         }
-
-        if (findUser?.length > 0) {
-            formUpdateService.setFieldValue('user_name', findUser[0]?.fullname);
-            formUpdateService.setFieldValue('user_email', findUser[0]?.email);
-        }
-
-        formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
-        formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderComment?.status)?.title);
     });
 
     const handleCancel = () => {
         setState({
+            ...computerState,
             isDetailCommentServer: false,
         });
-        formUpdateService.resetFields();
-    }
-
-    const iconService = (service) => {
-        switch (service?.category) {
-            case 'Comments':
-                return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }} />
-            case 'Likes':
-                return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }} />
-            case 'Subscribers':
-                return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }} />
-            default:
-                return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }} />
-        }
+        formDetailComputerCmt.resetFields();
     }
 
     return (
@@ -88,8 +53,107 @@ function DetailCommentComputer({ setState, computerState }) {
                 onCancel={handleCancel}
                 footer={null}
             >
-                <Form name="add_service" layout="vertical" form={formUpdateService}>
-                    <span>ss</span>
+                <Form layout="vertical" form={formDetailComputerCmt}>
+                    {
+                        !isLoading ? (
+                            <>
+                                <Row gutter="10">
+                                    <Col sm={12}>
+                                        <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input size='small' disabled addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server comment' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={12}>
+                                        <Form.Item name="ip" style={{ margin: '0px' }} label="IP" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input size='small' disabled addonBefore={<MdOutlineNumbers />} style={{ width: '100%' }} placeholder='Địa chỉ IP' />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
+
+                                <Row gutter="10">
+                                    <Col sm={8}>
+                                        <Form.Item name="name" label="Tên máy" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input size='small' disabled style={{ width: '100%' }} placeholder='Tên máy comment' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="cpu" label="CPU" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input size='small' disabled style={{ width: '100%' }} placeholder='CPU của server' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="ram" label="Ram" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input size='small' disabled style={{ width: '100%' }} placeholder='Ram của server' />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter="10">
+                                    <Col sm={8}>
+                                        <Form.Item name="current_thread" label="Luồng hiện tại" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <InputNumber type='number' disabled addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Số luồng hiện tại' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="thread" label="Tổng luồng" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <InputNumber type='number' disabled addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Tổng số luồng' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="limit_per_day" label="Giới hạn mỗi ngày" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <InputNumber type='number' disabled addonAfter="comment" size='small' style={{ width: '100%' }} placeholder='Giới hạn comment mỗi ngày ' />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter="10">
+                                    <Col sm={12}>
+                                        <Form.Item name="last_action_at" style={{ margin: '0px' }} label="Lần cuối Action" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input disabled size='small' style={{ width: '100%' }} placeholder='Thời gian hành động cuối' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={12}>
+                                        <Form.Item name="last_ping_at" style={{ margin: '0px' }} label="Lần cuối Ping" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input disabled size='small' style={{ width: '100%' }} placeholder='Thời gian Ping lần cuối' />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </>
+                        ) : (
+                            <div>Đang tải</div>
+                        )
+                    }
+
                 </Form>
             </Modal>
         </>

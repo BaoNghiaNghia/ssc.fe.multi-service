@@ -3,8 +3,9 @@ import {
     GENERAL_ORDER_COMMENT_ENDPOINT,
     COMMENT_IN_ORDER_COMMENT_ENDPOINT,
     CREATE_COMMENT_COMMENT_ENDPOINT,
-    LIST_COMPUTER_COMMENT_ENDPOINT,
-    UPDATE_MANY_ORDER_COMMENT_ENDPOINT
+    GENERAL_COMPUTER_COMMENT_ENDPOINT,
+    UPDATE_MANY_ORDER_COMMENT_ENDPOINT,
+    UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -14,8 +15,9 @@ BuffCommentAPI.createEntities([
     { name: GENERAL_ORDER_COMMENT_ENDPOINT },
     { name: COMMENT_IN_ORDER_COMMENT_ENDPOINT },
     { name: CREATE_COMMENT_COMMENT_ENDPOINT },
-    { name: LIST_COMPUTER_COMMENT_ENDPOINT },
+    { name: GENERAL_COMPUTER_COMMENT_ENDPOINT },
     { name: UPDATE_MANY_ORDER_COMMENT_ENDPOINT },
+    { name: UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT },
 ]);
 
 const fetchListOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_ORDER_COMMENT_ENDPOINT }).get(query);
@@ -27,7 +29,10 @@ const updateManyOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpo
 const commentOrderCommentAPI = (id) => BuffCommentAPI.createBasicCRUDEndpoints({ name: COMMENT_IN_ORDER_COMMENT_ENDPOINT }).submitGet(id);
 const createOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: CREATE_COMMENT_COMMENT_ENDPOINT }).post(query);
 
-const listComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: LIST_COMPUTER_COMMENT_ENDPOINT }).get(query);
+const listComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).get(query);
+const detailComputerRunCommentAPI = (id) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).getOne(id);
+const updateOneComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).update(query);
+const updateManyComputerCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT }).patchMultiple(query);
 
 export {
     fetchListOrderCommentAPI,
@@ -36,5 +41,8 @@ export {
     getOneOrderCommentAPI,
     updateOneOrderCommentAPI,
     listComputerRunCommentAPI,
-    updateManyOrderCommentAPI
+    updateManyOrderCommentAPI,
+    updateManyComputerCommentAPI,
+    updateOneComputerRunCommentAPI,
+    detailComputerRunCommentAPI
 }

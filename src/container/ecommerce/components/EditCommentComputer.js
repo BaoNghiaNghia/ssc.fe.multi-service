@@ -53,36 +53,33 @@ function EditCommentComputer({ setState, computerState }) {
 
     const handleCancel = () => {
         setState({
+            ...computerState,
             isEditCommentServer: false,
         });
         formUpdateService.resetFields();
     }
 
     return (
-        <>
-            <Modal
-                width='600px'
-                open={isEditCommentServer}
-                centered
-                title={
-                    <>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-                            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-                            <div>
-                                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật máy comment</p>
-                                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy comment</p>
-                            </div>
-                        </div>
-                    </>
-                }
-                onCancel={handleCancel}
-                footer={null}
-            >
-                <Form name="add_service" layout="vertical" form={formUpdateService}>
-                    <span>ss</span>
-                </Form>
-            </Modal>
-        </>
+        <Modal
+            width='600px'
+            open={isEditCommentServer}
+            centered
+            title={
+                <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+                    <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+                    <div>
+                        <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật máy comment</p>
+                        <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy comment</p>
+                    </div>
+                </div>
+            }
+            onCancel={handleCancel}
+            footer={null}
+        >
+            <Form name="add_service" layout="vertical" form={formUpdateService}>
+                <span>ss</span>
+            </Form>
+        </Modal>
     );
 }
 

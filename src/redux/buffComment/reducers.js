@@ -4,6 +4,7 @@ const initialState = {
   listOrderComment: [],
   detailOrderComment: {},
   listComputer: {},
+  detailComputerComment: {},
   commentInOrder: {},
   loading: false,
   error: null
@@ -38,14 +39,64 @@ const {
     LIST_COMPUTER_RUN_COMMENT_ERR,
     LIST_COMPUTER_RUN_COMMENT_SUCCESS,
 
+    DETAIL_COMPUTER_RUN_COMMENT_BEGIN,
+    DETAIL_COMPUTER_RUN_COMMENT_ERR,
+    DETAIL_COMPUTER_RUN_COMMENT_SUCCESS,
+    
     UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN,
     UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR,
-    UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS
+    UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS,
+    
+    UPDATE_ONE_COMPUTER_RUN_COMMENT_BEGIN,
+    UPDATE_ONE_COMPUTER_RUN_COMMENT_ERR,
+    UPDATE_ONE_COMPUTER_RUN_COMMENT_SUCCESS,
+
+    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN,
+    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR,
+    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case UPDATE_ONE_COMPUTER_RUN_COMMENT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_ONE_COMPUTER_RUN_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_ONE_COMPUTER_RUN_COMMENT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN:
       return {
         ...state,
@@ -99,6 +150,26 @@ const ReportsReducer = (state = initialState, action) => {
       };
 
     case DETAIL_ORDER_COMMENT_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case DETAIL_COMPUTER_RUN_COMMENT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_COMPUTER_RUN_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailComputerComment: data
+      };
+
+    case DETAIL_COMPUTER_RUN_COMMENT_ERR:
       return {
         ...state,
         loading: false,

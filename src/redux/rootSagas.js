@@ -63,7 +63,10 @@ import {
     createOrderCommentWatcherSaga,
     updateOrderCommentWatcherSaga,
     listComputerRunCommentWatcherSaga,
-    updateManyOrderCommentWatcherSaga
+    updateManyOrderCommentWatcherSaga,
+    updateManyComputerCommentWatcherSaga,
+    updateOneComputerCommentWatcherSaga,
+    detailComputerCommentWatcherSaga
 } from './buffComment/sagas';
 
 import {
@@ -122,6 +125,9 @@ export default function* rootSaga() {
         fetchListSettingsWatcherSaga(),
         updateSettingWatcherSaga(),
         getCreditHistoryMemberWatcherSaga(),
-        updateManyOrderCommentWatcherSaga()
+        updateManyOrderCommentWatcherSaga(),
+        updateManyComputerCommentWatcherSaga(),
+        updateOneComputerCommentWatcherSaga(),
+        detailComputerCommentWatcherSaga(),
     ]);
 }

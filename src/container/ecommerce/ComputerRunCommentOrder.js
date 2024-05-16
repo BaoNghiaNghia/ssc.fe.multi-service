@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, Table, Badge, Tooltip, Button, Form } from 'antd';
+import { Row, Col, Table, Badge, Tooltip, Button } from 'antd';
 import { BiLogoGmail } from 'react-icons/bi';
-import { TbServerBolt } from 'react-icons/tb';
+import { TbServerBolt, TbShoppingBagEdit } from 'react-icons/tb';
 import FeatherIcon from 'feather-icons-react';
 import { CgServer } from "react-icons/cg";
+import { LuLink2 } from "react-icons/lu";
+import { MdOutlineNumbers } from "react-icons/md";
 
 import { Pstates, TopToolBox } from './Style';
 import DetailCommentComputer from './components/DetailCommentComputer';
 import EditCommentComputer from './components/EditCommentComputer';
 import BatchUpdateComputerComment from './components/BatchUpdateComputerComment';
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { Main } from '../styled';
+import { Main, TableWrapper } from '../styled';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import actions from '../../redux/buffComment/actions';
 import Heading from '../../components/heading/heading';
 import { numberWithCommas } from '../../utility/utility';
-import { ProjectList } from '../pages/style';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 function ComputerRunCommentOrder() {
@@ -29,7 +30,7 @@ function ComputerRunCommentOrder() {
   const { searchData, listServer } = useSelector((state) => {
     return {
       searchData: state?.headerSearchData,
-      listServer: state?.buffComment?.listComputer?.items,
+      listServer: state?.buffComment?.listComputer,
       preIsLoading: state.chartContent.perLoading,
     }
   });
@@ -45,7 +46,7 @@ function ComputerRunCommentOrder() {
     selectedRowKeys: [],
   });
 
-  const { notData, selectedRowKeys, isEditCommentServer, isDetailCommentServer } = state;
+  const { notData, selectedRowKeys } = state;
 
   useEffect(() => {
     dispatch(actions.listComputerRunCommentBegin({
@@ -63,16 +64,16 @@ function ComputerRunCommentOrder() {
     });
   };
 
-  const fullThreadServer = listServer?.filter(item => item?.run >= 15)?.length;
-  const nonFullThreadServer = listServer?.filter(item => item?.run < 15 && item?.run > 5)?.length;
-  const aBitThreadServer = listServer?.filter(item => item?.run <= 5)?.length;
+  const fullThreadServer = listServer?.items?.filter(item => item?.run >= 15)?.length;
+  const nonFullThreadServer = listServer?.items?.filter(item => item?.run < 15 && item?.run > 5)?.length;
+  const aBitThreadServer = listServer?.items?.filter(item => item?.run <= 5)?.length;
 
-  const totalThread = listServer?.reduce((total, comp) => total + comp.run, 0) || 0;
+  const totalThread = listServer?.items?.reduce((total, comp) => total + comp.run, 0) || 0;
 
-  const accountTotal = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountAlive = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountWork = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountDie = (listServer?.length > 0) && numberWithCommas(listServer?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountTotal = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountAlive = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountWork = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountDie = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
 
   const columns = [
     {
@@ -120,15 +121,19 @@ function ComputerRunCommentOrder() {
 
   const dataSource = [];
 
-  if (listServer?.length > 0) {
-    listServer?.map((value, index) => {
+  if (listServer?.items?.length > 0) {
+    listServer?.items?.map((value, index) => {
       const color = value.run >= 15 ? 'green' : ((value.run < 15 && value.run > 5) ? 'orange' : 'red');
 
+      const fixedStyle = { display: 'inline-flex', alignItems: 'center', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
+
       const colorObj = value.run >= 15
-        ? { backgroundColor: '#0080001a', border: '2px solid green', color: 'green', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
+        ? { backgroundColor: '#0080001a', border: '2px solid green', color: 'green', ...fixedStyle }
         : ((value.run < 15 && value.run > 5)
-          ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
-          : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' });
+          ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', ...fixedStyle }
+          : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', ...fixedStyle });
+
+      const styleMail = { marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' };
 
       const threadString = `${value?.run || 0} / ${value?.thread}`;
 
@@ -138,16 +143,26 @@ function ComputerRunCommentOrder() {
           <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
             <TbServerBolt fontSize={17} style={{ marginRight: '5px', marginTop: '5px' }} />
             <div style={{ margin: 0, padding: 0 }}>
-              <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name}</p>
-              <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><span style={{ fontWeight: "700" }}>Link: </span> {value?.link}</p>
-              <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><span style={{ fontWeight: "700" }}>IP: </span> {value?.ip}</p>
+              <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}</p>
+              <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
+                <LuLink2 style={{ fontWeight: 700, marginRight: '5px' }}/>
+                {value?.link || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+              </div>
+              <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
+                <MdOutlineNumbers style={{ fontWeight: 700, marginRight: '5px' }} />
+                {value?.ip || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+              </div>
             </div>
           </span>
         ),
         configuration: (
           <>
-            <div style={{ margin: 0, padding: 0 }}>CPU: {value?.cpu}</div>
-            <div style={{ margin: 0, padding: 0 }}>Ram: {value?.ram}</div>
+            <div style={{ margin: 0, padding: 0 }}>
+              CPU: {value?.cpu || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+            </div>
+            <div style={{ margin: 0, padding: 0 }}>
+              Ram: {value?.ram || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+            </div>
           </>
         ),
         thread: (
@@ -157,14 +172,10 @@ function ComputerRunCommentOrder() {
           </span>
         ),
         limit: (
-          <Tooltip title={(
-            <>
-              <div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>
-            </>
-          )}>
+          <Tooltip title={(<div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>)}>
             <span>
               <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <CgServer fontSize={17} /> {value?.limit_per_day}
+                <CgServer fontSize={17} style={{ marginRight: '5px' }}/> {value?.limit_per_day}
               </span>
             </span>
           </Tooltip>
@@ -175,20 +186,23 @@ function ComputerRunCommentOrder() {
         mail: (
           <Tooltip title={(
             <>
-              <div>Mail sống: {value?.account_live}</div>
-              <div>Mail hoạt động: {value?.account_work}</div>
-              <div>Mail chết: {value?.account_die}</div>
+              <div>Mail sống: {value?.account_live || 'Chưa có' }</div>
+              <div>Mail hoạt động: {value?.account_work || 'Chưa có'}</div>
+              <div>Mail chết: {value?.account_die || 'Chưa có'}</div>
             </>
           )}>
             <span>
-              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <BiLogoGmail style={{ marginBottom: 0 }} fontSize={19} /> {numberWithCommas(value?.account_live)}
+              <span style={styleMail}>
+                <BiLogoGmail style={{ marginBottom: 0, marginRight: '4px' }} fontSize={19} />
+                {value?.account_live ? numberWithCommas(value?.account_live || 0) : '0'}
               </span>
-              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <BiLogoGmail fontSize={19} color='#27AE60' /> {numberWithCommas(value?.account_work)}
+              <span style={styleMail}>
+                <BiLogoGmail fontSize={19} color='#27AE60' style={{ marginRight: '4px' }} />
+                {value?.account_work ? numberWithCommas(value?.account_work || 0) : '0'}
               </span>
-              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <BiLogoGmail fontSize={19} color='#EB5757' /> {numberWithCommas(value?.account_die)}
+              <span style={styleMail}>
+                <BiLogoGmail fontSize={19} color='#EB5757' style={{ marginRight: '4px' }} />
+                {value?.account_die ? numberWithCommas(value?.account_die || 0) : '0'}
               </span>
             </span>
           </Tooltip>
@@ -218,6 +232,23 @@ function ComputerRunCommentOrder() {
                 <LuLink2 style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip> */}
+            <Tooltip title="Reset Computer">
+              <Button
+                size="default"
+                shape="circle"
+                type="default"
+                to="#"
+                style={{ marginRight: '5px' }}
+                className="btn-icon"
+                onClick={() => {
+                  dispatch(actions.detailComputerRunCommentBegin({
+                    id: value?.id
+                  }));
+                }}
+              >
+                <FeatherIcon icon="reset" size={16} style={{ marginTop: '4px' }} />
+              </Button>
+            </Tooltip>
             <Tooltip title="Sửa">
               <Button
                 size="default"
@@ -227,6 +258,9 @@ function ComputerRunCommentOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
+                  dispatch(actions.detailComputerRunCommentBegin({
+                    id: value?.id
+                  }));
                   setState({
                     ...state,
                     isEditCommentServer: true
@@ -245,6 +279,9 @@ function ComputerRunCommentOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
+                  dispatch(actions.detailComputerRunCommentBegin({
+                    id: value?.id
+                  }));
                   setState({
                     ...state,
                     isDetailCommentServer: true
@@ -265,11 +302,22 @@ function ComputerRunCommentOrder() {
     });
   }
 
+  // const rowSelection = {
+  //   getCheckboxProps: (record) => ({
+  //     disabled: record.name === 'Disabled User',
+  //     name: record.name,
+  //   }),
+  // };
+
+  const onSelectChange = (selectedRowKey) => {
+    console.log('---- selected row computer key nè -----', selectedRowKey);
+    setState({ ...state, selectedRowKeys: selectedRowKey });
+  };
+
   const rowSelection = {
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
+    onChange: (srk) => {
+      onSelectChange(srk);
+    },
   };
 
   return (
@@ -287,7 +335,7 @@ function ComputerRunCommentOrder() {
         setState={setState}
       />
       <PageHeader
-        title="Quản lý Server"
+        title="Quản lý Server Comment"
         buttons={[
           <div key="search" className="page-header-actions">
             <AutoComplete
@@ -320,14 +368,15 @@ function ComputerRunCommentOrder() {
                               <Button
                                 size="small"
                                 type="primary"
+                                style={{ display: 'flex', alignItems: 'center' }}
                                 onClick={() => {
                                   setState({
                                     ...state,
-                                    isAddDomainModal: true,
+                                    isBatchUpdateCommentServer: true,
                                   });
                                 }}
                               >
-                                <FeatherIcon icon="plus" size={12} /> Cập nhật ({selectedRowKeys.length})
+                                <TbShoppingBagEdit icon="plus" size={16} style={{ marginRight: '7px' }}/> Cập nhật ({selectedRowKeys.length})
                               </Button>
                             ) : null
                           }
@@ -345,7 +394,7 @@ function ComputerRunCommentOrder() {
                 >
                   <p style={{ fontWeight: 700 }}>Servers</p>
                   <Heading as="h1">
-                    {listServer?.length}
+                    {listServer?.meta?.total}
                   </Heading>
                 </div>
                 <div
@@ -435,32 +484,30 @@ function ComputerRunCommentOrder() {
         <Row>
           <Col xxl={24} md={24} xs={24}>
             <Cards headless>
-              <ProjectList>
-                <div className="table-responsive">
-                  <Table
-                    rowSelection={rowSelection}
-                    dataSource={dataSource}
-                    columns={columns}
-                    pagination={{
-                      current: listServer?.meta?.current_page,
-                      defaultPageSize: listServer?.meta?.count,
-                      pageSize: listServer?.meta?.per_page,
-                      total: listServer?.meta?.total,
-                      showSizeChanger: true,
-                      pageSizeOptions: DEFAULT_PAGESIZE,
-                      onChange(page, pageSize) {
-                        setCurrentPage(page);
-                        setLimitPage(pageSize)
-                      },
-                      position: ['bottomCenter'],
-                      responsive: true,
-                      showTotal(total, range) { return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p> },
-                      totalBoundaryShowSizeChanger: 100,
-                      size: "small"
-                    }}
-                  />
-                </div>
-              </ProjectList>
+              <TableWrapper className="">
+                <Table
+                  rowSelection={rowSelection}
+                  dataSource={dataSource}
+                  columns={columns}
+                  pagination={{
+                    current: listServer?.meta?.current_page,
+                    defaultPageSize: listServer?.meta?.count,
+                    pageSize: listServer?.meta?.per_page,
+                    total: listServer?.meta?.total,
+                    showSizeChanger: true,
+                    pageSizeOptions: DEFAULT_PAGESIZE,
+                    onChange(page, pageSize) {
+                      setCurrentPage(page);
+                      setLimitPage(pageSize)
+                    },
+                    position: ['bottomCenter'],
+                    responsive: true,
+                    showTotal(total, range) { return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p> },
+                    totalBoundaryShowSizeChanger: 100,
+                    size: "small"
+                  }}
+                />
+              </TableWrapper>
             </Cards>
           </Col>
         </Row>

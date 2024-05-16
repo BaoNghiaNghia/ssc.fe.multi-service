@@ -8,7 +8,10 @@ import {
     getOneOrderCommentAPI,
     updateOneOrderCommentAPI,
     listComputerRunCommentAPI,
-    updateManyOrderCommentAPI
+    updateManyOrderCommentAPI,
+    updateManyComputerCommentAPI,
+    detailComputerRunCommentAPI,
+    updateOneComputerRunCommentAPI
 } from '../../config/apiFactory/BuffComment/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE } from '../../variables';
 
@@ -64,6 +67,68 @@ function* updateOrderCommentFunc(params) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Update order comment failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* updateOneComputerCommentFunc(params) {
+  try {
+    const response = yield call(updateOneComputerRunCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateOneComputerCommentAdminSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.listComputerRunCommentBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
+      );
+
+      toast.success('Cập nhật server comment thành công');
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.updateOneComputerCommentAdminErr({ error: errorMessage || 'Update server comment failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Update server comment failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* updateManyComputerCommentFunc(params) {
+  try {
+    const response = yield call(updateManyComputerCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateManyComputerCommentAdminSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.listComputerRunCommentBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
+      );
+      toast.success('Cập nhật nhiều computer comment thành công');
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.updateManyComputerCommentAdminErr({ error: errorMessage || 'Update many computer comment failed' })
+    );
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Update many computer comment failed');
     }
   } finally { /* empty */ }
 }
@@ -153,6 +218,24 @@ function* fetchListOrderCommentFunc(params) {
   } finally { /* empty */ }
 }
 
+function* detailComputerCommentFunc(params) {
+  try {
+    const response = yield call(detailComputerRunCommentAPI, params?.payload?.id);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.detailComputerRunCommentSuccess(response?.data?.data)
+      );
+    }
+
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.detailComputerRunCommentErr({ error: errorMessage || 'Detail server run comment failed' })
+    );
+  } finally { /* empty */ }
+}
+
 function* detailOrderCommentFunc(params) {
   try {
     const response = yield call(getOneOrderCommentAPI, params?.payload?.id);
@@ -162,9 +245,6 @@ function* detailOrderCommentFunc(params) {
         actions.detailOrderCommentSuccess(response?.data?.data)
       );
     }
-    // yield put(
-    //     actions.detailOrderCommentSuccess(params?.payload)
-    // );
   } catch (error) {
     const errorMessage = error;
     yield put(
@@ -191,6 +271,14 @@ function* commentInOrderCommentFunc(params) {
 }
 
 
+export function* updateManyComputerCommentWatcherSaga() {
+  yield takeLatest(actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN, updateManyComputerCommentFunc);
+}
+
+export function* updateOneComputerCommentWatcherSaga() {
+  yield takeLatest(actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN, updateOneComputerCommentFunc);
+}
+
 export function* updateManyOrderCommentWatcherSaga() {
   yield takeLatest(actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN, updateManyOrderCommentFunc);
 }
@@ -212,6 +300,10 @@ export function* fetchListOrderCommentWatcherSaga() {
 
 export function* detailOrderCommentWatcherSaga() {
   yield takeLatest(actions.DETAIL_ORDER_COMMENT_BEGIN, detailOrderCommentFunc);
+}
+
+export function* detailComputerCommentWatcherSaga() {
+  yield takeLatest(actions.DETAIL_COMPUTER_RUN_COMMENT_BEGIN, detailComputerCommentFunc);
 }
 
 export function* commentInOrderCommentWatcherSaga() {

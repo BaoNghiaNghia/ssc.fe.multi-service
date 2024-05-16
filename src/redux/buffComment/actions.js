@@ -27,9 +27,21 @@ const actions = {
     UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS',
     UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR',
 
+    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN: 'UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN',
+    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS: 'UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS',
+    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR: 'UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR',
+
+    UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN: 'UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN',
+    UPDATE_ONE_COMPUTER_COMMENT_ADMIN_SUCCESS: 'UPDATE_ONE_COMPUTER_COMMENT_ADMIN_SUCCESS',
+    UPDATE_ONE_COMPUTER_COMMENT_ADMIN_ERR: 'UPDATE_ONE_COMPUTER_COMMENT_ADMIN_ERR',
+
     LIST_COMPUTER_RUN_COMMENT_BEGIN: 'LIST_COMPUTER_RUN_COMMENT_BEGIN',
     LIST_COMPUTER_RUN_COMMENT_SUCCESS: 'LIST_COMPUTER_RUN_COMMENT_SUCCESS',
     LIST_COMPUTER_RUN_COMMENT_ERR: 'LIST_COMPUTER_RUN_COMMENT_ERR',
+
+    DETAIL_COMPUTER_RUN_COMMENT_BEGIN: 'DETAIL_COMPUTER_RUN_COMMENT_BEGIN',
+    DETAIL_COMPUTER_RUN_COMMENT_SUCCESS: 'DETAIL_COMPUTER_RUN_COMMENT_SUCCESS',
+    DETAIL_COMPUTER_RUN_COMMENT_ERR: 'DETAIL_COMPUTER_RUN_COMMENT_ERR',
 
     listComputerRunCommentBegin: (payload) => {
         return {
@@ -52,6 +64,27 @@ const actions = {
         };
     },
 
+    detailComputerRunCommentBegin: (payload) => {
+        return {
+            type: actions.DETAIL_COMPUTER_RUN_COMMENT_BEGIN,
+            payload
+        };
+    },
+
+    detailComputerRunCommentSuccess: (data) => {
+        return {
+            type: actions.DETAIL_COMPUTER_RUN_COMMENT_SUCCESS,
+            data,
+        };
+    },
+
+    detailComputerRunCommentErr: (err) => {
+        return {
+            type: actions.DETAIL_COMPUTER_RUN_COMMENT_ERR,
+            err,
+        };
+    },
+
     detailOrderCommentAdminBegin: (payload) => {
         return {
             type: actions.DETAIL_ORDER_COMMENT_ADMIN_BEGIN,
@@ -69,6 +102,48 @@ const actions = {
     detailOrderCommentAdminErr: (err) => {
         return {
             type: actions.DETAIL_ORDER_COMMENT_ADMIN_ERR,
+            err,
+        };
+    },
+
+    updateOneComputerCommentAdminBegin: (payload) => {
+        return {
+            type: actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN,
+            payload
+        };
+    },
+
+    updateOneComputerCommentAdminSuccess: (data) => {
+        return {
+            type: actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_SUCCESS,
+            data,
+        };
+    },
+
+    updateOneComputerCommentAdminErr: (err) => {
+        return {
+            type: actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_ERR,
+            err,
+        };
+    },
+
+    updateManyComputerCommentAdminBegin: (payload) => {
+        return {
+            type: actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN,
+            payload
+        };
+    },
+
+    updateManyComputerCommentAdminSuccess: (data) => {
+        return {
+            type: actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS,
+            data,
+        };
+    },
+
+    updateManyComputerCommentAdminErr: (err) => {
+        return {
+            type: actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR,
             err,
         };
     },
