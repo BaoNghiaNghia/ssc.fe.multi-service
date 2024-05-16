@@ -183,7 +183,9 @@ function PendingBuffComment() {
         done_count,
         note,
         video_title,
-        video_duration
+        video_duration,
+        current_count,
+        start_count
        } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
@@ -263,14 +265,12 @@ function PendingBuffComment() {
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
                 <span>
-                  <Tooltip title={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <p>Đã chạy / Tổng số lượng</p>
-                    <p>Hiệu suất</p>
-                  </div>
-                }>
                   <div style={{ alignContent: 'center' }}>
-                    <p style={{ margin: '5px 0px', padding: '0px' }}><strong>{numberWithCommas(done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></p>
+                    <Tooltip title={
+                      <p>Thực tế / Đã chạy</p>
+                    }>
+                      <p style={{ margin: '5px 0px', padding: '0px' }}><strong>{numberWithCommas((Math.abs(current_count - start_count)) || 0)} / {numberWithCommas(done_count || 0)}</strong></p>
+                    </Tooltip>
                     {
                       performance !== 0 ? (
                         <span
@@ -301,7 +301,6 @@ function PendingBuffComment() {
                       )
                     }
                   </div>
-                  </Tooltip>
                 </span>
               )
             }
@@ -533,6 +532,23 @@ function PendingBuffComment() {
       <PageHeader
         ghost
         title="Danh sách đơn Comment"
+        buttons={[
+          <div className="table-toolbox-menu">
+            <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue="all">
+              <Radio.Button value="all">Tất cả</Radio.Button>
+              {
+                ORDER_YOUTUBE_STATUS?.map((state) => {
+                  return (
+                    <Radio.Button  key={state?.name} value={state?.value}>
+                      <Badge style={{ marginRight: '5px' }} dot color={ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === state?.value)]?.color} />
+                      {state?.label}
+                    </Radio.Button>
+                  );
+                })
+              }
+            </Radio.Group>
+          </div>
+        ]}
       />
       <Main>
         <Cards headless>
@@ -545,24 +561,7 @@ function PendingBuffComment() {
                       <AutoComplete onSearch={handleSearch} dataSource={notData} patterns />
                     </div>
                   </Col>
-                  <Col xxl={16} xs={16}>
-                    <div className="table-toolbox-menu">
-                      <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue="all">
-                        <Radio.Button value="all">Tất cả</Radio.Button>
-                        {
-                          ORDER_YOUTUBE_STATUS?.map((state) => {
-                            return (
-                              <Radio.Button  key={state?.name} value={state?.value}>
-                                <Badge style={{ marginRight: '5px' }} dot color={ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === state?.value)]?.color} />
-                                {state?.label}
-                              </Radio.Button>
-                            );
-                          })
-                        }
-                      </Radio.Group>
-                    </div>
-                  </Col>
-                  <Col xxl={2} xs={24}>
+                  <Col xxl={18} xs={24}>
                     <div className="table-toolbox-actions">
                       <Button
                         size="small"

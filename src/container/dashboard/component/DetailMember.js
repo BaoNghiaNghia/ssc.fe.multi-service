@@ -3,10 +3,9 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BsPersonCheck } from "react-icons/bs";
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
+import { Row, Col, Form, Input, Modal, InputNumber, Divider } from 'antd';
 import { VIETNAMES_CURRENCY } from '../../../variables';
 
-const { Option } = Select;
 
 function DetailMember({ isOpen, setState }) {
   const [formDetailMember] = Form.useForm();
