@@ -135,7 +135,7 @@ function ComputerRunCommentOrder() {
 
       const styleMail = { marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' };
 
-      const threadString = `${value?.run || 0} / ${value?.thread}`;
+      const threadString = `${value?.current_thread || 0} / ${value?.thread}`;
 
       return dataSource.push({
         key: value?.id,
