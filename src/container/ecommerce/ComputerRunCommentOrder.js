@@ -123,13 +123,13 @@ function ComputerRunCommentOrder() {
 
   if (listServer?.items?.length > 0) {
     listServer?.items?.map((value, index) => {
-      const color = value.run >= 15 ? 'green' : ((value.run < 15 && value.run > 5) ? 'orange' : 'red');
+      const color = value?.current_thread >= 15 ? 'green' : ((value?.current_thread < 15 && value?.current_thread > 5) ? 'orange' : 'red');
 
       const fixedStyle = { display: 'inline-flex', alignItems: 'center', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
 
-      const colorObj = value.run >= 15
+      const colorObj = value?.current_thread >= 15
         ? { backgroundColor: '#0080001a', border: '2px solid green', color: 'green', ...fixedStyle }
-        : ((value.run < 15 && value.run > 5)
+        : ((value?.current_thread < 15 && value?.current_thread > 5)
           ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', ...fixedStyle }
           : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', ...fixedStyle });
 

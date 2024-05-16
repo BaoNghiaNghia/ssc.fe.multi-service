@@ -38,6 +38,7 @@ function EditCommentComputer({ setState, computerState }) {
                         action: values?.action,
                         cpu: values?.cpu,
                         ip: values?.ip,
+                        current_thread: values?.current_thread,
                         limit_per_day: values?.limit_per_day,
                         link: values?.link,
                         ram: values?.ram,
