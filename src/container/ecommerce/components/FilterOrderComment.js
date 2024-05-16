@@ -135,7 +135,7 @@ function FilterOrderComment({ orderState, setState }) {
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Bộ lọc</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Tìm order comment phù hợp</p>
+                <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Tìm order comment phù hợp</p>
               </div>
             </div>
           </>
@@ -152,17 +152,18 @@ function FilterOrderComment({ orderState, setState }) {
         ]}
       >
         <Form layout="vertical" form={formCreateService}>
-          <Row gutter="10">
+          <Row gutter="15">
             <Col sm={14}>
               <Form.Item
                 name="order_type"
                 label="Sắp xếp"
+                style={{ margin: 0, padding: 0 }}
               >
                 <Select
-                  style={{ width: '100%', margin: '0px', padding: '0px' }}
                   dropdownMatchSelectWidth={false}
                   defaultActiveFirstOption
                   placeholder="Chọn kiểu lọc"
+                  size='small'
                   allowClear
                 >
                   {
@@ -179,8 +180,14 @@ function FilterOrderComment({ orderState, setState }) {
               <Form.Item
                 name="priority"
                 label="Ưu tiên"
+                style={{ margin: 0, padding: 0 }}
               >
-                <Select dropdownMatchSelectWidth={false} allowClear placeholder="Chọn trạng thái ưu tiên">
+                <Select 
+                  dropdownMatchSelectWidth={false}
+                  size='small'
+                  allowClear
+                  placeholder="Chọn trạng thái ưu tiên"
+                >
                   <Option key="priority_true" value="true" style={{ margin: 0, padding: 0 }}>Có</Option>
                   <Option key="priority_false" value="false" style={{ margin: 0, padding: 0 }}>Không</Option>
                 </Select>
@@ -189,10 +196,10 @@ function FilterOrderComment({ orderState, setState }) {
           </Row>
           <Row gutter={25}>
             <Col sm={24}>
-              <Form.Item name="user_id" style={{ margin: '0px' }} label="Người dùng">
+              <Form.Item name="user_id" style={{ margin: 0 }} label="Người dùng">
                 <Select
                   defaultActiveFirstOption
-                  style={{ width: '100%', margin: '0px', padding: '0px' }}
+                  style={{ width: '100%', margin: 0, padding: 0 }}
                   size='small'
                   placeholder='Chọn người dùng'
                   allowClear
@@ -204,8 +211,8 @@ function FilterOrderComment({ orderState, setState }) {
                           <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                             <FaRegUserCircle color='gray' fontSize={20} style={{ marginRight: '10px', marginTop: '5px' }}/> 
                             <span>
-                              <p style={{ margin: '0px', padding: '0px', fontWeight: '800' }}>{itemUser?.fullname}</p>
-                              <p style={{ margin: '0px', padding: '0px', fontSize: '0.7em' }}>{itemUser?.email}</p>
+                              <p style={{ margin: 0, padding: 0, fontWeight: '800' }}>{itemUser?.fullname}</p>
+                              <p style={{ margin: 0, padding: 0, fontSize: '0.7em' }}>{itemUser?.email}</p>
                             </span>
                           </div>
                         </Option>
@@ -242,7 +249,7 @@ function FilterOrderComment({ orderState, setState }) {
                                       </span>
                                     </Col>
                                   </Row>
-                                  <span style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</span>
+                                  <span style={{ color: 'gray', fontSize: '0.8em', margin: 0, padding: 0 }}>{itemService?.description}</span>
                                   <Row>
                                     <Col style={{ display: 'inline-flex', alignItems: 'center' }}>
                                       {

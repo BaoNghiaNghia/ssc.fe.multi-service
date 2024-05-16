@@ -30,19 +30,20 @@ import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, ROLE_GENERAL, 
 import { convertSeconds, numberWithCommas } from '../../utility/utility';
 
 
-const badgeOrangeStyle = {
-  border: `1.3px solid orange`,
+const badgeGreenStyle = {
+  border: `1.3px solid green`,
   fontFamily: 'Be Vietnam Pro',
   borderRadius: '7px ',
   padding: '1px 7px',
   fontSize: '0.7em',
-  color: 'orange',
+  backgroundColor: 'green',
   fontWeight: 'bold',
   display: 'inline-flex',
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
-  marginRight: '5px',
+  marginRight: '8px',
+  marginTop: '5px'
 };
 
 const columns = [
@@ -235,10 +236,11 @@ function PendingBuffComment() {
             <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
               {
                 priority ? (
-                  <span style={badgeOrangeStyle}>
-                    <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
-                    Ưu tiên
-                  </span>
+                  <Tooltip title="Ưu tiên">
+                    <span style={badgeGreenStyle}>
+                      <FaLocationArrow color='white'/>
+                    </span>
+                  </Tooltip>
                 ) : <></>
               }
 
