@@ -31,7 +31,7 @@ const createOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints
 
 const listComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).get(query);
 const detailComputerRunCommentAPI = (id) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).getOne(id);
-const updateOneComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).update(query);
+const updateOneComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).patch(query);
 const updateManyComputerCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT }).patchMultiple(query);
 
 export {
