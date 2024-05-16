@@ -96,7 +96,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         ) : <></>
       }
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF SUBSCRIBE</NavTitle>}
-      <SubMenu key="dashboard" icon={!topMenu && <FeatherIcon icon="home" />} title="Danh sách đơn">
+      {/* <SubMenu key="dashboard" icon={!topMenu && <FeatherIcon icon="home" />} title="Danh sách đơn">
         <Menu.Item key="subscribe-cho-duyet">
           <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/cho-duyet`}>
             Chờ duyệt
@@ -112,7 +112,21 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             Bảo hành
           </NavLink>
         </Menu.Item>
-      </SubMenu>
+      </SubMenu> */}
+      <Menu.Item
+        icon={
+          !topMenu && (
+            <NavLink className="menuItem-icon" to={`${path}/subscribe/cho-duyet`}>
+              <FeatherIcon icon="archive" />
+            </NavLink>
+          )
+        }
+        key="buff-subscribe-cho-duyet"
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/cho-duyet`}>
+          Danh sách đơn {pendingBadge}
+        </NavLink>
+      </Menu.Item>
       {
         checkMatchRole ? (
           <Menu.Item
@@ -126,13 +140,13 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             key="subscribe-lich-su-don"
           >
             <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/lich-su-don`}>
-              Lịch sử đơn
+              Lịch sử đơn {pendingBadge}
             </NavLink>
           </Menu.Item>
         ) : <></>
       }
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF LIKE</NavTitle>}
-      <SubMenu key="buff-like" icon={!topMenu && <FeatherIcon icon="mail" />} title="Danh sách đơn">
+      {/* <SubMenu key="buff-like" icon={!topMenu && <FeatherIcon icon="mail" />} title="Danh sách đơn">
         <Menu.Item key="buff-like-cho-duyet">
           <NavLink onClick={toggleCollapsed} to={`${path}/like/cho-duyet`}>
             Chờ duyệt
@@ -148,7 +162,21 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             Bảo hành
           </NavLink>
         </Menu.Item>
-      </SubMenu>
+      </SubMenu> */}
+      <Menu.Item
+        icon={
+          !topMenu && (
+            <NavLink className="menuItem-icon" to={`${path}/like/cho-duyet`}>
+              <FeatherIcon icon="archive" />
+            </NavLink>
+          )
+        }
+        key="buff-like-cho-duyet"
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/like/cho-duyet`}>
+          Danh sách đơn {pendingBadge}
+        </NavLink>
+      </Menu.Item>
       {
         checkMatchRole ? (
           <Menu.Item
@@ -162,7 +190,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             key="buff-like-lich-su-don"
           >
             <NavLink onClick={toggleCollapsed} to={`${path}/like/lich-su-don`}>
-              Lịch sử đơn
+              Lịch sử đơn {pendingBadge}
             </NavLink>
           </Menu.Item>
         ) : <></>
