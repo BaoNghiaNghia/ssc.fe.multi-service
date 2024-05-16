@@ -2,54 +2,62 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Form, Select, Modal } from 'antd';
-import { MdAddchart } from "react-icons/md";
+import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Button } from 'antd';
+import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
+import { LuLink2 } from 'react-icons/lu';
+import { toast } from 'react-toastify';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { STATUS_COMMENT_ENUM } from '../../../variables/index';
+import { isEmptyObject } from '../../../utility/utility';
+import actions from '../../../redux/buffComment/actions';
+
+const { Option } = Select;
 
 function BatchUpdateComputerComment({ setState, computerState }) {
     const dispatch = useDispatch();
 
     const { isBatchUpdateCommentServer, selectedRowKeys } = computerState;
+    const [formDetailComputerCmt] = Form.useForm();
 
-    const [formUpdateService] = Form.useForm();
-
-    const { detailOrderComment, userList, listService } = useSelector(state => {
+    const { isLoading, detailComputerComment } = useSelector(state => {
         return {
-            detailOrderComment: state?.buffComment?.detailOrderComment,
-            userList: state?.member?.userList,
-            listService: state?.settingService?.listService?.items,
+            isLoading: state?.buffComment?.loading,
+            detailComputerComment: state?.buffComment?.detailComputerComment
         };
     });
 
-    useEffect(() => {
-        dispatch(serviceActions.fetchListServiceBegin({}));
-    }, [dispatch]);
+    const handleOk = () => {
+        try {
+            formDetailComputerCmt.validateFields()
+                .then((values) => {
+                    Object.keys(values).forEach(key => values[key] === undefined && delete values[key]);
+                    if (isEmptyObject(values)) {
+                        toast.warn('Chưa nhập thông tin cập nhật');
+                        return;
+                    }
 
-    const findUser = userList?.filter((item) => item.id === detailOrderComment?.user_id);
-    const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
+                    if (selectedRowKeys?.length > 0) {
+                        values.ids = selectedRowKeys;
+                    }
+                    dispatch(actions.updateManyComputerCommentAdminBegin(values));
 
-    useEffect(() => {
-        formUpdateService.setFieldsValue(detailOrderComment);
-        if (findService?.length > 0) {
-            formUpdateService.setFieldValue('category', findService[0]?.category);
+                    setState({
+                        isModalEditMem: false,
+                    });
+
+                    formDetailComputerCmt.resetFields();
+                })
+                .catch((err) => {
+                    console.error("Handle Real Error: ", err);
+                });
+        } catch (err) {
+            console.log(err);
         }
-
-        if (findUser?.length > 0) {
-            formUpdateService.setFieldValue('user_name', findUser[0]?.fullname);
-            formUpdateService.setFieldValue('user_email', findUser[0]?.email);
-        }
-
-        formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
-        formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderComment?.status)?.title);
-    });
+    };
 
     const handleCancel = () => {
-        setState({
-            ...computerState,
-            isBatchUpdateCommentServer: false,
-        });
-        formUpdateService.resetFields();
+        setState({ ...computerState, isBatchUpdateCommentServer: false });
+        formDetailComputerCmt.resetFields();
     }
 
     return (
@@ -59,21 +67,84 @@ function BatchUpdateComputerComment({ setState, computerState }) {
                 open={isBatchUpdateCommentServer}
                 centered
                 title={
-                    <>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-                            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-                            <div>
-                                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} computer</p>
-                                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin đơn</p>
-                            </div>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+                        <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+                        <div>
+                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} Comment Server</p>
+                            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy chạy comment</p>
                         </div>
-                    </>
+                    </div>
                 }
                 onCancel={handleCancel}
-                footer={null}
+                footer={[
+                    <Button key="back" onClick={handleCancel}>
+                        Hủy
+                    </Button>,
+                    <Button key="submit" type="primary" onClick={handleOk}>
+                        Cập nhật
+                    </Button>
+                ]}
             >
-                <Form name="add_service" layout="vertical" form={formUpdateService}>
-                    <span>ss</span>
+                <Form layout="vertical" form={formDetailComputerCmt}>
+                    {
+                        !isLoading ? (
+                            <>
+                                <Row gutter="10">
+                                    <Col sm={12}>
+                                        <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn">
+                                            <Input size='small' addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server comment' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={12}>
+                                        <Form.Item name="ip" style={{ margin: '0px' }} label="IP">
+                                            <Input size='small' addonBefore={<MdOutlineNumbers />} style={{ width: '100%' }} placeholder='Địa chỉ IP' />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
+
+                                <Row gutter="10">
+                                    <Col sm={8}>
+                                        <Form.Item name="thread" label="Số luồng">
+                                            <InputNumber type="number" size='small' style={{ width: '100%' }} placeholder='Số luồng' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="cpu" label="CPU">
+                                            <Input size='small' style={{ width: '100%' }} placeholder='CPU của server' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="ram" label="Ram">
+                                            <Input size='small' style={{ width: '100%' }} placeholder='Ram của server' />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter="10">
+                                    <Col sm={8}>
+                                        <Form.Item name="current_thread" style={{ margin: 0 }} label="Luồng hiện tại">
+                                            <InputNumber type='number' addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Số luồng hiện tại' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="limit_per_day" style={{ margin: 0 }} label="Giới hạn mỗi ngày">
+                                            <InputNumber type='number' addonAfter="comment" size='small' style={{ width: '100%' }} placeholder='Giới hạn comment mỗi ngày ' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
+                                        <Form.Item name="action" label="Hành động" style={{ margin: 0 }}>
+                                            <Select style={{ width: '100%' }} placeholder="Chọn hành động" size='small'>
+                                                <Option value="reset">Reset</Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </>
+                        ) : (
+                            <div>Đang tải</div>
+                        )
+                    }
                 </Form>
             </Modal>
         </>

@@ -53,7 +53,7 @@ function EditCommentComputer({ setState, computerState }) {
                     formDetailComputerCmt.resetFields();
                 })
                 .catch((err) => {
-                    console.error("handle Real Error: ", err);
+                    console.error("Handle Real Error: ", err);
                 });
         } catch (err) {
             console.log(err);
@@ -121,7 +121,7 @@ function EditCommentComputer({ setState, computerState }) {
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <Input size='small' style={{ width: '100%' }} placeholder='Số luồng' />
+                                            <InputNumber type="number" size='small' style={{ width: '100%' }} placeholder='Số luồng' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>

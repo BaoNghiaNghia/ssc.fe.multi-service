@@ -144,10 +144,12 @@ function ComputerRunCommentOrder() {
             <TbServerBolt fontSize={17} style={{ marginRight: '5px', marginTop: '5px' }} />
             <div style={{ margin: 0, padding: 0 }}>
               <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}</p>
-              <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
-                <LuLink2 style={{ fontWeight: 700, marginRight: '5px' }}/>
-                {value?.link || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
-              </div>
+              <a href={value?.link} target="_blank" rel="noopener noreferrer">
+                <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
+                  <LuLink2 style={{ fontWeight: 700, marginRight: '5px' }}/>
+                  {value?.link || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
+                </div>
+              </a>
               <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
                 <MdOutlineNumbers style={{ fontWeight: 700, marginRight: '5px' }} />
                 {value?.ip || <span style={{ color: 'gray', fontWeight: '600' }}>Chưa có</span>}
@@ -310,7 +312,6 @@ function ComputerRunCommentOrder() {
   // };
 
   const onSelectChange = (selectedRowKey) => {
-    console.log('---- selected row computer key nè -----', selectedRowKey);
     setState({ ...state, selectedRowKeys: selectedRowKey });
   };
 
