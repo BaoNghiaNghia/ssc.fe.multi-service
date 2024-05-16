@@ -31,6 +31,8 @@ function DetailOrder({ setState, state }) {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
+  const { performance } = detailOrderComment;
+
   const findUser = userList?.filter((item) => item.id === detailOrderComment?.user_id);
   const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
 
@@ -68,6 +70,13 @@ function DetailOrder({ setState, state }) {
         return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
     }
   }
+
+
+  const performanceColor = (performance !== 0) 
+  ? (performance >= 0.8 ? 'green' : ((performance < 0.8 && performance > 0.5) ? 'yellow' : ((performance < 0.5 && performance > 0.3) ? 'red' : 'gray'))) : 'gray';
+
+  const performanceColorBack = (performance !== 0) 
+  ? (performance >= 0.8 ? '#84d984' : ((performance < 0.8 && performance > 0.5) ? '#ffdfa5' : ((performance < 0.5 && performance > 0.3) ? '#f9c1c1' : '#e7e7e7'))) : '#e7e7e7';
 
   return (
     <>
@@ -250,8 +259,8 @@ function DetailOrder({ setState, state }) {
                           fontWeight: 700,
                           padding:'0 5px',
                           borderRadius: '5px',
-                          border: '1px solid orange',
-                          backgroundColor: '#ffdfa5'
+                          border: `1px solid ${performanceColor}`,
+                          backgroundColor: performanceColorBack
                         }}
                       >
                         Hiệu suất: {numberWithCommas(Math.floor(detailOrderComment?.performance, 1) || 0)} %
