@@ -158,7 +158,6 @@ function* changeServiceTypeFunc(params) {
       actions.changeServiceTypeSuccess(params?.payload)
     );
 
-    console.log('--- change service type nè ---', params?.payload);
     if (params?.payload === SERVICE_TYPE.COMMENT.title) {
       yield put(
         actions.statisticCommentByOrderReportBegin()
@@ -167,9 +166,21 @@ function* changeServiceTypeFunc(params) {
   } catch (err) {
     yield put(
       actions.changeServiceTypeErr({ error: err || 'Count error subscribe failed' })
-    )
+    );
   }
 }
+
+function* toggleStateModalCreateOrderFunc(params) {
+  try {
+    yield put(
+      actions.toggleModalCreateOrderSuccess(!params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.toggleModalCreateOrderErr({ error: err || 'Toggle modal create order failed' })
+    );
+  }
+} 
 
 function* setRangeDateFilterFunc(params) {
   try {
@@ -230,4 +241,8 @@ export function* getStatisticsSubscribeReporWatcherSaga() {
 
 export function* getStatisticsByOrderStatusReportWatcherSaga() {
   yield takeLatest(actions.STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN, statisticCommentByOrderReportFunc);
+}
+
+export function* toggleStateModalCreateOrderWatcherSaga() {
+  yield takeLatest(actions.OPEN_MODAL_CREATE_NEW_ORDER_BEGIN, toggleStateModalCreateOrderFunc);
 }

@@ -15,7 +15,8 @@ import {
     countErrorSubscribeWatcherSaga,
     getStatisticsSubscribeReporWatcherSaga,
     changeServiceTypeWatcherSaga,
-    getStatisticsByOrderStatusReportWatcherSaga
+    getStatisticsByOrderStatusReportWatcherSaga,
+    toggleStateModalCreateOrderWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -130,6 +131,7 @@ export default function* rootSaga() {
         updateManyComputerCommentWatcherSaga(),
         updateOneComputerCommentWatcherSaga(),
         detailComputerCommentWatcherSaga(),
-        getStatisticsByOrderStatusReportWatcherSaga()
+        getStatisticsByOrderStatusReportWatcherSaga(),
+        toggleStateModalCreateOrderWatcherSaga()
     ]);
 }

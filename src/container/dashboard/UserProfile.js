@@ -92,10 +92,12 @@ const PasswordProfile = () => {
                             <Form.Item
                                 label="Mật khẩu cũ :"
                                 name="current_password"
-                                rules={[{
-                                    required: true,
-                                    message: 'Trường không được trống'
-                                }]}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Trường không được trống'
+                                    }
+                                ]}
                             >
                                 <Input.Password size='small' addonBefore={<MdPassword />} placeholder="Nhập mật khẩu" />
                             </Form.Item>
@@ -104,10 +106,12 @@ const PasswordProfile = () => {
                             <Form.Item
                                 label="Mật khẩu mới:"
                                 name="new_password"
-                                rules={[{
-                                    required: true,
-                                    message: 'Trường không được trống'
-                                }]}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Trường không được trống'
+                                    }
+                                ]}
                             >
                                 <Input.Password
                                     size='small'
@@ -120,17 +124,19 @@ const PasswordProfile = () => {
                             <Form.Item
                                 label="Nhập lại mật khẩu mới :"
                                 name="new_password_confirmation"
-                                rules={[{
-                                    required: true,
-                                    message: 'Trường không được trống'
-                                }]}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Trường không được trống'
+                                    }
+                                ]}
                             >
                                 <Input.Password size='small' addonBefore={<MdPassword />} placeholder="Nhập lại mật khẩu" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={8}>
+                        <Col xs={4}>
                             <Form.Item>
                                 <Button block type="primary" htmlType="submit" color="#26695c">
                                     Thay đổi

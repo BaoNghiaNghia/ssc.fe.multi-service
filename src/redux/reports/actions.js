@@ -37,10 +37,35 @@ const actions = {
   CHANGE_SERVICE_TYPE_SUCCESS: 'CHANGE_SERVICE_TYPE_SUCCESS',
   CHANGE_SERVICE_TYPE_ERR: 'CHANGE_SERVICE_TYPE_ERR',
 
+  OPEN_MODAL_CREATE_NEW_ORDER_BEGIN: 'OPEN_MODAL_CREATE_NEW_ORDER_BEGIN',
+  OPEN_MODAL_CREATE_NEW_ORDER_SUCCESS: 'OPEN_MODAL_CREATE_NEW_ORDER_SUCCESS',
+  OPEN_MODAL_CREATE_NEW_ORDER_ERR: 'OPEN_MODAL_CREATE_NEW_ORDER_ERR',
+
   // COMMENT
   STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN: 'STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN',
   STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
   STATISTIC_COMMENT_BY_ORDER_REPORT_ERR: 'STATISTIC_COMMENT_BY_ORDER_REPORT_ERR',
+
+  toggleModalCreateOrderBegin: (payload) => {
+    return {
+      type: actions.OPEN_MODAL_CREATE_NEW_ORDER_BEGIN,
+      payload
+    };
+  },
+
+  toggleModalCreateOrderSuccess: (data) => {
+    return {
+      type: actions.OPEN_MODAL_CREATE_NEW_ORDER_SUCCESS,
+      data,
+    };
+  },
+
+  toggleModalCreateOrderErr: (err) => {
+    return {
+      type: actions.OPEN_MODAL_CREATE_NEW_ORDER_ERR,
+      err,
+    };
+  },
 
   statisticCommentByOrderReportBegin: (payload) => {
     return {

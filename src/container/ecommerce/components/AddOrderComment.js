@@ -4,11 +4,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { AiOutlineFieldNumber } from "react-icons/ai";
-import { Row, Col, Form, Input, InputNumber, Button, Modal, Divider, Switch, Select, Badge } from 'antd';
-import { MdAddchart, MdOutlineImportExport } from "react-icons/md";
+import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge } from 'antd';
+import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import actions from '../../../redux/buffComment/actions';
+import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
@@ -61,14 +61,15 @@ const badgeRedStyle = {
 const { Option } = Select;
 
 
-function AddOrderComment({ isOpen, setState }) {
+function AddOrderComment() {
   const dispatch = useDispatch();
   const [formCreateService] = Form.useForm();
 
-  const { postLoading, listService } = useSelector(state => {
+  const { postLoading, listService, isOpenCreateOrder } = useSelector(state => {
     return {
       postLoading: state.settingService.postLoading,
       listService: state?.settingService?.listService?.items,
+      isOpenCreateOrder: state?.reports?.isOpenCreateOrder
     };
   });
 
@@ -90,13 +91,9 @@ function AddOrderComment({ isOpen, setState }) {
     try {
       formCreateService.validateFields()
         .then((values) => {
-          // const {
-
-          // }
-
           dispatch(actions.createOrderCommentAdminBegin(values));
-
-          setState({ isCreateCommentOrderModal: false });
+          // setState({ isCreateCommentOrderModal: false });
+          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
           formCreateService.resetFields();
         })
         .catch((err) => {
@@ -108,16 +105,17 @@ function AddOrderComment({ isOpen, setState }) {
   };
 
   const handleCancel = () => {
-    setState({
-      isCreateCommentOrderModal: false,
-    });
+    // setState({
+    //   isCreateCommentOrderModal: false,
+    // });
+    dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
   }
 
   return (
     <>
       <Modal
         width='800px'
-        open={isOpen}
+        open={isOpenCreateOrder}
         centered
         title={
           <>
@@ -137,7 +135,7 @@ function AddOrderComment({ isOpen, setState }) {
             Hủy
           </Button>,
           <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-            Đặt hàng
+            Xác nhận
           </Button>
         ]}
       >
@@ -271,9 +269,9 @@ function AddOrderComment({ isOpen, setState }) {
   );
 }
 
-AddOrderComment.propTypes = {
-  isOpen: PropTypes.bool,
-  setState: PropTypes.func
-};
+// AddOrderComment.propTypes = {
+//   isOpen: PropTypes.bool,
+//   setState: PropTypes.func
+// };
 
 export default AddOrderComment;

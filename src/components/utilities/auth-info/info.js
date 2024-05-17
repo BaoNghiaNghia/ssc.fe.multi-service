@@ -93,15 +93,6 @@ function AuthInfo() {
 
   return (
     <InfoWraper>
-      <Button
-        type="default"
-        style={{ marginRight: "20px" }}
-        onClick={() => {
-          console.log("----- Đặt hàng nè ------");
-        }}
-      >
-        <FeatherIcon icon="plus" size={12} style={{ marginRight: '5px' }} /> Đặt hàng
-      </Button>
       {/* <Message />
       <Notification />
 

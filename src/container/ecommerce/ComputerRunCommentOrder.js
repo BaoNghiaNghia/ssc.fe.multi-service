@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col, Table, Badge, Tooltip, Button } from 'antd';
@@ -114,12 +115,23 @@ function ComputerRunCommentOrder() {
       action: "reset",
     };
 
-  dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
+    dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
   }
 
-  const fullThreadServer = listServer?.items?.filter(item => item?.run >= 15)?.length;
-  const nonFullThreadServer = listServer?.items?.filter(item => item?.run < 15 && item?.run > 5)?.length;
-  const aBitThreadServer = listServer?.items?.filter(item => item?.run <= 5)?.length;
+  const fullThreadServer = listServer?.items?.filter(item => {
+    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
+    return percentThread >= 0.7;
+  })?.length;
+
+  const nonFullThreadServer = listServer?.items?.filter(item => {
+    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
+    return percentThread > 0.7 && percentThread < 0.3;
+  })?.length;
+
+  const aBitThreadServer = listServer?.items?.filter(item => {
+    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
+    return percentThread < 0.3;
+  })?.length;
 
   const totalThread = listServer?.items?.reduce((total, comp) => total + comp.run, 0) || 0;
 
@@ -131,7 +143,6 @@ function ComputerRunCommentOrder() {
   const dataSource = [];
   if (listServer?.items?.length > 0) {
     listServer?.items?.map((value, index) => {
-      // eslint-disable-next-line no-unsafe-optional-chaining
       const percentThread = (value?.current_thread > 0 && value?.thread > 0) ? value?.current_thread/value?.thread : 0;
       const color = (value.thread !== 0) ? (percentThread >= 0.7 ? 'green' : ((percentThread < 0.7 && percentThread > 0.3) ? 'orange' : 'red')) : 'gray';
 

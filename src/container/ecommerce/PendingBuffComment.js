@@ -26,26 +26,12 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/buffComment/actions';
+import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, ROLE_GENERAL, VIETNAMES_CURRENCY } from '../../variables';
 import { convertSeconds, numberWithCommas } from '../../utility/utility';
 
-
-const badgeRedStyle = {
-  border: `1.3px solid red`,
-  fontFamily: 'Be Vietnam Pro',
-  borderRadius: '7px ',
-  padding: '0px 7px',
-  backgroundColor: 'red',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '8px',
-  marginTop: '3px'
-};
 
 const columns = [
   {
@@ -97,14 +83,15 @@ const columns = [
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
-  const { searchData,  listOrderComment, userList, listService, isLoading, userInfo } = useSelector(state => {
+  const { searchData,  listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
     return {
       isLoading: state?.buffComment?.loading,
       searchData: state.headerSearchData,
       listOrderComment: state?.buffComment?.listOrderComment,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
-      userInfo: state?.auth?.userInfo
+      userInfo: state?.auth?.userInfo,
+      isOpenCreateOrder: state?.reports?.isOpenCreateOrder
     };
   });
 
@@ -508,10 +495,7 @@ function PendingBuffComment() {
         isOpen={isListCommentModal}
         setState={setState}
       />
-      <AddOrderComment
-        isOpen={isCreateCommentOrderModal}
-        setState={setState}
-      />
+      <AddOrderComment/>
       <BatchUpdateOrderComment
         orderState={state}
         setState={setState}
@@ -560,7 +544,7 @@ function PendingBuffComment() {
           <Row gutter={15}>
             <Col xs={24}>
               <TopToolBox>
-                <Row gutter={15} className="justify-content-center">
+                <Row gutter={15} className="justify-content-center" style={{ marginBottom: '15px' }}>
                   <Col lg={6} xs={6}>
                     <div className="table-search-box">
                       <AutoComplete onSearch={handleSearch} dataSource={notData} patterns />
@@ -597,6 +581,7 @@ function PendingBuffComment() {
                             type="primary"
                             onClick={() => {
                               setState({...state, isCreateCommentOrderModal: true });
+                              dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                             }}
                           >
                             <FeatherIcon icon="plus" size={12} /> Đặt hàng

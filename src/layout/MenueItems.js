@@ -1,18 +1,23 @@
 import React from 'react';
-import { Badge, Menu } from 'antd';
+import { Badge, Button, Menu } from 'antd';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { FiHome } from "react-icons/fi";
 import { LuServer } from "react-icons/lu";
+import { RiShoppingBag3Fill } from "react-icons/ri";
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 import { NavTitle } from './style';
+import reportActions from '../redux/reports/actions';
 import { COLOR_GENERAL, ROLE_DETAIL, ROLE_GENERAL } from '../variables';
+import AddOrderComment from '../container/ecommerce/components/AddOrderComment';
+
 
 const { SubMenu } = Menu;
 
 function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
   const { path } = useRouteMatch();
+  const dispatch = useDispatch();
   const pathName = window.location.pathname;
   const pathArray = pathName.split(path);
   const mainPath = pathArray[1];
@@ -22,9 +27,10 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
     !topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : [],
   );
 
-  const { userInfo } = useSelector(state => {
+  const { userInfo, isOpenCreateOrder } = useSelector(state => {
     return {
-      userInfo: state?.auth?.userInfo
+      userInfo: state?.auth?.userInfo,
+      isOpenCreateOrder: state?.reports?.isOpenCreateOrder
     };
   });
 
@@ -46,15 +52,9 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       onClick={onClick}
       mode={!topMenu || window.innerWidth <= 991 ? 'inline' : 'horizontal'}
       theme={darkMode && 'dark'}
-      // // eslint-disable-next-line no-nested-ternary
       defaultSelectedKeys={
         !topMenu
-          ? [
-              `${
-                mainPathSplit.length === 1 ? 'home' : mainPathSplit.length === 2 ? mainPathSplit[1] : mainPathSplit[2]
-              }`,
-            ]
-          : []
+          ? [ `${ mainPathSplit.length === 1 ? 'home' : mainPathSplit.length === 2 ? mainPathSplit[1] : mainPathSplit[2] }` ] : []
       }
       defaultOpenKeys={!topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : []}
       overflowedIndicator={<FeatherIcon icon="more-vertical" />}
@@ -63,6 +63,19 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
       {
         checkMatchRole ? (
           <>
+            <AddOrderComment />
+            <Button
+              type="default"
+              style={{ width: "94%", margin: '20px 0 10px 0', backgroundColor: '#f7ffea' }}
+              onClick={() => {
+                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+              }}
+            >
+              <span style={{ display: "inline-flex", alignItems: "center" }}>
+                <RiShoppingBag3Fill color="black" size={16} style={{ marginRight: '5px' }} />
+                <span style={{ fontWeight: 700, fontFamily: 'Be Vietnam Pro' }}>Đặt hàng</span>
+              </span>
+            </Button>
             {!topMenu && <NavTitle className="sidebar-nav-title">TỔNG QUAN</NavTitle>}
             <Menu.Item
               icon={
@@ -96,23 +109,6 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         ) : <></>
       }
       {!topMenu && <NavTitle className="sidebar-nav-title">BUFF SUBSCRIBE</NavTitle>}
-      {/* <SubMenu key="dashboard" icon={!topMenu && <FeatherIcon icon="home" />} title="Danh sách đơn">
-        <Menu.Item key="subscribe-cho-duyet">
-          <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/cho-duyet`}>
-            Chờ duyệt
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="subscribe-dang-chay">
-          <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/dang-chay`}>
-            Đang chạy
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="subscribe-bao-hanh">
-          <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/bao-hanh`}>
-            Bảo hành
-          </NavLink>
-        </Menu.Item>
-      </SubMenu> */}
       <Menu.Item
         icon={
           !topMenu && (
