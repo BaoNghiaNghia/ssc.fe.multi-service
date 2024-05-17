@@ -298,7 +298,6 @@ const ProductCard = Styled.div`
 `;
 
 const TopToolBox = Styled.div`
-    margin-bottom: 20px;
     /* // Toolbox Common Styles */
     .ant-row{
         align-items: center;
@@ -327,7 +326,7 @@ const TopToolBox = Styled.div`
         }
         .toolbox-menu-title,
         .ant-radio-group-outline{
-            margin: 10px;
+            margin: 0px;
         }
     }
     .ant-select{
@@ -473,7 +472,7 @@ const TopToolBox = Styled.div`
         }
         .toolbox-menu-title,
         .ant-radio-group{
-            margin: 10px;
+            margin: 0px;
             @media only screen and (max-width: 575px){
                 margin: 6px
             }
