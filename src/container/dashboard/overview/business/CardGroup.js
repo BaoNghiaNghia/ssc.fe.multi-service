@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { useSelector } from 'react-redux';
+import { IoFileTray } from "react-icons/io5";
 import Heading from '../../../../components/heading/heading';
 import { Focard, RatioCard } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
@@ -62,7 +63,15 @@ function CardGroup() {
       <Col md={12} xs={12}>
         <Focard>
           <div className="forcast-card-box">
-            <Cards headless title="Đơn đang chạy">
+            <Cards
+              headless
+              title={
+                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <IoFileTray fontSize={20} fontWeight={800} color="green" style={{ marginRight: '7px' }} />
+                  <span>Đơn đang chạy</span>
+                </div>
+              }
+            >
               <div className="focard-details growth-upward">
                 <Heading as="h1">{ getValueByKey(statisticComment, '0') } đơn</Heading>
                 {/* <p className="focard-status">
@@ -99,7 +108,15 @@ function CardGroup() {
       </Col>
       <Col md={12} sm={12} xs={12}>
         <RatioCard>
-          <Cards headless title="Đơn tạm tắt">
+          <Cards
+            headless
+            title={
+              <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                <IoFileTray fontSize={20} fontWeight={800} color="orange" style={{ marginRight: '7px' }} />
+                <span>Đơn tạm tắt</span>
+              </div>
+            }
+          >
             <div className="ratio-content">
               <Heading as="h1">{getValueByKey(statisticComment, '-1')} đơn</Heading>
               {/* <Progress percent={80} className="progress-success" /> */}
@@ -109,7 +126,15 @@ function CardGroup() {
       </Col>
       <Col md={12} sm={12} xs={12}>
         <RatioCard>
-          <Cards headless title="Đơn chờ duyệt">
+          <Cards
+            headless
+            title={
+              <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                <IoFileTray fontSize={20} fontWeight={800} color="gray" style={{ marginRight: '7px' }} />
+                <span>Đơn chờ duyệt</span>
+              </div>
+            }
+          >
             <div className="ratio-content">
               <Heading as="h1">{getValueByKey(statisticComment, '1')} đơn</Heading>
               {/* <Progress percent={72} status="warning" /> */}

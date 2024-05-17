@@ -6,7 +6,9 @@ import { Row, Col, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
+import { HiArrowSmRight } from "react-icons/hi";
 import { SiGmail } from "react-icons/si";
+import { BsThreads } from "react-icons/bs";
 import { GrNotification } from "react-icons/gr";
 import { CardBarChart2, CardBarChartCenter, EChartCard, GalleryNav } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -243,8 +245,10 @@ function Overview() {
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
-                        <span>Tỉ lệ {typeService}</span>
-                        <Heading as="h2">{Math.round(ratioSubSvg || 0)} %</Heading>
+                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                          <span>Tỉ lệ {typeService}</span>
+                        </span>
+                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {Math.round(ratioSubSvg || 0)} %</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -255,8 +259,10 @@ function Overview() {
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
-                        <span>Quest Lỗi/Tổng Quest</span>
-                        <Heading as="h2">0/0</Heading>
+                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                          <span>Quest Lỗi/Tổng Quest</span>
+                        </span>
+                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> 0/0</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -267,8 +273,10 @@ function Overview() {
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
-                        <span>Tổng Order hôm nay</span>
-                        <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
+                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                          <span>Tổng Order hôm nay</span>
+                        </span>
+                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -279,8 +287,10 @@ function Overview() {
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
-                        <span>Tổng {typeService} hôm nay</span>
-                        <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
+                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                          <span>Tổng {typeService} hôm nay</span>
+                        </span>
+                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>
@@ -291,8 +301,10 @@ function Overview() {
                   <EChartCard>
                     <div className="card-chunk">
                       <CardBarChart2>
-                        <span>Tổng luồng/thiếu</span>
-                        <Heading as="h2">1,330/1,200</Heading>
+                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                          <span>Tổng luồng/thiếu</span>
+                        </span>
+                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> 1,330/1,200</Heading>
                       </CardBarChart2>
                     </div>
                   </EChartCard>

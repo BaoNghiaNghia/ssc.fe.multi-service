@@ -166,7 +166,7 @@ const Focard = Styled.div`
         .ant-card-body{
             padding: 0 !important;
             h1{
-                padding: ${({ theme }) => (theme.rtl ? '25px 25px 0 0' : '25px 0 0 25px')};
+                padding: ${({ theme }) => (theme.rtl ? '15px 15px 0 0' : '15px 0 0 15px')};
                 font-size: 16px;
                 font-weight: 500;
                 margin-bottom: 26px;
@@ -178,9 +178,9 @@ const Focard = Styled.div`
 
         .focard-details{
             margin-top: 15px;
-            padding: 0 25px 22px;
+            padding: 0 15px 15px;
             @media only screen and (max-width: 767px){
-                padding: 0 25px 0;
+                padding: 0 15px 0;
             }
             h1{
                 padding: 0;
