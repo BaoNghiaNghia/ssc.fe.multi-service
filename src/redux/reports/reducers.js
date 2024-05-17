@@ -9,12 +9,13 @@ const initialState = {
     from: previousDate(7),
     to: currentDate
   },
-  typeService: SERVICE_TYPE.SUBSCRIBE.title,
+  typeService: SERVICE_TYPE.COMMENT.title,
   reportCountSuccess: [],
   subWithPoint: [],
   profitToday: {},
   listServer: [],
   statisticSubscribe: {},
+  statisticComment: {},
   ratioSubSvg: 0,
   countError: {},
   loading: false,
@@ -57,11 +58,35 @@ const {
     CHANGE_SERVICE_TYPE_BEGIN,
     CHANGE_SERVICE_TYPE_SUCCESS,
     CHANGE_SERVICE_TYPE_ERR,
+
+    STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
+    STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
+    STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        statisticComment: data,
+      };
+
+    case STATISTIC_COMMENT_BY_ORDER_REPORT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case CHANGE_SERVICE_TYPE_BEGIN:
       return {
         ...state,
@@ -69,7 +94,6 @@ const ReportsReducer = (state = initialState, action) => {
       };
 
     case CHANGE_SERVICE_TYPE_SUCCESS:
-      console.log(' --- service type: ------ ', data);
       return {
         ...state,
         loading: false,

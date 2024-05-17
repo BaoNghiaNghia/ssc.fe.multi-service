@@ -27,14 +27,15 @@ const CardGroup = lazy(() => import('./overview/business/CardGroup'));
 function Overview() {
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService } = useSelector((state) => {
+  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, statisticComment } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
       todayProfit: state?.reports?.profitToday,
       ratioSubSvg: state?.reports?.ratioSubSvg,
-      typeService: state?.reports?.typeService
-    }
+      typeService: state?.reports?.typeService,
+      statisticComment: state?.reports?.statisticComment
+    };
   });
 
   useEffect(() => {
@@ -43,9 +44,19 @@ function Overview() {
       to: toDate,
     }));
 
-    dispatch(actions.countSuccessSubscribeBegin());
-    dispatch(actions.computerDataListBegin());
-    dispatch(actions.getStatisticsSubscribeReportBegin());
+    if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+      dispatch(actions.countSuccessSubscribeBegin());
+      dispatch(actions.computerDataListBegin());
+      dispatch(actions.getStatisticsSubscribeReportBegin());
+    }
+
+    if (typeService === SERVICE_TYPE.COMMENT.title) {
+      dispatch(actions.statisticCommentByOrderReportBegin());
+    }
+
+    if (typeService === SERVICE_TYPE.LIKE.title) {
+      console.log("---- like data ----");
+    }
   }, [dispatch]);
 
   const [state, setState] = useState({
@@ -68,11 +79,9 @@ function Overview() {
       <PageHeader
         ghost
         title={(
-          <>
-            <span style={{ marginRight: '20px' }}>
-              Tổng quan
-            </span>
-          </>
+          <span style={{ marginRight: '20px' }}>
+            Tổng quan
+          </span>
         )}
         buttons={[ 
           <div key="1" className="page-header-actions">
@@ -84,7 +93,7 @@ function Overview() {
               <ul>
                 <li>
                   <Link
-                    className={state.activeClass === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
+                    className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
                     onClick={() => handleChange(SERVICE_TYPE.SUBSCRIBE.title)}
                     to="#"
                     style={{ display: 'inline-flex', alignItems: 'center' }}
@@ -94,7 +103,7 @@ function Overview() {
                 </li>
                 <li>
                   <Link
-                    className={state.activeClass === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
+                    className={typeService === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
                     onClick={() => handleChange(SERVICE_TYPE.COMMENT.title)}
                     to="#"
                   >
@@ -103,7 +112,7 @@ function Overview() {
                 </li>
                 <li>
                   <Link
-                    className={state.activeClass === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
+                    className={typeService === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
                     onClick={() => handleChange(SERVICE_TYPE.LIKE.title)}
                     to="#"
                   >
@@ -118,8 +127,8 @@ function Overview() {
       <Main>
         <Row gutter={12}>
           <Col xxl={4} md={8} sm={12} xs={12}>
-            <Cards headless 
-              // gradient='45deg, white, #FFF9E3'
+            <Cards
+              headless 
               border
             >
               <EChartCard>
@@ -133,9 +142,7 @@ function Overview() {
             </Cards>
           </Col>
           <Col xxl={4} md={8} sm={12} xs={12}>
-            <Cards headless 
-              // gradient='0deg, white, #ffeee3'
-            >
+            <Cards headless >
               <EChartCard>
                 <div className="card-chunk">
                   <CardBarChart2>
@@ -147,10 +154,10 @@ function Overview() {
             </Cards>
           </Col>
           <Col xxl={8} md={8} sm={24} xs={24}>
-            <Cards headless border 
-              gradient={
-                todayPoint >= 0 ? '0deg, rgb(255 226 0 / 28%), rgb(220 255 244)' : '0deg, #fff6d947, #ffac8d'
-              }
+            <Cards
+              headless
+              border 
+              gradient={ todayPoint >= 0 ? '0deg, rgb(255 226 0 / 28%), rgb(220 255 244)' : '0deg, #fff6d947, #ffac8d' }
             >
               <EChartCard>
                 <div className="card-chunk text-center">
@@ -177,7 +184,6 @@ function Overview() {
           </Col>
           <Col xxl={4} md={8} sm={8} xs={12}>
             <Cards headless
-              // gradient='0deg, white, #ffeee3'
             >
               <EChartCard>
                 <div className="card-chunk">
@@ -191,8 +197,7 @@ function Overview() {
           </Col>
           <Col xxl={4} md={8} sm={8} xs={12}>
             <Cards
-              headless 
-              // gradient='0deg, white, #e3ffb7'
+              headless
             >
               <EChartCard>
                 <div className="card-chunk">

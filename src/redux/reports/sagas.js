@@ -8,9 +8,11 @@ import {
   fetchComputerDataList,
   getDailyReportSubscribe,
   getSubscribeWithPointEveryday,
-  ratioSubscribeAverage
+  ratioSubscribeAverage,
+  getStatisticSubscribeReport,
+  statisticCommentByOrderReport
 } from '../../config/apiFactory/Reports/index';
-import { MESSSAGE_STATUS_CODE } from '../../variables';
+import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
 function* reportDataSubscribeFunc(params) {
   try {
@@ -118,6 +120,22 @@ function* countErrorSubscribeFunc() {
   }
 }
 
+function* statisticCommentByOrderReportFunc(params) {
+  try {
+    const response = yield call(statisticCommentByOrderReport, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticCommentByOrderReportSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.statisticCommentByOrderReportErr({ error: err || 'Count error subscribe failed' })
+    )
+  }
+}
+
 function* getStatisticsSubscribeFunc() {
   try {
     const response = yield call(ratioSubscribeAverage, {});
@@ -139,6 +157,13 @@ function* changeServiceTypeFunc(params) {
     yield put(
       actions.changeServiceTypeSuccess(params?.payload)
     );
+
+    console.log('--- change service type nè ---', params?.payload);
+    if (params?.payload === SERVICE_TYPE.COMMENT.title) {
+      yield put(
+        actions.statisticCommentByOrderReportBegin()
+      );
+    }
   } catch (err) {
     yield put(
       actions.changeServiceTypeErr({ error: err || 'Count error subscribe failed' })
@@ -201,4 +226,8 @@ export function* countErrorSubscribeWatcherSaga() {
 
 export function* getStatisticsSubscribeReporWatcherSaga() {
   yield takeLatest(actions.GET_STATISTICS_SUBSCRIBE_REPORT_BEGIN, getStatisticsSubscribeFunc);
+}
+
+export function* getStatisticsByOrderStatusReportWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN, statisticCommentByOrderReportFunc);
 }

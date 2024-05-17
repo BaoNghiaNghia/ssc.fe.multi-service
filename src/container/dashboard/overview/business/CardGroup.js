@@ -1,6 +1,5 @@
 import React from 'react';
-import { Row, Col, Progress } from 'antd';
-import FeatherIcon from 'feather-icons-react';
+import { Row, Col } from 'antd';
 import { useSelector } from 'react-redux';
 import Heading from '../../../../components/heading/heading';
 import { Focard, RatioCard } from '../../style';
@@ -10,13 +9,14 @@ import { chartLinearGradient } from '../../../../components/utilities/utilities'
 import { numberWithCommas } from '../../../../utility/utility';
 
 function CardGroup() {
-  const { reportData, typeService } = useSelector((state) => {
+  const { reportData, typeService, statisticComment } = useSelector((state) => {
     return {
       reportData: state?.reports?.subscribeReport?.report,
-      typeService: state?.reports?.typeService
+      typeService: state?.reports?.typeService,
+      statisticComment: state?.reports?.statisticComment
     }
   });
-
+  const getValueByKey = (object, row) => object[row];
   const totalSub = reportData && reportData.map((item) => item.total_run).reduce((partialSum, a) => partialSum + Number(a), 0);
 
   return (
@@ -26,13 +26,13 @@ function CardGroup() {
           <div className="forcast-card-box">
             <Cards bodypadding="5px" headless title={`Số ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
-                <Heading as="h1"><strong>{numberWithCommas(totalSub || 0)}</strong></Heading>
-                <p className="focard-status">
+                <Heading as="h1"><strong>{ numberWithCommas(totalSub || 0) }</strong></Heading>
+                {/* <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-down" /> 25%
                   </span>
                   <span>Since last month</span>
-                </p>
+                </p> */}
               </div>
               <ChartjsAreaChart
                 id="netProfit"
@@ -64,13 +64,13 @@ function CardGroup() {
           <div className="forcast-card-box">
             <Cards headless title="Đơn đang chạy">
               <div className="focard-details growth-upward">
-                <Heading as="h1">545 đơn</Heading>
-                <p className="focard-status">
+                <Heading as="h1">{ getValueByKey(statisticComment, '0') } đơn</Heading>
+                {/* <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-up" /> 25%
                   </span>
                   <span>Since last month</span>
-                </p>
+                </p> */}
               </div>
               <ChartjsAreaChart
                 id="grossProfit"
@@ -99,10 +99,10 @@ function CardGroup() {
       </Col>
       <Col md={12} sm={12} xs={12}>
         <RatioCard>
-          <Cards headless title="Đơn chờ hủy">
+          <Cards headless title="Đơn tạm tắt">
             <div className="ratio-content">
-              <Heading as="h1">0</Heading>
-              <Progress percent={80} className="progress-success" />
+              <Heading as="h1">{getValueByKey(statisticComment, '-1')} đơn</Heading>
+              {/* <Progress percent={80} className="progress-success" /> */}
             </div>
           </Cards>
         </RatioCard>
@@ -111,8 +111,8 @@ function CardGroup() {
         <RatioCard>
           <Cards headless title="Đơn chờ duyệt">
             <div className="ratio-content">
-              <Heading as="h1">0</Heading>
-              <Progress percent={72} status="warning" />
+              <Heading as="h1">{getValueByKey(statisticComment, '1')} đơn</Heading>
+              {/* <Progress percent={72} status="warning" /> */}
             </div>
           </Cards>
         </RatioCard>

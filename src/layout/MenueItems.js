@@ -75,7 +75,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
               key="tong-quan"
             >
               <NavLink onClick={toggleCollapsed} to={`${path}/tong-quan`}>
-                Tổng quan {pendingBadge}
+                Tổng quan
               </NavLink>
             </Menu.Item>
             <Menu.Item

@@ -7,7 +7,8 @@ import {
     COMPUTER_DATA_LIST_ENDPOINT,
     COUNT_ERROR_SUBSCRIBE_ENDPOINT,
     STATISTIC_SUBSCRIBE_REPORT_ENDPOINT,
-    RATIO_SUBSCRIBE_AVG_ENDPOINT
+    RATIO_SUBSCRIBE_AVG_ENDPOINT,
+    STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -22,8 +23,10 @@ ReportAPI.createEntities([
     { name: COUNT_ERROR_SUBSCRIBE_ENDPOINT },
     { name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT },
     { name: RATIO_SUBSCRIBE_AVG_ENDPOINT },
+    { name: STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
 ]);
 
+// SUBSCRIBERS
 const getDailyReportSubscribe = (data) => ReportAPI.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENPOINT }).get(data);
 const countSuccessSubscribe = () => ReportAPI.createBasicCRUDEndpoints({ name: REPORT_COUNT_SUCCESS_ENDPOINT }).get();
 const countProfitDataToday = () => ReportAPI.createBasicCRUDEndpoints({ name: COUNT_PROFIT_TODAY_ENDPOINT}).get();
@@ -35,6 +38,9 @@ const getStatisticSubscribeReport = () => ReportAPI.createBasicCRUDEndpoints({ n
 const countErrorSubscribe = () => ReportAPI.createBasicCRUDEndpoints({ name: COUNT_ERROR_SUBSCRIBE_ENDPOINT }).get();
 const ratioSubscribeAverage = () => ReportAPI.createBasicCRUDEndpoints({ name: RATIO_SUBSCRIBE_AVG_ENDPOINT }).get();
 
+// COMMENTS
+const statisticCommentByOrderReport = (query) => ReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+
 export {
     getDailyReportSubscribe,
     countSuccessSubscribe,
@@ -44,4 +50,5 @@ export {
     getStatisticSubscribeReport,
     countErrorSubscribe,
     ratioSubscribeAverage,
+    statisticCommentByOrderReport,
 }

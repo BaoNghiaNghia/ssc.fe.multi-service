@@ -8,6 +8,8 @@ import { FaLocationArrow } from "react-icons/fa6";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
+import { SiMediafire } from "react-icons/si";
+import { BsFire } from "react-icons/bs";
 import { LuListFilter } from "react-icons/lu";
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
@@ -30,20 +32,19 @@ import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, ROLE_GENERAL, 
 import { convertSeconds, numberWithCommas } from '../../utility/utility';
 
 
-const badgeGreenStyle = {
-  border: `1.3px solid green`,
+const badgeRedStyle = {
+  border: `1.3px solid red`,
   fontFamily: 'Be Vietnam Pro',
   borderRadius: '7px ',
-  padding: '1px 7px',
-  fontSize: '0.7em',
-  backgroundColor: 'green',
+  padding: '0px 7px',
+  backgroundColor: 'red',
   fontWeight: 'bold',
   display: 'inline-flex',
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '8px',
-  marginTop: '5px'
+  marginTop: '3px'
 };
 
 const columns = [
@@ -237,16 +238,18 @@ function PendingBuffComment() {
               {
                 priority ? (
                   <Tooltip title="Ưu tiên">
-                    <span style={badgeGreenStyle}>
-                      <FaLocationArrow color='white'/>
-                    </span>
+                    {/* <span style={badgeRedStyle}>
+                    </span> */}
+                    <BsFire fontSize={15} color='#26b726' style={{ marginRight: '6px', marginTop: '3px' }}/>
                   </Tooltip>
                 ) : <></>
               }
 
-              <Tooltip title="Xem Video" placement='topLeft'>
+              <Tooltip title={<span style={{ display: 'inline-flex' }}>
+                <strong>{video_title}</strong>
+              </span>} placement='topLeft'>
                 <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
-                  <span style={{ margin: 0, padding: 0, color: 'black !important' }}>{ `${video_title?.substring(0, 30)  }...` }</span>
+                  <span style={{ margin: 0, padding: 0, color: 'black !important', fontFamily: 'Be Vietnam Pro' }}>{ `${video_title?.substring(0, 30)  }...` }</span>
                 </a>
               </Tooltip>
             </div>

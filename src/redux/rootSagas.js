@@ -14,7 +14,8 @@ import {
     fetchSubscribeWithPointEverydayWatcherSaga,
     countErrorSubscribeWatcherSaga,
     getStatisticsSubscribeReporWatcherSaga,
-    changeServiceTypeWatcherSaga
+    changeServiceTypeWatcherSaga,
+    getStatisticsByOrderStatusReportWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -129,5 +130,6 @@ export default function* rootSaga() {
         updateManyComputerCommentWatcherSaga(),
         updateOneComputerCommentWatcherSaga(),
         detailComputerCommentWatcherSaga(),
+        getStatisticsByOrderStatusReportWatcherSaga()
     ]);
 }
