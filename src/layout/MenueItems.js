@@ -66,14 +66,14 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             <AddOrderComment />
             <Button
               type="default"
-              style={{ width: "94%", margin: '20px 0 10px 0', backgroundColor: '#f7ffea' }}
+              style={{ width: "94%", margin: '20px 0 10px 0' }}
               onClick={() => {
                 dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
               }}
             >
               <span style={{ display: "inline-flex", alignItems: "center" }}>
-                <RiShoppingBag3Fill color="black" size={16} style={{ marginRight: '5px' }} />
-                <span style={{ fontWeight: 700, fontFamily: 'Be Vietnam Pro' }}>Đặt hàng</span>
+                <RiShoppingBag3Fill size={15} style={{ marginRight: '5px' }} />
+                <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro' }}>Đặt hàng</span>
               </span>
             </Button>
             {!topMenu && <NavTitle className="sidebar-nav-title">TỔNG QUAN</NavTitle>}

@@ -122,8 +122,8 @@ function AddOrderComment() {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm Comment Order</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho order comment</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Đặt hàng dịch vụ mới</p>
+                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin đơn hàng</p>
               </div>
             </div>
           </>
@@ -140,7 +140,6 @@ function AddOrderComment() {
         ]}
       >
         <Form name="add_service" layout="vertical" form={formCreateService}>
-          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin Order</Divider>
           <Row gutter="10">
             <Col sm={24}>
               <Form.Item
@@ -190,6 +189,8 @@ function AddOrderComment() {
               </Form.Item>
             </Col>
           </Row>
+
+          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
             <Col sm={24}>
