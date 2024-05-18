@@ -82,7 +82,7 @@ function Overview() {
         ghost
         title={(
           <span style={{ marginRight: '20px' }}>
-            Tổng quan
+            Tổng quan {typeService}
           </span>
         )}
         buttons={[ 

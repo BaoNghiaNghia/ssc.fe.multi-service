@@ -5,6 +5,7 @@ import { Row, Col, Radio, Table, Tooltip, Progress, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa6";
+import { RiShoppingBag3Fill } from "react-icons/ri";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
@@ -584,7 +585,8 @@ function PendingBuffComment() {
                               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                             }}
                           >
-                            <FeatherIcon icon="plus" size={12} /> Đặt hàng
+                            <RiShoppingBag3Fill size={15} style={{ marginRight: '7px' }} />
+                            <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro' , margin: 0, padding: 0 }}>Đặt hàng</span>
                           </Button>
                         )
                       }
