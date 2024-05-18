@@ -73,7 +73,7 @@ function CardGroup() {
               }
             >
               <div className="focard-details growth-upward">
-                <Heading as="h1">{ getValueByKey(statisticComment, '0') } đơn</Heading>
+                <Heading as="h1">{ getValueByKey(statisticComment, '1') } đơn</Heading>
                 {/* <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-up" /> 25%
@@ -136,7 +136,7 @@ function CardGroup() {
             }
           >
             <div className="ratio-content">
-              <Heading as="h1">{getValueByKey(statisticComment, '1')} đơn</Heading>
+              <Heading as="h1">{getValueByKey(statisticComment, '0')} đơn</Heading>
               {/* <Progress percent={72} status="warning" /> */}
             </div>
           </Cards>

@@ -5,7 +5,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Button, Modal, Select, Badge } from 'antd';
+import { Row, Col, Form, Button, Modal, Select, Badge } from 'antd';
+import { IoMdRefresh } from "react-icons/io";
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaRegUserCircle, FaYoutube } from 'react-icons/fa';
 import actions from '../../../redux/buffComment/actions';
@@ -143,6 +144,9 @@ function FilterOrderComment({ orderState, setState }) {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
+          <Button key="back" onClick={handleCancel}>
+            <IoMdRefresh />
+          </Button>,
           <Button key="back" onClick={handleCancel}>
             Hủy
           </Button>,

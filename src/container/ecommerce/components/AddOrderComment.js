@@ -178,8 +178,6 @@ function AddOrderComment() {
                   },
                 ]}
                 onChange={(value) => {
-                  console.log('---- value comments -----', value?.target?.value?.split('\n'));
-
                   setAmountChange(value?.target?.value?.split('\n')?.length)
                   formCreateService.setFieldsValue({ comments: value?.target?.value });
                 }}
