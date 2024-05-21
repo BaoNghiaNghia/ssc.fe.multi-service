@@ -33,6 +33,15 @@ function AddService({ isOpen, setState }) {
   };
 
   useEffect(() => {
+    formCreateService.setFieldValue('category', 'Comments');
+    const matchService = FixedServiceTemp?.filter((item) => item?.category === 'Comments');
+    if (matchService?.length > 0) {
+      formCreateService.setFieldValue('type', matchService[0]?.type);
+      formCreateService.setFieldValue('service_type', matchService[0]?.service_type);
+    }
+  }, []);
+
+  useEffect(() => {
     dispatch(actions.fetchListServiceBegin({}));
   }, [dispatch]);
 
@@ -49,6 +58,7 @@ function AddService({ isOpen, setState }) {
             enabled: true,
             min: formCreateService.getFieldValue('min'),
             max: formCreateService.getFieldValue('max'),
+            geo: formCreateService.getFieldValue('geo'),
             max_threads: formCreateService.getFieldValue('max_threads'),
             max_threads_3000: formCreateService.getFieldValue('max_threads_3000'),
             max_threads_5000: formCreateService.getFieldValue('max_threads_5000'),
@@ -170,7 +180,7 @@ function AddService({ isOpen, setState }) {
           <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
-            <Col sm={24}>
+            <Col sm={19}>
               <Form.Item
                 name="name"
                 label="Tên dịch vụ"
@@ -181,6 +191,45 @@ function AddService({ isOpen, setState }) {
                 }]}
               >
                 <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ' />
+              </Form.Item>
+            </Col>
+            <Col sm={5}>
+              <Form.Item 
+                name="geo" 
+                label="Geo"
+                initialValue="vn"
+                style={{ marginBottom: '7px' }} 
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Select style={{ width: '100%' }} defaultValue="vn" size='small'>
+                  <Option value="vn">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/vn.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>VN</span>
+                    </div>
+                  </Option>
+                  <Option value="us">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/us.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>US</span>
+                    </div>
+                  </Option>
+                  <Option value="kr">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/kr.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>KR</span>
+                    </div>
+                  </Option>
+                  <Option value="jp">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/jp.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>JP</span>
+                    </div>
+                  </Option>
+                </Select>
               </Form.Item>
             </Col>
           </Row>
@@ -203,7 +252,7 @@ function AddService({ isOpen, setState }) {
 
           <Row gutter="10">
             <Col sm={9}>
-              <Form.Item name="service_type" initialValue="ytbsubscribe" label="Loại dịch vụ" rules={[{
+              <Form.Item name="service_type" initialValue="ytbcomment" label="Loại dịch vụ" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -215,7 +264,7 @@ function AddService({ isOpen, setState }) {
               </Form.Item>
             </Col>
             <Col sm={9}>
-              <Form.Item name="type" label="Loại" rules={[{
+              <Form.Item name="type" label="Loại" initialValue="Custom Comments" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>

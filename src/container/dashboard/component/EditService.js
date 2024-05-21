@@ -176,7 +176,7 @@ function EditService({ isOpen, setState, state }) {
           <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
-            <Col sm={24}>
+            <Col sm={19}>
               <Form.Item 
                 name="name" 
                 label="Tên dịch vụ"
@@ -187,6 +187,45 @@ function EditService({ isOpen, setState, state }) {
                 }]}
               >
                 <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ'/>
+              </Form.Item>
+            </Col>
+            <Col sm={5}>
+            <Form.Item 
+                name="geo" 
+                label="Geo"
+                initialValue="vn"
+                style={{ marginBottom: '7px' }} 
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Select style={{ width: '100%' }} defaultValue="vn" size='small'>
+                  <Option value="vn">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/vn.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>VN</span>
+                    </div>
+                  </Option>
+                  <Option value="us">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/us.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>US</span>
+                    </div>
+                  </Option>
+                  <Option value="kr">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/kr.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>KR</span>
+                    </div>
+                  </Option>
+                  <Option value="jp">
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                      <img src={require(`../../../static/img/flag/jp.png`)} alt="" width="20px" height="20px" />
+                      <span style={{ marginLeft: '10px' }}>JP</span>
+                    </div>
+                  </Option>
+                </Select>
               </Form.Item>
             </Col>
           </Row>

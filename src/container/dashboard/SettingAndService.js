@@ -113,13 +113,24 @@ function SettingAndService() {
   const dataSource = [];
   if (listService?.length) {
     listService?.map((value, key) => {
-      const { name, min, max, service_id, max_threads_3000, max_threads, max_threads_5000, priority, enabled, description, price_per_10, category, type } = value;
+      const { name, min, max, service_id, max_threads_3000, max_threads, max_threads_5000, priority, enabled, description, price_per_10, category, type, geo } = value;
       return dataSource?.push({
         key: key + 1,
         name: <>
           <Row>
             <Col>
-              <span className="label" style={{ display: 'inline-flex' }}><span style={{ fontWeight: 'bold', marginRight: '7px' }}>{service_id}</span>  - {name}</span>
+              <span className="label" style={{ display: 'inline-flex' }}>
+                {
+                  geo ? (
+                    <Tooltip title={geo?.toUpperCase()}>
+                      <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                        <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" />
+                      </span>
+                    </Tooltip>
+                  ) : null
+                }
+                 - <span style={{ fontWeight: 'bold', margin: '0px 7px' }}>{service_id}</span>  - {name}
+              </span>
             </Col>
           </Row>
           <Row style={{ marginBottom: '5px' }}>
