@@ -46,6 +46,7 @@ function EditService({ isOpen, setState, state }) {
             enabled: detailService?.enabled,
             min: values?.min,
             max: values?.max,
+            geo: values?.geo,
             max_threads: values?.max_threads,
             max_threads_3000: values?.max_threads_3000,
             max_threads_5000: values?.max_threads_5000,
