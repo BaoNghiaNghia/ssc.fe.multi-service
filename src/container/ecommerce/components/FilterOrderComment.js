@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Button, Modal, Select, Badge } from 'antd';
+import { Row, Col, Form, Button, Modal, Select, Badge, Tooltip } from 'antd';
 import { IoMdRefresh } from "react-icons/io";
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaRegUserCircle, FaYoutube } from 'react-icons/fa';
@@ -99,27 +99,38 @@ function FilterOrderComment({ orderState, setState }) {
           if (order_type) {
             const type = order_type.split(' ');
             rest[type[0]] = type[1];
+          }
+          if (priority) {
             rest.priority = priority === "true";
           }
-          console.log('------ values filter comment order ----', rest);
 
           dispatch(actions.fetchListOrderCommentBegin(rest));
 
-          setState({ isFilterCommentOrderModal: false });
-          // formCreateService.resetFields();
+          setState({ ...orderState, isFilterCommentOrderModal: false });
         })
         .catch((err) => {
           console.error("handle Real Error: ", err);
         });
     } catch (err) {
       console.log(err);
-      setState({ isFilterCommentOrderModal: false });
-        formCreateService.resetFields();
+      setState({ ...orderState, isFilterCommentOrderModal: false });
+      formCreateService.resetFields();
     }
   };
 
   const handleCancel = () => {
     setState({
+      ...orderState,
+      isFilterCommentOrderModal: false,
+    });
+  }
+
+  const handleResetForm = () => {
+    formCreateService.resetFields();
+    dispatch(actions.fetchListOrderCommentBegin({}));
+
+    setState({
+      ...orderState,
       isFilterCommentOrderModal: false,
     });
   }
@@ -144,8 +155,8 @@ function FilterOrderComment({ orderState, setState }) {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button key="back" onClick={handleCancel}>
-            <IoMdRefresh />
+          <Button key="back" onClick={handleResetForm} style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <IoMdRefresh style={{ margin: 0, padding: 0 }}/>
           </Button>,
           <Button key="back" onClick={handleCancel}>
             Hủy
