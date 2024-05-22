@@ -8,9 +8,31 @@ import {
   topupAdminConfirmMemberAPI,
   listTopupAdminMemberAPI,
   createTopupAdminMemberAPI,
-  getListCreditHistoryMemberAPI
+  getListCreditHistoryMemberAPI,
+  generateApiKeyMemberAPI
 } from '../../config/apiFactory/Member/index';
+
 import { MESSSAGE_STATUS_CODE, MEMBER_TABLE_TYPE } from '../../variables';
+
+function* generateApiKeyMemberFunc(params) {
+  try {
+    const response = yield call(generateApiKeyMemberAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.generateApiKeyMemberSuccess(response?.data?.data)
+      );
+      yield put(
+        actions.detailUserAdminBegin(params?.payload)
+      );
+    }
+
+  } catch (err) {
+    yield put(
+      actions.generateApiKeyMemberErr({ error: err || 'Generate Api Key failed' })
+    );
+  }
+}
 
 function* getCreditHistoryMemberFunc(params) {
   try {
@@ -170,6 +192,10 @@ function* changeTableTypeFunc(params) {
   }
 }
 
+
+export function* generateApiKeyMemberWatcherSaga() {
+  yield takeLatest(actions.GENERATE_API_KEY_MEMBER_BEGIN, generateApiKeyMemberFunc);
+}
 
 export function* getCreditHistoryMemberWatcherSaga() {
   yield takeLatest(actions.GET_CREDIT_HISTORY_MEMBER_BEGIN, getCreditHistoryMemberFunc);

@@ -116,14 +116,18 @@ class ApiFactory {
      * SUBMIT POST
      */
     endpoints.submitPost = (toSubmit, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
-      return axios.post(resourceURL.replace("id", toSubmit), toSubmit, {
+      const { id, ...query } = toSubmit;
+
+      const headers = {
         ...config,
+        params: { ...query },
         headers: {
           authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
+          ...{ ...config?.headers }
         }
-      });
+      }
+
+      return axios.post(resourceURL.replace("id", id), query, headers);
     }
 
     /**

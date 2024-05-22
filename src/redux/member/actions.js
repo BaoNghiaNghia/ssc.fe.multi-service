@@ -35,6 +35,31 @@ const actions = {
     GET_CREDIT_HISTORY_MEMBER_SUCCESS: 'GET_CREDIT_HISTORY_MEMBER_SUCCESS',
     GET_CREDIT_HISTORY_MEMBER_ERR: 'GET_CREDIT_HISTORY_MEMBER_ERR',
 
+    GENERATE_API_KEY_MEMBER_BEGIN: 'GENERATE_API_KEY_MEMBER_BEGIN',
+    GENERATE_API_KEY_MEMBER_SUCCESS: 'GENERATE_API_KEY_MEMBER_SUCCESS',
+    GENERATE_API_KEY_MEMBER_ERR: 'GENERATE_API_KEY_MEMBER_ERR',
+
+    generateApiKeyMemberBegin: (payload) => {
+      return {
+        type: actions.GENERATE_API_KEY_MEMBER_BEGIN,
+        payload
+      };
+    },
+  
+    generateApiKeyMemberSuccess: (data) => {
+      return {
+        type: actions.GENERATE_API_KEY_MEMBER_SUCCESS,
+        data,
+      };
+    },
+  
+    generateApiKeyMemberErr: (err) => {
+      return {
+        type: actions.GENERATE_API_KEY_MEMBER_ERR,
+        err,
+      };
+    },
+
     getCreditHistoryMemberBegin: (payload) => {
       return {
         type: actions.GET_CREDIT_HISTORY_MEMBER_BEGIN,

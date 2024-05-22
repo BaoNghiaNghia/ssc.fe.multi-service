@@ -1,13 +1,15 @@
 /* eslint-disable camelcase */
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BsPersonCheck } from "react-icons/bs";
-import { Row, Col, Form, Input, Modal, InputNumber, Divider } from 'antd';
+import { Row, Col, Form, Input, Modal, InputNumber, Divider, Button } from 'antd';
+import { RiKey2Line } from "react-icons/ri";
+import userActions from '../../../redux/member/actions';
 import { VIETNAMES_CURRENCY } from '../../../variables';
 
-
 function DetailMember({ isOpen, setState }) {
+  const dispatch = useDispatch();
   const [formDetailMember] = Form.useForm();
 
   const { detailUser } = useSelector(state => {
@@ -117,21 +119,40 @@ function DetailMember({ isOpen, setState }) {
           {
             detailUser?.api_key ? (
               <Row gutter={10}>
-                  <Col sm={24}>
-                    <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Key API" rules={[{
-                      required: true,
-                      message: 'Trường không được trống'
-                    }]}>
-                      <Input.Password 
-                        type='number'
-                        size='small'
-                        style={{ width: '100%' }}
-                        placeholder="Key API"
-                      />
-                    </Form.Item>
-                  </Col>
+                <Col sm={24}>
+                  <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Key API" rules={[{
+                    required: true,
+                    message: 'Trường không được trống'
+                  }]}>
+                    <Input.Password 
+                      type='number'
+                      size='small'
+                      style={{ width: '100%' }}
+                      placeholder="Key API"
+                    />
+                  </Form.Item>
+                </Col>
               </Row>
-            ) : null
+            ) : (
+              <Row gutter={10}>
+                <Col sm={24}>
+                  <Form.Item name="api_key" style={{ margin: '0px', width: '100%' }} label="Key API" rules={[{
+                    required: true,
+                    message: 'Trường không được trống'
+                  }]}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.9em', fontStyle: 'italic', color: 'gray', margin: '10px' }}>Chưa có API Key</span>
+                      <Button size='small' type='primary' style={{ display: 'inline-flex', alignItems: 'center' }} onClick={() => {
+                        dispatch(userActions.generateApiKeyMemberBegin({ id: detailUser?.id }))
+                      }}>
+                        <RiKey2Line style={{ marginRight: '4px' }} fontSize={17}/>
+                        Tạo API Key
+                      </Button>
+                    </div>
+                  </Form.Item>
+                </Col>
+              </Row>
+            )
           }
         </Form>
       </Modal>

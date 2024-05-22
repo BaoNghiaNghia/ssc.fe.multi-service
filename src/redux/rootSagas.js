@@ -45,7 +45,8 @@ import {
     fetchTopupListMemberWatcherSaga,
     detailTopupItemWatcherSaga,
     confirmTopupItemWatcherSaga,
-    getCreditHistoryMemberWatcherSaga
+    getCreditHistoryMemberWatcherSaga,
+    generateApiKeyMemberWatcherSaga
 } from './member/sagas';
 
 import { 
@@ -132,6 +133,7 @@ export default function* rootSaga() {
         updateOneComputerCommentWatcherSaga(),
         detailComputerCommentWatcherSaga(),
         getStatisticsByOrderStatusReportWatcherSaga(),
-        toggleStateModalCreateOrderWatcherSaga()
+        toggleStateModalCreateOrderWatcherSaga(),
+        generateApiKeyMemberWatcherSaga()
     ]);
 }

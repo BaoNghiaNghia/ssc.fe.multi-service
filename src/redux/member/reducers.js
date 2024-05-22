@@ -7,6 +7,7 @@ const initialState = {
   detailUser: {},
   detailTopup: {},
   creditHistory: {},
+  isLoadingKeyAPI: false,
   //  member or topup
   typeTable: MEMBER_TABLE_TYPE.MEMBER.title,
   topupList: [],
@@ -48,12 +49,35 @@ const {
 
     GET_CREDIT_HISTORY_MEMBER_BEGIN,
     GET_CREDIT_HISTORY_MEMBER_ERR,
-    GET_CREDIT_HISTORY_MEMBER_SUCCESS
+    GET_CREDIT_HISTORY_MEMBER_SUCCESS,
+
+    GENERATE_API_KEY_MEMBER_BEGIN,
+    GENERATE_API_KEY_MEMBER_ERR,
+    GENERATE_API_KEY_MEMBER_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case GENERATE_API_KEY_MEMBER_BEGIN:
+      return {
+        ...state,
+        isLoadingKeyAPI: true,
+      };
+
+    case GENERATE_API_KEY_MEMBER_SUCCESS:
+      return {
+        ...state,
+        isLoadingKeyAPI: false,
+      };
+
+    case GENERATE_API_KEY_MEMBER_ERR:
+      return {
+        ...state,
+        error: err,
+        isLoadingKeyAPI: false,
+      };
+    
     case GET_CREDIT_HISTORY_MEMBER_BEGIN:
       return {
         ...state,

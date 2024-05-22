@@ -4,7 +4,8 @@ import {
     USER_ADMIN_GENERAL_ENDPOINT,
     TOPUP_ADMIN_CONFIRM_ENDPOINT,
     TOPUP_ADMIN_ENDPOINT,
-    CREDIT_HISTORY_ENDPOINT
+    CREDIT_HISTORY_ENDPOINT,
+    GENERATE_API_KEY_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -16,6 +17,7 @@ MemberAPI.createEntities([
     { name: TOPUP_ADMIN_CONFIRM_ENDPOINT },
     { name: TOPUP_ADMIN_ENDPOINT },
     { name: CREDIT_HISTORY_ENDPOINT },
+    { name: GENERATE_API_KEY_ENDPOINT },
 ]);
 
 const fetchUserListAPI = (query) => MemberAPI.createBasicCRUDEndpoints({ name: FETCH_USER_LIST_ENDPOINT }).get(query);
@@ -32,6 +34,8 @@ const topupAdminConfirmMemberAPI = (query) => MemberAPI.createBasicCRUDEndpoints
 
 const getListCreditHistoryMemberAPI = (query) => MemberAPI.createBasicCRUDEndpoints({ name: CREDIT_HISTORY_ENDPOINT }).get(query);
 
+const generateApiKeyMemberAPI = (data) => MemberAPI.createBasicCRUDEndpoints({ name: GENERATE_API_KEY_ENDPOINT }).submitPost(data);
+
 export {
     fetchUserListAPI,
     detailUserAdminMemberAPI,
@@ -39,5 +43,6 @@ export {
     topupAdminConfirmMemberAPI,
     listTopupAdminMemberAPI,
     createTopupAdminMemberAPI,
-    getListCreditHistoryMemberAPI
+    getListCreditHistoryMemberAPI,
+    generateApiKeyMemberAPI
 }
