@@ -26,7 +26,7 @@ const badgeGreenStyle = {
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px'
-}
+};
 
 const badgeOrangeStyle = {
   border: '1.3px solid orange',
@@ -41,7 +41,7 @@ const badgeOrangeStyle = {
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px'
-}
+};
 
 const badgeRedStyle = {
   border: '1.3px solid red',
@@ -56,7 +56,7 @@ const badgeRedStyle = {
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px'
-}
+};
 
 const { Option } = Select;
 
@@ -65,12 +65,16 @@ function AddOrderComment() {
   const dispatch = useDispatch();
   const [formCreateService] = Form.useForm();
 
-  const { postLoading, listService, isOpenCreateOrder } = useSelector(state => {
+  const { postLoading, listService, isOpenCreateOrder } = useSelector((state) => {
     return {
       postLoading: state.settingService.postLoading,
       listService: state?.settingService?.listService?.items,
       isOpenCreateOrder: state?.reports?.isOpenCreateOrder
     };
+  });
+
+  const [stateCurr, setStateCurr] = useState({
+    selectedCategory: 'Comments'
   });
 
   const [amountChange, setAmountChange] = useState(0);
@@ -92,7 +96,6 @@ function AddOrderComment() {
       formCreateService.validateFields()
         .then((values) => {
           dispatch(actions.createOrderCommentAdminBegin(values));
-          // setState({ isCreateCommentOrderModal: false });
           dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
           formCreateService.resetFields();
         })
@@ -105,10 +108,99 @@ function AddOrderComment() {
   };
 
   const handleCancel = () => {
-    // setState({
-    //   isCreateCommentOrderModal: false,
-    // });
+    formCreateService.resetFields();
     dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+  }
+
+  const formCreateCommentService = () => {
+    return (
+      <>
+        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
+        <Row gutter="10">
+          <Col sm={24}>
+            <Form.Item
+              name="link"
+              label="Liên kết"
+              style={{ marginBottom: '7px' }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+                {
+                  validator: async (_, link) => {
+                    if (!validateYouTubeUrl(link)) {
+                      return Promise.reject( `Đường dẫn youtube không hợp lệ`);
+                    }
+                  },
+                }
+              ]}
+            >
+              <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter="10">
+          <Col sm={24}>
+            <Form.Item
+              name="comments"
+              label="Comment"
+              style={{ marginBottom: '7px' }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+              ]}
+              onChange={(value) => {
+                setAmountChange(value?.target?.value?.split('\n')?.length)
+                formCreateService.setFieldsValue({ comments: value?.target?.value });
+              }}
+            >
+              <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
+              <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary }}>Số lượng: {amountChange} comments</span>
+            </Form.Item>
+          </Col>
+        </Row>
+      </>
+    )
+  }
+
+  const formCreateSubscribeService = () => {
+    return (
+      <>
+        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
+      </>
+    );
+  }
+
+  const formCreateLikeService = () => {
+    return (
+      <>
+        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
+      </>
+    );
+  }
+
+  const switchServiceSelection = (type) => {
+    switch (type) {
+      case 'Comments':
+        return formCreateCommentService();
+
+      case 'Subscribers':
+        return formCreateSubscribeService();
+
+      case 'Likes':
+        return formCreateLikeService();
+
+      default:
+        return (
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <span style={{ fontStyle: 'italic', padding: '30px auto' }}>Chưa có thông tin dịch vụ</span>
+          </div>
+        );
+    }
   }
 
   return (
@@ -143,71 +235,45 @@ function AddOrderComment() {
           <Row gutter="10">
             <Col sm={24}>
               <Form.Item
-                name="link"
-                label="Liên kết"
-                style={{ marginBottom: '7px' }}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Trường không được trống'
-                  },
-                  {
-                    validator: async (_, link) => {
-                      if (!validateYouTubeUrl(link)) {
-                        return Promise.reject( `Đường dẫn youtube không hợp lệ`);
-                      }
-                    },
-                  }
-                ]}
-              >
-                <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter="10">
-            <Col sm={24}>
-              <Form.Item
-                name="comments"
-                label="Comment"
-                style={{ marginBottom: '7px' }}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Trường không được trống'
-                  },
-                ]}
-                onChange={(value) => {
-                  setAmountChange(value?.target?.value?.split('\n')?.length)
-                  formCreateService.setFieldsValue({ comments: value?.target?.value });
-                }}
-              >
-                <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
-                <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary }}>Số lượng: {amountChange} comments</span>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
-
-          <Row gutter="10">
-            <Col sm={24}>
-              <Form.Item
                 name="service_id"
                 label="Dịch vụ"
-                style={{ marginBottom: '7px' }}
+                style={{ marginBottom: '0px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Select style={{ width: '100%' }} defaultActiveFirstOption size='small'>
+                <Select 
+                  style={{ width: '100%' }}
+                  defaultActiveFirstOption
+                  allowClear
+                  showSearch
+                  onSearch={() => {
+                    setStateCurr({
+                      ...stateCurr,
+                      selectedCategory: ''
+                    })
+                  }}
+                  placeholder="Tìm theo ID của dịch vụ"
+                  size='small'
+                  onChange={(values) => {
+                    const findCategory = listService?.filter(itemService => itemService?.service_id === values);
+                    if (findCategory?.length > 0) {
+                      console.log('---- dịch vụ đang chọn nè -----', findCategory[0]?.category);
+                      setStateCurr({
+                        ...stateCurr,
+                        selectedCategory: findCategory[0]?.category
+                      })
+                    }
+                  }}
+                >
                   {
                     listService?.map((itemService, index) => {
                       return (
                         <>
                           {
-                            itemService?.enabled && itemService?.category === "Comments" ? (
+                            // itemService?.enabled && itemService?.category === "Comments" ? (
+                            itemService?.enabled ? (
                               <Option key={index} value={itemService.service_id}>
                                 <>
                                   <Row style={{ margin: 0, padding: 0 }}>
@@ -262,6 +328,7 @@ function AddOrderComment() {
               </Form.Item>
             </Col>
           </Row>
+          {switchServiceSelection(stateCurr?.selectedCategory)}
         </Form>
       </Modal>
     </>

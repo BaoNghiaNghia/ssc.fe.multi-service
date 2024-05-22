@@ -102,10 +102,7 @@ function EditCommentComputer({ setState, computerState }) {
                                         </Form.Item>
                                     </Col>
                                     <Col sm={12}>
-                                        <Form.Item name="ip" style={{ margin: '0px' }} label="IP" rules={[{
-                                            required: true,
-                                            message: 'Trường không được trống'
-                                        }]}>
+                                        <Form.Item name="ip" style={{ margin: '0px' }} label="IP">
                                             <Input size='small' addonBefore={<MdOutlineNumbers />} style={{ width: '100%' }} placeholder='Địa chỉ IP' />
                                         </Form.Item>
                                     </Col>
@@ -116,18 +113,12 @@ function EditCommentComputer({ setState, computerState }) {
                                 <Row gutter="10">
                                     
                                     <Col sm={12}>
-                                        <Form.Item name="cpu" label="CPU" rules={[{
-                                            required: true,
-                                            message: 'Trường không được trống'
-                                        }]}>
+                                        <Form.Item name="cpu" label="CPU">
                                             <Input size='small' style={{ width: '100%' }} placeholder='CPU của server' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={12}>
-                                        <Form.Item name="ram" label="Ram" rules={[{
-                                            required: true,
-                                            message: 'Trường không được trống'
-                                        }]}>
+                                        <Form.Item name="ram" label="Ram">
                                             <Input size='small' style={{ width: '100%' }} placeholder='Ram của server' />
                                         </Form.Item>
                                     </Col>
@@ -150,10 +141,7 @@ function EditCommentComputer({ setState, computerState }) {
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>
-                                        <Form.Item name="action" label="Hành động" style={{ margin: 0 }} rules={[{
-                                            required: true,
-                                            message: 'Trường không được trống'
-                                        }]}>
+                                        <Form.Item name="action" label="Hành động" style={{ margin: 0 }}>
                                             <Select style={{ width: '100%' }} placeholder="Chọn hành động" size='small'>
                                                 <Option value="" />
                                                 <Option value="reset">Reset</Option>
