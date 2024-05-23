@@ -4,18 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table, Tooltip, Progress, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots } from "react-icons/fa";
-import { FaLocationArrow } from "react-icons/fa6";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
-import { SiMediafire } from "react-icons/si";
 import { BsFire } from "react-icons/bs";
 import { LuListFilter } from "react-icons/lu";
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListCommentOfOrder';
-import AddOrderComment from './components/AddOrderComment';
 import CancelAndRefundOrderComment from './components/CancelAndRefundOrderComment';
 import UpdateOrderComment from './components/UpdateOrderComment';
 import InsuranceOrderComment from './components/InsuranceOrderComment';
@@ -30,7 +27,7 @@ import actions from '../../redux/buffComment/actions';
 import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, ROLE_GENERAL, VIETNAMES_CURRENCY } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
 import { convertSeconds, numberWithCommas } from '../../utility/utility';
 
 
@@ -496,7 +493,7 @@ function PendingBuffComment() {
         isOpen={isListCommentModal}
         setState={setState}
       />
-      {/* <AddOrderComment/> */}
+      {/* <AddOrderGeneral/> */}
       <BatchUpdateOrderComment
         orderState={state}
         setState={setState}
@@ -585,7 +582,7 @@ function PendingBuffComment() {
                               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                             }}
                           >
-                            <RiShoppingBag3Fill size={15} style={{ marginRight: '7px' }} />
+                            <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
                             <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro' , margin: 0, padding: 0 }}>Đặt hàng</span>
                           </Button>
                         )

@@ -325,7 +325,7 @@ const ThemeLayout = (WrappedComponent) => {
                       </Col>
                       <Col md={12} xs={24}>
                         <div className="admin-footer__links">
-                          <NavLink to="#">Về chúng tôi</NavLink>
+                          <NavLink to="#">Thành viên</NavLink>
                           <NavLink to="#">Dịch vụ</NavLink>
                           <NavLink to="#">Cài đặt</NavLink>
                         </div>

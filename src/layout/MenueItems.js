@@ -10,7 +10,7 @@ import { useSelector , useDispatch } from 'react-redux';
 import { NavTitle } from './style';
 import reportActions from '../redux/reports/actions';
 import { COLOR_GENERAL, ROLE_DETAIL, ROLE_GENERAL } from '../variables';
-import AddOrderComment from '../container/ecommerce/components/AddOrderComment';
+import AddOrderGeneral from '../container/ecommerce/components/AddOrderGeneral';
 
 
 const { SubMenu } = Menu;
@@ -48,7 +48,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
 
   return (
     <>
-      <AddOrderComment />
+      <AddOrderGeneral />
       <Menu
         onOpenChange={onOpenChange}
         onClick={onClick}
