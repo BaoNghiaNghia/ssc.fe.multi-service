@@ -3,6 +3,14 @@ const actions = {
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGIN_ERR: 'LOGIN_ERR',
 
+  REGISTER_REFERRAL_BEGIN: 'REGISTER_REFERRAL_BEGIN',
+  REGISTER_REFERRAL_SUCCESS: 'REGISTER_REFERRAL_SUCCESS',
+  REGISTER_REFERRAL_ERR: 'REGISTER_REFERRAL_ERR',
+
+  REGISTER_BEGIN: 'REGISTER_BEGIN',
+  REGISTER_SUCCESS: 'REGISTER_SUCCESS',
+  REGISTER_ERR: 'REGISTER_ERR',
+
   LOGOUT_BEGIN: 'LOGOUT_BEGIN',
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   LOGOUT_ERR: 'LOGOUT_ERR',
@@ -28,6 +36,48 @@ const actions = {
   fetchUserProfileErr: (err) => {
     return {
       type: actions.FETCH_USER_PROFILE_ERR,
+      err,
+    };
+  },
+
+  registerReferralBegin: (payload) => {
+    return {
+      type: actions.REGISTER_REFERRAL_BEGIN,
+      payload
+    };
+  },
+
+  registerReferralSuccess: (data) => {
+    return {
+      type: actions.REGISTER_REFERRAL_SUCCESS,
+      data,
+    };
+  },
+
+  registerReferralErr: (err) => {
+    return {
+      type: actions.REGISTER_REFERRAL_ERR,
+      err,
+    };
+  },
+  
+  registerBegin: (payload) => {
+    return {
+      type: actions.REGISTER_BEGIN,
+      payload
+    };
+  },
+
+  registerSuccess: (data) => {
+    return {
+      type: actions.REGISTER_SUCCESS,
+      data,
+    };
+  },
+
+  registerErr: (err) => {
+    return {
+      type: actions.REGISTER_ERR,
       err,
     };
   },

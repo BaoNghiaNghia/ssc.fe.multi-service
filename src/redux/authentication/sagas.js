@@ -2,8 +2,38 @@ import Cookies from 'js-cookie';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
-import { loginUserApi, fetchProfileDetail } from '../../config/apiFactory/Auth/index';
+import memberActions from "../member/actions";
+import { 
+  loginUserApi,
+  fetchProfileDetail,
+  registerUserApi
+} from '../../config/apiFactory/Auth/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
+
+function* registerReferralSagaFunc(params) {
+  try {
+    const response = yield call(registerUserApi, params?.payload);
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.registerReferralSuccess()
+      );
+      yield put(
+        memberActions.fetchUserListBegin()
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.registerReferralErr({ error: errorMessage || 'Register failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Register failed');
+    }
+  } finally { /* empty */ }
+}
 
 function* loginSagaFunc(params) {
   try {
@@ -84,6 +114,10 @@ export function* logoutWatcherSaga() {
 
 export function* loginWatcherSaga() {
   yield takeLatest(actions.LOGIN_BEGIN, loginSagaFunc);
+}
+
+export function* registerReferralWatcherSaga() {
+  yield takeLatest(actions.REGISTER_REFERRAL_BEGIN, registerReferralSagaFunc);
 }
 
 export function* fetchUserProfileSaga() {

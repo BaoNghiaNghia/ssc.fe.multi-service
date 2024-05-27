@@ -16,6 +16,7 @@ import { GalleryNav, TopToolBox } from './style';
 import EditMember from './component/EditMember';
 import ConfirmTopup from './component/ConfirmTopup';
 import CreditHistoryMember from './component/CreditHistoryMember';
+import RegisterNewMember from './component/RegisterNewMember';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -111,6 +112,7 @@ function Member() {
     isModalEditMem: false,
     isModalAddAccount: false,
     isModalCreditHistory: false,
+    isModalRegisterNewAccount: false,
     notData: searchData,
     item: orders,
     selectedRowKeys: [],
@@ -289,8 +291,6 @@ function Member() {
                 <span style={{ color: 'green', fontWeight: 700 }}>{numberWithCommas(amount)} (đ)</span>
               )
             }
-
-            
           </>
         ),
         user_id: (
@@ -361,6 +361,10 @@ function Member() {
 
   return (
     <>
+      <RegisterNewMember
+        memberState={state}
+        setState={setState}
+      />
       <AddTopup
         isOpen={isModalAddTopup}
         setState={setState}
@@ -385,7 +389,6 @@ function Member() {
         isOpen={isModalCreditHistory}
         setState={setState}
       />
-
       <PageHeader
         ghost
         title="Thành viên & Thanh toán"
@@ -437,11 +440,11 @@ function Member() {
                             onClick={() => {
                               setState({
                                 ...state,
-                                isAddDomainModal: true,
+                                isModalRegisterNewAccount: true,
                               });
                             }}
                           >
-                            <FeatherIcon icon="plus" size={12} /> Thêm tài khoản
+                            <FeatherIcon icon="plus" size={12} /> Thêm thành viên
                           </Button>
                         </div>
                       ) : null

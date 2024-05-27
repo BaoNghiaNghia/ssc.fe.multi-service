@@ -137,7 +137,7 @@ function EditMember({ isOpen, setState }) {
                   },
                 }
               ]}>
-                <Input addonBefore="+84" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
+                <Input addonBefore="+84" size='small' style={{ width: '100%' }} placeholder="Thêm số điện thoại"/>
               </Form.Item>
             </Col>
             <Col sm={12}>

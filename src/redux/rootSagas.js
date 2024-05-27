@@ -3,7 +3,8 @@ import { all } from 'redux-saga/effects';
 import { 
     fetchUserProfileSaga,
     loginWatcherSaga,
-    logoutWatcherSaga
+    logoutWatcherSaga,
+    registerReferralWatcherSaga
 } from './authentication/sagas';
 
 import {
@@ -134,6 +135,7 @@ export default function* rootSaga() {
         detailComputerCommentWatcherSaga(),
         getStatisticsByOrderStatusReportWatcherSaga(),
         toggleStateModalCreateOrderWatcherSaga(),
-        generateApiKeyMemberWatcherSaga()
+        generateApiKeyMemberWatcherSaga(),
+        registerReferralWatcherSaga()
     ]);
 }
