@@ -28,25 +28,26 @@ function EditMember({ isOpen, setState }) {
   const handleOk = () => {
     try {
       formDetailMember.validateFields()
-      .then((values) => {
-        const requestData = {
-          id: detailUser.id,
-          name: values?.name,
-          email: values?.email,
-          discount: values?.discount,
-        }
-  
-        dispatch(actions.updateUserAdminBegin(requestData));
+        .then((values) => {
+          const requestData = {
+            id: detailUser.id,
+            name: values?.name,
+            email: values?.email,
+            phone: String(values?.phone),
+            discount: values?.discount,
+          }
+    
+          dispatch(actions.updateUserAdminBegin(requestData));
 
-        setState({
-          isModalEditMem: false,
+          setState({
+            isModalEditMem: false,
+          });
+
+          formDetailMember.resetFields();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
         });
-
-        formDetailMember.resetFields();
-      })
-      .catch((err) => {
-        console.error("handle Real Error: ", err);
-      });
     } catch (err) {
       console.log(err);
     }
@@ -122,6 +123,11 @@ function EditMember({ isOpen, setState }) {
                   required: true,
                   message: 'Trường không được trống'
                 },
+                { 
+                  required: true, 
+                  message: "Định dạng số điện thoại không hợp lệ (0-9)",
+                  pattern: /^[0-9]+$/
+              } ,
                 {
                   validator: async (_, phone) => {
                     if (phone != null && isVietnamesePhoneNumber(phone)) {
@@ -131,7 +137,7 @@ function EditMember({ isOpen, setState }) {
                   },
                 }
               ]}>
-                <InputNumber type='number' addonBefore="+84" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
+                <Input addonBefore="+84" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={12}>
@@ -142,10 +148,20 @@ function EditMember({ isOpen, setState }) {
           </Row>
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="discount" style={{ margin: '0px' }} label="Discount" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
+              <Form.Item name="discount" style={{ margin: '0px' }} label="Discount" rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+                {
+                  min: 0,
+                  message: 'Giá trị phải lớn hơn 0'
+                },
+                {
+                  max: 100,
+                  message: 'Giá trị phải nhỏ hơn 100'
+                }
+              ]}>
                 <InputNumber type='number' addonAfter="%" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>

@@ -147,6 +147,8 @@ function* updateUserAdminFunc(params) {
         actions.updateUserAdminSuccess(response?.data?.data?.users)
       );
 
+      toast.success('Cập nhật thành viên thành công');
+
       yield put(
         actions.fetchUserListBegin()
       );
