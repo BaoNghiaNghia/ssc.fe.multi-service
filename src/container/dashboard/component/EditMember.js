@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
-import { MdAddchart } from "react-icons/md";
+import { MdAddchart, MdAlternateEmail } from "react-icons/md";
+import { HiMiniUserGroup } from "react-icons/hi2";
+import { FaUser } from "react-icons/fa";
 import actions from '../../../redux/member/actions';
+import { VIETNAMES_CURRENCY } from '../../../variables';
+import { isVietnamesePhoneNumber, numberWithCommas } from '../../../utility/utility';
 
 function EditMember({ isOpen, setState }) {
   const dispatch = useDispatch();
@@ -25,7 +29,12 @@ function EditMember({ isOpen, setState }) {
     try {
       formDetailMember.validateFields()
       .then((values) => {
-        const requestData = {}
+        const requestData = {
+          id: detailUser.id,
+          name: values?.name,
+          email: values?.email,
+          discount: values?.discount,
+        }
   
         dispatch(actions.updateUserAdminBegin(requestData));
 
@@ -85,15 +94,21 @@ function EditMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' placeholder="Thêm loại"/>
+                <Input addonBefore={<FaUser fontSize={14} style={{marginTop: '3px'}}/>} size='small' placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={12}>
-              <Form.Item name="email" label="Email" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Input size='small' placeholder="Thêm loại"/>
+              <Form.Item name="email" label="Email" rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+                {
+                  type: 'email',
+                  message: 'Email không hợp lệ'
+                },
+              ]}>
+                <Input addonBefore={<MdAlternateEmail fontSize={17} style={{marginTop: '3px'}}/>} size='small' placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
           </Row>
@@ -102,19 +117,26 @@ function EditMember({ isOpen, setState }) {
 
           <Row gutter="10">
             <Col sm={12}>
-              <Form.Item name="phone" label="Điện thoại" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
+              <Form.Item name="phone" label="Điện thoại" rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+                {
+                  validator: async (_, phone) => {
+                    if (phone != null && isVietnamesePhoneNumber(phone)) {
+                      // eslint-disable-next-line prefer-promise-reject-errors
+                      return Promise.reject( `Định dạng số điện thoại không hợp lệ`);
+                    }
+                  },
+                }
+              ]}>
+                <InputNumber type='number' addonBefore="+84" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={12}>
-              <Form.Item name="role" label="Nhóm người dùng" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <Input size='small' placeholder="Chọn người dùng"/>
+              <Form.Item name="role" label="Nhóm người dùng">
+                <Input size='small' addonBefore={<HiMiniUserGroup fontSize={17} style={{marginTop: '3px'}}/>} placeholder="Chọn người dùng"/>
               </Form.Item>
             </Col>
           </Row>
@@ -124,23 +146,27 @@ function EditMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
+                <InputNumber type='number' addonAfter="%" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="credit_used" style={{ margin: '0px' }} label="Credit đã dùng" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Credit đã dùng"/>
+              <Form.Item name="credit_used" style={{ margin: '0px' }} label="Credit đã dùng">
+                <InputNumber 
+                  readOnly type='number'
+                  addonAfter={VIETNAMES_CURRENCY} 
+                  size='small' style={{ width: '100%' }}
+                  placeholder="Credit đã dùng"
+                />
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="credit" style={{ margin: '0px' }} label="Tổng Credit" rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm credit"/>
+              <Form.Item name="credit" style={{ margin: '0px' }} label="Tổng Credit">
+                <InputNumber 
+                  readOnly type='number' 
+                  addonAfter={VIETNAMES_CURRENCY} 
+                  size='small' style={{ width: '100%' }}
+                  placeholder="Thêm credit"
+                />
               </Form.Item>
             </Col>
           </Row>

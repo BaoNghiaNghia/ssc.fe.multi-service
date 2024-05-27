@@ -373,10 +373,14 @@ function Member() {
         isOpen={isModalEditMem}
         setState={setState}
       />
-      <ConfirmTopup
-        isOpen={isModalConfirmTopup}
-        setState={setState}
-      />
+      {
+        typeTable === MEMBER_TABLE_TYPE.TOPUP.title ? (
+          <ConfirmTopup
+            isOpen={isModalConfirmTopup}
+            setState={setState}
+          />
+        ): null
+      }
       <CreditHistoryMember
         isOpen={isModalCreditHistory}
         setState={setState}
@@ -424,20 +428,24 @@ function Member() {
                     </div>
                   </Col>
                   <Col xxl={18} xs={24}>
-                    {/* <div className="table-toolbox-actions">
-                      <Button
-                        size="small"
-                        type="primary"
-                        onClick={() => {
-                          setState({
-                            ...state,
-                            isAddDomainModal: true,
-                          });
-                        }}
-                      >
-                        <FeatherIcon icon="plus" size={12} /> Thêm tài khoản
-                      </Button>
-                    </div> */}
+                    {
+                      typeTable === MEMBER_TABLE_TYPE.MEMBER.title ?(
+                        <div className="table-toolbox-actions">
+                          <Button
+                            size="small"
+                            type="primary"
+                            onClick={() => {
+                              setState({
+                                ...state,
+                                isAddDomainModal: true,
+                              });
+                            }}
+                          >
+                            <FeatherIcon icon="plus" size={12} /> Thêm tài khoản
+                          </Button>
+                        </div>
+                      ) : null
+                    }
                   </Col>
                 </Row>
               </TopToolBox>

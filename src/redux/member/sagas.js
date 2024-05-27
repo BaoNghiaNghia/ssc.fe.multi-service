@@ -146,6 +146,10 @@ function* updateUserAdminFunc(params) {
       yield put(
         actions.updateUserAdminSuccess(response?.data?.data?.users)
       );
+
+      yield put(
+        actions.fetchUserListBegin()
+      );
     }
   } catch (err) {
     yield put(
@@ -232,4 +236,3 @@ export function* updateUserAdminMemberWatcherSaga() {
 export function* changeTableTypeMemberWatcherSaga() {
   yield takeLatest(actions.CHANGE_TYPE_TABLE_BEGIN, changeTableTypeFunc);
 }
-

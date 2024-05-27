@@ -232,7 +232,10 @@ function ComputerRunCommentOrder() {
           </Tooltip>
         ),
         lastReset: (
-          <>
+          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <span style={{ marginRight: '8px' }}>{value?.action ? (
+              <Badge count={value?.action?.toUpperCase()} color="green" style={{fontSize: '0.8em', fontWeight: 600}}/>
+            ) : null}</span>
             <span>
               {
                 value?.last_action_at ? (
@@ -242,7 +245,7 @@ function ComputerRunCommentOrder() {
                 )
               }
             </span>
-          </>
+          </div>
         ),
         action: (
           <div className="table-actions">

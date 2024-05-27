@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import { BsPersonCheck } from "react-icons/bs";
 import { Row, Col, Form, Input, Modal, InputNumber, Divider, Button } from 'antd';
 import { RiKey2Line } from "react-icons/ri";
+import { MdAddchart, MdAlternateEmail } from "react-icons/md";
+import { HiMiniUserGroup } from "react-icons/hi2";
+import { FaUser } from "react-icons/fa";
 import userActions from '../../../redux/member/actions';
 import { VIETNAMES_CURRENCY } from '../../../variables';
 
@@ -57,7 +60,7 @@ function DetailMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' placeholder="Thêm loại"/>
+                <Input size='small' addonBefore={<FaUser fontSize={14} style={{marginTop: '3px'}}/>} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={12}>
@@ -65,7 +68,7 @@ function DetailMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' placeholder="Thêm loại"/>
+                <Input size='small' addonBefore={<MdAlternateEmail fontSize={17} style={{marginTop: '3px'}}/>} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
           </Row>
@@ -78,7 +81,7 @@ function DetailMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
+                <InputNumber type='number' addonBefore="+84" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={12}>
@@ -86,7 +89,7 @@ function DetailMember({ isOpen, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input size='small' placeholder="Chọn người dùng"/>
+                <Input size='small' addonBefore={<HiMiniUserGroup fontSize={17} style={{marginTop: '3px'}}/>} placeholder="Chọn người dùng"/>
               </Form.Item>
             </Col>
           </Row>
@@ -126,6 +129,7 @@ function DetailMember({ isOpen, setState }) {
                   }]}>
                     <Input.Password 
                       type='number'
+                      addonBefore={<RiKey2Line style={{ marginRight: '4px' }} fontSize={17}/>}
                       size='small'
                       style={{ width: '100%' }}
                       placeholder="Key API"

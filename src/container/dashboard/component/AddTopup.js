@@ -104,7 +104,7 @@ function AddTopup({ isOpen, setState }) {
               }]}>
                 <Select disabled defaultActiveFirstOption style={{ width: '100%', margin: '0px', padding: '0px' }} size='small' placeholder='Chọn người dùng'>
                   {
-                    userList.map(itemUser => {
+                    userList?.map(itemUser => {
                       return (
                         <Option value={itemUser?.id}>
                           <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
