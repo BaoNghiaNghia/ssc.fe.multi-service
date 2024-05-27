@@ -127,7 +127,7 @@ function EditMember({ isOpen, setState }) {
                   required: true, 
                   message: "Định dạng số điện thoại không hợp lệ (0-9)",
                   pattern: /^[0-9]+$/
-              } ,
+                },
                 {
                   validator: async (_, phone) => {
                     if (phone != null && isVietnamesePhoneNumber(phone)) {
@@ -154,12 +154,12 @@ function EditMember({ isOpen, setState }) {
                   message: 'Trường không được trống'
                 },
                 {
-                  min: 0,
-                  message: 'Giá trị phải lớn hơn 0'
-                },
-                {
-                  max: 100,
-                  message: 'Giá trị phải nhỏ hơn 100'
+                  validator: async (_, discount) => {
+                    if (discount != null && (discount < 0 || discount > 100)) {
+                      // eslint-disable-next-line prefer-promise-reject-errors
+                      return Promise.reject( `Giảm giá cần nhỏ hơn 100 và lớn hơn 0`);
+                    }
+                  },
                 }
               ]}>
                 <InputNumber type='number' addonAfter="%" size='small' style={{ width: '100%' }} placeholder="Thêm loại"/>
