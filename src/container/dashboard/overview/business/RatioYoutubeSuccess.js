@@ -200,11 +200,9 @@ function RatioYoutubeSuccess({ title }) {
           }
           more={moreContent}
           title={
-            <div>
-              {title}
-              <span>
-                Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong>
-              </span>
+            <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p> 
+              <span>Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong></span>
             </div>
           }
           size="large"

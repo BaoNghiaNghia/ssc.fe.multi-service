@@ -119,8 +119,9 @@ function ClosedDeals(props) {
             </div>
           }
           title={
-            <div>
-              {title} <span>Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong></span>
+            <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p> 
+              <span>Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong></span>
             </div>
           }
           size="large"
@@ -146,16 +147,24 @@ function ClosedDeals(props) {
                     }  
                   </Col>
                   <Col xxl={8} md={8} sm={8} xs={8}>
-                    <div className="flex-grid-child">
-                      <p>Doanh thu cao nhất (đ)</p>
-                      <Heading as="h3">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
-                    </div>
+                    {
+                      totalPoint?.length > 0 ? (
+                        <div className="flex-grid-child">
+                          <p>Doanh thu cao nhất (đ)</p>
+                          <Heading as="h3">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
+                        </div>
+                      ) : null
+                    }
                   </Col>
                   <Col xxl={8} md={8} sm={8} xs={8}>
-                    <div className="flex-grid-child">
-                      <p>Doanh thu thấp nhất (đ)</p>
-                      <Heading as="h3">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
-                    </div>
+                    {
+                      totalPoint?.length > 0 ? (
+                        <div className="flex-grid-child">
+                          <p>Doanh thu thấp nhất (đ)</p>
+                          <Heading as="h3">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
+                        </div>
+                      ) : null
+                    }
                   </Col>
                 </Row>
               </div>

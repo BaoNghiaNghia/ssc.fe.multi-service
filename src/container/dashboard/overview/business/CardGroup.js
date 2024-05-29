@@ -68,12 +68,12 @@ function CardGroup() {
               title={
                 <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                   <IoFileTray fontSize={20} fontWeight={800} color="green" style={{ marginRight: '7px' }} />
-                  <span>Đơn đang chạy</span>
+                  <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn đang chạy</span>
                 </div>
               }
             >
               <div className="focard-details growth-upward">
-                <Heading as="h1">{ getValueByKey(statisticComment, '1') } đơn</Heading>
+                <Heading as="h1">{ getValueByKey(statisticComment, '1') || 0 }</Heading>
                 {/* <p className="focard-status">
                   <span className="focard-status__percentage">
                     <FeatherIcon icon="arrow-up" /> 25%
@@ -113,12 +113,12 @@ function CardGroup() {
             title={
               <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                 <IoFileTray fontSize={20} fontWeight={800} color="orange" style={{ marginRight: '7px' }} />
-                <span>Đơn tạm tắt</span>
+                <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn tạm tắt</span>
               </div>
             }
           >
             <div className="ratio-content">
-              <Heading as="h1">{getValueByKey(statisticComment, '-1')} đơn</Heading>
+              <Heading as="h1">{getValueByKey(statisticComment, '-1') || 0 }</Heading>
               {/* <Progress percent={80} className="progress-success" /> */}
             </div>
           </Cards>
@@ -131,12 +131,12 @@ function CardGroup() {
             title={
               <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                 <IoFileTray fontSize={20} fontWeight={800} color="gray" style={{ marginRight: '7px' }} />
-                <span>Đơn chờ duyệt</span>
+                <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn chờ duyệt</span>
               </div>
             }
           >
             <div className="ratio-content">
-              <Heading as="h1">{getValueByKey(statisticComment, '0')} đơn</Heading>
+              <Heading as="h1">{getValueByKey(statisticComment, '0') || 0 }</Heading>
               {/* <Progress percent={72} status="warning" /> */}
             </div>
           </Cards>

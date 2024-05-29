@@ -15,7 +15,7 @@ const EChartCard = Styled.div`
                 margin-bottom: 0;
             }
             p{
-                margin: 5px 0 20px 0;
+                margin: 5px 0 10px 0;
             }
         }
     }
@@ -217,7 +217,6 @@ const CardBarChart = Styled.div`
     }
     .card-bar-top{
         &.flex-grid{
-            ${({ theme }) => (theme.rtl ? 'margin-right' : 'margin-left')}: -20px;
             @media only screen and (max-width: 575px) {
                 flex-flow: column;
                 align-items: center;
@@ -1067,7 +1066,7 @@ const CardBarChart2 = Styled.div`
         }
     }
     h1{
-        margin-top: 20px;
+        margin-top: 5px;
         margin-bottom: 0px;
     }
     @media only screen and (max-width: 1500px){
@@ -1079,7 +1078,6 @@ const CardBarChart2 = Styled.div`
         }
     }
     & > span{
-        font-weight: 600;
         font-family: 'Be Vietnam Pro',
         color: ${({ theme }) => theme['heading-color']};
     }

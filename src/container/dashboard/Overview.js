@@ -159,26 +159,32 @@ function Overview() {
             <Cards
               headless
               border 
-              gradient={ todayPoint >= 0 ? '0deg, rgb(255 226 0 / 28%), rgb(220 255 244)' : '0deg, #fff6d947, #ffac8d' }
+              gradient={ todayPoint >= 0 ? '120deg, rgb(212, 252, 121) 0%, rgb(150, 230, 161) 100%' : '0deg, #fff6d947, #ffac8d' }
             >
               <EChartCard>
                 <div className="card-chunk text-center">
                   <CardBarChartCenter>
-                    <span style={{ fontWeight: 600 }}>
-                      Tổng point hôm nay (đ)
-                    </span>
-                    <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
-                    <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
-                      <span style={{ marginRight: '23px' }}>
-                        Subscribe: <strong>{numberWithCommas(todaySubscribePoint)}</strong>
-                      </span>
-                      <span style={{ marginRight: '23px' }}>
-                        Comment: <strong>{numberWithCommas(todayCommentPoint)}</strong>
-                      </span>
-                      <span>
-                        Like: <strong>{numberWithCommas(todayLikePoint)}</strong>
-                      </span>
-                    </span>
+                    <Row style={{ display: 'flex', justifyContent: 'space-around' }}>
+                      <Col sm="12">
+                        <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                          Tổng point hôm nay (đ)
+                        </span>
+                        <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
+                      </Col>
+                      <Col sm="12">
+                        <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
+                          <div>
+                            Subscribe: <strong>{numberWithCommas(todaySubscribePoint)}</strong>
+                          </div>
+                          <div>
+                            Comment: <strong>{numberWithCommas(todayCommentPoint)}</strong>
+                          </div>
+                          <div>
+                            Like: <strong>{numberWithCommas(todayLikePoint)}</strong>
+                          </div>
+                        </span>
+                      </Col>
+                    </Row>
                   </CardBarChartCenter>
                 </div>
               </EChartCard>

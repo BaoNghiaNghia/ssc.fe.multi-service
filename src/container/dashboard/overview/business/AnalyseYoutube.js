@@ -228,8 +228,9 @@ function AnalyseYoutube(props) {
             </div>
           }
           title={
-            <div>
-              {title} <span>Từ <strong>{filterRange?.from}</strong> đến <strong>{filterRange?.to}</strong></span>
+            <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p> 
+              <span>Từ <strong>{filterRange?.from}</strong> đến <strong>{filterRange?.to}</strong></span>
             </div>
           }
           size="large"
@@ -257,16 +258,24 @@ function AnalyseYoutube(props) {
 
                   </Col>
                   <Col xxl={8} md={8} sm={8} xs={8}>
-                    <div className="flex-grid-child">
-                      <p>Cao nhất (sub)</p>
-                      <Heading as="h3">{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
-                    </div>
+                    {
+                      arrTotalSub?.length > 0 ? (
+                        <div className="flex-grid-child">
+                          <p>Cao nhất (sub)</p>
+                          <Heading as="h3">{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
+                        </div>
+                      ) : null
+                    }
                   </Col>
                   <Col xxl={8} md={8} sm={8} xs={8}>
-                    <div className="flex-grid-child">
-                      <p>Thấp nhất (sub)</p>
-                      <Heading as="h3">{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
-                    </div>
+                    {
+                      arrTotalSub?.length > 0 ? (
+                        <div className="flex-grid-child">
+                          <p>Thấp nhất (sub)</p>
+                          <Heading as="h3">{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
+                        </div>
+                      ) : null
+                    }
                   </Col>
                 </Row>
               </div>
