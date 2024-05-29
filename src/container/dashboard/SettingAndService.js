@@ -134,9 +134,11 @@ function SettingAndService() {
             </Col>
           </Row>
           <Row style={{ marginBottom: '5px' }}>
-            <Col>
-              <span className="label" style={{ color: 'gray', fontSize: '0.8em' }}>{description}</span>
-            </Col>
+            <Tooltip title={description} placement='right'>
+              <Col>
+                <span className="label" style={{ color: 'gray', fontSize: '0.8em' }}>{description.length > 80 ? `${description?.slice(0, 80)  } ...` : description}</span>
+              </Col>
+            </Tooltip>
           </Row>
           <Row>
             <Col>
