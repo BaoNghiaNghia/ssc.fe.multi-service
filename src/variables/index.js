@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 // 7 seconds timeout request
 export const TIMEOUT_REQUEST_API = 70000;
 
@@ -361,3 +362,6 @@ export const ROLE_GENERAL = {
   ADMIN: 'admin',
   SUPER_ADMIN: 'superadmin'
 }
+
+export const REGEX_VALIDATE_YOUTUBE_VIDEO_LINK =  /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+export const REGEX_VALIDATE_YOUTUBE_ALL_LINK = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;

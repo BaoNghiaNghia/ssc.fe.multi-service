@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
+import { TiTick } from "react-icons/ti";
 import actions from '../../../redux/buffComment/actions';
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
@@ -128,6 +129,8 @@ function AddOrderGeneral() {
     return value?.target?.value?.split('\n')?.length;
   }
 
+  const validateCommentCount = stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange <= detailService?.max;
+
   const formCreateCommentService = () => {
     return (
       <>
@@ -146,7 +149,7 @@ function AddOrderGeneral() {
                 {
                   validator: async (_, link) => {
                     if (!validateYouTubeUrl(link)) {
-                      return Promise.reject( `Đường dẫn youtube không hợp lệ`);
+                      return Promise.reject( `Đường dẫn video Youtube không hợp lệ`);
                     }
                   },
                 }
@@ -193,8 +196,12 @@ function AddOrderGeneral() {
               }}
             >
               <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
-              <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary }}>
-                <span>{stateCurr?.amountChange} comments (Ít nhất: {detailService?.min || 0} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)} )</span>
+              <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary, display: 'flex', justifyContent: 'space-between', marginTop: '3px' }}>
+                <span style={{ color: (validateCommentCount) ? 'green' : 'red', display: 'inline-flex', alignItems: 'center' }}>
+                  <span>{stateCurr?.amountChange} comments</span> 
+                  { validateCommentCount ? <TiTick fontSize={17} style={{ marginLeft: '3px' }} /> : null }
+                </span>
+                <span>Ít nhất: {numberWithCommas(detailService?.min || 0)} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)}</span>
               </span>
             </Form.Item>
           </Col>

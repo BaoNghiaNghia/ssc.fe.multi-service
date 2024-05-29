@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import moment from "moment";
+import { REGEX_VALIDATE_YOUTUBE_VIDEO_LINK } from "../variables";
 
 /**
  * Return ellipsis of a given string
@@ -16,8 +17,7 @@ const numberWithCommas = (x) => {
 
 export const validateYouTubeUrl = (urlToParse) => {
   if (urlToParse) {
-      const regExp = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-      if (urlToParse.match(regExp)) {
+      if (urlToParse.match(REGEX_VALIDATE_YOUTUBE_VIDEO_LINK)) {
           return true;
       }
   }

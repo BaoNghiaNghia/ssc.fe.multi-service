@@ -545,7 +545,7 @@ function PendingBuffComment() {
                 <Row gutter={15} className="justify-content-center" style={{ marginBottom: '15px' }}>
                   <Col lg={6} xs={6}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} patterns />
+                      <AutoComplete onSearch={handleSearch} dataSource={notData} patterns placeholder="Tìm kiếm Order ID, Video ID"/>
                     </div>
                   </Col>
                   <Col xxl={18} xs={24}>

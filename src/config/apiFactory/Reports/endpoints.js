@@ -11,5 +11,18 @@ export const RATIO_SUBSCRIBE_AVG_ENDPOINT = 'api/v2/pfmAvg';
 
 // COMMENTS
 export const STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-comment/api/v1/admin/orders/statistics/status";
+export const STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-comment/api/v1/admin/stats/order-amount";
+export const STATISTIC_BY_STATUS_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-status";
+export const STATISTIC_PERFORMANCE_ENDPOINT = "ytb-comment/api/v1/admin/stats/perfomance";
+export const STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/stats/user-order";
+export const STATISTIC_USER_POINT_ENDPOINT = "ytb-comment/api/v1/admin/stats/user-point";
+
+export const STATISTIC_ACCOUNT_STATUS_ENDPOINT = "api/v1/admin/stats/account-status";
+export const STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT = "api/v1/admin/stats/comment-by-day";
+export const STATISTIC_COMMENT_BY_DAY_ENDPOINT = "api/v1/admin/stats/comment-by-day";
+export const STATISTIC_COMPUTER_THREAD_ENDPOINT = "api/v1/admin/stats/computer-thread";
+export const STATISTIC_RUNNING_COMPUTER_ENDPOINT = "api/v1/admin/stats/running-computers";
+export const STATISTIC_TASK_OF_TOOL_ENDPOINT = "api/v1/admin/stats/tasks";
+export const STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT = "api/v1/admin/stats/tasks-success";
 
 // LIKE

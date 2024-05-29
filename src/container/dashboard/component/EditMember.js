@@ -113,9 +113,7 @@ function EditMember({ isOpen, setState }) {
               </Form.Item>
             </Col>
           </Row>
-
           <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '10px', margin: '0px' }}>Thông tin cơ bản</Divider>
-
           <Row gutter="10">
             <Col sm={12}>
               <Form.Item name="phone" label="Điện thoại" rules={[
@@ -128,14 +126,6 @@ function EditMember({ isOpen, setState }) {
                   message: "Định dạng số điện thoại không hợp lệ (0-9)",
                   pattern: /^[0-9]+$/
                 },
-                {
-                  validator: async (_, phone) => {
-                    if (phone != null && isVietnamesePhoneNumber(phone)) {
-                      // eslint-disable-next-line prefer-promise-reject-errors
-                      return Promise.reject( `Định dạng số điện thoại không hợp lệ`);
-                    }
-                  },
-                }
               ]}>
                 <Input addonBefore="+84" size='small' style={{ width: '100%' }} placeholder="Thêm số điện thoại"/>
               </Form.Item>
