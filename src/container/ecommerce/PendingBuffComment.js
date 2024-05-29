@@ -48,9 +48,14 @@ const columns = [
     key: 'order_id',
   },
   {
-    title: 'Số lượng comment',
+    title: 'Đã chạy / Thực tế',
     dataIndex: 'quantity',
     key: 'quantity',
+  },
+  {
+    title: 'Bắt đầu / Hiện tại',
+    dataIndex: 'start_count',
+    key: 'start_count',
   },
   {
     title: 'Luồng tối đa',
@@ -246,6 +251,13 @@ function PendingBuffComment() {
             <span style={{ fontSize: '0.8em' }}>
               <strong>Thời lượng: </strong> {convertSeconds(video_duration || 0)}
             </span>
+          </>
+        ),
+        start_count: (
+          <>
+            <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Bắt đầu: <strong>{numberWithCommas(start_count || 0)}</strong></p>
+            <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Hiện tại: <strong>{numberWithCommas(current_count || 0)}</strong></p>
+            {/* <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Còn thiếu: <strong>{numberWithCommas((quantity - (current_count - start_count)))}</strong></p> */}
           </>
         ),
         quantity: (

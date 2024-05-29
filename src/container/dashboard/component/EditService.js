@@ -236,14 +236,13 @@ function EditService({ isOpen, setState, state }) {
               <Form.Item
                 name="description"
                 label="Mô tả"
-                tooltip={formUpdateService.getFieldValue('description')}
                 style={{ marginBottom: '7px', fontStyle: 'italic' }} 
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={4}  />
+                <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={4}/>
               </Form.Item>
             </Col>
           </Row>
