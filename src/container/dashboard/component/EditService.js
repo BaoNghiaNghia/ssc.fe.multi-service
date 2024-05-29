@@ -109,7 +109,7 @@ function EditService({ isOpen, setState, state }) {
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật dịch vụ</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Thay đổi thông tin cho dịch vụ</p>
+                <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Thay đổi thông tin cho dịch vụ</p>
               </div>
             </div>
           </>
@@ -136,7 +136,7 @@ function EditService({ isOpen, setState, state }) {
             <Col sm={12}>
               <Form.Item
                 name="category"
-                style={{ margin: '0px' }}
+                style={{ margin: 0 }}
                 bordered 
                 rules={[{
                   required: true,
@@ -144,7 +144,7 @@ function EditService({ isOpen, setState, state }) {
                 }]}
               >
                 <Select
-                  style={{ width: '100%', margin: '0px', padding: '0px' }}
+                  style={{ width: '100%', margin: 0, padding: 0 }}
                   bordered={false}
                   initialValue="Comments"
                   size='small'
@@ -174,7 +174,7 @@ function EditService({ isOpen, setState, state }) {
             </Col>
           </Row>
 
-          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
+          <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: 0 }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
             <Col sm={19}>
@@ -236,13 +236,14 @@ function EditService({ isOpen, setState, state }) {
               <Form.Item
                 name="description"
                 label="Mô tả"
+                tooltip={formUpdateService.getFieldValue('description')}
                 style={{ marginBottom: '7px', fontStyle: 'italic' }} 
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={2} />
+                <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={4}  />
               </Form.Item>
             </Col>
           </Row>
@@ -286,7 +287,7 @@ function EditService({ isOpen, setState, state }) {
             </Col>
           </Row>
 
-          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
+          <Divider plain style={{ marginTop: 0, padding: 0, fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
 
           <Row gutter="10">
             <Col sm={8}>
@@ -314,29 +315,29 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter="10">
+          <Row gutter="10" >
             <Col sm={8}>
-              <Form.Item name="min" style={{ margin: '0px' }}  label="Số sub order min" rules={[{
+              <Form.Item name="min" style={{ margin: 0 }}  label="Số sub order min" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' style={{ width: '100%', margin: 0, padding: 0 }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max" style={{ margin: '0px' }}  label="Số Sub (order max)" rules={[{
+              <Form.Item name="max" style={{ margin: 0 }}  label="Số Sub (order max)" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' style={{ width: '100%', margin: 0, padding: 0 }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="price_per_10" style={{ margin: '0px' }}  label="Prices / 10 Subs" rules={[{
+              <Form.Item name="price_per_10" style={{ margin: 0 }}  label="Prices / 10 Subs" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' style={{ width: '100%', margin: 0, padding: 0 }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
           </Row>

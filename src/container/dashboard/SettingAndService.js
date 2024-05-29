@@ -129,7 +129,7 @@ function SettingAndService() {
                     </Tooltip>
                   ) : null
                 }
-                 - <span style={{ fontWeight: 'bold', margin: '0px 7px' }}>{service_id}</span>  - {name}
+                 - <span style={{ fontWeight: 'bold', margin: '0px 7px' }}>{service_id}</span> - <Tooltip title={name} placement='right'>{name.length > 70 ? `${name?.slice(0, 70)  } ...` : name}</Tooltip>
               </span>
             </Col>
           </Row>
@@ -376,7 +376,7 @@ function SettingAndService() {
                     <Row gutter={15} className="justify-content-center">
                       <Col lg={6} xs={24}>
                         <div className="table-search-box">
-                          <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch v" />
+                          <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch vụ" />
                         </div>
                       </Col>
                       <Col xxl={18} xs={24}>

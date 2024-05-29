@@ -219,7 +219,7 @@ const Div = Styled.div`
             ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 0;
         }
         img{
-            max-width: ${({ theme }) => (theme.topMenu ? '65px' : '60px')};
+            max-width: ${({ theme }) => (theme.topMenu ? '85px' : '80px')};
             width: 100%;
         }
         &.top-menu{
