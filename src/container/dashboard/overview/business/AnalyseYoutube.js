@@ -17,7 +17,7 @@ function AnalyseYoutube(props) {
   const { title } = props;
 
   const dispatch = useDispatch();
-  const { cashFlowState, cfIsLoading, avgPerformance, reportChart, isLoading, filterRange, typeService } = useSelector(state => {
+  const { cashFlowState, cfIsLoading, avgPerformance, reportChart, isLoading, filterRange, typeService, commentByDay } = useSelector(state => {
     return {
       cashFlowState: state?.chartContent?.cashFlowData,
       cfIsLoading: state?.chartContent?.cfLoading,
@@ -25,7 +25,8 @@ function AnalyseYoutube(props) {
       avgPerformance: state?.reports?.subscribeReport?.avg_performance,
       reportChart: state?.reports?.subscribeReport?.report,
       filterRange: state?.reports?.filterRange,
-      typeService: state?.reports?.typeService
+      typeService: state?.reports?.typeService,
+      commentByDay: state?.reports?.commentByDay
     };
   });
 
@@ -91,74 +92,74 @@ function AnalyseYoutube(props) {
     },
   ];
 
-  const chartBar = (
-    <ChartjsBarChartTransparent
-      labels={avgPerformance?.map(item => item?.date)}
-      datasets={cashFlowDataset || []}
-      height={43}
-      options={{
-        maintainAspectRatio: true,
-        responsive: true,
-        layout: {
-          padding: {
-            top: 20,
-          },
-        },
-        legend: {
-          display: false,
-          position: 'bottom',
-          align: 'start',
-          labels: {
-            boxWidth: 6,
-            display: false,
-            usePointStyle: true,
-          },
-        },
-        scales: {
-          yAxes: [
-            {
-              gridLines: {
-                color: '#e5e9f2',
-                borderDash: [3, 3],
-                zeroLineColor: '#e5e9f2',
-                zeroLineWidth: 1,
-                zeroLineBorderDash: [3, 3],
-              },
-              ticks: {
-                beginAtZero: true,
-                fontSize: 12,
-                fontColor: '#182b49',
-                // max: Math.max(...reportChart.map(item => item?.total_run)),
-                // stepSize: Math.floor(Math.max(...reportChart.map(item => item?.total_run)) / 5),
-                callback(label) {
-                  return `${label}k`;
-                },
-              },
-            },
-          ],
-          xAxes: [
-            {
-              gridLines: {
-                display: true,
-                zeroLineWidth: 2,
-                zeroLineColor: '#fff',
-                color: 'transparent',
-                z: 1,
-              },
-              ticks: {
-                beginAtZero: true,
-                fontSize: 12,
-                fontColor: '#182b49',
-              }
-            },
-          ],
-        },
-      }}
-    />
-  )
+  // const chartBar = (
+  //   <ChartjsBarChartTransparent
+  //     labels={avgPerformance?.map(item => item?.date)}
+  //     datasets={cashFlowDataset || []}
+  //     height={43}
+  //     options={{
+  //       maintainAspectRatio: true,
+  //       responsive: true,
+  //       layout: {
+  //         padding: {
+  //           top: 20,
+  //         },
+  //       },
+  //       legend: {
+  //         display: false,
+  //         position: 'bottom',
+  //         align: 'start',
+  //         labels: {
+  //           boxWidth: 6,
+  //           display: false,
+  //           usePointStyle: true,
+  //         },
+  //       },
+  //       scales: {
+  //         yAxes: [
+  //           {
+  //             gridLines: {
+  //               color: '#e5e9f2',
+  //               borderDash: [3, 3],
+  //               zeroLineColor: '#e5e9f2',
+  //               zeroLineWidth: 1,
+  //               zeroLineBorderDash: [3, 3],
+  //             },
+  //             ticks: {
+  //               beginAtZero: true,
+  //               fontSize: 12,
+  //               fontColor: '#182b49',
+  //               // max: Math.max(...reportChart.map(item => item?.total_run)),
+  //               // stepSize: Math.floor(Math.max(...reportChart.map(item => item?.total_run)) / 5),
+  //               callback(label) {
+  //                 return `${label}k`;
+  //               },
+  //             },
+  //           },
+  //         ],
+  //         xAxes: [
+  //           {
+  //             gridLines: {
+  //               display: true,
+  //               zeroLineWidth: 2,
+  //               zeroLineColor: '#fff',
+  //               color: 'transparent',
+  //               z: 1,
+  //             },
+  //             ticks: {
+  //               beginAtZero: true,
+  //               fontSize: 12,
+  //               fontColor: '#182b49',
+  //             }
+  //           },
+  //         ],
+  //       },
+  //     }}
+  //   />
+  // )
 
-  const arrTotalSub = reportChart?.map(item => item?.total_run) || [];
-  const arrWaveDate = avgPerformance?.map(item => item?.date);
+  const arrTotalSub = commentByDay?.map(item => item?.comments) || [];
+  const arrWaveDate = commentByDay?.map(item => item?.date);
   
   const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? arrTotalSub[arrWaveDate?.indexOf(currentDate)] : 0;
 
@@ -169,10 +170,10 @@ function AnalyseYoutube(props) {
         name: 'Tổng sub chạy (sub)',
         data: arrTotalSub
       },
-      {
-        name: 'Tỉ lệ thành công (%)',
-        data: avgPerformance?.map(item => item?.performance)
-      }
+      // {
+      //   name: 'Tỉ lệ thành công (%)',
+      //   data: avgPerformance?.map(item => item?.performance)
+      // }
     ],
   };
 
@@ -181,11 +182,11 @@ function AnalyseYoutube(props) {
   );
 
   const dataIndicator = (
-    <ul className="chart-dataIndicator">
+    <ul className="chart-dataIndicator" style={{ margin: 0, padding: 0 }}>
       {
         cashFlowDataset && cashFlowDataset?.map((item, key) => {
           return (
-            <li key={key + 1} style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <li key={key + 1} style={{ display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0 }}>
               <span
                 style={{
                   width: '10px',
@@ -235,6 +236,7 @@ function AnalyseYoutube(props) {
           }
           size="large"
           more={moreContent}
+          style={{ backgroundColor: 'gray' }}
         >
           {cfIsLoading ? (
             <div className="sd-spin">

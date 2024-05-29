@@ -46,6 +46,56 @@ const actions = {
   STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
   STATISTIC_COMMENT_BY_ORDER_REPORT_ERR: 'STATISTIC_COMMENT_BY_ORDER_REPORT_ERR',
 
+  STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN',
+  STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS',
+  STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR',
+
+  STATISTIC_COMMENT_BY_DAY_BEGIN: 'STATISTIC_COMMENT_BY_DAY_BEGIN',
+  STATISTIC_COMMENT_BY_DAY_SUCCESS: 'STATISTIC_COMMENT_BY_DAY_SUCCESS',
+  STATISTIC_COMMENT_BY_DAY_ERR: 'STATISTIC_COMMENT_BY_DAY_ERR',
+
+  statisticCommentByDayBegin: (payload) => {
+    return {
+      type: actions.STATISTIC_COMMENT_BY_DAY_BEGIN,
+      payload
+    };
+  },
+
+  statisticCommentByDaySuccess: (data) => {
+    return {
+      type: actions.STATISTIC_COMMENT_BY_DAY_SUCCESS,
+      data,
+    };
+  },
+
+  statisticCommentByDayErr: (err) => {
+    return {
+      type: actions.STATISTIC_COMMENT_BY_DAY_ERR,
+      err,
+    };
+  },
+
+  statisticTaskSuccessInMinuteBegin: (payload) => {
+    return {
+      type: actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
+      payload
+    };
+  },
+
+  statisticTaskSuccessInMinuteSuccess: (data) => {
+    return {
+      type: actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS,
+      data,
+    };
+  },
+
+  statisticTaskSuccessInMinuteErr: (err) => {
+    return {
+      type: actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
+      err,
+    };
+  },
+
   toggleModalCreateOrderBegin: (payload) => {
     return {
       type: actions.OPEN_MODAL_CREATE_NEW_ORDER_BEGIN,

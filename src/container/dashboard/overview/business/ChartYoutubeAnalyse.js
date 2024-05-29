@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts";
 import { numberWithCommas } from '../../../../utility/utility';
+import { FORMAT_DATESTRING } from '../../../../variables/index';
 
 const ChartYoutubeAnalyse = ({
     chartData,
@@ -8,7 +9,6 @@ const ChartYoutubeAnalyse = ({
 }) => {
     const chartDataGeneral = {
         chart: {
-            height: 250,
             width: '100%',
             type: 'line',
             dropShadow: {
@@ -100,7 +100,7 @@ const ChartYoutubeAnalyse = ({
         tooltip: {
             x: {
                 show: true,
-                format: 'DD-MM-YYYY'
+                format: FORMAT_DATESTRING
             },
             y: {
                 formatter (value) {

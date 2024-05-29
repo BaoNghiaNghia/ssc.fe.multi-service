@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { ItemWraper, ButtonGroup } from './style';
 import { Button } from '../buttons/buttons';
+import { FORMAT_DATESTRING } from '../../variables/index';
 
 const DateRangePickerOne = ({ actionPicker }) => {
   const dispatch = useDispatch();
@@ -39,8 +40,8 @@ const DateRangePickerOne = ({ actionPicker }) => {
     });
 
     dispatch(actionPicker({
-      from: moment(dateRangePicker?.selection?.startDate).format("DD-MM-YYYY"),
-      to: moment(dateRangePicker.selection.endDate).format("DD-MM-YYYY")
+      from: moment(dateRangePicker?.selection?.startDate).format(FORMAT_DATESTRING),
+      to: moment(dateRangePicker.selection.endDate).format(FORMAT_DATESTRING)
     }));
   };
 

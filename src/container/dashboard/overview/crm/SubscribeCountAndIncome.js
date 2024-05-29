@@ -15,9 +15,10 @@ import { currentDate, findSecondMinimum, numberWithCommas } from '../../../../ut
 function ClosedDeals(props) {
   const { title } = props;
   const dispatch = useDispatch();
-  const { closeDealState, cdIsLoading, fromDate, toDate, subWithPoint, typeService } = useSelector(state => {
+  const { closeDealState, cdIsLoading, fromDate, toDate, subWithPoint, typeService, isLoading } = useSelector(state => {
     return {
       closeDealState: state?.chartContent?.closeDealData,
+      isLoading: state?.reports?.loading,
       cdIsLoading: state?.chartContent?.cdLoading,
       fromDate: state?.reports.filterRange?.from,
       toDate: state?.reports.filterRange?.to,
@@ -236,7 +237,7 @@ function ClosedDeals(props) {
                 }}
                 height={window.innerWidth <= 575 ? 200 : 65}
               /> */}
-              <ul className="deals-list">
+              <ul className="deals-list" style={{ margin: 0, padding: 0 }}>
                 {closeDealDatasets &&
                   closeDealDatasets.map((item, key) => {
                     return (

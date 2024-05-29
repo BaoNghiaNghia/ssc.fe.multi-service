@@ -12,7 +12,7 @@ const AuthLayout = (WraperContent) => {
           <Aside>
             <div className="auth-side-content">
               <Content>
-                <Image style={{ width: '120px', marginBottom: '70px' }} src={logoSSC} alt="" />
+                <Image width="50%" style={{ width: '65px !important', marginBottom: '70px' }} src={logoSSC} alt="" />
                 <Heading as="h4" weight="800">
                   YOUTUBE
                 </Heading>

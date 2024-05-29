@@ -17,6 +17,8 @@ const initialState = {
   listServer: [],
   statisticSubscribe: {},
   statisticComment: {},
+  commentByDay: [],
+  taskSuccessInMinutes: {},
   ratioSubSvg: 0,
   countError: {},
   loading: false,
@@ -60,18 +62,65 @@ const {
   CHANGE_SERVICE_TYPE_SUCCESS,
   CHANGE_SERVICE_TYPE_ERR,
 
+  OPEN_MODAL_CREATE_NEW_ORDER_BEGIN,
+  OPEN_MODAL_CREATE_NEW_ORDER_SUCCESS,
+  OPEN_MODAL_CREATE_NEW_ORDER_ERR,
+
   STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
   STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
   STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
 
-  OPEN_MODAL_CREATE_NEW_ORDER_BEGIN,
-  OPEN_MODAL_CREATE_NEW_ORDER_SUCCESS,
-  OPEN_MODAL_CREATE_NEW_ORDER_ERR
+  STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
+  STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
+  STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS,
+
+  STATISTIC_COMMENT_BY_DAY_BEGIN,
+  STATISTIC_COMMENT_BY_DAY_ERR,
+  STATISTIC_COMMENT_BY_DAY_SUCCESS,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case STATISTIC_COMMENT_BY_DAY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case STATISTIC_COMMENT_BY_DAY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentByDay: data,
+      };
+
+    case STATISTIC_COMMENT_BY_DAY_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+    case STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        taskSuccessInMinutes: data,
+      };
+
+    case STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case OPEN_MODAL_CREATE_NEW_ORDER_BEGIN:
       return {
         ...state,

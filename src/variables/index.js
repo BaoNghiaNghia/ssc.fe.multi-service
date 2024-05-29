@@ -12,6 +12,8 @@ export const COLOR_GENERAL = {
   'primary': '#26695c'
 }
 
+export const FORMAT_DATESTRING = "YYYY-MM-DD";
+
 export const DEFAULT_PERPAGE = 20;
 export const DEFAULT_PAGESIZE = [20, 50, 100, 200, 300];
 

@@ -21,7 +21,7 @@ function CardGroup() {
   const totalSub = reportData && reportData.map((item) => item.total_run).reduce((partialSum, a) => partialSum + Number(a), 0);
 
   return (
-    <Row gutter={25}>
+    <Row gutter={10}>
       <Col md={12} xs={12}>
         <Focard>
           <div className="forcast-card-box">
@@ -67,7 +67,7 @@ function CardGroup() {
               headless
               title={
                 <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                  <IoFileTray fontSize={20} fontWeight={800} color="green" style={{ marginRight: '7px' }} />
+                  <IoFileTray fontSize={16} fontWeight={800} color="green" style={{ marginRight: '7px' }} />
                   <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn đang chạy</span>
                 </div>
               }
@@ -112,7 +112,7 @@ function CardGroup() {
             headless
             title={
               <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                <IoFileTray fontSize={20} fontWeight={800} color="orange" style={{ marginRight: '7px' }} />
+                <IoFileTray fontSize={16} fontWeight={800} color="orange" style={{ marginRight: '7px' }} />
                 <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn tạm tắt</span>
               </div>
             }
@@ -130,7 +130,7 @@ function CardGroup() {
             headless
             title={
               <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                <IoFileTray fontSize={20} fontWeight={800} color="gray" style={{ marginRight: '7px' }} />
+                <IoFileTray fontSize={16} fontWeight={800} color="gray" style={{ marginRight: '7px' }} />
                 <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn chờ duyệt</span>
               </div>
             }

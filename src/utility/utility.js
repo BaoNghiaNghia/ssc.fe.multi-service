@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import moment from "moment";
-import { REGEX_VALIDATE_YOUTUBE_VIDEO_LINK } from "../variables";
+import { FORMAT_DATESTRING, REGEX_VALIDATE_YOUTUBE_VIDEO_LINK } from "../variables/index";
 
 /**
  * Return ellipsis of a given string
@@ -33,10 +33,10 @@ const findSecondMinimum = (arr) => {
   return arrClone[1];
 }
 
-const currentDate = moment(new Date()).format("DD-MM-YYYY");
+const currentDate = moment(new Date()).format(FORMAT_DATESTRING);
 
 const previousDate = (day) => {
-  return moment().subtract(7,'d').format('DD-MM-YYYY');
+  return moment().subtract(7,'d').format(FORMAT_DATESTRING);
 };
 
 const convertSeconds = (seconds) => {

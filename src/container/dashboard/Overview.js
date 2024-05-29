@@ -41,10 +41,13 @@ function Overview() {
   });
 
   useEffect(() => {
-    dispatch(actions.reportSubscribeBegin({
-      from: fromDate,
-      to: toDate,
-    }));
+    const initialFilter = {
+      start_time: `${fromDate  } 00:00:00`,
+      end_time: `${toDate  } 23:59:59`,
+      status: 0
+    };
+
+    dispatch(actions.reportSubscribeBegin(initialFilter));
 
     if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
       dispatch(actions.countSuccessSubscribeBegin());
@@ -54,6 +57,8 @@ function Overview() {
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.statisticCommentByOrderReportBegin());
+      dispatch(actions.statisticTaskSuccessInMinuteBegin());
+      dispatch(actions.statisticCommentByDayBegin(initialFilter));
     }
 
     if (typeService === SERVICE_TYPE.LIKE.title) {
@@ -174,13 +179,13 @@ function Overview() {
                       <Col sm="12">
                         <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
                           <div>
-                            Subscribe: <strong>{numberWithCommas(todaySubscribePoint)}</strong>
+                            <span style={{ fontSize: '0.8em' }}>Subscribe:</span> <strong>{numberWithCommas(todaySubscribePoint)}</strong>
                           </div>
                           <div>
-                            Comment: <strong>{numberWithCommas(todayCommentPoint)}</strong>
+                            <span style={{ fontSize: '0.8em' }}>Comment:</span> <strong>{numberWithCommas(todayCommentPoint)}</strong>
                           </div>
                           <div>
-                            Like: <strong>{numberWithCommas(todayLikePoint)}</strong>
+                            <span style={{ fontSize: '0.8em' }}>Like:</span> <strong>{numberWithCommas(todayLikePoint)}</strong>
                           </div>
                         </span>
                       </Col>

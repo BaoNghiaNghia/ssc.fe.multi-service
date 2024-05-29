@@ -10,9 +10,67 @@ import {
   getSubscribeWithPointEveryday,
   ratioSubscribeAverage,
   getStatisticSubscribeReport,
-  statisticCommentByOrderReport
+  statisticCommentByOrderReport,
+  statisticAccountOnComputerAPI,
+  statisticAccountStatusAPI,
+  statisticByStatusOrderAPI,
+  statisticCommentByDayAPI,
+  statisticComputerThreadAPI,
+  statisticRunningComputerAPI,
+  statisticTaskOfToolAPI,
+  statisticOrderAmountAPI,
+  statisticPerformanceAPI,
+  statisticRunningUserOrderAPI,
+  statisticTaskSuccessInMinutesAPI,
+  statisticUserPointAPI
 } from '../../config/apiFactory/Reports/index';
 import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
+
+function* statisticCommentByDayFunc(params) {
+  try {
+    const response = yield call(statisticCommentByDayAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticCommentByDaySuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.statisticCommentByDayErr({ error: errorMessage || 'Fetch comment by day failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch comment by day failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* statisticTaskSuccessInMinuteFunc(params) {
+  try {
+    const response = yield call(statisticTaskSuccessInMinutesAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticTaskSuccessInMinuteSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.statisticTaskSuccessInMinuteErr({ error: errorMessage || 'Fetch task success in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch task success in minute failed');
+    }
+  } finally { /* empty */ }
+}
 
 function* reportDataSubscribeFunc(params) {
   try {
@@ -159,9 +217,7 @@ function* changeServiceTypeFunc(params) {
     );
 
     if (params?.payload === SERVICE_TYPE.COMMENT.title) {
-      yield put(
-        actions.statisticCommentByOrderReportBegin()
-      );
+      yield put(actions.statisticCommentByOrderReportBegin());
     }
   } catch (err) {
     yield put(
@@ -201,6 +257,14 @@ function* setRangeDateFilterFunc(params) {
       actions.setRangeDateFilterErr({ error: err || 'Set range filter failed' })
     );
   }
+}
+
+export function* statisticCommentByDayWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_COMMENT_BY_DAY_BEGIN, statisticCommentByDayFunc);
+}
+
+export function* statisticTaskSuccessInMinuteWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN, statisticTaskSuccessInMinuteFunc);
 }
 
 export function* resportSubscribeWatcherSaga() {

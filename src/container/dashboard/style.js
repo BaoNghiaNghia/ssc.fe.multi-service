@@ -223,22 +223,17 @@ const CardBarChart = Styled.div`
             }
             h1{
                 font-size: 24px;
-                margin-bottom: 22px;
                 @media only screen and (max-width: 1199px) {
                     font-size: 20px;
                 }
             }
         }
-        .flex-grid-child{
-            padding: 0 20px;
-        }
         p{
-            font-size: 14px;
-            margin-bottom: 8px;
+            font-size: 12px;
+            margin-bottom: 0px;
             color: ${({ theme }) => theme['light-color']};
         }
         h1{
-            margin-bottom: 18px;
             sub{
                 bottom: 0;
                 font-size: 14px;
@@ -263,7 +258,6 @@ const CardBarChart = Styled.div`
         }
     }
     .chartjs-tooltip{
-        min-width: 140px !important;
         @media only screen and (max-width: 1199px){
             min-width: 115px !important;
         }
@@ -1238,7 +1232,7 @@ const IncomeExpenseWrapper = Styled.div`
         }
     }
     .chart-dataIndicator{
-        padding: 15px 0 25px 0;
+        padding: 0;
         margin-top: 0 !important;
     }
     ul{
