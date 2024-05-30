@@ -8,6 +8,7 @@ import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, 
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { TiTick } from "react-icons/ti";
+import { isEmpty } from 'lodash';
 import actions from '../../../redux/buffComment/actions';
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
@@ -79,10 +80,6 @@ function AddOrderGeneral() {
     return itemService?.enabled && itemService?.category === "Comments"
   }); 
 
-  // if (validatedServiceComment && validatedServiceComment?.length > 0) {
-  //   formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
-  // }
-
   const [stateCurr, setStateCurr] = useState({
     selectedCategory: 'Comments',
     amountChange: 0
@@ -91,9 +88,14 @@ function AddOrderGeneral() {
   useEffect(() => {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
+
   useEffect(() => {
     if (validatedServiceComment && validatedServiceComment?.length > 0) {
       dispatch(actionsService.modalDetailServiceBegin({ min: 11111, max: 9999999 }));
+    }
+
+    if (validatedServiceComment && validatedServiceComment?.length > 0) {
+      formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
     }
   }, [dispatch]);
 
@@ -256,6 +258,8 @@ function AddOrderGeneral() {
     );
   }
 
+  console.log('----------  detailService ------------', detailService)
+
   const switchServiceSelection = (type) => {
     switch (type) {
       case 'Comments':
@@ -321,7 +325,6 @@ function AddOrderGeneral() {
                         allowClear
                         showSearch
                         size='small'
-                        defaultActiveFirstOption
                         className='full-height-dropdown'
                         style={{ width: '100%' }}
                         placeholder="Tìm theo ID của dịch vụ"
@@ -346,7 +349,6 @@ function AddOrderGeneral() {
                               // Reset fields when change service type
                               formCreateService.resetFields();
                             }
-                            formCreateService.setFieldsValue({ service_id: findCategory[0]?.service_id });
                             dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
                           }
                         }}
@@ -429,11 +431,71 @@ function AddOrderGeneral() {
               </Card>
             </Col>
             <Col sm={8}>
-              <Card size="small">
-                <span style={{ padding: '10px' }}>
-                  {stateCurr?.selectedCategory}
-                </span>
-              </Card>
+              {
+                !isEmpty(detailService) ? (
+                  <>
+                    <Card size="small" style={{ marginBottom: '15px' }}>
+                      <div>
+                        <Row style={{ margin: 0, padding: 0 }}>
+                          <Col style={{ margin: 0, padding: 0 }}>
+                            <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                              Platform: &nbsp;<FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} /> Youtube
+                            </p>
+                            <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                              GEO: &nbsp;
+                              {
+                                detailService?.geo ? (
+                                  <Tooltip title={detailService?.geo?.toUpperCase()}>
+                                    <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                      <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" />
+                                    </span>
+                                  </Tooltip>
+                                ) : 'Không có'
+                              }
+                            </p>
+                            <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
+                            <p style={{ fontWeight: 600, color: 'green', fontSize: '1.1em' }}>{detailService?.name}</p>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: '0.9em' }}>Giá tiền: </span>
+                              <p style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</p>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card>
+                    <Card size="small">
+                      <div>
+                        <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{detailService?.description}</p>
+                        {
+                          detailService?.enabled ? (
+                            <span className="label" style={badgeGreenStyle}>
+                              <Badge color='green' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                              Đang hoạt động
+                            </span>
+                          ) : (
+                            <span className="label" style={badgeRedStyle}>
+                              <Badge color='red' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                              Đang tắt
+                            </span>
+                          )
+                        }
+                        <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                        <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                        {
+                          detailService?.priority ? (
+                            <span className="label" style={badgeOrangeStyle}>
+                              <FaLocationArrow color='orange' fontSize={8} style={{  margin: '0 5px 0 0', padding: 0 }}/>
+                              Ưu tiên
+                            </span>
+                          ) : <></>
+                        }
+                      </div>
+                    </Card>
+                  </>
+                ) : <Card size="small">
+                  Chưa chọn dịch vụ
+                </Card>
+              }
             </Col>
           </Row>
         </Form>
