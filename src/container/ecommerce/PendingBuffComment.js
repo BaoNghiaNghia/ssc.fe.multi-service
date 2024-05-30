@@ -338,26 +338,30 @@ function PendingBuffComment() {
                 <>
                   <Tooltip 
                     title={
-                      <div style={{ }}>
-                        <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
-                        {
-                          findService[0]?.geo ? (
-                            <Tooltip title={findService[0]?.geo?.toUpperCase()}>
-                              <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" />
-                              </span>
-                            </Tooltip>
-                          ) : null
-                        }
-                        <span style={{ fontWeight: 'bold' }}>
-                          {findService[0]?.service_id}
-                        </span>
-                        <span>
-                          {` - ${findService[0]?.name} - `}
-                        </span>
-                        <span style={{ fontWeight: 'bold' }}>
+                      <div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                          <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                          {
+                            findService[0]?.geo ? (
+                              <Tooltip title={findService[0]?.geo?.toUpperCase()}>
+                                <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                  <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" />
+                                </span>
+                              </Tooltip>
+                            ) : null
+                          }
+                          <span style={{ fontWeight: 'bold' }}>
+                            {findService[0]?.service_id}
+                          </span>
+                        </div>
+                        <div>
+                          <span>
+                            {`${findService[0]?.name}`}
+                          </span>
+                        </div>
+                        <div style={{ fontWeight: 'bold', color: 'green' }}>
                           {numberWithCommas(findService[0]?.price_per_10 || 0)} {VIETNAMES_CURRENCY}
-                        </span>
+                        </div>
                       </div>
                     }
                     placement='topLeft'
