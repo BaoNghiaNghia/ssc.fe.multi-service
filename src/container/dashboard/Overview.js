@@ -29,21 +29,22 @@ const CardGroup = lazy(() => import('./overview/business/CardGroup'));
 function Overview() {
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, statisticComment } = useSelector((state) => {
+  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, statisticComment, computerThread } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
       todayProfit: state?.reports?.profitToday,
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
-      statisticComment: state?.reports?.statisticComment
+      statisticComment: state?.reports?.statisticComment,
+      computerThread: state?.reports?.computerThread
     };
   });
 
   useEffect(() => {
     const initialFilter = {
-      start_time: `${fromDate  } 00:00:00`,
-      end_time: `${toDate  } 23:59:59`,
+      start_date: `${fromDate  } 00:00:00`,
+      end_date: `${toDate  } 23:59:59`,
       status: 0
     };
 
@@ -59,6 +60,7 @@ function Overview() {
       dispatch(actions.statisticCommentByOrderReportBegin());
       dispatch(actions.statisticTaskSuccessInMinuteBegin());
       dispatch(actions.statisticCommentByDayBegin(initialFilter));
+      dispatch(actions.statisticComputerThreadBegin(initialFilter));
     }
 
     if (typeService === SERVICE_TYPE.LIKE.title) {
@@ -81,6 +83,181 @@ function Overview() {
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
 
+  const generalHeaderStatistic = () => {
+    return (
+      <Row gutter={12}>
+        <Col xxl={4} md={8} sm={12} xs={12}>
+          <Cards
+            headless 
+            border
+          >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
+                  <Heading as="h2">100</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={4} md={8} sm={12} xs={12}>
+          <Cards headless >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
+                  <Heading as="h2">33</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={8} md={8} sm={24} xs={24}>
+          <Cards
+            headless
+            border 
+            gradient={ todayPoint >= 0 ? '120deg, rgb(212, 252, 121) 0%, rgb(150, 230, 161) 100%' : '0deg, #fff6d947, #ffac8d' }
+          >
+            <EChartCard>
+              <div className="card-chunk text-center">
+                <CardBarChartCenter>
+                  <Row style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <Col sm="12">
+                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                        Tổng point hôm nay (đ)
+                      </span>
+                      <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
+                    </Col>
+                    <Col sm="12">
+                      <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
+                        <div>
+                          <span style={{ fontSize: '0.8em' }}>Subscribe:</span> <strong>{numberWithCommas(todaySubscribePoint)}</strong>
+                        </div>
+                        <div>
+                          <span style={{ fontSize: '0.8em' }}>Comment:</span> <strong>{numberWithCommas(todayCommentPoint)}</strong>
+                        </div>
+                        <div>
+                          <span style={{ fontSize: '0.8em' }}>Like:</span> <strong>{numberWithCommas(todayLikePoint)}</strong>
+                        </div>
+                      </span>
+                    </Col>
+                  </Row>
+                </CardBarChartCenter>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={4} md={8} sm={8} xs={12}>
+          <Cards headless
+          >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
+                  <Heading as="h2">7,461</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={4} md={8} sm={8} xs={12}>
+          <Cards
+            headless
+          >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
+                  <Heading as="h2">7,461</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+      </Row>
+    )
+  }
+
+  const statisticMultipleData = () => {
+    return (
+      <Row gutter={10}>
+        <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white'>
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                    <span>Tỉ lệ {typeService}</span>
+                  </span>
+                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {Math.round(ratioSubSvg || 0)} %</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white' >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                    <span>Quest Lỗi/Tổng Quest</span>
+                  </span>
+                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> 0/0</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white' >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                    <span>Tổng Order hôm nay</span>
+                  </span>
+                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white' >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                    <span>Tổng {typeService} hôm nay</span>
+                  </span>
+                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={24} md={24} sm={24} xs={12} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white' >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                    <span>Hiện tại/Tổng luồng</span>
+                  </span>
+                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/>
+                    {computerThread?.current_thread}/{computerThread?.free_thread}
+                  </Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+      </Row>
+    )
+  }
+
   return (
     <>
       <PageHeader
@@ -92,9 +269,6 @@ function Overview() {
         )}
         buttons={[ 
           <div key="1" className="page-header-actions">
-            <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
-              Từ <strong>{fromDate}</strong> đến <strong>{toDate}</strong>
-            </span>
             <FilterCalendar actionPicker={actions.setRangeDateFilterBegin}/>
             <GalleryNav>
               <ul>
@@ -132,97 +306,7 @@ function Overview() {
         ]}
       />
       <Main>
-        <Row gutter={12}>
-          <Col xxl={4} md={8} sm={12} xs={12}>
-            <Cards
-              headless 
-              border
-            >
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <span style={{ display: 'inline-flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
-                    <Heading as="h1">100</Heading>
-                  </CardBarChart2>
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-          <Col xxl={4} md={8} sm={12} xs={12}>
-            <Cards headless >
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <span style={{ display: 'inline-flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
-                    <Heading as="h1">33</Heading>
-                  </CardBarChart2>
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-          <Col xxl={8} md={8} sm={24} xs={24}>
-            <Cards
-              headless
-              border 
-              gradient={ todayPoint >= 0 ? '120deg, rgb(212, 252, 121) 0%, rgb(150, 230, 161) 100%' : '0deg, #fff6d947, #ffac8d' }
-            >
-              <EChartCard>
-                <div className="card-chunk text-center">
-                  <CardBarChartCenter>
-                    <Row style={{ display: 'flex', justifyContent: 'space-around' }}>
-                      <Col sm="12">
-                        <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                          Tổng point hôm nay (đ)
-                        </span>
-                        <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
-                      </Col>
-                      <Col sm="12">
-                        <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
-                          <div>
-                            <span style={{ fontSize: '0.8em' }}>Subscribe:</span> <strong>{numberWithCommas(todaySubscribePoint)}</strong>
-                          </div>
-                          <div>
-                            <span style={{ fontSize: '0.8em' }}>Comment:</span> <strong>{numberWithCommas(todayCommentPoint)}</strong>
-                          </div>
-                          <div>
-                            <span style={{ fontSize: '0.8em' }}>Like:</span> <strong>{numberWithCommas(todayLikePoint)}</strong>
-                          </div>
-                        </span>
-                      </Col>
-                    </Row>
-                  </CardBarChartCenter>
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-          <Col xxl={4} md={8} sm={8} xs={12}>
-            <Cards headless
-            >
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <span style={{ display: 'inline-flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
-                    <Heading as="h1">7,461</Heading>
-                  </CardBarChart2>
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-          <Col xxl={4} md={8} sm={8} xs={12}>
-            <Cards
-              headless
-            >
-              <EChartCard>
-                <div className="card-chunk">
-                  <CardBarChart2>
-                    <span style={{ display: 'inline-flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
-                    <Heading as="h1">7,461</Heading>
-                  </CardBarChart2>
-                </div>
-              </EChartCard>
-            </Cards>
-          </Col>
-        </Row>
+        {generalHeaderStatistic()}
         <Row gutter={15}>
           <Col xxl={6} md={6} xs={24}>
             <Suspense
@@ -234,6 +318,7 @@ function Overview() {
             >
               <CardGroup />
             </Suspense>
+            {statisticMultipleData()}
           </Col>
           <Col xxl={18} md={18} xs={24}>
             <Suspense
@@ -245,85 +330,6 @@ function Overview() {
             >
               <AnalyseYoutube title={`Thống kê ${typeService}`} />
             </Suspense>
-          </Col>
-        </Row>
-
-        <Row gutter={15}>
-          <Col xxl={6} lg={9} md={24} xs={24}>
-            <Row gutter={10}>
-              <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
-                <Cards headless gradient='64deg, white, white'>
-                  <EChartCard>
-                    <div className="card-chunk">
-                      <CardBarChart2>
-                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                          <span>Tỉ lệ {typeService}</span>
-                        </span>
-                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {Math.round(ratioSubSvg || 0)} %</Heading>
-                      </CardBarChart2>
-                    </div>
-                  </EChartCard>
-                </Cards>
-              </Col>
-              <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
-                <Cards headless gradient='64deg, white, white' >
-                  <EChartCard>
-                    <div className="card-chunk">
-                      <CardBarChart2>
-                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                          <span>Quest Lỗi/Tổng Quest</span>
-                        </span>
-                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> 0/0</Heading>
-                      </CardBarChart2>
-                    </div>
-                  </EChartCard>
-                </Cards>
-              </Col>
-              <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
-                <Cards headless gradient='64deg, white, white' >
-                  <EChartCard>
-                    <div className="card-chunk">
-                      <CardBarChart2>
-                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                          <span>Tổng Order hôm nay</span>
-                        </span>
-                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
-                      </CardBarChart2>
-                    </div>
-                  </EChartCard>
-                </Cards>
-              </Col>
-              <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
-                <Cards headless gradient='64deg, white, white' >
-                  <EChartCard>
-                    <div className="card-chunk">
-                      <CardBarChart2>
-                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                          <span>Tổng {typeService} hôm nay</span>
-                        </span>
-                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
-                      </CardBarChart2>
-                    </div>
-                  </EChartCard>
-                </Cards>
-              </Col>
-              <Col xxl={24} md={24} sm={24} xs={12} style={{ display: 'flex' }}>
-                <Cards headless gradient='64deg, white, white' >
-                  <EChartCard>
-                    <div className="card-chunk">
-                      <CardBarChart2>
-                        <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                          <span>Tổng luồng/thiếu</span>
-                        </span>
-                        <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> 1,330/1,200</Heading>
-                      </CardBarChart2>
-                    </div>
-                  </EChartCard>
-                </Cards>
-              </Col>
-            </Row>
-          </Col>
-          <Col xxl={18} lg={15} md={24} xs={24}>
             <Suspense
               fallback={
                 <Cards headless>

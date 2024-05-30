@@ -54,6 +54,31 @@ const actions = {
   STATISTIC_COMMENT_BY_DAY_SUCCESS: 'STATISTIC_COMMENT_BY_DAY_SUCCESS',
   STATISTIC_COMMENT_BY_DAY_ERR: 'STATISTIC_COMMENT_BY_DAY_ERR',
 
+  STATISTIC_COMPUTER_THREAD_BEGIN: 'STATISTIC_COMPUTER_THREAD_BEGIN',
+  STATISTIC_COMPUTER_THREAD_SUCCESS: 'STATISTIC_COMPUTER_THREAD_SUCCESS',
+  STATISTIC_COMPUTER_THREAD_ERR: 'STATISTIC_COMPUTER_THREAD_ERR',
+
+  statisticComputerThreadBegin: (payload) => {
+    return {
+      type: actions.STATISTIC_COMPUTER_THREAD_BEGIN,
+      payload
+    };
+  },
+
+  statisticComputerThreadSuccess: (data) => {
+    return {
+      type: actions.STATISTIC_COMPUTER_THREAD_SUCCESS,
+      data,
+    };
+  },
+
+  statisticComputerThreadErr: (err) => {
+    return {
+      type: actions.STATISTIC_COMPUTER_THREAD_ERR,
+      err,
+    };
+  },
+
   statisticCommentByDayBegin: (payload) => {
     return {
       type: actions.STATISTIC_COMMENT_BY_DAY_BEGIN,

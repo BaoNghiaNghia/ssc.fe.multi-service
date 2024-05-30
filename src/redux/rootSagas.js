@@ -19,7 +19,8 @@ import {
     getStatisticsByOrderStatusReportWatcherSaga,
     toggleStateModalCreateOrderWatcherSaga,
     statisticTaskSuccessInMinuteWatcherSaga,
-    statisticCommentByDayWatcherSaga
+    statisticCommentByDayWatcherSaga,
+    statisticComputerThreadWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -140,6 +141,7 @@ export default function* rootSaga() {
         generateApiKeyMemberWatcherSaga(),
         registerReferralWatcherSaga(),
         statisticTaskSuccessInMinuteWatcherSaga(),
-        statisticCommentByDayWatcherSaga()
+        statisticCommentByDayWatcherSaga(),
+        statisticComputerThreadWatcherSaga()
     ]);
 }

@@ -26,13 +26,36 @@ import {
 } from '../../config/apiFactory/Reports/index';
 import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
+function* statisticComputerThreadFunc(params) {
+  try {
+    const response = yield call(statisticComputerThreadAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticComputerThreadSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.statisticComputerThreadErr({ error: errorMessage || 'Fetch computer thread failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch computer thread failed');
+    }
+  } finally { /* empty */ }
+}
+
 function* statisticCommentByDayFunc(params) {
   try {
     const response = yield call(statisticCommentByDayAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.statisticCommentByDaySuccess(response?.data?.data)
+        actions.statisticCommentByDaySuccess(response?.data?.data?.reverse())
       );
     }
   } catch (error) {
@@ -261,6 +284,10 @@ function* setRangeDateFilterFunc(params) {
 
 export function* statisticCommentByDayWatcherSaga() {
   yield takeLatest(actions.STATISTIC_COMMENT_BY_DAY_BEGIN, statisticCommentByDayFunc);
+}
+
+export function* statisticComputerThreadWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_COMPUTER_THREAD_BEGIN, statisticComputerThreadFunc);
 }
 
 export function* statisticTaskSuccessInMinuteWatcherSaga() {

@@ -30,7 +30,8 @@ const DateRangePickerOne = ({ actionPicker }) => {
   const start = dateRangePicker.selection.startDate.toString().split(' ');
   const end = dateRangePicker.selection.endDate.toString().split(' ');
 
-  const handleRangeChange = which => {
+  const handleRangeChange = (which) => {
+    console.log('----- range picker date nè --------', moment(which?.selection?.startDate).format(FORMAT_DATESTRING), moment(which.selection.endDate).format(FORMAT_DATESTRING));
     setState({
       ...state,
       dateRangePicker: {
@@ -40,8 +41,8 @@ const DateRangePickerOne = ({ actionPicker }) => {
     });
 
     dispatch(actionPicker({
-      from: moment(dateRangePicker?.selection?.startDate).format(FORMAT_DATESTRING),
-      to: moment(dateRangePicker.selection.endDate).format(FORMAT_DATESTRING)
+      from: moment(which?.selection?.startDate).format(FORMAT_DATESTRING),
+      to: moment(which.selection.endDate).format(FORMAT_DATESTRING)
     }));
   };
 

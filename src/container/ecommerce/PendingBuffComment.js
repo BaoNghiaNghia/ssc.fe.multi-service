@@ -27,7 +27,7 @@ import actions from '../../redux/buffComment/actions';
 import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
+import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
 import { convertSeconds, numberWithCommas } from '../../utility/utility';
 
 
@@ -195,7 +195,7 @@ function PendingBuffComment() {
 
       return dataSource.push({
         key: id,
-        order_id: <span className="order-id">{order_id}</span>,
+        order_id: <span className="order-id" style={{ fontSize: '0.9em' }}>{order_id}</span>,
         user_id: (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
             {
@@ -228,18 +228,21 @@ function PendingBuffComment() {
               {
                 priority ? (
                   <Tooltip title="Ưu tiên">
-                    {/* <span style={badgeRedStyle}>
-                    </span> */}
-                    <BsFire fontSize={15} color='#26b726' style={{ marginRight: '6px', marginTop: '3px' }}/>
+                    <BsFire fontSize={15} color='rgb(38, 183, 38)' style={{ marginRight: '6px', marginTop: '3px' }}/>
                   </Tooltip>
                 ) : <></>
               }
 
-              <Tooltip title={<span style={{ display: 'inline-flex' }}>
-                <strong>{video_title}</strong>
-              </span>} placement='topLeft'>
-                <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
-                  <span style={{ margin: 0, padding: 0, color: 'black !important', fontFamily: 'Be Vietnam Pro' }}>{ `${video_title?.substring(0, 30)  }...` }</span>
+              <Tooltip 
+                title={
+                  <span style={{ display: 'inline-flex' }}>
+                    <strong>{video_title}</strong>
+                  </span>
+                } 
+                placement='topLeft'
+              >
+                <a href={link} color='black' target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
+                  <span style={{ margin: 0, padding: 0, color: priority ? '#00ad00' : 'black', fontFamily: 'Be Vietnam Pro' }}>{ `${video_title?.substring(0, 30)  }...` }</span>
                 </a>
               </Tooltip>
             </div>
@@ -255,8 +258,12 @@ function PendingBuffComment() {
         ),
         start_count: (
           <>
-            <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Bắt đầu: <strong>{numberWithCommas(start_count || 0)}</strong></p>
-            <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Hiện tại: <strong>{numberWithCommas(current_count || 0)}</strong></p>
+            <p style={{ margin: 0, padding: 0, fontSize: '0.9em', display: 'flex', alignItems: 'center' }}>
+              <span style={{ color: 'gray' }}>Bắt đầu: &nbsp;</span> <strong>{numberWithCommas(start_count || 0)}</strong>
+            </p>
+            <p style={{ margin: 0, padding: 0, fontSize: '0.9em', display: 'flex', alignItems: 'center' }}>
+              <span style={{ color: 'gray' }}>Hiện tại: &nbsp;</span> <strong>{numberWithCommas(current_count || 0)}</strong>
+            </p>
             {/* <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Còn thiếu: <strong>{numberWithCommas((quantity - (current_count - start_count)))}</strong></p> */}
           </>
         ),
@@ -281,11 +288,12 @@ function PendingBuffComment() {
                             fontWeight: 700,
                             padding:'0 5px',
                             borderRadius: '5px',
-                            border: `1px solid ${performanceColor}`,
-                            backgroundColor: performanceColorBack
+                            // border: `1px solid ${performanceColor}`,
+                            backgroundColor: performanceColorBack,
+                            display: 'flex', alignItems: 'center'
                           }}
                         >
-                          Hiệu suất: {numberWithCommas(Math.floor(performance, 1) || 0)} %
+                          <span style={{ color: 'green' }}>Hiệu suất: &nbsp;</span> {numberWithCommas(Math.floor(performance, 1) || 0)} %
                         </span>
                       ) : (
                         <span
@@ -294,11 +302,12 @@ function PendingBuffComment() {
                             fontWeight: 700,
                             padding:'0 5px',
                             borderRadius: '5px',
-                            border: '1px solid gray',
-                            backgroundColor: '#ebebeb'
+                            // border: '1px solid gray',
+                            backgroundColor: '#ebebeb',
+                            display: 'flex', alignItems: 'center'
                           }}
                         >
-                          Hiệu suất: {numberWithCommas(Math.floor(performance, 1) || 0)} %
+                          <span style={{ color: 'gray' }}>Hiệu suất: &nbsp;</span> {numberWithCommas(Math.floor(performance, 1) || 0)} %
                         </span>
                       )
                     }
