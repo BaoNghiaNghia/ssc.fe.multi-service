@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip } from 'antd';
+import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { TiTick } from "react-icons/ti";
@@ -77,11 +77,11 @@ function AddOrderGeneral() {
 
   const validatedServiceComment = listService?.filter((itemService) => {
     return itemService?.enabled && itemService?.category === "Comments"
-  });
+  }); 
 
-  if (validatedServiceComment && validatedServiceComment?.length > 0) {
-    formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
-  }
+  // if (validatedServiceComment && validatedServiceComment?.length > 0) {
+  //   formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
+  // }
 
   const [stateCurr, setStateCurr] = useState({
     selectedCategory: 'Comments',
@@ -276,62 +276,6 @@ function AddOrderGeneral() {
     }
   }
 
-  const detailServiceOption = (itemService, index) => {
-    return (
-      <div>
-        <Row style={{ margin: 0, padding: 0 }}>
-          <Col style={{ margin: 0, padding: 0 }}>
-            <span className="label" style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
-              {
-                itemService?.geo ? (
-                  <Tooltip title={itemService?.geo?.toUpperCase()}>
-                    <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                      <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="17px" height="17px" />
-                    </span>
-                  </Tooltip>
-                ) : null
-              }
-              <span style={{ fontWeight: 'bold', marginRight: '7px' }}>{itemService?.service_id}</span>
-              <span style={{ padding: '0 5px' }}>-</span>
-              <span style={{ fontWeight: 500 }}>{itemService?.name}</span>
-              <span style={{ padding: '0 5px' }}>-</span>
-              <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
-            </span>
-          </Col>
-        </Row>
-        {/* <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</p> */}
-        <Row>
-          <Col style={{ display: 'inline-flex', alignItems: 'center' }}>
-            {
-              itemService?.enabled ? (
-                <span className="label" style={badgeGreenStyle}>
-                  <Badge color='green' dot style={{ marginRight: '5px' }} />
-                  Đang hoạt động
-                </span>
-              ) : (
-                <span className="label" style={badgeRedStyle}>
-                  <Badge color='red' dot style={{ marginRight: '5px' }} />
-                  Đang tắt
-                </span>
-              )
-            }
-            <span className="label" style={badgeGreenStyle}>Bảo hành</span>
-            <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
-            {
-              itemService?.priority ? (
-                <span className="label" style={badgeOrangeStyle}>
-                  <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
-                  Ưu tiên
-                </span>
-              ) : <></>
-            }
-          </Col>
-        </Row>
-      </div>
-    )
-  }
-
   return (
     <>
       <Modal
@@ -358,89 +302,141 @@ function AddOrderGeneral() {
           </Button>
         ]}
       >
-        <Row gutter={15}>
-          <Col sm={16}>
-            {/* <Card size="small">
-
-            </Card> */}
-            <Form layout="vertical" form={formCreateService}>
-              <Row gutter="10">
-                <Col sm={24}>
-                  <Form.Item
-                    name="service_id"
-                    label="Dịch vụ"
-                    style={{ marginBottom: '0px' }}
-                    rules={[{
-                      required: true,
-                      message: 'Trường không được trống'
-                    }]}
-                  >
-                    <Select 
-                      allowClear
-                      showSearch
-                      size='small'
-                      className='full-height-dropdown'
-                      style={{ width: '100%' }}
-
-                      placeholder="Tìm theo ID của dịch vụ"
-                      onSearch={(values) => {
-                        setStateCurr({
-                          ...stateCurr,
-                          selectedCategory: ''
-                        });
-                        dispatch(actionsService.modalDetailServiceBegin({}));
-                      }}
-                      onChange={(values) => {
-                        const findCategory = listService?.filter(itemService => itemService?.service_id === values);
-                        if (findCategory?.length > 0) {
-                          if (findCategory[0]?.category !== stateCurr?.selectedCategory) {
-                            setStateCurr({
-                              ...stateCurr,
-                              selectedCategory: findCategory[0]?.category,
-                              amountChange: 0
-                            });
-
-                            // Reset fields when change service type
-                            formCreateService.resetFields();
-                          }
-
-                          dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
-                        }
-                      }}
-                      onClear={() => {
-                        setStateCurr({
-                          ...stateCurr,
-                          selectedCategory: ''
-                        });
-                        dispatch(actionsService.modalDetailServiceBegin({}));
-                      }}
+        <Form layout="vertical" form={formCreateService}>
+          <Row gutter={15}>
+            <Col sm={16}>
+              <Card size="small">
+                <Row gutter="10">
+                  <Col sm={24}>
+                    <Form.Item
+                      name="service_id"
+                      label="Dịch vụ"
+                      style={{ marginBottom: '0px' }}
+                      rules={[{
+                        required: true,
+                        message: 'Trường không được trống'
+                      }]}
                     >
-                      {
-                        listService?.map((itemService, index) => {
-                          return <>
-                            {
-                              itemService?.enabled ? (
-                                <Option key={index} value={itemService?.service_id}>
-                                  {detailServiceOption(itemService, index)}
-                                </Option>
-                              ) : null
+                      <Select 
+                        allowClear
+                        showSearch
+                        size='small'
+                        defaultActiveFirstOption
+                        className='full-height-dropdown'
+                        style={{ width: '100%' }}
+                        placeholder="Tìm theo ID của dịch vụ"
+                        onSearch={(values) => {
+                          setStateCurr({
+                            ...stateCurr,
+                            selectedCategory: ''
+                          });
+                          dispatch(actionsService.modalDetailServiceBegin({}));
+                        }}
+                        onChange={(values) => {
+                          const findCategory = listService?.filter(itemService => itemService?.service_id === values);
+                          console.log('--- service change nè ----', findCategory, stateCurr?.selectedCategory)
+                          if (findCategory?.length > 0) {
+                            if (findCategory[0]?.category !== stateCurr?.selectedCategory) {
+                              setStateCurr({
+                                ...stateCurr,
+                                selectedCategory: findCategory[0]?.category,
+                                amountChange: 0
+                              });
+
+                              // Reset fields when change service type
+                              formCreateService.resetFields();
                             }
-                          </>;
-                        })
-                      }
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-              {switchServiceSelection(stateCurr?.selectedCategory)}
-            </Form>
-          </Col>
-          <Col sm={8}>
-            <span style={{ padding: '10px', border: '1px solid gray', borderRadius: '5px' }}>
-              {stateCurr?.selectedCategory}
-            </span>
-          </Col>
-        </Row>
+                            formCreateService.setFieldsValue({ service_id: findCategory[0]?.service_id });
+                            dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
+                          }
+                        }}
+                        onClear={() => {
+                          setStateCurr({
+                            ...stateCurr,
+                            selectedCategory: ''
+                          });
+                          dispatch(actionsService.modalDetailServiceBegin({}));
+                        }}
+                      >
+                        {
+                          listService?.map((itemService, index) => {
+                            return <>
+                              {
+                                itemService?.enabled ? (
+                                  <Option key={index} value={itemService?.service_id}>
+                                    <div>
+                                      <Row style={{ margin: 0, padding: 0 }}>
+                                        <Col style={{ margin: 0, padding: 0 }}>
+                                          <span className="label" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                            <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                                            {
+                                              itemService?.geo ? (
+                                                <Tooltip title={itemService?.geo?.toUpperCase()}>
+                                                  <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                                    <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="17px" height="17px" />
+                                                  </span>
+                                                </Tooltip>
+                                              ) : null
+                                            }
+                                            <span style={{ fontWeight: 'bold', marginRight: '7px' }}>{itemService?.service_id}</span>
+                                            <span style={{ padding: '0 5px' }}>-</span>
+                                            <span style={{ fontWeight: 500 }}>{itemService?.name}</span>
+                                            <span style={{ padding: '0 5px' }}>-</span>
+                                            <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
+                                          </span>
+                                        </Col>
+                                      </Row>
+                                      {/* <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</p> */}
+                                      <Row>
+                                        <Col style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                          {
+                                            itemService?.enabled ? (
+                                              <span className="label" style={badgeGreenStyle}>
+                                                <Badge color='green' dot style={{ marginRight: '5px' }} />
+                                                Đang hoạt động
+                                              </span>
+                                            ) : (
+                                              <span className="label" style={badgeRedStyle}>
+                                                <Badge color='red' dot style={{ marginRight: '5px' }} />
+                                                Đang tắt
+                                              </span>
+                                            )
+                                          }
+                                          <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                                          <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                                          {
+                                            itemService?.priority ? (
+                                              <span className="label" style={badgeOrangeStyle}>
+                                                <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
+                                                Ưu tiên
+                                              </span>
+                                            ) : <></>
+                                          }
+                                        </Col>
+                                      </Row>
+                                    </div>
+                                  </Option>
+                                ) : null
+                              }
+                            </>;
+                          })
+                        }
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                {switchServiceSelection(stateCurr?.selectedCategory)}
+              </Card>
+            </Col>
+            <Col sm={8}>
+              <Card size="small">
+                <span style={{ padding: '10px' }}>
+                  {stateCurr?.selectedCategory}
+                </span>
+              </Card>
+            </Col>
+          </Row>
+        </Form>
       </Modal>
     </>
   );
