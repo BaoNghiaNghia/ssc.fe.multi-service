@@ -520,17 +520,23 @@ function PendingBuffComment() {
   };
 
   const onSelectChange = (selectedRowKey) => {
+    console.log('----- check nè tèo ------', selectedRowKey);
     if (selectedRowKey.length > 0) {
       const matchedOrder = listOrderComment?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
       if (matchedOrder?.length > 0) {
-        const checkUpdateOrderStatus = ['OrderStatusCancelNoRefund', 'OrderStatusCancelRefund', 'OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === matchedOrder[0]?.status)?.name);
-        console.log('---- selected row key nè -----', checkUpdateOrderStatus);
+        const checkUpdateOrderStatus = [
+          'OrderStatusCancelNoRefund', 'OrderStatusCancelRefund', 'OrderStatusDone'
+        ].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === matchedOrder[0]?.status)?.name);
         if (checkUpdateOrderStatus) {
           toast.error('Không thể cập nhật đơn đã hủy hoặc hoàn thành');
         } else {
           setState({ ...state, selectedRowKeys: selectedRowKey });
         }
       }
+    }
+  
+    if (selectedRowKey.length === 0) {
+      setState({ ...state, selectedRowKeys: selectedRowKey });
     }
   };
 
