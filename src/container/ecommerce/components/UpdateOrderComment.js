@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Progress, Badge } from 'antd';
+import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
@@ -10,7 +10,7 @@ import { GrNotification } from "react-icons/gr";
 import userActions from '../../../redux/member/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import commentActions from '../../../redux/buffComment/actions';
-import { FixedServiceTemp, ORDER_YOUTUBE_STATUS, STATUS_COMMENT_ENUM } from '../../../variables/index';
+import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 
 const { Option } = Select;
 

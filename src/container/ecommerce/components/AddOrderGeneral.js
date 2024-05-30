@@ -309,7 +309,7 @@ function AddOrderGeneral() {
         <Form layout="vertical" form={formCreateService}>
           <Row gutter={15}>
             <Col sm={16}>
-              <Card size="small">
+              <Card size="small" style={{ border: '1px solid #dddddd' }}>
                 <Row gutter="10">
                   <Col sm={24}>
                     <Form.Item
@@ -434,7 +434,7 @@ function AddOrderGeneral() {
               {
                 !isEmpty(detailService) ? (
                   <>
-                    <Card size="small" style={{ marginBottom: '15px' }}>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #009ef7' }}>
                       <div>
                         <Row style={{ margin: 0, padding: 0 }}>
                           <Col style={{ margin: 0, padding: 0 }}>
@@ -464,7 +464,7 @@ function AddOrderGeneral() {
                         </Row>
                       </div>
                     </Card>
-                    <Card size="small">
+                    <Card size="small" style={{ border: '1px solid #009ef7' }}>
                       <div>
                         <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{detailService?.description}</p>
                         {
