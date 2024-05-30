@@ -87,19 +87,6 @@ function BatchUpdateOrderComment({ setState, orderState }) {
     }
   };
 
-  const iconService = (service) => {
-    switch (service?.category) {
-      case 'Comments':
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Likes':
-        return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Subscribers':
-        return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      default:
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-    }
-  }
-
   return (
     <>
       <Modal

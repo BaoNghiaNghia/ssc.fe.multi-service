@@ -10,6 +10,7 @@ import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
 import { BsFire } from "react-icons/bs";
 import { LuListFilter } from "react-icons/lu";
+import { toast } from 'react-toastify';
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListCommentOfOrder';
@@ -117,14 +118,14 @@ function PendingBuffComment() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { isListCommentModal, isCreateCommentOrderModal, isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
+  const { isListCommentModal, isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
 
   useEffect(() => {
     dispatch(actions.fetchListOrderCommentBegin({
       page: currentPage,
       limit: limitPage,
     }));
-  }, [dispatch, currentPage, limitPage, selectedRowKeys]);
+  }, [dispatch, currentPage, limitPage]);
 
   useEffect(() => {
     dispatch(userActions.fetchUserListBegin());
@@ -253,7 +254,7 @@ function PendingBuffComment() {
             </span>
 
             <span style={{ fontSize: '0.8em' }}>
-              <strong>Thời lượng: </strong> {convertSeconds(video_duration || 0)}
+              <strong>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
             </span>
           </>
         ),
@@ -519,13 +520,24 @@ function PendingBuffComment() {
   };
 
   const onSelectChange = (selectedRowKey) => {
-    console.log('---- selected row key nè -----', selectedRowKey);
-    setState({ ...state, selectedRowKeys: selectedRowKey });
+    if (selectedRowKey.length > 0) {
+      const matchedOrder = listOrderComment?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
+      if (matchedOrder?.length > 0) {
+        const checkUpdateOrderStatus = ['OrderStatusCancelNoRefund', 'OrderStatusCancelRefund', 'OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === matchedOrder[0]?.status)?.name);
+        console.log('---- selected row key nè -----', checkUpdateOrderStatus);
+        if (checkUpdateOrderStatus) {
+          toast.error('Không thể cập nhật đơn đã hủy hoặc hoàn thành');
+        } else {
+          setState({ ...state, selectedRowKeys: selectedRowKey });
+        }
+      }
+    }
   };
 
   const rowSelection = {
-    onChange: (srk) => {
-      onSelectChange(srk);
+    selectedRowKeys,
+    onChange: (selectedRowKeys, selectedRows) => {
+      onSelectChange(selectedRowKeys);
     },
   };
 

@@ -151,7 +151,6 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
           dataSource={dataSource}
           size='small'
           columns={columns}
-          // pagination={{ pageSize: 10, showSizeChanger: true, total: commentInOrder?.items?.length }}
           pagination={{
             current: commentInOrder?.meta?.current_page,
             defaultPageSize: commentInOrder?.meta?.count,
