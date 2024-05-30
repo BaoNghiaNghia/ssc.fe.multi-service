@@ -448,6 +448,7 @@ function AddOrderGeneral() {
                                   <Tooltip title={detailService?.geo?.toUpperCase()}>
                                     <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
                                       <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" />
+                                      <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
                                     </span>
                                   </Tooltip>
                                 ) : 'Không có'
@@ -455,7 +456,7 @@ function AddOrderGeneral() {
                             </p>
                             <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
                             <p style={{ fontWeight: 600, color: 'green', fontSize: '1.1em' }}>{detailService?.name}</p>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
                               <span style={{ fontSize: '0.9em' }}>Giá tiền: </span>
                               <p style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</p>
                             </div>
