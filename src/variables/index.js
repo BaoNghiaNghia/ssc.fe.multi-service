@@ -69,27 +69,27 @@ export const FILTER_ORDER_COMMENT = [
   },
   {
       label: 'Số luồng, giảm dần',
-      value: 'sort[current_count] asc'
+      value: 'sort[current_count] desc'
   },
   {
     label: 'Số luồng, tăng dần',
-    value: 'sort[current_count] desc'
+    value: 'sort[current_count] asc'
   },
   {
       label: 'Hiệu suất, giảm dần',
-      value: 'sort[performance] asc'
+      value: 'sort[performance] desc'
   },
   {
     label: 'Hiệu suất, tăng dần',
-    value: 'sort[performance] desc'
+    value: 'sort[performance] asc'
   },
   {
       label: 'Sub còn thiếu, giảm dần',
-      value: 'sort[remain_count] asc'
+      value: 'sort[remain_count] desc'
   },
   {
       label: 'Sub còn thiếu, tăng dần',
-      value: 'sort[remain_count] desc'
+      value: 'sort[remain_count] asc'
   }
 ];
 

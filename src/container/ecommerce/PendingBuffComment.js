@@ -520,7 +520,6 @@ function PendingBuffComment() {
   };
 
   const onSelectChange = (selectedRowKey) => {
-    console.log('----- check nè tèo ------', selectedRowKey);
     if (selectedRowKey.length > 0) {
       const matchedOrder = listOrderComment?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
       if (matchedOrder?.length > 0) {
