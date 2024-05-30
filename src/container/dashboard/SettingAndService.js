@@ -120,6 +120,7 @@ function SettingAndService() {
           <Row>
             <Col>
               <span className="label" style={{ display: 'inline-flex' }}>
+                <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
                 {
                   geo ? (
                     <Tooltip title={geo?.toUpperCase()}>
@@ -404,6 +405,7 @@ function SettingAndService() {
                     </div>
                     <Table
                       size='small'
+                      
                       showHeader={false}
                       dataSource={dataSource}
                       columns={columns}

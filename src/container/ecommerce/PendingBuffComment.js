@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table, Tooltip, Progress, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
-import { FaRegCommentDots } from "react-icons/fa";
+import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
@@ -177,7 +177,8 @@ function PendingBuffComment() {
         video_title,
         video_duration,
         current_count,
-        start_count
+        start_count,
+        geo
        } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
@@ -337,7 +338,17 @@ function PendingBuffComment() {
                 <>
                   <Tooltip 
                     title={
-                      <div>
+                      <div style={{ }}>
+                        <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                        {
+                          findService[0]?.geo ? (
+                            <Tooltip title={findService[0]?.geo?.toUpperCase()}>
+                              <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" />
+                              </span>
+                            </Tooltip>
+                          ) : null
+                        }
                         <span style={{ fontWeight: 'bold' }}>
                           {findService[0]?.service_id}
                         </span>
@@ -351,7 +362,18 @@ function PendingBuffComment() {
                     }
                     placement='topLeft'
                   >
-                    <span style={{ margin: '0px', fontWeight: '700' }}>{ `${findService[0]?.name?.substring(0, 20)  }...` }</span>
+                    <span style={{ margin: '0px', fontWeight: '700', display: 'flex', alignItems: 'center' }}>
+                      {
+                        findService[0]?.geo ? (
+                          <Tooltip title={findService[0]?.geo?.toUpperCase()}>
+                            <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                              <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" />
+                            </span>
+                          </Tooltip>
+                        ) : null
+                      }
+                      { `${findService[0]?.name?.substring(0, 20)  }...` }
+                    </span>
                     <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>
                   </Tooltip>
                 </>

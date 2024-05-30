@@ -247,7 +247,7 @@ function Overview() {
                     <span>Hiện tại/Tổng luồng</span>
                   </span>
                   <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/>
-                    {computerThread?.current_thread}/{computerThread?.free_thread}
+                    {computerThread?.current_thread || 0}/{computerThread?.free_thread || 0}
                   </Heading>
                 </CardBarChart2>
               </div>
