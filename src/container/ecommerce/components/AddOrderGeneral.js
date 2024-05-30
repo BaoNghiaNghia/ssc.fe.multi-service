@@ -91,10 +91,6 @@ function AddOrderGeneral() {
 
   useEffect(() => {
     if (validatedServiceComment && validatedServiceComment?.length > 0) {
-      dispatch(actionsService.modalDetailServiceBegin({ min: 11111, max: 9999999 }));
-    }
-
-    if (validatedServiceComment && validatedServiceComment?.length > 0) {
       formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
     }
   }, [dispatch]);
@@ -143,6 +139,7 @@ function AddOrderGeneral() {
               name="link"
               label="Liên kết"
               style={{ marginBottom: '7px' }}
+              hasFeedback
               rules={[
                 {
                   required: true,
@@ -157,7 +154,7 @@ function AddOrderGeneral() {
                 }
               ]}
             >
-              <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
+              <Input size='small' allowClear style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
             </Form.Item>
           </Col>
         </Row>
@@ -258,8 +255,6 @@ function AddOrderGeneral() {
     );
   }
 
-  console.log('----------  detailService ------------', detailService)
-
   const switchServiceSelection = (type) => {
     switch (type) {
       case 'Comments':
@@ -337,7 +332,7 @@ function AddOrderGeneral() {
                         }}
                         onChange={(values) => {
                           const findCategory = listService?.filter(itemService => itemService?.service_id === values);
-                          console.log('--- service change nè ----', findCategory, stateCurr?.selectedCategory)
+
                           if (findCategory?.length > 0) {
                             if (findCategory[0]?.category !== stateCurr?.selectedCategory) {
                               setStateCurr({
@@ -346,8 +341,9 @@ function AddOrderGeneral() {
                                 amountChange: 0
                               });
 
+                              dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
                               // Reset fields when change service type
-                              formCreateService.resetFields();
+                              // formCreateService.resetFields();
                             }
                             dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
                           }
@@ -355,7 +351,7 @@ function AddOrderGeneral() {
                         onClear={() => {
                           setStateCurr({
                             ...stateCurr,
-                            selectedCategory: ''
+                            selectedCategory: null
                           });
                           dispatch(actionsService.modalDetailServiceBegin({}));
                         }}
