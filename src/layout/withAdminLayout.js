@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import { Layout, Button, Row, Col } from 'antd';
+import { Layout, Button, Row, Col, Image } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { NavLink, Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -215,7 +215,7 @@ const ThemeLayout = (WrappedComponent) => {
                   ) : null}
                   <Link
                     className={topMenu && window.innerWidth > 991 ? 'striking-logo top-menu' : 'striking-logo'}
-                    to="/"
+                    to="/admin/tong-quan"
                   >
                     <img
                       src={
@@ -224,6 +224,7 @@ const ThemeLayout = (WrappedComponent) => {
                           : require(`../static/img/Logo_white.png`).default
                       }
                       alt=""
+
                     />
                   </Link>
                 </Col>

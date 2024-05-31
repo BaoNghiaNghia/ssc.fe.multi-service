@@ -11,6 +11,7 @@ import { closeDealFilterData, closeDealGetData } from '../../../../redux/chartCo
 import actions from '../../../../redux/reports/actions';
 import Heading from '../../../../components/heading/heading';
 import { currentDate, findSecondMinimum, numberWithCommas } from '../../../../utility/utility';
+import { VIETNAMES_CURRENCY } from '../../../../variables';
 
 function ClosedDeals(props) {
   const { title } = props;
@@ -139,7 +140,7 @@ function ClosedDeals(props) {
                     {
                       totalSubToday > 0 ? (
                         <div className="flex-grid-child">
-                          <p>Hôm nay (đ)</p>
+                          <p>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
                           <Heading as="h3" className="color-primary">
                             {numberWithCommas(totalPoint?.at(-1) || 0)}
                           </Heading>
@@ -151,7 +152,7 @@ function ClosedDeals(props) {
                     {
                       totalPoint?.length > 0 ? (
                         <div className="flex-grid-child">
-                          <p>Doanh thu cao nhất (đ)</p>
+                          <p>Doanh thu cao nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
                           <Heading as="h3">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
                         </div>
                       ) : null
@@ -161,7 +162,7 @@ function ClosedDeals(props) {
                     {
                       totalPoint?.length > 0 ? (
                         <div className="flex-grid-child">
-                          <p>Doanh thu thấp nhất (đ)</p>
+                          <p>Doanh thu thấp nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
                           <Heading as="h3">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
                         </div>
                       ) : null

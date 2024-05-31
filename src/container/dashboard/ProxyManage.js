@@ -54,8 +54,11 @@ function ProxyManage() {
   }, [orders, selectedRowKeys]);
 
   useEffect(() => {
-    dispatch(actions.listAllDomainBegin());
-  }, [dispatch]);
+    dispatch(actions.listAllDomainBegin({
+      page: currentPage,
+      limit: limitPage,
+    }));
+  }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = searchText => {
     const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));

@@ -53,12 +53,12 @@ function CreditHistoryMember({ isOpen, setState }) {
           <>
             {
               income === true ? (
-                <span style={{ color: 'green', fontWeight: 700 }}>
-                   + {numberWithCommas(amount)} (đ)
+                <span style={{ color: '#0089ff', fontWeight: 700 }}>
+                   + {numberWithCommas(amount)} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
                 </span>
               ) : (
                 <span style={{ color: 'red', fontWeight: 700 }}>
-                   - {numberWithCommas(amount)} (đ)
+                   - {numberWithCommas(amount)} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
                 </span>
               )
             }
@@ -66,7 +66,7 @@ function CreditHistoryMember({ isOpen, setState }) {
         ),
         current_credit: (
           <span style={{ color: 'green', fontWeight: 800 }}>
-            {numberWithCommas(current_credit)} (đ)
+            {numberWithCommas(current_credit)} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
           </span>
         ),
         quantity: (

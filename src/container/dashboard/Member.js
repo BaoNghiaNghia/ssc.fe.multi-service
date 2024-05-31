@@ -24,7 +24,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/member/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const columnsMember = [
   {
@@ -163,8 +163,8 @@ function Member() {
           </span>
         ),
         point: (
-          <span style={{ color: 'green', fontWeight: 700 }}>
-            {numberWithCommas(credit_used)} / {numberWithCommas(credit)} (đ)
+          <span style={{ color: 'green', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>
+            {numberWithCommas(credit_used)} / {numberWithCommas(credit)} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
           </span>
         ),
         discount: (
@@ -288,7 +288,9 @@ function Member() {
               amount === 0 ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
-                <span style={{ color: 'green', fontWeight: 700 }}>{numberWithCommas(amount)} (đ)</span>
+                <span style={{ color: 'green', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>
+                  {numberWithCommas(amount)} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
+                </span>
               )
             }
           </>

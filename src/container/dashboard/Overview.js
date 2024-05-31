@@ -18,7 +18,7 @@ import Heading from '../../components/heading/heading';
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 import actions from '../../redux/reports/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { SERVICE_TYPE } from '../../variables';
+import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const RatioYoutubeSuccess = lazy(() => import('./overview/business/RatioYoutubeSuccess'));
 const SubscribeCountAndIncome = lazy(() => import('./overview/crm/SubscribeCountAndIncome'));
@@ -125,7 +125,7 @@ function Overview() {
                   <Row style={{ display: 'flex', justifyContent: 'space-around' }}>
                     <Col sm="12">
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                        Tổng point hôm nay (đ)
+                        Tổng point hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
                       </span>
                       <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
                     </Col>

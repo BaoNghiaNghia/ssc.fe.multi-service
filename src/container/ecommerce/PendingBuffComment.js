@@ -612,7 +612,8 @@ function PendingBuffComment() {
                       <AutoComplete onSearch={handleSearch} dataSource={notData} patterns placeholder="Tìm kiếm Order ID, Video ID"/>
                     </div>
                   </Col>
-                  <Col xxl={18} xs={24}>
+                  <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderComment?.meta?.total || 0)}</span> order</span>
                     <div className="table-toolbox-actions">
                       <Button
                         size="small"
