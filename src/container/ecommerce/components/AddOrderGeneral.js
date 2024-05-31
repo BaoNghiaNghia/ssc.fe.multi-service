@@ -364,11 +364,11 @@ function AddOrderGeneral() {
                               {
                                 itemService?.enabled ? (
                                   <Option key={index} value={itemService?.service_id}>
-                                    <div>
+                                    <div style={{ paddingBottom: '8px', borderBottom: '1px dashed #cbcbcb' }}>
                                       <Row style={{ margin: 0, padding: 0 }}>
                                         <Col style={{ margin: 0, padding: 0 }}>
-                                          <span className="label" style={{ display: 'inline-flex', alignItems: 'center' }}>
-                                            <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                                          <span className="label" style={{ display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                                            <FaYoutube color="red" fontSize={20} style={{ margin: '2px 7px 0 0' }} />
                                             {
                                               itemService?.geo ? (
                                                 <Tooltip title={itemService?.geo?.toUpperCase()}>
@@ -386,7 +386,7 @@ function AddOrderGeneral() {
                                           </span>
                                         </Col>
                                       </Row>
-                                      {/* <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</p> */}
+                                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</p>
                                       <Row>
                                         <Col style={{ display: 'inline-flex', alignItems: 'center' }}>
                                           {
@@ -465,8 +465,8 @@ function AddOrderGeneral() {
                     <Card size="small" style={{ border: '1px solid #009ef7' }}>
                       <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
-                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {detailService?.min} {stateCurr?.selectedCategory}</p>
-                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: {detailService?.max} {stateCurr?.selectedCategory}</p>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: {numberWithCommas(detailService?.max)} {stateCurr?.selectedCategory}</p>
                         </div>
                         <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '4px 0px' }}>{detailService?.description}</p>
                         {

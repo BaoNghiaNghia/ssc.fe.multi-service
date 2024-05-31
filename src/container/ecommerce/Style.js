@@ -431,7 +431,8 @@ const TopToolBox = Styled.div`
             }
         }
         span{
-            color: ${({ theme }) => theme['light-color']};
+            color: black;
+            font-weight: 500;
             @media only screen and (max-width: 1792px){
                 font-size: 13px;
             }
@@ -439,6 +440,7 @@ const TopToolBox = Styled.div`
         &.ant-radio-button-wrapper-checked{
             span{
                 color: ${({ theme }) => theme['primary-color']};
+                font-weight: 800;
             }
         }
     }

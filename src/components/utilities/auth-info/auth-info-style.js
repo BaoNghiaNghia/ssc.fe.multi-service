@@ -9,7 +9,7 @@ const InfoWraper = Styled.div`
         text-decoration: none;
         color: ${({ theme }) => theme['text-color-secondary']};
         box-shadow: none;
-        padding: 0px 8px;
+        padding: 0px 10px;
         ${({ darkMode }) => (darkMode ? `color: #A8AAB3;` : '')};
     }
     .message .ant-badge-dot{
