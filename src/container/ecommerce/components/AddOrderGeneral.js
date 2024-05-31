@@ -121,6 +121,8 @@ function AddOrderGeneral() {
 
     formCreateService.resetFields();
     dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+
+    dispatch(actionsService.modalDetailServiceBegin({}));
   }
 
   const handleCountValidateCommentString = (value) => {
@@ -462,7 +464,11 @@ function AddOrderGeneral() {
                     </Card>
                     <Card size="small" style={{ border: '1px solid #009ef7' }}>
                       <div>
-                        <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{detailService?.description}</p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {detailService?.min} {stateCurr?.selectedCategory}</p>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: {detailService?.max} {stateCurr?.selectedCategory}</p>
+                        </div>
+                        <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '4px 0px' }}>{detailService?.description}</p>
                         {
                           detailService?.enabled ? (
                             <span className="label" style={badgeGreenStyle}>
