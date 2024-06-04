@@ -553,14 +553,14 @@ function SettingAndService() {
                         <Col sm={12}>
                           <Form.Item
                             name="min_video_time"
-                            label="Số phút tối đa lấy video"
+                            label="Số giây tối đa lấy video"
                             style={{ marginBottom: '7px' }}
                             rules={[{
                               required: true,
                               message: 'Trường không được trống'
                             }]}
                           >
-                            <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                            <InputNumber size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
                           </Form.Item>
                         </Col>
                       </Row>

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { IoPeopleOutline } from "react-icons/io5";
 import { AiOutlineTransaction } from "react-icons/ai";
+import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import DetailMember from './component/DetailMember';
 import AddTopup from './component/AddTopup';
 import { GalleryNav, TopToolBox } from './style';
@@ -23,6 +25,7 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/member/actions';
+import serviceActions from '../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../utility/utility';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
@@ -42,6 +45,7 @@ const columnsMember = [
     dataIndex: 'discount',
     key: 'discount',
   },
+  Table.EXPAND_COLUMN,
   {
     title: 'Đơn cuối',
     dataIndex: 'last_order_time',
@@ -88,17 +92,63 @@ const columnsToup = [
   },
 ];
 
+const badgeGreenStyle = {
+  border: '1.3px solid #00ab00',
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: '#00ab00',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+const badgeOrangeStyle = {
+  border: '1.3px solid orange',
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'orange',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+const badgeRedStyle = {
+  border: '1.3px solid red',
+  fontFamily: 'Be Vietnam Pro',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'red',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
 function Member() {
   const dispatch = useDispatch();
 
-  const { searchData, orders, userList, isLoading, typeTable, topupList } = useSelector(state => {
+  const { searchData, orders, userList, isLoading, typeTable, topupList, listService } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
       userList: state?.member?.userList,
       isLoading: state?.member?.loading,
       typeTable: state?.member?.typeTable,
-      topupList: state?.member?.topupList?.topups
+      topupList: state?.member?.topupList?.topups,
+      listService: state?.settingService?.listService?.items,
     };
   });
 
@@ -132,6 +182,7 @@ function Member() {
 
   useEffect(() => {
     dispatch(actions.fetchUserListBegin());
+    dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
   const handleSearch = searchText => {
@@ -148,7 +199,7 @@ function Member() {
     userList?.map((value, key) => {
       const { api_key, discount, id, last_order_time, max_threads, order_running, credit, sub_order, fullname, email, credit_used, phone } = value;
       return dataSource.push({
-        key: key + 1,
+        key: id,
         username: (
           <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
             <ReactNiceAvatar
@@ -170,7 +221,7 @@ function Member() {
         discount: (
           <>
             {
-              discount === 0 ? (
+              discount ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
                 <span>{discount} %</span>
@@ -462,7 +513,7 @@ function Member() {
                 {
                   typeTable === MEMBER_TABLE_TYPE.MEMBER.title ? (
                     <Table
-                      rowSelection={rowSelection}
+                      // rowSelection={rowSelection}
                       size='small'
                       dataSource={dataSource}
                       loading={isLoading}
@@ -487,6 +538,117 @@ function Member() {
                         },
                         totalBoundaryShowSizeChanger: 100,
                         size: "small"
+                      }}
+                      expandable={{
+                        expandedRowRender: (record, index) => {
+                          const RowData = userList.filter(item => item?.id === record?.key);
+                          if (RowData?.length > 0) {
+                            const { discount } = RowData[0];
+
+                            if (!discount) {
+                              return (
+                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Không có thông tin khuyến mãi</span>
+                              )
+                            } 
+
+                            
+                            const arrayDiscount = []
+                            Object.keys(discount).forEach(function(key) {
+                              arrayDiscount.push({ service_id: Number(key), discount_service: discount[key] });
+                            });
+                            
+                            const expandColumns = [
+                              {
+                                title: 'Dịch vụ',
+                                dataIndex: 'service_id',
+                                key: 'service_id',
+                              },
+                              {
+                                title: 'Giảm giá',
+                                dataIndex: 'discount_service',
+                                key: 'discount_service',
+                              },
+                            ];
+
+                            const inTableData = [];
+
+                            if (arrayDiscount?.length > 0 && listService?.length > 0) {
+                              arrayDiscount.map((item) => {
+                                console.log('---- matched service ----', listService, arrayDiscount);
+                                const matchService = listService?.filter((service) => service?.service_id === item?.service_id);
+                                if (matchService?.length > 0 ) {
+                                  const { name, service_id, priority, enabled, description, geo } = matchService[0];
+                                  return inTableData.push({
+                                    key: item?.service_id,
+                                    service_id: (
+                                      <>
+                                        <Row>
+                                          <Col>
+                                            <span className="label" style={{ display: 'inline-flex' }}>
+                                              <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                                              {
+                                                geo ? (
+                                                  <Tooltip title={geo?.toUpperCase()}>
+                                                    <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                                      <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" />
+                                                    </span>
+                                                  </Tooltip>
+                                                ) : null
+                                              }
+                                              - <span style={{ fontWeight: 'bold', margin: '0px 7px' }}>{service_id}</span> - <Tooltip title={name} placement='right'>{name?.length > 70 ? `${name?.slice(0, 70)  } ...` : name}</Tooltip>
+                                            </span>
+                                          </Col>
+                                        </Row>
+                                        <Row style={{ marginBottom: '5px' }}>
+                                          <Tooltip title={description} placement='right'>
+                                            <Col>
+                                              <span className="label" style={{ color: 'gray', fontSize: '0.8em' }}>{description.length > 80 ? `${description?.slice(0, 80)  } ...` : description}</span>
+                                            </Col>
+                                          </Tooltip>
+                                        </Row>
+                                        <Row>
+                                          <Col>
+                                            {
+                                              enabled ? (
+                                                <span className="label" style={badgeGreenStyle}>
+                                                  <Badge color='green' dot style={{ marginRight: '5px' }} />
+                                                  Đang hoạt động
+                                                </span>
+                                              ) : (
+                                                <span className="label" style={badgeRedStyle}>
+                                                  <Badge color='red' dot style={{ marginRight: '5px' }} />
+                                                  Đang tắt
+                                                </span>
+                                              )
+                                            }
+                                            <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                                            <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                                            {
+                                              priority ? (
+                                                <span className="label" style={badgeOrangeStyle}>
+                                                  <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
+                                                  Ưu tiên
+                                                </span>
+                                              ) : <></>
+                                            }
+                                          </Col>
+                                        </Row>
+                                      </>
+                                    ),
+                                    discount_service: (
+                                      <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontWeight: 800, fontSize: '1.1em' }}>
+                                        {item?.discount_service} %
+                                      </span>
+                                    ),
+                                  });
+                                }
+                              })
+                            }
+                            
+                            return <Table columns={expandColumns} showHeader={false} dataSource={inTableData} pagination={false} />;
+                          }
+                        },
+                        rowExpandable: (record) => record?.discount !== null
                       }}
                     />
                   ) : (
