@@ -574,7 +574,6 @@ function Member() {
 
                             if (arrayDiscount?.length > 0 && listService?.length > 0) {
                               arrayDiscount.map((item) => {
-                                console.log('---- matched service ----', listService, arrayDiscount);
                                 const matchService = listService?.filter((service) => service?.service_id === item?.service_id);
                                 if (matchService?.length > 0 ) {
                                   const { name, service_id, priority, enabled, description, geo } = matchService[0];
@@ -637,7 +636,7 @@ function Member() {
                                     ),
                                     discount_service: (
                                       <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontWeight: 800, fontSize: '1.1em' }}>
-                                        {item?.discount_service} %
+                                        Giảm giá {item?.discount_service} %
                                       </span>
                                     ),
                                   });
