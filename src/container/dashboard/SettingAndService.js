@@ -369,7 +369,6 @@ function SettingAndService() {
       <Main>
         {
           typeTab === SERVICE_SETTING_TYPE.SERVICE.title ? (
-
             <Cards headless>
               <Row gutter={15}>
                 <Col xs={24}>

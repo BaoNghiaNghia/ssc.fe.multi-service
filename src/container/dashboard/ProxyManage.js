@@ -16,6 +16,43 @@ import actions from '../../redux/proxy/actions';
 import { numberWithCommas } from '../../utility/utility';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIMIT_ITEM_REQUEST_API } from '../../variables';
 
+const columns = [
+  {
+    title: 'Domain',
+    dataIndex: 'domain',
+    key: 'domain',
+  },
+  {
+    title: 'GEO',
+    dataIndex: 'geo',
+    key: 'geo',
+  },
+  {
+    title: 'Port',
+    dataIndex: 'port_start',
+    key: 'port_start',
+  },
+  {
+    title: 'Số lượng',
+    dataIndex: 'total',
+    key: 'total',
+  },
+  {
+    title: 'Đã sử dụng',
+    dataIndex: 'used_count',
+    key: 'used_count',
+  },
+  {
+    title: 'Trạng thái',
+    dataIndex: 'enable',
+    key: 'enable',
+  },
+  {
+    title: 'Hành động',
+    dataIndex: 'action',
+    key: 'action',
+  },
+];
 
 function ProxyManage() {
   const dispatch = useDispatch();
@@ -102,7 +139,6 @@ function ProxyManage() {
         enable: (
           <Tooltip title={enable ? 'Đang hoạt động' : 'Ngừng hoạt động'}>
             <Switch checked={enable} onChange={(state) => {
-              console.log('---- change status proxy -------', state)
               const dataRequest = {
                 domain,
                 enable: state,
@@ -153,44 +189,6 @@ function ProxyManage() {
       });
     });
   }
-
-  const columns = [
-    {
-      title: 'Domain',
-      dataIndex: 'domain',
-      key: 'domain',
-    },
-    {
-      title: 'GEO',
-      dataIndex: 'geo',
-      key: 'geo',
-    },
-    {
-      title: 'Port',
-      dataIndex: 'port_start',
-      key: 'port_start',
-    },
-    {
-      title: 'Số lượng',
-      dataIndex: 'total',
-      key: 'total',
-    },
-    {
-      title: 'Đã sử dụng',
-      dataIndex: 'used_count',
-      key: 'used_count',
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'enable',
-      key: 'enable',
-    },
-    {
-      title: 'Hành động',
-      dataIndex: 'action',
-      key: 'action',
-    },
-  ];
 
   const onSelectChange = selectedRowKey => {
     setState({ ...state, selectedRowKeys: selectedRowKey });

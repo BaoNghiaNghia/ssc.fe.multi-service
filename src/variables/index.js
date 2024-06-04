@@ -14,8 +14,8 @@ export const COLOR_GENERAL = {
 
 export const FORMAT_DATESTRING = "YYYY-MM-DD";
 
-export const DEFAULT_PERPAGE = 20;
-export const DEFAULT_PAGESIZE = [20, 50, 100, 200, 300];
+export const DEFAULT_PERPAGE = 15;
+export const DEFAULT_PAGESIZE = [15, 50, 100, 200, 300];
 
 export const ORDER_YOUTUBE_STATUS = [
   {
