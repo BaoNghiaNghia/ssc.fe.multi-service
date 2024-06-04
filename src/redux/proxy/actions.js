@@ -18,8 +18,32 @@ const actions = {
     DETAIL_DOMAIN_BEGIN: 'DETAIL_DOMAIN_BEGIN',
     DETAIL_DOMAIN_SUCCESS: 'DETAIL_DOMAIN_SUCCESS',
     DETAIL_DOMAIN_ERR: 'DETAIL_DOMAIN_ERR',
+
+    PATCH_PROXY_BEGIN: 'PATCH_PROXY_BEGIN',
+    PATCH_PROXY_SUCCESS: 'PATCH_PROXY_SUCCESS',
+    PATCH_PROXY_ERR: 'PATCH_PROXY_ERR',
     
 
+    patchProxyBegin: (payload) => {
+        return {
+            type: actions.PATCH_PROXY_BEGIN,
+            payload
+        };
+    },
+
+    patchProxySuccess: (data) => {
+        return {
+            type: actions.PATCH_PROXY_SUCCESS,
+            data,
+        };
+    },
+
+    patchProxyErr: (err) => {
+        return {
+            type: actions.PATCH_PROXY_ERR,
+            err,
+        };
+    },
     detailDomainBegin: (payload) => {
         return {
             type: actions.DETAIL_DOMAIN_BEGIN,

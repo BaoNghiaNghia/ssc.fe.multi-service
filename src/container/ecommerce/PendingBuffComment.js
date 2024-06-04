@@ -11,6 +11,8 @@ import { MdBlock } from "react-icons/md";
 import { BsFire } from "react-icons/bs";
 import { LuListFilter } from "react-icons/lu";
 import { toast } from 'react-toastify';
+import { debounce } from 'lodash';
+
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListCommentOfOrder';
@@ -28,7 +30,7 @@ import actions from '../../redux/buffComment/actions';
 import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
 import { convertSeconds, numberWithCommas } from '../../utility/utility';
 
 
@@ -57,6 +59,11 @@ const columns = [
     title: 'Bắt đầu / Hiện tại',
     dataIndex: 'start_count',
     key: 'start_count',
+  },
+  {
+    title: 'Còn thiếu',
+    dataIndex: 'loss',
+    key: 'loss',
   },
   {
     title: 'Luồng tối đa',
@@ -109,7 +116,7 @@ function PendingBuffComment() {
     isFilterCommentOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
     statusNumber: 'all',
-    notData: searchData,
+    notData: {},
     rowData: {},
     item: listOrderComment,
     selectedRowKeys: [],
@@ -140,18 +147,18 @@ function PendingBuffComment() {
     const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
 
     if (arraySearchValidate && arraySearchValidate.length > 0) {
-      setTimeout(() => {
-        const pattern = /^\d+\.?\d*$/;
-        if (pattern.test(arraySearchValidate.join(""))) {
-          dispatch(actions.fetchListOrderCommentBegin({
-            order_ids: arraySearchValidate.join(",")
-          }));
-        } else {
-          dispatch(actions.fetchListOrderCommentBegin({
-            video_ids: arraySearchValidate.join(",")
-          }));
-        }
-      }, 500);
+      // setTimeout(() => {
+      // }, 500);
+      const pattern = /^\d+\.?\d*$/;
+      if (pattern.test(arraySearchValidate.join(""))) {
+        dispatch(actions.fetchListOrderCommentBegin({
+          order_ids: arraySearchValidate.join(",")
+        }));
+      } else {
+        dispatch(actions.fetchListOrderCommentBegin({
+          video_ids: arraySearchValidate.join(",")
+        }));
+      }
     }
   };
 
@@ -315,6 +322,19 @@ function PendingBuffComment() {
                     }
                   </div>
                 </span>
+              )
+            }
+          </>
+        ),
+        loss: (
+          <>
+            {
+              max_thread === 0 ? (
+                <span style={{ color: '#bdbdbd' }}>0</span>
+              ) : (
+                <Tooltip title="Comment thiếu / Tổng comment đã đặt">
+                  <span><strong>{numberWithCommas(quantity - done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></span>
+                </Tooltip>
               )
             }
           </>
@@ -523,9 +543,12 @@ function PendingBuffComment() {
     if (selectedRowKey.length > 0) {
       const matchedOrder = listOrderComment?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
       if (matchedOrder?.length > 0) {
+        const matchState = ORDER_YOUTUBE_STATUS.find(item => item?.value === matchedOrder[0]?.status)?.name;
         const checkUpdateOrderStatus = [
-          'OrderStatusCancelNoRefund', 'OrderStatusCancelRefund', 'OrderStatusDone'
-        ].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === matchedOrder[0]?.status)?.name);
+          'OrderStatusCancelNoRefund',
+          'OrderStatusCancelRefund',
+          'OrderStatusDone'
+        ].includes(matchState);
         if (checkUpdateOrderStatus) {
           toast.error('Không thể cập nhật đơn đã hủy hoặc hoàn thành');
         } else {
@@ -609,7 +632,7 @@ function PendingBuffComment() {
                 <Row gutter={15} className="justify-content-center" style={{ marginBottom: '15px' }}>
                   <Col lg={6} xs={6}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} patterns placeholder="Tìm kiếm Order ID, Video ID"/>
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} patterns placeholder="Tìm kiếm Order ID, Video ID"/>
                     </div>
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>

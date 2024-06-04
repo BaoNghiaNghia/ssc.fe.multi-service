@@ -101,7 +101,15 @@ function ProxyManage() {
         </>,
         enable: (
           <Tooltip title={enable ? 'Đang hoạt động' : 'Ngừng hoạt động'}>
-            <Switch checked={enable} />
+            <Switch checked={enable} onChange={(state) => {
+              console.log('---- change status proxy -------', state)
+              const dataRequest = {
+                domain,
+                enable: state,
+                id
+              }
+              dispatch(actions.patchProxyBegin(dataRequest));
+            }}/>
           </Tooltip>
         ),
         action: (

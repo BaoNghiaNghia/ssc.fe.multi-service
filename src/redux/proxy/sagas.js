@@ -5,10 +5,31 @@ import {
     createDomainAPI,
     deleteDomainAPI,
     getListProxyInDomainAPI,
-    listGeneralDomainAPI
+    listGeneralDomainAPI,
+    patchProxyAPI
 } from '../../config/apiFactory/Proxy/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
+
+function* patchProxyFunc(params) {
+  try {
+    const response = yield call(patchProxyAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.patchProxySuccess(params?.payload)
+      );
+      yield put(
+        actions.listAllDomainBegin()
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.patchProxyErr({ error: errorMessage || 'Patch proxy failed' })
+    );
+  } finally { /* empty */ }
+}
 
 function* detailDomainFunc(params) {
   try {
@@ -129,6 +150,9 @@ function* listGeneralDomainFunc(params) {
 }
 
 
+export function* patchProxyWatcherSaga() {
+  yield takeLatest(actions.PATCH_PROXY_BEGIN, patchProxyFunc);
+}
 export function* detailDomainWatcherSaga() {
   yield takeLatest(actions.DETAIL_DOMAIN_BEGIN, detailDomainFunc);
 }

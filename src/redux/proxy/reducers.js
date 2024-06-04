@@ -28,11 +28,34 @@ const {
     DETAIL_DOMAIN_BEGIN,
     DETAIL_DOMAIN_ERR,
     DETAIL_DOMAIN_SUCCESS,
+
+    PATCH_PROXY_BEGIN,
+    PATCH_PROXY_ERR,
+    PATCH_PROXY_SUCCESS,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case PATCH_PROXY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case PATCH_PROXY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case PATCH_PROXY_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case DETAIL_DOMAIN_BEGIN:
       return {
         ...state,
