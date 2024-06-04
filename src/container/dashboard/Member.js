@@ -221,10 +221,10 @@ function Member() {
         discount: (
           <>
             {
-              discount ? (
-                <span style={{ color: '#bdbdbd' }}>0</span>
+              discount === null ? (
+                <span style={{ color: '#bdbdbd' }}>Chưa có</span>
               ) : (
-                <span>{discount} %</span>
+                <span>{Object.keys(discount).length} dịch vụ</span>
               )
             }
           </>
