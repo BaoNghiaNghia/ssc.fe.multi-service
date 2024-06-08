@@ -141,10 +141,6 @@ function HistoryBuffSubscribe() {
     },
   };
 
-  const handleChange = (value) => {
-    console.log('---- check type ------', value);
-  };
-
   return (
     <>
       <PageHeader

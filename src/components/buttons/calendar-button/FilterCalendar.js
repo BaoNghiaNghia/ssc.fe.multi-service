@@ -10,7 +10,13 @@ const FilterCalendar = ({ actionPicker, fromDate, toDate }) => {
   const content = (<DateRangePickerOne actionPicker={actionPicker}/>);
 
   return (
-    <Popover placement="bottomRight" title="Lọc theo khoảng thời gian" content={content} action="hover" style={{ backgroundColor: 'white' }}>
+    <Popover 
+      placement="bottomRight"
+      title="Lọc theo khoảng thời gian"
+      content={content}
+      action="click"
+      style={{ backgroundColor: 'gray' }}
+    >
       <Button size="small" style={{ border: '2px solid #97cb97', backgroundColor: '#f2fff24a' }}>
         <span style={{ display: 'flex', alignItems: 'center', color: 'green' }}>
           <TbCalendarCog fontSize={50} style={{ width: '30px', height: '20px', margin: '0 10px 0 0', padding: 0, color: 'green' }} />

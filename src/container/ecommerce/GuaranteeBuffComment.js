@@ -144,8 +144,7 @@ function PendingBuffComment() {
         user_id, 
         link, 
         video_id,
-        priority, 
-        service_id, 
+        priority,
         performance, 
         max_thread, 
         id,
@@ -380,7 +379,7 @@ function PendingBuffComment() {
                     </div>
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderComment?.meta?.total || 0)}</span> order</span>
+                    <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listWarrantyOrder?.meta?.total || 0)}</span> order</span>
 
                   </Col>
                 </Row>
@@ -397,10 +396,10 @@ function PendingBuffComment() {
                   dataSource={dataSource}
                   columns={columns}
                   pagination={{
-                    current: listOrderComment?.meta?.current_page,
-                    defaultPageSize: listOrderComment?.meta?.count,
-                    pageSize: listOrderComment?.meta?.per_page,
-                    total: listOrderComment?.meta?.total,
+                    current: listWarrantyOrder?.meta?.current_page,
+                    defaultPageSize: listWarrantyOrder?.meta?.count,
+                    pageSize: listWarrantyOrder?.meta?.per_page,
+                    total: listWarrantyOrder?.meta?.total,
                     showSizeChanger: true,
                     pageSizeOptions: DEFAULT_PAGESIZE,
                     onChange(page, pageSize) {

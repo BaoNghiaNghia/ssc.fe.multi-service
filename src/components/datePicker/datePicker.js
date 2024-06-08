@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { ItemWraper, ButtonGroup } from './style';
 import { Button } from '../buttons/buttons';
-import { FORMAT_DATESTRING } from '../../variables/index';
+import { DEFAULT_PERPAGE, FORMAT_DATESTRING } from '../../variables/index';
 
 const DateRangePickerOne = ({ actionPicker }) => {
   const dispatch = useDispatch();
@@ -31,7 +31,6 @@ const DateRangePickerOne = ({ actionPicker }) => {
   const end = dateRangePicker.selection.endDate.toString().split(' ');
 
   const handleRangeChange = (which) => {
-    console.log('----- range picker date nè --------', moment(which?.selection?.startDate).format(FORMAT_DATESTRING), moment(which.selection.endDate).format(FORMAT_DATESTRING));
     setState({
       ...state,
       dateRangePicker: {
@@ -39,12 +38,21 @@ const DateRangePickerOne = ({ actionPicker }) => {
         ...which,
       },
     });
+  };
+
+  const onSubmitChange = () => {
+    const { dateRangePicker } = state;
+
+    const whichFrom = moment(dateRangePicker.selection.startDate).format(FORMAT_DATESTRING);
+    const whichTo = moment(dateRangePicker.selection.endDate).format(FORMAT_DATESTRING);
 
     dispatch(actionPicker({
-      from: moment(which?.selection?.startDate).format(FORMAT_DATESTRING),
-      to: moment(which.selection.endDate).format(FORMAT_DATESTRING)
+      pageSize: 1,
+      limit: DEFAULT_PERPAGE,
+      from: whichFrom,
+      to: whichTo
     }));
-  };
+  }
 
   return (
     <ItemWraper>
@@ -57,10 +65,9 @@ const DateRangePickerOne = ({ actionPicker }) => {
         ranges={[dateRangePicker.selection]}
         direction="horizontal"
       />
-
       <ButtonGroup>
         <p>{`${start[1]} ${start[2]} ${start[3]} - ${end[1]} ${end[2]} ${end[3]}`}</p>
-        <Button size="small" type="primary">
+        <Button size="small" type="primary" onClick={onSubmitChange}>
           Xác nhận
         </Button>
         <Button size="small" type="white" outlined>

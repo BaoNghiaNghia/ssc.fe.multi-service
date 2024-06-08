@@ -355,8 +355,15 @@ function* setRangeDateWarrantyFilterFunc(params) {
       actions.setRangeDateWarrantyFilterSuccess(params?.payload)
     );
 
+    const requestData = {
+      start_date: `${params?.payload?.from} 00:00:00`,
+      end_date: `${params?.payload?.to} 23:59:59`,
+      pageSize: params?.payload?.pageSize,
+      limit: params?.payload?.limit
+    }
+
     yield put(
-      actions.reportSubscribeBegin(params?.payload)
+      actions.fetchWarrantyOrderBegin(requestData)
     );
 
   } catch (err) {

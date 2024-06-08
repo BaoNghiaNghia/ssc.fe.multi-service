@@ -580,7 +580,6 @@ function PendingBuffComment() {
         isOpen={isListCommentModal}
         setState={setState}
       />
-      {/* <AddOrderGeneral/> */}
       <BatchUpdateOrderComment
         orderState={state}
         setState={setState}
