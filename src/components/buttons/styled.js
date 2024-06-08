@@ -106,7 +106,7 @@ const ButtonStyled = Styled(Button)`
     align-items: center;
     justify-content: center;
     border-radius: ${({ shape }) => (!shape ? '4px' : '40px')};
-    padding: 0px 20.5px;
+    padding: 0px 18px;
     height: ${({ size, theme }) => (size !== 'default' ? theme[`btn-height-${size}`] : '42px')};
     font-weight: 500;
     box-shadow: 0 0;

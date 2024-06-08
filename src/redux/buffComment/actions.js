@@ -43,6 +43,106 @@ const actions = {
     DETAIL_COMPUTER_RUN_COMMENT_SUCCESS: 'DETAIL_COMPUTER_RUN_COMMENT_SUCCESS',
     DETAIL_COMPUTER_RUN_COMMENT_ERR: 'DETAIL_COMPUTER_RUN_COMMENT_ERR',
 
+    FETCH_WARRANTY_ORDER_BEGIN: 'FETCH_WARRANTY_ORDER_BEGIN',
+    FETCH_WARRANTY_ORDER_SUCCESS: 'FETCH_WARRANTY_ORDER_SUCCESS',
+    FETCH_WARRANTY_ORDER_ERR: 'FETCH_WARRANTY_ORDER_ERR',
+
+    ACTIVE_WARRANTY_ORDER_BEGIN: 'ACTIVE_WARRANTY_ORDER_BEGIN',
+    ACTIVE_WARRANTY_ORDER_SUCCESS: 'ACTIVE_WARRANTY_ORDER_SUCCESS',
+    ACTIVE_WARRANTY_ORDER_ERR: 'ACTIVE_WARRANTY_ORDER_ERR',
+
+    REFUND_WARRANTY_ORDER_BEGIN: 'REFUND_WARRANTY_ORDER_BEGIN',
+    REFUND_WARRANTY_ORDER_SUCCESS: 'REFUND_WARRANTY_ORDER_SUCCESS',
+    REFUND_WARRANTY_ORDER_ERR: 'REFUND_WARRANTY_ORDER_ERR',
+
+    SET_RANGE_DATE_WARRANTY_FILTER_BEGIN: 'SET_RANGE_DATE_WARRANTY_FILTER_BEGIN',
+    SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS: 'SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS',
+    SET_RANGE_DATE_WARRANTY_FILTER_ERR: 'SET_RANGE_DATE_WARRANTY_FILTER_ERR',
+
+    setRangeDateWarrantyFilterBegin: (payload) => {
+        return {
+          type: actions.SET_RANGE_DATE_WARRANTY_FILTER_BEGIN,
+          payload
+        };
+    },
+
+    setRangeDateWarrantyFilterSuccess: (data) => {
+        return {
+            type: actions.SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS,
+            data,
+        }
+    },
+
+    setRangeDateWarrantyFilterErr: (err) => {
+        return {
+            type: actions.SET_RANGE_DATE_WARRANTY_FILTER_ERR,
+            err,
+        }
+    },
+
+    refundWarrantyOrderBegin: (payload) => {
+        return {
+            type: actions.REFUND_WARRANTY_ORDER_BEGIN,
+            payload
+        };
+    },
+
+    refundWarrantyOrderSuccess: (data) => {
+        return {
+            type: actions.REFUND_WARRANTY_ORDER_SUCCESS,
+            data,
+        };
+    },
+
+    refundWarrantyOrderErr: (err) => {
+        return {
+            type: actions.REFUND_WARRANTY_ORDER_ERR,
+            err,
+        };
+    },
+
+    activeWarrantyOrderBegin: (payload) => {
+        return {
+            type: actions.ACTIVE_WARRANTY_ORDER_BEGIN,
+            payload
+        };
+    },
+
+    activeWarrantyOrderSuccess: (data) => {
+        return {
+            type: actions.ACTIVE_WARRANTY_ORDER_SUCCESS,
+            data,
+        };
+    },
+
+    activeWarrantyOrderErr: (err) => {
+        return {
+            type: actions.ACTIVE_WARRANTY_ORDER_ERR,
+            err,
+        };
+    },
+
+    fetchWarrantyOrderBegin: (payload) => {
+        return {
+            type: actions.FETCH_WARRANTY_ORDER_BEGIN,
+            payload
+        };
+    },
+
+    fetchWarrantyOrderSuccess: (data) => {
+        return {
+            type: actions.FETCH_WARRANTY_ORDER_SUCCESS,
+            data,
+        };
+    },
+
+    fetchWarrantyOrderErr: (err) => {
+        return {
+            type: actions.FETCH_WARRANTY_ORDER_ERR,
+            err,
+        };
+    },
+
     listComputerRunCommentBegin: (payload) => {
         return {
             type: actions.LIST_COMPUTER_RUN_COMMENT_BEGIN,

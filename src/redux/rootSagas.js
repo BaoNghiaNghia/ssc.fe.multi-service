@@ -73,7 +73,11 @@ import {
     updateManyOrderCommentWatcherSaga,
     updateManyComputerCommentWatcherSaga,
     updateOneComputerCommentWatcherSaga,
-    detailComputerCommentWatcherSaga
+    detailComputerCommentWatcherSaga,
+    fetchWarrantyOrderWatcherSaga,
+    activeWarrantyOrderWatcherSaga,
+    refundhWarrantyOrderWatcherSaga,
+    setRangeDateWarrantyFilterWatcherSaga
 } from './buffComment/sagas';
 
 import {
@@ -144,6 +148,10 @@ export default function* rootSaga() {
         statisticTaskSuccessInMinuteWatcherSaga(),
         statisticCommentByDayWatcherSaga(),
         statisticComputerThreadWatcherSaga(),
-        patchProxyWatcherSaga()
+        patchProxyWatcherSaga(),
+        fetchWarrantyOrderWatcherSaga(),
+        activeWarrantyOrderWatcherSaga(),
+        refundhWarrantyOrderWatcherSaga(),
+        setRangeDateWarrantyFilterWatcherSaga()
     ]);
 }

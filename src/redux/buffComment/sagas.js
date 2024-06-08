@@ -11,7 +11,11 @@ import {
     updateManyOrderCommentAPI,
     updateManyComputerCommentAPI,
     detailComputerRunCommentAPI,
-    updateOneComputerRunCommentAPI
+    updateOneComputerRunCommentAPI,
+
+    activeWarrantyOrderAPI,
+    fetchListWarrantyOrderAPI,
+    refundWarrantyOrderAPI,
 } from '../../config/apiFactory/BuffComment/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE } from '../../variables';
 
@@ -36,6 +40,80 @@ function* listComputerRunCommentFunc(params) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Update order comment failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* fetchWarrantyOrderFunc(params) {
+  try {
+    const response = yield call(fetchListWarrantyOrderAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchWarrantyOrderSuccess(response?.data?.data)
+      );
+    }
+
+  } catch (error) {
+    const errorMessage = error;
+
+    yield put(
+      actions.fetchWarrantyOrderErr({ error: errorMessage || 'Fetch Warranty Order failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Fetch Warranty Order failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* activeWarrantyOrderFunc(params) {
+  try {
+    const response = yield call(activeWarrantyOrderAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.activeWarrantyOrderSuccess(response?.data?.data)
+      );
+    }
+
+  } catch (error) {
+    const errorMessage = error;
+
+    yield put(
+      actions.activeWarrantyOrderErr({ error: errorMessage || 'Active Warranty Order failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Active Warranty Order failed');
+    }
+  } finally { /* empty */ }
+}
+function* refundWarrantyOrderFunc(params) {
+  try {
+    const response = yield call(refundWarrantyOrderAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.refundWarrantyOrderSuccess(response?.data?.data)
+      );
+    }
+
+  } catch (error) {
+    const errorMessage = error;
+
+    yield put(
+      actions.refundWarrantyOrderErr({ error: errorMessage || 'Refund Warranty Order failed' })
+    );
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Refund Warranty Order failed');
     }
   } finally { /* empty */ }
 }
@@ -271,6 +349,24 @@ function* commentInOrderCommentFunc(params) {
 }
 
 
+function* setRangeDateWarrantyFilterFunc(params) {
+  try {
+    yield put(
+      actions.setRangeDateWarrantyFilterSuccess(params?.payload)
+    );
+
+    yield put(
+      actions.reportSubscribeBegin(params?.payload)
+    );
+
+  } catch (err) {
+    yield put(
+      actions.setRangeDateWarrantyFilterErr({ error: err || 'Set range filter failed' })
+    );
+  }
+}
+
+
 export function* updateManyComputerCommentWatcherSaga() {
   yield takeLatest(actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN, updateManyComputerCommentFunc);
 }
@@ -308,4 +404,20 @@ export function* detailComputerCommentWatcherSaga() {
 
 export function* commentInOrderCommentWatcherSaga() {
   yield takeLatest(actions.COMMENT_IN_ORDER_COMMENT_BEGIN, commentInOrderCommentFunc);
+}
+
+export function* fetchWarrantyOrderWatcherSaga() {
+  yield takeLatest(actions.FETCH_WARRANTY_ORDER_BEGIN, fetchWarrantyOrderFunc);
+}
+
+export function* activeWarrantyOrderWatcherSaga() {
+  yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_BEGIN, activeWarrantyOrderFunc);
+}
+
+export function* refundhWarrantyOrderWatcherSaga() {
+  yield takeLatest(actions.REFUND_WARRANTY_ORDER_BEGIN, refundWarrantyOrderFunc);
+}
+
+export function* setRangeDateWarrantyFilterWatcherSaga() {
+  yield takeLatest(actions.SET_RANGE_DATE_WARRANTY_FILTER_BEGIN, setRangeDateWarrantyFilterFunc);
 }

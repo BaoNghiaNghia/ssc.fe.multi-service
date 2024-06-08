@@ -644,7 +644,7 @@ function Member() {
                               })
                             }
                             
-                            return <Table columns={expandColumns} showHeader={false} dataSource={inTableData} pagination={false} />;
+                            return <Table columns={expandColumns} showHeader={false} dataSource={inTableData} pagination={false} footer={null} size='small'/>;
                           }
                         },
                         rowExpandable: (record) => record?.discount !== null

@@ -269,7 +269,7 @@ function Overview() {
         )}
         buttons={[ 
           <div key="1" className="page-header-actions">
-            <FilterCalendar actionPicker={actions.setRangeDateFilterBegin}/>
+            <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate}/>
             <GalleryNav>
               <ul>
                 <li>

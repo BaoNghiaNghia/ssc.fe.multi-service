@@ -5,7 +5,11 @@ import {
     CREATE_COMMENT_COMMENT_ENDPOINT,
     GENERAL_COMPUTER_COMMENT_ENDPOINT,
     UPDATE_MANY_ORDER_COMMENT_ENDPOINT,
-    UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT
+    UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT,
+
+    ACTIVE_WARRANTY_ORDER_ENDPOINT,
+    GET_WARRANTY_ORDER_ENDPOINT,
+    REFUND_WARRANTY_ORDER_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -18,6 +22,10 @@ BuffCommentAPI.createEntities([
     { name: GENERAL_COMPUTER_COMMENT_ENDPOINT },
     { name: UPDATE_MANY_ORDER_COMMENT_ENDPOINT },
     { name: UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT },
+
+    { name: ACTIVE_WARRANTY_ORDER_ENDPOINT },
+    { name: GET_WARRANTY_ORDER_ENDPOINT },
+    { name: REFUND_WARRANTY_ORDER_ENDPOINT },
 ]);
 
 const fetchListOrderCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_ORDER_COMMENT_ENDPOINT }).get(query);
@@ -34,6 +42,10 @@ const detailComputerRunCommentAPI = (id) => BuffCommentAPI.createBasicCRUDEndpoi
 const updateOneComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_COMMENT_ENDPOINT }).patch(query);
 const updateManyComputerCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT }).patchMultiple(query);
 
+const fetchListWarrantyOrderAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GET_WARRANTY_ORDER_ENDPOINT }).get(query);
+const activeWarrantyOrderAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: ACTIVE_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
+const refundWarrantyOrderAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: REFUND_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
+
 export {
     fetchListOrderCommentAPI,
     commentOrderCommentAPI,
@@ -44,5 +56,8 @@ export {
     updateManyOrderCommentAPI,
     updateManyComputerCommentAPI,
     updateOneComputerRunCommentAPI,
-    detailComputerRunCommentAPI
+    detailComputerRunCommentAPI,
+    fetchListWarrantyOrderAPI,
+    activeWarrantyOrderAPI,
+    refundWarrantyOrderAPI,
 }

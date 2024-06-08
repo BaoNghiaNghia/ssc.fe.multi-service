@@ -4,6 +4,7 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 import { FiHome } from "react-icons/fi";
 import { LuServer } from "react-icons/lu";
 import { RiShoppingBag3Fill } from "react-icons/ri";
+import { TbScan } from "react-icons/tb";
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
 import { useSelector , useDispatch } from 'react-redux';
@@ -205,33 +206,49 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         <Menu.Item
           icon={
             !topMenu && (
-              <NavLink className="menuItem-icon" to={`${path}/comment/cho-duyet`}>
+              <NavLink className="menuItem-icon" to={`${path}/comment/danh-sach-don`}>
                 <FeatherIcon icon="archive" />
               </NavLink>
             )
           }
-          key="buff-comment-cho-duyet"
+          key="buff-comment-danh-sach-don"
         >
-          <NavLink onClick={toggleCollapsed} to={`${path}/comment/cho-duyet`}>
+          <NavLink onClick={toggleCollapsed} to={`${path}/comment/danh-sach-don`}>
             Danh sách đơn
           </NavLink>
         </Menu.Item>
         {
           checkMatchRole ? (
-            <Menu.Item
-              icon={
-                !topMenu && (
-                  <NavLink className="menuItem-icon" to={`${path}/comment/dang-chay`}>
-                    <FeatherIcon icon="hard-drive" />
-                  </NavLink>
-                )
-              }
-              key="buff-comment-dang-chay"
-            >
-              <NavLink onClick={toggleCollapsed} to={`${path}/comment/dang-chay`}>
-                Danh sách máy
-              </NavLink>
-            </Menu.Item>
+            <>
+              <Menu.Item
+                icon={
+                  !topMenu && (
+                    <NavLink className="menuItem-icon" to={`${path}/comment/danh-sach-may`}>
+                      <FeatherIcon icon="hard-drive" />
+                    </NavLink>
+                  )
+                }
+                key="buff-comment-danh-sach-may"
+              >
+                <NavLink onClick={toggleCollapsed} to={`${path}/comment/danh-sach-may`}>
+                  Danh sách máy
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item
+                icon={
+                  !topMenu && (
+                    <NavLink className="menuItem-icon" to={`${path}/comment/quet-bao-hanh`}>
+                      <TbScan size={18}/>
+                    </NavLink>
+                  )
+                }
+                key="buff-comment-quet-bao-hanh"
+              >
+                <NavLink onClick={toggleCollapsed} to={`${path}/comment/quet-bao-hanh`}>
+                  Quét bảo hành
+                </NavLink>
+              </Menu.Item>
+            </>
           ) : <></>
         }
         {

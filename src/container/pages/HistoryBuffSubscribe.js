@@ -155,7 +155,7 @@ function HistoryBuffSubscribe() {
             <span style={{ marginRight: '20px', backgroundColor: 'white', padding: '6px 12px', borderRadius: '5px' }}>
               Từ <strong>{fromDay}</strong> đến <strong>{toDay}</strong>
             </span>
-            <FilterCalendar actionPicker={actions.setRangeDateOrderHistoryBegin}/>
+            <FilterCalendar actionPicker={actions.setRangeDateOrderHistoryBegin} fromDate={fromDay} toDate={toDay}/>
           </div>,
         ]}
       />

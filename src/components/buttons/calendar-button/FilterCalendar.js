@@ -6,22 +6,15 @@ import { Popover } from '../../popup/popup';
 import { DateRangePickerOne } from '../../datePicker/datePicker';
 import { Button } from '../buttons';
 
-const FilterCalendar = ({ actionPicker }) => {
+const FilterCalendar = ({ actionPicker, fromDate, toDate }) => {
   const content = (<DateRangePickerOne actionPicker={actionPicker}/>);
 
-  const { fromDate, toDate } = useSelector((state) => {
-    return {
-      fromDate: state?.reports?.filterRange?.from,
-      toDate: state?.reports?.filterRange?.to
-    };
-  });
-
   return (
-    <Popover placement="bottomRight" title="Lọc theo khoảng thời gian" content={content} action="hover">
-      <Button size="small" type="white">
-        <span style={{ padding: '6px', display: 'flex', alignItems: 'center' }}>
-          <TbCalendarCog fontSize={50} style={{ width: '30px', height: '20px', margin: 0, padding: 0, color: 'black' }} />
-          <strong> &nbsp;{fromDate} &nbsp;</strong> đến <strong> &nbsp;{toDate}</strong>
+    <Popover placement="bottomRight" title="Lọc theo khoảng thời gian" content={content} action="hover" style={{ backgroundColor: 'white' }}>
+      <Button size="small" style={{ border: '2px solid #97cb97', backgroundColor: '#f2fff24a' }}>
+        <span style={{ display: 'flex', alignItems: 'center', color: 'green' }}>
+          <TbCalendarCog fontSize={50} style={{ width: '30px', height: '20px', margin: '0 10px 0 0', padding: 0, color: 'green' }} />
+          <strong style={{ color: 'green' }}> &nbsp;{fromDate} &nbsp;</strong> đến <strong style={{ color: 'green' }}> &nbsp;{toDate}</strong>
         </span>
       </Button>
     </Popover>
@@ -30,6 +23,8 @@ const FilterCalendar = ({ actionPicker }) => {
 
 FilterCalendar.propTypes = {
   actionPicker: PropTypes.func,
+  fromDate: PropTypes.object,
+  toDate: PropTypes.object,
 }
 
 export { FilterCalendar };

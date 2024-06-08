@@ -1,11 +1,17 @@
 import actions from './actions';
+import { currentDate, previousDate } from '../../utility/utility';
 
 const initialState = {
   listOrderComment: [],
   detailOrderComment: {},
   listComputer: {},
   detailComputerComment: {},
+  listWarrantyOrder: [],
   commentInOrder: {},
+  filterRange: {
+    from: previousDate(7),
+    to: currentDate
+  },
   loading: false,
   error: null
 };
@@ -54,11 +60,105 @@ const {
     UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN,
     UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR,
     UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS,
+
+    ACTIVE_WARRANTY_ORDER_BEGIN,
+    ACTIVE_WARRANTY_ORDER_ERR,
+    ACTIVE_WARRANTY_ORDER_SUCCESS,
+
+    FETCH_WARRANTY_ORDER_BEGIN,
+    FETCH_WARRANTY_ORDER_ERR,
+    FETCH_WARRANTY_ORDER_SUCCESS,
+
+    REFUND_WARRANTY_ORDER_BEGIN,
+    REFUND_WARRANTY_ORDER_ERR,
+    REFUND_WARRANTY_ORDER_SUCCESS,
+
+    SET_RANGE_DATE_WARRANTY_FILTER_BEGIN,
+    SET_RANGE_DATE_WARRANTY_FILTER_ERR,
+    SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case FETCH_WARRANTY_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case FETCH_WARRANTY_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listWarrantyOrder: data
+      };
+
+    case FETCH_WARRANTY_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case SET_RANGE_DATE_WARRANTY_FILTER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        filterRange: data
+      };
+
+    case SET_RANGE_DATE_WARRANTY_FILTER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case REFUND_WARRANTY_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case REFUND_WARRANTY_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case REFUND_WARRANTY_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case ACTIVE_WARRANTY_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ACTIVE_WARRANTY_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case ACTIVE_WARRANTY_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN:
       return {
         ...state,

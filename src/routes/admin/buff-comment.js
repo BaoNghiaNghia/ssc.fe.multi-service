@@ -10,9 +10,9 @@ function EcommerceRoute() {
   const { path } = useRouteMatch();
   return (
     <Switch>
-      <Route exact path={`${path}/comment/cho-duyet`} component={PendingBuffComment} />
-      <Route exact path={`${path}/comment/dang-chay`} component={ComputerRunCommentOrder} />
-      <Route exact path={`${path}/comment/bao-hanh`} component={GuaranteeBuffComment} />
+      <Route exact path={`${path}/comment/danh-sach-don`} component={PendingBuffComment} />
+      <Route exact path={`${path}/comment/danh-sach-may`} component={ComputerRunCommentOrder} />
+      <Route exact path={`${path}/comment/quet-bao-hanh`} component={GuaranteeBuffComment} />
       <Route exact path={`${path}/comment/lich-su-don`} component={HistoryBuffComment} />
     </Switch>
   );
