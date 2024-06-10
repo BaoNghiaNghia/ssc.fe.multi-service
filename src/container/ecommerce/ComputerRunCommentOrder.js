@@ -144,16 +144,16 @@ function ComputerRunCommentOrder() {
   if (listServer?.items?.length > 0) {
     listServer?.items?.map((value, index) => {
       const percentThread = (value?.current_thread > 0 && value?.thread > 0) ? value?.current_thread/value?.thread : 0;
-      const color = (value.thread !== 0) ? (percentThread >= 0.7 ? 'green' : ((percentThread < 0.7 && percentThread > 0.3) ? 'orange' : 'red')) : 'gray';
+      const color = (value.thread !== 0) ? (percentThread >= 0.7 ? 'green' : ((percentThread < 0.7 && percentThread > 0.3) ? 'orange' : 'orangered')) : 'gray';
 
-      const fixedStyle = { display: 'inline-flex', alignItems: 'center', padding: '4px 12px', borderRadius: '10px', fontWeight: 'bold' }
+      const fixedStyle = { display: 'inline-flex', alignItems: 'center', padding: '0px 8px', borderRadius: '13px', fontWeight: 'bold' }
 
       const colorObj = (value.thread !== 0) ? (percentThread >= 0.7
-        ? { backgroundColor: '#0080001a', border: '2px solid green', color: 'green', ...fixedStyle }
+        ? { backgroundColor: '#0080001a', border: '1px solid green', color: 'green', ...fixedStyle }
         : ((percentThread < 0.7 && percentThread > 0.3)
-          ? { backgroundColor: '#ffa5002e', border: '2px solid orange', color: '#d58200', ...fixedStyle }
-          : { backgroundColor: '#ff000026', border: '2px solid red', color: 'red', ...fixedStyle })) 
-          : { backgroundColor: '#efefef', border: '2px solid gray', color: 'gray', ...fixedStyle };
+          ? { backgroundColor: '#ffa5002e', border: '1px solid orange', color: '#d58200', ...fixedStyle }
+          : { backgroundColor: '#ff000026', border: '1px solid orangered', color: 'orangered', ...fixedStyle })) 
+          : { backgroundColor: '#efefef', border: '1px solid gray', color: 'gray', ...fixedStyle };
 
       const styleMail = { marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' };
 
@@ -233,9 +233,6 @@ function ComputerRunCommentOrder() {
         ),
         lastReset: (
           <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '8px' }}>{value?.action ? (
-              <Badge count={value?.action?.toUpperCase()} color="green" style={{fontSize: '0.8em', fontWeight: 600}}/>
-            ) : null}</span>
             <span>
               {
                 value?.last_action_at ? (
@@ -245,6 +242,9 @@ function ComputerRunCommentOrder() {
                 )
               }
             </span>
+            <span style={{ marginLeft: '8px' }}>{value?.action ? (
+              <Badge count={value?.action?.toUpperCase()} color="green" style={{fontSize: '0.8em', fontWeight: 600}}/>
+            ) : null}</span>
           </div>
         ),
         action: (
@@ -259,7 +259,7 @@ function ComputerRunCommentOrder() {
                 className="btn-icon"
                 onClick={() => handleResetComputer(value)}
               >
-                <FeatherIcon icon="rotate-ccw" size={16} style={{ marginTop: '4px' }} />
+                <FeatherIcon icon="rotate-ccw" size={16} style={{ marginTop: '4px' }} color="orange" />
               </Button>
             </Tooltip>
             <Tooltip title="Sửa">
