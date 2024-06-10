@@ -446,6 +446,166 @@ function Member() {
 
   const { isModalDetailMem, isModalEditMem, isModalAddTopup, isModalConfirmTopup, isModalCreditHistory } = state;
 
+  const handleRowExtanded = (record, index) => {
+    const RowData = userList.filter(item => item?.id === record?.key);
+    if (RowData?.length > 0) {
+      const { discount, id } = RowData[0];
+
+      const arrayDiscount = [];
+      const inTableData = [];
+
+      if (discount) {
+        Object.keys(discount).forEach(function(key) {
+          arrayDiscount.push({ service_id: Number(key), discount_service: discount[key] });
+        });
+      }
+
+      const expandColumns = [
+        {
+          title: 'Dịch vụ',
+          dataIndex: 'service_id',
+          key: 'service_id',
+        },
+        {
+          title: 'Giảm giá',
+          dataIndex: 'discount_service',
+          key: 'discount_service',
+        },
+      ];
+
+      listService.map((itemService, index) => {
+        const { name, service_id, priority, enabled, description, geo } = itemService;
+        const matchingServiceDiscount = arrayDiscount?.filter((match) => service_id === match?.service_id);
+        return inTableData.push({
+          key: index,
+          service_id: (
+            <>
+              <Row>
+                <Col>
+                  <span className="label" style={{ display: 'inline-flex' }}>
+                    <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                    {
+                      geo ? (
+                        <Tooltip title={geo?.toUpperCase()}>
+                          <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                            <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                          </span>
+                        </Tooltip>
+                      ) : null
+                    }
+                    - <span style={{ fontWeight: 'bold', margin: '0px 7px' }}>{service_id}</span> - <Tooltip title={name} placement='right'>{name?.length > 70 ? `${name?.slice(0, 70)  } ...` : name}</Tooltip>
+                  </span>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: '5px' }}>
+                <Tooltip title={description} placement='right'>
+                  <Col>
+                    <span className="label" style={{ color: 'gray', fontSize: '0.8em' }}>{description.length > 80 ? `${description?.slice(0, 80)  } ...` : description}</span>
+                  </Col>
+                </Tooltip>
+              </Row>
+              <Row>
+                <Col>
+                  {
+                    enabled ? (
+                      <span className="label" style={badgeGreenStyle}>
+                        <Badge color='green' dot style={{ marginRight: '5px' }} />
+                        Đang hoạt động
+                      </span>
+                    ) : (
+                      <span className="label" style={badgeRedStyle}>
+                        <Badge color='red' dot style={{ marginRight: '5px' }} />
+                        Đang tắt
+                      </span>
+                    )
+                  }
+                  <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                  <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                  {
+                    priority ? (
+                      <span className="label" style={badgeOrangeStyle}>
+                        <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
+                        Ưu tiên
+                      </span>
+                    ) : <></>
+                  }
+                </Col>
+              </Row>
+            </>
+          ),
+          discount_service: (
+            <>
+              {
+                matchingServiceDiscount && matchingServiceDiscount?.length > 0 ? (
+                  <Paragraph
+                    inputMode='numeric'
+                    style={{ color: '#b7b7b7', fontWeight: 400 }}
+                    editable={{
+                      icon: <TbPencilDiscount style={{ marginBottom: '5px', color: 'orangered' }}/>,
+                      tooltip: 'Sửa giảm giá',
+                      onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
+                      maxLength: 3
+                    }}
+                    
+                  >
+                    <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
+                      <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
+                        <span style={{ color: 'black', display: 'inline-flex', alignItems: 'center', marginRight: '3px' }}>
+                          <span>Giảm giá</span> 
+                          <span style={{ fontWeight: 800 , marginRight: '4px', marginLeft: '4px'}}>
+                            { matchingServiceDiscount[0]?.discount_service }
+                            </span>
+                          <span>%</span>
+                        </span>
+                    </span>
+                  </Paragraph>
+                ) : (
+                  <Paragraph
+                    inputMode='numeric'
+                    style={{ color: '#b7b7b7', fontWeight: 400 }}
+                    editable={{
+                      icon: <TbPencilDiscount style={{ color: 'orangered' }}/>,
+                      tooltip: 'Sửa giảm giá',
+                      onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
+                    }}
+                  >
+                    <span style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>Chưa có giảm giá</span>
+                  </Paragraph>
+                )
+              }
+            </> 
+          ),
+        });
+      })
+      
+      return (
+        <Table 
+          columns={expandColumns}
+          // showHeader={false}
+          dataSource={inTableData}
+          footer={null} 
+          pagination={{
+            current: listMetaService.current_page,
+            defaultPageSize: listMetaService.count,
+            pageSize: listMetaService.per_page,
+            total: listMetaService.total,
+            showSizeChanger: true,
+            pageSizeOptions: DEFAULT_PAGESIZE,
+            onChange(page, pageSize) {
+                setCurrentPage(page);
+                setLimitPage(pageSize);
+            },
+            position: ['bottomCenter'],
+            responsive: true,
+            totalBoundaryShowSizeChanger: 100,
+            size: "small"
+          }}
+          size='small'
+        />
+      );
+    }
+  }
+
   return (
     <>
       <RegisterNewMember
@@ -574,166 +734,7 @@ function Member() {
                         size: "small"
                       }}
                       expandable={{
-                        expandedRowRender: (record, index) => {
-                          const RowData = userList.filter(item => item?.id === record?.key);
-                          if (RowData?.length > 0) {
-                            const { discount, id } = RowData[0];
-
-                            const arrayDiscount = [];
-                            const inTableData = [];
-
-                            if (discount) {
-                              Object.keys(discount).forEach(function(key) {
-                                arrayDiscount.push({ service_id: Number(key), discount_service: discount[key] });
-                              });
-                            }
-
-                            const expandColumns = [
-                              {
-                                title: 'Dịch vụ',
-                                dataIndex: 'service_id',
-                                key: 'service_id',
-                              },
-                              {
-                                title: 'Giảm giá',
-                                dataIndex: 'discount_service',
-                                key: 'discount_service',
-                              },
-                            ];
-
-                            listService.map((itemService, index) => {
-                              const { name, service_id, priority, enabled, description, geo } = itemService;
-                              const matchingServiceDiscount = arrayDiscount?.filter((match) => service_id === match?.service_id);
-                              return inTableData.push({
-                                key: index,
-                                service_id: (
-                                  <>
-                                    <Row>
-                                      <Col>
-                                        <span className="label" style={{ display: 'inline-flex' }}>
-                                          <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
-                                          {
-                                            geo ? (
-                                              <Tooltip title={geo?.toUpperCase()}>
-                                                <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                                  <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                                                </span>
-                                              </Tooltip>
-                                            ) : null
-                                          }
-                                          - <span style={{ fontWeight: 'bold', margin: '0px 7px' }}>{service_id}</span> - <Tooltip title={name} placement='right'>{name?.length > 70 ? `${name?.slice(0, 70)  } ...` : name}</Tooltip>
-                                        </span>
-                                      </Col>
-                                    </Row>
-                                    <Row style={{ marginBottom: '5px' }}>
-                                      <Tooltip title={description} placement='right'>
-                                        <Col>
-                                          <span className="label" style={{ color: 'gray', fontSize: '0.8em' }}>{description.length > 80 ? `${description?.slice(0, 80)  } ...` : description}</span>
-                                        </Col>
-                                      </Tooltip>
-                                    </Row>
-                                    <Row>
-                                      <Col>
-                                        {
-                                          enabled ? (
-                                            <span className="label" style={badgeGreenStyle}>
-                                              <Badge color='green' dot style={{ marginRight: '5px' }} />
-                                              Đang hoạt động
-                                            </span>
-                                          ) : (
-                                            <span className="label" style={badgeRedStyle}>
-                                              <Badge color='red' dot style={{ marginRight: '5px' }} />
-                                              Đang tắt
-                                            </span>
-                                          )
-                                        }
-                                        <span className="label" style={badgeGreenStyle}>Bảo hành</span>
-                                        <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
-                                        {
-                                          priority ? (
-                                            <span className="label" style={badgeOrangeStyle}>
-                                              <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
-                                              Ưu tiên
-                                            </span>
-                                          ) : <></>
-                                        }
-                                      </Col>
-                                    </Row>
-                                  </>
-                                ),
-                                discount_service: (
-                                  <>
-                                    {
-                                      matchingServiceDiscount && matchingServiceDiscount?.length > 0 ? (
-                                        <Paragraph
-                                          inputMode='numeric'
-                                          style={{ color: '#b7b7b7', fontWeight: 400 }}
-                                          editable={{
-                                            icon: <TbPencilDiscount style={{ marginBottom: '5px', color: 'orangered' }}/>,
-                                            tooltip: 'Sửa giảm giá',
-                                            onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
-                                            maxLength: 3
-                                          }}
-                                          
-                                        >
-                                          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
-                                            <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
-                                              <span style={{ color: 'black', display: 'inline-flex', alignItems: 'center', marginRight: '3px' }}>
-                                                <span>Giảm giá</span> 
-                                                <span style={{ fontWeight: 800 , marginRight: '4px', marginLeft: '4px'}}>
-                                                  { matchingServiceDiscount[0]?.discount_service }
-                                                  </span>
-                                                <span>%</span>
-                                              </span>
-                                          </span>
-                                        </Paragraph>
-                                      ) : (
-                                        <Paragraph
-                                          inputMode='numeric'
-                                          style={{ color: '#b7b7b7', fontWeight: 400 }}
-                                          editable={{
-                                            icon: <TbPencilDiscount style={{ color: 'orangered' }}/>,
-                                            tooltip: 'Sửa giảm giá',
-                                            onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
-                                          }}
-                                        >
-                                          Chưa có giảm giá
-                                        </Paragraph>
-                                      )
-                                    }
-                                  </> 
-                                ),
-                              });
-                            })
-                            
-                            return <Table 
-                              columns={expandColumns}
-                              showHeader={false}
-                              dataSource={inTableData}
-                              footer={null} 
-                              pagination={{
-                                current: listMetaService.current_page,
-                                defaultPageSize: listMetaService.count,
-                                pageSize: listMetaService.per_page,
-                                total: listMetaService.total,
-                                showSizeChanger: true,
-                                pageSizeOptions: DEFAULT_PAGESIZE,
-                                onChange(page, pageSize) {
-                                    setCurrentPage(page);
-                                    setLimitPage(pageSize);
-                                },
-                                position: ['bottomCenter'],
-                                responsive: true,
-                                // showTotal(total, range) {
-                                //     return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
-                                // },
-                                totalBoundaryShowSizeChanger: 100,
-                                size: "small"
-                              }}
-                              size='small'
-                            />;
-                          }
-                        },
+                        expandedRowRender: (record, index) => handleRowExtanded(record, index),
                         rowExpandable: (record) => record?.discount !== null
                       }}
                     />
