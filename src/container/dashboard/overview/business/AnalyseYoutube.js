@@ -167,7 +167,7 @@ function AnalyseYoutube(props) {
     wave_date: arrWaveDate,
     wave_timeline: [
       {
-        name: 'Tổng sub chạy (sub)',
+        name: `Tổng sub chạy (${typeService})`,
         data: arrTotalSub
       },
       // {
@@ -249,7 +249,7 @@ function AnalyseYoutube(props) {
                   {
                     totalSubToday > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Hôm nay (sub)</p>
+                        <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
                         <Heading as="h3" className="color-primary" style={{ margin: 0, padding: 0 }}>
                           {numberWithCommas(arrTotalSub?.at(-1) || 0)}
                         </Heading>
@@ -262,7 +262,7 @@ function AnalyseYoutube(props) {
                   {
                     arrTotalSub?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Cao nhất (sub)</p>
+                        <p style={{ margin: 0, padding: 0 }}>Cao nhất</p>
                         <Heading as="h3" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
                       </div>
                     ) : null
@@ -272,7 +272,7 @@ function AnalyseYoutube(props) {
                   {
                     arrTotalSub?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Thấp nhất (sub)</p>
+                        <p style={{ margin: 0, padding: 0 }}>Thấp nhất</p>
                         <Heading as="h3" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
                       </div>
                     ) : null

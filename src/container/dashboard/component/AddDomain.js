@@ -116,7 +116,7 @@ function AddDomain({ isOpen, setState }) {
                 <Select style={{ width: '100%' }} defaultValue="vn" size='small'>
                   <Option value="vn">
                     <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                      <img src={require(`../../../static/img/flag/vn.png`)} alt="" width="20px" height="20px" />
+                      <img src={require(`../../../static/img/flag/vn.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
                       <span style={{ marginLeft: '10px' }}>VN</span>
                     </div>
                   </Option>

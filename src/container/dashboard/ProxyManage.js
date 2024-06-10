@@ -121,7 +121,7 @@ function ProxyManage() {
         ),
         geo: (
           <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-            <img src={require(`../../static/img/flag/${geo}.png`)} alt="" />
+            <img src={require(`../../static/img/flag/${geo}.png`)} alt="" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
             <span style={{ marginLeft: '8px' }}>{geo.toUpperCase()}</span>
           </div>
         ),

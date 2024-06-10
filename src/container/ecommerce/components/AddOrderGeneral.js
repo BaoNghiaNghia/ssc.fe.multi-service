@@ -373,7 +373,7 @@ function AddOrderGeneral() {
                                               itemService?.geo ? (
                                                 <Tooltip title={itemService?.geo?.toUpperCase()}>
                                                   <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                                    <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="17px" height="17px" />
+                                                    <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
                                                   </span>
                                                 </Tooltip>
                                               ) : null
@@ -445,7 +445,7 @@ function AddOrderGeneral() {
                                 detailService?.geo ? (
                                   <Tooltip title={detailService?.geo?.toUpperCase()}>
                                     <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                      <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" />
+                                      <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
                                       <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
                                     </span>
                                   </Tooltip>

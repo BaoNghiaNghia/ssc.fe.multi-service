@@ -366,7 +366,7 @@ function PendingBuffComment() {
                             findService[0]?.geo ? (
                               <Tooltip title={findService[0]?.geo?.toUpperCase()}>
                                 <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                  <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" />
+                                  <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
                                 </span>
                               </Tooltip>
                             ) : null
@@ -392,7 +392,7 @@ function PendingBuffComment() {
                         findService[0]?.geo ? (
                           <Tooltip title={findService[0]?.geo?.toUpperCase()}>
                             <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                              <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" />
+                              <img src={require(`../../static/img/flag/${findService[0]?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
                             </span>
                           </Tooltip>
                         ) : null

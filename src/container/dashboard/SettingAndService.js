@@ -72,11 +72,12 @@ function SettingAndService() {
 
   const [formUpdateSettings] = Form.useForm();
 
-  const { searchData, orders, listService, typeTab, listSettings } = useSelector(state => {
+  const { searchData, orders, listService, typeTab, listSettings, listMetaService } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
       listService: state?.settingService?.listService?.items,
+      listMetaService: state?.settingService?.listService?.meta,
       typeTab: state?.settingService?.typeTab,
       listSettings: state?.settingService?.listSettings
     };
@@ -86,7 +87,13 @@ function SettingAndService() {
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   useEffect(() => {
-    dispatch(actions.fetchListServiceBegin({}));
+    dispatch(actions.fetchListServiceBegin({
+      page: currentPage,
+      limit: limitPage,
+    }));
+  }, [dispatch, currentPage, limitPage]);
+
+  useEffect(() => {
     dispatch(actions.fetchListSettingsBegin({}));
   }, [dispatch]);
 
@@ -125,7 +132,7 @@ function SettingAndService() {
                   geo ? (
                     <Tooltip title={geo?.toUpperCase()}>
                       <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                        <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" style={{ border: '1px solid gray', borderRadius: '4px' }} />
+                        <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
                       </span>
                     </Tooltip>
                   ) : null
@@ -404,15 +411,14 @@ function SettingAndService() {
                     </div>
                     <Table
                       size='small'
-                      
                       showHeader={false}
                       dataSource={dataSource}
                       columns={columns}
                       pagination={{
-                        current: listService?.meta?.current_page,
-                        defaultPageSize: listService?.meta?.count,
-                        pageSize: listService?.meta?.per_page,
-                        total: listService?.meta?.total,
+                        current: listMetaService?.current_page,
+                        defaultPageSize: listMetaService?.count,
+                        pageSize: listMetaService?.per_page,
+                        total: listMetaService?.total,
                         showSizeChanger: true,
                         pageSizeOptions: DEFAULT_PAGESIZE,
                         onChange(page, pageSize) {
