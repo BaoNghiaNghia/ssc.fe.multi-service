@@ -53,20 +53,20 @@ function CreditHistoryMember({ isOpen, setState }) {
           <>
             {
               income === true ? (
-                <span style={{ color: '#0089ff', fontWeight: 700 }}>
-                   + {numberWithCommas(amount)} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
+                <span style={{ color: 'green', fontWeight: 700 }}>
+                   + {numberWithCommas(Math.round(amount))} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
                 </span>
               ) : (
-                <span style={{ color: 'red', fontWeight: 700 }}>
-                   - {numberWithCommas(amount)} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
+                <span style={{ color: 'orangered', fontWeight: 700 }}>
+                   - {numberWithCommas(Math.round(amount))} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
                 </span>
               )
             }
           </>
         ),
         current_credit: (
-          <span style={{ color: 'green', fontWeight: 800 }}>
-            {numberWithCommas(current_credit)} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
+          <span style={{ color: '#0089ff', fontWeight: 800 }}>
+            {numberWithCommas(Math.round(current_credit))} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
           </span>
         ),
         quantity: (
@@ -95,7 +95,7 @@ function CreditHistoryMember({ isOpen, setState }) {
                           {` - ${findService[0]?.name} - `}
                         </span>
                         <span style={{ fontWeight: 'bold' }}>
-                          {numberWithCommas(findService[0]?.price_per_10 || 0)} {VIETNAMES_CURRENCY}
+                          {numberWithCommas(Math.round(findService[0]?.price_per_10) || 0)} {VIETNAMES_CURRENCY}
                         </span>
                       </div>
                     }

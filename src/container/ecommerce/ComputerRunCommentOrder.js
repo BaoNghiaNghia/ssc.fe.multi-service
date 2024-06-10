@@ -364,9 +364,9 @@ function ComputerRunCommentOrder() {
                   <TopToolBox>
                     <Row gutter={15} className="justify-content-center">
                       <Col lg={6} xs={24}>
-                        <div className="table-search-box">
+                        {/* <div className="table-search-box">
                           <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
-                        </div>
+                        </div> */}
                       </Col>
                       <Col xxl={18} xs={24}>
                         <div className="table-toolbox-actions">
@@ -400,7 +400,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ fontWeight: 700 }}>Servers</p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {listServer?.meta?.total}
                   </Heading>
                 </div>
@@ -410,7 +410,7 @@ function ComputerRunCommentOrder() {
                   tabIndex=""
                 >
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
-                  <Heading as="h1" >
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     <span style={{ color: 'green !important' }}>{fullThreadServer}</span>
                   </Heading>
                 </div>
@@ -420,7 +420,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {nonFullThreadServer}
                   </Heading>
                 </div>
@@ -430,7 +430,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luổng thiếu</p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {aBitThreadServer}
                   </Heading>
                 </div>
@@ -440,7 +440,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ fontWeight: 700 }}><span>Tổng Mail</span></p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {accountTotal || 0}
                   </Heading>
                 </div>
@@ -450,7 +450,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} /><span>Mail sống</span></p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {accountAlive || 0}
                   </Heading>
                 </div>
@@ -460,7 +460,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#27AE60' /><span>Mail hoạt động</span></p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {accountWork || 0}
                   </Heading>
                 </div>
@@ -470,7 +470,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#EB5757' /><span>Mail chết</span></p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {accountDie || 0}
                   </Heading>
                 </div>
@@ -480,7 +480,7 @@ function ComputerRunCommentOrder() {
                   tabIndex="0"
                 >
                   <p style={{ fontWeight: 700 }}>Tổng Luồng</p>
-                  <Heading as="h1">
+                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {totalThread}
                   </Heading>
                 </div>
@@ -491,7 +491,7 @@ function ComputerRunCommentOrder() {
         <Row>
           <Col xxl={24} md={24} xs={24}>
             <Cards headless>
-              <TableWrapper className="">
+              <TableWrapper>
                 <Table
                   rowSelection={rowSelection}
                   dataSource={dataSource}

@@ -224,7 +224,7 @@ function Member() {
         ),
         point: (
           <span style={{ color: 'green', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>
-            {numberWithCommas(credit_used)} / {numberWithCommas(credit)} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
+            {numberWithCommas(Math.round(credit_used))} / {numberWithCommas(Math.round(credit))} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
           </span>
         ),
         discount: (

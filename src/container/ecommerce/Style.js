@@ -2057,14 +2057,14 @@ const Pstates = Styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-left: 10px;
+    margin-left: 7px;
     @media only screen and (max-width: 767px){
         margin: -19px 0 25px;
         flex-flow: column;
     }
     >div{
         transition: 0.3s ease;
-        padding: 20px;
+        padding: 10px;
         @media only screen and (max-width: 1599px) {
             flex: 0 0 25%;
         }
@@ -2091,6 +2091,8 @@ const Pstates = Styled.div`
         }
         h1{
             font-size: 24px;
+            margin: 0;
+            padding: 0;
             sub{
                 span{
                     font-weight: 500;
