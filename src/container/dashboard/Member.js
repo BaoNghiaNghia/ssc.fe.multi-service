@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Tooltip, Badge } from 'antd';
+import { Row, Col, Table, Tooltip, Badge, Typography } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
@@ -10,9 +10,11 @@ import { MdVerifiedUser } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { BiSolidDiscount } from "react-icons/bi";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { TbPencilDiscount } from "react-icons/tb";
 import { IoPeopleOutline } from "react-icons/io5";
 import { AiOutlineTransaction } from "react-icons/ai";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
+import Paragraph from 'antd/lib/typography/Paragraph';
 import DetailMember from './component/DetailMember';
 import AddTopup from './component/AddTopup';
 import { GalleryNav, TopToolBox } from './style';
@@ -167,7 +169,7 @@ function Member() {
     isModalRegisterNewAccount: false,
     notData: searchData,
     item: orders,
-    selectedRowKeys: [],
+    selectedRowKeys: []
   });
 
   const { notData, item, selectedRowKeys } = state;
@@ -417,6 +419,31 @@ function Member() {
     },
   };
 
+  const onUpdateDiscountSpecificate = (service_id, value, id, arrayDiscount) => {
+    console.log('--- giá trị value nè -----------------------', value);
+    if (!value  || value === '') {
+      alert('Vui lòng nhập giá trị');
+      return;
+    }
+    const regexp = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
+    if(!regexp.test(Number(value))){
+      alert('Vui lòng nhập dạng số. Lớn hơn 0 và nhỏ hơn 100');
+      return;
+    }
+
+    const combineDiscount = {
+      ...arrayDiscount,
+    };
+
+    combineDiscount[service_id] = Number(value);
+
+    const requestData = {
+      id,
+      discount: combineDiscount,
+    }
+    dispatch(actions.updateUserAdminBegin(requestData));
+  }
+
   const { isModalDetailMem, isModalEditMem, isModalAddTopup, isModalConfirmTopup, isModalCreditHistory } = state;
 
   return (
@@ -550,7 +577,7 @@ function Member() {
                         expandedRowRender: (record, index) => {
                           const RowData = userList.filter(item => item?.id === record?.key);
                           if (RowData?.length > 0) {
-                            const { discount } = RowData[0];
+                            const { discount, id } = RowData[0];
 
                             const arrayDiscount = [];
                             const inTableData = [];
@@ -559,9 +586,6 @@ function Member() {
                               Object.keys(discount).forEach(function(key) {
                                 arrayDiscount.push({ service_id: Number(key), discount_service: discount[key] });
                               });
-                              // return (
-                              //   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Không có thông tin khuyến mãi</span>
-                              // )
                             }
 
                             const expandColumns = [
@@ -641,17 +665,41 @@ function Member() {
                                   <>
                                     {
                                       matchingServiceDiscount && matchingServiceDiscount?.length > 0 ? (
-                                        <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
-                                          <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
-                                          <span style={{ color: 'black', display: 'inline-flex', alignItems: 'center', marginRight: '3px' }}>
-                                            <span>Giảm giá</span> 
-                                            <span style={{ fontWeight: 800 , marginRight: '4px', marginLeft: '4px'}}>
-                                              { matchingServiceDiscount[0]?.discount_service }
+                                        <Paragraph
+                                          inputMode='numeric'
+                                          style={{ color: '#b7b7b7', fontWeight: 400 }}
+                                          editable={{
+                                            icon: <TbPencilDiscount style={{ marginBottom: '5px', color: 'orangered' }}/>,
+                                            tooltip: 'Sửa giảm giá',
+                                            onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
+                                            maxLength: 3
+                                          }}
+                                          
+                                        >
+                                          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
+                                            <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
+                                              <span style={{ color: 'black', display: 'inline-flex', alignItems: 'center', marginRight: '3px' }}>
+                                                <span>Giảm giá</span> 
+                                                <span style={{ fontWeight: 800 , marginRight: '4px', marginLeft: '4px'}}>
+                                                  { matchingServiceDiscount[0]?.discount_service }
+                                                  </span>
+                                                <span>%</span>
                                               </span>
-                                            <span>%</span>
                                           </span>
-                                        </span>
-                                      ) : <span style={{ color: '#b7b7b7' }}>Chưa thông tin giảm giá</span>
+                                        </Paragraph>
+                                      ) : (
+                                        <Paragraph
+                                          inputMode='numeric'
+                                          style={{ color: '#b7b7b7', fontWeight: 400 }}
+                                          editable={{
+                                            icon: <TbPencilDiscount style={{ color: 'orangered' }}/>,
+                                            tooltip: 'Sửa giảm giá',
+                                            onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
+                                          }}
+                                        >
+                                          Chưa có giảm giá
+                                        </Paragraph>
+                                      )
                                     }
                                   </> 
                                 ),
