@@ -539,14 +539,14 @@ function Member() {
                 matchingServiceDiscount && matchingServiceDiscount?.length > 0 ? (
                   <Paragraph
                     inputMode='numeric'
-                    style={{ color: '#b7b7b7', fontWeight: 400 }}
+                    placeholder='Nhập % (Từ 0 -> 100%)'
+                    style={{ color: '#b7b7b7', fontWeight: 400, width: '100px' }}
                     editable={{
                       icon: <TbPencilDiscount style={{ marginBottom: '5px', color: 'orangered' }}/>,
                       tooltip: 'Sửa giảm giá',
                       onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
-                      maxLength: 3
-                    }}
-                    
+                      maxLength: 3,
+                    }} 
                   >
                     <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
                       <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
@@ -562,7 +562,9 @@ function Member() {
                 ) : (
                   <Paragraph
                     inputMode='numeric'
-                    style={{ color: '#b7b7b7', fontWeight: 400 }}
+                    placeholder='Nhập % (Từ 0 -> 100%)'
+
+                    style={{ color: '#b7b7b7', fontWeight: 400, width: '100px' }}
                     editable={{
                       icon: <TbPencilDiscount style={{ color: 'orangered' }}/>,
                       tooltip: 'Sửa giảm giá',
@@ -573,7 +575,7 @@ function Member() {
                   </Paragraph>
                 )
               }
-            </> 
+            </>
           ),
         });
       })
@@ -581,7 +583,7 @@ function Member() {
       return (
         <Table 
           columns={expandColumns}
-          // showHeader={false}
+          showHeader={false}
           dataSource={inTableData}
           footer={null} 
           pagination={{
