@@ -125,7 +125,7 @@ function SettingAndService() {
                   geo ? (
                     <Tooltip title={geo?.toUpperCase()}>
                       <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                        <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" />
+                        <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" style={{ border: '1px solid gray', borderRadius: '4px' }} />
                       </span>
                     </Tooltip>
                   ) : null

@@ -8,6 +8,7 @@ import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { MdVerifiedUser } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { BiSolidDiscount } from "react-icons/bi";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { IoPeopleOutline } from "react-icons/io5";
 import { AiOutlineTransaction } from "react-icons/ai";
@@ -48,8 +49,8 @@ const columnsMember = [
   Table.EXPAND_COLUMN,
   {
     title: 'Đơn cuối',
-    dataIndex: 'last_order_time',
-    key: 'last_order_time',
+    dataIndex: 'last_order',
+    key: 'last_order',
   },
   {
     title: 'Hành động',
@@ -197,7 +198,7 @@ function Member() {
 
   if (userList?.length) {
     userList?.map((value, key) => {
-      const { api_key, discount, id, last_order_time, max_threads, order_running, credit, sub_order, fullname, email, credit_used, phone } = value;
+      const { api_key, discount, id, last_order, max_threads, order_running, credit, sub_order, fullname, email, credit_used, phone } = value;
       return dataSource.push({
         key: id,
         username: (
@@ -241,15 +242,15 @@ function Member() {
           </>
         ),
         api_key: <span className="ordered-date">{api_key}</span>,
-        last_order_time: (
+        last_order: (
           <>
             {
-              last_order_time === 0 ? (
+              !last_order ? (
                 <span style={{ color: '#bdbdbd' }}>Chưa có đơn hàng</span>
               ) : (
                 <span style={{ fontWeight: 'bold' }}>
                   {
-                    moment(last_order_time).format('DD/MM HH:mm')
+                    moment(last_order).format('HH:mm DD/MM')
                   }
                 </span>
               )
@@ -635,8 +636,9 @@ function Member() {
                                       </>
                                     ),
                                     discount_service: (
-                                      <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontWeight: 800, fontSize: '1.1em' }}>
-                                        Giảm giá {item?.discount_service} %
+                                      <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
+                                        <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
+                                        <span style={{ color: 'black', display: 'inline-flex', alignItems: 'center', marginRight: '3px' }}>Giảm giá <span style={{ fontWeight: 800 , marginRight: '4px', marginLeft: '4px'}}>{item?.discount_service}</span> %</span>
                                       </span>
                                     ),
                                   });

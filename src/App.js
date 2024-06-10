@@ -5,6 +5,7 @@ import { Provider, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { ReactReduxFirebaseProvider, isLoaded } from 'react-redux-firebase';
+import locale from 'antd/es/locale/vi_VN';
 import { ConfigProvider, Spin } from 'antd';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
@@ -44,7 +45,7 @@ const ProviderConfig = () => {
   }, [setPath]);
 
   return (
-    <ConfigProvider direction={rtl ? 'rtl' : 'ltr'}>
+    <ConfigProvider direction={rtl ? 'rtl' : 'ltr'} locale={locale}>
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

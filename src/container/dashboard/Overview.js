@@ -45,7 +45,7 @@ function Overview() {
     const initialFilter = {
       start_date: `${fromDate  } 00:00:00`,
       end_date: `${toDate  } 23:59:59`,
-      status: 0
+      status: 1
     };
 
     dispatch(actions.reportSubscribeBegin(initialFilter));

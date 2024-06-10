@@ -6,6 +6,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import { DatePicker } from 'antd';
+import locale from 'antd/es/locale/vi_VN';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { ItemWraper, ButtonGroup } from './style';
@@ -59,6 +60,7 @@ const DateRangePickerOne = ({ actionPicker }) => {
       <DateRangePicker
         onChange={handleRangeChange}
         showSelectionPreview
+        // locale={locale}
         moveRangeOnFirstSelection={false}
         className="PreviewArea"
         months={2}
@@ -135,6 +137,7 @@ class CustomDateRange extends React.Component {
           disabledDate={this.disabledStartDate}
           showTime
           format="YYYY-MM-DD HH:mm:ss"
+          locale={locale}
           value={startValue}
           placeholder="Start"
           onChange={this.onStartChange}
@@ -145,6 +148,7 @@ class CustomDateRange extends React.Component {
         <DatePicker
           disabledDate={this.disabledEndDate}
           showTime
+          locale={locale}
           format="YYYY-MM-DD HH:mm:ss"
           value={endValue}
           placeholder="End"
