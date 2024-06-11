@@ -205,11 +205,11 @@ function PendingBuffComment() {
             return {
               color: 'white',
               backgroundColor: 'goldenrod',
-              blurColor: 'sienna'
+              blurColor: 'saddlebrown'
             }
           case (performance > 80 && performance < 100):
             return {
-              color: 'green',
+              color: 'darkgreen',
               backgroundColor: '#84d984',
               blurColor: 'white'
             }
@@ -281,7 +281,7 @@ function PendingBuffComment() {
               {
                 priority ? (
                   <Tooltip title="Ưu tiên">
-                    <BsFire fontSize={15} color='rgb(38, 183, 38)' style={{ marginRight: '6px', marginTop: '3px' }}/>
+                    <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
                   </Tooltip>
                 ) : <></>
               }
@@ -295,16 +295,25 @@ function PendingBuffComment() {
                 placement='topLeft'
               >
                 <a href={link} color='black' target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
-                  <span style={{ margin: 0, padding: 0, color: priority ? '#00ad00' : 'black', fontFamily: 'Be Vietnam Pro' }}>{ `${video_title?.substring(0, 30)  }...` }</span>
+                  <span
+                    style={{ 
+                      margin: 0,
+                      padding: 0,
+                      color: priority ? 'green' : 'darkslategray',
+                      fontFamily: 'Be Vietnam Pro',
+                      fontWeight:600,
+                      textShadow: priority ? `1px 1px 3px yellowgreen ` : 'none'
+                    }}
+                  >{ `${video_title?.substring(0, 30)  }...` }</span>
                 </a>
               </Tooltip>
             </div>
 
-            <span style={{ fontSize: '0.8em' }}>
+            <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
               <strong>Video ID: </strong> {video_id}
             </span>
 
-            <span style={{ fontSize: '0.8em' }}>
+            <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
               <strong>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
             </span>
           </>
@@ -338,7 +347,7 @@ function PendingBuffComment() {
                         <span
                           style={{ 
                             fontSize: '0.8em',
-                            fontWeight: 700,
+                            fontWeight: 800,
                             padding:'0 5px',
                             fontFamily: 'Be Vietnam Pro',
                             borderRadius: '5px',
@@ -349,7 +358,7 @@ function PendingBuffComment() {
                             display: 'inline-flex', alignItems: 'center'
                           }}
                         >
-                          <span style={{ fontWeight: 400 }}>Hiệu suất: &nbsp;</span> <span style={{ fontSize: '1.1em' }}>{numberWithCommas(Math.floor(performance, 1) || 0)}  %</span>
+                          <span style={{ fontWeight: 600 }}>Hiệu suất: &nbsp;</span> <span style={{ fontSize: '1.1em' }}>{numberWithCommas(Math.floor(performance, 1) || 0)}  %</span>
                         </span>
                       ) : (
                         <span
