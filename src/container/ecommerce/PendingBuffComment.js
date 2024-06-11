@@ -199,8 +199,52 @@ function PendingBuffComment() {
       const performanceColor = (performance !== 0) 
         ? (performance >= 0.8 ? 'green' : ((performance < 0.8 && performance > 0.5) ? 'yellow' : ((performance < 0.5 && performance > 0.3) ? 'red' : 'gray'))) : 'gray';
 
-      const performanceColorBack = (performance !== 0) 
-        ? (performance >= 0.8 ? '#84d984' : ((performance < 0.8 && performance > 0.5) ? '#ffdfa5' : ((performance < 0.5 && performance > 0.3) ? '#f9c1c1' : '#e7e7e7'))) : '#e7e7e7';
+      const performanceColorBack = (performance) => {
+        switch (true) {
+          case (performance >= 100):
+            return {
+              color: 'white',
+              backgroundColor: 'goldenrod',
+              blurColor: 'sienna'
+            }
+          case (performance > 80 && performance < 100):
+            return {
+              color: 'green',
+              backgroundColor: '#84d984',
+              blurColor: 'white'
+            }
+          case (performance < 80 && performance > 50):
+            return {
+              color: 'green',
+              backgroundColor: '#ffdfa5',
+              blurColor: 'black'
+            }
+          case (performance < 50 && performance > 30):
+            return {
+              color: 'green',
+              backgroundColor: '#f9c1c1',
+              blurColor: 'white'
+            }
+          case (performance < 30):
+            return {
+              color: 'white',
+              backgroundColor: 'crimson',
+              blurColor: 'black'
+            }
+          case (performance === 0):
+            return {
+              color: 'gray',
+              backgroundColor: '#e7e7e7',
+              blurColor: 'black'
+            }
+          default:
+            return {
+              color: 'gray',
+              backgroundColor: '#e7e7e7',
+              blurColor: 'black'
+            }
+        }
+      }
 
       return dataSource.push({
         key: id,
@@ -296,19 +340,23 @@ function PendingBuffComment() {
                             fontSize: '0.8em',
                             fontWeight: 700,
                             padding:'0 5px',
+                            fontFamily: 'Be Vietnam Pro',
                             borderRadius: '5px',
-                            // border: `1px solid ${performanceColor}`,
-                            backgroundColor: performanceColorBack,
-                            display: 'flex', alignItems: 'center'
+                            // border: `1px solid ${performanceColorBack(performance)?.blurColor}`,
+                            textShadow: `1px 1px 2px ${performanceColorBack(performance)?.blurColor}`,
+                            backgroundColor: performanceColorBack(performance)?.backgroundColor,
+                            color: performanceColorBack(performance)?.color,
+                            display: 'inline-flex', alignItems: 'center'
                           }}
                         >
-                          <span style={{ color: 'green' }}>Hiệu suất: &nbsp;</span> {numberWithCommas(Math.floor(performance, 1) || 0)} %
+                          <span style={{ fontWeight: 400 }}>Hiệu suất: &nbsp;</span> <span style={{ fontSize: '1.1em' }}>{numberWithCommas(Math.floor(performance, 1) || 0)}  %</span>
                         </span>
                       ) : (
                         <span
                           style={{ 
                             fontSize: '0.8em',
                             fontWeight: 700,
+                            fontFamily: 'Be Vietnam Pro',
                             padding:'0 5px',
                             borderRadius: '5px',
                             // border: '1px solid gray',
