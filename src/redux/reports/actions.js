@@ -61,6 +61,82 @@ const actions = {
   STATISTIC_COMPUTER_THREAD_BEGIN: 'STATISTIC_COMPUTER_THREAD_BEGIN',
   STATISTIC_COMPUTER_THREAD_SUCCESS: 'STATISTIC_COMPUTER_THREAD_SUCCESS',
   STATISTIC_COMPUTER_THREAD_ERR: 'STATISTIC_COMPUTER_THREAD_ERR',
+  
+  STATISTIC_ORDER_AMOUNT_BEGIN: 'STATISTIC_ORDER_AMOUNT_BEGIN',
+  STATISTIC_ORDER_AMOUNT_SUCCESS: 'STATISTIC_ORDER_AMOUNT_SUCCESS',
+  STATISTIC_ORDER_AMOUNT_ERR: 'STATISTIC_ORDER_AMOUNT_ERR',
+
+  STATISTIC_PERFORMANCE_COMMENT_BEGIN: 'STATISTIC_PERFORMANCE_COMMENT_BEGIN',
+  STATISTIC_PERFORMANCE_COMMENT_SUCCESS: 'STATISTIC_PERFORMANCE_COMMENT_SUCCESS',
+  STATISTIC_PERFORMANCE_COMMENT_ERR: 'STATISTIC_PERFORMANCE_COMMENT_ERR',
+
+  STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN: 'STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN',
+  STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS: 'STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS',
+  STATISTIC_ACCOUNT_STATUS_COMMENT_ERR: 'STATISTIC_ACCOUNT_STATUS_COMMENT_ERR',
+  
+
+  statisticAccountStatusCommentBegin: (payload) => {
+    return {
+      type: actions.STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN,
+      payload
+    };
+  },
+
+  statisticAccountStatusCommentSuccess: (data) => {
+    return {
+      type: actions.STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS,
+      data,
+    };
+  },
+
+  statisticAccountStatusCommentErr: (err) => {
+    return {
+      type: actions.STATISTIC_ACCOUNT_STATUS_COMMENT_ERR,
+      err,
+    };
+  },
+
+  statisticPerformanceCommentBegin: (payload) => {
+    return {
+      type: actions.STATISTIC_PERFORMANCE_COMMENT_BEGIN,
+      payload
+    };
+  },
+
+  statisticPerformanceCommentSuccess: (data) => {
+    return {
+      type: actions.STATISTIC_PERFORMANCE_COMMENT_SUCCESS,
+      data,
+    };
+  },
+
+  statisticPerformanceCommentErr: (err) => {
+    return {
+      type: actions.STATISTIC_PERFORMANCE_COMMENT_ERR,
+      err,
+    };
+  },
+
+  statisticOrderAmountBegin: (payload) => {
+    return {
+      type: actions.STATISTIC_ORDER_AMOUNT_BEGIN,
+      payload
+    };
+  },
+
+  statisticOrderAmountSuccess: (data) => {
+    return {
+      type: actions.STATISTIC_ORDER_AMOUNT_SUCCESS,
+      data,
+    };
+  },
+
+  statisticOrderAmountErr: (err) => {
+    return {
+      type: actions.STATISTIC_ORDER_AMOUNT_ERR,
+      err,
+    };
+  },
 
   statisticComputerThreadBegin: (payload) => {
     return {

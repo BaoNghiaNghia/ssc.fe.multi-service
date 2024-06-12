@@ -2,13 +2,11 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 // import FeatherIcon from 'feather-icons-react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Skeleton, Divider } from 'antd';
+import { Row, Col, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
-import { HiArrowSmRight } from "react-icons/hi";
 import { SiGmail } from "react-icons/si";
-import { BsThreads } from "react-icons/bs";
 import { GrNotification } from "react-icons/gr";
 import { CardBarChart2, CardBarChartCenter, EChartCard, GalleryNav } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -30,14 +28,15 @@ const CardGroup = lazy(() => import('./overview/business/CardGroup'));
 function Overview() {
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, computerThread} = useSelector((state) => {
+  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, computerThread, accountStatus } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
       todayProfit: state?.reports?.profitToday,
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
-      computerThread: state?.reports?.computerThread
+      computerThread: state?.reports?.computerThread,
+      accountStatus: state?.reports?.accountStatus
     };
   });
 
@@ -60,6 +59,9 @@ function Overview() {
       dispatch(actions.statisticCommentByOrderReportBegin());
       dispatch(actions.statisticTaskSuccessInMinuteBegin());
       dispatch(actions.statisticTaskDurationInMinuteBegin());
+      dispatch(actions.statisticOrderAmountBegin(initialFilter));
+      dispatch(actions.statisticAccountStatusCommentBegin(initialFilter));
+      dispatch(actions.statisticPerformanceCommentBegin(initialFilter));
       dispatch(actions.statisticCommentByDayBegin(initialFilter));
       dispatch(actions.statisticComputerThreadBegin(initialFilter));
     }
@@ -96,7 +98,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
-                  <Heading as="h2">100</Heading>
+                  <Heading as="h2">{accountStatus[0]}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -108,7 +110,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
-                  <Heading as="h2">33</Heading>
+                  <Heading as="h2">{accountStatus[1]}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -156,7 +158,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
-                  <Heading as="h2">7,461</Heading>
+                  <Heading as="h2">{accountStatus[2]}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -170,7 +172,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
-                  <Heading as="h2">7,461</Heading>
+                  <Heading as="h2">{accountStatus[7]}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>

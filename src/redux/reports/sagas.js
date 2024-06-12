@@ -73,6 +73,75 @@ function* statisticCommentByDayFunc(params) {
   } finally { /* empty */ }
 }
 
+function* statisticPerformanceCommentFunc(params) {
+  try {
+    const response = yield call(statisticPerformanceAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticPerformanceCommentSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.statisticPerformanceCommentErr({ error: errorMessage || 'Fetch performance comment in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch performance comment in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* statisticAccountStatusCommentFunc(params) {
+  try {
+    const response = yield call(statisticAccountStatusAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticAccountStatusCommentSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.statisticAccountStatusCommentErr({ error: errorMessage || 'Fetch account status in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch account status in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* statisticOrderAmountFunc(params) {
+  try {
+    const response = yield call(statisticOrderAmountAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticOrderAmountSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.statisticOrderAmountErr({ error: errorMessage || 'Fetch order amount in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch order amount in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
 function* statisticTaskSuccessInMinuteFunc(params) {
   try {
     const response = yield call(statisticTaskSuccessInMinutesAPI, params?.payload);
@@ -352,6 +421,18 @@ export function* fetchComputerDataListWatcherSaga() {
 
 export function* countErrorSubscribeWatcherSaga() {
   yield takeLatest(actions.COUNT_ERROR_SUBSCRIBE_BEGIN, countErrorSubscribeFunc);
+}
+
+export function* statisticOrderAmountWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_ORDER_AMOUNT_BEGIN, statisticOrderAmountFunc);
+}
+
+export function* statisticPerformanceCommentWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_PERFORMANCE_COMMENT_BEGIN, statisticPerformanceCommentFunc);
+}
+
+export function* statisticAccountStatusCommentWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN, statisticAccountStatusCommentFunc);
 }
 
 export function* getStatisticsSubscribeReporWatcherSaga() {

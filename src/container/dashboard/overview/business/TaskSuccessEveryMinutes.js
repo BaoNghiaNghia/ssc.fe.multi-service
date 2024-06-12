@@ -161,7 +161,6 @@ function TaskSuccessEveryMinutes({ title }) {
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>
               <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p>
               {durationReport?.length > 0 ? (
-
                 <span>Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong></span>
               ) : null}
             </div>

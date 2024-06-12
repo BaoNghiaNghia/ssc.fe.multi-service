@@ -65,28 +65,20 @@ function AnalyseYoutube(props) {
     </>
   );
 
-  const handleActiveChangeCash = value => {
-    setState({
-      ...state,
-      cashFlowActive: value,
-    });
-    dispatch(cashFlowFilterData(value));
-  };
-
   const cashFlowDataset = cashFlowState !== null && [
-    {
-      data: avgPerformance && avgPerformance?.map(item => item?.performance),
-      backgroundColor: '#00547370',
-      hoverBackgroundColor: '#005473',
-      label: 'Tỉ lệ thành công (%)',
-      maxBarThickness: 10,
-      barThickness: 12,
-    },
     {
       data: avgPerformance && reportChart?.map(item => item?.total_run),
       backgroundColor: '#ff880070',
       hoverBackgroundColor: '#ff8800',
       label: `Tổng ${  typeService  } chạy`,
+      maxBarThickness: 10,
+      barThickness: 12,
+    },
+    {
+      data: avgPerformance && avgPerformance?.map(item => item?.performance),
+      backgroundColor: '#00547370',
+      hoverBackgroundColor: '#005473',
+      label: 'Tỉ lệ thành công (%)',
       maxBarThickness: 10,
       barThickness: 12,
     },
@@ -250,7 +242,7 @@ function AnalyseYoutube(props) {
                     <Col xxl={3} md={3} sm={3} xs={3}>
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
-                        <Heading as="h3" className="color-primary" style={{ margin: 0, padding: 0 }}>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                           {numberWithCommas(arrTotalSub?.at(-1) || 0)}
                         </Heading>
                       </div>
@@ -262,7 +254,7 @@ function AnalyseYoutube(props) {
                     arrTotalSub?.length > 0 ? (
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Cao nhất</p>
-                        <Heading as="h3" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
                       </div>
                     ) : null
                   }
@@ -272,7 +264,7 @@ function AnalyseYoutube(props) {
                     arrTotalSub?.length > 0 ? (
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Thấp nhất</p>
-                        <Heading as="h3" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
                       </div>
                     ) : null
                   }

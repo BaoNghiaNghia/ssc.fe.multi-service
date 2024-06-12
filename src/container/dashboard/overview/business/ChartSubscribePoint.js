@@ -46,7 +46,7 @@ const ChartSubscribePoint = ({
                 }
             }
         },
-        colors: ['#5F63F2', "#000"],
+        colors: ['#5F63F2', "goldenrod"],
         stroke: {
             curve: 'smooth'
         },

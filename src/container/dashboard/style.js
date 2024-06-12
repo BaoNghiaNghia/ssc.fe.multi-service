@@ -243,6 +243,7 @@ const CardBarChart = Styled.div`
                     ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 4px;
                 }
             }
+            margin-bottom: 0;
         }
     }
     ul{

@@ -13,7 +13,7 @@ import { ExportButtonPageHeader } from '../../components/buttons/export-button/e
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 
 const TotalRevenue = lazy(() => import('./overview/crm/TotalRevenue'));
-const ClosedDeals = lazy(() => import('./overview/crm/ClosedDeals'));
+// const ClosedDeals = lazy(() => import('./overview/crm/ClosedDeals'));
 const SalesLeaderBoard = lazy(() => import('./overview/crm/SalesLeaderboard'));
 const EmailSent = lazy(() => import('./overview/crm/EmailSent'));
 const RecentDeals = lazy(() => import('./overview/crm/RecentDeals'));
@@ -227,7 +227,7 @@ function CRM() {
                 </Cards>
               }
             >
-              <ClosedDeals />
+              {/* <ClosedDeals /> */}
             </Suspense>
           </Col>
          <Col xxl={8} xl={12} xs={24}>

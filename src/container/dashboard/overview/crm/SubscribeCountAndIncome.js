@@ -2,35 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import FeatherIcon from 'feather-icons-react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import ChartSubscribePoint from '../business/ChartSubscribePoint';
-import { closeDealFilterData, closeDealGetData } from '../../../../redux/chartContent/actionCreator';
+import { closeDealGetData } from '../../../../redux/chartContent/actionCreator';
 import actions from '../../../../redux/reports/actions';
 import Heading from '../../../../components/heading/heading';
 import { currentDate, numberWithCommas } from '../../../../utility/utility';
 import { VIETNAMES_CURRENCY } from '../../../../variables';
 
-function ClosedDeals(props) {
+function SubscribeCountAndIncome(props) {
   const { title } = props;
   const dispatch = useDispatch();
-  const { closeDealState, cdIsLoading, fromDate, toDate, subWithPoint, typeService, isLoading } = useSelector(state => {
+  const { closeDealState, cdIsLoading, fromDate, toDate, typeService, isLoading, orderAmount, performance } = useSelector(state => {
     return {
       closeDealState: state?.chartContent?.closeDealData,
       isLoading: state?.reports?.loading,
       cdIsLoading: state?.chartContent?.cdLoading,
       fromDate: state?.reports.filterRange?.from,
       toDate: state?.reports.filterRange?.to,
-      subWithPoint: state?.reports?.subWithPoint,
-      typeService: state?.reports?.typeService
-    };
-  });
+      typeService: state?.reports?.typeService,
 
-  const [state, setState] = useState({
-    closeDealTabActive: 'year',
+      orderAmount: state?.reports?.orderAmount,
+      performance: state?.reports?.performance
+    };
   });
 
   useEffect(() => {
@@ -47,30 +44,30 @@ function ClosedDeals(props) {
 
   const closeDealDatasets = closeDealState !== null && [
     {
-      data: subWithPoint?.map(item => Math.abs(item?.totalPoint)),
+      data: orderAmount?.map(item => Math.abs(item?.total)),
       backgroundColor: '#20C99780',
-      hoverBackgroundColor: '#000',
+      hoverBackgroundColor: '#5F63F2',
       label: 'Tổng point (đ)',
       average: '50.8',
       maxBarThickness: 10,
-      barThickness: 12,
+      barThickness: 7,
       percent: 49,
     },
     {
-      data: subWithPoint?.map(item => Math.abs(item?.subOrder)),
+      data: orderAmount?.map(item => Math.abs(item?.subOrder)),
       backgroundColor: '#5F63F280',
-      hoverBackgroundColor: '#5F63F2',
+      hoverBackgroundColor: 'goldenrod',
       label: `${typeService} yêu cầu`,
       average: '$28k',
       maxBarThickness: 10,
-      barThickness: 12,
+      barThickness: 7,
       percent: 60,
     },
   ];
 
   // eslint-disable-next-line no-unsafe-optional-chaining
-  const totalPoint = subWithPoint?.map(item => item?.totalPoint*(-1)) || [];
-  const arrWaveDate = subWithPoint?.map(item => item?.date);
+  const totalPoint = orderAmount?.map(item => item?.total) || [];
+  const arrWaveDate = orderAmount?.map(item => item?.date) || [];
 
   const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? totalPoint[arrWaveDate?.indexOf(currentDate)] : 0;
 
@@ -79,22 +76,14 @@ function ClosedDeals(props) {
     wave_timeline: [
       {
         name: `${typeService} yêu cầu`,
-        data: subWithPoint?.map(item => Math.abs(item?.subOrder))
+        data: orderAmount?.map(item => Math.abs(item?.total)) || []
       },
       {
         name: 'Tổng point',
-        data: totalPoint
+        data: performance?.map(item => Math.round(item?.avg_performance)) || []
       }
     ],
   }
-
-  const handleActiveChangeYoutube = value => {
-    setState({
-      ...state,
-      closeDealTabActive: value,
-    });
-    dispatch(closeDealFilterData(value));
-  };
 
   const moreContent = (
     <>
@@ -161,47 +150,45 @@ function ClosedDeals(props) {
             </div>
           ) : (
             <CardBarChart>
-              <div className="card-bar-top d-flex flex-grid">
-                <Row gutter={15}>
-                  <Col xxl={8} md={8} sm={8} xs={8}>
-                    {
-                      totalSubToday > 0 ? (
+              <Row justify="start" style={{ marginLeft: '10px' }}>
+                  {
+                    totalSubToday > 0 ? (
+                      <Col xxl={3} md={3} sm={3} xs={3}>
                         <div className="flex-grid-child">
                           <p>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
-                          <Heading as="h3" className="color-primary">
+                          <Heading as="h5" className="color-primary">
                             {numberWithCommas(totalPoint?.at(-1) || 0)}
                           </Heading>
                         </div>
-                      ) : null
-                    }  
-                  </Col>
-                  <Col xxl={8} md={8} sm={8} xs={8}>
-                    {
-                      totalPoint?.length > 0 ? (
-                        <div className="flex-grid-child">
-                          <p>Doanh thu cao nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
-                          <Heading as="h3">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
-                        </div>
-                      ) : null
-                    }
-                  </Col>
-                  <Col xxl={8} md={8} sm={8} xs={8}>
-                    {
-                      totalPoint?.length > 0 ? (
-                        <div className="flex-grid-child">
-                          <p>Doanh thu thấp nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
-                          <Heading as="h3">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
-                        </div>
-                      ) : null
-                    }
-                  </Col>
-                </Row>
-              </div>
+                      </Col>
+                    ) : null
+                  }  
+                <Col xxl={3} md={3} sm={3} xs={3}>
+                  {
+                    totalPoint?.length > 0 ? (
+                      <div className="flex-grid-child">
+                        <p style={{ margin: 0, padding: 0 }}>Doanh thu cao nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
+                        <Heading as="h5">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
+                      </div>
+                    ) : null
+                  }
+                </Col>
+                <Col xxl={3} md={3} sm={3} xs={3}>
+                  {
+                    totalPoint?.length > 0 ? (
+                      <div className="flex-grid-child">
+                        <p style={{ margin: 0, padding: 0 }}>Doanh thu thấp nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
+                        <Heading as="h5">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
+                      </div>
+                    ) : null
+                  }
+                </Col>
+              </Row>
 
               <ChartSubscribePoint loadingChart={false} chartData={chartSubscribePoint || {}} />
 
               {/* <ChartjsBarChartTransparent
-                labels={subWithPoint?.map(item => item.date)}
+                labels={orderAmount?.map(item => item.date)}
                 datasets={closeDealDatasets}
                 options={{
                   maintainAspectRatio: true,
@@ -288,8 +275,8 @@ function ClosedDeals(props) {
   );
 }
 
-ClosedDeals.propTypes = {
+SubscribeCountAndIncome.propTypes = {
   title: PropTypes.string,
 };
 
-export default ClosedDeals;
+export default SubscribeCountAndIncome;

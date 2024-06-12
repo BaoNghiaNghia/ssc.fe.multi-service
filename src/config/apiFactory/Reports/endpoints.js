@@ -13,7 +13,7 @@ export const RATIO_SUBSCRIBE_AVG_ENDPOINT = 'api/v2/pfmAvg';
 export const STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-comment/api/v1/admin/statistics/status";
 export const STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-comment/api/v1/admin/stats/order-amount";
 export const STATISTIC_BY_STATUS_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-status";
-export const STATISTIC_PERFORMANCE_ENDPOINT = "ytb-commenĐơn đang chạyt/api/v1/admin/stats/perfomance";
+export const STATISTIC_PERFORMANCE_ENDPOINT = "ytb-comment/api/v1/admin/stats/perfomance";
 export const STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/stats/user-order";
 export const STATISTIC_USER_POINT_ENDPOINT = "ytb-comment/api/v1/admin/stats/user-point";
 

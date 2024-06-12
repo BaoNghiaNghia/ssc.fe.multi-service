@@ -18,9 +18,12 @@ const initialState = {
   statisticSubscribe: {},
   statisticComment: {},
   commentByDay: [],
-  taskSuccessInMinutes: {},
-  taskDurationInMinutes: {},
+  taskSuccessInMinutes: [],
+  taskDurationInMinutes: [],
+  orderAmount: [],
+  accountStatus: {},
   computerThread: {},
+  performance: [],
   ratioSubSvg: 0,
   countError: {},
   loading: false,
@@ -87,11 +90,84 @@ const {
   STATISTIC_COMPUTER_THREAD_BEGIN,
   STATISTIC_COMPUTER_THREAD_ERR,
   STATISTIC_COMPUTER_THREAD_SUCCESS,
+
+  STATISTIC_ORDER_AMOUNT_BEGIN,
+  STATISTIC_ORDER_AMOUNT_ERR,
+  STATISTIC_ORDER_AMOUNT_SUCCESS,
+
+  STATISTIC_PERFORMANCE_COMMENT_BEGIN,
+  STATISTIC_PERFORMANCE_COMMENT_ERR,
+  STATISTIC_PERFORMANCE_COMMENT_SUCCESS,
+
+  STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN,
+  STATISTIC_ACCOUNT_STATUS_COMMENT_ERR,
+  STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS
+
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        accountStatus: data,
+      };
+
+    case STATISTIC_ACCOUNT_STATUS_COMMENT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case STATISTIC_PERFORMANCE_COMMENT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case STATISTIC_PERFORMANCE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        performance: data,
+      };
+
+    case STATISTIC_PERFORMANCE_COMMENT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case STATISTIC_ORDER_AMOUNT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case STATISTIC_ORDER_AMOUNT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orderAmount: data,
+      };
+
+    case STATISTIC_ORDER_AMOUNT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case STATISTIC_COMPUTER_THREAD_BEGIN:
       return {
         ...state,

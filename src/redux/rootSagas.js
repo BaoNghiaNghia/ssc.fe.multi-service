@@ -21,7 +21,10 @@ import {
     statisticTaskSuccessInMinuteWatcherSaga,
     statisticCommentByDayWatcherSaga,
     statisticComputerThreadWatcherSaga,
-    statisticTaskDurationInMinuteWatcherSaga
+    statisticTaskDurationInMinuteWatcherSaga,
+    statisticOrderAmountWatcherSaga,
+    statisticPerformanceCommentWatcherSaga,
+    statisticAccountStatusCommentWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -154,6 +157,9 @@ export default function* rootSaga() {
         activeWarrantyOrderWatcherSaga(),
         refundhWarrantyOrderWatcherSaga(),
         setRangeDateWarrantyFilterWatcherSaga(),
-        statisticTaskDurationInMinuteWatcherSaga()
+        statisticTaskDurationInMinuteWatcherSaga(),
+        statisticOrderAmountWatcherSaga(),
+        statisticPerformanceCommentWatcherSaga(),
+        statisticAccountStatusCommentWatcherSaga()
     ]);
 }
