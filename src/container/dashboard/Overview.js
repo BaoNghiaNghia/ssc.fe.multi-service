@@ -359,7 +359,7 @@ function Overview() {
       />
       <Main>
         {generalHeaderStatistic()}
-        <Row gutter={15}>
+        <Row gutter={25}>
           <Col xxl={6} md={6} xs={24}>
             <Suspense
               fallback={
