@@ -6,8 +6,10 @@ import { Row, Col, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
+import FeatherIcon from 'feather-icons-react';
 import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
+import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import { CardBarChart2, CardBarChartCenter, EChartCard, GalleryNav } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
@@ -85,13 +87,82 @@ function Overview() {
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
 
+  const moreContent = (
+    <>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="printer" />
+        <span>Printer</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="book-open" />
+        <span>PDF</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="file-text" />
+        <span>Google Sheets</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="x" />
+        <span>Excel (XLSX)</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="file" />
+        <span>CSV</span>
+      </NavLink>
+    </>
+  );
+
   const generalHeaderStatistic = () => {
     return (
       <Row gutter={12}>
+        <Col xxl={8} md={8} sm={24} xs={24}>
+          <Cards
+            headless
+            border 
+            gradient={ todayPoint >= 0 ? '120deg, rgb(212, 252, 121) 0%, rgb(150, 230, 161) 100%' : '0deg, #fff6d947, #ffac8d' }
+          >
+            <EChartCard>
+              <div className="card-chunk text-center">
+                <CardBarChartCenter>
+                  <Row style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                    <Col sm="6">
+                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                        Tổng point hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
+                      </span>
+                      <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
+                    </Col>
+                    <Col sm="6">
+                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                        Subscribe
+                      </span>
+                      <Heading as="h4" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todaySubscribePoint)}</Heading>
+                    </Col>
+                    <Col sm="6">
+                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                        Comment
+                      </span>
+                      <Heading as="h4" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayCommentPoint)}</Heading>
+                    </Col>
+                    <Col sm="6">
+                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                        Like
+                      </span>
+                      <Heading as="h4" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayLikePoint)}</Heading>
+                    </Col>
+                  </Row>
+                </CardBarChartCenter>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
         <Col xxl={4} md={8} sm={12} xs={12}>
           <Cards
-            headless 
             border
+            headless
+            // title={
+            //   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
+            // }
+            // more={moreContent}
           >
             <EChartCard>
               <div className="card-chunk">
@@ -104,7 +175,7 @@ function Overview() {
           </Cards>
         </Col>
         <Col xxl={4} md={8} sm={12} xs={12}>
-          <Cards headless >
+          <Cards headless more={moreContent}>
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
@@ -115,43 +186,8 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={8} md={8} sm={24} xs={24}>
-          <Cards
-            headless
-            border 
-            gradient={ todayPoint >= 0 ? '120deg, rgb(212, 252, 121) 0%, rgb(150, 230, 161) 100%' : '0deg, #fff6d947, #ffac8d' }
-          >
-            <EChartCard>
-              <div className="card-chunk text-center">
-                <CardBarChartCenter>
-                  <Row style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <Col sm="12">
-                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                        Tổng point hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
-                      </span>
-                      <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
-                    </Col>
-                    <Col sm="12">
-                      <span style={{ paddingBottom: '0px', marginBottom: '0px' }}>
-                        <div>
-                          <span style={{ fontSize: '0.8em' }}>Subscribe:</span> <strong>{numberWithCommas(todaySubscribePoint)}</strong>
-                        </div>
-                        <div>
-                          <span style={{ fontSize: '0.8em' }}>Comment:</span> <strong>{numberWithCommas(todayCommentPoint)}</strong>
-                        </div>
-                        <div>
-                          <span style={{ fontSize: '0.8em' }}>Like:</span> <strong>{numberWithCommas(todayLikePoint)}</strong>
-                        </div>
-                      </span>
-                    </Col>
-                  </Row>
-                </CardBarChartCenter>
-              </div>
-            </EChartCard>
-          </Cards>
-        </Col>
         <Col xxl={4} md={8} sm={8} xs={12}>
-          <Cards headless
+          <Cards headless more={moreContent}
           >
             <EChartCard>
               <div className="card-chunk">
@@ -165,7 +201,8 @@ function Overview() {
         </Col>
         <Col xxl={4} md={8} sm={8} xs={12}>
           <Cards
-            headless
+            headless 
+            more={moreContent}
           >
             <EChartCard>
               <div className="card-chunk">
@@ -192,7 +229,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Tỉ lệ {typeService}</span>
                   </span>
-                  <Heading as="h3">{Math.round(ratioSubSvg || 0)} %</Heading>
+                  <Heading as="h4">{Math.round(ratioSubSvg || 0)} %</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -206,7 +243,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Quest Lỗi/Tổng Quest</span>
                   </span>
-                  <Heading as="h3">0/0</Heading>
+                  <Heading as="h4">0/0</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -220,7 +257,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Tổng Order hôm nay</span>
                   </span>
-                  <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
+                  <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -234,7 +271,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Tổng {typeService} hôm nay</span>
                   </span>
-                  <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
+                  <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -248,7 +285,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Hiện tại/Tổng luồng</span>
                   </span>
-                  <Heading as="h2">
+                  <Heading as="h4">
                     {computerThread?.current_thread || 0}/{computerThread?.free_thread || 0}
                   </Heading>
                 </CardBarChart2>

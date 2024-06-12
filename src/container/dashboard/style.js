@@ -985,7 +985,7 @@ const LadingPages = Styled.div`
 
 const CardBarChartCenter = Styled.div`
     .ant-card-body{
-        padding: 10px !important;
+        padding: 7px !important;
     }
     @media only screen and (max-width: 379px) {
         text-align: center !important;

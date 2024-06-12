@@ -123,10 +123,10 @@ ul {
 .ant-card {
   box-shadow: 0 5px 20px #9299b803;
 }
-
+/* 
 .ant-card-body {
-  padding: 14px !important;
-}
+  padding: 13px;
+} */
 
 .ant-card-head {
   padding-left: 25px !important;
