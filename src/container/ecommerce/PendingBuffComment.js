@@ -349,9 +349,9 @@ function PendingBuffComment() {
                 <span>
                   <div style={{ alignContent: 'center' }}>
                     <Tooltip title={
-                      <p>Thực tế / Đã chạy</p>
+                      <p>Đã chạy / Thực tế</p>
                     }>
-                      <p style={{ margin: '5px 0px', padding: '0px' }}><strong>{numberWithCommas((Math.abs(current_count - start_count)) || 0)} / {numberWithCommas(done_count || 0)}</strong></p>
+                      <p style={{ margin: 0, padding: 0 }}><strong>{numberWithCommas((Math.abs(current_count - start_count)) || 0)} / {numberWithCommas(done_count || 0)}</strong></p>
                     </Tooltip>
                     {
                       performance !== 0 ? (
@@ -401,7 +401,9 @@ function PendingBuffComment() {
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
                 <Tooltip title="Comment thiếu / Tổng comment đã đặt">
-                  <span><strong>{numberWithCommas(quantity - done_count || 0)} / {numberWithCommas(quantity || 0)}</strong></span>
+                  <span style={{ display: 'flex', alignItems: 'center' }}>
+                    <span>{numberWithCommas(quantity - done_count || 0)}/</span><span style={{ fontWeight: 800 }}>{numberWithCommas(quantity || 0)}</span>
+                  </span>
                 </Tooltip>
               )
             }
