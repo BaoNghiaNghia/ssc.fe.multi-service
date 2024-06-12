@@ -10,12 +10,16 @@ import { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import { GrNotification } from 'react-icons/gr';
+import { FaRegCommentDots } from 'react-icons/fa';
+import { AiOutlineLike } from 'react-icons/ai';
 import MenueItems from './MenueItems';
 import TopMenu from './TopMenu';
 import { Div, SmallScreenAuthInfo, SmallScreenSearch, TopMenuSearch } from './style';
 import HeaderSearch from '../components/header-search/header-search';
 import AuthInfo from '../components/utilities/auth-info/info';
 import { changeRtlMode, changeLayoutMode, changeMenuMode } from '../redux/themeLayout/actionCreator';
+import { GalleryNav } from '../container/dashboard/style';
 
 const { darkTheme } = require('../config/theme/themeVariables');
 
@@ -231,7 +235,39 @@ const ThemeLayout = (WrappedComponent) => {
                 <Col lg={!topMenu ? 14 : 15} md={8} sm={0} xs={0}>
                   {topMenu && window.innerWidth > 991 ? <TopMenu /> : (
                     <>
-                      <HeaderSearch rtl={rtl} darkMode={darkMode} />
+                      {/* <HeaderSearch rtl={rtl} darkMode={darkMode} /> */}
+                      {/* <GalleryNav>
+                        <ul>
+                          <li>
+                            <Link
+                              // className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
+                              // onClick={() => handleChange(SERVICE_TYPE.SUBSCRIBE.title)}
+                              to="#"
+                              style={{ display: 'inline-flex', alignItems: 'center' }}
+                            >
+                              <GrNotification fontSize={15} className='pr-3'/> <span>Subscribe</span>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // className={typeService === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
+                              // onClick={() => handleChange(SERVICE_TYPE.COMMENT.title)}
+                              to="#"
+                            >
+                              <FaRegCommentDots fontSize={15} className='mr-3'/> <span>Comment</span>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // className={typeService === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
+                              // onClick={() => handleChange(SERVICE_TYPE.LIKE.title)}
+                              to="#"
+                            >
+                              <AiOutlineLike fontSize={17} className='mr-3'/> <span>Like</span>
+                            </Link>
+                          </li>
+                        </ul>
+                      </GalleryNav> */}
                     </>
                   )}
                 </Col>

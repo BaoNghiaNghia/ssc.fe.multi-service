@@ -22,6 +22,7 @@ import {
   statisticPerformanceAPI,
   statisticRunningUserOrderAPI,
   statisticTaskSuccessInMinutesAPI,
+  statisticTaskDurationInMinutesAPI,
   statisticUserPointAPI
 } from '../../config/apiFactory/Reports/index';
 import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
@@ -91,6 +92,29 @@ function* statisticTaskSuccessInMinuteFunc(params) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
       toast.error('Fetch task success in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* statisticTaskDurationInMinuteFunc(params) {
+  try {
+    const response = yield call(statisticTaskDurationInMinutesAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.statisticTaskDurationInMinuteSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.statisticTaskDurationInMinuteErr({ error: errorMessage || 'Fetch task duration in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch task duration in minute failed');
     }
   } finally { /* empty */ }
 }
@@ -288,6 +312,10 @@ export function* statisticCommentByDayWatcherSaga() {
 
 export function* statisticComputerThreadWatcherSaga() {
   yield takeLatest(actions.STATISTIC_COMPUTER_THREAD_BEGIN, statisticComputerThreadFunc);
+}
+
+export function* statisticTaskDurationInMinuteWatcherSaga() {
+  yield takeLatest(actions.STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN, statisticTaskDurationInMinuteFunc);
 }
 
 export function* statisticTaskSuccessInMinuteWatcherSaga() {

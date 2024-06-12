@@ -50,6 +50,10 @@ const actions = {
   STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS',
   STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR',
 
+  STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN: 'STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN',
+  STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS: 'STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS',
+  STATISTIC_TASK_DURATION_IN_MINUTE_ERR: 'STATISTIC_TASK_DURATION_IN_MINUTE_ERR',
+
   STATISTIC_COMMENT_BY_DAY_BEGIN: 'STATISTIC_COMMENT_BY_DAY_BEGIN',
   STATISTIC_COMMENT_BY_DAY_SUCCESS: 'STATISTIC_COMMENT_BY_DAY_SUCCESS',
   STATISTIC_COMMENT_BY_DAY_ERR: 'STATISTIC_COMMENT_BY_DAY_ERR',
@@ -117,6 +121,27 @@ const actions = {
   statisticTaskSuccessInMinuteErr: (err) => {
     return {
       type: actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
+      err,
+    };
+  },
+
+  statisticTaskDurationInMinuteBegin: (payload) => {
+    return {
+      type: actions.STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN,
+      payload
+    };
+  },
+
+  statisticTaskDurationInMinuteSuccess: (data) => {
+    return {
+      type: actions.STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS,
+      data,
+    };
+  },
+
+  statisticTaskDurationInMinuteErr: (err) => {
+    return {
+      type: actions.STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
       err,
     };
   },

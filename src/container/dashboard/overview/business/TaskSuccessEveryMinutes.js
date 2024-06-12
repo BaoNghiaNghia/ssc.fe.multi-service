@@ -37,13 +37,15 @@ const moreContent = (
     </NavLink>
   </>
 );
-function RatioYoutubeSuccess({ title }) {
+function TaskSuccessEveryMinutes({ title }) {
   const dispatch = useDispatch();
-  const { performanceState, preIsLoading, countSubscribeSuccess } = useSelector(state => {
+  const { performanceState, preIsLoading, taskSuccessInMinutes, typeService } = useSelector(state => {
     return {
       performanceState: state.chartContent.performanceData,
       preIsLoading: state.chartContent.perLoading,
-      countSubscribeSuccess: state?.reports?.reportCountSuccess
+      countSubscribeSuccess: state?.reports?.reportCountSuccess,
+      taskSuccessInMinutes: state?.reports?.taskSuccessInMinutes,
+      typeService: state?.reports?.typeService,
     };
   });
 
@@ -57,51 +59,7 @@ function RatioYoutubeSuccess({ title }) {
     }
   }, [dispatch]);
 
-  const handleActiveChangeRevenue = value => {
-    setState({
-      ...state,
-      revenue: value,
-    });
-    return dispatch(performanceFilterData(value));
-  };
-
-  const performanceDatasets = performanceState !== null && [
-    {
-      data: countSubscribeSuccess?.map(item => item.count),
-      borderColor: '#5F63F2',
-      borderWidth: 4,
-      fill: true,
-      backgroundColor: () =>
-        chartLinearGradient(document.getElementById('performance'), 300, {
-          start: '#5F63F230',
-          end: '#ffffff05',
-        }),
-      label: 'Current period',
-      pointStyle: 'circle',
-      pointRadius: '0',
-      hoverRadius: '9',
-      pointBorderColor: '#fff',
-      pointBackgroundColor: '#5F63F2',
-      hoverBorderWidth: 5,
-      amount: '$7,596',
-      amountClass: 'current-amount',
-    },
-    {
-      data: performanceState.users[2],
-      borderColor: '#C6D0DC',
-      borderWidth: 2,
-      fill: false,
-      backgroundColor: '#00173750',
-      label: 'Previous period',
-      borderDash: [3, 3],
-      pointRadius: '0',
-      hoverRadius: '0',
-      amount: '$3,258',
-      amountClass: 'prev-amount',
-    },
-  ];
-
-  const durationReport = countSubscribeSuccess?.map((rp) => rp?.note_date);
+  const durationReport = taskSuccessInMinutes?.map((rp) => rp?.time);
 
   const optionTaskSuccess = {
     chart: {
@@ -121,7 +79,7 @@ function RatioYoutubeSuccess({ title }) {
     yAxis: {
       min: 0,
       title: {
-        text: 'Lượt subscribe',
+        text: `Lượt ${typeService}`,
       },
       align: "center",
       verticalAlign: "middle",
@@ -134,7 +92,7 @@ function RatioYoutubeSuccess({ title }) {
     series: [
       {
         lineWidth: 1,
-        data: countSubscribeSuccess?.map((rp) => rp?.count),
+        data: taskSuccessInMinutes?.map((rp) => rp?.total),
       },
     ],
     legend: {
@@ -177,32 +135,35 @@ function RatioYoutubeSuccess({ title }) {
     <RevenueWrapper>
       {performanceState !== null && (
         <Cards
-          isbutton={
-            <div className="card-nav">
-              <ul>
-                <li className={state.revenue === 'week' ? 'active' : 'deactivate'}>
-                  <Link onClick={() => handleActiveChangeRevenue('week')} to="#">
-                    Week
-                  </Link>
-                </li>
-                <li className={state.revenue === 'month' ? 'active' : 'deactivate'}>
-                  <Link onClick={() => handleActiveChangeRevenue('month')} to="#">
-                    Month
-                  </Link>
-                </li>
-                <li className={state.revenue === 'year' ? 'active' : 'deactivate'}>
-                  <Link onClick={() => handleActiveChangeRevenue('year')} to="#">
-                    Year
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          }
+          // isbutton={
+          //   <div className="card-nav">
+          //     <ul>
+          //       <li className={state.revenue === 'week' ? 'active' : 'deactivate'}>
+          //         <Link onClick={() => handleActiveChangeRevenue('week')} to="#">
+          //           Week
+          //         </Link>
+          //       </li>
+          //       <li className={state.revenue === 'month' ? 'active' : 'deactivate'}>
+          //         <Link onClick={() => handleActiveChangeRevenue('month')} to="#">
+          //           Month
+          //         </Link>
+          //       </li>
+          //       <li className={state.revenue === 'year' ? 'active' : 'deactivate'}>
+          //         <Link onClick={() => handleActiveChangeRevenue('year')} to="#">
+          //           Year
+          //         </Link>
+          //       </li>
+          //     </ul>
+          //   </div>
+          // }
           more={moreContent}
           title={
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p> 
-              <span>Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong></span>
+              <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p>
+              {durationReport?.length > 0 ? (
+
+                <span>Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong></span>
+              ) : null}
             </div>
           }
           size="large"
@@ -239,12 +200,12 @@ function RatioYoutubeSuccess({ title }) {
   );
 }
 
-RatioYoutubeSuccess.defaultProps = {
+TaskSuccessEveryMinutes.defaultProps = {
   title: 'Total Revenue',
 };
 
-RatioYoutubeSuccess.propTypes = {
+TaskSuccessEveryMinutes.propTypes = {
   title: PropTypes.string,
 };
 
-export default RatioYoutubeSuccess;
+export default TaskSuccessEveryMinutes;

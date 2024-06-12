@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 // import FeatherIcon from 'feather-icons-react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Skeleton } from 'antd';
+import { Row, Col, Skeleton, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
@@ -20,7 +20,8 @@ import actions from '../../redux/reports/actions';
 import { numberWithCommas } from '../../utility/utility';
 import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
-const RatioYoutubeSuccess = lazy(() => import('./overview/business/RatioYoutubeSuccess'));
+const TaskSuccessEveryMinutes = lazy(() => import('./overview/business/TaskSuccessEveryMinutes'));
+const TaskDurationEveryMinutes = lazy(() => import('./overview/business/TaskDurationEveryMinutes'));
 const SubscribeCountAndIncome = lazy(() => import('./overview/crm/SubscribeCountAndIncome'));
 const AnalyseYoutube = lazy(() => import('./overview/business/AnalyseYoutube'));
 
@@ -29,14 +30,13 @@ const CardGroup = lazy(() => import('./overview/business/CardGroup'));
 function Overview() {
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, statisticComment, computerThread } = useSelector((state) => {
+  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, computerThread} = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
       todayProfit: state?.reports?.profitToday,
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
-      statisticComment: state?.reports?.statisticComment,
       computerThread: state?.reports?.computerThread
     };
   });
@@ -59,6 +59,7 @@ function Overview() {
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.statisticCommentByOrderReportBegin());
       dispatch(actions.statisticTaskSuccessInMinuteBegin());
+      dispatch(actions.statisticTaskDurationInMinuteBegin());
       dispatch(actions.statisticCommentByDayBegin(initialFilter));
       dispatch(actions.statisticComputerThreadBegin(initialFilter));
     }
@@ -190,21 +191,21 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Tỉ lệ {typeService}</span>
                   </span>
-                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {Math.round(ratioSubSvg || 0)} %</Heading>
+                  <Heading as="h2">{Math.round(ratioSubSvg || 0)} %</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
           </Cards>
         </Col>
         <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
-          <Cards headless gradient='64deg, white, white' >
+          <Cards headless gradient='64deg, white, white'>
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Quest Lỗi/Tổng Quest</span>
                   </span>
-                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> 0/0</Heading>
+                  <Heading as="h2">0/0</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -218,7 +219,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Tổng Order hôm nay</span>
                   </span>
-                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
+                  <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -232,7 +233,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Tổng {typeService} hôm nay</span>
                   </span>
-                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/> {numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
+                  <Heading as="h2">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -246,7 +247,7 @@ function Overview() {
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
                     <span>Hiện tại/Tổng luồng</span>
                   </span>
-                  <Heading as="h2"><HiArrowSmRight color="gray" fontSize={17} style={{ marginTop: '3px' }}/>
+                  <Heading as="h2">
                     {computerThread?.current_thread || 0}/{computerThread?.free_thread || 0}
                   </Heading>
                 </CardBarChart2>
@@ -350,7 +351,18 @@ function Overview() {
                 </Cards>
               }
             >
-              <RatioYoutubeSuccess title={`Tỉ lệ ${typeService} thành công`} />
+              <TaskSuccessEveryMinutes title={`Tỉ lệ ${typeService} thành công`} />
+            </Suspense>
+          </Col>
+          <Col xxl={24} xs={24}>
+            <Suspense
+              fallback={
+                <Cards headless>
+                  <Skeleton active/>
+                </Cards>
+              }
+            >
+              <TaskDurationEveryMinutes title={`Số lượng ${typeService} mỗi phút`} />
             </Suspense>
           </Col>
           {/* <Col xxl={10} xs={24}>

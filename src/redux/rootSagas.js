@@ -20,7 +20,8 @@ import {
     toggleStateModalCreateOrderWatcherSaga,
     statisticTaskSuccessInMinuteWatcherSaga,
     statisticCommentByDayWatcherSaga,
-    statisticComputerThreadWatcherSaga
+    statisticComputerThreadWatcherSaga,
+    statisticTaskDurationInMinuteWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -152,6 +153,7 @@ export default function* rootSaga() {
         fetchWarrantyOrderWatcherSaga(),
         activeWarrantyOrderWatcherSaga(),
         refundhWarrantyOrderWatcherSaga(),
-        setRangeDateWarrantyFilterWatcherSaga()
+        setRangeDateWarrantyFilterWatcherSaga(),
+        statisticTaskDurationInMinuteWatcherSaga()
     ]);
 }

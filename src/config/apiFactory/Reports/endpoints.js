@@ -24,5 +24,6 @@ export const STATISTIC_COMPUTER_THREAD_ENDPOINT = "ytb-comment/api/v1/admin/stat
 export const STATISTIC_RUNNING_COMPUTER_ENDPOINT = "ytb-comment/api/v1/admin/stats/running-computers";
 export const STATISTIC_TASK_OF_TOOL_ENDPOINT = "ytb-comment/api/v1/admin/stats/tasks";
 export const STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT = "ytb-comment/api/v1/admin/stats/tasks-success";
+export const STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT = "ytb-comment/api/v1/admin/stats/tasks-duration";
 
 // LIKE

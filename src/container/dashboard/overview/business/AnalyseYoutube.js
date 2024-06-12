@@ -207,27 +207,27 @@ function AnalyseYoutube(props) {
   return (    
       cashFlowState !== null && (
         <Cards
-          isbutton={
-            <div className="card-nav">
-              <ul>
-                <li className={state.cashFlowActive === 'week' ? 'active' : 'regular'}>
-                  <Link onClick={() => handleActiveChangeCash('week')} to="#">
-                    Week
-                  </Link>
-                </li>
-                <li className={state.cashFlowActive === 'month' ? 'active' : 'regular'}>
-                  <Link onClick={() => handleActiveChangeCash('month')} to="#">
-                    Month
-                  </Link>
-                </li>
-                <li className={state.cashFlowActive === 'year' ? 'active' : 'regular'}>
-                  <Link onClick={() => handleActiveChangeCash('year')} to="#">
-                    Year
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          }
+          // isbutton={
+          //   <div className="card-nav">
+          //     <ul>
+          //       <li className={state.cashFlowActive === 'week' ? 'active' : 'regular'}>
+          //         <Link onClick={() => handleActiveChangeCash('week')} to="#">
+          //           Week
+          //         </Link>
+          //       </li>
+          //       <li className={state.cashFlowActive === 'month' ? 'active' : 'regular'}>
+          //         <Link onClick={() => handleActiveChangeCash('month')} to="#">
+          //           Month
+          //         </Link>
+          //       </li>
+          //       <li className={state.cashFlowActive === 'year' ? 'active' : 'regular'}>
+          //         <Link onClick={() => handleActiveChangeCash('year')} to="#">
+          //           Year
+          //         </Link>
+          //       </li>
+          //     </ul>
+          //   </div>
+          // }
           title={
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>
               <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p> 
@@ -244,20 +244,19 @@ function AnalyseYoutube(props) {
             </div>
           ) : (
             <CardBarChart>
-              <Row justify="start">
-                <Col xxl={3} md={3} sm={3} xs={3}>
-                  {
-                    totalSubToday > 0 ? (
+              <Row justify="start" style={{ marginLeft: '10px' }}>
+                {
+                  totalSubToday ? (
+                    <Col xxl={3} md={3} sm={3} xs={3}>
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
                         <Heading as="h3" className="color-primary" style={{ margin: 0, padding: 0 }}>
                           {numberWithCommas(arrTotalSub?.at(-1) || 0)}
                         </Heading>
                       </div>
-                    ) : null
-                  }
-
-                </Col>
+                    </Col>
+                  ) : null
+                }
                 <Col xxl={3} md={3} sm={3} xs={3}>
                   {
                     arrTotalSub?.length > 0 ? (

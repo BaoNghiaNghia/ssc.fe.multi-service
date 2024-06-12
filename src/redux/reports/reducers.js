@@ -19,6 +19,7 @@ const initialState = {
   statisticComment: {},
   commentByDay: [],
   taskSuccessInMinutes: {},
+  taskDurationInMinutes: {},
   computerThread: {},
   ratioSubSvg: 0,
   countError: {},
@@ -74,6 +75,10 @@ const {
   STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
   STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
   STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS,
+
+  STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN,
+  STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
+  STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS,
 
   STATISTIC_COMMENT_BY_DAY_BEGIN,
   STATISTIC_COMMENT_BY_DAY_ERR,
@@ -140,6 +145,25 @@ const ReportsReducer = (state = initialState, action) => {
       };
 
     case STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+    case STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        taskDurationInMinutes: data,
+      };
+
+    case STATISTIC_TASK_DURATION_IN_MINUTE_ERR:
       return {
         ...state,
         loading: false,

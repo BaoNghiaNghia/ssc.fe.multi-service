@@ -21,7 +21,8 @@ import {
     STATISTIC_ORDER_AMOUNT_ENDPOINT,
     STATISTIC_PERFORMANCE_ENDPOINT,
     STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
-    STATISTIC_USER_POINT_ENDPOINT
+    STATISTIC_USER_POINT_ENDPOINT,
+    STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -39,6 +40,7 @@ GeneralReportAPI.createEntities([
 
     { name: STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
     { name: STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT },
+    { name: STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
     { name: STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
     { name: STATISTIC_ACCOUNT_STATUS_ENDPOINT },
     { name: STATISTIC_BY_STATUS_ORDER_ENDPOINT },
@@ -67,6 +69,7 @@ const ratioSubscribeAverage = () => GeneralReportAPI.createBasicCRUDEndpoints({ 
 // COMMENTS
 const statisticCommentByOrderReport = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
 const statisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
+const statisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
 const statisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
 const statisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
 const statisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
@@ -100,5 +103,6 @@ export {
     statisticOrderAmountAPI,
     statisticPerformanceAPI,
     statisticRunningUserOrderAPI,
-    statisticUserPointAPI
+    statisticUserPointAPI,
+    statisticTaskDurationInMinutesAPI
 }

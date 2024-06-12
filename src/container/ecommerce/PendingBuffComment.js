@@ -282,6 +282,7 @@ function PendingBuffComment() {
                 priority ? (
                   <Tooltip title="Ưu tiên">
                     <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
+                     {/* 🔥 */}
                   </Tooltip>
                 ) : <></>
               }
@@ -310,11 +311,11 @@ function PendingBuffComment() {
             </div>
 
             <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-              <strong>Video ID: </strong> {video_id}
+              <strong style={{ color: 'gray' }}>Video ID: </strong> {video_id}
             </span>
 
             <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-              <strong>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
+              <strong style={{ color: 'gray' }}>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
             </span>
           </>
         ),

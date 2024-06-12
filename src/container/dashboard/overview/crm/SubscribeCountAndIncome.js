@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
+import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
-import { ChartjsBarChartTransparent } from '../../../../components/charts/chartjs';
 import ChartSubscribePoint from '../business/ChartSubscribePoint';
 import { closeDealFilterData, closeDealGetData } from '../../../../redux/chartContent/actionCreator';
 import actions from '../../../../redux/reports/actions';
 import Heading from '../../../../components/heading/heading';
-import { currentDate, findSecondMinimum, numberWithCommas } from '../../../../utility/utility';
+import { currentDate, numberWithCommas } from '../../../../utility/utility';
 import { VIETNAMES_CURRENCY } from '../../../../variables';
 
 function ClosedDeals(props) {
@@ -95,31 +96,57 @@ function ClosedDeals(props) {
     dispatch(closeDealFilterData(value));
   };
 
+  const moreContent = (
+    <>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="printer" />
+        <span>Printer</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="book-open" />
+        <span>PDF</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="file-text" />
+        <span>Google Sheets</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="x" />
+        <span>Excel (XLSX)</span>
+      </NavLink>
+      <NavLink to="#">
+        <FeatherIcon size={16} icon="file" />
+        <span>CSV</span>
+      </NavLink>
+    </>
+  );
+
   return (
     <>
       {closeDealState !== null && (
         <Cards
-          isbutton={
-            <div className="card-nav">
-              <ul>
-                <li className={state.closeDealTabActive === 'week' ? 'active' : 'deactivate'}>
-                  <Link onClick={() => handleActiveChangeYoutube('week')} to="#">
-                    Week
-                  </Link>
-                </li>
-                <li className={state.closeDealTabActive === 'month' ? 'active' : 'deactivate'}>
-                  <Link onClick={() => handleActiveChangeYoutube('month')} to="#">
-                    Month
-                  </Link>
-                </li>
-                <li className={state.closeDealTabActive === 'year' ? 'active' : 'deactivate'}>
-                  <Link onClick={() => handleActiveChangeYoutube('year')} to="#">
-                    Year
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          }
+          // isbutton={
+          //   <div className="card-nav">
+          //     <ul>
+          //       <li className={state.closeDealTabActive === 'week' ? 'active' : 'deactivate'}>
+          //         <Link onClick={() => handleActiveChangeYoutube('week')} to="#">
+          //           Week
+          //         </Link>
+          //       </li>
+          //       <li className={state.closeDealTabActive === 'month' ? 'active' : 'deactivate'}>
+          //         <Link onClick={() => handleActiveChangeYoutube('month')} to="#">
+          //           Month
+          //         </Link>
+          //       </li>
+          //       <li className={state.closeDealTabActive === 'year' ? 'active' : 'deactivate'}>
+          //         <Link onClick={() => handleActiveChangeYoutube('year')} to="#">
+          //           Year
+          //         </Link>
+          //       </li>
+          //     </ul>
+          //   </div>
+          // }
+          more={moreContent}
           title={
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>
               <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p> 
