@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
+import { BsThreeDots } from "react-icons/bs";
 import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
@@ -119,7 +120,7 @@ function Overview() {
           <Cards
             headless
             border 
-            gradient={ todayPoint >= 0 ? '120deg, rgb(212, 252, 121) 0%, rgb(150, 230, 161) 100%' : '0deg, #fff6d947, #ffac8d' }
+            gradient={ todayPoint >= 0 ? '120deg, rgb(212, 252, 121) 0%, #f8ffe6 100%' : '0deg, #fff6d947, #ffac8d' }
           >
             <EChartCard>
               <div className="card-chunk text-center">
@@ -167,7 +168,10 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
+                    <span><BsThreeDots /></span>
+                  </span>
                   <Heading as="h3">{numberWithCommas(accountStatus[0])}</Heading>
                 </CardBarChart2>
               </div>
@@ -179,7 +183,10 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
+                    <span><BsThreeDots /></span>
+                  </span>
                   <Heading as="h3">{numberWithCommas(accountStatus[-1])}</Heading>
                 </CardBarChart2>
               </div>
@@ -192,7 +199,10 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
+                    <span><BsThreeDots /></span>
+                  </span>
                   <Heading as="h3">{numberWithCommas(accountStatus[7])}</Heading>
                 </CardBarChart2>
               </div>
@@ -207,7 +217,10 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
+                    <span><BsThreeDots /></span>
+                  </span>
                   <Heading as="h2">{numberWithCommas(accountStatus[1])}</Heading>
                 </CardBarChart2>
               </div>

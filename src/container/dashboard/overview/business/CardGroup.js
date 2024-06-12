@@ -25,15 +25,9 @@ function CardGroup() {
       <Col md={12} xs={12}>
         <Focard>
           <div className="forcast-card-box">
-            <Cards bodypadding="5px" headless title={`Số ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
+            <Cards bodypadding="5px" headless title={`Tổng ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
                 <Heading as="h1"><strong>{ numberWithCommas(totalSub || 0) }</strong></Heading>
-                {/* <p className="focard-status">
-                  <span className="focard-status__percentage">
-                    <FeatherIcon icon="arrow-down" /> 25%
-                  </span>
-                  <span>Since last month</span>
-                </p> */}
               </div>
               <ChartjsAreaChart
                 id="netProfit"

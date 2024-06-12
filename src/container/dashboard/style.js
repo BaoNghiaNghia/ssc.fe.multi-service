@@ -1061,7 +1061,7 @@ const CardBarChart2 = Styled.div`
         }
     }
     h1{
-        margin-top: 5px;
+        margin-top: 8px;
         margin-bottom: 0px;
     }
     @media only screen and (max-width: 1500px){
