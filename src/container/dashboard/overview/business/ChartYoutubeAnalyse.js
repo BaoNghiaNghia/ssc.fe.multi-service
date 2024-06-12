@@ -10,6 +10,7 @@ const ChartYoutubeAnalyse = ({
 }) => {
     const chartDataGeneral = {
         chart: {
+            height: 250,
             width: '100%',
             type: 'line',
             dropShadow: {

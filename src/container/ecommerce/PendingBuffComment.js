@@ -128,10 +128,16 @@ function PendingBuffComment() {
   const { isListCommentModal, isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
 
   useEffect(() => {
-    dispatch(actions.fetchListOrderCommentBegin({
+    let initParams = {
       page: currentPage,
       limit: limitPage,
-    }));
+    };
+
+    if (state?.statusNumber !== 'all') {
+      initParams = { ...initParams, status: state.statusNumber };
+    }
+  
+    dispatch(actions.fetchListOrderCommentBegin(initParams));
   }, [dispatch, currentPage, limitPage]);
 
   useEffect(() => {
@@ -152,11 +158,15 @@ function PendingBuffComment() {
       const pattern = /^\d+\.?\d*$/;
       if (pattern.test(arraySearchValidate.join(""))) {
         dispatch(actions.fetchListOrderCommentBegin({
-          order_ids: arraySearchValidate.join(",")
+          order_ids: arraySearchValidate.join(","),
+          page: currentPage,
+          limit: limitPage,
         }));
       } else {
         dispatch(actions.fetchListOrderCommentBegin({
-          video_ids: arraySearchValidate.join(",")
+          video_ids: arraySearchValidate.join(","),
+          page: currentPage,
+          limit: limitPage,
         }));
       }
     }
@@ -588,10 +598,16 @@ function PendingBuffComment() {
     setState({
       ...state,
       statusNumber: e.target.value
-    })
+    });
+
+    setCurrentPage(1);
 
     if (e.target.value !== "all") {
-      dispatch(actions.fetchListOrderCommentBegin({ status: e.target.value }));
+      dispatch(actions.fetchListOrderCommentBegin({
+        status: e.target.value,
+        page: currentPage,
+        limit: limitPage,
+      }));
     } else {
       dispatch(actions.fetchListOrderCommentBegin());
     }

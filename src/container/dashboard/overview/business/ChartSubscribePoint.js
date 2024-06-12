@@ -51,24 +51,6 @@ const ChartSubscribePoint = ({
         stroke: {
             curve: 'smooth'
         },
-        // title: {
-        //     text: `Thống kê Subscribe`,
-        //     align: 'left',
-        //     style: {
-        //         fontFamily: 'Be Vietnam Pro',
-        //         fontWeight: 700,
-        //         fontSize: '15px'
-        //     },
-        // },
-        // subtitle: {
-        //     text: `Lần cập nhật tiếp theo 21:00 ${(today.getHours()) >= 21 ? (`${today.getDate() + 1  }/${  today.getMonth()  }${1  }/${  today.getFullYear()}`)
-        //         : (`${today.getDate()  }/${  today.getMonth()  }${1  }/${  today.getFullYear()}`)
-        //         }`,
-        //     align: 'left',
-        //     style: {
-        //         fontFamily: 'Be Vietnam Pro'
-        //     },
-        // },
         grid: {
             borderColor: '#68550046',
             row: {
