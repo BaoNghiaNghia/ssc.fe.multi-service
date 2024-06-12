@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts";
+import LoadingOverlay from 'react-loading-overlay-ts';
 import { numberWithCommas } from '../../../../utility/utility';
 import { FORMAT_DATESTRING } from '../../../../variables/index';
 
@@ -131,7 +132,13 @@ const ChartSubscribePoint = ({
     }
 
     return (
-        <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="line" height={180}/>
+        <LoadingOverlay
+            active={loadingChart}
+            spinner
+            text='Đang cập nhật...'
+        >
+            <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="line" height={180}/>
+        </LoadingOverlay>
     )
 }
 

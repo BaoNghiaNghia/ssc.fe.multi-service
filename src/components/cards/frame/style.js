@@ -70,6 +70,7 @@ const CardFrame = Styled(Card)`
 
   .ant-card-head{
     border-color: #F1F2F6;
+    background-color: #fffffa;
   }
   .ant-card-head .ant-card-head-title {
     padding: 18px 0;

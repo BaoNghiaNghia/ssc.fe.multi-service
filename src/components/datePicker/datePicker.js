@@ -7,14 +7,21 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import { DatePicker } from 'antd';
 import locale from 'antd/es/locale/vi_VN';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector } from 'react-redux';
 import moment from 'moment';
 import { ItemWraper, ButtonGroup } from './style';
 import { Button } from '../buttons/buttons';
 import { DEFAULT_PERPAGE, FORMAT_DATESTRING } from '../../variables/index';
 
+
 const DateRangePickerOne = ({ actionPicker }) => {
   const dispatch = useDispatch();
+
+  const { typeService } = useSelector((state) => {
+    return {
+      typeService: state?.reports?.typeService
+    };
+  });
 
   const [state, setState] = useState({
     datePickerInternational: null,
@@ -51,7 +58,8 @@ const DateRangePickerOne = ({ actionPicker }) => {
       pageSize: 1,
       limit: DEFAULT_PERPAGE,
       from: whichFrom,
-      to: whichTo
+      to: whichTo,
+      typeService
     }));
   }
 

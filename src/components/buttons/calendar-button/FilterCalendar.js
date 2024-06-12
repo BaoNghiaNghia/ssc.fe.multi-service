@@ -13,7 +13,7 @@ const FilterCalendar = ({ actionPicker, fromDate, toDate }) => {
       placement="bottomRight"
       title="Lọc theo khoảng thời gian"
       content={content}
-      action="click"
+      action="hover"
       style={{ backgroundColor: 'gray' }}
     >
       <Button 

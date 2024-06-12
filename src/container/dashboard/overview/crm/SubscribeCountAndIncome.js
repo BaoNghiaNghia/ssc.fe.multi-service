@@ -44,7 +44,6 @@ function SubscribeCountAndIncome(props) {
 
   const closeDealDatasets = closeDealState !== null && [
     {
-      data: orderAmount?.map(item => Math.abs(item?.total)),
       backgroundColor: '#20C99780',
       hoverBackgroundColor: '#5F63F2',
       label: 'Tổng point (đ)',
@@ -54,7 +53,6 @@ function SubscribeCountAndIncome(props) {
       percent: 49,
     },
     {
-      data: orderAmount?.map(item => Math.abs(item?.subOrder)),
       backgroundColor: '#5F63F280',
       hoverBackgroundColor: 'goldenrod',
       label: `${typeService} yêu cầu`,
@@ -66,21 +64,20 @@ function SubscribeCountAndIncome(props) {
   ];
 
   // eslint-disable-next-line no-unsafe-optional-chaining
-  const totalPoint = orderAmount?.map(item => item?.total) || [];
-  const arrWaveDate = orderAmount?.map(item => item?.date) || [];
-
-  const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? totalPoint[arrWaveDate?.indexOf(currentDate)] : 0;
+  const orderRequest = orderAmount?.reverse()?.map(item => item?.total) || [];
+  const totalPoint = performance?.reverse()?.map(item => Math.round(item?.avg_performance)) || [];
+  const arrWaveDate = performance?.map(item => item?.date) || [];
 
   const chartSubscribePoint = {
     wave_date: arrWaveDate,
     wave_timeline: [
       {
         name: `${typeService} yêu cầu`,
-        data: orderAmount?.map(item => Math.abs(item?.total)) || []
+        data: orderRequest
       },
       {
         name: 'Tổng point',
-        data: performance?.map(item => Math.round(item?.avg_performance)) || []
+        data: totalPoint
       }
     ],
   }
@@ -109,6 +106,8 @@ function SubscribeCountAndIncome(props) {
       </NavLink>
     </>
   );
+
+  const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? totalPoint[arrWaveDate?.indexOf(currentDate)] : 0;
 
   return (
     <>
@@ -155,7 +154,7 @@ function SubscribeCountAndIncome(props) {
                     totalSubToday > 0 ? (
                       <Col xxl={3} md={3} sm={3} xs={3}>
                         <div className="flex-grid-child">
-                          <p>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
+                          <p style={{ margin: 0, padding: 0 }}>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
                           <Heading as="h5" className="color-primary">
                             {numberWithCommas(totalPoint?.at(-1) || 0)}
                           </Heading>
@@ -167,7 +166,7 @@ function SubscribeCountAndIncome(props) {
                   {
                     totalPoint?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Doanh thu cao nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
+                        <p style={{ margin: 0, padding: 0 }}>Cao nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
                         <Heading as="h5">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
                       </div>
                     ) : null
@@ -177,7 +176,7 @@ function SubscribeCountAndIncome(props) {
                   {
                     totalPoint?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Doanh thu thấp nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
+                        <p style={{ margin: 0, padding: 0 }}>Thấp nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
                         <Heading as="h5">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
                       </div>
                     ) : null
@@ -185,7 +184,7 @@ function SubscribeCountAndIncome(props) {
                 </Col>
               </Row>
 
-              <ChartSubscribePoint loadingChart={false} chartData={chartSubscribePoint || {}} />
+              <ChartSubscribePoint loadingChart={isLoading} chartData={chartSubscribePoint || {}} />
 
               {/* <ChartjsBarChartTransparent
                 labels={orderAmount?.map(item => item.date)}

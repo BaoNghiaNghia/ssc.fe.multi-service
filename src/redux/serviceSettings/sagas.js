@@ -31,7 +31,7 @@ function* fetchListSettingsFunc(params) {
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
-      toast.error('Fetch report failed');
+      toast.error('Fetch list settings failed');
     }
   } finally { /* empty */ }
 }
@@ -55,7 +55,7 @@ function* fetchListServicesFunc(params) {
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
-      toast.error('Fetch report failed');
+      toast.error('Fetch services list failed');
     }
 
   } finally { /* empty */ }

@@ -200,13 +200,13 @@ function* reportDataSubscribeFunc(params) {
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.reportSubscribeErr({ error: errorMessage || 'Fetch report failed' })
+      actions.reportSubscribeErr({ error: errorMessage || 'Fetch daily subscribe failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
-      toast.error('Fetch report failed');
+      toast.error('Fetch daily subscribe failed');
     }
   } finally { /* empty */ }
 }
@@ -333,7 +333,21 @@ function* changeServiceTypeFunc(params) {
     );
 
     if (params?.payload === SERVICE_TYPE.COMMENT.title) {
+      console.log('---- change type nè ------', params?.payload)
+      // const initialFilter = {
+      //   start_date: `${fromDate  } 00:00:00`,
+      //   end_date: `${toDate  } 23:59:59`,
+      //   status: 1
+      // };
+
       yield put(actions.statisticCommentByOrderReportBegin());
+      yield put(actions.statisticTaskSuccessInMinuteBegin());
+      yield put(actions.statisticTaskDurationInMinuteBegin());
+      // yield put(actions.statisticOrderAmountBegin(initialFilter));
+      // yield put(actions.statisticAccountStatusCommentBegin(initialFilter));
+      // yield put(actions.statisticPerformanceCommentBegin(initialFilter));
+      // yield put(actions.statisticCommentByDayBegin(initialFilter));
+      // yield put(actions.statisticComputerThreadBegin(initialFilter));
     }
   } catch (err) {
     yield put(
@@ -360,14 +374,28 @@ function* setRangeDateFilterFunc(params) {
       actions.setRangeDateFilterSuccess(params?.payload)
     );
 
-    yield put(
-      actions.reportSubscribeBegin(params?.payload)
-    );
+    const initialFilter = {
+      start_date: `${params?.payload?.from  } 00:00:00`,
+      end_date: `${params?.payload?.to  } 23:59:59`,
+      status: 1
+    };
 
-    yield put(
-      actions.fetchSubscribeWithPointEverydayBegin(params?.payload)
-    );
-
+    if (params?.payload?.typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+      yield put(actions.reportSubscribeBegin(params?.payload));
+      yield put(actions.fetchSubscribeWithPointEverydayBegin(params?.payload));
+    }
+    
+    if (params?.payload?.typeService === SERVICE_TYPE.COMMENT.title) {
+  
+      yield put(actions.statisticCommentByOrderReportBegin());
+      yield put(actions.statisticTaskSuccessInMinuteBegin());
+      yield put(actions.statisticTaskDurationInMinuteBegin());
+      yield put(actions.statisticOrderAmountBegin(initialFilter));
+      yield put(actions.statisticAccountStatusCommentBegin(initialFilter));
+      yield put(actions.statisticPerformanceCommentBegin(initialFilter));
+      yield put(actions.statisticCommentByDayBegin(initialFilter));
+      yield put(actions.statisticComputerThreadBegin(initialFilter));
+    }
   } catch (err) {
     yield put(
       actions.setRangeDateFilterErr({ error: err || 'Set range filter failed' })

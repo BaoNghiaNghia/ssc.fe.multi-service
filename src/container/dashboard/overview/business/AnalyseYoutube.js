@@ -8,9 +8,8 @@ import ChartYoutubeAnalyse from './ChartYoutubeAnalyse';
 import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import Heading from '../../../../components/heading/heading';
-import { ChartjsBarChartTransparent } from '../../../../components/charts/chartjs';
 
-import { cashFlowGetData, cashFlowFilterData } from '../../../../redux/chartContent/actionCreator';
+import { cashFlowGetData } from '../../../../redux/chartContent/actionCreator';
 import { currentDate, numberWithCommas } from '../../../../utility/utility';
 
 function AnalyseYoutube(props) {
@@ -28,10 +27,6 @@ function AnalyseYoutube(props) {
       typeService: state?.reports?.typeService,
       commentByDay: state?.reports?.commentByDay
     };
-  });
-
-  const [state, setState] = useState({
-    cashFlowActive: 'year',
   });
 
   useEffect(() => {
@@ -83,72 +78,6 @@ function AnalyseYoutube(props) {
       barThickness: 12,
     },
   ];
-
-  // const chartBar = (
-  //   <ChartjsBarChartTransparent
-  //     labels={avgPerformance?.map(item => item?.date)}
-  //     datasets={cashFlowDataset || []}
-  //     height={43}
-  //     options={{
-  //       maintainAspectRatio: true,
-  //       responsive: true,
-  //       layout: {
-  //         padding: {
-  //           top: 20,
-  //         },
-  //       },
-  //       legend: {
-  //         display: false,
-  //         position: 'bottom',
-  //         align: 'start',
-  //         labels: {
-  //           boxWidth: 6,
-  //           display: false,
-  //           usePointStyle: true,
-  //         },
-  //       },
-  //       scales: {
-  //         yAxes: [
-  //           {
-  //             gridLines: {
-  //               color: '#e5e9f2',
-  //               borderDash: [3, 3],
-  //               zeroLineColor: '#e5e9f2',
-  //               zeroLineWidth: 1,
-  //               zeroLineBorderDash: [3, 3],
-  //             },
-  //             ticks: {
-  //               beginAtZero: true,
-  //               fontSize: 12,
-  //               fontColor: '#182b49',
-  //               // max: Math.max(...reportChart.map(item => item?.total_run)),
-  //               // stepSize: Math.floor(Math.max(...reportChart.map(item => item?.total_run)) / 5),
-  //               callback(label) {
-  //                 return `${label}k`;
-  //               },
-  //             },
-  //           },
-  //         ],
-  //         xAxes: [
-  //           {
-  //             gridLines: {
-  //               display: true,
-  //               zeroLineWidth: 2,
-  //               zeroLineColor: '#fff',
-  //               color: 'transparent',
-  //               z: 1,
-  //             },
-  //             ticks: {
-  //               beginAtZero: true,
-  //               fontSize: 12,
-  //               fontColor: '#182b49',
-  //             }
-  //           },
-  //         ],
-  //       },
-  //     }}
-  //   />
-  // )
 
   const arrTotalSub = commentByDay?.map(item => item?.comments) || [];
   const arrWaveDate = commentByDay?.map(item => item?.date);
@@ -270,8 +199,6 @@ function AnalyseYoutube(props) {
                   }
                 </Col>
               </Row>
-
-              {/* {chartBar} */}
               {chartApex}
               {dataIndicator}
 

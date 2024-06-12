@@ -6,9 +6,7 @@ import { Button } from '../buttons';
 
 const CalendarButtonPageHeader = () => {
   const content = (
-    <>
-      <DateRangePickerOne />
-    </>
+    <DateRangePickerOne />
   );
 
   return (
