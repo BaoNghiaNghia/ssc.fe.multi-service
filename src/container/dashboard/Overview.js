@@ -97,7 +97,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
-                  <Heading as="h3">{accountStatus[0]}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus[0])}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -109,7 +109,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
-                  <Heading as="h3">{accountStatus[-1]}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus[-1])}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -157,7 +157,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
-                  <Heading as="h3">{accountStatus[7]}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus[7])}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -171,7 +171,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
-                  <Heading as="h2">{accountStatus[1]}</Heading>
+                  <Heading as="h2">{numberWithCommas(accountStatus[1])}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
