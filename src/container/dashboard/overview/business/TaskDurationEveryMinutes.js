@@ -63,7 +63,7 @@ function TaskDurationEveryMinutes({ title }) {
   const optionTaskSuccess = {
     chart: {
       type: 'line',
-      height: 200,
+      height: 160,
     },
     title: {
       text: '',

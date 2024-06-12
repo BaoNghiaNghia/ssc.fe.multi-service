@@ -268,7 +268,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                    <span>Tổng Order hôm nay</span>
+                    <span>Tổng Order <br/> hôm nay</span>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                 </CardBarChart2>
@@ -282,7 +282,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                    <span>Tổng {typeService} hôm nay</span>
+                    <span>Tổng {typeService} <br/> hôm nay</span>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                 </CardBarChart2>
@@ -290,7 +290,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={24} md={24} sm={24} xs={12} style={{ display: 'flex' }}>
+        <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
           <Cards headless gradient='64deg, white, white' >
             <EChartCard>
               <div className="card-chunk">
@@ -394,7 +394,7 @@ function Overview() {
           </Col>
         </Row>
         <Row gutter={15}>
-          <Col xxl={24} xs={24}>
+          <Col xxl={12} xs={12}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -405,7 +405,7 @@ function Overview() {
               <TaskSuccessEveryMinutes title={`Tỉ lệ ${typeService} thành công`} />
             </Suspense>
           </Col>
-          <Col xxl={24} xs={24}>
+          <Col xxl={12} xs={12}>
             <Suspense
               fallback={
                 <Cards headless>
