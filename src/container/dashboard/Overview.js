@@ -8,6 +8,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
 import { BsThreeDots } from "react-icons/bs";
+import { TbSquareRoundedPercentage } from "react-icons/tb";
 import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
@@ -172,7 +173,7 @@ function Overview() {
                     <span><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
                     <span><BsThreeDots /></span>
                   </span>
-                  <Heading as="h3">{numberWithCommas(accountStatus[0])}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus[0] || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -187,7 +188,7 @@ function Overview() {
                     <span><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
                     <span><BsThreeDots /></span>
                   </span>
-                  <Heading as="h3">{numberWithCommas(accountStatus[-1])}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus[-1] || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -203,7 +204,7 @@ function Overview() {
                     <span><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
                     <span><BsThreeDots /></span>
                   </span>
-                  <Heading as="h3">{numberWithCommas(accountStatus[7])}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus[7] || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -221,7 +222,7 @@ function Overview() {
                     <span><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
                     <span><BsThreeDots /></span>
                   </span>
-                  <Heading as="h2">{numberWithCommas(accountStatus[1])}</Heading>
+                  <Heading as="h2">{numberWithCommas(accountStatus[1] || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -239,8 +240,9 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span>Tỉ lệ {typeService}</span>
+                    <TbSquareRoundedPercentage fontSize={17}/>
                   </span>
                   <Heading as="h4">{Math.round(ratioSubSvg || 0)} %</Heading>
                 </CardBarChart2>
@@ -253,8 +255,9 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span>Quest Lỗi/Tổng Quest</span>
+                    <TbSquareRoundedPercentage fontSize={17}/>
                   </span>
                   <Heading as="h4">0/0</Heading>
                 </CardBarChart2>
@@ -267,8 +270,9 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Tổng Order <br/> hôm nay</span>
+                    <TbSquareRoundedPercentage fontSize={17}/>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                 </CardBarChart2>
@@ -281,8 +285,9 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Tổng {typeService} <br/> hôm nay</span>
+                    <TbSquareRoundedPercentage fontSize={17}/>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                 </CardBarChart2>
@@ -295,8 +300,9 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Hiện tại/Tổng luồng</span>
+                    <TbSquareRoundedPercentage fontSize={17}/>
                   </span>
                   <Heading as="h4">
                     {computerThread?.current_thread || 0}/{computerThread?.free_thread || 0}

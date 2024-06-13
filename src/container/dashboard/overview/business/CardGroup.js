@@ -60,9 +60,9 @@ function CardGroup() {
             <Cards
               headless
               title={
-                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                  <IoFileTray fontSize={16} fontWeight={800} color="green" style={{ marginRight: '7px' }} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn đang chạy</span>
+                  <IoFileTray fontSize={18} fontWeight={800} color="green" style={{ marginRight: '13px' }} />
                 </div>
               }
             >
@@ -105,9 +105,9 @@ function CardGroup() {
           <Cards
             headless
             title={
-              <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                <IoFileTray fontSize={16} fontWeight={800} color="orange" style={{ marginRight: '7px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn tạm tắt</span>
+                <IoFileTray fontSize={18} fontWeight={800} color="orange" />
               </div>
             }
           >
@@ -123,9 +123,9 @@ function CardGroup() {
           <Cards
             headless
             title={
-              <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                <IoFileTray fontSize={16} fontWeight={800} color="gray" style={{ marginRight: '7px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn chờ duyệt</span>
+                <IoFileTray fontSize={18} fontWeight={800} color="gray" />
               </div>
             }
           >
