@@ -10,7 +10,7 @@ export const COUNT_ERROR_SUBSCRIBE_ENDPOINT = 'api/v2/admin/getCountError';
 export const RATIO_SUBSCRIBE_AVG_ENDPOINT = 'api/v2/pfmAvg';
 
 // COMMENTS
-export const STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-comment/api/v1/admin/statistics/status";
+export const STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-status";
 export const STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-comment/api/v1/admin/stats/order-amount";
 export const STATISTIC_BY_STATUS_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-status";
 export const STATISTIC_PERFORMANCE_ENDPOINT = "ytb-comment/api/v1/admin/stats/perfomance";

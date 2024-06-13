@@ -59,7 +59,7 @@ function Overview() {
     }
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
-      dispatch(actions.statisticCommentByOrderReportBegin());
+      dispatch(actions.statisticCommentByOrderReportBegin(initialFilter));
       dispatch(actions.statisticTaskSuccessInMinuteBegin());
       dispatch(actions.statisticTaskDurationInMinuteBegin());
       dispatch(actions.statisticOrderAmountBegin(initialFilter));
