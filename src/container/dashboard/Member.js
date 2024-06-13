@@ -233,7 +233,7 @@ function Member() {
               discount === null ? (
                 <span style={{ color: '#bdbdbd' }}>Chưa có</span>
               ) : (
-                <span>{Object.keys(discount).length} dịch vụ</span>
+                <span><strong>{Object.keys(discount).length}</strong> dịch vụ</span>
               )
             }
           </>
@@ -551,7 +551,7 @@ function Member() {
                     <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
                       <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
                         <span style={{ color: 'black', display: 'inline-flex', alignItems: 'center', marginRight: '3px' }}>
-                          <span>Giảm giá</span> 
+                          {/* <span>Giảm giá</span>  */}
                           <span style={{ fontWeight: 800 , marginRight: '4px', marginLeft: '4px'}}>
                             { matchingServiceDiscount[0]?.discount_service }
                             </span>
