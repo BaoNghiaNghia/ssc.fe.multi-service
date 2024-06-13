@@ -177,7 +177,7 @@ function EditService({ isOpen, setState, state }) {
           <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: 0 }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
-            <Col sm={19}>
+            <Col sm={18}>
               <Form.Item 
                 name="name" 
                 label="Tên dịch vụ"
@@ -190,7 +190,7 @@ function EditService({ isOpen, setState, state }) {
                 <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ'/>
               </Form.Item>
             </Col>
-            <Col sm={5}>
+            <Col sm={6}>
             <Form.Item 
                 name="geo" 
                 label="Geo"
@@ -203,27 +203,27 @@ function EditService({ isOpen, setState, state }) {
               >
                 <Select style={{ width: '100%' }} defaultValue="vn" size='small'>
                   <Option value="vn">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                      <img src={require(`../../../static/img/flag/vn.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>VN</span>
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
+                      <img src={require(`../../../static/img/flag/vn.png`)} alt="vn-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                      <span style={{ marginLeft: '10px' }}>Việt Nam</span>
                     </div>
                   </Option>
                   <Option value="us">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                      <img src={require(`../../../static/img/flag/us.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>US</span>
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
+                      <img src={require(`../../../static/img/flag/us.png`)} alt="us-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                      <span style={{ marginLeft: '10px' }}>USA</span>
                     </div>
                   </Option>
                   <Option value="kr">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                      <img src={require(`../../../static/img/flag/kr.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>KR</span>
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
+                      <img src={require(`../../../static/img/flag/kr.png`)} alt="kr-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                      <span style={{ marginLeft: '10px' }}>Korean</span>
                     </div>
                   </Option>
                   <Option value="jp">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                      <img src={require(`../../../static/img/flag/jp.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>JP</span>
+                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
+                      <img src={require(`../../../static/img/flag/jp.png`)} alt="jp-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                      <span style={{ marginLeft: '10px' }}>Japan</span>
                     </div>
                   </Option>
                 </Select>
