@@ -47,16 +47,14 @@ function SubscribeCountAndIncome(props) {
       backgroundColor: '#20C99780',
       hoverBackgroundColor: '#5F63F2',
       label: 'Tổng point (đ)',
-      average: '50.8',
       maxBarThickness: 10,
       barThickness: 7,
       percent: 49,
     },
     {
-      backgroundColor: '#5F63F280',
-      hoverBackgroundColor: 'goldenrod',
+      backgroundColor: '#008000',
+      hoverBackgroundColor: '#008000',
       label: `${typeService} yêu cầu`,
-      average: '$28k',
       maxBarThickness: 10,
       barThickness: 7,
       percent: 60,
@@ -64,8 +62,8 @@ function SubscribeCountAndIncome(props) {
   ];
 
   // eslint-disable-next-line no-unsafe-optional-chaining
-  const orderRequest = orderAmount?.reverse()?.map(item => item?.total) || [];
-  const totalPoint = performance?.reverse()?.map(item => Math.round(item?.avg_performance)) || [];
+  const totalPoint = orderAmount?.reverse()?.map(item => Math.round(item?.total)) || [];
+  const orderRequest = performance?.reverse()?.map(item => Math.round(item?.avg_performance)) || [];
   const arrWaveDate = performance?.map(item => item?.date) || [];
 
   const chartSubscribePoint = {
@@ -149,19 +147,15 @@ function SubscribeCountAndIncome(props) {
             </div>
           ) : (
             <CardBarChart>
-              <Row justify="start" style={{ marginLeft: '10px' }}>
-                  {
-                    totalSubToday > 0 ? (
-                      <Col xxl={3} md={3} sm={3} xs={3}>
-                        <div className="flex-grid-child">
-                          <p style={{ margin: 0, padding: 0 }}>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
-                          <Heading as="h5" className="color-primary">
-                            {numberWithCommas(totalPoint?.at(-1) || 0)}
-                          </Heading>
-                        </div>
-                      </Col>
-                    ) : null
-                  }  
+              <Row justify="start" style={{ marginLeft: '10px' }}> 
+                <Col xxl={3} md={3} sm={3} xs={3}>
+                  <div className="flex-grid-child">
+                    <p style={{ margin: 0, padding: 0}}>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
+                    <Heading as="h5" className="color-primary">
+                      {numberWithCommas(totalSubToday)}
+                    </Heading>
+                  </div>
+                </Col>
                 <Col xxl={3} md={3} sm={3} xs={3}>
                   {
                     totalPoint?.length > 0 ? (

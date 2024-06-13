@@ -166,18 +166,14 @@ function AnalyseYoutube(props) {
           ) : (
             <CardBarChart>
               <Row justify="start" style={{ marginLeft: '10px' }}>
-                {
-                  totalSubToday ? (
-                    <Col xxl={3} md={3} sm={3} xs={3}>
-                      <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
-                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>
-                          {numberWithCommas(arrTotalSub?.at(-1) || 0)}
-                        </Heading>
-                      </div>
-                    </Col>
-                  ) : null
-                }
+                <Col xxl={3} md={3} sm={3} xs={3}>
+                  <div className="flex-grid-child">
+                    <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
+                    <Heading as="h5" style={{ margin: 0, padding: 0 }}>
+                      {numberWithCommas(totalSubToday || 0)}
+                    </Heading>
+                  </div>
+                </Col>
                 <Col xxl={3} md={3} sm={3} xs={3}>
                   {
                     arrTotalSub?.length > 0 ? (
