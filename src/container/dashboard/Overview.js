@@ -255,9 +255,9 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Quest Lỗi/Tổng Quest</span>
-                    <TbSquareRoundedPercentage fontSize={17}/>
+                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">0/0</Heading>
                 </CardBarChart2>
@@ -272,7 +272,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Tổng Order <br/> hôm nay</span>
-                    <TbSquareRoundedPercentage fontSize={17}/>
+                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                 </CardBarChart2>
@@ -287,7 +287,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Tổng {typeService} <br/> hôm nay</span>
-                    <TbSquareRoundedPercentage fontSize={17}/>
+                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
                 </CardBarChart2>
@@ -302,7 +302,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Hiện tại/Tổng luồng</span>
-                    <TbSquareRoundedPercentage fontSize={17}/>
+                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
                     {computerThread?.current_thread || 0}/{computerThread?.free_thread || 0}

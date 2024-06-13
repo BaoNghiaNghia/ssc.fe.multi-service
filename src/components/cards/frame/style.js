@@ -69,8 +69,8 @@ const CardFrame = Styled(Card)`
   }
 
   .ant-card-head{
-    border-color: #F1F2F6;
-    background-image: linear-gradient(120deg, rgb(251 250 247) 0%, #f5f5f5 50%, rgba(231, 231, 231, 0) 100%);
+    border-color: rgb(0 0 0 / 12%);
+    background-image: linear-gradient(120deg, rgb(248 255 242) 0%, rgb(203 203 203 / 27%) 70%, rgba(231, 231, 231, 0) 100%);
   }
   .ant-card-head .ant-card-head-title {
     padding: 18px 0;

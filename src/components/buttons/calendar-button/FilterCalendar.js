@@ -19,7 +19,7 @@ const FilterCalendar = ({ actionPicker, fromDate, toDate }) => {
       <Button 
         size="small" 
         style={{ border: 'none', backgroundColor: 'transparent' }}
-        icon={<FaRegCalendarMinus style={{ width: '30', height: '30', color: 'green', backgroundColor: 'white', borderRadius: '8px', padding: '6px', border: '1px solid #a5c1a5' }} />}
+        icon={<FaRegCalendarMinus style={{ width: '30', height: '30', color: 'green', backgroundColor: 'white', borderRadius: '8px', padding: '5px', border: '2px solid green' }} />}
       >
         <span style={{ display: 'flex', alignItems: 'center', color: 'green' }}>
           <strong style={{ color: 'green' }}> &nbsp;{fromDate} &nbsp;</strong> đến <strong style={{ color: 'green' }}> &nbsp;{toDate}</strong>
