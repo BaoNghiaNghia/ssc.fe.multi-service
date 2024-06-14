@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import { GrNotification } from 'react-icons/gr';
-import { FaRegCommentDots } from 'react-icons/fa';
+import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from 'react-icons/ai';
 import MenueItems from './MenueItems';
 import TopMenu from './TopMenu';
@@ -236,6 +236,11 @@ const ThemeLayout = (WrappedComponent) => {
                   {topMenu && window.innerWidth > 991 ? <TopMenu /> : (
                     <>
                       {/* <HeaderSearch rtl={rtl} darkMode={darkMode} /> */}
+                      <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+                        <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px', color: 'gray' }}>Nền tảng: </span>
+                        <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }} />
+                        <span style={{ fontSize: '14px', fontWeight: '700' }}>Youtube</span>
+                      </div>
                       {/* <GalleryNav>
                         <ul>
                           <li>

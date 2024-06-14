@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
-import { FaRegCommentDots } from "react-icons/fa";
+import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
 import { BsThreeDots } from "react-icons/bs";
 import { TbSquareRoundedPercentage } from "react-icons/tb";
@@ -408,7 +408,7 @@ function Overview() {
                 </Cards>
               }
             >
-              <TaskSuccessEveryMinutes title={`Tỉ lệ ${typeService} thành công`} />
+              <TaskSuccessEveryMinutes title={`Số lượng ${typeService} mỗi phút`} />
             </Suspense>
           </Col>
           <Col xxl={12} xs={12}>
@@ -419,7 +419,7 @@ function Overview() {
                 </Cards>
               }
             >
-              <TaskDurationEveryMinutes title={`Số lượng ${typeService} mỗi phút`} />
+              <TaskDurationEveryMinutes title={`Thời gian ${typeService} trung bình`} />
             </Suspense>
           </Col>
           {/* <Col xxl={10} xs={24}>
