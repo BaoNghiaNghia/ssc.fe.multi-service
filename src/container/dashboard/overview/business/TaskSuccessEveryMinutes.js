@@ -74,7 +74,11 @@ function TaskSuccessEveryMinutes({ title }) {
       title: {
         text: 'Thời gian',
       },
-      visible: false
+      visible: false,
+      labels: {
+        format: '{value} km'
+      },
+      minRange: 5,
     },
     yAxis: {
       min: 0,
@@ -93,6 +97,13 @@ function TaskSuccessEveryMinutes({ title }) {
       {
         lineWidth: 1,
         data: taskSuccessInMinutes?.map((rp) => rp?.total),
+        name: `Lượt ${typeService}`,
+        color: '#008000',
+        fillOpacity: 0.5,
+        marker: {
+            enabled: false
+        },
+        threshold: null
       },
     ],
     legend: {
@@ -100,33 +111,45 @@ function TaskSuccessEveryMinutes({ title }) {
     },
     plotOptions: {
       area: {
-        fillColor: {
-            linearGradient: {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 1
-            }
-        },
-        marker: {
-            radius: 2
-        },
-        lineWidth: 1,
-        states: {
-            hover: {
-                lineWidth: 1
-            }
-        },
-        threshold: null
+          fillColor: {
+              linearGradient: {
+                  x1: 0,
+                  y1: 0,
+                  x2: 0,
+                  y2: 1
+              },
+              stops: [
+                  [0, Highcharts.getOptions().colors[0]],
+                  [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+              ]
+          },
+          marker: {
+              radius: 2
+          },
+          lineWidth: 1,
+          states: {
+              hover: {
+                  lineWidth: 1
+              }
+          },
+          threshold: null
       }
-    },
-    accessibility: {
-      screenReaderSection: {
-          beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
-      }
-    },
+  },
+    // accessibility: {
+    //   screenReaderSection: {
+    //       beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
+    //   }
+    // },
+  accessibility: {
+    screenReaderSection: {
+        beforeChartFormat: '<{headingTagName}>' +
+            '{chartTitle}</{headingTagName}><div>{chartSubtitle}</div>' +
+            '<div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>' +
+            '{yAxisDescription}</div>'
+    }
+  },
     tooltip: {
-        valueDecimals: 2
+        valueDecimals: 0
     }
   };
 

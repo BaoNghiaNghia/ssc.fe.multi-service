@@ -92,6 +92,8 @@ function TaskDurationEveryMinutes({ title }) {
       {
         lineWidth: 1,
         data: taskDurationInMinutes?.map((rp) => rp?.duration),
+        name: `Thời gian ${typeService}`,
+        color: '#008000'
       },
     ],
     legend: {
