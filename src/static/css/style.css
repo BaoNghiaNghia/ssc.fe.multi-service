@@ -1753,6 +1753,7 @@ html[dir='rtl'] .sDash_upload-basic .sDash_upload-browse{
 
 .ant-page-header-heading-title {
   text-transform: capitalize;
+  font-size: 15px !important;
 }
 
 /* Antd drag & drop */
