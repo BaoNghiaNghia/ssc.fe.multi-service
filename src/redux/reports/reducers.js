@@ -210,39 +210,33 @@ const ReportsReducer = (state = initialState, action) => {
     case STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
       return {
         ...state,
-        loading: true,
       };
 
     case STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS:
       return {
         ...state,
-        loading: false,
         taskSuccessInMinutes: data,
       };
 
     case STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR:
       return {
         ...state,
-        loading: false,
         error: err
       };
     case STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN:
       return {
         ...state,
-        loading: true,
       };
 
     case STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS:
       return {
         ...state,
-        loading: false,
         taskDurationInMinutes: data,
       };
 
     case STATISTIC_TASK_DURATION_IN_MINUTE_ERR:
       return {
         ...state,
-        loading: false,
         error: err
       };
 

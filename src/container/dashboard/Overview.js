@@ -60,8 +60,10 @@ function Overview() {
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.statisticCommentByOrderReportBegin(initialFilter));
-      dispatch(actions.statisticTaskSuccessInMinuteBegin());
-      dispatch(actions.statisticTaskDurationInMinuteBegin());
+      window.setInterval(() => {
+        dispatch(actions.statisticTaskSuccessInMinuteBegin());
+        dispatch(actions.statisticTaskDurationInMinuteBegin());
+      }, 3000);
       dispatch(actions.statisticOrderAmountBegin(initialFilter));
       dispatch(actions.statisticAccountStatusCommentBegin(initialFilter));
       dispatch(actions.statisticPerformanceCommentBegin(initialFilter));
@@ -305,7 +307,7 @@ function Overview() {
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
-                    {computerThread?.current_thread || 0}/{computerThread?.free_thread || 0}
+                    {numberWithCommas(computerThread?.current_thread) || 0}/{numberWithCommas(computerThread?.free_thread) || 0}
                   </Heading>
                 </CardBarChart2>
               </div>

@@ -302,7 +302,7 @@ function Member() {
             <Tooltip title="Credit Transaction">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
                 dispatch(actions.getCreditHistoryMemberBegin({ 
-                  id
+                  user_id: id
                 }));
 
                 setState({ ...state, isModalCreditHistory: true });

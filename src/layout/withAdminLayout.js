@@ -239,7 +239,7 @@ const ThemeLayout = (WrappedComponent) => {
                       <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                         <span style={{ marginRight: '15px', fontWeight: '600', paddingLeft: '10px', color: 'gray' }}>Nền tảng: </span>
                         <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }} />
-                        <span style={{ fontSize: '14px', fontWeight: '700' }}>Youtube</span>
+                        <span style={{ fontSize: '14px', fontWeight: '700', color: 'gray' }}>Youtube</span>
                       </div>
                       {/* <GalleryNav>
                         <ul>
