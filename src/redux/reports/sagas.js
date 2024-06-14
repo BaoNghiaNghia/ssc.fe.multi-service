@@ -78,8 +78,9 @@ function* statisticPerformanceCommentFunc(params) {
     const response = yield call(statisticPerformanceAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      const reverseTempData = response?.data?.data?.reverse()
       yield put(
-        actions.statisticPerformanceCommentSuccess(response?.data?.data)
+        actions.statisticPerformanceCommentSuccess(reverseTempData)
       );
     }
   } catch (error) {
@@ -124,8 +125,9 @@ function* statisticOrderAmountFunc(params) {
     const response = yield call(statisticOrderAmountAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      const reverseTempData = response?.data?.data?.reverse();
       yield put(
-        actions.statisticOrderAmountSuccess(response?.data?.data)
+        actions.statisticOrderAmountSuccess(reverseTempData)
       );
     }
   } catch (error) {

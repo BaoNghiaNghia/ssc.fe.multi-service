@@ -62,8 +62,8 @@ function SubscribeCountAndIncome(props) {
   ];
 
   // eslint-disable-next-line no-unsafe-optional-chaining
-  const totalPoint = orderAmount?.reverse()?.map(item => Math.round(item?.total)) || [];
-  const orderRequest = performance?.reverse()?.map(item => Math.round(item?.avg_performance)) || [];
+  const totalPoint = orderAmount?.map(item => Math.round(item?.total)) || [];
+  const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
   const arrWaveDate = performance?.map(item => item?.date) || [];
 
   const chartSubscribePoint = {
