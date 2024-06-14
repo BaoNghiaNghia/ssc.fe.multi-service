@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { FaYoutube } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { Row, Col, Form, Modal, Table, Tooltip, Popover } from 'antd';
+import moment from 'moment';
 import memberActions from '../../../redux/member/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, VIETNAMES_CURRENCY } from '../../../variables';
@@ -56,7 +57,7 @@ function CreditHistoryMember({ historyState, setState }) {
   
   if (creditHistory?.items?.length) {
     creditHistory?.items?.map((value, key) => {
-      const { id, amount, quantity, service_id, order_id, income, note, current_credit } = value;
+      const { id, amount, quantity, service_id, order_id, income, note, current_credit, created_at } = value;
 
       const findService = listService?.filter((item) => item.service_id === service_id);
 
@@ -82,6 +83,11 @@ function CreditHistoryMember({ historyState, setState }) {
         current_credit: (
           <span style={{ color: '#0089ff', fontWeight: 800 }}>
             {numberWithCommas(Math.round(current_credit))} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
+          </span>
+        ),
+        payment_date: (
+          <span style={{  }}>
+            {moment(created_at).format('HH:mm DD/MM')}
           </span>
         ),
         quantity: (
@@ -166,21 +172,16 @@ function CreditHistoryMember({ historyState, setState }) {
       dataIndex: 'quantity',
       key: 'quantity',
     },
-    // {
-    //   title: 'Dịch vụ',
-    //   dataIndex: 'service',
-    //   key: 'service',
-    // },
+    {
+      title: 'Giao dịch',
+      dataIndex: 'payment_date',
+      key: 'payment_date',
+    },
     {
       title: 'Nội dung thanh toán',
       dataIndex: 'note',
       key: 'note',
     },
-    // {
-    //   title: 'Thu nhập',
-    //   dataIndex: 'income',
-    //   key: 'income',
-    // },
   ];
 
   const findUser = creditHistory?.items?.length > 0 ? userList?.filter((item) => item.id === creditHistory?.items[0]?.user_id) : [];
