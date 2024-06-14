@@ -96,7 +96,7 @@ function TaskSuccessEveryMinutes({ title }) {
     series: [
       {
         lineWidth: 1,
-        data: taskSuccessInMinutes?.map((rp) => rp?.total),
+        data: taskSuccessInMinutes?.map((rp) => Math.round(rp?.total)),
         name: `Lượt ${typeService}`,
         color: '#008000',
         fillOpacity: 0.5,
@@ -149,7 +149,7 @@ function TaskSuccessEveryMinutes({ title }) {
     }
   },
     tooltip: {
-        valueDecimals: 0
+        valueDecimals: 0,
     }
   };
 

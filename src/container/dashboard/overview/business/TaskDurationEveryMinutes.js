@@ -87,7 +87,7 @@ function TaskDurationEveryMinutes({ title }) {
     series: [
       {
         lineWidth: 1,
-        data: taskDurationInMinutes?.map((rp) => rp?.duration),
+        data: taskDurationInMinutes?.map((rp) => Math.round(rp?.duration)),
         name: `Thời gian ${typeService}`,
         color: '#008000'
       },
@@ -123,7 +123,7 @@ function TaskDurationEveryMinutes({ title }) {
       }
     },
     tooltip: {
-        valueDecimals: 2
+        valueDecimals: 0
     }
   };
 

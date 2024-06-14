@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 // import FeatherIcon from 'feather-icons-react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Skeleton } from 'antd';
+import { Row, Col, Skeleton, Tooltip, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
@@ -172,8 +172,12 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
-                    <span><BsThreeDots /></span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
+                    <Tooltip title="Chi tiết">
+                      <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: '0 0 0 8px' }}>
+                        <BsThreeDots  style={{ margin: 0, padding: 0 }}/>
+                      </Button>
+                    </Tooltip>
                   </span>
                   <Heading as="h3">{numberWithCommas(accountStatus[0] || 0)}</Heading>
                 </CardBarChart2>
@@ -187,8 +191,14 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
-                    <span><BsThreeDots /></span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
+                    <span>
+                      <Tooltip title="Chi tiết">
+                        <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
+                          <BsThreeDots />
+                        </Button>
+                      </Tooltip>
+                    </span>
                   </span>
                   <Heading as="h3">{numberWithCommas(accountStatus[-1] || 0)}</Heading>
                 </CardBarChart2>
@@ -203,8 +213,14 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
-                    <span><BsThreeDots /></span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
+                    <span>
+                      <Tooltip title="Chi tiết">
+                        <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
+                          <BsThreeDots />
+                        </Button>
+                      </Tooltip>
+                    </span>
                   </span>
                   <Heading as="h3">{numberWithCommas(accountStatus[7] || 0)}</Heading>
                 </CardBarChart2>
@@ -221,8 +237,14 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
-                    <span><BsThreeDots /></span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
+                    <span>
+                      <Tooltip title="Chi tiết">
+                        <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
+                          <BsThreeDots />
+                        </Button>
+                      </Tooltip>
+                    </span>
                   </span>
                   <Heading as="h2">{numberWithCommas(accountStatus[1] || 0)}</Heading>
                 </CardBarChart2>
