@@ -64,12 +64,7 @@ const CardFrame = Styled(Card)`
   ${({ isbutton, theme }) => isbutton && BtnWraper(theme)}
   margin-bottom: 25px !important;
 
-  @media only screen and (max-width:320px) {
-    
-  }
-
   .ant-card-head{
-    border-color: rgb(0 0 0 / 12%);
     background-image: linear-gradient(120deg, rgb(248, 255, 242) 0%, rgb(251 227 227 / 27%) 40%, rgba(203, 203, 203, 0.27) 70%, rgb(255 255 255) 85%, rgba(231, 231, 231, 0) 100%);
   }
   .ant-card-head .ant-card-head-title {
