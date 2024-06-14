@@ -60,10 +60,10 @@ function Overview() {
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.statisticCommentByOrderReportBegin(initialFilter));
-      window.setInterval(() => {
-        dispatch(actions.statisticTaskSuccessInMinuteBegin());
-        dispatch(actions.statisticTaskDurationInMinuteBegin());
-      }, 3000);
+      // window.setInterval(() => {
+      // }, 4000);
+      dispatch(actions.statisticTaskSuccessInMinuteBegin());
+      dispatch(actions.statisticTaskDurationInMinuteBegin());
       dispatch(actions.statisticOrderAmountBegin(initialFilter));
       dispatch(actions.statisticAccountStatusCommentBegin(initialFilter));
       dispatch(actions.statisticPerformanceCommentBegin(initialFilter));
