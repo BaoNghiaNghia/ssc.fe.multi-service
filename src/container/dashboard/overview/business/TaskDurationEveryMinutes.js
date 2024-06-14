@@ -48,10 +48,6 @@ function TaskDurationEveryMinutes({ title }) {
     };
   });
 
-  const [state, setState] = useState({
-    revenue: 'year',
-  });
-
   useEffect(() => {
     if (performanceGetData) {
       dispatch(performanceGetData());
@@ -78,7 +74,7 @@ function TaskDurationEveryMinutes({ title }) {
     yAxis: {
       min: 0,
       title: {
-        text: `Lượt ${typeService}`,
+        text: `Thời gian (phút)`,
       },
       align: "center",
       verticalAlign: "middle",
