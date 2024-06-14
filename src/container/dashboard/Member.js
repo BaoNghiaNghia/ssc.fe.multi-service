@@ -169,6 +169,7 @@ function Member() {
     isModalRegisterNewAccount: false,
     notData: searchData,
     item: orders,
+    selectedRowID: null,
     selectedRowKeys: []
   });
 
@@ -301,11 +302,16 @@ function Member() {
             </Tooltip>
             <Tooltip title="Credit Transaction">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.getCreditHistoryMemberBegin({ 
+                dispatch(actions.getCreditHistoryMemberBegin({
+                  page: 1,
+                  limit: DEFAULT_PERPAGE,
                   user_id: id
                 }));
-
-                setState({ ...state, isModalCreditHistory: true });
+                setState({ 
+                  ...state, 
+                  isModalCreditHistory: true,
+                  selectedRowID: id
+                });
               }}>
                 <AiOutlineTransaction fontSize={18}/>
               </Button>
@@ -635,7 +641,7 @@ function Member() {
         ): null
       }
       <CreditHistoryMember
-        isOpen={isModalCreditHistory}
+        historyState={state}
         setState={setState}
       />
       <PageHeader

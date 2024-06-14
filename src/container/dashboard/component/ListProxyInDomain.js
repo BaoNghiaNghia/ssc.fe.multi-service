@@ -30,7 +30,6 @@ function ListProxyInDomain({ currentState, setState }) {
       limit: limitPage,
       id: dataRow?.id
     }));
-
   }, [dispatch, currentPage, limitPage]);
 
   const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);

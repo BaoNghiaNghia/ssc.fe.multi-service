@@ -4,15 +4,17 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FaYoutube } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
-import { Row, Col, Form, Modal, Table, Tooltip } from 'antd';
-import { MdAddchart } from "react-icons/md";
+import { Row, Col, Form, Modal, Table, Tooltip, Popover } from 'antd';
+import memberActions from '../../../redux/member/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, VIETNAMES_CURRENCY } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
 
-function CreditHistoryMember({ isOpen, setState }) {
+function CreditHistoryMember({ historyState, setState }) {
   const dispatch = useDispatch();
   const [formDelService] = Form.useForm();
+  
+  const { isModalCreditHistory, selectedRowID } = historyState;
 
   const { isLoading, creditHistory, listService, userList } = useSelector(state => {
     return {
@@ -28,13 +30,26 @@ function CreditHistoryMember({ isOpen, setState }) {
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   useEffect(() => {
+    if (selectedRowID !== null) {
+      dispatch(memberActions.getCreditHistoryMemberBegin({
+        page: currentPage,
+        limit: limitPage,
+        user_id: selectedRowID
+      }));
+    }
+  }, [dispatch, currentPage, limitPage]);
+
+  useEffect(() => {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
   const handleCancel = () => {
     setState({
+      ...historyState,
       isModalCreditHistory: false,
     });
+
+    setCurrentPage(1);
   }
 
   const dataSource = [];
@@ -119,30 +134,13 @@ function CreditHistoryMember({ isOpen, setState }) {
           <>
             {
               note?.length > 0 ? (
-                <Tooltip title={note} placement='Top'>
+                <Popover placement="top" title="" content={note} action="hover">
                   <span className="ordered-amount">{ note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}</span>
-                </Tooltip>
+                </Popover>
               ) : <>...</>
             }
           </>
         ),
-        // income: (
-        //   <>
-        //     {
-        //       income ? (
-        //         <span className="label" style={badgeGreenStyle}>
-        //           <BiMoneyWithdraw size={14} style={{ marginRight: '5px' }}/>
-        //           Cộng tiền
-        //         </span>
-        //       ) : (
-        //         <span className="label" style={badgeRedStyle}>
-        //           <BiMoneyWithdraw size={14} style={{ marginRight: '5px' }}/>
-        //           Trừ tiền
-        //         </span>
-        //       )
-        //     }
-        //   </>
-        // ),
       });
     });
   }
@@ -191,7 +189,7 @@ function CreditHistoryMember({ isOpen, setState }) {
     <>
       <Modal
         width='900px'
-        open={isOpen}
+        open={isModalCreditHistory}
         centered
         title={
           <>
@@ -199,7 +197,7 @@ function CreditHistoryMember({ isOpen, setState }) {
               <GrTransaction fontSize={40} color='#a1a1a1' style={{ margin: '0 20px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div >
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách giao dịch</p>
-                <p style={{ fontSize: '0.7em', marginBottom: '2px', fontWeight: '700' }}>Thông kê toàn bộ giao dịch của khách hàng</p>
+                <p style={{ fontSize: '0.7em', marginBottom: '2px', fontWeight: '700' }}>Thống kê toàn bộ giao dịch của khách hàng</p>
                 {
                   findUser?.length > 0 ? (
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -254,7 +252,7 @@ function CreditHistoryMember({ isOpen, setState }) {
 }
 
 CreditHistoryMember.propTypes = {
-  isOpen: PropTypes.bool,
+  historyState: PropTypes.object,
   setState: PropTypes.func
 };
 

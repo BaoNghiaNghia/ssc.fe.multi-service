@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table, Tooltip, Progress, Badge } from 'antd';
+import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
@@ -499,9 +499,9 @@ function PendingBuffComment() {
           <>
             {
               note?.length > 0 ? (
-                <Tooltip title={note} placement='Top'>
+                <Popover placement="top" content={note} action="hover">
                   <span className="ordered-amount">{ note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}</span>
-                </Tooltip>
+                </Popover>
               ) : <>...</>
             }
           </>
