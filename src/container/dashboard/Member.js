@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { BiSolidDiscount } from "react-icons/bi";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { TbPencilDiscount } from "react-icons/tb";
+import { FiArrowUpLeft } from "react-icons/fi";
 import { IoPeopleOutline } from "react-icons/io5";
 import { AiOutlineTransaction } from "react-icons/ai";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
@@ -548,7 +549,7 @@ function Member() {
                     placeholder='Nhập % (Từ 0 -> 100%)'
                     style={{ color: '#b7b7b7', fontWeight: 400, width: '100px' }}
                     editable={{
-                      icon: <TbPencilDiscount style={{ marginBottom: '5px', color: 'orangered' }}/>,
+                      icon: <FiArrowUpLeft fontSize={23} style={{ color: 'black' }}/>,
                       tooltip: 'Sửa giảm giá',
                       onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
                       maxLength: 3,
@@ -572,7 +573,7 @@ function Member() {
 
                     style={{ color: '#b7b7b7', fontWeight: 400, width: '100px' }}
                     editable={{
-                      icon: <TbPencilDiscount style={{ color: 'orangered' }}/>,
+                      icon: <FiArrowUpLeft fontSize={23} style={{ color: 'black', margin: 0, padding: 0 }}/>,
                       tooltip: 'Sửa giảm giá',
                       onChange: (value) => onUpdateDiscountSpecificate(service_id, value, id, discount),
                     }}

@@ -244,7 +244,7 @@ function CreditHistoryMember({ historyState, setState }) {
                   <Search 
                     size='small'
                     style={{ width: '90%', margin: 0 }}
-                    placeholder='Tìm theo Order ID'
+                    placeholder='Tìm ID đơn hàng'
                     onChange={debounce(handleSearchOrder, 500)}
                     allowClear
                   />
