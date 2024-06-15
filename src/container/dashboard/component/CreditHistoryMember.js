@@ -54,6 +54,7 @@ function CreditHistoryMember({ historyState, setState }) {
     });
 
     setCurrentPage(1);
+    formFilterTransaction.resetFields();
   }
 
   const dataSource = [];
@@ -84,7 +85,7 @@ function CreditHistoryMember({ historyState, setState }) {
           </>
         ),
         current_credit: (
-          <span style={{ color: '#0089ff', fontWeight: 800 }}>
+          <span style={{ color: '#006799', fontWeight: 800 }}>
             {numberWithCommas(Math.round(current_credit))} <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>
           </span>
         ),
@@ -206,17 +207,6 @@ function CreditHistoryMember({ historyState, setState }) {
         order_id: value
       }));
     }
-
-    // const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
-
-    // if (arraySearchValidate && arraySearchValidate.length > 0) {
-    //   dispatch(memberActions.getCreditHistoryMemberBegin({
-    //     page: currentPage,
-    //     limit: limitPage,
-    //     user_id: selectedRowID,
-    //     order_id: arraySearchValidate.join(",")
-    //   }));
-    // }
   };
 
   return (
