@@ -448,13 +448,14 @@ function Member() {
       id,
       discount: combineDiscount,
     }
+
     dispatch(actions.updateUserAdminBegin(requestData));
   }
 
   const { isModalDetailMem, isModalEditMem, isModalAddTopup, isModalConfirmTopup, isModalCreditHistory } = state;
 
   const handleRowExtanded = (record, index) => {
-    const RowData = userList.filter(item => item?.id === record?.key);
+    const RowData = userList?.filter(item => item?.id === record?.key);
     if (RowData?.length > 0) {
       const { discount, id } = RowData[0];
 
@@ -480,7 +481,7 @@ function Member() {
         },
       ];
 
-      listService.map((itemService, index) => {
+      listService?.map((itemService, index) => {
         const { name, service_id, priority, enabled, description, geo } = itemService;
         const matchingServiceDiscount = arrayDiscount?.filter((match) => service_id === match?.service_id);
         return inTableData.push({
