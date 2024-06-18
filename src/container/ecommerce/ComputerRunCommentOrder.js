@@ -429,7 +429,7 @@ function ComputerRunCommentOrder() {
                   role="button"
                   tabIndex="0"
                 >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luổng thiếu</p>
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luồng thiếu</p>
                   <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {aBitThreadServer}
                   </Heading>

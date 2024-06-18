@@ -40,7 +40,7 @@ function SignIn() {
   return (
     <AuthWrapper>
       <p className="auth-notice">
-        Chưa có tài khoản? <NavLink to="/register">Đăng ký ngay</NavLink>
+        {/* Chưa có tài khoản? <NavLink to="/register">Đăng ký ngay</NavLink> */}
       </p>
       <div className="auth-contents">
         <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">

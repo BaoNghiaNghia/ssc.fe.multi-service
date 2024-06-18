@@ -98,13 +98,13 @@ function AuthInfo() {
 
       <Settings /> */}
       {/* <Support /> */}
-      <div className="nav-author">
+      {/* <div className="nav-author">
         <Dropdown placement="bottomRight" content={country} trigger="click">
           <Link to="#" className="head-example">
             <img src={require(`../../../static/img/flag/${flag}.png`)} alt="" />
           </Link>
         </Dropdown>
-      </div>
+      </div> */}
 
       <div className="nav-author">
         <Popover placement="bottomRight" content={userContent} action="click">

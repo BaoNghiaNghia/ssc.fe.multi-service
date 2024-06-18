@@ -12,6 +12,7 @@ yarn.lock
 
 # production
 /build
+/build_yt_multiple_service_production
 
 # misc
 .DS_Store
