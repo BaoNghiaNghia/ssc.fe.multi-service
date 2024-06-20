@@ -5,6 +5,7 @@ import { Row, Col, Table, Tooltip, Badge, Switch, Form, InputNumber } from 'antd
 import FeatherIcon from 'feather-icons-react';
 import { FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { FcGoogle } from "react-icons/fc";
 import { FiEdit2 } from "react-icons/fi";
 import { FaLocationArrow } from "react-icons/fa6";
 import { TbServicemark } from "react-icons/tb";
@@ -515,6 +516,119 @@ function SettingAndService() {
     )
   }
 
+  const generateMenuTab = (typeTab) => {
+    switch (typeTab) {
+      case SERVICE_SETTING_TYPE.SERVICE.title: 
+        return (
+          <Cards headless>
+            <Row gutter={15}>
+              <Col xs={24}>
+                <TopToolBox>
+                  <Row gutter={15} className="justify-content-center">
+                    <Col lg={6} xs={24}>
+                      <div className="table-search-box">
+                        <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch vụ" />
+                      </div>
+                    </Col>
+                    <Col xxl={18} xs={24}>
+                      <div className="table-toolbox-actions">
+                        <Button size="small" key="4" type="primary" onClick={() => {
+                          setState({
+                            isOpenAdd: true,
+                          });
+                        }}>
+                          <FeatherIcon icon="plus" size={14} />
+                          Thêm dịch vụ
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </TopToolBox>
+              </Col>
+            </Row>
+            <Row gutter={15}>
+              <Col md={24}>
+                <TableWrapper className="table-order table-responsive">
+                  <div style={{ display: 'inline-flex' }}>
+                    <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                    <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
+                  </div>
+                  <Table
+                    size='small'
+                    showHeader={false}
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination={{
+                      current: listMetaService?.current_page,
+                      defaultPageSize: listMetaService?.count,
+                      pageSize: listMetaService?.per_page,
+                      total: listMetaService?.total,
+                      showSizeChanger: true,
+                      pageSizeOptions: DEFAULT_PAGESIZE,
+                      onChange(page, pageSize) {
+                        setCurrentPage(page);
+                        setLimitPage(pageSize)
+                      },
+                      position: ['bottomCenter'],
+                      responsive: true,
+                      showTotal(total, range) {
+                        return <>
+                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
+                        </>
+                      },
+                      totalBoundaryShowSizeChanger: 100,
+                      size: "small"
+                    }}
+                  />
+                </TableWrapper>
+              </Col>
+            </Row>
+          </Cards>
+        );
+      case SERVICE_SETTING_TYPE.SETTING.title: 
+        return (
+          <div>
+            {CommentSettingComponent()}
+            {LikeSettingComponent()}
+            {SubscribeSettingComponent()}
+          </div>
+        )
+      case SERVICE_SETTING_TYPE.GOOGLE_KEY.title: 
+        return (
+          <Cards headless>
+            <Row gutter={15}>
+              <Col xs={24}>
+                <TopToolBox>
+                  <Row gutter={15} className="justify-content-center">
+                    <Col lg={6} xs={24}>
+                      <div className="table-search-box">
+                        <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm key" />
+                      </div>
+                    </Col>
+                    <Col xxl={18} xs={24}>
+                      <div className="table-toolbox-actions">
+                        <Button size="small" key="4" type="primary" onClick={() => {
+                          setState({
+                            isOpenAdd: true,
+                          });
+                        }}>
+                          <FeatherIcon icon="plus" size={14} />
+                          Thêm key
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </TopToolBox>
+              </Col>
+            </Row>
+          </Cards>
+        );
+
+      default: 
+        return <></>
+    }
+  }
+
   return (
     <>
       <AddService
@@ -562,85 +676,28 @@ function SettingAndService() {
                   <IoSettingsOutline fontSize={18} style={{ marginRight: '5px' }} /> <span>Cài đặt</span>
                 </Link>
               </li>
+              <li>
+                <Link
+                  className={typeTab === SERVICE_SETTING_TYPE.GOOGLE_KEY.title ? 'active' : 'deactivate'}
+                  onClick={() => {
+                    handleChange(SERVICE_SETTING_TYPE.GOOGLE_KEY.title);
+
+                    if (listSettings) {
+                      formUpdateSettings.setFieldsValue(listSettings);
+                    }
+                  }}
+                  style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
+                  to="#"
+                >
+                  <FcGoogle fontSize={18} style={{ marginRight: '5px' }} /> <span>Quản lí Google Key</span>
+                </Link>
+              </li>
             </ul>
           </GalleryNav>,
         ]}
       />
       <Main>
-        {
-          typeTab === SERVICE_SETTING_TYPE.SERVICE.title ? (
-            <Cards headless>
-              <Row gutter={15}>
-                <Col xs={24}>
-                  <TopToolBox>
-                    <Row gutter={15} className="justify-content-center">
-                      <Col lg={6} xs={24}>
-                        <div className="table-search-box">
-                          <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch vụ" />
-                        </div>
-                      </Col>
-                      <Col xxl={18} xs={24}>
-                        <div className="table-toolbox-actions">
-                          <Button size="small" key="4" type="primary" onClick={() => {
-                            setState({
-                              isOpenAdd: true,
-                            });
-                          }}>
-                            <FeatherIcon icon="plus" size={14} />
-                            Thêm dịch vụ
-                          </Button>
-                        </div>
-                      </Col>
-                    </Row>
-                  </TopToolBox>
-                </Col>
-              </Row>
-              <Row gutter={15}>
-                <Col md={24}>
-                  <TableWrapper className="table-order table-responsive">
-                    <div style={{ display: 'inline-flex' }}>
-                      <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
-                      <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
-                    </div>
-                    <Table
-                      size='small'
-                      showHeader={false}
-                      dataSource={dataSource}
-                      columns={columns}
-                      pagination={{
-                        current: listMetaService?.current_page,
-                        defaultPageSize: listMetaService?.count,
-                        pageSize: listMetaService?.per_page,
-                        total: listMetaService?.total,
-                        showSizeChanger: true,
-                        pageSizeOptions: DEFAULT_PAGESIZE,
-                        onChange(page, pageSize) {
-                          setCurrentPage(page);
-                          setLimitPage(pageSize)
-                        },
-                        position: ['bottomCenter'],
-                        responsive: true,
-                        showTotal(total, range) {
-                          return <>
-                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
-                          </>
-                        },
-                        totalBoundaryShowSizeChanger: 100,
-                        size: "small"
-                      }}
-                    />
-                  </TableWrapper>
-                </Col>
-              </Row>
-            </Cards>
-          ) : (
-            <div>
-              {CommentSettingComponent()}
-              {LikeSettingComponent()}
-              {SubscribeSettingComponent()}
-            </div>
-          )
-        }
+        {generateMenuTab(typeTab)}
       </Main>
     </>
   );

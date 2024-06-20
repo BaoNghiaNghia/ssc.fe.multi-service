@@ -140,6 +140,9 @@ export const SERVICE_SETTING_TYPE = {
   'SETTING': {
       title: 'setting',
   },
+  'GOOGLE_KEY': {
+      title: 'google_key',
+  },
 }
 
 export const FixedServiceTemp = [
