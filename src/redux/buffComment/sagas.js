@@ -11,6 +11,7 @@ import {
     updateManyOrderCommentAPI,
     updateManyComputerCommentAPI,
     detailComputerRunCommentAPI,
+    deleteComputerRunCommentAPI,
     updateOneComputerRunCommentAPI,
 
     activeWarrantyOrderAPI,
@@ -314,6 +315,31 @@ function* detailComputerCommentFunc(params) {
   } finally { /* empty */ }
 }
 
+function* deleteComputerCommentFunc(params) {
+  try {
+    console.log('--- delete id nè ---', params?.payload);
+    const response = yield call(deleteComputerRunCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.deleteComputerRunCommentSuccess(response?.data?.data)
+      );
+
+      toast.success("Xóa máy chạy comment thành công!");
+
+      yield put(
+        actions.listComputerRunCommentBegin(response?.data?.data)
+      );
+    }
+
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.deleteComputerRunCommentErr({ error: errorMessage || 'Delete server run comment failed' })
+    );
+  } finally { /* empty */ }
+}
+
 function* detailOrderCommentFunc(params) {
   try {
     const response = yield call(getOneOrderCommentAPI, params?.payload?.id);
@@ -407,6 +433,10 @@ export function* detailOrderCommentWatcherSaga() {
 
 export function* detailComputerCommentWatcherSaga() {
   yield takeLatest(actions.DETAIL_COMPUTER_RUN_COMMENT_BEGIN, detailComputerCommentFunc);
+}
+
+export function* deleteComputerCommentWatcherSaga() {
+  yield takeLatest(actions.DELETE_COMPUTER_RUN_COMMENT_BEGIN, deleteComputerCommentFunc);
 }
 
 export function* commentInOrderCommentWatcherSaga() {

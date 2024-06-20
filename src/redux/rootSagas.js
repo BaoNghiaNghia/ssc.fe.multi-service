@@ -81,7 +81,8 @@ import {
     fetchWarrantyOrderWatcherSaga,
     activeWarrantyOrderWatcherSaga,
     refundhWarrantyOrderWatcherSaga,
-    setRangeDateWarrantyFilterWatcherSaga
+    setRangeDateWarrantyFilterWatcherSaga,
+    deleteComputerCommentWatcherSaga
 } from './buffComment/sagas';
 
 import {
@@ -160,6 +161,7 @@ export default function* rootSaga() {
         statisticTaskDurationInMinuteWatcherSaga(),
         statisticOrderAmountWatcherSaga(),
         statisticPerformanceCommentWatcherSaga(),
-        statisticAccountStatusCommentWatcherSaga()
+        statisticAccountStatusCommentWatcherSaga(),
+        deleteComputerCommentWatcherSaga()
     ]);
 }

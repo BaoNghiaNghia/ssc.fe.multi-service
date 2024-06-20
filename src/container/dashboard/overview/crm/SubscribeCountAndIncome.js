@@ -69,10 +69,10 @@ function SubscribeCountAndIncome(props) {
   const chartSubscribePoint = {
     wave_date: arrWaveDate,
     wave_timeline: [
-      {
-        name: `${typeService} yêu cầu`,
-        data: orderRequest
-      },
+      // {
+      //   name: `${typeService} yêu cầu`,
+      //   data: orderRequest
+      // },
       {
         name: 'Tổng point',
         data: totalPoint

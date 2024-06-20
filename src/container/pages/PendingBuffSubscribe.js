@@ -20,23 +20,6 @@ import { numberWithCommas } from '../../utility/utility';
 
 function PendingBuffSubscribe() {
   const dispatch = useDispatch();
-  const [currentCancelChannel, setCurrentCancelChannel] = useState(-1);
-
-  const [currentGroup, setCurrentGroup] = useState()
-  const [order_by, setOrder_by] = useState(0)
-  const [currentUser, setCurrentUser] = useState();
-  const [currentService, setCurrentService] = useState();
-  const [valueService, setValueService] = useState(0)
-  const [priority, setPriority] = useState(-1)
-  const [currentChannelID, setCurrentChannelID] = useState('');
-  const [currentOrderID, setCurrentOrderID] = useState(0);
-
-  const [current, setCurrent] = useState('mail');
-
-  const onClickMenu = e => {
-    console.log('click ', e);
-    setCurrent(e.key);
-  };
 
   const { searchData, orders, listOrderSubscribe, isLoading } = useSelector(state => {
     return {
@@ -125,53 +108,12 @@ function PendingBuffSubscribe() {
     });
   }
 
-  const clickUpdateHandler = (item) => {
-    dispatch(actions.showcurrentOrder(item))
-  }
   const clickShowListVideo = async (item) => {
     // const res = await getListVideo(item.channel_id)
     
     // if (res?.data?.success === true) {
     //   showModal()
     //   setDataVideo(res.data.data)
-    // }
-  }
-
-  const clickShowSubEveryday = async (item) => {
-    // const params = {
-    //   order_id: item.order_id
-    // }
-    // const res = await getSubOfVideo(params)
-    
-    // if (res?.data?.success === true) {
-    //   showModalSub()
-    //   setDataSubOfVideo(res.data.data)
-    // }
-  }
-
-  
-  const clickCompleteHandler = async (item) => {
-    // if (window.confirm('bạn có chắc chắn muốn hoàn thành đơn này') === true) {
-    //   const res = await completeChannel(item.order_id)
-    //   if (res?.data?.success === true) {
-    //     setOrders(orders.filter(_item => {
-    //       if (_item.order_id === item.order_id) {
-    //         return false
-    //       }
-    //       return true
-    //     }))
-    //   }
-    // }
-  }
-  const clickReloadVideo = async (item) => {
-    // if (window.confirm('bạn có chắc chắn muốn reload video cho kênh này') === true) {
-    //   const data = {
-    //     channel_id : item.channel_id
-    //   }
-    //   const res = await reloadVideo(data)
-    //   if (res?.data?.success === true) {
-    //     alert('Reload thành công')
-    //   }
     // }
   }
   const clickCancelHandler = async (item) => {
@@ -193,69 +135,6 @@ function PendingBuffSubscribe() {
     // setCurrentCancelVideo(order_id)
   }
 
-  const clickShowOrderPerformance = async (order) => {
-    // const res = await getPerformanceOrder(order.channel_id)
-    // if (res?.data?.success === true) {
-    //   setPerformanceOrder(res.data.data)
-    //   setShowPerformance(true);
-    // }
-  }
-
-  const remapOrders = orders.filter((order, index) => {
-    if (currentUser !== undefined && order.user_id !== currentUser.id) {
-      return false
-    }
-    if (currentService !== undefined && order.service_id !== currentService.service_id || currentService === undefined && valueService !== 0) {
-      return false
-    }
-    if (currentGroup !== undefined && order.group_id !== currentGroup.id) {
-      return false
-    }
-
-    if (priority !== -1 && order.priority !== priority) {
-      return false
-    }
-
-    if (currentChannelID && order.channel_id !== currentChannelID) {
-      return false
-    }
-    if (currentOrderID !== 0 && order.order_id !== currentOrderID) {
-      return false
-    }
-
-    return true
-  });
-
-  remapOrders.sort((a, b) => {
-    if(order_by === 0){
-      return a.order_id - b.order_id
-    } if (order_by === 1) {
-      return b.running - a.running;
-    } if (order_by === 2) {
-      return a.running - b.running;
-    } if (order_by === 3) {
-      return (b.current_sub - b.start_sub)/b.runed   - (a.current_sub - a.start_sub)/a.runed;
-    } if (order_by === 4) {
-      return (a.current_sub - a.start_sub)/a.runed  - (b.current_sub - b.start_sub)/b.runed;
-    } if (order_by === 5) {
-      return (a.sub_need - (a.current_sub - a.start_sub)) - (b.sub_need - (b.current_sub - b.start_sub));
-    } if (order_by === 6) {
-      return (b.sub_need - (b.current_sub - b.start_sub)) - (a.sub_need - (a.current_sub - a.start_sub));
-    } 
-      return a.running - b.running;
-    
-  });
-
-
-  let totalThieu = 0
-  let totalNeed = 0
-  let totalRuned = 0
-
-  remapOrders.forEach((item) => {
-    totalThieu += item.sub_need - (item.current_sub - item.start_sub)
-    totalNeed += item.sub_need
-    totalRuned += item.runed
-  });
 
   const columns = [
     {
@@ -476,15 +355,15 @@ function PendingBuffSubscribe() {
             <i className="feather icon-trash-2" /> Hủy
           </Button>
         }
-        if (state === "cancel") {
-          return (
-            <Button
-              onClick={() => setCurrentCancelChannel(record?.order_id)}
-            >
-              Duyệt hủy
-            </Button>
-          )
-        }
+        // if (state === "cancel") {
+        //   return (
+        //     <Button
+        //       onClick={() => setCurrentCancelChannel(record?.order_id)}
+        //     >
+        //       Duyệt hủy
+        //     </Button>
+        //   )
+        // }
 
         const menuDropdown = (
           <Menu>

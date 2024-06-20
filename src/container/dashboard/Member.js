@@ -427,7 +427,6 @@ function Member() {
   };
 
   const onUpdateDiscountSpecificate = (service_id, value, id, arrayDiscount) => {
-    console.log('--- giá trị value nè -----------------------', value);
     if (!value  || value === '') {
       alert('Vui lòng nhập giá trị');
       return;

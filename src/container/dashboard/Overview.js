@@ -163,23 +163,21 @@ function Overview() {
           <Cards
             border
             headless
-            // title={
-            //   <span style={{ display: 'inline-flex', alignItems: 'center', color: 'gray' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
-            // }
-            // more={moreContent}
           >
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
-                    <Tooltip title="Chi tiết">
-                      <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: '0 0 0 8px' }}>
+                    <Tooltip title="Danh sách mail">
+                      <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----', )} style={{ margin: 0, padding: '0 0 0 8px' }}>
                         <BsThreeDots  style={{ margin: 0, padding: 0 }}/>
                       </Button>
                     </Tooltip>
                   </span>
-                  <Heading as="h3">{numberWithCommas(accountStatus[0] || 0)}</Heading>
+                  <Heading as="h3">
+                    {numberWithCommas(accountStatus?.total_uncalled || 0)}
+                  </Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -191,7 +189,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail bị lỗi</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động</span>
                     <span>
                       <Tooltip title="Chi tiết">
                         <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
@@ -200,7 +198,7 @@ function Overview() {
                       </Tooltip>
                     </span>
                   </span>
-                  <Heading as="h3">{numberWithCommas(accountStatus[-1] || 0)}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus?.total_run || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -213,16 +211,16 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail die trong ngày</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chết</span>
                     <span>
-                      <Tooltip title="Chi tiết">
+                      <Tooltip title="Danh sách mail">
                         <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
                           <BsThreeDots />
                         </Button>
                       </Tooltip>
                     </span>
                   </span>
-                  <Heading as="h3">{numberWithCommas(accountStatus[7] || 0)}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus?.total_dead || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -237,7 +235,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động 24h</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail sống</span>
                     <span>
                       <Tooltip title="Chi tiết">
                         <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
@@ -246,7 +244,7 @@ function Overview() {
                       </Tooltip>
                     </span>
                   </span>
-                  <Heading as="h2">{numberWithCommas(accountStatus[1] || 0)}</Heading>
+                  <Heading as="h2">{numberWithCommas(accountStatus?.total_live || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>

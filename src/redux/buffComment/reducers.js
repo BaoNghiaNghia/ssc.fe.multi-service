@@ -48,6 +48,10 @@ const {
     DETAIL_COMPUTER_RUN_COMMENT_BEGIN,
     DETAIL_COMPUTER_RUN_COMMENT_ERR,
     DETAIL_COMPUTER_RUN_COMMENT_SUCCESS,
+
+    DELETE_COMPUTER_RUN_COMMENT_BEGIN,
+    DELETE_COMPUTER_RUN_COMMENT_ERR,
+    DELETE_COMPUTER_RUN_COMMENT_SUCCESS,
     
     UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN,
     UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR,
@@ -256,6 +260,24 @@ const ReportsReducer = (state = initialState, action) => {
         error: err
       };
 
+    case DELETE_COMPUTER_RUN_COMMENT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_COMPUTER_RUN_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case DELETE_COMPUTER_RUN_COMMENT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
     case DETAIL_COMPUTER_RUN_COMMENT_BEGIN:
       return {
         ...state,

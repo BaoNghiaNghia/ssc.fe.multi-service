@@ -16,7 +16,7 @@ function AnalyseYoutube(props) {
   const { title } = props;
 
   const dispatch = useDispatch();
-  const { cashFlowState, cfIsLoading, avgPerformance, reportChart, isLoading, filterRange, typeService, commentByDay } = useSelector(state => {
+  const { cashFlowState, cfIsLoading, avgPerformance, reportChart, isLoading, filterRange, typeService, commentByDay, performance } = useSelector(state => {
     return {
       cashFlowState: state?.chartContent?.cashFlowData,
       cfIsLoading: state?.chartContent?.cfLoading,
@@ -25,7 +25,8 @@ function AnalyseYoutube(props) {
       reportChart: state?.reports?.subscribeReport?.report,
       filterRange: state?.reports?.filterRange,
       typeService: state?.reports?.typeService,
-      commentByDay: state?.reports?.commentByDay
+      commentByDay: state?.reports?.commentByDay,
+      performance: state?.reports?.performance
     };
   });
 
@@ -80,21 +81,21 @@ function AnalyseYoutube(props) {
   ];
 
   const arrTotalSub = commentByDay?.map(item => item?.comments) || [];
+  const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
   const arrWaveDate = commentByDay?.map(item => item?.date);
-  
-  const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? arrTotalSub[arrWaveDate?.indexOf(currentDate)] : 0;
+
 
   const dataChartYoutube = {
     wave_date: arrWaveDate,
     wave_timeline: [
       {
-        name: `Tổng sub chạy (${typeService})`,
+        name: 'Tỉ lệ thành công (%)',
+        data: orderRequest
+      },
+      {
+        name: `Tổng ${typeService} chạy (${typeService})`,
         data: arrTotalSub
       },
-      // {
-      //   name: 'Tỉ lệ thành công (%)',
-      //   data: avgPerformance?.map(item => item?.performance)
-      // }
     ],
   };
 
@@ -123,7 +124,9 @@ function AnalyseYoutube(props) {
           );
         })}
     </ul>
-  )
+  );
+
+  const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? arrTotalSub[arrWaveDate?.indexOf(currentDate)] : 0;
 
   return (    
       cashFlowState !== null && (

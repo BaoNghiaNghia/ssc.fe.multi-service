@@ -380,7 +380,7 @@ function PendingBuffComment() {
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listWarrantyOrder?.meta?.total || 0)}</span> order</span>
-
+                    <Button type="">Quét</Button>
                   </Col>
                 </Row>
               </TopToolBox>

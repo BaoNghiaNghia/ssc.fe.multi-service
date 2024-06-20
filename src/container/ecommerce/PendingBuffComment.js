@@ -5,6 +5,7 @@ import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover } from 'antd'
 import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
+import { WiTime7 } from "react-icons/wi";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
@@ -13,6 +14,7 @@ import { LuListFilter } from "react-icons/lu";
 import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
 
+import moment from 'moment';
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListCommentOfOrder';
@@ -51,6 +53,11 @@ const columns = [
     key: 'order_id',
   },
   {
+    title: 'Thời gian tạo',
+    dataIndex: 'created_at',
+    key: 'created_at',
+  },
+  {
     title: 'Đã chạy / Thực tế',
     dataIndex: 'quantity',
     key: 'quantity',
@@ -79,6 +86,16 @@ const columns = [
     title: 'Trạng thái',
     dataIndex: 'status',
     key: 'status',
+  },
+  {
+    title: 'Lần cuối',
+    dataIndex: 'last_call_at',
+    key: 'last_call_at',
+  },
+  {
+    title: 'Google quét',
+    dataIndex: 'last_google_at',
+    key: 'last_google_at',
   },
   {
     title: 'Ghi chú',
@@ -196,7 +213,10 @@ function PendingBuffComment() {
         video_duration,
         current_count,
         start_count,
-        geo
+        geo,
+        created_at,
+        last_google_at,
+        last_call_at
        } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
@@ -341,6 +361,24 @@ function PendingBuffComment() {
             {/* <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Còn thiếu: <strong>{numberWithCommas((quantity - (current_count - start_count)))}</strong></p> */}
           </>
         ),
+        created_at: (
+          <span style={{ fontStyle: 'italic', color: 'gray', fontSize: '0.9em', display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+            {moment(created_at).format('HH:mm DD/MM')}
+          </span>
+        ),
+        last_call_at: (
+          <span style={{ fontStyle: 'italic', color: 'gray', fontSize: '0.9em', display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+            {moment(last_call_at).format('HH:mm DD/MM')}
+          </span>
+        ),
+        last_google_at: (
+          <span style={{ fontStyle: 'italic', color: 'gray', fontSize: '0.9em', display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+            {moment(last_google_at).format('HH:mm DD/MM')}
+          </span>
+        ),
         quantity: (
           <>
             {
@@ -468,9 +506,11 @@ function PendingBuffComment() {
                           </Tooltip>
                         ) : null
                       }
-                      { `${findService[0]?.name?.substring(0, 20)  }...` }
+                      { `${findService[0]?.name?.substring(0, 17)  }...` }
+                      {/* {findService[0]?.service_id} */}
                     </span>
                     <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>
+                    <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>ID: </strong>{findService[0]?.service_id}</span>
                   </Tooltip>
                 </>
               ) : (

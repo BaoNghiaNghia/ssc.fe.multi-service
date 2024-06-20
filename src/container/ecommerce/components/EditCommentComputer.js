@@ -94,10 +94,7 @@ function EditCommentComputer({ setState, computerState }) {
                             <>
                                 <Row gutter="10">
                                     <Col sm={12}>
-                                        <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn" rules={[{
-                                            required: true,
-                                            message: 'Trường không được trống'
-                                        }]}>
+                                        <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn">
                                             <Input size='small' addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server comment' />
                                         </Form.Item>
                                     </Col>
@@ -110,8 +107,7 @@ function EditCommentComputer({ setState, computerState }) {
 
                                 <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
 
-                                <Row gutter="10">
-                                    
+                                <Row gutter="10"> 
                                     <Col sm={12}>
                                         <Form.Item name="cpu" label="CPU">
                                             <Input size='small' style={{ width: '100%' }} placeholder='CPU của server' />

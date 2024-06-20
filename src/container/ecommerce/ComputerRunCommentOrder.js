@@ -5,6 +5,7 @@ import { Row, Col, Table, Badge, Tooltip, Button } from 'antd';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt, TbShoppingBagEdit } from 'react-icons/tb';
 import FeatherIcon from 'feather-icons-react';
+import { AiTwotoneDelete } from "react-icons/ai";
 import { CgServer } from "react-icons/cg";
 import { LuLink2 } from "react-icons/lu";
 import { MdOutlineNumbers } from "react-icons/md";
@@ -13,6 +14,7 @@ import { Pstates, TopToolBox } from './Style';
 import DetailCommentComputer from './components/DetailCommentComputer';
 import EditCommentComputer from './components/EditCommentComputer';
 import BatchUpdateComputerComment from './components/BatchUpdateComputerComment';
+import ConfirmRequestModal from './components/ConfirmRequestModal';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { Cards } from '../../components/cards/frame/cards-frame';
@@ -83,12 +85,14 @@ function ComputerRunCommentOrder() {
   const [state, setState] = useState({
     isEditCommentServer: false,
     isDetailCommentServer: false,
+    isDeleteCommentServer: false,
     isBatchUpdateCommentServer: false,
     notData: searchData,
     activeClass: 'all',
     current: 0,
     pageSize: 0,
     selectedRowKeys: [],
+    selectedItem: {}
   });
 
   const { notData, selectedRowKeys } = state;
@@ -304,6 +308,26 @@ function ComputerRunCommentOrder() {
                 <FeatherIcon icon="eye" size={16} style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
+            {/* TODO: */}
+            <Tooltip title="Xóa">
+              <Button
+                size="default"
+                shape="circle"
+                type="default"
+                to="#"
+                style={{ marginRight: '5px' }}
+                className="btn-icon"
+                onClick={() => {
+                  setState({
+                    ...state,
+                    isDeleteCommentServer: true,
+                    selectedItem: value
+                  })
+                }}
+              >
+                <AiTwotoneDelete size={16} style={{ marginTop: '4px' }} />
+              </Button>
+            </Tooltip>
           </div>
         ),
       });
@@ -327,8 +351,24 @@ function ComputerRunCommentOrder() {
     },
   };
 
+  console.log('--- selected computer comment -----', state?.selectedItem);
+
   return (
     <>
+      <ConfirmRequestModal
+        isOpen={state?.isDeleteCommentServer}
+        setState={setState}
+        descriptions={`Xác nhận xóa máy chạy comment ${state?.selectedItem?.name}`}
+        title="Xác nhận"
+        subtitle="Xóa thông tin máy chạy comment"
+        handleOk={() => {
+          dispatch(actions.deleteComputerRunCommentBegin({id: state?.selectedItem?.id}));
+          setState({ 
+            ...state,
+            isSendRequestModal: false
+          });
+        }}
+      />
       <BatchUpdateComputerComment
         computerState={state}
         setState={setState}

@@ -43,6 +43,10 @@ const actions = {
     DETAIL_COMPUTER_RUN_COMMENT_SUCCESS: 'DETAIL_COMPUTER_RUN_COMMENT_SUCCESS',
     DETAIL_COMPUTER_RUN_COMMENT_ERR: 'DETAIL_COMPUTER_RUN_COMMENT_ERR',
 
+    DELETE_COMPUTER_RUN_COMMENT_BEGIN: 'DELETE_COMPUTER_RUN_COMMENT_BEGIN',
+    DELETE_COMPUTER_RUN_COMMENT_SUCCESS: 'DELETE_COMPUTER_RUN_COMMENT_SUCCESS',
+    DELETE_COMPUTER_RUN_COMMENT_ERR: 'DELETE_COMPUTER_RUN_COMMENT_ERR',
+
     FETCH_WARRANTY_ORDER_BEGIN: 'FETCH_WARRANTY_ORDER_BEGIN',
     FETCH_WARRANTY_ORDER_SUCCESS: 'FETCH_WARRANTY_ORDER_SUCCESS',
     FETCH_WARRANTY_ORDER_ERR: 'FETCH_WARRANTY_ORDER_ERR',
@@ -181,6 +185,27 @@ const actions = {
     detailComputerRunCommentErr: (err) => {
         return {
             type: actions.DETAIL_COMPUTER_RUN_COMMENT_ERR,
+            err,
+        };
+    },
+
+    deleteComputerRunCommentBegin: (payload) => {
+        return {
+            type: actions.DELETE_COMPUTER_RUN_COMMENT_BEGIN,
+            payload
+        };
+    },
+
+    deleteComputerRunCommentSuccess: (data) => {
+        return {
+            type: actions.DELETE_COMPUTER_RUN_COMMENT_SUCCESS,
+            data,
+        };
+    },
+
+    deleteComputerRunCommentErr: (err) => {
+        return {
+            type: actions.DELETE_COMPUTER_RUN_COMMENT_ERR,
             err,
         };
     },
