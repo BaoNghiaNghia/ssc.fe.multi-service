@@ -40,7 +40,7 @@ function Overview() {
     ratioSubSvg, 
     typeService, 
     computerThread, 
-    // accountStatus
+    accountStatus
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
@@ -49,40 +49,9 @@ function Overview() {
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
       computerThread: state?.reports?.computerThread,
-      // accountStatus: state?.reports?.accountStatus
+      accountStatus: state?.reports?.accountStatus
     };
   });
-
-  const accountStatus = {
-    "total_live": 3762,
-    "total_run": 0,
-    "total_uncalled": 3028,
-    "list_uncalled": [
-        {
-            "computer_id": "6666884821eedf7bccc0e868",
-            "computer_name": "May_vn",
-            "total": 1493
-        },
-        {
-            "computer_id": "6671463f861744ed0a66830f",
-            "computer_name": "May_42_2_vn",
-            "total": 44
-        },
-        {
-            "computer_id": "6666a77f21eedf7bccc0eace",
-            "computer_name": "May_kr",
-            "total": 1491
-        }
-    ],
-    "total_dead": 3,
-    "list_dead": [
-        {
-            "computer_id": "6666884821eedf7bccc0e868",
-            "computer_name": "May_vn",
-            "total": 3
-        }
-    ]
-}
 
   useEffect(() => {
     const initialFilter = {
@@ -211,7 +180,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
-                    <Tooltip title="Danh sách mail">
+                    <Tooltip title={accountStatus?.list_uncalled ? "Danh sách mail": "Không có mail"}>
                       <Button 
                         type='text'
                         disabled={accountStatus?.list_uncalled === undefined || accountStatus?.list_uncalled === null}
@@ -267,7 +236,7 @@ function Overview() {
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chết</span>
                     <span>
-                      <Tooltip title="Danh sách mail">
+                      <Tooltip title={accountStatus?.list_dead ? "Danh sách mail": "Không có mail"}>
                         <Button 
                           type='text'
                           onClick={() => setState({ 

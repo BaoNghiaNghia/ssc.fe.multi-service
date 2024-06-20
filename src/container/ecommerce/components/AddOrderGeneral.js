@@ -425,7 +425,9 @@ function AddOrderGeneral() {
                     </Form.Item>
                   </Col>
                 </Row>
-                {switchServiceSelection(stateCurr?.selectedCategory)}
+                {
+                  !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : null
+                }
               </Card>
             </Col>
             <Col sm={8}>
@@ -495,7 +497,7 @@ function AddOrderGeneral() {
                       </div>
                     </Card>
                   </>
-                ) : <Card size="small">
+                ) : <Card size="small" style={{ display: 'flex', alignItems: 'stretch', flexFlow: 'column' }}>
                   Chưa chọn dịch vụ
                 </Card>
               }
