@@ -8,6 +8,8 @@ import { BsFire } from "react-icons/bs";
 import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
 import { MdOutlineSendTimeExtension } from "react-icons/md";
+import moment from 'moment';
+import { WiTime7 } from 'react-icons/wi';
 import { TopToolBox } from './Style';
 import ConfirmRequestModal from './components/ConfirmRequestModal';
 import FilterOrderComment from './components/FilterOrderComment';
@@ -259,7 +261,10 @@ function PendingBuffComment() {
         ),
         completed_at: (
           <>
-            <span>{completed_at}</span>
+            <span style={{ fontStyle: 'italic', color: 'gray', fontSize: '0.9em', display: 'inline-flex', alignItems: 'center' }}>
+              <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+              {moment(completed_at).format('HH:mm DD/MM')}
+            </span>
           </>
         ),
         amount: <span className="ordered-amount">{amount}</span>,

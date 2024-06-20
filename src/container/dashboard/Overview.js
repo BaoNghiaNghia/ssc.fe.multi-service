@@ -13,6 +13,7 @@ import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import { CardBarChart2, CardBarChartCenter, EChartCard, GalleryNav } from './style';
+import DetailMailList from './component/DetailMailList';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
@@ -32,7 +33,15 @@ const CardGroup = lazy(() => import('./overview/business/CardGroup'));
 function Overview() {
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, todayProfit, ratioSubSvg, typeService, computerThread, accountStatus } = useSelector((state) => {
+  const { 
+    fromDate, 
+    toDate, 
+    todayProfit, 
+    ratioSubSvg, 
+    typeService, 
+    computerThread, 
+    // accountStatus
+  } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
@@ -40,9 +49,40 @@ function Overview() {
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
       computerThread: state?.reports?.computerThread,
-      accountStatus: state?.reports?.accountStatus
+      // accountStatus: state?.reports?.accountStatus
     };
   });
+
+  const accountStatus = {
+    "total_live": 3762,
+    "total_run": 0,
+    "total_uncalled": 3028,
+    "list_uncalled": [
+        {
+            "computer_id": "6666884821eedf7bccc0e868",
+            "computer_name": "May_vn",
+            "total": 1493
+        },
+        {
+            "computer_id": "6671463f861744ed0a66830f",
+            "computer_name": "May_42_2_vn",
+            "total": 44
+        },
+        {
+            "computer_id": "6666a77f21eedf7bccc0eace",
+            "computer_name": "May_kr",
+            "total": 1491
+        }
+    ],
+    "total_dead": 3,
+    "list_dead": [
+        {
+            "computer_id": "6666884821eedf7bccc0e868",
+            "computer_name": "May_vn",
+            "total": 3
+        }
+    ]
+}
 
   useEffect(() => {
     const initialFilter = {
@@ -78,6 +118,8 @@ function Overview() {
 
   const [state, setState] = useState({
     activeClass: SERVICE_TYPE.SUBSCRIBE.title,
+    isMailListPopup: false,
+    selectedItem: {}
   });
 
   const handleChange = (value) => {
@@ -170,7 +212,19 @@ function Overview() {
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
                     <Tooltip title="Danh sách mail">
-                      <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----', )} style={{ margin: 0, padding: '0 0 0 8px' }}>
+                      <Button 
+                        type='text'
+                        disabled={accountStatus?.list_uncalled === undefined || accountStatus?.list_uncalled === null}
+                        onClick={() => setState({ 
+                          ...state,
+                          isMailListPopup: true,
+                          selectedItem: {
+                            title: 'Mail chưa được gọi',
+                            data: accountStatus?.list_uncalled
+                          }
+                        })}
+                        style={{ margin: 0, padding: '0 0 0 8px' }}
+                      >
                         <BsThreeDots  style={{ margin: 0, padding: 0 }}/>
                       </Button>
                     </Tooltip>
@@ -214,7 +268,19 @@ function Overview() {
                     <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chết</span>
                     <span>
                       <Tooltip title="Danh sách mail">
-                        <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
+                        <Button 
+                          type='text'
+                          onClick={() => setState({ 
+                            ...state,
+                            isMailListPopup: true,
+                            selectedItem: {
+                              title: 'Mail chết',
+                              data: accountStatus?.list_dead
+                            }
+                          })}
+                          style={{ margin: 0, padding: 0 }}
+                          disabled={accountStatus?.list_dead === undefined || accountStatus?.list_dead === null}
+                        >
                           <BsThreeDots />
                         </Button>
                       </Tooltip>
@@ -340,6 +406,10 @@ function Overview() {
 
   return (
     <>
+      <DetailMailList
+        mailState={state}
+        setState={setState}
+      />
       <PageHeader
         ghost
         title={(

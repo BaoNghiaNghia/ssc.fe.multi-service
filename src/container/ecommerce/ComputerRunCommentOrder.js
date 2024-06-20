@@ -10,6 +10,7 @@ import { CgServer } from "react-icons/cg";
 import { LuLink2 } from "react-icons/lu";
 import { MdOutlineNumbers } from "react-icons/md";
 
+import { WiTime7 } from 'react-icons/wi';
 import { Pstates, TopToolBox } from './Style';
 import DetailCommentComputer from './components/DetailCommentComputer';
 import EditCommentComputer from './components/EditCommentComputer';
@@ -237,10 +238,11 @@ function ComputerRunCommentOrder() {
         ),
         lastReset: (
           <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
             <span>
               {
                 value?.last_action_at ? (
-                  <span style={{ fontWeight: '700' }}>{value?.last_action_at}</span>
+                  <span style={{ fontWeight: '500' }}>{value?.last_action_at}</span>
                 ) : (
                   <span style={{ color: '#cdcdcd' }}>Chưa reset</span>
                 )
@@ -350,8 +352,6 @@ function ComputerRunCommentOrder() {
       onSelectChange(srk);
     },
   };
-
-  console.log('--- selected computer comment -----', state?.selectedItem);
 
   return (
     <>

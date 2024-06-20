@@ -317,7 +317,6 @@ function* detailComputerCommentFunc(params) {
 
 function* deleteComputerCommentFunc(params) {
   try {
-    console.log('--- delete id nè ---', params?.payload);
     const response = yield call(deleteComputerRunCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {

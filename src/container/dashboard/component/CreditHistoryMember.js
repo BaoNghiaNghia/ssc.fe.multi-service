@@ -7,6 +7,7 @@ import { FaYoutube } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { Row, Col, Form, Modal, Table, Tooltip, Popover, Input } from 'antd';
 import moment from 'moment';
+import { WiTime7 } from 'react-icons/wi';
 import memberActions from '../../../redux/member/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, VIETNAMES_CURRENCY } from '../../../variables';
@@ -90,7 +91,8 @@ function CreditHistoryMember({ historyState, setState }) {
           </span>
         ),
         payment_date: (
-          <span style={{  }}>
+          <span style={{ fontStyle: 'italic', color: 'gray', fontSize: '0.9em', display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
             {moment(created_at).format('HH:mm DD/MM')}
           </span>
         ),
