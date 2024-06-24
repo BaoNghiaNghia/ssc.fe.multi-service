@@ -136,12 +136,15 @@ export const MEMBER_TABLE_TYPE = {
 export const SERVICE_SETTING_TYPE = {
   'SERVICE': {
       title: 'service',
+      describe: 'Dịch vụ'
   },
   'SETTING': {
       title: 'setting',
+      describe: 'Cài đặt'
   },
   'GOOGLE_KEY': {
       title: 'google_key',
+      describe: 'Quản lý Google Key'
   },
 }
 

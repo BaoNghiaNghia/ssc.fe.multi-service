@@ -27,6 +27,131 @@ const actions = {
     CHANGE_TYPE_TAB_SUCCESS: 'CHANGE_TYPE_TAB_SUCCESS',
     CHANGE_TYPE_TAB_ERR: 'CHANGE_TYPE_TAB_ERR',
 
+    FETCH_LIST_ALL_GOOGLE_KEY_BEGIN: 'FETCH_LIST_ALL_GOOGLE_KEY_BEGIN',
+    FETCH_LIST_ALL_GOOGLE_KEY_SUCCESS: 'FETCH_LIST_ALL_GOOGLE_KEY_SUCCESS',
+    FETCH_LIST_ALL_GOOGLE_KEY_ERR: 'FETCH_LIST_ALL_GOOGLE_KEY_ERR',
+
+    CREATE_GOOGLE_KEY_BEGIN: 'CREATE_GOOGLE_KEY_BEGIN',
+    CREATE_GOOGLE_KEY_SUCCESS: 'CREATE_GOOGLE_KEY_SUCCESS',
+    CREATE_GOOGLE_KEY_ERR: 'CREATE_GOOGLE_KEY_ERR',
+
+    DETAIL_GOOGLE_KEY_BEGIN: 'DETAIL_GOOGLE_KEY_BEGIN',
+    DETAIL_GOOGLE_KEY_SUCCESS: 'DETAIL_GOOGLE_KEY_SUCCESS',
+    DETAIL_GOOGLE_KEY_ERR: 'DETAIL_GOOGLE_KEY_ERR',
+
+    UPDATE_GOOGLE_KEY_BEGIN: 'UPDATE_GOOGLE_KEY_BEGIN',
+    UPDATE_GOOGLE_KEY_SUCCESS: 'UPDATE_GOOGLE_KEY_SUCCESS',
+    UPDATE_GOOGLE_KEY_ERR: 'UPDATE_GOOGLE_KEY_ERR',
+
+    DELETE_GOOGLE_KEY_BEGIN: 'DELETE_GOOGLE_KEY_BEGIN',
+    DELETE_GOOGLE_KEY_SUCCESS: 'DELETE_GOOGLE_KEY_SUCCESS',
+    DELETE_GOOGLE_KEY_ERR: 'DELETE_GOOGLE_KEY_ERR',
+
+
+    deleteGoogleKeyBegin: (payload) => {
+      return {
+        type: actions.DELETE_GOOGLE_KEY_BEGIN,
+        payload
+      };
+    },
+
+    deleteGoogleKeySuccess: (data) => {
+      return {
+        type: actions.DELETE_GOOGLE_KEY_SUCCESS,
+        data,
+      };
+    },
+
+    deleteGoogleKeyErr: (err) => {
+      return {
+        type: actions.DELETE_GOOGLE_KEY_ERR,
+        err,
+      };
+    },
+
+    updateGoogleKeyBegin: (payload) => {
+      return {
+        type: actions.UPDATE_GOOGLE_KEY_BEGIN,
+        payload
+      };
+    },
+
+    updateGoogleKeySuccess: (data) => {
+      return {
+        type: actions.UPDATE_GOOGLE_KEY_SUCCESS,
+        data,
+      };
+    },
+
+    updateGoogleKeyErr: (err) => {
+      return {
+        type: actions.UPDATE_GOOGLE_KEY_ERR,
+        err,
+      };
+    },
+  
+    detailGoogleKeyBegin: (payload) => {
+      return {
+        type: actions.DETAIL_GOOGLE_KEY_BEGIN,
+        payload
+      };
+    },
+
+    detailGoogleKeySuccess: (data) => {
+      return {
+        type: actions.DETAIL_GOOGLE_KEY_SUCCESS,
+        data,
+      };
+    },
+
+    detailGoogleKeyErr: (err) => {
+      return {
+        type: actions.DETAIL_GOOGLE_KEY_ERR,
+        err,
+      };
+    },
+  
+    createGoogleKeyBegin: (payload) => {
+      return {
+        type: actions.CREATE_GOOGLE_KEY_BEGIN,
+        payload
+      };
+    },
+
+    createGoogleKeySuccess: (data) => {
+      return {
+        type: actions.CREATE_GOOGLE_KEY_SUCCESS,
+        data,
+      };
+    },
+
+    createGoogleKeyErr: (err) => {
+      return {
+        type: actions.CREATE_GOOGLE_KEY_ERR,
+        err,
+      };
+    },
+
+    fetchListAllGoogleKeyBegin: (payload) => {
+        return {
+            type: actions.FETCH_LIST_ALL_GOOGLE_KEY_BEGIN,
+            payload
+        };
+    },
+
+    fetchListAllGoogleKeySuccess: (data) => {
+        return {
+            type: actions.FETCH_LIST_ALL_GOOGLE_KEY_SUCCESS,
+            data,
+        };
+    },
+
+    fetchListAllGoogleKeyErr: (err) => {
+        return {
+            type: actions.FETCH_LIST_ALL_GOOGLE_KEY_ERR,
+            err,
+        };
+    },
 
     updateListSettingsBegin: (payload) => {
         return {

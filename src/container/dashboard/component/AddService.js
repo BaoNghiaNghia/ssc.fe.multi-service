@@ -12,8 +12,10 @@ import { FixedServiceTemp } from '../../../variables';
 
 const { Option } = Select;
 
-function AddService({ isOpen, setState }) {
+function AddService({ serviceState, setState }) {
   const dispatch = useDispatch();
+
+  const { isOpenAdd } = serviceState;
 
   const { postLoading } = useSelector(state => {
     return {
@@ -24,7 +26,6 @@ function AddService({ isOpen, setState }) {
   const [formCreateService] = Form.useForm();
 
   const [state, setStateModal] = useState({
-    tags: ['UI/UX', 'Branding', 'Product Design', 'Web Design'],
     values: null,
   });
 
@@ -49,7 +50,7 @@ function AddService({ isOpen, setState }) {
     try {
       formCreateService.validateFields()
         .then((values) => {
-          const requestData = {// {
+          const requestData = {
             category: formCreateService.getFieldValue('category'),
             platform: formCreateService.getFieldValue('platform') || 'Youtube',
             service_type: formCreateService.getFieldValue('service_type'),
@@ -70,6 +71,7 @@ function AddService({ isOpen, setState }) {
           dispatch(actions.createServiceBegin(requestData));
 
           setState({
+            ...serviceState,
             isOpenAdd: false,
           });
 
@@ -86,6 +88,7 @@ function AddService({ isOpen, setState }) {
 
   const handleCancel = () => {
     setState({
+      ...serviceState,
       isOpenAdd: false,
     });
   }
@@ -107,18 +110,16 @@ function AddService({ isOpen, setState }) {
     <>
       <Modal
         width='600px'
-        open={isOpen}
+        open={isOpenAdd}
         centered
         title={
-          <>
-            <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-              <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm dịch vụ</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho dịch vụ mới</p>
-              </div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+            <div>
+              <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm dịch vụ</p>
+              <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho dịch vụ mới</p>
             </div>
-          </>
+          </div>
         }
         onOk={handleOk}
         onCancel={handleCancel}
@@ -381,7 +382,7 @@ function AddService({ isOpen, setState }) {
 }
 
 AddService.propTypes = {
-  isOpen: PropTypes.bool,
+  serviceState: PropTypes.object,
   setState: PropTypes.func
 };
 

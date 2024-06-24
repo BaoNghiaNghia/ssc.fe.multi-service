@@ -59,10 +59,15 @@ import {
 
 import { 
     changeTabTypeMemberWatcherSaga,
+    createGoogleKeyWatcherSaga,
     createServicesWatcherSaga,
+    deleteGoogleKeyWatcherSaga,
+    detailGoogleKeyWatcherSaga,
+    fetchListAllGoogleKeyWatcherSaga,
     fetchListServicesWatcherSaga,
     fetchListSettingsWatcherSaga,
     modalDetailServiceWatcherSaga,
+    updateGoogleKeyWatcherSaga,
     updateServicesWatcherSaga,
     updateSettingWatcherSaga
 } from './serviceSettings/sagas';
@@ -162,6 +167,11 @@ export default function* rootSaga() {
         statisticOrderAmountWatcherSaga(),
         statisticPerformanceCommentWatcherSaga(),
         statisticAccountStatusCommentWatcherSaga(),
-        deleteComputerCommentWatcherSaga()
+        deleteComputerCommentWatcherSaga(),
+        deleteGoogleKeyWatcherSaga(),
+        updateGoogleKeyWatcherSaga(),
+        detailGoogleKeyWatcherSaga(),
+        createGoogleKeyWatcherSaga(),
+        fetchListAllGoogleKeyWatcherSaga(),
     ]);
 }

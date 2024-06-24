@@ -9,6 +9,8 @@ const initialState = {
   typeTab: SERVICE_SETTING_TYPE.SERVICE.title,
   listSettings: {},
   detailService: {},
+  listGoogleKey: {},
+  detailGoogleKey: {},
   loading: false,
   error: null
 };
@@ -41,11 +43,128 @@ const {
     UPDATE_SETTING_BEGIN,
     UPDATE_SETTING_ERR,
     UPDATE_SETTING_SUCCESS,
+
+    FETCH_LIST_ALL_GOOGLE_KEY_BEGIN,
+    FETCH_LIST_ALL_GOOGLE_KEY_ERR,
+    FETCH_LIST_ALL_GOOGLE_KEY_SUCCESS,
+
+    CREATE_GOOGLE_KEY_BEGIN,
+    CREATE_GOOGLE_KEY_ERR,
+    CREATE_GOOGLE_KEY_SUCCESS,
+
+    DELETE_GOOGLE_KEY_BEGIN,
+    DELETE_GOOGLE_KEY_ERR,
+    DELETE_GOOGLE_KEY_SUCCESS,
+
+    DETAIL_GOOGLE_KEY_BEGIN,
+    DETAIL_GOOGLE_KEY_ERR,
+    DETAIL_GOOGLE_KEY_SUCCESS,
+
+    UPDATE_GOOGLE_KEY_BEGIN,
+    UPDATE_GOOGLE_KEY_ERR,
+    UPDATE_GOOGLE_KEY_SUCCESS,
 } = actions;
 
 const reducers = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case DELETE_GOOGLE_KEY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_GOOGLE_KEY_SUCCESS:
+      return {
+        ...state,
+        loading: false
+      };
+
+    case DELETE_GOOGLE_KEY_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case UPDATE_GOOGLE_KEY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_GOOGLE_KEY_SUCCESS:
+      return {
+        ...state,
+        loading: false
+      };
+
+    case UPDATE_GOOGLE_KEY_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case CREATE_GOOGLE_KEY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CREATE_GOOGLE_KEY_SUCCESS:
+      return {
+        ...state,
+        loading: false
+      };
+
+    case CREATE_GOOGLE_KEY_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case DETAIL_GOOGLE_KEY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_GOOGLE_KEY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailGoogleKey: data
+      };
+
+    case DETAIL_GOOGLE_KEY_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case FETCH_LIST_ALL_GOOGLE_KEY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case FETCH_LIST_ALL_GOOGLE_KEY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listGoogleKey: data
+      };
+
+    case FETCH_LIST_ALL_GOOGLE_KEY_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
     case UPDATE_SETTING_BEGIN:
       return {
         ...state,

@@ -7,11 +7,143 @@ import {
   updateServiceAPI,
   fetchListServiceAPI,
   fetchListSettingAPI,
-  updateSettingAPI
+  updateSettingAPI,
+
+  createGoogleKeyAPI,
+  deleteGoogleKeyAPI,
+  detailGoogleKeyAPI,
+  fetchListAllGoogleKeyAPI,
+  updateGoogleKeyAPI
 } from '../../config/apiFactory/ServiceSetting/index';
 
 import { MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
 
+function* deleteGoogleKeyFunc(params) {
+  try {
+    const response = yield call(deleteGoogleKeyAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.deleteGoogleKeySuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListAllGoogleKeyBegin()
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.deleteGoogleKeyErr({ error: errorMessage || 'Delete google key failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Delete google key failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* updateGoogleKeyFunc(params) {
+  try {
+    const response = yield call(updateGoogleKeyAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateGoogleKeySuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListAllGoogleKeyBegin()
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.updateGoogleKeyErr({ error: errorMessage || 'Update google key failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Update google key failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* createGoogleKeyFunc(params) {
+  try {
+    const response = yield call(createGoogleKeyAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.createGoogleKeySuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListAllGoogleKeyBegin()
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.createGoogleKeyErr({ error: errorMessage || 'Create google key failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Create google key failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* detailGoogleKeyFunc(params) {
+  try {
+    const response = yield call(detailGoogleKeyAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.detailGoogleKeySuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.detailGoogleKeyErr({ error: errorMessage || 'Detail google key failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Detail google key failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* fetchListAllGoogleKeyFunc(params) {
+  try {
+    const response = yield call(fetchListAllGoogleKeyAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchListAllGoogleKeySuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.fetchListAllGoogleKeyErr({ error: errorMessage || 'Fetch google key list failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Fetch list google key failed');
+    }
+  } finally { /* empty */ }
+}
 
 function* fetchListSettingsFunc(params) {
   try {
@@ -175,15 +307,26 @@ export function* modalDetailServiceFunc(params) {
 }
 
 function* changeTabTypeFunc(params) {
+  console.log('---- params: -----', params?.payload);
   try {
-    if (params?.payload === SERVICE_SETTING_TYPE.SERVICE.title) {
-      yield put(
-        actions.fetchListServiceBegin()
-      );
-    } else {
-      yield put(
-        actions.fetchListSettingsBegin()
-      );
+    switch (params?.payload) {
+      case SERVICE_SETTING_TYPE.SETTING.title:
+        yield put(
+          actions.fetchListSettingsBegin()
+        );
+        break;
+      case SERVICE_SETTING_TYPE.SERVICE.title:
+        yield put(
+          actions.fetchListServiceBegin()
+        );
+        break;
+      case SERVICE_SETTING_TYPE.GOOGLE_KEY.title:
+        yield put(
+          actions.fetchListAllGoogleKeyBegin()
+        );
+        break;
+      default:
+        break;
     }
 
     yield put(
@@ -223,4 +366,21 @@ export function* modalDetailServiceWatcherSaga() {
 
 export function* changeTabTypeMemberWatcherSaga() {
   yield takeLatest(actions.CHANGE_TYPE_TAB_BEGIN, changeTabTypeFunc);
+}
+
+
+export function* deleteGoogleKeyWatcherSaga() {
+  yield takeLatest(actions.DELETE_GOOGLE_KEY_BEGIN, deleteGoogleKeyFunc);
+}
+export function* updateGoogleKeyWatcherSaga() {
+  yield takeLatest(actions.UPDATE_GOOGLE_KEY_BEGIN, updateGoogleKeyFunc);
+}
+export function* detailGoogleKeyWatcherSaga() {
+  yield takeLatest(actions.DETAIL_GOOGLE_KEY_BEGIN, detailGoogleKeyFunc);
+}
+export function* createGoogleKeyWatcherSaga() {
+  yield takeLatest(actions.CREATE_GOOGLE_KEY_BEGIN, createGoogleKeyFunc);
+}
+export function* fetchListAllGoogleKeyWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_ALL_GOOGLE_KEY_BEGIN, fetchListAllGoogleKeyFunc);
 }

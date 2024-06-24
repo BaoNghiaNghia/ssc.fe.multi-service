@@ -3,17 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip, Badge, Switch, Form, InputNumber } from 'antd';
 import FeatherIcon from 'feather-icons-react';
+import moment from 'moment';
 import { FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { FiEdit2 } from "react-icons/fi";
+import { WiTime7 } from "react-icons/wi";
 import { FaLocationArrow } from "react-icons/fa6";
 import { TbServicemark } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
+import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import AddService from './component/AddService';
 import EditService from './component/EditService';
 import DelService from './component/DelService';
+import AddGoogleKey from './component/AddGoogleKey';
 import { GalleryNav, TopToolBox } from './style';
+import ConfirmRequestModal from "../ecommerce/components/ConfirmRequestModal";
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { numberWithCommas } from '../../utility/utility';
@@ -68,19 +73,88 @@ const badgeRedStyle = {
   marginRight: '5px'
 }
 
+const columnsService = [
+  {
+    title: 'name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'range',
+    dataIndex: 'range',
+    key: 'range',
+  },
+  {
+    title: 'category',
+    dataIndex: 'category',
+    key: 'category',
+  },
+  {
+    title: 'threads',
+    dataIndex: 'threads',
+    key: 'threads',
+  },
+  {
+    title: 'price',
+    dataIndex: 'price',
+    key: 'price',
+  },
+  {
+    title: 'action',
+    dataIndex: 'action',
+    key: 'action',
+  },
+];
+
+const columnsGoogleKey = [
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'Key',
+    dataIndex: 'google_key',
+    key: 'google_key',
+  },
+  {
+    title: 'Trạng thái',
+    dataIndex: 'status',
+    key: 'status',
+  },
+  {
+    title: 'Khởi tạo',
+    dataIndex: 'created_at',
+    key: 'created_at',
+  },
+  {
+    title: 'Cập nhật',
+    dataIndex: 'updated_at',
+    key: 'updated_at',
+  },
+  {
+    title: 'Hành động',
+    dataIndex: 'action',
+    key: 'action',
+  },
+];
+
+
 function SettingAndService() {
   const dispatch = useDispatch();
 
   const [formUpdateSettings] = Form.useForm();
 
-  const { searchData, orders, listService, typeTab, listSettings, listMetaService } = useSelector(state => {
+  const { searchData, orders, listService, typeTab, listSettings, listMetaService, listGoogleKey, listGoogleKeyMeta } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
       listService: state?.settingService?.listService?.items,
       listMetaService: state?.settingService?.listService?.meta,
       typeTab: state?.settingService?.typeTab,
-      listSettings: state?.settingService?.listSettings
+      listSettings: state?.settingService?.listSettings,
+      listGoogleKey: state?.settingService?.listGoogleKey?.google_keys,
+      listGoogleKeyMeta: state?.settingService?.listGoogleKey?.meta,
     };
   });
 
@@ -94,14 +168,13 @@ function SettingAndService() {
     }));
   }, [dispatch, currentPage, limitPage]);
 
-  useEffect(() => {
-    dispatch(actions.fetchListSettingsBegin({}));
-  }, [dispatch]);
-
   const [state, setState] = useState({
     isOpenAdd: false,
     isOpenEdit: false,
     isOpenDel: false,
+    isDetailGoogkeKey: false,
+    isAddGoogkeKey: false,
+    isDelGoogkeKey: false,
     selectedService: '',
     selectedRowData: {},
     notData: searchData,
@@ -234,42 +307,112 @@ function SettingAndService() {
     });
   }
 
-  const columns = [
-    {
-      title: 'name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'range',
-      dataIndex: 'range',
-      key: 'range',
-    },
-    {
-      title: 'category',
-      dataIndex: 'category',
-      key: 'category',
-    },
-    {
-      title: 'threads',
-      dataIndex: 'threads',
-      key: 'threads',
-    },
-    {
-      title: 'price',
-      dataIndex: 'price',
-      key: 'price',
-    },
-    {
-      title: 'action',
-      dataIndex: 'action',
-      key: 'action',
-    },
-  ];
+  const dataSourceGoogleKey = [];
+  if (listGoogleKey?.length) {
+    listGoogleKey?.map((google_key, index) => {
+      const { email, key, status, created_at, updated_at, id } = google_key;
+      return dataSourceGoogleKey?.push({
+        key: index + 1,
+        email: (
+          <>
+            <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <ReactNiceAvatar
+                style={{ width: '1.7rem', height: '1.7rem', outline: '2px solid orange', border: '2px solid white' }}
+                {...genConfig(email?.charAt(0))}
+              />
+              <span className="customer-name" style={{ color: 'green', fontWeight: '800', marginLeft: '8px' }}>{email}</span>
+            </span>
+          </>
+        ),
+        google_key: <>
+          <Row>
+            <Col>
+              <code className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{key}</code>
+            </Col>
+          </Row>
+        </>,
+        status: <>
+          <Tooltip title={status ? 'Đang hoạt động' : 'Ngừng hoạt động'}>
+            <Switch checked={status} onChange={(state) => {
+              console.log('--- Cập nhật trạng thái google key ----', state);
+            }}/>
+          </Tooltip>
+        </>,
+        created_at: <>
+          <span style={{ fontStyle: 'italic', color: 'gray', fontSize: '0.9em', display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+            {moment(created_at).format('HH:mm DD/MM')}
+          </span>
+        </>,
+        updated_at: <>
+          <span style={{ fontStyle: 'italic', color: 'gray', fontSize: '0.9em', display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+            {moment(created_at).format('HH:mm DD/MM')}
+          </span>
+        </>,
+        action: <div className="table-actions">
+          <Tooltip title="Chi tiết">
+            <Button className="btn-icon" type="primary" to="#" shape="circle" 
+              onClick={() => {
+                dispatch(actions.detailGoogleKeyBegin({ id }));
+                setState({ ...state, isAddGoogkeKey: true });
+              }}
+            >
+              <FeatherIcon icon="eye" size={16} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Cập nhật">
+            <Button
+              size="small"
+              className="btn-icon"
+              style={{ marginRight: '5px', background: 'none' }}
+              onClick={() => {
+                setState({ ...state, isOpenEdit: true });
+                dispatch(actions.detailGoogleKeyBegin(google_key));
+              }}
+            >
+              <FiEdit2 style={{ marginTop: '4px' }} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa Google Key">
+            <Button
+              size="small"
+              className="btn-icon"
+              style={{ marginRight: '5px', background: 'none' }}
+              onClick={() => {
+                setState({ 
+                  ...state, 
+                  isDelGoogkeKey: true,
+                  selectedRowData: google_key
+                });
+                dispatch(actions.deleteGoogleKeyBegin(google_key?.id));
+              }}
+            >
+              <FeatherIcon icon="trash-2" size={16} />
+            </Button>
+          </Tooltip>
+        </div>
+        
+      });
+    });
+  }
 
   const handleChange = (value) => {
     dispatch(actions.changeTypeTabBegin(value));
   };
+
+  const handleTitleChange = (typeTab) => {
+    switch (typeTab) {
+      case SERVICE_SETTING_TYPE.SERVICE.title:
+        return SERVICE_SETTING_TYPE.SERVICE.describe;
+      case SERVICE_SETTING_TYPE.SETTING.title:
+        return SERVICE_SETTING_TYPE.SETTING.describe;
+      case SERVICE_SETTING_TYPE.GOOGLE_KEY.title:
+        return SERVICE_SETTING_TYPE.GOOGLE_KEY.describe;
+      default:
+        return SERVICE_SETTING_TYPE.SERVICE.describe;
+    }
+  }
 
   const handleUpdateSetting = () => {
     try {
@@ -321,7 +464,7 @@ function SettingAndService() {
     }
   }
 
-  const { isOpenAdd, isOpenEdit, isOpenDel, notData } = state;
+  const { isDelGoogkeKey, isOpenEdit, isOpenDel, notData, selectedRowData } = state;
 
   const CommentSettingComponent = () => {
     return (
@@ -557,7 +700,7 @@ function SettingAndService() {
                     size='small'
                     showHeader={false}
                     dataSource={dataSource}
-                    columns={columns}
+                    columns={columnsService}
                     pagination={{
                       current: listMetaService?.current_page,
                       defaultPageSize: listMetaService?.count,
@@ -609,7 +752,7 @@ function SettingAndService() {
                       <div className="table-toolbox-actions">
                         <Button size="small" key="4" type="primary" onClick={() => {
                           setState({
-                            isOpenAdd: true,
+                            isAddGoogkeKey: true,
                           });
                         }}>
                           <FeatherIcon icon="plus" size={14} />
@@ -619,6 +762,39 @@ function SettingAndService() {
                     </Col>
                   </Row>
                 </TopToolBox>
+              </Col>
+            </Row>
+            <Row gutter={15}>
+              <Col md={24}>
+                <TableWrapper className="table-order table-responsive">
+                  <Table
+                    size='small'
+                    showHeader
+                    dataSource={dataSourceGoogleKey}
+                    columns={columnsGoogleKey}
+                    pagination={{
+                      current: listGoogleKeyMeta?.current_page,
+                      defaultPageSize: listGoogleKeyMeta?.count,
+                      pageSize: listGoogleKeyMeta?.per_page,
+                      total: listGoogleKeyMeta?.total,
+                      showSizeChanger: true,
+                      pageSizeOptions: DEFAULT_PAGESIZE,
+                      onChange(page, pageSize) {
+                        setCurrentPage(page);
+                        setLimitPage(pageSize)
+                      },
+                      position: ['bottomCenter'],
+                      responsive: true,
+                      showTotal(total, range) {
+                        return <>
+                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> Google Key</p>
+                        </>
+                      },
+                      totalBoundaryShowSizeChanger: 100,
+                      size: "small"
+                    }}
+                  />
+                </TableWrapper>
               </Col>
             </Row>
           </Cards>
@@ -631,8 +807,26 @@ function SettingAndService() {
 
   return (
     <>
+      <ConfirmRequestModal
+        isOpen={isDelGoogkeKey}
+        setState={setState}
+        descriptions={`Xác nhận xóa google key: ${selectedRowData?.id}`}
+        title="Xác nhận"
+        subtitle="Gửi yêu cầu bảo hành"
+        handleOk={() => {
+          dispatch(actions.activeWarrantyOrderBegin({id: selectedRowData?.id}));
+          setState({ 
+            ...state,
+            isDelGoogkeKey: false
+          });
+        }}
+      />
+      <AddGoogleKey
+        googleKeyState={state}
+        setState={setState}
+      />
       <AddService
-        isOpen={isOpenAdd}
+        serviceState={state}
         setState={setState}
       />
       <EditService
@@ -646,7 +840,7 @@ function SettingAndService() {
       />
       <PageHeader
         ghost
-        title="Dịch vụ & Cài đặt"
+        title={handleTitleChange(typeTab)}
         buttons={[
           <GalleryNav>
             <ul>
@@ -665,10 +859,7 @@ function SettingAndService() {
                   className={typeTab === SERVICE_SETTING_TYPE.SETTING.title ? 'active' : 'deactivate'}
                   onClick={() => {
                     handleChange(SERVICE_SETTING_TYPE.SETTING.title);
-
-                    if (listSettings) {
-                      formUpdateSettings.setFieldsValue(listSettings);
-                    }
+                    if (listSettings) formUpdateSettings.setFieldsValue(listSettings);
                   }}
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"
@@ -681,10 +872,7 @@ function SettingAndService() {
                   className={typeTab === SERVICE_SETTING_TYPE.GOOGLE_KEY.title ? 'active' : 'deactivate'}
                   onClick={() => {
                     handleChange(SERVICE_SETTING_TYPE.GOOGLE_KEY.title);
-
-                    if (listSettings) {
-                      formUpdateSettings.setFieldsValue(listSettings);
-                    }
+                    if (listSettings) formUpdateSettings.setFieldsValue(listSettings);
                   }}
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"
