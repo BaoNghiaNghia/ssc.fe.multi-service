@@ -10,10 +10,10 @@ function FeaturesRoute() {
   const { path } = useRouteMatch();
   return (
     <Switch>
-      <Route path={`${path}/like/cho-duyet`} component={PendingBuffLike} />
-      <Route path={`${path}/like/dang-chay`} component={RunningBuffLike} />
+      <Route path={`${path}/like/danh-sach-don`} component={PendingBuffLike} />
+      <Route path={`${path}/like/danh-sach-may`} component={RunningBuffLike} />
       <Route path={`${path}/like/bao-hanh`} component={GuaranteeBuffLike} />
-      <Route path={`${path}/like/lich-su-don`} component={HistoryBuffLike} />
+      <Route path={`${path}/like/danh-sach-may`} component={HistoryBuffLike} />
     </Switch>
   );
 }

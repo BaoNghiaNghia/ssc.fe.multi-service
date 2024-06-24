@@ -16,6 +16,7 @@ import ReportsDailyReducer from './reports/reducers';
 import ServerReducer from './servers/reducers';
 import BuffSubscribeReducer from './buffSubscribe/reducers';
 import BuffCommentReducer from './buffComment/reducers';
+import BuffLikeReducer from './buffLike/reducers';
 import SettingsServiceReducer from './serviceSettings/reducers';
 import ProxyReducer from './proxy/reducers';
 
@@ -35,6 +36,7 @@ const rootReducers = combineReducers({
   servers: ServerReducer,
   buffSubscribe: BuffSubscribeReducer,
   buffComment: BuffCommentReducer,
+  buffLike: BuffLikeReducer,
   blackList: BlackListReducer,
   member: MemberReducer,
   proxy: ProxyReducer,

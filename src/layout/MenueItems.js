@@ -153,12 +153,12 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         {!topMenu && <NavTitle className="sidebar-nav-title">BUFF LIKE</NavTitle>}
         {/* <SubMenu key="buff-like" icon={!topMenu && <FeatherIcon icon="mail" />} title="Danh sách đơn">
           <Menu.Item key="buff-like-cho-duyet">
-            <NavLink onClick={toggleCollapsed} to={`${path}/like/cho-duyet`}>
+            <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-don`}>
               Chờ duyệt
             </NavLink>
           </Menu.Item>
           <Menu.Item key="buff-like-dang-chay">
-            <NavLink onClick={toggleCollapsed} to={`${path}/like/dang-chay`}>
+            <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-may`}>
               Đang chạy
             </NavLink>
           </Menu.Item>
@@ -171,14 +171,14 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         <Menu.Item
           icon={
             !topMenu && (
-              <NavLink className="menuItem-icon" to={`${path}/like/cho-duyet`}>
+              <NavLink className="menuItem-icon" to={`${path}/like/danh-sach-don`}>
                 <FeatherIcon icon="archive" />
               </NavLink>
             )
           }
           key="buff-like-cho-duyet"
         >
-          <NavLink onClick={toggleCollapsed} to={`${path}/like/cho-duyet`}>
+          <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-don`}>
             Danh sách đơn
           </NavLink>
         </Menu.Item>
@@ -188,14 +188,14 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
               disabled
               icon={
                 !topMenu && (
-                  <NavLink className="menuItem-icon" to={`${path}/like/lich-su-don`}>
+                  <NavLink className="menuItem-icon" to={`${path}/like/danh-sach-may`}>
                     <FeatherIcon icon="hard-drive" />
                   </NavLink>
                 )
               }
               key="buff-like-lich-su-don"
             >
-              <NavLink onClick={toggleCollapsed} to={`${path}/like/lich-su-don`}>
+              <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-may`}>
                 Danh sách máy {pendingBadge}
               </NavLink>
             </Menu.Item>

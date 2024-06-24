@@ -89,6 +89,10 @@ import {
 } from './buffComment/sagas';
 
 import {
+    fetchListOrderLikeWatcherSaga
+} from './buffLike/sagas';
+
+import {
     createDomainWatcherSaga,
     deleteDomainWatcherSaga,
     detailDomainWatcherSaga,
@@ -169,5 +173,8 @@ export default function* rootSaga() {
         detailGoogleKeyWatcherSaga(),
         createGoogleKeyWatcherSaga(),
         fetchListAllGoogleKeyWatcherSaga(),
+
+
+        fetchListOrderLikeWatcherSaga()
     ]);
 }
