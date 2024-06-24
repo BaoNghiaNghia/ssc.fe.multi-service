@@ -17,6 +17,8 @@ import AddService from './component/AddService';
 import EditService from './component/EditService';
 import DelService from './component/DelService';
 import AddGoogleKey from './component/AddGoogleKey';
+import DetailGoogleKey from './component/DetailGoogleKey';
+import EditGoogleKey from './component/EditGoogleKey';
 import { GalleryNav, TopToolBox } from './style';
 import ConfirmRequestModal from "../ecommerce/components/ConfirmRequestModal";
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -174,6 +176,7 @@ function SettingAndService() {
     isOpenDel: false,
     isDetailGoogkeKey: false,
     isAddGoogkeKey: false,
+    isUpdateGoogkeKey: false,
     isDelGoogkeKey: false,
     selectedService: '',
     selectedRowData: {},
@@ -354,8 +357,12 @@ function SettingAndService() {
           <Tooltip title="Chi tiết">
             <Button className="btn-icon" type="primary" to="#" shape="circle" 
               onClick={() => {
-                dispatch(actions.detailGoogleKeyBegin({ id }));
-                setState({ ...state, isAddGoogkeKey: true });
+                setState({ 
+                  ...state,
+                  isDetailGoogkeKey: true,
+                  selectedRowData: google_key
+                });
+                dispatch(actions.detailGoogleKeyBegin(id));
               }}
             >
               <FeatherIcon icon="eye" size={16} />
@@ -367,8 +374,11 @@ function SettingAndService() {
               className="btn-icon"
               style={{ marginRight: '5px', background: 'none' }}
               onClick={() => {
-                setState({ ...state, isOpenEdit: true });
-                dispatch(actions.detailGoogleKeyBegin(google_key));
+                setState({ 
+                  ...state,
+                  isUpdateGoogkeKey: true
+                });
+                dispatch(actions.detailGoogleKeyBegin(id));
               }}
             >
               <FiEdit2 style={{ marginTop: '4px' }} />
@@ -385,7 +395,6 @@ function SettingAndService() {
                   isDelGoogkeKey: true,
                   selectedRowData: google_key
                 });
-                dispatch(actions.deleteGoogleKeyBegin(google_key?.id));
               }}
             >
               <FeatherIcon icon="trash-2" size={16} />
@@ -814,12 +823,20 @@ function SettingAndService() {
         title="Xác nhận"
         subtitle="Gửi yêu cầu bảo hành"
         handleOk={() => {
-          dispatch(actions.activeWarrantyOrderBegin({id: selectedRowData?.id}));
+          dispatch(actions.deleteGoogleKeyBegin({ id: selectedRowData?.id }));
           setState({ 
             ...state,
             isDelGoogkeKey: false
           });
         }}
+      />
+      <EditGoogleKey
+        googleKeyState={state}
+        setState={setState}
+      />
+      <DetailGoogleKey
+        googleKeyState={state}
+        setState={setState}
       />
       <AddGoogleKey
         googleKeyState={state}

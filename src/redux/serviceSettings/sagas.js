@@ -57,6 +57,8 @@ function* updateGoogleKeyFunc(params) {
       yield put(
         actions.fetchListAllGoogleKeyBegin()
       );
+
+      toast.success('Cập nhật Google Key thành công')
     }
   } catch (error) {
     const errorMessage = error;
