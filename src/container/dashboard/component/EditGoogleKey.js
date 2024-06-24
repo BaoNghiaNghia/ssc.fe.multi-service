@@ -44,8 +44,6 @@ function EditGoogleKey({ googleKeyState, setState }) {
                         status: values?.status === 'true',
                         id: detailGoogleKey?.id
                     }
-
-                    console.log('--- data update nè ----', requestData);
                     dispatch(actions.updateGoogleKeyBegin(requestData));
 
                     setState({

@@ -169,7 +169,6 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           </Menu.Item>
         </SubMenu> */}
         <Menu.Item
-          disabled
           icon={
             !topMenu && (
               <NavLink className="menuItem-icon" to={`${path}/like/cho-duyet`}>
@@ -180,7 +179,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           key="buff-like-cho-duyet"
         >
           <NavLink onClick={toggleCollapsed} to={`${path}/like/cho-duyet`}>
-            Danh sách đơn {pendingBadge}
+            Danh sách đơn
           </NavLink>
         </Menu.Item>
         {

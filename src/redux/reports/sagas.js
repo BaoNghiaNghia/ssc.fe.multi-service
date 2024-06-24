@@ -3,11 +3,9 @@ import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
   countErrorSubscribe,
-  countProfitDataToday,
   countSuccessSubscribe,
   fetchComputerDataList,
   getDailyReportSubscribe,
-  getSubscribeWithPointEveryday,
   ratioSubscribeAverage,
   getStatisticSubscribeReport,
   statisticCommentByOrderReport,
@@ -230,40 +228,6 @@ function* countSuccessSubscribeFunc() {
   }
 }
 
-function* countProfitDataTodayFunc() {
-  try {
-    const response = yield call(countProfitDataToday, {});
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.countProfitDataTodaySuccess(response?.data?.data)
-      );
-    }
-
-  } catch (err) {
-    yield put(
-      actions.countProfitDataTodayErr({ error: err || 'Count profit failed' })
-    );
-  }
-}
-
-function* fetchSubscribeWithPointEverydayFunc(params) {
-  try {
-    const response = yield call(getSubscribeWithPointEveryday, params?.payload);
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.fetchSubscribeWithPointEverydaySuccess(response?.data?.data)
-      );
-    }
-
-  } catch (err) {
-    yield put(
-      actions.fetchSubscribeWithPointEverydayErr({ error: err || 'Fetch Subscribe and Point failed' })
-    );
-  }
-}
-
 function* fetchComputerDataListFunc(params) {
   try {
     const response = yield call(fetchComputerDataList, {});
@@ -435,14 +399,6 @@ export function* changeServiceTypeWatcherSaga() {
 
 export function* countSuccessSubscribeWatcherSaga() {
   yield takeLatest(actions.COUNT_SUCCESS_SUBSCRIBE_BEGIN, countSuccessSubscribeFunc);
-}
-
-export function* countProfitDataTodayWatcherSaga() {
-  yield takeLatest(actions.COUNT_PROFIT_DATA_TODAY_BEGIN, countProfitDataTodayFunc);
-}
-
-export function* fetchSubscribeWithPointEverydayWatcherSaga() {
-  yield takeLatest(actions.FETCH_SUBSCRIBE_POINT_EVERYDAY_BEGIN, fetchSubscribeWithPointEverydayFunc);
 }
 
 export function* fetchComputerDataListWatcherSaga() {

@@ -2,8 +2,6 @@
 import {
     DAILY_REPORT_SUBSCRIBE_ENPOINT,
     REPORT_COUNT_SUCCESS_ENDPOINT,
-    COUNT_PROFIT_TODAY_ENDPOINT,
-    SUBSCRIBE_POINT_EVERYDAY_ENDPOINT,
     COMPUTER_DATA_LIST_ENDPOINT,
     COUNT_ERROR_SUBSCRIBE_ENDPOINT,
     STATISTIC_SUBSCRIBE_REPORT_ENDPOINT,
@@ -31,8 +29,6 @@ const GeneralReportAPI = new ApiFactory({ url: process.env.REACT_APP_API_ENDPOIN
 GeneralReportAPI.createEntities([
     { name: DAILY_REPORT_SUBSCRIBE_ENPOINT },
     { name: REPORT_COUNT_SUCCESS_ENDPOINT },
-    { name: COUNT_PROFIT_TODAY_ENDPOINT },
-    { name: SUBSCRIBE_POINT_EVERYDAY_ENDPOINT },
     { name: COMPUTER_DATA_LIST_ENDPOINT },
     { name: COUNT_ERROR_SUBSCRIBE_ENDPOINT },
     { name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT },
@@ -57,8 +53,6 @@ GeneralReportAPI.createEntities([
 // SUBSCRIBERS
 const getDailyReportSubscribe = (data) => GeneralReportAPI.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENPOINT }).get(data);
 const countSuccessSubscribe = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: REPORT_COUNT_SUCCESS_ENDPOINT }).get();
-const countProfitDataToday = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: COUNT_PROFIT_TODAY_ENDPOINT}).get();
-const getSubscribeWithPointEveryday = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_POINT_EVERYDAY_ENDPOINT }).get(query);
 
 const fetchComputerDataList = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMPUTER_DATA_LIST_ENDPOINT }).get();
 
@@ -85,8 +79,6 @@ const statisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoin
 export {
     getDailyReportSubscribe,
     countSuccessSubscribe,
-    countProfitDataToday,
-    getSubscribeWithPointEveryday,
     fetchComputerDataList,
     getStatisticSubscribeReport,
     countErrorSubscribe,

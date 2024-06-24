@@ -8,11 +8,9 @@ import {
 } from './authentication/sagas';
 
 import {
-    countProfitDataTodayWatcherSaga,
     countSuccessSubscribeWatcherSaga,
     resportSubscribeWatcherSaga,
     setRangeDateFilterWatcherSaga,
-    fetchSubscribeWithPointEverydayWatcherSaga,
     countErrorSubscribeWatcherSaga,
     getStatisticsSubscribeReporWatcherSaga,
     changeServiceTypeWatcherSaga,
@@ -107,8 +105,6 @@ export default function* rootSaga() {
         resportSubscribeWatcherSaga(),
         setRangeDateFilterWatcherSaga(),
         countSuccessSubscribeWatcherSaga(),
-        countProfitDataTodayWatcherSaga(),
-        fetchSubscribeWithPointEverydayWatcherSaga(),
         fetchComputerDataListWatcherSaga(),
         countErrorSubscribeWatcherSaga(),
         getStatisticsSubscribeReporWatcherSaga(),

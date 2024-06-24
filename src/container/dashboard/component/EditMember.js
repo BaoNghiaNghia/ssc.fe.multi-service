@@ -10,12 +10,28 @@ import actions from '../../../redux/member/actions';
 import { VIETNAMES_CURRENCY } from '../../../variables';
 import { isVietnamesePhoneNumber, numberWithCommas } from '../../../utility/utility';
 
+const optionListRole = [
+  {
+      'label': 'Quản trị viên cấp cao',
+      'value': 'superadmin'
+  },
+  {
+      'label': 'Trưởng nhóm',
+      'value': 'admin'
+  },
+  {
+      'label': 'Người dùng',
+      'value': 'user'
+  },
+];
+
 function EditMember({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formDetailMember] = Form.useForm();
 
-  const { detailUser } = useSelector(state => {
+  const { detailUser, loading } = useSelector(state => {
     return {
+      loading: state?.member?.loading,
       detailUser: state?.member?.detailUser,
     };
   });
@@ -33,6 +49,7 @@ function EditMember({ isOpen, setState }) {
             id: detailUser.id,
             name: values?.name,
             email: values?.email,
+            role: values?.role,
             phone: String(values?.phone),
             discount: values?.discount,
           }
@@ -132,7 +149,12 @@ function EditMember({ isOpen, setState }) {
             </Col>
             <Col sm={12}>
               <Form.Item name="role" label="Nhóm người dùng">
-                <Input size='small' addonBefore={<HiMiniUserGroup fontSize={17} style={{marginTop: '3px'}}/>} placeholder="Chọn người dùng"/>
+                <Select
+                  loading={loading}
+                  placeholder='Chọn quyền hạn'
+                  options={optionListRole}
+                  size='small'
+                />
               </Form.Item>
             </Col>
           </Row>
