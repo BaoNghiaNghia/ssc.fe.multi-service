@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
-import themeUsersReducer from './themeUsers/reducers';
 import authReducer from './authentication/reducers';
 import ChangeLayoutMode from './themeLayout/reducers';
 import { headerSearchReducer } from './headerSearch/reducers';
@@ -27,7 +26,6 @@ const rootReducers = combineReducers({
   projects: projectReducer,
 
   fb: firebaseReducer,
-  themeUsers: themeUsersReducer,
   headerSearchData: headerSearchReducer,
   auth: authReducer,
   chartContent: chartContentReducer,

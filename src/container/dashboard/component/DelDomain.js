@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Select, Button, Modal,  Typography } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/proxy/actions';
-import { COLOR_GENERAL, FixedServiceTemp } from '../../../variables';
+import { COLOR_GENERAL, LIST_SERVICE_SUPPLY } from '../../../variables';
 
 const { Paragraph, Text } = Typography;
 

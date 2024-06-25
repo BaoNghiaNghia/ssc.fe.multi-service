@@ -148,7 +148,7 @@ export const SERVICE_SETTING_TYPE = {
   },
 }
 
-export const FixedServiceTemp = [
+export const LIST_SERVICE_SUPPLY = [
   {
     'platform': 'Youtube',
     'category': 'Comments',

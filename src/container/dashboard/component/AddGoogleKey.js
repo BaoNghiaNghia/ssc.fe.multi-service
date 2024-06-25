@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, Switch } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
-import { FixedServiceTemp } from '../../../variables';
+import { LIST_SERVICE_SUPPLY } from '../../../variables';
 
 function AddGoogleKey({ googleKeyState, setState }) {
     const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function AddGoogleKey({ googleKeyState, setState }) {
 
     useEffect(() => {
         formCreateGoogleKey.setFieldValue('category', 'Comments');
-        const matchService = FixedServiceTemp?.filter((item) => item?.category === 'Comments');
+        const matchService = LIST_SERVICE_SUPPLY?.filter((item) => item?.category === 'Comments');
         if (matchService?.length > 0) {
             formCreateGoogleKey.setFieldValue('type', matchService[0]?.type);
             formCreateGoogleKey.setFieldValue('service_type', matchService[0]?.service_type);

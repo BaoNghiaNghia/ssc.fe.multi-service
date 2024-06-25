@@ -8,7 +8,7 @@ import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification, GrServicePlay  } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
-import { FixedServiceTemp } from '../../../variables';
+import { LIST_SERVICE_SUPPLY } from '../../../variables';
 
 const { Option } = Select;
 
@@ -36,7 +36,7 @@ function AddService({ serviceState, setState }) {
 
   useEffect(() => {
     formCreateService.setFieldValue('category', 'Comments');
-    const matchService = FixedServiceTemp?.filter((item) => item?.category === 'Comments');
+    const matchService = LIST_SERVICE_SUPPLY?.filter((item) => item?.category === 'Comments');
     if (matchService?.length > 0) {
       formCreateService.setFieldValue('type', matchService[0]?.type);
       formCreateService.setFieldValue('service_type', matchService[0]?.service_type);
@@ -183,7 +183,7 @@ function AddService({ serviceState, setState }) {
                   message: 'Trường không được trống'
                 }]}
                 onClick={(value) => {
-                  const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
+                  const selectedService = LIST_SERVICE_SUPPLY.filter(item => item?.category === value?.target?.innerText);
                   if (selectedService?.length > 0) {
                     formCreateService.setFieldValue('type', selectedService[0]?.type);
                     formCreateService.setFieldValue('service_type', selectedService[0]?.service_type);
@@ -192,7 +192,7 @@ function AddService({ serviceState, setState }) {
               >
                 <Select style={{ width: '100%', margin: '0px', padding: '0px' }} bordered={false} initialValue="Comments" size='small'>
                 {
-                    FixedServiceTemp?.map(service => {
+                    LIST_SERVICE_SUPPLY?.map(service => {
                       return (
                         <Option key={service?.category} value={service?.category}>
                           <div style={{ display: 'inline-flex', alignItems: 'center' }}>

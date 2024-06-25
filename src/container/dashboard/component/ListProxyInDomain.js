@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Modal,  Table, Switch, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/proxy/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, FixedServiceTemp } from '../../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIST_SERVICE_SUPPLY } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
 
 function ListProxyInDomain({ currentState, setState }) {
@@ -32,7 +32,7 @@ function ListProxyInDomain({ currentState, setState }) {
     }));
   }, [dispatch, currentPage, limitPage]);
 
-  const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);
+  const initCategory = LIST_SERVICE_SUPPLY.filter(item => item?.category === detailService?.category);
 
   const handleOk = () => {
     try {
@@ -88,7 +88,7 @@ function ListProxyInDomain({ currentState, setState }) {
           <>
             {
               using ? <>
-                <p style={{ fontWeight: '700', padding: 0, margin: 0, color: '#538d81' }}>{proxy_string}</p>
+                <p style={{ fontWeight: '700', padding: 0, margin: 0, color: '#538d81', textShadow: `0px 1px 2px yellowgreen` }}>{proxy_string}</p>
               </> : <>
                 <p style={{ fontWeight: '700', padding: 0, margin: 0 }}>{proxy_string}</p>
               </>
@@ -96,7 +96,12 @@ function ListProxyInDomain({ currentState, setState }) {
             <span style={{ fontSize: '0.8em', }}>
               {
                 using ? <>
-                  <span style={{ fontWeight: 800, display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                  <span style={{ 
+                    fontWeight: 800,
+                    display: 'inline-flex',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                  }}>
                     <Badge dots color="green" size='small' style={{ marginRight: '5px' }} />
                     <span style={{ padding: 0 }}>Đang sử dụng</span>
                   </span>

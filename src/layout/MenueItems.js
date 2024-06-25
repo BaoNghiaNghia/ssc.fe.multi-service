@@ -70,7 +70,12 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
                 !topMenu && (
                   <Button
                     type="default"
-                    style={{ width: "94%", margin: 0 }}
+                    style={{ 
+                      width: "94%",
+                      margin: 0,
+                      backgroundImage: 'linear-gradient(120deg, rgb(248, 255, 242) 0%, rgba(251, 227, 227, 0.27) 40%, rgba(203, 203, 203, 0.27) 70%, rgb(255, 255, 255) 85%, rgba(231, 231, 231, 0) 100%)',
+                      border: '1px solid #8080801c'
+                    }}
                     onClick={() => {
                       dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                     }}

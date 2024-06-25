@@ -8,7 +8,7 @@ import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import serviceActions from '../../../redux/serviceSettings/actions';
-import { FixedServiceTemp, STATUS_COMMENT_ENUM } from '../../../variables/index';
+import { LIST_SERVICE_SUPPLY, STATUS_COMMENT_ENUM } from '../../../variables/index';
 import { numberWithCommas } from '../../../utility/utility';
 
 const { Option } = Select;
@@ -126,7 +126,7 @@ function DetailOrder({ setState, state }) {
                       disabled
                       size='small'
                       onClick={(value) => {
-                        const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
+                        const selectedService = LIST_SERVICE_SUPPLY.filter(item => item?.category === value?.target?.innerText);
 
                         if (selectedService?.length > 0) {
                           formUpdateService.setFieldValue('type', selectedService[0]?.type);
@@ -135,7 +135,7 @@ function DetailOrder({ setState, state }) {
                       }}
                     >
                       {
-                        FixedServiceTemp?.map(service => {
+                        LIST_SERVICE_SUPPLY?.map(service => {
                           return (
                             <Option key={service?.category} value={service?.category}>
                               <div style={{ display: 'inline-flex', alignItems: 'center' }}>

@@ -103,8 +103,6 @@ function* deleteDomainFunc(params) {
 
 function* getListProxyInDomainFunc(params) {
   try {
-    console.log('----------- get list proxy in domain ----------', params?.payload);
-
     const response = yield call(getListProxyInDomainAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {

@@ -811,7 +811,7 @@ ul {
 }
 
 .ant-modal .ant-modal-header {
-  border-radius: 10px 10px 0 0;
+  border-radius: 8px 8px 0 0;
 }
 
 .table-fill-modal .ant-modal-body {
@@ -1879,23 +1879,23 @@ html[dir='rtl'] .sDash_upload-basic .sDash_upload-browse{
   margin: 5px;
 }
 
-.sDash_create-file .ant-form-item-control-input{
+.sDash_create-file .ant-form-item-control-input {
   border-radius: 5px;
 }
 
-.sDash_create-file .ant-form-item-control-input input{
+.sDash_create-file .ant-form-item-control-input input {
   border: 1px solid #E3E6EF;
 }
 
 /* Task Modal */
-.sDash_task-details .ant-modal-content .ant-modal-close{
+.sDash_task-details .ant-modal-content .ant-modal-close {
   top: 10px;
 }
-.sDash_task-details .ant-modal-header{
+.sDash_task-details .ant-modal-header {
   border-bottom: 0 none;
   padding: 30px 30px 0;
 }
-.sDash_task-details .ant-modal{
+.sDash_task-details .ant-modal {
   width: 600px !important;
 }
 .sDash_task-details .ant-modal-header .ant-modal-title h4{

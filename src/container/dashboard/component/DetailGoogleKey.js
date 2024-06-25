@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, Switch } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
-import { FixedServiceTemp } from '../../../variables';
+import { LIST_SERVICE_SUPPLY } from '../../../variables';
 
 function DetailGoogleKey({ googleKeyState, setState }) {
     const dispatch = useDispatch();

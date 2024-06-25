@@ -3,8 +3,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card } from 'antd';
+import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { TiTick } from "react-icons/ti";
@@ -13,7 +12,8 @@ import actions from '../../../redux/buffComment/actions';
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
+import { COLOR_GENERAL, LIST_SERVICE_SUPPLY, VIETNAMES_CURRENCY } from '../../../variables';
+import EmptyBackground from '../../../static/img/empty_bg_2.png';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -72,13 +72,12 @@ function AddOrderGeneral() {
       listService: state?.settingService?.listService?.items,
       isOpenCreateOrder: state?.reports?.isOpenCreateOrder,
       detailService: state?.settingService?.detailService
-
     };
   });
 
-  const validatedServiceComment = listService?.filter((itemService) => {
-    return itemService?.enabled && itemService?.category === "Comments"
-  }); 
+  // const validatedServiceComment = listService?.filter((itemService) => {
+  //   return itemService?.enabled && itemService?.category === "Comments"
+  // }); 
 
   const [stateCurr, setStateCurr] = useState({
     selectedCategory: 'Comments',
@@ -89,11 +88,11 @@ function AddOrderGeneral() {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (validatedServiceComment && validatedServiceComment?.length > 0) {
-      formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (validatedServiceComment && validatedServiceComment?.length > 0) {
+  //     formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
+  //   }
+  // }, [dispatch]);
 
   const handleOk = () => {
     try {
@@ -284,13 +283,18 @@ function AddOrderGeneral() {
         open={isOpenCreateOrder}
         centered
         title={
-          <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-            <div>
-              <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Đặt hàng dịch vụ mới</p>
-              <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin đơn hàng</p>
-            </div>
-          </div>
+          <Row>
+            <Col sm={16}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+                <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+                <div>
+                  <p style={{ fontSize: '1.1em', marginBottom: '0px', fontWeight: '700' }}>Đặt hàng dịch vụ mới</p>
+                  <p style={{ fontSize: '0.75em', marginBottom: '0px', color: 'gray', fontWeight: 400 }}>Điền thông tin đơn hàng</p>
+                </div>
+              </div>
+            </Col>
+            <Col sm={8}><></></Col>
+          </Row>
         }
         onOk={handleOk}
         onCancel={handleCancel}
@@ -306,7 +310,7 @@ function AddOrderGeneral() {
         <Form layout="vertical" form={formCreateService}>
           <Row gutter={15}>
             <Col sm={16}>
-              <Card size="small" style={{ border: '1px solid #dddddd' }}>
+              <Card size="small" style={{ border: '1px solid #dddddd', padding: '5px' }}>
                 <Row gutter="10">
                   <Col sm={24}>
                     <Form.Item
@@ -426,7 +430,11 @@ function AddOrderGeneral() {
                   </Col>
                 </Row>
                 {
-                  !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : null
+                  !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : (
+                    <div className="text-center">
+                      <Image src={EmptyBackground} style={{ width: '40%' }} preview={false} />
+                    </div>
+                  )
                 }
               </Card>
             </Col>
@@ -435,7 +443,7 @@ function AddOrderGeneral() {
                 !isEmpty(detailService) ? (
                   <>
                     <Card size="small" style={{ marginBottom: '15px', border: '1px solid #009ef7' }}>
-                      <div>
+                      <div style={{ padding: '5px' }}>
                         <Row style={{ margin: 0, padding: 0 }}>
                           <Col style={{ margin: 0, padding: 0 }}>
                             <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
@@ -465,7 +473,7 @@ function AddOrderGeneral() {
                       </div>
                     </Card>
                     <Card size="small" style={{ border: '1px solid #009ef7' }}>
-                      <div>
+                      <div style={{ padding: '5px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
                           <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>
                           <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: {numberWithCommas(detailService?.max)} {stateCurr?.selectedCategory}</p>
@@ -497,7 +505,7 @@ function AddOrderGeneral() {
                       </div>
                     </Card>
                   </>
-                ) : <Card size="small" style={{ display: 'flex', alignItems: 'stretch', flexFlow: 'column' }}>
+                ) : <Card size="small" className='text-center' style={{ display: 'flex', alignItems: 'stretch', flexFlow: 'column' }}>
                   Chưa chọn dịch vụ
                 </Card>
               }
@@ -508,10 +516,5 @@ function AddOrderGeneral() {
     </>
   );
 }
-
-// AddOrderGeneral.propTypes = {
-//   isOpen: PropTypes.bool,
-//   setState: PropTypes.func
-// };
 
 export default AddOrderGeneral;

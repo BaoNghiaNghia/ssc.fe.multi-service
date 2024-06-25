@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Select, Button, Modal,  Typography } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
-import { COLOR_GENERAL, FixedServiceTemp } from '../../../variables';
+import { COLOR_GENERAL, LIST_SERVICE_SUPPLY } from '../../../variables';
 
 const { Paragraph, Text } = Typography;
 
@@ -20,7 +20,7 @@ function DelService({ isOpen, setState }) {
     };
   });
 
-  const initCategory = FixedServiceTemp.filter(item => item?.category === detailService?.category);
+  const initCategory = LIST_SERVICE_SUPPLY.filter(item => item?.category === detailService?.category);
 
   const currentStateWorking = detailService?.enabled;
 

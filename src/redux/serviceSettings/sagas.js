@@ -309,7 +309,6 @@ export function* modalDetailServiceFunc(params) {
 }
 
 function* changeTabTypeFunc(params) {
-  console.log('---- params: -----', params?.payload);
   try {
     switch (params?.payload) {
       case SERVICE_SETTING_TYPE.SETTING.title:
