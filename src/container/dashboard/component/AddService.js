@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
+import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Tooltip, Switch } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
+import { GrNotification, GrServicePlay  } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
 import { FixedServiceTemp } from '../../../variables';
 
@@ -27,6 +27,7 @@ function AddService({ serviceState, setState }) {
 
   const [state, setStateModal] = useState({
     values: null,
+    rest_api: true,
   });
 
   const handleSubmit = (values) => {
@@ -65,7 +66,8 @@ function AddService({ serviceState, setState }) {
             max_threads_5000: formCreateService.getFieldValue('max_threads_5000'),
             name: formCreateService.getFieldValue('name'),
             price_per_10: formCreateService.getFieldValue('price_per_10'),
-            priority: formCreateService.getFieldValue('priority') === 'true'
+            priority: formCreateService.getFieldValue('priority') === 'true',
+            rest_api: state?.rest_api
           }
 
           dispatch(actions.createServiceBegin(requestData));
@@ -73,6 +75,11 @@ function AddService({ serviceState, setState }) {
           setState({
             ...serviceState,
             isOpenAdd: false,
+          });
+
+          setStateModal({
+            ...state,
+            rest_api: true
           });
 
           formCreateService.resetFields();
@@ -90,6 +97,11 @@ function AddService({ serviceState, setState }) {
     setState({
       ...serviceState,
       isOpenAdd: false,
+    });
+
+    setStateModal({
+      ...state,
+      rest_api: true
     });
   }
 
@@ -113,13 +125,31 @@ function AddService({ serviceState, setState }) {
         open={isOpenAdd}
         centered
         title={
-          <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-            <div>
-              <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm dịch vụ</p>
-              <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho dịch vụ mới</p>
-            </div>
-          </div>
+          <Row gutter={10}>
+            <Col sm={16}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+                <GrServicePlay fontSize={40} color='#a1a1a1' style={{ margin: '0 20px 0 0', padding: '5px', border: '1px solid #e3e3e3', borderRadius: '10px' }} />
+                <div>
+                  <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm dịch vụ</p>
+                  <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho dịch vụ mới</p>
+                </div>
+              </div>
+            </Col>
+            <Col sm={8}>
+              <Form.Item
+                name="rest_api"
+                label="Rest API"
+                style={{ marginBottom: '7px' }}
+              >
+                <Switch checked={state?.rest_api} onChange={(check) => {
+                  setStateModal({
+                    ...state,
+                    rest_api: check
+                  })
+                }}/>
+              </Form.Item>
+            </Col>
+          </Row>
         }
         onOk={handleOk}
         onCancel={handleCancel}
@@ -133,6 +163,7 @@ function AddService({ serviceState, setState }) {
         ]}
       >
         <Form name="add_service" layout="vertical" form={formCreateService} onFinish={handleSubmit}>
+
           <Row gutter="10" style={{ backgroundColor: '#efefef', borderRadius: '10px' }}>
             <Col sm={12}>
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', marginTop: '10px' }}>
@@ -153,7 +184,6 @@ function AddService({ serviceState, setState }) {
                 }]}
                 onClick={(value) => {
                   const selectedService = FixedServiceTemp.filter(item => item?.category === value?.target?.innerText);
-
                   if (selectedService?.length > 0) {
                     formCreateService.setFieldValue('type', selectedService[0]?.type);
                     formCreateService.setFieldValue('service_type', selectedService[0]?.service_type);
@@ -161,7 +191,7 @@ function AddService({ serviceState, setState }) {
                 }}
               >
                 <Select style={{ width: '100%', margin: '0px', padding: '0px' }} bordered={false} initialValue="Comments" size='small'>
-                 {
+                {
                     FixedServiceTemp?.map(service => {
                       return (
                         <Option key={service?.category} value={service?.category}>
