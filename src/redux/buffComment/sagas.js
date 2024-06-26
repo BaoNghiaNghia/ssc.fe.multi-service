@@ -40,7 +40,7 @@ function* listComputerRunCommentFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Update order comment failed');
+      toast.error('Cập nhật đơn comment thất bại');
     }
   } finally { /* empty */ }
 }
@@ -65,7 +65,7 @@ function* fetchWarrantyOrderFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Fetch Warranty Order failed');
+      toast.error('Lấy đơn bảo hành không thành công');
     }
   } finally { /* empty */ }
 }
@@ -84,13 +84,13 @@ function* activeWarrantyOrderFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.activeWarrantyOrderErr({ error: errorMessage || 'Active Warranty Order failed' })
+      actions.activeWarrantyOrderErr({ error: errorMessage || 'Activate Warranty Order failed' })
     );
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Active Warranty Order failed');
+      toast.error('Kích hoạt lệnh bảo hành không thành công');
     }
   } finally { /* empty */ }
 }
@@ -114,7 +114,7 @@ function* refundWarrantyOrderFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Refund Warranty Order failed');
+      toast.error('Hoàn tiền Bảo hành Lệnh không thành công');
     }
   } finally { /* empty */ }
 }
@@ -145,7 +145,7 @@ function* updateOrderCommentFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Update order comment failed');
+      toast.error('Cập nhật nhận xét đơn hàng không thành công');
     }
   } finally { /* empty */ }
 }
@@ -177,7 +177,7 @@ function* updateOneComputerCommentFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Update server comment failed');
+      toast.error('Cập nhật máy chủ comment không thành công');
     }
   } finally { /* empty */ }
 }
@@ -207,7 +207,7 @@ function* updateManyComputerCommentFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Update many computer comment failed');
+      toast.error('Cập nhật nhiều bình luận máy tính không thành công');
     }
   } finally { /* empty */ }
 }
@@ -237,7 +237,7 @@ function* updateManyOrderCommentFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Update many order comment failed');
+      toast.error('Cập nhật đơn hàng comment không thành công');
     }
   } finally { /* empty */ }
 }
@@ -269,7 +269,7 @@ function* createOrderCommentFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Create order comment failed');
+      toast.error('Tạo đơn hàng comment không thành công');
     }
   } finally { /* empty */ }
 }
@@ -292,7 +292,7 @@ function* fetchListOrderCommentFunc(params) {
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
-      toast.error('Fetch list order comment failed');
+      toast.error('Tìm danh sách đơn comment không thành công');
     }
   } finally { /* empty */ }
 }

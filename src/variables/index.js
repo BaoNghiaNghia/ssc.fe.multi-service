@@ -373,3 +373,30 @@ export const ROLE_GENERAL = {
 
 export const REGEX_VALIDATE_YOUTUBE_VIDEO_LINK =  /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
 export const REGEX_VALIDATE_YOUTUBE_ALL_LINK = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
+
+export const REGION_IDENTIFIER = [
+  {
+      shortcode: "vn",
+      alt: "vn-flag",
+      path: "static/img/flag/vn.png",
+      region: "Việt Nam"
+  },
+  {
+      shortcode: "us",
+      alt: "us-flag",
+      path: "static/img/flag/us.png",
+      region: "USA"
+  },
+  {
+      shortcode: "kr",
+      alt: "kr-flag",
+      path: "static/img/flag/kr.png",
+      region: "Hàn Quốc"
+  },
+  {
+      shortcode: "jp",
+      alt: "jp-flag",
+      path: "static/img/flag/jp.png",
+      region: "Nhật Bản"
+  },
+]

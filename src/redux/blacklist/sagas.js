@@ -24,7 +24,7 @@ function* fetchBlackListChannelFunc() {
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
-      toast.error('Fetch admin setting failed');
+      toast.error('Lấy thông tin cài đặt thất bại');
     }
   } finally { /* empty */ }
 }

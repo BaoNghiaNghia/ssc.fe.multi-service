@@ -299,21 +299,15 @@ function* changeServiceTypeFunc(params) {
     );
 
     if (params?.payload === SERVICE_TYPE.COMMENT.title) {
-      console.log('---- change type nè ------', params?.payload)
-      // const initialFilter = {
-      //   start_date: `${fromDate  } 00:00:00`,
-      //   end_date: `${toDate  } 23:59:59`,
-      //   status: 1
-      // };
-
       yield put(actions.statisticCommentByOrderReportBegin());
       yield put(actions.statisticTaskSuccessInMinuteBegin());
       yield put(actions.statisticTaskDurationInMinuteBegin());
-      // yield put(actions.statisticOrderAmountBegin(initialFilter));
-      // yield put(actions.statisticAccountStatusCommentBegin(initialFilter));
-      // yield put(actions.statisticPerformanceCommentBegin(initialFilter));
-      // yield put(actions.statisticCommentByDayBegin(initialFilter));
-      // yield put(actions.statisticComputerThreadBegin(initialFilter));
+    }
+    if (params?.payload === SERVICE_TYPE.LIKE.title) {
+      console.log('--- THAY ĐỔI STATISTIC LIKE ---')
+    }
+    if (params?.payload === SERVICE_TYPE.SUBSCRIBE.title) {
+      console.log('--- THAY ĐỔI STATISTIC SUBSCRIBE ---')
     }
   } catch (err) {
     yield put(

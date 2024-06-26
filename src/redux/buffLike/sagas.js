@@ -40,7 +40,7 @@ function* listComputerRunLikeFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Update order like failed');
+      toast.error('Cập nhật đơn like thất bại');
     }
   } finally { /* empty */ }
 }
@@ -65,7 +65,7 @@ function* fetchWarrantyOrderFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Fetch Warranty Order failed');
+      toast.error('Lấy đơn bảo hành không thành công');
     }
   } finally { /* empty */ }
 }
@@ -84,13 +84,13 @@ function* activeWarrantyOrderFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.activeWarrantyOrderErr({ error: errorMessage || 'Active Warranty Order failed' })
+      actions.activeWarrantyOrderErr({ error: errorMessage || 'Activate Warranty Order failed' })
     );
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Active Warranty Order failed');
+      toast.error('Activate Warranty Order failed');
     }
   } finally { /* empty */ }
 }

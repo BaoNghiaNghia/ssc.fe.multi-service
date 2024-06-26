@@ -9,7 +9,7 @@ import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY } from '../../../variables/index';
+import { LIST_SERVICE_SUPPLY, REGION_IDENTIFIER } from '../../../variables/index';
 
 const { Option } = Select;
 
@@ -209,30 +209,16 @@ function EditService({ isOpen, setState, state }) {
                 }]}
               >
                 <Select style={{ width: '100%' }} defaultValue="vn" size='small'>
-                  <Option value="vn">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
-                      <img src={require(`../../../static/img/flag/vn.png`)} alt="vn-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>Việt Nam</span>
-                    </div>
-                  </Option>
-                  <Option value="us">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
-                      <img src={require(`../../../static/img/flag/us.png`)} alt="us-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>USA</span>
-                    </div>
-                  </Option>
-                  <Option value="kr">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
-                      <img src={require(`../../../static/img/flag/kr.png`)} alt="kr-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>Korean</span>
-                    </div>
-                  </Option>
-                  <Option value="jp">
-                    <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
-                      <img src={require(`../../../static/img/flag/jp.png`)} alt="jp-flag" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                      <span style={{ marginLeft: '10px' }}>Japan</span>
-                    </div>
-                  </Option>
+                  {
+                    REGION_IDENTIFIER?.map(region => (
+                      <Option value={region?.shortcode}>
+                        <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
+                          <img src={require(`../../../${region?.path}`)} alt={region?.alt} width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                          <span style={{ marginLeft: '10px' }}>{region?.region}</span>
+                        </div>
+                      </Option>
+                    ))
+                  }
                 </Select>
               </Form.Item>
             </Col>

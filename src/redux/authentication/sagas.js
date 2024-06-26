@@ -30,7 +30,7 @@ function* registerReferralSagaFunc(params) {
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Register failed');
+      toast.error('Đăng ký thất bại');
     }
   } finally { /* empty */ }
 }
@@ -67,7 +67,7 @@ function* loginSagaFunc(params) {
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
-      toast.error('Login failed');
+      toast.error('Đăng nhập thất bại');
     }
   } finally { /* empty */ }
 }
