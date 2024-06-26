@@ -92,6 +92,11 @@ const columnsService = [
     key: 'category',
   },
   {
+    title: 'rest_api',
+    dataIndex: 'rest_api',
+    key: 'rest_api',
+  },
+  {
     title: 'threads',
     dataIndex: 'threads',
     key: 'threads',
@@ -197,7 +202,7 @@ function SettingAndService() {
   const dataSource = [];
   if (listService?.length) {
     listService?.map((value, key) => {
-      const { name, min, max, service_id, max_threads_3000, max_threads, max_threads_5000, priority, enabled, description, price_per_10, category, type, geo } = value;
+      const { name, min, max, service_id, max_threads_3000, max_threads, max_threads_5000, priority, enabled, description, price_per_10, category, type, geo, rest_api } = value;
       return dataSource?.push({
         key: key + 1,
         name: <>
@@ -282,6 +287,11 @@ function SettingAndService() {
             <span className="customer-name">{max_threads} / {max_threads_3000} / {max_threads_5000}</span>
           </Tooltip>
         </>,
+        rest_api: (
+          <>
+            <Switch checkedChildren="Rest API" unCheckedChildren="No Rest API" size='small' checked={rest_api} />
+          </>
+        ),
         action: <div style={{ display: 'inline-flex', alignItems: 'center' }}>
           <Tooltip title="Sửa dịch vụ">
             <Button
@@ -297,7 +307,7 @@ function SettingAndService() {
             </Button>
           </Tooltip>
           <Tooltip title={`${enabled ? 'Tắt' : 'Bật'} dịch vụ`}>
-            <Switch checked={enabled} onChange={() => {
+            <Switch checked={enabled} size='small' onChange={() => {
               setState({
                 ...state,
                 isOpenDel: true

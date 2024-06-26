@@ -141,7 +141,7 @@ function AddService({ serviceState, setState }) {
                 label="Rest API"
                 style={{ marginBottom: '7px' }}
               >
-                <Switch checked={state?.rest_api} onChange={(check) => {
+                <Switch checkedChildren="Rest API" unCheckedChildren="No Rest API" checked={state?.rest_api} onChange={(check) => {
                   setStateModal({
                     ...state,
                     rest_api: check

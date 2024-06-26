@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
+import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Switch } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
@@ -26,14 +27,16 @@ function EditService({ isOpen, setState, state }) {
   const initCategory = LIST_SERVICE_SUPPLY.filter(item => item?.category === detailService?.category);
 
   useEffect(() => {
-    formUpdateService.setFieldsValue(detailService);
-    formUpdateService.setFieldValue('priority', String(detailService?.priority));
+    if (detailService !== undefined) {
+      formUpdateService.setFieldValue('rest_api', detailService?.rest_api);
+      formUpdateService.setFieldsValue(detailService);
+      formUpdateService.setFieldValue('priority', String(detailService?.priority));
+    }
     formUpdateService.setFieldValue('type', initCategory[0]?.type);
   });
 
   const handleOk = () => {
     try {
-
       formUpdateService.validateFields()
         .then((values) => {
           const requestData = {
@@ -52,15 +55,16 @@ function EditService({ isOpen, setState, state }) {
             max_threads_5000: values?.max_threads_5000,
             name: values?.name,
             price_per_10: values?.price_per_10,
-            priority: values?.priority === 'true'
+            priority: values?.priority === 'true',
+            rest_api: values?.rest_api
           }
-      
+
           dispatch(actions.updateServiceBegin(requestData));
-    
+
           setState({
             isOpenAdd: false,
           });
-    
+
           formUpdateService.resetFields();
         })
         .catch((err) => {
@@ -73,7 +77,6 @@ function EditService({ isOpen, setState, state }) {
       formUpdateService.resetFields();
       console.log(err);
     }
-
   };
 
   const handleCancel = () => {
@@ -104,15 +107,19 @@ function EditService({ isOpen, setState, state }) {
         open={isOpen}
         centered
         title={
-          <>
-            <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-              <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật dịch vụ</p>
-                <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Thay đổi thông tin cho dịch vụ</p>
+          <Row>
+            <Col sm={16}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+                <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+                <div>
+                  <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật dịch vụ</p>
+                  <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Thay đổi thông tin cho dịch vụ</p>
+                </div>
               </div>
-            </div>
-          </>
+            </Col>
+            <Col sm={8}><></>
+            </Col>
+          </Row>
         }
         onCancel={handleCancel}
         footer={[
@@ -177,7 +184,7 @@ function EditService({ isOpen, setState, state }) {
           <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: 0 }}>Thông tin dịch vụ</Divider>
 
           <Row gutter="10">
-            <Col sm={18}>
+            <Col sm={15}>
               <Form.Item 
                 name="name" 
                 label="Tên dịch vụ"
@@ -190,8 +197,8 @@ function EditService({ isOpen, setState, state }) {
                 <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ'/>
               </Form.Item>
             </Col>
-            <Col sm={6}>
-            <Form.Item 
+            <Col sm={5}>
+              <Form.Item 
                 name="geo" 
                 label="Geo"
                 initialValue="vn"
@@ -226,6 +233,22 @@ function EditService({ isOpen, setState, state }) {
                       <span style={{ marginLeft: '10px' }}>Japan</span>
                     </div>
                   </Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="rest_api"
+                label="Rest API"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Select style={{ width: '100%' }} size='small'>
+                  <Option value={false}>Không</Option>
+                  <Option value={true}>Có</Option>
                 </Select>
               </Form.Item>
             </Col>
