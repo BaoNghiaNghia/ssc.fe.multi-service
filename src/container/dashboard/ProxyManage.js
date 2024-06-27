@@ -137,8 +137,8 @@ function ProxyManage() {
           }
         </>,
         enable: (
-          <Tooltip title={enable ? 'Đang hoạt động' : 'Ngừng hoạt động'}>
-            <Switch checked={enable} onChange={(state) => {
+          <Tooltip title={enable ? 'Đang hoạt động' : 'Không hoạt động'}>
+            <Switch checkedChildren="Hoạt động" unCheckedChildren="Dừng hoạt động"  checked={enable} onChange={(state) => {
               const dataRequest = {
                 domain,
                 enable: state,

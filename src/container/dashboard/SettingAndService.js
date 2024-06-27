@@ -346,7 +346,7 @@ function SettingAndService() {
         </>,
         status: <>
           <Tooltip title={status ? 'Đang hoạt động' : 'Ngừng hoạt động'}>
-            <Switch checked={status} onChange={(state) => {
+            <Switch checkedChildren="Hoạt động" unCheckedChildren="Ngừng hoạt động" checked={status} onChange={(state) => {
               console.log('--- Cập nhật trạng thái google key ----', state);
             }}/>
           </Tooltip>
@@ -533,6 +533,7 @@ function SettingAndService() {
                       }]}
                     >
                       <Switch
+                        checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
                         checked={listSettings?.block_video}
                         onChange={(value) => handleSwitchBlockVideo(value)}
                       />
