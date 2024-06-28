@@ -115,7 +115,7 @@ function PendingBuffLike() {
     return {
       isLoading: state?.buffComment?.loading,
       searchData: state.headerSearchData,
-      listOrderLike: state?.buffComment?.listOrderLike,
+      listOrderLike: state?.buffLike?.listOrderLike,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
       userInfo: state?.auth?.userInfo,
@@ -613,22 +613,6 @@ function PendingBuffLike() {
                 }}
               >
                 <FeatherIcon icon="eye" size={16} />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Danh sách comment">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.commentOrderLikeBegin({
-                  id,
-                  page: 1,
-                  limit: DEFAULT_PERPAGE
-                }));
-                setState({
-                  ...state,
-                  rowData: value,
-                  isListCommentModal: true
-                });
-              }}>
-                <FaRegCommentDots fontSize={15}/>
               </Button>
             </Tooltip>
           </div>

@@ -363,7 +363,7 @@ const ThemeLayout = (WrappedComponent) => {
                   <Footer className="admin-footer" style={footerStyle}>
                     <Row>
                       <Col md={12} xs={24}>
-                        <span className="admin-footer__copyright">{new Date().getFullYear()} © SSC - SEEDING Panel - Social Services</span>
+                        <span className="admin-footer__copyright">{new Date().getFullYear()} © SSC - Seeding Panel - Social Services</span>
                       </Col>
                       <Col md={12} xs={24}>
                         <div className="admin-footer__links">
