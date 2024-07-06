@@ -23,7 +23,7 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import actions from '../../redux/buffComment/actions';
 import Heading from '../../components/heading/heading';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
+import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 const columns = [
   {
@@ -160,7 +160,7 @@ function ComputerRunCommentOrder() {
           : { backgroundColor: '#ff000026', border: '1px solid orangered', color: 'orangered', ...fixedStyle })) 
           : { backgroundColor: '#efefef', border: '1px solid gray', color: 'gray', ...fixedStyle };
 
-      const styleMail = { marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' };
+      const styleMail = { marginRight: '12px', padding:' 0px 5px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', backgroundColor: '#e5e5e585', borderRadius: '5px'};
 
       const threadString = `${value?.current_thread || 0} / ${value?.thread}`;
 
@@ -220,20 +220,28 @@ function ComputerRunCommentOrder() {
               <div>Mail chết: {value?.account_dead || 'Chưa có'}</div>
             </>
           )}>
-            <span>
-              <span style={styleMail}>
-                <BiLogoGmail style={{ marginBottom: 0, marginRight: '4px' }} fontSize={19} />
-                {value?.account_live ? numberWithCommas(value?.account_live || 0) : '0'}
-              </span>
-              <span style={styleMail}>
-                <BiLogoGmail fontSize={19} color='#27AE60' style={{ marginRight: '4px' }} />
-                {value?.account_run ? numberWithCommas(value?.account_run || 0) : '0'}
-              </span>
-              <span style={styleMail}>
-                <BiLogoGmail fontSize={19} color='#EB5757' style={{ marginRight: '4px' }} />
-                {value?.account_dead ? numberWithCommas(value?.account_dead || 0) : '0'}
-              </span>
-            </span>
+            <Row gutter={15}>
+              <Col xs={7}>
+                <span style={styleMail}>
+                  <BiLogoGmail style={{ marginBottom: 0, marginRight: '4px' }} color={COLOR_GENERAL.primary} fontSize={19} />
+                  {value?.account_live ? numberWithCommas(value?.account_live || 0) : '0'}
+                </span>
+              </Col>
+              <Col xs={7}>
+                <span style={styleMail}>
+                  <BiLogoGmail fontSize={19} color='#27AE60' style={{ marginRight: '4px' }} />
+                  {value?.account_run ? numberWithCommas(value?.account_run || 0) : '0'}
+                </span>
+
+              </Col>
+              <Col xs={7}>
+                <span style={styleMail}>
+                  <BiLogoGmail fontSize={19} color='#EB5757' style={{ marginRight: '4px' }} />
+                  {value?.account_dead ? numberWithCommas(value?.account_dead || 0) : '0'}
+                </span>
+
+              </Col>
+            </Row>
           </Tooltip>
         ),
         lastReset: (
@@ -489,7 +497,7 @@ function ComputerRunCommentOrder() {
                   role="button"
                   tabIndex="0"
                 >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} /><span>Mail sống</span></p>
+                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color={COLOR_GENERAL.primary} /><span>Mail sống</span></p>
                   <Heading as="h1" style={{ margin: 0, padding: 0 }}>
                     {accountAlive || 0}
                   </Heading>
