@@ -69,25 +69,27 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
               {
                 !topMenu && (
                   <Button
-                    type="default"
+                    type="primary"
+                    size='small'
                     style={{ 
                       width: "94%",
                       margin: 0,
-                      backgroundImage: 'linear-gradient(120deg, rgb(248, 255, 242) 0%, rgba(251, 227, 227, 0.27) 40%, rgba(203, 203, 203, 0.27) 70%, rgb(255, 255, 255) 85%, rgba(231, 231, 231, 0) 100%)',
-                      border: '1px solid #8080801c'
+                      // backgroundImage: 'linear-gradient(120deg, rgb(248, 255, 242) 0%, rgba(251, 227, 227, 0.27) 40%, rgba(203, 203, 203, 0.27) 70%, rgb(255, 255, 255) 85%, rgba(231, 231, 231, 0) 100%)',
+                      border: '1px solid #8080801c',
+                      backgroundColor: COLOR_GENERAL.primary
                     }}
                     onClick={() => {
                       dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                     }}
                   >
                     <span style={{ display: "inline-flex", alignItems: "center" }}>
-                      <RiShoppingBag3Fill size={15} style={{ marginRight: '5px' }} />
-                      <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro', color: 'gray' }}>Đặt hàng</span>
+                      <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro', marginRight: '10px'}}>Đặt hàng</span>
+                      <RiShoppingBag3Fill size={15} style={{ paddingBottom: '1px' }}/>
                     </span>
                   </Button>
                 )
               }
-              {!topMenu && <NavTitle className="sidebar-nav-title">TỔNG QUAN</NavTitle>}
+              {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>TỔNG QUAN</NavTitle>}
               <Menu.Item
                 icon={
                   !topMenu && (
@@ -120,7 +122,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title">BUFF SUBSCRIBE</NavTitle>}
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>BUFF SUBSCRIBE</NavTitle>}
         <Menu.Item
           disabled
           icon={
@@ -155,7 +157,9 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title">BUFF LIKE</NavTitle>}
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>
+          BUFF LIKE
+        </NavTitle>}
         {/* <SubMenu key="buff-like" icon={!topMenu && <FeatherIcon icon="mail" />} title="Danh sách đơn">
           <Menu.Item key="buff-like-cho-duyet">
             <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-don`}>
@@ -190,7 +194,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         {
           checkMatchRole ? (
             <Menu.Item
-              disabled
+              // disabled
               icon={
                 !topMenu && (
                   <NavLink className="menuItem-icon" to={`${path}/like/danh-sach-may`}>
@@ -201,12 +205,12 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
               key="buff-like-lich-su-don"
             >
               <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-may`}>
-                Danh sách máy {pendingBadge}
+                Danh sách máy
               </NavLink>
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title">BUFF COMMENT</NavTitle>}
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>BUFF COMMENT</NavTitle>}
         <Menu.Item
           icon={
             !topMenu && (
@@ -258,7 +262,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         {
           checkMatchRole ? (
             <>
-              {!topMenu && <NavTitle className="sidebar-nav-title">ADD-ON</NavTitle>}
+              {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>ADD-ON</NavTitle>}
               <Menu.Item
                 disabled
                 icon={

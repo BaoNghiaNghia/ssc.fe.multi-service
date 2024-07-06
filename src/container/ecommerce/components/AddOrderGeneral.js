@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image } from 'antd';
+import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image, InputNumber } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { TiTick } from "react-icons/ti";
@@ -12,7 +12,7 @@ import actions from '../../../redux/buffComment/actions';
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, LIST_SERVICE_SUPPLY, VIETNAMES_CURRENCY } from '../../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
 
 const badgeGreenStyle = {
@@ -75,10 +75,6 @@ function AddOrderGeneral() {
     };
   });
 
-  // const validatedServiceComment = listService?.filter((itemService) => {
-  //   return itemService?.enabled && itemService?.category === "Comments"
-  // }); 
-
   const [stateCurr, setStateCurr] = useState({
     selectedCategory: 'Comments',
     amountChange: 0
@@ -87,12 +83,6 @@ function AddOrderGeneral() {
   useEffect(() => {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (validatedServiceComment && validatedServiceComment?.length > 0) {
-  //     formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
-  //   }
-  // }, [dispatch]);
 
   const handleOk = () => {
     try {
@@ -124,8 +114,11 @@ function AddOrderGeneral() {
     dispatch(actionsService.modalDetailServiceBegin({}));
   }
 
-  const handleCountValidateCommentString = (value) => {
-    return value?.target?.value?.split('\n')?.length;
+  const handleCountValidateCommentString = (input) => {
+    const commentString = input?.target?.value;
+    if (commentString === '') { return 0; } 
+
+    return commentString?.split('\n')?.length;
   }
 
   const validateCommentCount = stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange <= detailService?.max;
@@ -219,6 +212,7 @@ function AddOrderGeneral() {
             <Form.Item
               name="note"
               label="Mô tả"
+              hasFeedback
               style={{ marginBottom: '7px' }}
               rules={[{
                 required: true,
@@ -237,18 +231,52 @@ function AddOrderGeneral() {
     return (
       <>
         <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
-        <Row gutter="10">
-          <Col sm={24}>
+        <Row gutter="10" style={{ marginBottom: '7px' }}>
+          <Col sm={19}>
             <Form.Item
-              name="note"
-              label="Mô tả"
-              style={{ marginBottom: '7px' }}
+              name="link"
+              label="Liên kết"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+                {
+                  validator: async (_, link) => {
+                    if (!validateYouTubeUrl(link)) {
+                      return Promise.reject( `Đường dẫn video Youtube không hợp lệ`);
+                    }
+                  },
+                }
+              ]}
+            >
+              <Input size='small' allowClear style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
+            </Form.Item>
+          </Col>
+          <Col sm={5}>
+            <Form.Item
+              name="like_count"
+              label="Số like"
+              hasFeedback
               rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}
             >
-              <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={2} />
+              <Tooltip title={`Min: ${detailService?.min} & Max:${detailService?.max}`} placement='left'>
+                <InputNumber 
+                  size='small'
+                  style={{ width: '100% !important' }}
+                  onChange={(value) => {
+                    console.log('---- 000000 ------', value);
+                  }}
+                  defaultValue={detailService?.min}
+                  min={detailService?.min}
+                  max={detailService?.max}
+                  placeholder={`Min: ${detailService?.min} & Max:${detailService?.max}`}
+                />
+              </Tooltip>
             </Form.Item>
           </Col>
         </Row>
@@ -275,6 +303,8 @@ function AddOrderGeneral() {
         );
     }
   }
+
+  console.log('----- start ---------', formCreateService.getFieldValue('like_count'), detailService?.min);
 
   return (
     <>
@@ -309,7 +339,7 @@ function AddOrderGeneral() {
       >
         <Form layout="vertical" form={formCreateService}>
           <Row gutter={15}>
-            <Col sm={16}>
+            <Col sm={!isEmpty(detailService) ? 16 : 24}>
               <Card size="small" style={{ border: '1px solid #dddddd', padding: '5px' }}>
                 <Row gutter="10">
                   <Col sm={24}>
@@ -348,8 +378,6 @@ function AddOrderGeneral() {
                               });
 
                               dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
-                              // Reset fields when change service type
-                              // formCreateService.resetFields();
                             }
                             dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
                           }
@@ -438,41 +466,43 @@ function AddOrderGeneral() {
                 }
               </Card>
             </Col>
-            <Col sm={8}>
               {
                 !isEmpty(detailService) ? (
-                  <>
+                  <Col sm={8}>
                     <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd7a' }}>
                       <div style={{ padding: '5px' }}>
                         <Row style={{ margin: 0, padding: 0 }}>
                           <Col style={{ margin: 0, padding: 0 }}>
-                            <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
-                              Platform: &nbsp;<FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} /> Youtube
-                            </p>
-                            <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
-                              GEO: &nbsp;
-                              {
-                                detailService?.geo ? (
-                                  <Tooltip title={detailService?.geo?.toUpperCase()}>
-                                    <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                      <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                                      <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
-                                    </span>
-                                  </Tooltip>
-                                ) : 'Không có'
-                              }
-                            </p>
-                            <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
                             <p style={{ fontWeight: 600, color: 'green', fontSize: '1.1em' }}>{detailService?.name}</p>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
-                              <span style={{ fontSize: '0.9em' }}>Giá tiền: </span>
-                              <p style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</p>
+                            <div className='my-2' style={{ borderTop: '1px dashed #e7e7e7' }}>
+                              <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                                Platform: &nbsp;<FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} /> Youtube
+                              </p>
+                              <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                                GEO: &nbsp;
+                                {
+                                  detailService?.geo ? (
+                                    <Tooltip title={detailService?.geo?.toUpperCase()}>
+                                      <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                        <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                                        <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
+                                      </span>
+                                    </Tooltip>
+                                  ) : 'Không có'
+                                }
+                              </p>
+                              <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
+                              <span style={{ fontSize: '0.9em' }}>Giá tiền : </span>
+                              <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
+                              <span style={{ fontSize: '0.9em' }}>/ 10 {stateCurr?.selectedCategory} </span>
                             </div>
                           </Col>
                         </Row>
                       </div>
                     </Card>
-                    <Card size="small" style={{ border: '1px solid #dddddd7a' }}>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd7a' }}>
                       <div style={{ padding: '5px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
                           <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>
@@ -504,12 +534,47 @@ function AddOrderGeneral() {
                         }
                       </div>
                     </Card>
-                  </>
-                ) : <Card size="small" className='text-center' style={{ display: 'flex', alignItems: 'stretch', flexFlow: 'column' }}>
-                  Chưa chọn dịch vụ
-                </Card>
+                    {
+                      (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0)  ? (
+                        <Card
+                          size="small"
+                          style={{ 
+                            border: '3px solid #dddddd7a',
+                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, rgb(255 248 152 / 43%) 100%)',
+                            color: 'black'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'space-between', padding: '7px' }}>
+                            <span style={{ fontSize: '0.8em' }}>TỔNG CỘNG </span>
+                            <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>
+                              {numberWithCommas((stateCurr?.amountChange ?? 1)*(detailService?.price_per_10 ?? 1)/10 || 0)} {VIETNAMES_CURRENCY}
+                            </span>
+                          </div>
+                        </Card>
+                      ) : null
+                    }
+                    {
+                      (formCreateService.getFieldValue('like_count') >= detailService?.min && formCreateService.getFieldValue('like_count') > 0)  ? (
+                        <Card
+                          size="small"
+                          style={{ 
+                            border: '3px solid #dddddd7a',
+                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, rgb(255 248 152 / 43%) 100%)',
+                            color: 'black'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'space-between', padding: '7px' }}>
+                            <span style={{ fontSize: '0.8em' }}>TỔNG CỘNG </span>
+                            <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>
+                              {numberWithCommas((stateCurr?.amountChange ?? 1)*(detailService?.price_per_10 ?? 1)/10 || 0)} {VIETNAMES_CURRENCY}
+                            </span>
+                          </div>
+                        </Card>
+                      ) : null
+                    }
+                  </Col>
+                ) : null
               }
-            </Col>
           </Row>
         </Form>
       </Modal>

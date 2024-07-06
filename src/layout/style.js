@@ -477,7 +477,7 @@ const Div = Styled.div`
                     }
                 }
                 .sidebar-nav-title{
-                    margin-top: 30px;
+                    margin-top: 20px;
                     margin-bottom: 24px;
                 }
                 &.ant-menu-inline-collapsed{
