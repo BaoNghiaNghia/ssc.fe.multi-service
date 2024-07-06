@@ -132,7 +132,7 @@ function PendingBuffComment() {
     isInsuranceCommentOrderModal: false,
     isFilterCommentOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
-    statusNumber: 'all',
+    statusNumber: 1,
     notData: {},
     rowData: {},
     item: listOrderComment,

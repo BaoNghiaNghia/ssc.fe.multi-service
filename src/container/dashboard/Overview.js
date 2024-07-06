@@ -483,17 +483,6 @@ function Overview() {
               <TaskDurationEveryMinutes title={`Thời gian ${typeService} trung bình`} />
             </Suspense>
           </Col>
-          {/* <Col xxl={10} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active/>
-                </Cards>
-              }
-            >
-              <EfficiencySubscribe title={`Hiệu suất ${typeService}`} />
-            </Suspense>
-          </Col> */}
         </Row>
       </Main>
     </>
