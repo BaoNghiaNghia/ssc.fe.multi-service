@@ -142,8 +142,8 @@ function ComputerRunCommentOrder() {
 
   const accountTotal = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
   const accountAlive = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountWork = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_work)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountDie = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_die)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountWork = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_run)?.reduce((accumulator, item) => accumulator + item) || 0);
+  const accountDie = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_dead)?.reduce((accumulator, item) => accumulator + item) || 0);
 
   const dataSource = [];
   if (listServer?.items?.length > 0) {
@@ -216,8 +216,8 @@ function ComputerRunCommentOrder() {
           <Tooltip title={(
             <>
               <div>Mail sống: {value?.account_live || 'Chưa có' }</div>
-              <div>Mail hoạt động: {value?.account_work || 'Chưa có'}</div>
-              <div>Mail chết: {value?.account_die || 'Chưa có'}</div>
+              <div>Mail hoạt động: {value?.account_run || 'Chưa có'}</div>
+              <div>Mail chết: {value?.account_dead || 'Chưa có'}</div>
             </>
           )}>
             <span>
@@ -227,11 +227,11 @@ function ComputerRunCommentOrder() {
               </span>
               <span style={styleMail}>
                 <BiLogoGmail fontSize={19} color='#27AE60' style={{ marginRight: '4px' }} />
-                {value?.account_work ? numberWithCommas(value?.account_work || 0) : '0'}
+                {value?.account_run ? numberWithCommas(value?.account_run || 0) : '0'}
               </span>
               <span style={styleMail}>
                 <BiLogoGmail fontSize={19} color='#EB5757' style={{ marginRight: '4px' }} />
-                {value?.account_die ? numberWithCommas(value?.account_die || 0) : '0'}
+                {value?.account_dead ? numberWithCommas(value?.account_dead || 0) : '0'}
               </span>
             </span>
           </Tooltip>
