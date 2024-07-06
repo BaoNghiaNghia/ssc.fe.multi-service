@@ -464,8 +464,7 @@ const Div = Styled.div`
                     
                     &.ant-menu-item-selected{
                         border-radius: 4px;
-                        background-color: #e3e3e3;
-                        border: 1px solid #c9c7c7;
+                        background-color: #26695c1f;
 
                         &:after{
                             content: none;

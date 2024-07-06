@@ -270,6 +270,10 @@ function AddOrderGeneral() {
                   style={{ width: '100% !important' }}
                   onChange={(value) => {
                     console.log('---- 000000 ------', value);
+                    setStateCurr({
+                      ...stateCurr,
+                      amountChange: handleCountValidateCommentString(value)
+                    })
                   }}
                   defaultValue={detailService?.min}
                   min={detailService?.min}
