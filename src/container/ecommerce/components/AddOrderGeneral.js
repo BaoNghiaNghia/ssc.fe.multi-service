@@ -344,7 +344,7 @@ function AddOrderGeneral() {
         <Form layout="vertical" form={formCreateService}>
           <Row gutter={15}>
             <Col sm={!isEmpty(detailService) ? 16 : 24}>
-              <Card size="small" style={{ border: '1px solid #dddddd', padding: '5px' }}>
+              <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px' }}>
                 <Row gutter="10">
                   <Col sm={24}>
                     <Form.Item
@@ -473,7 +473,7 @@ function AddOrderGeneral() {
               {
                 !isEmpty(detailService) ? (
                   <Col sm={8}>
-                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd7a' }}>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd597a' }}>
                       <div style={{ padding: '5px' }}>
                         <Row style={{ margin: 0, padding: 0 }}>
                           <Col style={{ margin: 0, padding: 0 }}>
@@ -506,7 +506,7 @@ function AddOrderGeneral() {
                         </Row>
                       </div>
                     </Card>
-                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd7a' }}>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd597a' }}>
                       <div style={{ padding: '5px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
                           <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>
@@ -544,7 +544,7 @@ function AddOrderGeneral() {
                           size="small"
                           style={{ 
                             border: '3px solid #dddddd7a',
-                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, rgb(255 248 152 / 43%) 100%)',
+                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
                             color: 'black'
                           }}
                         >
@@ -563,7 +563,7 @@ function AddOrderGeneral() {
                           size="small"
                           style={{ 
                             border: '3px solid #dddddd7a',
-                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, rgb(255 248 152 / 43%) 100%)',
+                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
                             color: 'black'
                           }}
                         >

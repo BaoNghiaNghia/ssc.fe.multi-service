@@ -13,6 +13,7 @@ import { FaLocationArrow } from "react-icons/fa6";
 import { TbServicemark } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+
 import AddService from './component/AddService';
 import EditService from './component/EditService';
 import DelService from './component/DelService';
@@ -173,6 +174,8 @@ function SettingAndService() {
       page: currentPage,
       limit: limitPage,
     }));
+
+    dispatch(actions.fetchListSettingsBegin());
   }, [dispatch, currentPage, limitPage]);
 
   const [state, setState] = useState({
@@ -416,7 +419,7 @@ function SettingAndService() {
     });
   }
 
-  const handleChange = (value) => {
+  const handleChangeTabType = (value) => {
     dispatch(actions.changeTypeTabBegin(value));
   };
 
@@ -486,138 +489,143 @@ function SettingAndService() {
   const { isDelGoogkeKey, isOpenEdit, isOpenDel, notData, selectedRowData } = state;
 
   const CommentSettingComponent = () => {
-    return (
-      <Cards headless>
-        <TopToolBox>
-          <Row gutter={15} className="justify-content-center">
-            <Col lg={6} xs={24}>
-              <div style={{ display: 'inline-flex' }}>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>Cài đặt Comment</span>
-              </div>
-            </Col>
-            <Col xxl={18} xs={24}>
-              <div className="table-toolbox-actions">
-                <Button size="small" key="4" type="primary" onClick={handleUpdateSetting}>
-                  <FeatherIcon icon="save" size={14} />
-                  Cập nhật
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </TopToolBox>
-        <Form name='form-update-settings' layout="vertical" form={formUpdateSettings}>
-          <Row gutter={50}>
-            <Col xs={12}>
-                <Row gutter="15">
-                  <Col sm={12}>
-                    <Form.Item
-                      name="account_delay_time"
-                      label="Thời gian bốc lại account"
-                      style={{ marginBottom: '7px' }}
-                      rules={[{
-                        required: true,
-                        message: 'Trường không được trống'
-                      }]}
-                    >
-                      <InputNumber size='small' addonAfter="phút" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
-                    </Form.Item>
-                  </Col>
-                  <Col sm={12}>
-                    <Form.Item
-                      name="block_video"
-                      label="Màn hình đen"
-                      style={{ marginBottom: '7px' }}
-                      rules={[{
-                        required: true,
-                        message: 'Trường không được trống'
-                      }]}
-                    >
-                      <Switch
-                        checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
-                        checked={listSettings?.block_video}
-                        onChange={(value) => handleSwitchBlockVideo(value)}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row gutter="15">
-                  <Col sm={12}>
-                    <Form.Item
-                      name="computer_reset_time"
-                      label="Thời gian reset luồng sau khi OFF"
-                      style={{ marginBottom: '7px' }}
-                      rules={[{
-                        required: true,
-                        message: 'Trường không được trống'
-                      }]}
-                    >
-                      <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
-                    </Form.Item>
-                  </Col>
-                  <Col sm={12}>
-                    <Form.Item
-                      name="max_order"
-                      label="Số luồng tối đa hệ thống"
-                      style={{ marginBottom: '7px' }}
-                      rules={[{
-                        required: true,
-                        message: 'Trường không được trống'
-                      }]}
-                    >
-                      <InputNumber addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
-                    </Form.Item>
-                  </Col>
-                </Row>
-            </Col>
-            <Col xs={12}>
-              <Row gutter="15">
-                <Col sm={12}>
-                  <Form.Item
-                    name="max_random_time"
-                    label="Thời gian xem tối đa"
-                    style={{ marginBottom: '7px' }}
-                    rules={[{
-                      required: true,
-                      message: 'Trường không được trống'
-                    }]}
-                  >
-                    <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
-                  </Form.Item>
+    return (<>
+      {
+        listSettings ? (
+          <Cards headless>
+            <TopToolBox>
+              <Row gutter={15} className="justify-content-center">
+                <Col lg={6} xs={24}>
+                  <div style={{ display: 'inline-flex' }}>
+                    <span style={{ fontSize: '16px', fontWeight: '700' }}>Cài đặt Comment</span>
+                  </div>
                 </Col>
-                <Col sm={12}>
-                  <Form.Item
-                    name="min_random_time"
-                    label="Thời gian xem tối thiểu"
-                    style={{ marginBottom: '7px' }}
-                    rules={[{
-                      required: true,
-                      message: 'Trường không được trống'
-                    }]}
-                  >
-                    <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
-                  </Form.Item>
+                <Col xxl={18} xs={24}>
+                  <div className="table-toolbox-actions">
+                    <Button size="small" key="4" type="primary" onClick={handleUpdateSetting}>
+                      <FeatherIcon icon="save" size={14} />
+                      Cập nhật
+                    </Button>
+                  </div>
                 </Col>
               </Row>
-
-              <Row gutter="15">
-                <Col sm={12}>
-                  <Form.Item
-                    name="min_video_time"
-                    label="Số giây tối đa lấy video"
-                    style={{ marginBottom: '7px' }}
-                    rules={[{
-                      required: true,
-                      message: 'Trường không được trống'
-                    }]}
-                  >
-                    <InputNumber size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
-                  </Form.Item>
+            </TopToolBox>
+            <Form name='form-update-settings' layout="vertical" form={formUpdateSettings}>
+              <Row gutter={50}>
+                <Col xs={12}>
+                    <Row gutter="15">
+                      <Col sm={12}>
+                        <Form.Item
+                          name="account_delay_time"
+                          label="Thời gian bốc lại account"
+                          style={{ marginBottom: '7px' }}
+                          rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                          }]}
+                        >
+                          <InputNumber size='small' addonAfter="phút" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                        </Form.Item>
+                      </Col>
+                      <Col sm={12}>
+                        <Form.Item
+                          name="block_video"
+                          label="Màn hình đen"
+                          style={{ marginBottom: '7px' }}
+                          rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                          }]}
+                        >
+                          <Switch
+                            checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
+                            checked={listSettings?.block_video}
+                            onChange={(value) => handleSwitchBlockVideo(value)}
+                          />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                    <Row gutter="15">
+                      <Col sm={12}>
+                        <Form.Item
+                          name="computer_reset_time"
+                          label="Thời gian reset luồng sau khi OFF"
+                          style={{ marginBottom: '7px' }}
+                          rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                          }]}
+                        >
+                          <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                        </Form.Item>
+                      </Col>
+                      <Col sm={12}>
+                        <Form.Item
+                          name="max_order"
+                          label="Số luồng tối đa hệ thống"
+                          style={{ marginBottom: '7px' }}
+                          rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                          }]}
+                        >
+                          <InputNumber addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                        </Form.Item>
+                      </Col>
+                    </Row>
                 </Col>
+                <Col xs={12}>
+                  <Row gutter="15">
+                    <Col sm={12}>
+                      <Form.Item
+                        name="max_random_time"
+                        label="Thời gian xem tối đa"
+                        style={{ marginBottom: '7px' }}
+                        rules={[{
+                          required: true,
+                          message: 'Trường không được trống'
+                        }]}
+                      >
+                        <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                      </Form.Item>
+                    </Col>
+                    <Col sm={12}>
+                      <Form.Item
+                        name="min_random_time"
+                        label="Thời gian xem tối thiểu"
+                        style={{ marginBottom: '7px' }}
+                        rules={[{
+                          required: true,
+                          message: 'Trường không được trống'
+                        }]}
+                      >
+                        <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+    
+                  <Row gutter="15">
+                    <Col sm={12}>
+                      <Form.Item
+                        name="min_video_time"
+                        label="Số giây tối đa lấy video"
+                        style={{ marginBottom: '7px' }}
+                        rules={[{
+                          required: true,
+                          message: 'Trường không được trống'
+                        }]}
+                      >
+                        <InputNumber size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+              </Col>
               </Row>
-          </Col>
-          </Row>
-        </Form>
-      </Cards>
+            </Form>
+          </Cards>
+        ) : null
+      }
+    </>
     )
   }
 
@@ -875,7 +883,9 @@ function SettingAndService() {
               <li>
                 <Link
                   className={typeTab === SERVICE_SETTING_TYPE.SERVICE.title ? 'active' : 'deactivate'}
-                  onClick={() => handleChange(SERVICE_SETTING_TYPE.SERVICE.title)}
+                  onClick={() => {
+                    handleChangeTabType(SERVICE_SETTING_TYPE.SERVICE.title);
+                  }}
                   to="#"
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                 >
@@ -886,8 +896,8 @@ function SettingAndService() {
                 <Link
                   className={typeTab === SERVICE_SETTING_TYPE.SETTING.title ? 'active' : 'deactivate'}
                   onClick={() => {
-                    handleChange(SERVICE_SETTING_TYPE.SETTING.title);
-                    if (listSettings) formUpdateSettings.setFieldsValue(listSettings);
+                    handleChangeTabType(SERVICE_SETTING_TYPE.SETTING.title);
+                    if (Object.keys(listSettings).length !== 0) formUpdateSettings.setFieldsValue(listSettings);
                   }}
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"
@@ -899,8 +909,7 @@ function SettingAndService() {
                 <Link
                   className={typeTab === SERVICE_SETTING_TYPE.GOOGLE_KEY.title ? 'active' : 'deactivate'}
                   onClick={() => {
-                    handleChange(SERVICE_SETTING_TYPE.GOOGLE_KEY.title);
-                    if (listSettings) formUpdateSettings.setFieldsValue(listSettings);
+                    handleChangeTabType(SERVICE_SETTING_TYPE.GOOGLE_KEY.title);
                   }}
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"

@@ -138,7 +138,7 @@ function ComputerRunCommentOrder() {
     return percentThread < 0.3;
   })?.length;
 
-  const totalThread = listServer?.items?.reduce((total, comp) => total + comp.run, 0) || 0;
+  const totalThread = listServer?.items?.reduce((total, comp) => total + comp.thread, 0) || 0;
 
   const accountTotal = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
   const accountAlive = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
