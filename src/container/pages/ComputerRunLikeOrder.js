@@ -20,7 +20,7 @@ import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
-import actions from '../../redux/buffComment/actions';
+import actions from '../../redux/buffLike/actions';
 import Heading from '../../components/heading/heading';
 import { numberWithCommas } from '../../utility/utility';
 import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
@@ -78,7 +78,7 @@ function ComputerRunLikeOrder() {
   const { searchData, listServer } = useSelector((state) => {
     return {
       searchData: state?.headerSearchData,
-      listServer: state?.buffComment?.listComputer,
+      listServer: state?.buffLike?.listComputer,
       preIsLoading: state.chartContent.perLoading,
     }
   });
@@ -99,7 +99,7 @@ function ComputerRunLikeOrder() {
   const { notData, selectedRowKeys } = state;
 
   useEffect(() => {
-    dispatch(actions.listComputerRunCommentBegin({
+    dispatch(actions.listComputerRunLikeBegin({
       page: currentPage,
       limit: limitPage,
     }));
@@ -120,7 +120,7 @@ function ComputerRunLikeOrder() {
       action: "reset",
     };
 
-    dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
+    dispatch(actions.updateOneComputerLikeAdminBegin(requestData));
   }
 
   const fullThreadServer = listServer?.items?.filter(item => {
@@ -285,7 +285,7 @@ function ComputerRunLikeOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
-                  dispatch(actions.detailComputerRunCommentBegin({
+                  dispatch(actions.detailComputerRunLikeBegin({
                     id: value?.id
                   }));
                   setState({
@@ -306,7 +306,7 @@ function ComputerRunLikeOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
-                  dispatch(actions.detailComputerRunCommentBegin({
+                  dispatch(actions.detailComputerRunLikeBegin({
                     id: value?.id
                   }));
                   setState({
@@ -370,7 +370,7 @@ function ComputerRunLikeOrder() {
         title="Xác nhận"
         subtitle="Xóa thông tin máy chạy comment"
         handleOk={() => {
-          dispatch(actions.deleteComputerRunCommentBegin({id: state?.selectedItem?.id}));
+          dispatch(actions.deleteComputerRunLikeBegin({id: state?.selectedItem?.id}));
           setState({ 
             ...state,
             isSendRequestModal: false
@@ -430,7 +430,7 @@ function ComputerRunLikeOrder() {
           >
             <p style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>Servers</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {listServer?.meta?.total}
+              {listServer?.meta?.total || 0}
             </Heading>
           </div>
           <div
@@ -439,7 +439,7 @@ function ComputerRunLikeOrder() {
           >
             <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              <span style={{ color: 'green !important' }}>{fullThreadServer}</span>
+              <span style={{ color: 'green !important' }}>{fullThreadServer || 0}</span>
             </Heading>
           </div>
           <div
@@ -448,7 +448,7 @@ function ComputerRunLikeOrder() {
           >
             <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {nonFullThreadServer}
+              {nonFullThreadServer || 0}
             </Heading>
           </div>
           <div
@@ -457,7 +457,7 @@ function ComputerRunLikeOrder() {
           >
             <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luồng thiếu</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {aBitThreadServer}
+              {aBitThreadServer || 0}
             </Heading>
           </div>
           <div

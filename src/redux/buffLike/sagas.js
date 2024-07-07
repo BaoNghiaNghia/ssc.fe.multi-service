@@ -442,15 +442,15 @@ export function* likeInOrderLikeWatcherSaga() {
   yield takeLatest(actions.LIKE_IN_ORDER_LIKE_BEGIN, likeInOrderLikeFunc);
 }
 
-export function* fetchWarrantyOrderWatcherSaga() {
+export function* fetchWarrantyLikeOrderWatcherSaga() {
   yield takeLatest(actions.FETCH_WARRANTY_ORDER_BEGIN, fetchWarrantyOrderFunc);
 }
 
-export function* activeWarrantyOrderWatcherSaga() {
+export function* activeWarrantyLikeOrderWatcherSaga() {
   yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_BEGIN, activeWarrantyOrderFunc);
 }
 
-export function* refundhWarrantyOrderWatcherSaga() {
+export function* refundhWarrantyLikeOrderWatcherSaga() {
   yield takeLatest(actions.REFUND_WARRANTY_ORDER_BEGIN, refundWarrantyOrderFunc);
 }
 

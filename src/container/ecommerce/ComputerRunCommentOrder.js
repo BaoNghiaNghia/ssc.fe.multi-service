@@ -390,7 +390,7 @@ function ComputerRunCommentOrder() {
         setState={setState}
       />
       <PageHeader
-        title="Quản lý Server Like"
+        title="Quản lý Server Comment"
         buttons={[
           <div className="table-toolbox-actions">
             {
@@ -430,7 +430,7 @@ function ComputerRunCommentOrder() {
           >
             <p style={{ fontWeight: 700 }}>Servers</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {listServer?.meta?.total}
+              {listServer?.meta?.total || 0}
             </Heading>
           </div>
           <div
@@ -439,7 +439,7 @@ function ComputerRunCommentOrder() {
           >
             <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              <span style={{ color: 'green !important' }}>{fullThreadServer}</span>
+              <span style={{ color: 'green !important' }}>{fullThreadServer || 0}</span>
             </Heading>
           </div>
           <div
@@ -448,7 +448,7 @@ function ComputerRunCommentOrder() {
           >
             <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {nonFullThreadServer}
+              {nonFullThreadServer || 0}
             </Heading>
           </div>
           <div
@@ -457,7 +457,7 @@ function ComputerRunCommentOrder() {
           >
             <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luồng thiếu</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {aBitThreadServer}
+              {aBitThreadServer || 0}
             </Heading>
           </div>
           <div

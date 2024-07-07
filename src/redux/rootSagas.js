@@ -89,7 +89,19 @@ import {
 } from './buffComment/sagas';
 
 import {
-    fetchListOrderLikeWatcherSaga
+    fetchListOrderLikeWatcherSaga,
+    detailOrderLikeWatcherSaga,
+    createOrderLikeWatcherSaga,
+    updateOrderLikeWatcherSaga,
+    listComputerRunLikeWatcherSaga,
+    updateManyOrderLikeWatcherSaga,
+    updateManyComputerLikeWatcherSaga,
+    updateOneComputerLikeWatcherSaga,
+    detailComputerLikeWatcherSaga,
+    fetchWarrantyLikeOrderWatcherSaga,
+    activeWarrantyLikeOrderWatcherSaga,
+    refundhWarrantyLikeOrderWatcherSaga,
+    deleteComputerLikeWatcherSaga
 } from './buffLike/sagas';
 
 import {
@@ -175,6 +187,18 @@ export default function* rootSaga() {
         fetchListAllGoogleKeyWatcherSaga(),
 
 
-        fetchListOrderLikeWatcherSaga()
+        fetchListOrderLikeWatcherSaga(),
+        detailOrderLikeWatcherSaga(),
+        createOrderLikeWatcherSaga(),
+        updateOrderLikeWatcherSaga(),
+        listComputerRunLikeWatcherSaga(),
+        updateManyOrderLikeWatcherSaga(),
+        updateManyComputerLikeWatcherSaga(),
+        updateOneComputerLikeWatcherSaga(),
+        detailComputerLikeWatcherSaga(),
+        fetchWarrantyLikeOrderWatcherSaga(),
+        activeWarrantyLikeOrderWatcherSaga(),
+        refundhWarrantyLikeOrderWatcherSaga(),
+        deleteComputerLikeWatcherSaga()
     ]);
 }
