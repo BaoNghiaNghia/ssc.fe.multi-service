@@ -13,7 +13,7 @@ import actions from '../../../redux/buffComment/actions';
 
 const { Option } = Select;
 
-function BatchUpdateComputerComment({ setState, computerState }) {
+function BatchUpdateComputerLike({ setState, computerState }) {
     const dispatch = useDispatch();
 
     const { isBatchUpdateCommentServer, selectedRowKeys } = computerState;
@@ -146,9 +146,9 @@ function BatchUpdateComputerComment({ setState, computerState }) {
     );
 }
 
-BatchUpdateComputerComment.propTypes = {
+BatchUpdateComputerLike.propTypes = {
     setState: PropTypes.func,
     computerState: PropTypes.object
 };
 
-export default BatchUpdateComputerComment;
+export default BatchUpdateComputerLike;

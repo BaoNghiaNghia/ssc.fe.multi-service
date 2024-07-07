@@ -9,7 +9,7 @@ import serviceActions from '../../../redux/serviceSettings/actions';
 import { STATUS_COMMENT_ENUM } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
 
-function DetailCommentComputer({ setState, computerState }) {
+function DetailLikeComputer({ setState, computerState }) {
     const { isDetailCommentServer } = computerState;
 
     const [formDetailComputerCmt] = Form.useForm();
@@ -160,9 +160,9 @@ function DetailCommentComputer({ setState, computerState }) {
     );
 }
 
-DetailCommentComputer.propTypes = {
+DetailLikeComputer.propTypes = {
     setState: PropTypes.func,
     computerState: PropTypes.object
 };
 
-export default DetailCommentComputer;
+export default DetailLikeComputer;

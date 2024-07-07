@@ -10,7 +10,7 @@ import actions from '../../../redux/buffComment/actions';
 
 const { Option } = Select;
 
-function EditCommentComputer({ setState, computerState }) {
+function EditLikeComputer({ setState, computerState }) {
     const dispatch = useDispatch();
 
     const { isEditCommentServer } = computerState;
@@ -156,9 +156,9 @@ function EditCommentComputer({ setState, computerState }) {
     );
 }
 
-EditCommentComputer.propTypes = {
+EditLikeComputer.propTypes = {
     setState: PropTypes.func,
     computerState: PropTypes.object
 };
 
-export default EditCommentComputer;
+export default EditLikeComputer;

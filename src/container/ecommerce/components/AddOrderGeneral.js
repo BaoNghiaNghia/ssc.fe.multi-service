@@ -471,7 +471,7 @@ function AddOrderGeneral() {
               {
                 !isEmpty(detailService) ? (
                   <Col sm={8}>
-                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd597a' }}>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
                       <div style={{ padding: '5px' }}>
                         <Row style={{ margin: 0, padding: 0 }}>
                           <Col style={{ margin: 0, padding: 0 }}>
@@ -504,7 +504,7 @@ function AddOrderGeneral() {
                         </Row>
                       </div>
                     </Card>
-                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #dddddd597a' }}>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
                       <div style={{ padding: '5px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
                           <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>

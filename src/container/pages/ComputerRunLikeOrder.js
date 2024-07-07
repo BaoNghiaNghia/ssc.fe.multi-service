@@ -14,7 +14,7 @@ import { WiTime7 } from 'react-icons/wi';
 import { Pstates, TopToolBox } from './style';
 import DetailLikeComputer from './components/DetailLikeComputer';
 import EditLikeComputer from './components/EditLikeComputer';
-import BatchUpdateComputer from './components/BatchUpdateComputerLike';
+import BatchUpdateComputerLike from './components/BatchUpdateComputerLike';
 import ConfirmRequestModal from './components/ConfirmRequestModal';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -69,7 +69,7 @@ const columns = [
   },
 ];
 
-function ComputerRunCommentOrder() {
+function ComputerRunLikeOrder() {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -377,7 +377,7 @@ function ComputerRunCommentOrder() {
           });
         }}
       />
-      <BatchUpdateComputer
+      <BatchUpdateComputerLike
         computerState={state}
         setState={setState}
       />
@@ -428,7 +428,7 @@ function ComputerRunCommentOrder() {
             className="growth-upward"
             role="button"
           >
-            <p style={{ fontWeight: 700 }}>Servers</p>
+            <p style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>Servers</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
               {listServer?.meta?.total}
             </Heading>
@@ -464,7 +464,7 @@ function ComputerRunCommentOrder() {
             className="growth-upward active"
             role="button"
           >
-            <p style={{ fontWeight: 700 }}><span>Tổng Mail</span></p>
+            <p style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}><span>Tổng Mail</span></p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
               {accountTotal || 0}
             </Heading>
@@ -500,7 +500,7 @@ function ComputerRunCommentOrder() {
             className="growth-upward"
             role="button"
           >
-            <p style={{ fontWeight: 700 }}>Tổng Luồng</p>
+            <p style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>Tổng Luồng</p>
             <Heading as="h1" style={{ margin: 0, padding: 0 }}>
               {totalThread}
             </Heading>
@@ -537,4 +537,4 @@ function ComputerRunCommentOrder() {
   );
 }
 
-export default ComputerRunCommentOrder;
+export default ComputerRunLikeOrder;
