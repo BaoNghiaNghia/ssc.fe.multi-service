@@ -2057,7 +2057,9 @@ const Pstates = Styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-left: 7px;
+    background-color: white;
+    margin-bottom: 15px;
+    border-radius: 8px;
     @media only screen and (max-width: 767px){
         margin: -19px 0 25px;
         flex-flow: column;

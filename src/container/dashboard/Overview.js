@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Skeleton, Tooltip, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
-import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
+import { FaRegCommentDots } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
-import { BsThreeDots } from "react-icons/bs";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 import { TbSquareRoundedPercentage } from "react-icons/tb";
 import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
@@ -21,7 +21,7 @@ import Heading from '../../components/heading/heading';
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 import actions from '../../redux/reports/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
+import { COLOR_GENERAL, SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const TaskSuccessEveryMinutes = lazy(() => import('./overview/business/TaskSuccessEveryMinutes'));
 const TaskDurationEveryMinutes = lazy(() => import('./overview/business/TaskDurationEveryMinutes'));
@@ -144,7 +144,7 @@ function Overview() {
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
                         Tổng point hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
                       </span>
-                      <Heading as="h1" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
+                      <Heading as="h2" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
                     </Col>
                     <Col sm="6">
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
@@ -172,14 +172,14 @@ function Overview() {
         </Col>
         <Col xxl={4} md={8} sm={12} xs={12}>
           <Cards
-            border
-            headless
+            headless 
+            more={moreContent}
           >
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chưa được gọi</span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail chưa được gọi</span>
                     <Tooltip title={accountStatus?.list_uncalled ? "Danh sách mail": "Không có mail"}>
                       <Button 
                         type='text'
@@ -192,34 +192,37 @@ function Overview() {
                             data: accountStatus?.list_uncalled
                           }
                         })}
-                        style={{ margin: 0, padding: '0 0 0 8px' }}
+                        style={{ margin: 0, padding: 0, height: '8px' }}
                       >
-                        <BsThreeDots  style={{ margin: 0, padding: 0 }}/>
+                        <HiOutlineDotsVertical fontSize={16}/>
                       </Button>
                     </Tooltip>
                   </span>
-                  <Heading as="h3">
-                    {numberWithCommas(accountStatus?.total_uncalled || 0)}
-                  </Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus?.total_uncalled || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
           </Cards>
         </Col>
         <Col xxl={4} md={8} sm={12} xs={12}>
-          <Cards headless more={moreContent}>
+          <Cards
+            headless 
+            more={moreContent}
+          >
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail hoạt động</span>
-                    <span>
-                      <Tooltip title="Chi tiết">
-                        <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
-                          <BsThreeDots />
-                        </Button>
-                      </Tooltip>
-                    </span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail hoạt động</span>
+                    <Tooltip title="Chi tiết">
+                      <Button 
+                        type='text'
+                        onClick={() => console.log('---- chi tiết mail nè ----')}
+                        style={{ margin: 0, padding: 0, height: '8px' }}
+                      >
+                        <HiOutlineDotsVertical fontSize={16} />
+                      </Button>
+                    </Tooltip>
                   </span>
                   <Heading as="h3">{numberWithCommas(accountStatus?.total_run || 0)}</Heading>
                 </CardBarChart2>
@@ -228,32 +231,32 @@ function Overview() {
           </Cards>
         </Col>
         <Col xxl={4} md={8} sm={8} xs={12}>
-          <Cards headless more={moreContent}
+          <Cards
+            headless 
+            more={moreContent}
           >
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail chết</span>
-                    <span>
-                      <Tooltip title={accountStatus?.list_dead ? "Danh sách mail": "Không có mail"}>
-                        <Button 
-                          type='text'
-                          onClick={() => setState({ 
-                            ...state,
-                            isMailListPopup: true,
-                            selectedItem: {
-                              title: 'Mail chết',
-                              data: accountStatus?.list_dead
-                            }
-                          })}
-                          style={{ margin: 0, padding: 0 }}
-                          disabled={accountStatus?.list_dead === undefined || accountStatus?.list_dead === null}
-                        >
-                          <BsThreeDots />
-                        </Button>
-                      </Tooltip>
-                    </span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail chết</span>
+                    <Tooltip title={accountStatus?.list_dead ? "Danh sách mail": "Không có mail"}>
+                      <Button 
+                        type='text'
+                        onClick={() => setState({ 
+                          ...state,
+                          isMailListPopup: true,
+                          selectedItem: {
+                            title: 'Mail chết',
+                            data: accountStatus?.list_dead
+                          }
+                        })}
+                        style={{ margin: 0, padding: 0, height: '8px' }}
+                        disabled={accountStatus?.list_dead === undefined || accountStatus?.list_dead === null}
+                      >
+                        <HiOutlineDotsVertical fontSize={16} />
+                      </Button>
+                    </Tooltip>
                   </span>
                   <Heading as="h3">{numberWithCommas(accountStatus?.total_dead || 0)}</Heading>
                 </CardBarChart2>
@@ -269,17 +272,19 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px' }} />Mail sống</span>
-                    <span>
-                      <Tooltip title="Chi tiết">
-                        <Button type='text' onClick={() => console.log('---- chi tiết mail nè ----')} style={{ margin: 0, padding: 0 }}>
-                          <BsThreeDots />
-                        </Button>
-                      </Tooltip>
-                    </span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail sống</span>
+                    <Tooltip title="Chi tiết">
+                      <Button
+                        type='text'
+                        onClick={() => console.log('---- chi tiết mail nè ----')}
+                        style={{ margin: 0, padding: 0, height: '8px' }}
+                      >
+                        <HiOutlineDotsVertical fontSize={16} />
+                      </Button>
+                    </Tooltip>
                   </span>
-                  <Heading as="h2">{numberWithCommas(accountStatus?.total_live || 0)}</Heading>
+                  <Heading as="h3">{numberWithCommas(accountStatus?.total_live || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>

@@ -104,7 +104,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
                   Tổng quan
                 </NavLink>
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 disabled
                 icon={
                   !topMenu && (
@@ -118,7 +118,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
                 <NavLink onClick={toggleCollapsed} to={`${path}/quan-ly-may`}>
                   Quản lý máy {pendingBadge}
                 </NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
             </>
           ) : <></>
         }

@@ -7,11 +7,10 @@ axios.defaults.timeout = TIMEOUT_REQUEST_API;
 
 axios.defaults.headers = {
   'Content-Type': 'application/json;charset=UTF-8',
-  "Access-Control-Allow-Origin": "*",
-}
+  'Access-Control-Allow-Origin': '*',
+};
 
 class ApiFactory {
-
   constructor({ url }) {
     this.url = url || BASE_URL;
     this.endpoints = {};
@@ -19,226 +18,194 @@ class ApiFactory {
 
   /**
    * Create and store a single entity's endpoints
-   * @param {A entity Object} entity
+   * @param {Object} entity
    */
   createEntity(entity) {
     this.endpoints[entity.name] = this.createBasicCRUDEndpoints(entity);
   }
 
   /**
-   * Create and store multiple entity's endpoints
-   * @param {A entity Array} arrayOfEntity
+   * Create and store multiple entities' endpoints
+   * @param {Array<Object>} arrayOfEntity
    */
   createEntities(arrayOfEntity) {
     arrayOfEntity.forEach(this.createEntity.bind(this));
   }
 
   /**
+   * Check if token is expired or not present
+   */
+  checkToken() {
+    if (!token) {
+      this.logout();
+      throw new Error('Token not found. Logging out.');
+    }
+
+    // Assuming the token is a JWT and checking its expiration
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const expiryTime = decodedToken.exp * 1000; // Convert to milliseconds
+
+    // Create a new Date object using the timestamp
+    const date = new Date(expiryTime);
+
+    // Use Intl.DateTimeFormat for custom formatting
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+
+    console.log('Expired Time: ', formattedDate);
+
+    if (Date.now() >= expiryTime) {
+      // this.logout();
+      throw new Error('Token expired. Logging out.');
+    }
+  }
+
+  /**
+   * Logout function
+   */
+  logout() {
+    localStorage.removeItem('logedIn');
+    // Redirect to login page or perform other logout actions
+    window.location.href = '/login';
+  }
+
+  /**
    * Create the basic endpoints handlers for CRUD operations
-   * @param {A entity Object} entity
+   * @param {Object} entity
    */
   createBasicCRUDEndpoints({ name }) {
-    var endpoints = {};
+    const resourceURL = `${this.url}/${name}`;
+    const authorizationHeader = token ? { authorization: `Bearer ${token}` } : {};
 
-    const resourceURL = `${this.url}/${name}`
+    const endpoints = {};
 
     /**
      * GET WITH NO TOKEN
      */
-    endpoints.getWithNoToken = (query, config = { headers: {} }) =>
+    endpoints.getWithNoToken = (query, config = {}) =>
       axios.get(resourceURL, { params: { ...query }, ...config });
 
     /**
      * GET
      */
-    endpoints.get = (query, config = { headers: { authorization: token ? `Bearer ${token}` : null } }) => 
-      axios.get(resourceURL, { params: { ...query }, ...config });
+    endpoints.get = (query, config = {}) => {
+      this.checkToken();
+      return axios.get(resourceURL, { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * GET WITH HEADER
      */
-    endpoints.getWithHeader = (query, config) =>  {
-      const customHeaders = {};
-
-      return axios.get(resourceURL, {
-        params: { ...query },
-        headers: {
-          ...customHeaders,
-          authorization: token ? `Bearer ${token}` : null
-        }
-      });
-    }
+    endpoints.getWithHeader = (query, config = {}) => {
+      this.checkToken();
+      return axios.get(resourceURL, { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * SUBMIT GET
      */
-    endpoints.submitGet = (toSubmit, config) => {
+    endpoints.submitGet = (toSubmit, config = {}) => {
+      this.checkToken();
       const { id, ...query } = toSubmit;
-
-      const headers = {
-        ...config,
-        params: { ...query },
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...{ ...config?.headers }
-        }
-      }
-      
-      return axios.get(resourceURL.replace("id", id), headers);
-    }
+      return axios.get(resourceURL.replace('id', id), { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * GET/{:ID}
      */
-    endpoints.getOne = (id, config = { headers: { authorization: token ? `Bearer ${token}` : null } }) =>
-      axios.get(`${resourceURL}/${id}`, { ...config });
+    endpoints.getOne = (id, config = {}) => {
+      this.checkToken();
+      return axios.get(`${resourceURL}/${id}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * GET WITH LINK
      */
-    endpoints.getByLink = ({ link }, config = { headers: { authorization: token ? `Bearer ${token}` : null } }) =>
-      axios.get(`${resourceURL}/${link}`, { ...config });
+    endpoints.getByLink = ({ link }, config = {}) => {
+      this.checkToken();
+      return axios.get(`${resourceURL}/${link}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * POST WITH NO TOKEN
      */
-    endpoints.postWithNoToken = (data, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
-      return axios.post(resourceURL, data, {
-        ...config,
-        headers: {
-          ...customHeaders
-        }
-      });
-    }
+    endpoints.postWithNoToken = (data, config = {}) =>
+      axios.post(resourceURL, data, { ...config });
 
     /**
      * SUBMIT POST
      */
-    endpoints.submitPost = (toSubmit, config) => {
+    endpoints.submitPost = (toSubmit, config = {}) => {
+      this.checkToken();
       const { id, ...query } = toSubmit;
-
-      const headers = {
-        ...config,
-        params: { ...query },
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...{ ...config?.headers }
-        }
-      }
-
-      return axios.post(resourceURL.replace("id", id), query, headers);
-    }
+      return axios.post(resourceURL.replace('id', id), query, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * POST
      */
-    endpoints.post = (data, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
-      return axios.post(resourceURL, data, {
-        ...config,
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
-        }
-      });
-    }
+    endpoints.post = (data, config = {}) => {
+      this.checkToken();
+      return axios.post(resourceURL, data, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * PUT
      */
-    endpoints.put = (data, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
-      return axios.put(resourceURL, data, {
-        ...config,
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
-        }
-      });
-    }
+    endpoints.put = (data, config = {}) => {
+      this.checkToken();
+      return axios.put(resourceURL, data, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * SUBMIT PUT
      */
-    endpoints.submitPut = (toSubmit, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
-      return axios.put(resourceURL.replace("id", toSubmit.id), toSubmit, {
-        ...config,
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
-        }
-      });
-    }
+    endpoints.submitPut = (toSubmit, config = {}) => {
+      this.checkToken();
+      return axios.put(resourceURL.replace('id', toSubmit.id), toSubmit, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * SUBMIT DELETE
      */
-    endpoints.submitDelete = (toSubmit, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
-      // console.log('---- resource url -----', resourceURL.replace("id", toSubmit), toSubmit);
-      // const id = toSubmit && (toSubmit.id || toSubmit.get('id'));
-      return axios.delete(resourceURL.replace("id", toSubmit), toSubmit, {
-        ...config,
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
-        }
-      });
-    }
+    endpoints.submitDelete = (toSubmit, config = {}) => {
+      this.checkToken();
+      return axios.delete(resourceURL.replace('id', toSubmit), { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * UPDATE
      */
-    endpoints.update = (toUpdate, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
+    endpoints.update = (toUpdate, config = {}) => {
+      this.checkToken();
       const id = toUpdate && (toUpdate.id || toUpdate.get('id'));
-      return axios.put(`${resourceURL}/${id}`, toUpdate, {
-        ...config,
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
-        }
-      });
-    }
+      return axios.put(`${resourceURL}/${id}`, toUpdate, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * PATCH
      */
-    endpoints.patch = (toPatch, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
+    endpoints.patch = (toPatch, config = {}) => {
+      this.checkToken();
       const id = toPatch && (toPatch.id || toPatch.get('id'));
-
-      return axios.patch(`${resourceURL}/${id}`, toPatch, {
-        ...config,
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
-        }
-      })
-    }
+      return axios.patch(`${resourceURL}/${id}`, toPatch, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
-     * PATCH
+     * PATCH MULTIPLE
      */
-    endpoints.patchMultiple = (toPatch, config) => {
-      const customHeaders = config && config.headers && { ...config.headers };
-
-      return axios.patch(`${resourceURL}`, toPatch, {
-        ...config,
-        headers: {
-          authorization: token ? `Bearer ${token}` : null,
-          ...customHeaders
-        }
-      })
-    }
+    endpoints.patchMultiple = (toPatch, config = {}) => {
+      this.checkToken();
+      return axios.patch(resourceURL, toPatch, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     /**
      * DELETE
      */
-    endpoints.delete = ({ id }, config = { headers: { authorization: token ? `Bearer ${token}` : null } }) =>
-      axios.delete(`${resourceURL}/${id}`, { ...config })
+    endpoints.delete = ({ id }, config = {}) => {
+      this.checkToken();
+      return axios.delete(`${resourceURL}/${id}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+    };
 
     return endpoints;
   }

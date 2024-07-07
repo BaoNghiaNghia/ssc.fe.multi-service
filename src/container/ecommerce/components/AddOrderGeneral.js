@@ -272,7 +272,7 @@ function AddOrderGeneral() {
                     console.log('---- 000000 ------', value);
                     setStateCurr({
                       ...stateCurr,
-                      amountChange: handleCountValidateCommentString(value)
+                      amountChange: value
                     })
                   }}
                   defaultValue={detailService?.min}
@@ -307,8 +307,6 @@ function AddOrderGeneral() {
         );
     }
   }
-
-  console.log('----- start ---------', formCreateService.getFieldValue('like_count'), detailService?.min);
 
   return (
     <>
@@ -540,25 +538,6 @@ function AddOrderGeneral() {
                     </Card>
                     {
                       (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0)  ? (
-                        <Card
-                          size="small"
-                          style={{ 
-                            border: '3px solid #dddddd7a',
-                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
-                            color: 'black'
-                          }}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'space-between', padding: '7px' }}>
-                            <span style={{ fontSize: '0.8em' }}>TỔNG CỘNG </span>
-                            <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>
-                              {numberWithCommas((stateCurr?.amountChange ?? 1)*(detailService?.price_per_10 ?? 1)/10 || 0)} {VIETNAMES_CURRENCY}
-                            </span>
-                          </div>
-                        </Card>
-                      ) : null
-                    }
-                    {
-                      (formCreateService.getFieldValue('like_count') >= detailService?.min && formCreateService.getFieldValue('like_count') > 0)  ? (
                         <Card
                           size="small"
                           style={{ 

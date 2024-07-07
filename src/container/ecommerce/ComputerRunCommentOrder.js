@@ -390,8 +390,27 @@ function ComputerRunCommentOrder() {
         setState={setState}
       />
       <PageHeader
-        title="Quản lý Server Comment"
+        title="Quản lý Server Like"
         buttons={[
+          <div className="table-toolbox-actions">
+            {
+              selectedRowKeys?.length > 0 ? (
+                <Button
+                  size="middle"
+                  type="primary"
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  onClick={() => {
+                    setState({
+                      ...state,
+                      isBatchUpdateCommentServer: true,
+                    });
+                  }}
+                >
+                  <TbShoppingBagEdit icon="plus" size={16} style={{ marginRight: '7px' }}/> Cập nhật ({selectedRowKeys.length})
+                </Button>
+              ) : null
+            }
+          </div>,
           <div key="search" className="page-header-actions">
             <AutoComplete
               onSearch={handleSearch}
@@ -404,168 +423,115 @@ function ComputerRunCommentOrder() {
         ]}
       />
       <Main>
-        <Row gutter={25} >
-          <Col xxl={24} md={24} xs={24}>
-            <Cards headless>
-              <Row gutter={15}>
-                <Col xs={24}>
-                  <TopToolBox>
-                    <Row gutter={15} className="justify-content-center">
-                      <Col lg={6} xs={24}>
-                        {/* <div className="table-search-box">
-                          <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
-                        </div> */}
-                      </Col>
-                      <Col xxl={18} xs={24}>
-                        <div className="table-toolbox-actions">
-                          {
-                            selectedRowKeys?.length > 0 ? (
-                              <Button
-                                size="small"
-                                type="primary"
-                                style={{ display: 'flex', alignItems: 'center' }}
-                                onClick={() => {
-                                  setState({
-                                    ...state,
-                                    isBatchUpdateCommentServer: true,
-                                  });
-                                }}
-                              >
-                                <TbShoppingBagEdit icon="plus" size={16} style={{ marginRight: '7px' }}/> Cập nhật ({selectedRowKeys.length})
-                              </Button>
-                            ) : null
-                          }
-                        </div>
-                      </Col>
-                    </Row>
-                  </TopToolBox>
-                </Col>
-              </Row>
-              <Pstates>
-                <div
-                  className="growth-upward"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ fontWeight: 700 }}>Servers</p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {listServer?.meta?.total}
-                  </Heading>
-                </div>
-                <div
-                  className="growth-upward"
-                  role="button"
-                  tabIndex=""
-                >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    <span style={{ color: 'green !important' }}>{fullThreadServer}</span>
-                  </Heading>
-                </div>
-                <div
-                  className="growth-downward"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {nonFullThreadServer}
-                  </Heading>
-                </div>
-                <div
-                  className="growth-upward"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luồng thiếu</p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {aBitThreadServer}
-                  </Heading>
-                </div>
-                <div
-                  className="growth-upward active"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ fontWeight: 700 }}><span>Tổng Mail</span></p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {accountTotal || 0}
-                  </Heading>
-                </div>
-                <div
-                  className="growth-upward"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color={COLOR_GENERAL.primary} /><span>Mail sống</span></p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {accountAlive || 0}
-                  </Heading>
-                </div>
-                <div
-                  className="growth-upward"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#27AE60' /><span>Mail hoạt động</span></p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {accountWork || 0}
-                  </Heading>
-                </div>
-                <div
-                  className="growth-upward"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#EB5757' /><span>Mail chết</span></p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {accountDie || 0}
-                  </Heading>
-                </div>
-                <div
-                  className="growth-upward"
-                  role="button"
-                  tabIndex="0"
-                >
-                  <p style={{ fontWeight: 700 }}>Tổng Luồng</p>
-                  <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-                    {totalThread}
-                  </Heading>
-                </div>
-              </Pstates>
-            </Cards>
-          </Col>
-        </Row>
-        <Row>
-          <Col xxl={24} md={24} xs={24}>
-            <Cards headless>
-              <TableWrapper>
-                <Table
-                  rowSelection={rowSelection}
-                  dataSource={dataSource}
-                  columns={columns}
-                  pagination={{
-                    current: listServer?.meta?.current_page,
-                    defaultPageSize: listServer?.meta?.count,
-                    pageSize: listServer?.meta?.per_page,
-                    total: listServer?.meta?.total,
-                    showSizeChanger: true,
-                    pageSizeOptions: DEFAULT_PAGESIZE,
-                    onChange(page, pageSize) {
-                      setCurrentPage(page);
-                      setLimitPage(pageSize)
-                    },
-                    position: ['bottomCenter'],
-                    responsive: true,
-                    showTotal(total, range) { return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p> },
-                    totalBoundaryShowSizeChanger: 100,
-                    size: "small"
-                  }}
-                />
-              </TableWrapper>
-            </Cards>
-          </Col>
-        </Row>
+        <Pstates>
+          <div
+            className="growth-upward"
+            role="button"
+          >
+            <p style={{ fontWeight: 700 }}>Servers</p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {listServer?.meta?.total}
+            </Heading>
+          </div>
+          <div
+            className="growth-upward"
+            role="button"
+          >
+            <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              <span style={{ color: 'green !important' }}>{fullThreadServer}</span>
+            </Heading>
+          </div>
+          <div
+            className="growth-downward"
+            role="button"
+          >
+            <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {nonFullThreadServer}
+            </Heading>
+          </div>
+          <div
+            className="growth-upward"
+            role="button"
+          >
+            <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luồng thiếu</p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {aBitThreadServer}
+            </Heading>
+          </div>
+          <div
+            className="growth-upward active"
+            role="button"
+          >
+            <p style={{ fontWeight: 700 }}><span>Tổng Mail</span></p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {accountTotal || 0}
+            </Heading>
+          </div>
+          <div
+            className="growth-upward"
+            role="button"
+          >
+            <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color={COLOR_GENERAL.primary} /><span>Mail sống</span></p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {accountAlive || 0}
+            </Heading>
+          </div>
+          <div
+            className="growth-upward"
+            role="button"
+          >
+            <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#27AE60' /><span>Mail hoạt động</span></p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {accountWork || 0}
+            </Heading>
+          </div>
+          <div
+            className="growth-upward"
+            role="button"
+          >
+            <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#EB5757' /><span>Mail chết</span></p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {accountDie || 0}
+            </Heading>
+          </div>
+          <div
+            className="growth-upward"
+            role="button"
+          >
+            <p style={{ fontWeight: 700 }}>Tổng Luồng</p>
+            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
+              {totalThread}
+            </Heading>
+          </div>
+        </Pstates>
+        <Cards headless>
+          <TableWrapper>
+            <Table
+              rowSelection={rowSelection}
+              dataSource={dataSource}
+              columns={columns}
+              pagination={{
+                current: listServer?.meta?.current_page,
+                defaultPageSize: listServer?.meta?.count,
+                pageSize: listServer?.meta?.per_page,
+                total: listServer?.meta?.total,
+                showSizeChanger: true,
+                pageSizeOptions: DEFAULT_PAGESIZE,
+                onChange(page, pageSize) {
+                  setCurrentPage(page);
+                  setLimitPage(pageSize)
+                },
+                position: ['bottomCenter'],
+                responsive: true,
+                showTotal(total, range) { return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p> },
+                totalBoundaryShowSizeChanger: 100,
+                size: "small"
+              }}
+            />
+          </TableWrapper>
+        </Cards>
       </Main>
     </>
   );

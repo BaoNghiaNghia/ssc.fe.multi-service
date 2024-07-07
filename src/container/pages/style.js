@@ -2580,14 +2580,16 @@ const Pstates = Styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-left: 10px;
+    background-color: white;
+    margin-bottom: 15px;
+    border-radius: 8px;
     @media only screen and (max-width: 767px){
         margin: -19px 0 25px;
         flex-flow: column;
     }
     >div{
         transition: 0.3s ease;
-        padding: 20px;
+        padding: 15px;
         @media only screen and (max-width: 1599px) {
             flex: 0 0 25%;
         }
