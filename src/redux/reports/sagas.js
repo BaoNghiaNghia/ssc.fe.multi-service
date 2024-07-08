@@ -22,7 +22,7 @@ import {
   statisticTaskSuccessInMinutesAPI,
   statisticTaskDurationInMinutesAPI,
   statisticUserPointAPI,
-  validateYoutubeLinkVideoAPI
+  validateYoutubeLinkCommentVideoAPI
 } from '../../config/apiFactory/Reports/index';
 import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
@@ -247,7 +247,7 @@ function* fetchComputerDataListFunc(params) {
 
 function* validateYoutubeVideoLinkFunc(params) {
   try {
-    const response = yield call(validateYoutubeLinkVideoAPI, params?.payload);
+    const response = yield call(validateYoutubeLinkCommentVideoAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(

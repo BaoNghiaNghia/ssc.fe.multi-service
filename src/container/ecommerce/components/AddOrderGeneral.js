@@ -19,7 +19,7 @@ import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
-import { validateYoutubeLinkVideoAPI } from '../../../config/apiFactory/Reports';
+import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI } from '../../../config/apiFactory/Reports';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -97,10 +97,27 @@ function AddOrderGeneral() {
         status = 'error';
         help = 'Đường dẫn video Youtube không hợp lệ';
       }
-      const responseValidVideo = await validateYoutubeLinkVideoAPI({ link: value });
+      let responseValidVideo = {};
+
+      switch (stateCurr?.selectedCategory) {
+        case 'Comments':
+          responseValidVideo = await validateYoutubeLinkCommentVideoAPI({ link: value });
+          break;
+
+        case 'Likes':
+          responseValidVideo = await validateYoutubeLinkLikeVideoAPI({ link: value });
+          break;
+  
+        case 'Subscribers':
+          break;
+  
+        default:
+          console.log('Chưa chọn dịch vụ');
+      }
 
       const mapping = {
         'Cho phép comment': 'is_allow_cmt',
+        'Cho phép like': 'is_allow_like',
         'Cho phép live': 'is_live',
         'Thời gian video': 'is_valid_video_duration',
         'Hiệu lực đường dẫn': 'is_valid_link',
@@ -108,14 +125,18 @@ function AddOrderGeneral() {
       };
 
       if (responseValidVideo?.data?.error_code === 0) {
+        const validData = responseValidVideo.data?.data;
         const mappedObj = Object.keys(mapping).reduce((acc, title) => {
-          acc[title] = responseValidVideo.data?.data[mapping[title]];
+          console.log('--- ghghg ---', title);
+          if (Object.keys(validData).includes(mapping[title])) {
+            acc[title] = validData[mapping[title]];
+          }
           return acc;
         }, {});
 
+
         // Check if any of the required fields are false
-        const isValid = mappedObj['Cho phép comment'] &&
-                        mappedObj['Thời gian video'] &&
+        const isValid = mappedObj['Thời gian video'] &&
                         mappedObj['Hiệu lực đường dẫn'] &&
                         mappedObj['Video tồn tại'];
 
@@ -191,7 +212,6 @@ function AddOrderGeneral() {
       .then((values) => {
         dispatch(actionsSubscribe.createOrderCommentAdminBegin(values));
         dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-
         formCreateService.resetFields();
       })
       .catch((err) => {
@@ -364,6 +384,7 @@ function AddOrderGeneral() {
               name="link"
               label="Liên kết"
               hasFeedback
+              help={helpMessage.link}
               rules={[
                 {
                   required: true,
@@ -371,11 +392,10 @@ function AddOrderGeneral() {
                 },
                 {
                   validator: async (_, link) => {
-                    if (!validateYouTubeUrl(link)) {
-                      return Promise.reject( `Đường dẫn video Youtube không hợp lệ`);
-                    }
+                    const { status, help } = await handleValidateLink(link);
+                    if (!status) { return Promise.reject(help); }
                   },
-                }
+                },
               ]}
             >
               <Input size='small' allowClear style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
@@ -384,7 +404,7 @@ function AddOrderGeneral() {
           <Col sm={5}>
             <Tooltip title={`Min: ${detailService?.min} & Max:${detailService?.max}`} placement='left'>
               <Form.Item
-                name="like_count"
+                name="quantity"
                 label="Số like"
                 hasFeedback
                 rules={[{
@@ -503,6 +523,10 @@ function AddOrderGeneral() {
                                 selectedCategory: findCategory[0]?.category,
                                 amountChange: 0
                               });
+
+                              formCreateService.setFieldValue('link', '');
+
+                              setHelpMessage({});
 
                               dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
                             }

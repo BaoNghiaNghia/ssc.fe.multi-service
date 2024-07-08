@@ -1,6 +1,7 @@
 /* eslint-disable */
 
-export const VALIDATE_YOUTUBE_VIDEO_ENDPOINT = 'ytb-comment/api/v1/admin/orders/validate-ytb-video';
+export const VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT = 'ytb-comment/api/v1/admin/orders/validate-ytb-video';
+export const VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT = 'ytb-like/api/v1/admin/orders/validate-ytb-video';
 
 // SUBSCRIBE
 export const DAILY_REPORT_SUBSCRIBE_ENPOINT = 'api/v2/admin/report';

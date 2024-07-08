@@ -21,7 +21,8 @@ import {
     STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
     STATISTIC_USER_POINT_ENDPOINT,
     STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
-    VALIDATE_YOUTUBE_VIDEO_ENDPOINT
+    VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT,
+    VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -49,7 +50,8 @@ GeneralReportAPI.createEntities([
     { name: STATISTIC_PERFORMANCE_ENDPOINT },
     { name: STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
     { name: STATISTIC_USER_POINT_ENDPOINT },
-    { name: VALIDATE_YOUTUBE_VIDEO_ENDPOINT },
+    { name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT },
+    { name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT },
 ]);
 
 // SUBSCRIBERS
@@ -79,7 +81,8 @@ const statisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasicCRUD
 const statisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_USER_POINT_ENDPOINT }).get(query);
 
 
-const validateYoutubeLinkVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_ENDPOINT }).get(query);
+const validateYoutubeLinkCommentVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT }).get(query);
+const validateYoutubeLinkLikeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT }).get(query);
 
 export {
     getDailyReportSubscribe,
@@ -102,5 +105,6 @@ export {
     statisticRunningUserOrderAPI,
     statisticUserPointAPI,
     statisticTaskDurationInMinutesAPI,
-    validateYoutubeLinkVideoAPI
+    validateYoutubeLinkCommentVideoAPI,
+    validateYoutubeLinkLikeVideoAPI
 }

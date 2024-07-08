@@ -132,7 +132,7 @@ function PendingBuffLike() {
     isInsuranceCommentOrderModal: false,
     isFilterCommentOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
-    statusNumber: 'all',
+    statusNumber: 1,
     notData: {},
     rowData: {},
     item: listOrderLike,
@@ -707,7 +707,7 @@ function PendingBuffLike() {
         buttons={[
           <TopToolBox>
             <div className="table-toolbox-menu">
-              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue="all">
+              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue={1}>
                 <Radio.Button value="all">Tất cả</Radio.Button>
                 {
                   ORDER_YOUTUBE_STATUS?.map((state) => {

@@ -10,7 +10,7 @@ import {
     ACTIVE_WARRANTY_ORDER_ENDPOINT,
     GET_WARRANTY_ORDER_ENDPOINT,
     REFUND_WARRANTY_ORDER_ENDPOINT, 
-    VALIDATE_YOUTUBE_VIDEO_ENDPOINT
+    VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -27,7 +27,7 @@ BuffLikeAPI.createEntities([
     { name: ACTIVE_WARRANTY_ORDER_ENDPOINT },
     { name: GET_WARRANTY_ORDER_ENDPOINT },
     { name: REFUND_WARRANTY_ORDER_ENDPOINT },
-    { name: VALIDATE_YOUTUBE_VIDEO_ENDPOINT },
+    { name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT },
 ]);
 
 const fetchListOrderLikeAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: GENERAL_ORDER_LIKE_ENDPOINT }).get(query);
@@ -49,7 +49,7 @@ const fetchListWarrantyOrderAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoint
 const activeWarrantyOrderAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: ACTIVE_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
 const refundWarrantyOrderAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: REFUND_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
 
-const validateYoutubeVideoAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_ENDPOINT }).submitPost(query);
+const validateYoutubeVideoAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT }).submitPost(query);
 
 export {
     fetchListOrderLikeAPI,
