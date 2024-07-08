@@ -8,7 +8,11 @@ import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { TiTick } from "react-icons/ti";
 import { isEmpty } from 'lodash';
-import actions from '../../../redux/buffComment/actions';
+
+import actionsComment from '../../../redux/buffComment/actions';
+import actionsLike from '../../../redux/buffLike/actions';
+import actionsSubscribe from '../../../redux/buffSubscribe/actions';
+
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
@@ -84,18 +88,61 @@ function AddOrderGeneral() {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
 
+  const handleSubmitComment = () => {
+    formCreateService.validateFields()
+      .then((values) => {
+        dispatch(actionsComment.createOrderCommentAdminBegin(values));
+        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+
+        formCreateService.resetFields();
+      })
+      .catch((err) => {
+        console.error("handle Real Error: ", err);
+    });
+  }
+  const handleSubmitLike = () => {
+    formCreateService.validateFields()
+      .then((values) => {
+        dispatch(actionsLike.createOrderLikeAdminBegin(values));
+        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+
+        formCreateService.resetFields();
+      })
+      .catch((err) => {
+        console.error("handle Real Error: ", err);
+    });
+  }
+  const handleSubmitSubscribe = () => {
+    formCreateService.validateFields()
+      .then((values) => {
+        dispatch(actionsSubscribe.createOrderCommentAdminBegin(values));
+        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+
+        formCreateService.resetFields();
+      })
+      .catch((err) => {
+        console.error("handle Real Error: ", err);
+    });
+  }
+
   const handleOk = () => {
     try {
-      formCreateService.validateFields()
-        .then((values) => {
-          dispatch(actions.createOrderCommentAdminBegin(values));
-          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+      switch (stateCurr?.selectedCategory) {
+        case 'Comments':
+          handleSubmitComment();
+          break;
 
-          formCreateService.resetFields();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
+        case 'Likes':
+          handleSubmitLike();
+          break;
+  
+        case 'Subscribers':
+          handleSubmitSubscribe();
+          break;
+  
+        default:
+          console.log('Chưa chọn dịch vụ');
+      }
     } catch (err) {
       console.log(err);
     }
@@ -255,33 +302,32 @@ function AddOrderGeneral() {
             </Form.Item>
           </Col>
           <Col sm={5}>
-            <Form.Item
-              name="like_count"
-              label="Số like"
-              hasFeedback
-              rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}
-            >
-              <Tooltip title={`Min: ${detailService?.min} & Max:${detailService?.max}`} placement='left'>
-                <InputNumber 
-                  size='small'
-                  style={{ width: '100% !important' }}
-                  onChange={(value) => {
-                    console.log('---- 000000 ------', value);
-                    setStateCurr({
-                      ...stateCurr,
-                      amountChange: value
-                    })
-                  }}
-                  defaultValue={detailService?.min}
-                  min={detailService?.min}
-                  max={detailService?.max}
-                  placeholder={`Min: ${detailService?.min} & Max:${detailService?.max}`}
-                />
-              </Tooltip>
-            </Form.Item>
+            <Tooltip title={`Min: ${detailService?.min} & Max:${detailService?.max}`} placement='left'>
+              <Form.Item
+                name="like_count"
+                label="Số like"
+                hasFeedback
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                
+                  <InputNumber 
+                    size='small'
+                    style={{ width: '100% !important' }}
+                    onChange={(value) => {
+                      setStateCurr({
+                        ...stateCurr,
+                        amountChange: value
+                      })
+                    }}
+                    min={detailService?.min}
+                    max={detailService?.max}
+                    placeholder={`Min: ${detailService?.min} & Max:${detailService?.max}`}
+                  />
+              </Form.Item>
+            </Tooltip>
           </Col>
         </Row>
       </>
