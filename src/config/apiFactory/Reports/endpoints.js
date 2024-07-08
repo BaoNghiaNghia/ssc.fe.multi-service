@@ -1,4 +1,7 @@
 /* eslint-disable */
+
+export const VALIDATE_YOUTUBE_VIDEO_ENDPOINT = 'ytb-comment/api/v1/admin/orders/validate-ytb-video';
+
 // SUBSCRIBE
 export const DAILY_REPORT_SUBSCRIBE_ENPOINT = 'api/v2/admin/report';
 export const REPORT_COUNT_SUCCESS_ENDPOINT = 'api/v2/admin/reportCountSuccess';

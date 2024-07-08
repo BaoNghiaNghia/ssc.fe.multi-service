@@ -4,8 +4,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image, InputNumber } from 'antd';
-import { MdAddchart } from "react-icons/md";
+import { MdAddchart, MdCancel } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
+import { IoIosCheckmarkCircle } from "react-icons/io";
 import { TiTick } from "react-icons/ti";
 import { isEmpty } from 'lodash';
 
@@ -18,6 +19,7 @@ import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
+import { validateYoutubeLinkVideoAPI } from '../../../config/apiFactory/Reports';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -84,6 +86,76 @@ function AddOrderGeneral() {
     amountChange: 0
   });
 
+  const [helpMessage, setHelpMessage] = useState({});
+
+  const handleValidateLink = async (value) => {
+    let status = 'success';
+    let help = '';
+
+    try {
+      if (!validateYouTubeUrl(value)) {
+        status = 'error';
+        help = 'Đường dẫn video Youtube không hợp lệ';
+      }
+      const responseValidVideo = await validateYoutubeLinkVideoAPI({ link: value });
+
+      const mapping = {
+        'Cho phép comment': 'is_allow_cmt',
+        'Cho phép live': 'is_live',
+        'Thời gian video': 'is_valid_video_duration',
+        'Hiệu lực đường dẫn': 'is_valid_link',
+        'Video tồn tại': 'is_exist_video',
+      };
+
+      if (responseValidVideo?.data?.error_code === 0) {
+        const mappedObj = Object.keys(mapping).reduce((acc, title) => {
+          acc[title] = responseValidVideo.data?.data[mapping[title]];
+          return acc;
+        }, {});
+
+        // Check if any of the required fields are false
+        const isValid = mappedObj['Cho phép comment'] &&
+                        mappedObj['Thời gian video'] &&
+                        mappedObj['Hiệu lực đường dẫn'] &&
+                        mappedObj['Video tồn tại'];
+
+        const customHelp = (
+          <div style={{ textAlign: 'end' }}>
+            {
+              Object.entries(mappedObj).map(([key, value]) => (
+                <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '12px' }}>
+                  <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '2px' }}>{key}</span>
+                  {value === true ? <IoIosCheckmarkCircle color='green'/> : <MdCancel color='orangered'/> }
+                </span>
+              ))
+            }
+          </div>
+        );
+
+        if (isValid) {
+          status = 'success';
+          help = customHelp;
+        } else {
+          status = 'error';
+          help = customHelp;
+        }
+      } else {
+        status = 'error';
+        help = 'Đường dẫn video Youtube không hợp lệ';
+      }
+    } catch (error) {
+      status = 'error';
+      help = 'Error validating YouTube link';
+    }
+
+    setHelpMessage((prevHelp) => ({ ...prevHelp, 'link': help }));
+
+    return {
+      status: status === 'success',
+      help
+    };
+  };
+
   useEffect(() => {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
@@ -100,6 +172,7 @@ function AddOrderGeneral() {
         console.error("handle Real Error: ", err);
     });
   }
+
   const handleSubmitLike = () => {
     formCreateService.validateFields()
       .then((values) => {
@@ -112,6 +185,7 @@ function AddOrderGeneral() {
         console.error("handle Real Error: ", err);
     });
   }
+
   const handleSubmitSubscribe = () => {
     formCreateService.validateFields()
       .then((values) => {
@@ -152,8 +226,10 @@ function AddOrderGeneral() {
   const handleCancel = () => {
     setStateCurr({
       ...stateCurr,
-      selectedCategory: 'Comments'
+      selectedCategory: 'Comments',
     });
+
+    setHelpMessage({});
 
     formCreateService.resetFields();
     dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
@@ -181,6 +257,7 @@ function AddOrderGeneral() {
               label="Liên kết"
               style={{ marginBottom: '7px' }}
               hasFeedback
+              help={helpMessage.link}
               rules={[
                 {
                   required: true,
@@ -188,18 +265,21 @@ function AddOrderGeneral() {
                 },
                 {
                   validator: async (_, link) => {
-                    if (!validateYouTubeUrl(link)) {
-                      return Promise.reject( `Đường dẫn video Youtube không hợp lệ`);
-                    }
+                    const { status, help } = await handleValidateLink(link);
+                    if (!status) { return Promise.reject(help); }
                   },
-                }
+                },
               ]}
             >
-              <Input size='small' allowClear style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
+              <Input 
+                allowClear
+                size='small'
+                style={{ fontWeight: 'bold' }}
+                placeholder='Thêm liên kết'
+              />
             </Form.Item>
           </Col>
         </Row>
-
         <Row gutter="10">
           <Col sm={24}>
             <Form.Item
@@ -312,20 +392,19 @@ function AddOrderGeneral() {
                   message: 'Trường không được trống'
                 }]}
               >
-                
-                  <InputNumber 
-                    size='small'
-                    style={{ width: '100% !important' }}
-                    onChange={(value) => {
-                      setStateCurr({
-                        ...stateCurr,
-                        amountChange: value
-                      })
-                    }}
-                    min={detailService?.min}
-                    max={detailService?.max}
-                    placeholder={`Min: ${detailService?.min} & Max:${detailService?.max}`}
-                  />
+                <InputNumber 
+                  size='small'
+                  style={{ width: '100% !important' }}
+                  onChange={(value) => {
+                    setStateCurr({
+                      ...stateCurr,
+                      amountChange: value
+                    })
+                  }}
+                  min={detailService?.min}
+                  max={detailService?.max}
+                  placeholder={`Min: ${detailService?.min} & Max:${detailService?.max}`}
+                />
               </Form.Item>
             </Tooltip>
           </Col>

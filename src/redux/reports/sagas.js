@@ -21,7 +21,8 @@ import {
   statisticRunningUserOrderAPI,
   statisticTaskSuccessInMinutesAPI,
   statisticTaskDurationInMinutesAPI,
-  statisticUserPointAPI
+  statisticUserPointAPI,
+  validateYoutubeLinkVideoAPI
 } from '../../config/apiFactory/Reports/index';
 import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
@@ -244,6 +245,22 @@ function* fetchComputerDataListFunc(params) {
   }
 }
 
+function* validateYoutubeVideoLinkFunc(params) {
+  try {
+    const response = yield call(validateYoutubeLinkVideoAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.validateYoutubeVideoLinkSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.validateYoutubeVideoLinkErr({ error: err || 'validate youtube video failed' })
+    );
+  }
+}
+
 function* countErrorSubscribeFunc() {
   try {
     const response = yield call(countErrorSubscribe, {});
@@ -425,4 +442,8 @@ export function* getStatisticsByOrderStatusReportWatcherSaga() {
 
 export function* toggleStateModalCreateOrderWatcherSaga() {
   yield takeLatest(actions.OPEN_MODAL_CREATE_NEW_ORDER_BEGIN, toggleStateModalCreateOrderFunc);
+}
+
+export function* validateYoutubeVideoLinkWatcherSaga() {
+  yield takeLatest(actions.VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN, validateYoutubeVideoLinkFunc);
 }

@@ -73,7 +73,32 @@ const actions = {
   STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN: 'STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN',
   STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS: 'STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS',
   STATISTIC_ACCOUNT_STATUS_COMMENT_ERR: 'STATISTIC_ACCOUNT_STATUS_COMMENT_ERR',
+
+  VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN: 'VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN',
+  VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS: 'VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS',
+  VALIDATE_YOUTUBE_VIDEO_LINK_ERR: 'VALIDATE_YOUTUBE_VIDEO_LINK_ERR',
   
+
+  validateYoutubeVideoLinkBegin: (payload) => {
+    return {
+      type: actions.VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN,
+      payload
+    };
+  },
+
+  validateYoutubeVideoLinkSuccess: (data) => {
+    return {
+      type: actions.VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS,
+      data,
+    };
+  },
+
+  validateYoutubeVideoLinkErr: (err) => {
+    return {
+      type: actions.VALIDATE_YOUTUBE_VIDEO_LINK_ERR,
+      err,
+    };
+  },
 
   statisticAccountStatusCommentBegin: (payload) => {
     return {

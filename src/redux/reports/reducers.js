@@ -15,6 +15,7 @@ const initialState = {
   reportCountSuccess: [],
   subWithPoint: [],
   profitToday: {},
+  validateYouTubeUrl: {},
   listServer: [],
   statisticSubscribe: {},
   statisticComment: {},
@@ -102,13 +103,37 @@ const {
 
   STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN,
   STATISTIC_ACCOUNT_STATUS_COMMENT_ERR,
-  STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS
+  STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS,
+
+  VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN,
+  VALIDATE_YOUTUBE_VIDEO_LINK_ERR,
+  VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS,
 
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        validateYouTubeUrl: data,
+      };
+
+    case VALIDATE_YOUTUBE_VIDEO_LINK_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+    
     case STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN:
       return {
         ...state,

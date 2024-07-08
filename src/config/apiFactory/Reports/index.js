@@ -20,7 +20,8 @@ import {
     STATISTIC_PERFORMANCE_ENDPOINT,
     STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
     STATISTIC_USER_POINT_ENDPOINT,
-    STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT
+    STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
+    VALIDATE_YOUTUBE_VIDEO_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -47,7 +48,8 @@ GeneralReportAPI.createEntities([
     { name: STATISTIC_ORDER_AMOUNT_ENDPOINT },
     { name: STATISTIC_PERFORMANCE_ENDPOINT },
     { name: STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
-    { name: STATISTIC_USER_POINT_ENDPOINT }
+    { name: STATISTIC_USER_POINT_ENDPOINT },
+    { name: VALIDATE_YOUTUBE_VIDEO_ENDPOINT },
 ]);
 
 // SUBSCRIBERS
@@ -76,6 +78,9 @@ const statisticPerformanceAPI = (query) => GeneralReportAPI.createBasicCRUDEndpo
 const statisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_RUNNING_USER_ORDER_ENDPOINT }).get(query);
 const statisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_USER_POINT_ENDPOINT }).get(query);
 
+
+const validateYoutubeLinkVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_ENDPOINT }).get(query);
+
 export {
     getDailyReportSubscribe,
     countSuccessSubscribe,
@@ -96,5 +101,6 @@ export {
     statisticPerformanceAPI,
     statisticRunningUserOrderAPI,
     statisticUserPointAPI,
-    statisticTaskDurationInMinutesAPI
+    statisticTaskDurationInMinutesAPI,
+    validateYoutubeLinkVideoAPI
 }

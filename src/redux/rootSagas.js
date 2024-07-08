@@ -22,7 +22,8 @@ import {
     statisticTaskDurationInMinuteWatcherSaga,
     statisticOrderAmountWatcherSaga,
     statisticPerformanceCommentWatcherSaga,
-    statisticAccountStatusCommentWatcherSaga
+    statisticAccountStatusCommentWatcherSaga,
+    validateYoutubeVideoLinkWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -179,6 +180,8 @@ export default function* rootSaga() {
         statisticOrderAmountWatcherSaga(),
         statisticPerformanceCommentWatcherSaga(),
         statisticAccountStatusCommentWatcherSaga(),
+        validateYoutubeVideoLinkWatcherSaga(),
+
         deleteComputerCommentWatcherSaga(),
         deleteGoogleKeyWatcherSaga(),
         updateGoogleKeyWatcherSaga(),

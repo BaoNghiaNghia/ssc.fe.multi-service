@@ -61,5 +61,5 @@ export {
     deleteComputerRunCommentAPI,
     fetchListWarrantyOrderAPI,
     activeWarrantyOrderAPI,
-    refundWarrantyOrderAPI,
+    refundWarrantyOrderAPI
 }
