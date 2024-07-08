@@ -5,6 +5,7 @@ import { SERVICE_TYPE } from '../../variables';
 
 const initialState = {
   subscribeReport: {},
+  chartLoading: false,
   isOpenCreateOrder: false,
   filterRange: {
     from: previousDate(7),
@@ -210,34 +211,40 @@ const ReportsReducer = (state = initialState, action) => {
     case STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
       return {
         ...state,
+        loading: true,
       };
 
     case STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS:
       return {
         ...state,
         taskSuccessInMinutes: data,
+        loading: false,
       };
 
     case STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR:
       return {
         ...state,
+        loading: false,
         error: err
       };
     case STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN:
       return {
         ...state,
+        loading: true,
       };
 
     case STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS:
       return {
         ...state,
         taskDurationInMinutes: data,
+        loading: false,
       };
 
     case STATISTIC_TASK_DURATION_IN_MINUTE_ERR:
       return {
         ...state,
-        error: err
+        error: err,
+        loading: false,
       };
 
     case OPEN_MODAL_CREATE_NEW_ORDER_BEGIN:

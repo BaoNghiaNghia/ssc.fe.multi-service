@@ -12,9 +12,10 @@ import { ToastContainer } from 'react-toastify';
 import { persistor, rrfProps, store } from './redux/store';
 import Admin from './routes/admin';
 import Auth from './routes/auth';
-import './static/css/style.css';
 import config from './config/config';
 import ProtectedRoute from './components/utilities/protectedRoute';
+
+import './static/css/style.css';
 import 'antd/dist/antd.less';
 
 const { theme } = config;

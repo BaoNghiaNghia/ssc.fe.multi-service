@@ -27,7 +27,9 @@ function* registerReferralSagaFunc(params) {
       actions.registerReferralErr({ error: errorMessage || 'Register failed' })
     );
 
-    if (errorMessage?.response?.data?.message) {
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Đăng ký thất bại');
@@ -51,13 +53,11 @@ function* loginSagaFunc(params) {
         actions.loginSuccess(respLoggged)
       );
 
-      // yield put(
-      //   actions.fetchUserProfileBegin(params?.payload)
-      // );
-
-      params?.payload?.history.push('/admin/tong-quan');
-      window.location.reload();
+      window.location.href = '/admin/tong-quan'; // Directly set window location for redirection
+      // params?.payload?.history.push('/admin/tong-quan');
+      // window.location.reload();
     }
+
   } catch (error) {
     const errorMessage = error;
     yield put(
@@ -66,6 +66,8 @@ function* loginSagaFunc(params) {
 
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Đăng nhập thất bại');
     }

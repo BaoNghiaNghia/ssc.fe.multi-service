@@ -56,7 +56,7 @@ function SignIn() {
             ]}
             label="Người dùng"
           >
-            <Input prefix={<UserOutlined />} placeholder="Nhập tên đăng nhập" />
+            <Input size='middle' prefix={<UserOutlined />} placeholder="Nhập tên đăng nhập" />
           </Form.Item>
           <Form.Item
             name="password"
@@ -65,7 +65,7 @@ function SignIn() {
               {required: true, message: 'Trường không được trống' }
             ]}
           >
-            <Input.Password prefix={<MdOutlinePassword />} placeholder="Mật khẩu" />
+            <Input.Password size='middle' prefix={<MdOutlinePassword />} placeholder="Mật khẩu" />
           </Form.Item>
           <div className="auth-form-action">
             <Checkbox onChange={onChange} checked={state.checked}>
@@ -80,17 +80,15 @@ function SignIn() {
               {isLoading ? 'Đang tải...' : 'Đăng nhập'}
             </Button>
           </Form.Item>
-          <p className="form-divider">
-            <span>Or</span>
-          </p>
-          <ul className="social-login">
+          <span className='text-center'>Chưa có tài khoản? <NavLink to="/register">Đăng ký ngay</NavLink></span>
+          {/* <ul className="social-login">
             <li>
               <Link className="google-signup" to="#">
                 <img src={require('../../../../static/img/google.png')} alt="" />
                 <span>Sign in with Google</span>
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </Form>
       </div>
     </AuthWrapper>

@@ -87,7 +87,9 @@ function* activeWarrantyOrderFunc(params) {
       actions.activeWarrantyOrderErr({ error: errorMessage || 'Activate Warranty Order failed' })
     );
 
-    if (errorMessage?.response?.data?.message) {
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Kích hoạt lệnh bảo hành không thành công');
@@ -111,7 +113,9 @@ function* refundWarrantyOrderFunc(params) {
       actions.refundWarrantyOrderErr({ error: errorMessage || 'Refund Warranty Order failed' })
     );
 
-    if (errorMessage?.response?.data?.message) {
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Hoàn tiền Bảo hành Lệnh không thành công');
@@ -142,7 +146,9 @@ function* updateOrderCommentFunc(params) {
       actions.updateOrderCommentAdminErr({ error: errorMessage || 'Update order comment failed' })
     );
 
-    if (errorMessage?.response?.data?.message) {
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Cập nhật nhận xét đơn hàng không thành công');
@@ -174,7 +180,9 @@ function* updateOneComputerCommentFunc(params) {
       actions.updateOneComputerCommentAdminErr({ error: errorMessage || 'Update server comment failed' })
     );
 
-    if (errorMessage?.response?.data?.message) {
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Cập nhật máy chủ comment không thành công');
@@ -204,7 +212,10 @@ function* updateManyComputerCommentFunc(params) {
     yield put(
       actions.updateManyComputerCommentAdminErr({ error: errorMessage || 'Update many computer comment failed' })
     );
-    if (errorMessage?.response?.data?.message) {
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Cập nhật nhiều bình luận máy tính không thành công');
@@ -234,7 +245,9 @@ function* updateManyOrderCommentFunc(params) {
     yield put(
       actions.updateManyOrderCommentAdminErr({ error: errorMessage || 'Update many order comment failed' })
     );
-    if (errorMessage?.response?.data?.message) {
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Cập nhật đơn hàng comment không thành công');
@@ -266,7 +279,9 @@ function* createOrderCommentFunc(params) {
       actions.createOrderCommentAdminErr({ error: errorMessage || 'Create order comment failed' })
     );
 
-    if (errorMessage?.response?.data?.message) {
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Tạo đơn hàng comment không thành công');
@@ -291,6 +306,8 @@ function* fetchListOrderCommentFunc(params) {
 
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
     } else {
       toast.error('Tìm danh sách đơn comment không thành công');
     }

@@ -9,17 +9,13 @@ import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import Heading from '../../../../components/heading/heading';
 
-import { cashFlowGetData } from '../../../../redux/chartContent/actionCreator';
 import { currentDate, numberWithCommas } from '../../../../utility/utility';
 
 function AnalyseYoutube(props) {
   const { title } = props;
 
-  const dispatch = useDispatch();
-  const { cashFlowState, cfIsLoading, avgPerformance, reportChart, isLoading, filterRange, typeService, commentByDay, performance } = useSelector(state => {
+  const { avgPerformance, reportChart, isLoading, filterRange, typeService, commentByDay, performance } = useSelector(state => {
     return {
-      cashFlowState: state?.chartContent?.cashFlowData,
-      cfIsLoading: state?.chartContent?.cfLoading,
       isLoading: state?.reports?.loading,
       avgPerformance: state?.reports?.subscribeReport?.avg_performance,
       reportChart: state?.reports?.subscribeReport?.report,
@@ -29,12 +25,6 @@ function AnalyseYoutube(props) {
       performance: state?.reports?.performance
     };
   });
-
-  useEffect(() => {
-    if (cashFlowGetData) {
-      dispatch(cashFlowGetData());
-    }
-  }, [dispatch]);
 
   const moreContent = (
     <>
@@ -61,7 +51,7 @@ function AnalyseYoutube(props) {
     </>
   );
 
-  const cashFlowDataset = cashFlowState !== null && [
+  const cashFlowDataset = avgPerformance !== null && [
     {
       data: avgPerformance && reportChart?.map(item => item?.total_run),
       backgroundColor: '#ff880070',
@@ -129,7 +119,7 @@ function AnalyseYoutube(props) {
   const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? arrTotalSub[arrWaveDate?.indexOf(currentDate)] : 0;
 
   return (    
-      cashFlowState !== null && (
+    avgPerformance !== null && (
         <Cards
           // isbutton={
           //   <div className="card-nav">
@@ -162,7 +152,7 @@ function AnalyseYoutube(props) {
           more={moreContent}
           style={{ backgroundColor: 'gray' }}
         >
-          {cfIsLoading ? (
+          { isLoading ? (
             <div className="sd-spin">
               <Spin />
             </div>

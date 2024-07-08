@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 import { AuthWrapper } from './style';
 import { Checkbox } from '../../../../components/checkbox/checkbox';
 import Heading from '../../../../components/heading/heading';
@@ -27,9 +27,11 @@ function SignUp() {
       </p>
       <div className="auth-contents">
         <Form name="register" onFinish={handleSubmit} layout="vertical">
-          <Heading as="h3">
-            Sign Up to <span className="color-secondary">Admin</span>
-          </Heading>
+          <Row justify="space-around" style={{ marginBottom: '40px' }}>
+            <Col md={24} sm={24} xs={24}>
+              <Heading as="h2" weight="700">ĐĂNG KÝ</Heading>
+            </Col>
+          </Row>
           <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please input your Full name!' }]}>
             <Input placeholder="Full name" />
           </Form.Item>

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { BASE_URL, TIMEOUT_REQUEST_API } from '../../variables/index';
 
-let token = localStorage.getItem('logedIn');
+const token = localStorage.getItem('logedIn');
 axios.defaults.timeout = TIMEOUT_REQUEST_API;
 
 axios.defaults.headers = {
@@ -36,29 +36,36 @@ class ApiFactory {
    * Check if token is expired or not present
    */
   checkToken() {
-    if (!token) {
+    try {
+      const token = localStorage.getItem('logedIn');
+      if (!token) {
+        throw new Error('Token is null or undefined.');
+      }
+  
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const expiryTime = decodedToken.exp * 1000; // Convert to milliseconds
+  
+      const date = new Date(expiryTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+  
+      const timeUntilExpiry = expiryTime - Date.now();
+      console.log('Token Expiry Time: ', formattedDate, 'Time Until Expiry (ms):', timeUntilExpiry);
+  
+      if (timeUntilExpiry <= 0) {
+        console.error('Token has expired.');
+        localStorage.clear(); // Clear all items from localStorage
+        this.logout();
+        throw new Error('Token has expired.');
+      }
+    } catch (error) {
+      console.error('Error checking token:', error.message);
+      localStorage.clear(); // Clear all items from localStorage in case of an error
       this.logout();
-      throw new Error('Token not found. Logging out.');
-    }
-
-    // Assuming the token is a JWT and checking its expiration
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
-    const expiryTime = decodedToken.exp * 1000; // Convert to milliseconds
-
-    // Create a new Date object using the timestamp
-    const date = new Date(expiryTime);
-
-    // Use Intl.DateTimeFormat for custom formatting
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-
-    console.log('Expired Time: ', formattedDate);
-
-    if (Date.now() >= expiryTime) {
-      // this.logout();
-      throw new Error('Token expired. Logging out.');
+      throw error; // Rethrow the error after logging out
     }
   }
+  
 
   /**
    * Logout function
@@ -129,8 +136,10 @@ class ApiFactory {
     /**
      * POST WITH NO TOKEN
      */
-    endpoints.postWithNoToken = (data, config = {}) =>
-      axios.post(resourceURL, data, { ...config });
+    endpoints.postWithNoToken = (data, config = {}) => {
+      console.log('---- post with no token -----', data);
+      return axios.post(resourceURL, data, { ...config }); 
+    }
 
     /**
      * SUBMIT POST

@@ -12,6 +12,7 @@ import { TbSquareRoundedPercentage } from "react-icons/tb";
 import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
+
 import { CardBarChart2, CardBarChartCenter, EChartCard, GalleryNav } from './style';
 import DetailMailList from './component/DetailMailList';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -34,7 +35,7 @@ function Overview() {
   const dispatch = useDispatch();
 
   const { 
-    fromDate, 
+    fromDate,
     toDate, 
     todayProfit, 
     ratioSubSvg, 
@@ -69,8 +70,6 @@ function Overview() {
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.statisticCommentByOrderReportBegin(initialFilter));
-      // window.setInterval(() => {
-      // }, 4000);
       dispatch(actions.statisticTaskSuccessInMinuteBegin());
       dispatch(actions.statisticTaskDurationInMinuteBegin());
       dispatch(actions.statisticOrderAmountBegin(initialFilter));
