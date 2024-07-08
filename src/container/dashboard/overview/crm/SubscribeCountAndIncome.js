@@ -16,15 +16,13 @@ import { VIETNAMES_CURRENCY } from '../../../../variables';
 function SubscribeCountAndIncome(props) {
   const { title } = props;
   const dispatch = useDispatch();
-  const { closeDealState, cdIsLoading, fromDate, toDate, typeService, isLoading, orderAmount, performance } = useSelector(state => {
+
+  const { fromDate, toDate, typeService, isLoading, orderAmount, performance } = useSelector(state => {
     return {
-      closeDealState: state?.chartContent?.closeDealData,
-      isLoading: state?.reports?.loading,
-      cdIsLoading: state?.chartContent?.cdLoading,
+      isLoading: state?.reports?.chartLoading,
       fromDate: state?.reports.filterRange?.from,
       toDate: state?.reports.filterRange?.to,
       typeService: state?.reports?.typeService,
-
       orderAmount: state?.reports?.orderAmount,
       performance: state?.reports?.performance
     };
@@ -42,7 +40,7 @@ function SubscribeCountAndIncome(props) {
     }));
   }, [dispatch]);
 
-  const closeDealDatasets = closeDealState !== null && [
+  const closeDealDatasets = orderAmount !== null && [
     {
       backgroundColor: '#20C99780',
       hoverBackgroundColor: '#5F63F2',
@@ -60,6 +58,8 @@ function SubscribeCountAndIncome(props) {
       percent: 60,
     },
   ];
+
+  console.log('-- loading nè ----', isLoading);
 
   // eslint-disable-next-line no-unsafe-optional-chaining
   const totalPoint = orderAmount?.map(item => Math.round(item?.total)) || [];
@@ -109,7 +109,7 @@ function SubscribeCountAndIncome(props) {
 
   return (
     <>
-      {closeDealState !== null && (
+      {orderAmount !== null && (
         <Cards
           // isbutton={
           //   <div className="card-nav">
@@ -141,7 +141,7 @@ function SubscribeCountAndIncome(props) {
           }
           size="large"
         >
-          {cdIsLoading ? (
+          {isLoading ? (
             <div className="sd-spin">
               <Spin />
             </div>
@@ -179,72 +179,6 @@ function SubscribeCountAndIncome(props) {
               </Row>
 
               <ChartSubscribePoint loadingChart={isLoading} chartData={chartSubscribePoint || {}} />
-
-              {/* <ChartjsBarChartTransparent
-                labels={orderAmount?.map(item => item.date)}
-                datasets={closeDealDatasets}
-                options={{
-                  maintainAspectRatio: true,
-                  responsive: true,
-                  layout: {
-                    padding: {
-                      top: 20,
-                    },
-                  },
-                  legend: {
-                    display: false,
-                    position: 'top',
-                    align: 'end',
-                    labels: {
-                      boxWidth: 6,
-                      display: true,
-                      usePointStyle: true,
-                    },
-                  },
-
-                  scales: {
-                    yAxes: [
-                      {
-                        gridLines: {
-                          color: '#e5e9f2',
-                          borderDash: [3, 3],
-                          zeroLineColor: '#e5e9f2',
-                          zeroLineWidth: 1,
-                          zeroLineBorderDash: [3, 3],
-                        },
-                        ticks: {
-                          beginAtZero: true,
-                          fontSize: 12,
-                          fontColor: '#182b49',
-                          // max: Math.max(...closeDealState.won),
-                          // stepSize: Math.max(...closeDealState.won) / 5,
-                          display: true,
-                          min: 0,
-                          padding: 10,
-                        },
-                      },
-                    ],
-                    xAxes: [
-                      {
-                        gridLines: {
-                          display: true,
-                          zeroLineWidth: 2,
-                          zeroLineColor: '#fff',
-                          color: 'transparent',
-                          z: 1,
-                        },
-                        ticks: {
-                          beginAtZero: true,
-                          fontSize: 12,
-                          fontColor: '#182b49',
-                          min: 0,
-                        },
-                      },
-                    ],
-                  },
-                }}
-                height={window.innerWidth <= 575 ? 200 : 65}
-              /> */}
               <ul className="deals-list" style={{ margin: 0, padding: 0 }}>
                 {closeDealDatasets &&
                   closeDealDatasets.map((item, key) => {

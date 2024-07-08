@@ -4,7 +4,7 @@ import { currentDate, previousDate } from '../../utility/utility';
 import { SERVICE_TYPE } from '../../variables';
 
 const initialState = {
-  subscribeReport: {},
+  usuallyReportData: {},
   chartLoading: false,
   isOpenCreateOrder: false,
   filterRange: {
@@ -407,19 +407,21 @@ const ReportsReducer = (state = initialState, action) => {
     case FETCH_DAILY_SUBSCRIBE_RESPORT_BEGIN:
       return {
         ...state,
-        loading: true,
+        chartLoading: true,
       };
+
     case FETCH_DAILY_SUBSCRIBE_RESPORT_SUCCESS:
       return {
         ...state,
-        subscribeReport: data,
-        loading: false,
+        chartLoading: false,
+        usuallyReportData: data,
       };
+
     case FETCH_DAILY_SUBSCRIBE_RESPORT_ERR:
       return {
         ...state,
         error: err,
-        loading: false,
+        chartLoading: false,
       };
 
     case SET_RANGE_DATE_FILTER_BEGIN:

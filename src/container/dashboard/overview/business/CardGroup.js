@@ -10,9 +10,10 @@ import { chartLinearGradient } from '../../../../components/utilities/utilities'
 import { numberWithCommas } from '../../../../utility/utility';
 
 function CardGroup() {
-  const { reportData, typeService, statisticComment } = useSelector((state) => {
+  const { reportData, typeService, statisticComment, isLoading } = useSelector((state) => {
     return {
-      reportData: state?.reports?.subscribeReport?.report,
+      isLoading: state?.reports?.chartLoading,
+      reportData: state?.reports?.usuallyReportData?.report,
       typeService: state?.reports?.typeService,
       statisticComment: state?.reports?.statisticComment
     }

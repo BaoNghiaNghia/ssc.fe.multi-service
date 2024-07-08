@@ -16,9 +16,9 @@ function AnalyseYoutube(props) {
 
   const { avgPerformance, reportChart, isLoading, filterRange, typeService, commentByDay, performance } = useSelector(state => {
     return {
-      isLoading: state?.reports?.loading,
-      avgPerformance: state?.reports?.subscribeReport?.avg_performance,
-      reportChart: state?.reports?.subscribeReport?.report,
+      isLoading: state?.reports?.chartLoading,
+      avgPerformance: state?.reports?.usuallyReportData?.avg_performance,
+      reportChart: state?.reports?.usuallyReportData?.report,
       filterRange: state?.reports?.filterRange,
       typeService: state?.reports?.typeService,
       commentByDay: state?.reports?.commentByDay,
