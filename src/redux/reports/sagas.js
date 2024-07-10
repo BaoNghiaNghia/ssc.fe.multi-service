@@ -805,7 +805,7 @@ export function* commentStatisticUserPointWatcherSaga() {
 
 // LIKE
 export function* likeStatisticCommentByDayWatcherSaga() {
-  yield takeLatest(actions.LIKE_STATISTIC_COMMENT_BY_DAY_BEGIN, likeStatisticCommentByDayFunc);
+  yield takeLatest(actions.LIKE_STATISTIC_LIKE_BY_DAY_BEGIN, likeStatisticCommentByDayFunc);
 }
 
 export function* likeStatisticComputerThreadWatcherSaga() {

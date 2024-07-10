@@ -10,6 +10,7 @@ import { Cards } from '../../../../components/cards/frame/cards-frame';
 import Heading from '../../../../components/heading/heading';
 
 import { currentDate, numberWithCommas } from '../../../../utility/utility';
+import { SERVICE_TYPE } from '../../../../variables';
 
 function AnalyseYoutube(props) {
   const { title } = props;
@@ -70,7 +71,12 @@ function AnalyseYoutube(props) {
     },
   ];
 
-  const arrTotalSub = commentByDay?.map(item => item?.comments) || [];
+  const arrTotalSub = commentByDay?.map(item => {
+    if (typeService === SERVICE_TYPE.COMMENT.title) {
+      return item?.comments;
+    }
+    return item?.likes;
+  }) || [];
   const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
   const arrWaveDate = commentByDay?.map(item => item?.date);
 

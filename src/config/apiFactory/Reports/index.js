@@ -30,7 +30,7 @@ import {
 
     // LIKE
     LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT,
-    LIKE_STATISTIC_COMMENT_BY_DAY_ENDPOINT,
+    LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT,
     LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT,
     LIKE_STATISTIC_RUNNING_COMPUTER_ENDPOINT,
     LIKE_STATISTIC_TASK_OF_TOOL_ENDPOINT,
@@ -77,7 +77,7 @@ GeneralReportAPI.createEntities([
     { name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT },
 
     { name: LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
-    { name: LIKE_STATISTIC_COMMENT_BY_DAY_ENDPOINT },
+    { name: LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT },
     { name: LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT },
     { name: LIKE_STATISTIC_RUNNING_COMPUTER_ENDPOINT },
     { name: LIKE_STATISTIC_TASK_OF_TOOL_ENDPOINT },
@@ -130,7 +130,7 @@ const likeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.create
 const likeStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
 const likeStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
 const likeStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
-const likeStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMMENT_BY_DAY_ENDPOINT }).get(query);
+const likeStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT }).get(query);
 const likeStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
 const likeStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
 const likeStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);

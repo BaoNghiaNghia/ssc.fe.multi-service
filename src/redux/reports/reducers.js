@@ -128,9 +128,9 @@ const {
   LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
   LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS,
 
-  LIKE_STATISTIC_COMMENT_BY_DAY_BEGIN,
-  LIKE_STATISTIC_COMMENT_BY_DAY_ERR,
-  LIKE_STATISTIC_COMMENT_BY_DAY_SUCCESS,
+  LIKE_STATISTIC_LIKE_BY_DAY_BEGIN,
+  LIKE_STATISTIC_LIKE_BY_DAY_ERR,
+  LIKE_STATISTIC_LIKE_BY_DAY_SUCCESS,
 
   LIKE_STATISTIC_COMPUTER_THREAD_BEGIN,
   LIKE_STATISTIC_COMPUTER_THREAD_ERR,
@@ -661,20 +661,20 @@ const ReportsReducer = (state = initialState, action) => {
         error: err
       };
 
-    case LIKE_STATISTIC_COMMENT_BY_DAY_BEGIN:
+    case LIKE_STATISTIC_LIKE_BY_DAY_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case LIKE_STATISTIC_COMMENT_BY_DAY_SUCCESS:
+    case LIKE_STATISTIC_LIKE_BY_DAY_SUCCESS:
       return {
         ...state,
         loading: false,
         commentByDay: data,
       };
 
-    case LIKE_STATISTIC_COMMENT_BY_DAY_ERR:
+    case LIKE_STATISTIC_LIKE_BY_DAY_ERR:
       return {
         ...state,
         loading: false,
