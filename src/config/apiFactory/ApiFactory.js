@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
-import { BASE_URL, TIMEOUT_REQUEST_API } from '../../variables/index';
+import { BASE_URL, MESSSAGE_STATUS_CODE, TIMEOUT_REQUEST_API } from '../../variables/index';
 
 const token = localStorage.getItem('logedIn');
 axios.defaults.timeout = TIMEOUT_REQUEST_API;
@@ -9,6 +9,21 @@ axios.defaults.headers = {
   'Content-Type': 'application/json;charset=UTF-8',
   'Access-Control-Allow-Origin': '*',
 };
+
+// Create an instance of axios
+const axiosInstance = axios.create();
+
+// Add a response interceptor
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.data && error.response.data.error_code === MESSSAGE_STATUS_CODE.UNAUTHORISED.code) {
+      localStorage.clear();
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
 class ApiFactory {
   constructor({ url }) {
@@ -90,14 +105,14 @@ class ApiFactory {
      * GET WITH NO TOKEN
      */
     endpoints.getWithNoToken = (query, config = {}) =>
-      axios.get(resourceURL, { params: { ...query }, ...config });
+      axiosInstance.get(resourceURL, { params: { ...query }, ...config });
 
     /**
      * GET
      */
     endpoints.get = (query, config = {}) => {
       this.checkToken();
-      return axios.get(resourceURL, { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.get(resourceURL, { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -105,7 +120,7 @@ class ApiFactory {
      */
     endpoints.getWithHeader = (query, config = {}) => {
       this.checkToken();
-      return axios.get(resourceURL, { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.get(resourceURL, { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -114,7 +129,7 @@ class ApiFactory {
     endpoints.submitGet = (toSubmit, config = {}) => {
       this.checkToken();
       const { id, ...query } = toSubmit;
-      return axios.get(resourceURL.replace('id', id), { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.get(resourceURL.replace('id', id), { params: { ...query }, ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -122,7 +137,7 @@ class ApiFactory {
      */
     endpoints.getOne = (id, config = {}) => {
       this.checkToken();
-      return axios.get(`${resourceURL}/${id}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.get(`${resourceURL}/${id}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -130,7 +145,7 @@ class ApiFactory {
      */
     endpoints.getByLink = ({ link }, config = {}) => {
       this.checkToken();
-      return axios.get(`${resourceURL}/${link}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.get(`${resourceURL}/${link}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -138,7 +153,7 @@ class ApiFactory {
      */
     endpoints.postWithNoToken = (data, config = {}) => {
       console.log('---- post with no token -----', data);
-      return axios.post(resourceURL, data, { ...config }); 
+      return axiosInstance.post(resourceURL, data, { ...config }); 
     }
 
     /**
@@ -147,7 +162,7 @@ class ApiFactory {
     endpoints.submitPost = (toSubmit, config = {}) => {
       this.checkToken();
       const { id, ...query } = toSubmit;
-      return axios.post(resourceURL.replace('id', id), query, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.post(resourceURL.replace('id', id), query, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -155,7 +170,7 @@ class ApiFactory {
      */
     endpoints.post = (data, config = {}) => {
       this.checkToken();
-      return axios.post(resourceURL, data, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.post(resourceURL, data, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -163,7 +178,7 @@ class ApiFactory {
      */
     endpoints.put = (data, config = {}) => {
       this.checkToken();
-      return axios.put(resourceURL, data, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.put(resourceURL, data, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -171,7 +186,7 @@ class ApiFactory {
      */
     endpoints.submitPut = (toSubmit, config = {}) => {
       this.checkToken();
-      return axios.put(resourceURL.replace('id', toSubmit.id), toSubmit, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.put(resourceURL.replace('id', toSubmit.id), toSubmit, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -179,7 +194,7 @@ class ApiFactory {
      */
     endpoints.submitDelete = (toSubmit, config = {}) => {
       this.checkToken();
-      return axios.delete(resourceURL.replace('id', toSubmit), { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.delete(resourceURL.replace('id', toSubmit), { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -188,7 +203,7 @@ class ApiFactory {
     endpoints.update = (toUpdate, config = {}) => {
       this.checkToken();
       const id = toUpdate && (toUpdate.id || toUpdate.get('id'));
-      return axios.put(`${resourceURL}/${id}`, toUpdate, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.put(`${resourceURL}/${id}`, toUpdate, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -197,7 +212,7 @@ class ApiFactory {
     endpoints.patch = (toPatch, config = {}) => {
       this.checkToken();
       const id = toPatch && (toPatch.id || toPatch.get('id'));
-      return axios.patch(`${resourceURL}/${id}`, toPatch, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.patch(`${resourceURL}/${id}`, toPatch, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -205,7 +220,7 @@ class ApiFactory {
      */
     endpoints.patchMultiple = (toPatch, config = {}) => {
       this.checkToken();
-      return axios.patch(resourceURL, toPatch, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.patch(resourceURL, toPatch, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     /**
@@ -213,7 +228,7 @@ class ApiFactory {
      */
     endpoints.delete = ({ id }, config = {}) => {
       this.checkToken();
-      return axios.delete(`${resourceURL}/${id}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
+      return axiosInstance.delete(`${resourceURL}/${id}`, { ...config, headers: { ...authorizationHeader, ...config.headers } });
     };
 
     return endpoints;
