@@ -84,7 +84,7 @@ function Overview() {
   }, [dispatch]);
 
   const [state, setState] = useState({
-    activeClass: SERVICE_TYPE.SUBSCRIBE.title,
+    activeClass: SERVICE_TYPE.COMMENT.title,
     isMailListPopup: false,
     selectedItem: {}
   });

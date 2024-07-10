@@ -697,17 +697,19 @@ function* setRangeDateFilterFunc(params) {
       actions.setRangeDateFilterSuccess(params?.payload)
     );
 
+    const isType = params?.payload?.typeService;
+
     const initialFilter = {
       start_date: `${params?.payload?.from  } 00:00:00`,
       end_date: `${params?.payload?.to  } 23:59:59`,
       status: 1
     };
 
-    if (params?.payload?.typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+    if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
       console.log('----- range filter with comment ------');
     }
     
-    if (params?.payload?.typeService === SERVICE_TYPE.COMMENT.title) {
+    if (isType === SERVICE_TYPE.COMMENT.title) {
       yield put(actions.commentStatisticCommentByOrderReportBegin());
       yield put(actions.commentStatisticTaskSuccessInMinuteBegin());
       yield put(actions.commentStatisticTaskDurationInMinuteBegin());
@@ -723,6 +725,24 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.commentStatisticTaskOfToolBegin(initialFilter));
       yield put(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.commentStatisticUserPointBegin(initialFilter));
+    }
+
+    if (isType === SERVICE_TYPE.LIKE.title) {
+      yield put(actions.likeStatisticCommentByOrderReportBegin());
+      yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
+      yield put(actions.likeStatisticTaskDurationInMinuteBegin());
+      yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
+      yield put(actions.likeStatisticAccountStatusCommentBegin(initialFilter));
+      yield put(actions.likeStatisticPerformanceCommentBegin(initialFilter));
+      yield put(actions.likeStatisticCommentByDayBegin(initialFilter));
+      yield put(actions.likeStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actions.likeStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actions.likeStatisticByStatusOrderBegin(initialFilter));
+      yield put(actions.likeStatisticRunningOrderBegin(initialFilter));
+      yield put(actions.likeStatisticTaskOfToolBegin(initialFilter));
+      yield put(actions.likeStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actions.likeStatisticUserPointBegin(initialFilter));
     }
   } catch (err) {
     yield put(

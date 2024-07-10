@@ -37,10 +37,6 @@ const initialState = {
 };
 
 const {
-  FETCH_DAILY_SUBSCRIBE_RESPORT_BEGIN,
-  FETCH_DAILY_SUBSCRIBE_RESPORT_SUCCESS,
-  FETCH_DAILY_SUBSCRIBE_RESPORT_ERR,
-
   SET_RANGE_DATE_FILTER_BEGIN,
   SET_RANGE_DATE_FILTER_SUCCESS,
   SET_RANGE_DATE_FILTER_ERR,
@@ -345,20 +341,20 @@ const ReportsReducer = (state = initialState, action) => {
     case COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN:
       return {
         ...state,
-        loading: true,
+        chartLoading: true,
       };
 
     case COMMENT_STATISTIC_ORDER_AMOUNT_SUCCESS:
       return {
         ...state,
-        loading: false,
+        chartLoading: false,
         orderAmount: data,
       };
 
     case COMMENT_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
-        loading: false,
+        chartLoading: false,
         error: err
       };
 
@@ -821,26 +817,6 @@ const ReportsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: err
-      };
-
-    case FETCH_DAILY_SUBSCRIBE_RESPORT_BEGIN:
-      return {
-        ...state,
-        chartLoading: true,
-      };
-
-    case FETCH_DAILY_SUBSCRIBE_RESPORT_SUCCESS:
-      return {
-        ...state,
-        chartLoading: false,
-        usuallyReportData: data,
-      };
-
-    case FETCH_DAILY_SUBSCRIBE_RESPORT_ERR:
-      return {
-        ...state,
-        error: err,
-        chartLoading: false,
       };
 
     case SET_RANGE_DATE_FILTER_BEGIN:
