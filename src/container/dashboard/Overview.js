@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 // import FeatherIcon from 'feather-icons-react';
 
@@ -41,7 +42,8 @@ function Overview() {
     ratioSubSvg, 
     typeService, 
     computerThread, 
-    accountStatus
+    accountStatus,
+    orderAmount
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
@@ -50,7 +52,8 @@ function Overview() {
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
       computerThread: state?.reports?.computerThread,
-      accountStatus: state?.reports?.accountStatus
+      accountStatus: state?.reports?.accountStatus,
+      orderAmount: state?.reports?.orderAmount
     };
   });
 
@@ -69,14 +72,21 @@ function Overview() {
     }
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
-      dispatch(actions.statisticCommentByOrderReportBegin(initialFilter));
-      dispatch(actions.statisticTaskSuccessInMinuteBegin());
-      dispatch(actions.statisticTaskDurationInMinuteBegin());
-      dispatch(actions.statisticOrderAmountBegin(initialFilter));
-      dispatch(actions.statisticAccountStatusCommentBegin(initialFilter));
-      dispatch(actions.statisticPerformanceCommentBegin(initialFilter));
-      dispatch(actions.statisticCommentByDayBegin(initialFilter));
-      dispatch(actions.statisticComputerThreadBegin(initialFilter));
+      dispatch(actions.commentStatisticCommentByOrderReportBegin(initialFilter));
+      dispatch(actions.commentStatisticTaskSuccessInMinuteBegin());
+      dispatch(actions.commentStatisticTaskDurationInMinuteBegin());
+      dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
+      dispatch(actions.commentStatisticAccountStatusCommentBegin(initialFilter));
+      dispatch(actions.commentStatisticPerformanceCommentBegin(initialFilter));
+      dispatch(actions.commentStatisticCommentByDayBegin(initialFilter));
+      dispatch(actions.commentStatisticComputerThreadBegin(initialFilter));
+      
+      dispatch(actions.commentStatisticAccountOnComputerBegin(initialFilter));
+      dispatch(actions.commentStatisticByStatusOrderBegin(initialFilter));
+      dispatch(actions.commentStatisticRunningOrderBegin(initialFilter));
+      dispatch(actions.commentStatisticTaskOfToolBegin(initialFilter));
+      dispatch(actions.commentStatisticRunningUserOrderBegin(initialFilter));
+      dispatch(actions.commentStatisticUserPointBegin(initialFilter));
     }
 
     if (typeService === SERVICE_TYPE.LIKE.title) {
@@ -95,8 +105,12 @@ function Overview() {
     setState({ ...state, activeClass: value });
   };
 
+  const findObjectByValue = (array, key, value) => {
+    return array.find(obj => obj[key] === value);
+  };
+
   const todaySubscribePoint = (Number(todayProfit?.total_point_today))*(-1) || 0;
-  const todayCommentPoint = 0;
+  const todayCommentPoint = findObjectByValue(orderAmount, 'is_current', true)?.total || 0;
   const todayLikePoint = 0;
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
@@ -393,6 +407,8 @@ function Overview() {
         buttons={[ 
           <div key="1" className="page-header-actions">
             <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate}/>
+          </div>,
+          <div key="2" className="page-header-actions">
             <GalleryNav>
               <ul>
                 <li>

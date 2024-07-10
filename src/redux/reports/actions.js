@@ -42,42 +42,191 @@ const actions = {
   OPEN_MODAL_CREATE_NEW_ORDER_ERR: 'OPEN_MODAL_CREATE_NEW_ORDER_ERR',
 
   // COMMENT
-  STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN: 'STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN',
-  STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
-  STATISTIC_COMMENT_BY_ORDER_REPORT_ERR: 'STATISTIC_COMMENT_BY_ORDER_REPORT_ERR',
+  COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN: 'COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN',
+  COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
+  COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR: 'COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR',
 
-  STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN',
-  STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS',
-  STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR: 'STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR',
+  COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN: 'COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN',
+  COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS: 'COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS',
+  COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR: 'COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR',
 
-  STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN: 'STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN',
-  STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS: 'STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS',
-  STATISTIC_TASK_DURATION_IN_MINUTE_ERR: 'STATISTIC_TASK_DURATION_IN_MINUTE_ERR',
+  COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN: 'COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN',
+  COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS: 'COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS',
+  COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ERR: 'COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ERR',
 
-  STATISTIC_COMMENT_BY_DAY_BEGIN: 'STATISTIC_COMMENT_BY_DAY_BEGIN',
-  STATISTIC_COMMENT_BY_DAY_SUCCESS: 'STATISTIC_COMMENT_BY_DAY_SUCCESS',
-  STATISTIC_COMMENT_BY_DAY_ERR: 'STATISTIC_COMMENT_BY_DAY_ERR',
+  COMMENT_STATISTIC_COMMENT_BY_DAY_BEGIN: 'COMMENT_STATISTIC_COMMENT_BY_DAY_BEGIN',
+  COMMENT_STATISTIC_COMMENT_BY_DAY_SUCCESS: 'COMMENT_STATISTIC_COMMENT_BY_DAY_SUCCESS',
+  COMMENT_STATISTIC_COMMENT_BY_DAY_ERR: 'COMMENT_STATISTIC_COMMENT_BY_DAY_ERR',
 
-  STATISTIC_COMPUTER_THREAD_BEGIN: 'STATISTIC_COMPUTER_THREAD_BEGIN',
-  STATISTIC_COMPUTER_THREAD_SUCCESS: 'STATISTIC_COMPUTER_THREAD_SUCCESS',
-  STATISTIC_COMPUTER_THREAD_ERR: 'STATISTIC_COMPUTER_THREAD_ERR',
+  COMMENT_STATISTIC_COMPUTER_THREAD_BEGIN: 'COMMENT_STATISTIC_COMPUTER_THREAD_BEGIN',
+  COMMENT_STATISTIC_COMPUTER_THREAD_SUCCESS: 'COMMENT_STATISTIC_COMPUTER_THREAD_SUCCESS',
+  COMMENT_STATISTIC_COMPUTER_THREAD_ERR: 'COMMENT_STATISTIC_COMPUTER_THREAD_ERR',
   
-  STATISTIC_ORDER_AMOUNT_BEGIN: 'STATISTIC_ORDER_AMOUNT_BEGIN',
-  STATISTIC_ORDER_AMOUNT_SUCCESS: 'STATISTIC_ORDER_AMOUNT_SUCCESS',
-  STATISTIC_ORDER_AMOUNT_ERR: 'STATISTIC_ORDER_AMOUNT_ERR',
+  COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN: 'COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN',
+  COMMENT_STATISTIC_ORDER_AMOUNT_SUCCESS: 'COMMENT_STATISTIC_ORDER_AMOUNT_SUCCESS',
+  COMMENT_STATISTIC_ORDER_AMOUNT_ERR: 'COMMENT_STATISTIC_ORDER_AMOUNT_ERR',
 
-  STATISTIC_PERFORMANCE_COMMENT_BEGIN: 'STATISTIC_PERFORMANCE_COMMENT_BEGIN',
-  STATISTIC_PERFORMANCE_COMMENT_SUCCESS: 'STATISTIC_PERFORMANCE_COMMENT_SUCCESS',
-  STATISTIC_PERFORMANCE_COMMENT_ERR: 'STATISTIC_PERFORMANCE_COMMENT_ERR',
+  COMMENT_STATISTIC_PERFORMANCE_COMMENT_BEGIN: 'COMMENT_STATISTIC_PERFORMANCE_COMMENT_BEGIN',
+  COMMENT_STATISTIC_PERFORMANCE_COMMENT_SUCCESS: 'COMMENT_STATISTIC_PERFORMANCE_COMMENT_SUCCESS',
+  COMMENT_STATISTIC_PERFORMANCE_COMMENT_ERR: 'COMMENT_STATISTIC_PERFORMANCE_COMMENT_ERR',
 
-  STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN: 'STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN',
-  STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS: 'STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS',
-  STATISTIC_ACCOUNT_STATUS_COMMENT_ERR: 'STATISTIC_ACCOUNT_STATUS_COMMENT_ERR',
+  COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN: 'COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN',
+  COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS: 'COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS',
+  COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_ERR: 'COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_ERR',
+
+  COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN: 'COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN',
+  COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_SUCCESS: 'COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_SUCCESS',
+  COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ERR: 'COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ERR',
+
+  COMMENT_STATISTIC_BY_STATUS_ORDER_BEGIN: 'COMMENT_STATISTIC_BY_STATUS_ORDER_BEGIN',
+  COMMENT_STATISTIC_BY_STATUS_ORDER_SUCCESS: 'COMMENT_STATISTIC_BY_STATUS_ORDER_SUCCESS',
+  COMMENT_STATISTIC_BY_STATUS_ORDER_ERR: 'COMMENT_STATISTIC_BY_STATUS_ORDER_ERR',
+
+  COMMENT_STATISTIC_RUNNING_COMPUTER_BEGIN: 'COMMENT_STATISTIC_RUNNING_COMPUTER_BEGIN',
+  COMMENT_STATISTIC_RUNNING_COMPUTER_SUCCESS: 'COMMENT_STATISTIC_RUNNING_COMPUTER_SUCCESS',
+  COMMENT_STATISTIC_RUNNING_COMPUTER_ERR: 'COMMENT_STATISTIC_RUNNING_COMPUTER_ERR',
+
+  COMMENT_STATISTIC_TASK_OF_TOOL_BEGIN: 'COMMENT_STATISTIC_TASK_OF_TOOL_BEGIN',
+  COMMENT_STATISTIC_TASK_OF_TOOL_SUCCESS: 'COMMENT_STATISTIC_TASK_OF_TOOL_SUCCESS',
+  COMMENT_STATISTIC_TASK_OF_TOOL_ERR: 'COMMENT_STATISTIC_TASK_OF_TOOL_ERR',
+
+  COMMENT_STATISTIC_RUNNING_USER_ORDER_BEGIN: 'COMMENT_STATISTIC_RUNNING_USER_ORDER_BEGIN',
+  COMMENT_STATISTIC_RUNNING_USER_ORDER_SUCCESS: 'COMMENT_STATISTIC_RUNNING_USER_ORDER_SUCCESS',
+  COMMENT_STATISTIC_RUNNING_USER_ORDER_ERR: 'COMMENT_STATISTIC_RUNNING_USER_ORDER_ERR',
+
+  COMMENT_STATISTIC_USER_POINT_BEGIN: 'COMMENT_STATISTIC_USER_POINT_BEGIN',
+  COMMENT_STATISTIC_USER_POINT_SUCCESS: 'COMMENT_STATISTIC_USER_POINT_SUCCESS',
+  COMMENT_STATISTIC_USER_POINT_ERR: 'COMMENT_STATISTIC_USER_POINT_ERR',
 
   VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN: 'VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN',
   VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS: 'VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS',
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR: 'VALIDATE_YOUTUBE_VIDEO_LINK_ERR',
   
+  commentStatisticUserPointBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_USER_POINT_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticUserPointSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_USER_POINT_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticUserPointErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_USER_POINT_ERR,
+      err,
+    };
+  },
+  
+  commentStatisticRunningUserOrderBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_RUNNING_USER_ORDER_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticRunningUserOrderSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_RUNNING_USER_ORDER_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticRunningUserOrderErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_RUNNING_USER_ORDER_ERR,
+      err,
+    };
+  },
+  
+  commentStatisticTaskOfToolBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_TASK_OF_TOOL_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticTaskOfToolSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_TASK_OF_TOOL_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticTaskOfToolErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_TASK_OF_TOOL_ERR,
+      err,
+    };
+  },
+  
+  commentStatisticRunningOrderBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_RUNNING_COMPUTER_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticRunningOrderSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_RUNNING_COMPUTER_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticRunningOrderErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_RUNNING_COMPUTER_ERR,
+      err,
+    };
+  },
+  
+  commentStatisticByStatusOrderBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_BY_STATUS_ORDER_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticByStatusOrderSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_BY_STATUS_ORDER_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticByStatusOrderErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_BY_STATUS_ORDER_ERR,
+      err,
+    };
+  },
+
+  commentStatisticAccountOnComputerBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticAccountOnComputerSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticAccountOnComputerErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ERR,
+      err,
+    };
+  },
 
   validateYoutubeVideoLinkBegin: (payload) => {
     return {
@@ -100,149 +249,149 @@ const actions = {
     };
   },
 
-  statisticAccountStatusCommentBegin: (payload) => {
+  commentStatisticAccountStatusCommentBegin: (payload) => {
     return {
-      type: actions.STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN,
+      type: actions.COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN,
       payload
     };
   },
 
-  statisticAccountStatusCommentSuccess: (data) => {
+  commentStatisticAccountStatusCommentSuccess: (data) => {
     return {
-      type: actions.STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS,
+      type: actions.COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS,
       data,
     };
   },
 
-  statisticAccountStatusCommentErr: (err) => {
+  commentStatisticAccountStatusCommentErr: (err) => {
     return {
-      type: actions.STATISTIC_ACCOUNT_STATUS_COMMENT_ERR,
+      type: actions.COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_ERR,
       err,
     };
   },
 
-  statisticPerformanceCommentBegin: (payload) => {
+  commentStatisticPerformanceCommentBegin: (payload) => {
     return {
-      type: actions.STATISTIC_PERFORMANCE_COMMENT_BEGIN,
+      type: actions.COMMENT_STATISTIC_PERFORMANCE_COMMENT_BEGIN,
       payload
     };
   },
 
-  statisticPerformanceCommentSuccess: (data) => {
+  commentStatisticPerformanceCommentSuccess: (data) => {
     return {
-      type: actions.STATISTIC_PERFORMANCE_COMMENT_SUCCESS,
+      type: actions.COMMENT_STATISTIC_PERFORMANCE_COMMENT_SUCCESS,
       data,
     };
   },
 
-  statisticPerformanceCommentErr: (err) => {
+  commentStatisticPerformanceCommentErr: (err) => {
     return {
-      type: actions.STATISTIC_PERFORMANCE_COMMENT_ERR,
+      type: actions.COMMENT_STATISTIC_PERFORMANCE_COMMENT_ERR,
       err,
     };
   },
 
-  statisticOrderAmountBegin: (payload) => {
+  commentStatisticOrderAmountBegin: (payload) => {
     return {
-      type: actions.STATISTIC_ORDER_AMOUNT_BEGIN,
+      type: actions.COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN,
       payload
     };
   },
 
-  statisticOrderAmountSuccess: (data) => {
+  commentStatisticOrderAmountSuccess: (data) => {
     return {
-      type: actions.STATISTIC_ORDER_AMOUNT_SUCCESS,
+      type: actions.COMMENT_STATISTIC_ORDER_AMOUNT_SUCCESS,
       data,
     };
   },
 
-  statisticOrderAmountErr: (err) => {
+  commentStatisticOrderAmountErr: (err) => {
     return {
-      type: actions.STATISTIC_ORDER_AMOUNT_ERR,
+      type: actions.COMMENT_STATISTIC_ORDER_AMOUNT_ERR,
       err,
     };
   },
 
-  statisticComputerThreadBegin: (payload) => {
+  commentStatisticComputerThreadBegin: (payload) => {
     return {
-      type: actions.STATISTIC_COMPUTER_THREAD_BEGIN,
+      type: actions.COMMENT_STATISTIC_COMPUTER_THREAD_BEGIN,
       payload
     };
   },
 
-  statisticComputerThreadSuccess: (data) => {
+  commentStatisticComputerThreadSuccess: (data) => {
     return {
-      type: actions.STATISTIC_COMPUTER_THREAD_SUCCESS,
+      type: actions.COMMENT_STATISTIC_COMPUTER_THREAD_SUCCESS,
       data,
     };
   },
 
-  statisticComputerThreadErr: (err) => {
+  commentStatisticComputerThreadErr: (err) => {
     return {
-      type: actions.STATISTIC_COMPUTER_THREAD_ERR,
+      type: actions.COMMENT_STATISTIC_COMPUTER_THREAD_ERR,
       err,
     };
   },
 
-  statisticCommentByDayBegin: (payload) => {
+  commentStatisticCommentByDayBegin: (payload) => {
     return {
-      type: actions.STATISTIC_COMMENT_BY_DAY_BEGIN,
+      type: actions.COMMENT_STATISTIC_COMMENT_BY_DAY_BEGIN,
       payload
     };
   },
 
-  statisticCommentByDaySuccess: (data) => {
+  commentStatisticCommentByDaySuccess: (data) => {
     return {
-      type: actions.STATISTIC_COMMENT_BY_DAY_SUCCESS,
+      type: actions.COMMENT_STATISTIC_COMMENT_BY_DAY_SUCCESS,
       data,
     };
   },
 
-  statisticCommentByDayErr: (err) => {
+  commentStatisticCommentByDayErr: (err) => {
     return {
-      type: actions.STATISTIC_COMMENT_BY_DAY_ERR,
+      type: actions.COMMENT_STATISTIC_COMMENT_BY_DAY_ERR,
       err,
     };
   },
 
-  statisticTaskSuccessInMinuteBegin: (payload) => {
+  commentStatisticTaskSuccessInMinuteBegin: (payload) => {
     return {
-      type: actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
+      type: actions.COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
       payload
     };
   },
 
-  statisticTaskSuccessInMinuteSuccess: (data) => {
+  commentStatisticTaskSuccessInMinuteSuccess: (data) => {
     return {
-      type: actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS,
+      type: actions.COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS,
       data,
     };
   },
 
-  statisticTaskSuccessInMinuteErr: (err) => {
+  commentStatisticTaskSuccessInMinuteErr: (err) => {
     return {
-      type: actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
+      type: actions.COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
       err,
     };
   },
 
-  statisticTaskDurationInMinuteBegin: (payload) => {
+  commentStatisticTaskDurationInMinuteBegin: (payload) => {
     return {
-      type: actions.STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN,
+      type: actions.COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN,
       payload
     };
   },
 
-  statisticTaskDurationInMinuteSuccess: (data) => {
+  commentStatisticTaskDurationInMinuteSuccess: (data) => {
     return {
-      type: actions.STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS,
+      type: actions.COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS,
       data,
     };
   },
 
-  statisticTaskDurationInMinuteErr: (err) => {
+  commentStatisticTaskDurationInMinuteErr: (err) => {
     return {
-      type: actions.STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
+      type: actions.COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
       err,
     };
   },
@@ -268,23 +417,23 @@ const actions = {
     };
   },
 
-  statisticCommentByOrderReportBegin: (payload) => {
+  commentStatisticCommentByOrderReportBegin: (payload) => {
     return {
-      type: actions.STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
+      type: actions.COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
       payload
     };
   },
 
-  statisticCommentByOrderReportSuccess: (data) => {
+  commentStatisticCommentByOrderReportSuccess: (data) => {
     return {
-      type: actions.STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
+      type: actions.COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
       data,
     };
   },
 
-  statisticCommentByOrderReportErr: (err) => {
+  commentStatisticCommentByOrderReportErr: (err) => {
     return {
-      type: actions.STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
+      type: actions.COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
       err,
     };
   },

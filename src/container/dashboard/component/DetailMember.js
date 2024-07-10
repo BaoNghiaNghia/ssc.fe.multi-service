@@ -10,6 +10,7 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaUser } from "react-icons/fa";
 import userActions from '../../../redux/member/actions';
 import { VIETNAMES_CURRENCY } from '../../../variables';
+import { numberWithCommas } from '../../../utility/utility';
 
 function DetailMember({ isOpen, setState }) {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ function DetailMember({ isOpen, setState }) {
   useEffect(() => {
     formDetailMember.setFieldsValue(detailUser);
     formDetailMember.setFieldValue('role', detailUser?.group?.role);
+    formDetailMember.setFieldValue('credit_used', numberWithCommas(detailUser?.credit_used || 0));
+    formDetailMember.setFieldValue('credit', numberWithCommas(detailUser?.credit || 0));
   });
 
   const handleCancel = () => {

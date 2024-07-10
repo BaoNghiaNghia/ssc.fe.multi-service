@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import React, { useState } from 'react';
 import { addDays } from 'date-fns';
 import PropTypes from 'prop-types';
@@ -7,28 +6,23 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import { DatePicker } from 'antd';
 import locale from 'antd/es/locale/vi_VN';
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { ItemWraper, ButtonGroup } from './style';
 import { Button } from '../buttons/buttons';
 import { DEFAULT_PERPAGE, FORMAT_DATESTRING } from '../../variables/index';
 
-
 const DateRangePickerOne = ({ actionPicker }) => {
   const dispatch = useDispatch();
-
-  const { typeService } = useSelector((state) => {
-    return {
-      typeService: state?.reports?.typeService
-    };
-  });
+  const { typeService } = useSelector((state) => ({
+    typeService: state?.reports?.typeService,
+  }));
 
   const [state, setState] = useState({
-    datePickerInternational: null,
     dateRangePicker: {
       selection: {
         startDate: new Date(),
-        endDate: addDays(new Date(), 7),
+        endDate: new Date(),
         key: 'selection',
       },
     },
@@ -39,18 +33,23 @@ const DateRangePickerOne = ({ actionPicker }) => {
   const end = dateRangePicker.selection.endDate.toString().split(' ');
 
   const handleRangeChange = (which) => {
+    const { startDate } = which.selection;
+    const endDate = which.selection.endDate > new Date() ? new Date() : which.selection.endDate;
+
     setState({
       ...state,
       dateRangePicker: {
-        ...state.dateRangePicker,
-        ...which,
+        selection: {
+          startDate,
+          endDate,
+          key: 'selection',
+        },
       },
     });
   };
 
   const onSubmitChange = () => {
     const { dateRangePicker } = state;
-
     const whichFrom = moment(dateRangePicker.selection.startDate).format(FORMAT_DATESTRING);
     const whichTo = moment(dateRangePicker.selection.endDate).format(FORMAT_DATESTRING);
 
@@ -59,21 +58,21 @@ const DateRangePickerOne = ({ actionPicker }) => {
       limit: DEFAULT_PERPAGE,
       from: whichFrom,
       to: whichTo,
-      typeService
+      typeService,
     }));
-  }
+  };
 
   return (
     <ItemWraper>
       <DateRangePicker
         onChange={handleRangeChange}
         showSelectionPreview
-        // locale={locale}
         moveRangeOnFirstSelection={false}
         className="PreviewArea"
         months={2}
         ranges={[dateRangePicker.selection]}
         direction="horizontal"
+        maxDate={new Date()}
       />
       <ButtonGroup>
         <p>{`${start[1]} ${start[2]} ${start[3]} - ${end[1]} ${end[2]} ${end[3]}`}</p>
@@ -89,27 +88,29 @@ const DateRangePickerOne = ({ actionPicker }) => {
 };
 
 class CustomDateRange extends React.Component {
-  // eslint-disable-next-line react/state-in-constructor
-  state = {
-    startValue: null,
-    endValue: null,
-    endOpen: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      startValue: null,
+      endValue: null,
+      endOpen: false,
+    };
+  }
 
-  disabledStartDate = startValue => {
+  disabledStartDate = (startValue) => {
     const { endValue } = this.state;
     if (!startValue || !endValue) {
-      return false;
+      return startValue && startValue.valueOf() > Date.now();
     }
-    return startValue.valueOf() > endValue.valueOf();
+    return startValue.valueOf() > endValue.valueOf() || startValue.valueOf() > Date.now();
   };
 
-  disabledEndDate = endValue => {
+  disabledEndDate = (endValue) => {
     const { startValue } = this.state;
     if (!endValue || !startValue) {
-      return false;
+      return endValue && endValue.valueOf() > Date.now();
     }
-    return endValue.valueOf() <= startValue.valueOf();
+    return endValue.valueOf() <= startValue.valueOf() || endValue.valueOf() > Date.now();
   };
 
   onChange = (field, value) => {
@@ -118,21 +119,21 @@ class CustomDateRange extends React.Component {
     });
   };
 
-  onStartChange = value => {
+  onStartChange = (value) => {
     this.onChange('startValue', value);
   };
 
-  onEndChange = value => {
+  onEndChange = (value) => {
     this.onChange('endValue', value);
   };
 
-  handleStartOpenChange = open => {
+  handleStartOpenChange = (open) => {
     if (!open) {
       this.setState({ endOpen: true });
     }
   };
 
-  handleEndOpenChange = open => {
+  handleEndOpenChange = (open) => {
     this.setState({ endOpen: open });
   };
 
@@ -152,7 +153,6 @@ class CustomDateRange extends React.Component {
           onOpenChange={this.handleStartOpenChange}
           style={{ margin: '5px' }}
         />
-
         <DatePicker
           disabledDate={this.disabledEndDate}
           showTime

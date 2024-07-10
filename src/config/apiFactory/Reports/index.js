@@ -7,22 +7,43 @@ import {
     STATISTIC_SUBSCRIBE_REPORT_ENDPOINT,
     RATIO_SUBSCRIBE_AVG_ENDPOINT,
     
-    STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
-    STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT,
-    STATISTIC_ACCOUNT_STATUS_ENDPOINT,
-    STATISTIC_BY_STATUS_ORDER_ENDPOINT,
-    STATISTIC_COMMENT_BY_DAY_ENDPOINT,
-    STATISTIC_COMPUTER_THREAD_ENDPOINT,
-    STATISTIC_RUNNING_COMPUTER_ENDPOINT,
-    STATISTIC_TASK_OF_TOOL_ENDPOINT,
-    STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT,
-    STATISTIC_ORDER_AMOUNT_ENDPOINT,
-    STATISTIC_PERFORMANCE_ENDPOINT,
-    STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
-    STATISTIC_USER_POINT_ENDPOINT,
-    STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
+    // COMMENT
+    COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
+    COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT,
+    COMMENT_STATISTIC_ACCOUNT_STATUS_ENDPOINT,
+    COMMENT_STATISTIC_BY_STATUS_ORDER_ENDPOINT,
+    COMMENT_STATISTIC_COMMENT_BY_DAY_ENDPOINT,
+    COMMENT_STATISTIC_COMPUTER_THREAD_ENDPOINT,
+    COMMENT_STATISTIC_RUNNING_COMPUTER_ENDPOINT,
+    COMMENT_STATISTIC_TASK_OF_TOOL_ENDPOINT,
+    COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT,
+    COMMENT_STATISTIC_ORDER_AMOUNT_ENDPOINT,
+    COMMENT_STATISTIC_PERFORMANCE_ENDPOINT,
+    COMMENT_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
+    COMMENT_STATISTIC_USER_POINT_ENDPOINT,
+    COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
+
+    // Validate youtube link 
     VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT,
-    VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT
+    VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT,
+    VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT,
+
+    // LIKE
+    LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT,
+    LIKE_STATISTIC_COMMENT_BY_DAY_ENDPOINT,
+    LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT,
+    LIKE_STATISTIC_RUNNING_COMPUTER_ENDPOINT,
+    LIKE_STATISTIC_TASK_OF_TOOL_ENDPOINT,
+    LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT,
+    LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
+    LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT,
+    LIKE_STATISTIC_BY_STATUS_ORDER_ENDPOINT,
+    LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
+    LIKE_STATISTIC_ORDER_AMOUNT_ENDPOINT,
+    LIKE_STATISTIC_PERFORMANCE_ENDPOINT,
+    LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
+    LIKE_STATISTIC_USER_POINT_ENDPOINT,
+
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -36,75 +57,127 @@ GeneralReportAPI.createEntities([
     { name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT },
     { name: RATIO_SUBSCRIBE_AVG_ENDPOINT },
 
-    { name: STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
-    { name: STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT },
-    { name: STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
-    { name: STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
-    { name: STATISTIC_ACCOUNT_STATUS_ENDPOINT },
-    { name: STATISTIC_BY_STATUS_ORDER_ENDPOINT },
-    { name: STATISTIC_COMMENT_BY_DAY_ENDPOINT },
-    { name: STATISTIC_COMPUTER_THREAD_ENDPOINT },
-    { name: STATISTIC_RUNNING_COMPUTER_ENDPOINT },
-    { name: STATISTIC_TASK_OF_TOOL_ENDPOINT },
-    { name: STATISTIC_ORDER_AMOUNT_ENDPOINT },
-    { name: STATISTIC_PERFORMANCE_ENDPOINT },
-    { name: STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
-    { name: STATISTIC_USER_POINT_ENDPOINT },
+    { name: COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
+    { name: COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT },
+    { name: COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
+    { name: COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
+    { name: COMMENT_STATISTIC_ACCOUNT_STATUS_ENDPOINT },
+    { name: COMMENT_STATISTIC_BY_STATUS_ORDER_ENDPOINT },
+    { name: COMMENT_STATISTIC_COMMENT_BY_DAY_ENDPOINT },
+    { name: COMMENT_STATISTIC_COMPUTER_THREAD_ENDPOINT },
+    { name: COMMENT_STATISTIC_RUNNING_COMPUTER_ENDPOINT },
+    { name: COMMENT_STATISTIC_TASK_OF_TOOL_ENDPOINT },
+    { name: COMMENT_STATISTIC_ORDER_AMOUNT_ENDPOINT },
+    { name: COMMENT_STATISTIC_PERFORMANCE_ENDPOINT },
+    { name: COMMENT_STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
+    { name: COMMENT_STATISTIC_USER_POINT_ENDPOINT },
+
     { name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT },
     { name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT },
+    { name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT },
+
+    { name: LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
+    { name: LIKE_STATISTIC_COMMENT_BY_DAY_ENDPOINT },
+    { name: LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT },
+    { name: LIKE_STATISTIC_RUNNING_COMPUTER_ENDPOINT },
+    { name: LIKE_STATISTIC_TASK_OF_TOOL_ENDPOINT },
+    { name: LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT },
+    { name: LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
+    { name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT },
+    { name: LIKE_STATISTIC_BY_STATUS_ORDER_ENDPOINT },
+    { name: LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
+    { name: LIKE_STATISTIC_ORDER_AMOUNT_ENDPOINT },
+    { name: LIKE_STATISTIC_PERFORMANCE_ENDPOINT },
+    { name: LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
+    { name: LIKE_STATISTIC_USER_POINT_ENDPOINT },
+
 ]);
 
 // SUBSCRIBERS
-const getDailyReportSubscribe = (data) => GeneralReportAPI.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENPOINT }).get(data);
-const countSuccessSubscribe = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: REPORT_COUNT_SUCCESS_ENDPOINT }).get();
+const getDailyReportSubscribeAPI = (data) => GeneralReportAPI.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENPOINT }).get(data);
+const countSuccessSubscribeAPI = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: REPORT_COUNT_SUCCESS_ENDPOINT }).get();
 
-const fetchComputerDataList = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMPUTER_DATA_LIST_ENDPOINT }).get();
+const fetchComputerDataListAPI = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMPUTER_DATA_LIST_ENDPOINT }).get();
 
-const getStatisticSubscribeReport = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT }).get();
-const countErrorSubscribe = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: COUNT_ERROR_SUBSCRIBE_ENDPOINT }).get();
-const ratioSubscribeAverage = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: RATIO_SUBSCRIBE_AVG_ENDPOINT }).get();
+const getStatisticSubscribeReportAPI = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT }).get();
+const countErrorSubscribeAPI = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: COUNT_ERROR_SUBSCRIBE_ENDPOINT }).get();
+const ratioSubscribeAverageAPI = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: RATIO_SUBSCRIBE_AVG_ENDPOINT }).get();
 
 // COMMENTS
-const statisticCommentByOrderReport = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
-const statisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
-const statisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
-const statisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
-const statisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
-const statisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
-const statisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_COMMENT_BY_DAY_ENDPOINT }).get(query);
-const statisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
-const statisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
-const statisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
-const statisticOrderAmountAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_ORDER_AMOUNT_ENDPOINT }).get(query);
-const statisticPerformanceAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_PERFORMANCE_ENDPOINT }).get(query);
-const statisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_RUNNING_USER_ORDER_ENDPOINT }).get(query);
-const statisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: STATISTIC_USER_POINT_ENDPOINT }).get(query);
+const commentStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+const commentStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
+const commentStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
+const commentStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
+const commentStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const commentStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const commentStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_COMMENT_BY_DAY_ENDPOINT }).get(query);
+const commentStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
+const commentStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
+const commentStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
+const commentStatisticOrderAmountAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_ORDER_AMOUNT_ENDPOINT }).get(query);
+const commentStatisticPerformanceAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_PERFORMANCE_ENDPOINT }).get(query);
+const commentStatisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_RUNNING_USER_ORDER_ENDPOINT }).get(query);
+const commentStatisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_USER_POINT_ENDPOINT }).get(query);
 
 
 const validateYoutubeLinkCommentVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT }).get(query);
 const validateYoutubeLinkLikeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT }).get(query);
+const validateYoutubeLinkSubscribeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT }).get(query);
+
+const likeStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+const likeStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
+const likeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
+const likeStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
+const likeStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const likeStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const likeStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMMENT_BY_DAY_ENDPOINT }).get(query);
+const likeStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
+const likeStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
+const likeStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
+const likeStatisticOrderAmountAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ORDER_AMOUNT_ENDPOINT }).get(query);
+const likeStatisticPerformanceAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_PERFORMANCE_ENDPOINT }).get(query);
+const likeStatisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT }).get(query);
+const likeStatisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_USER_POINT_ENDPOINT }).get(query);
 
 export {
-    getDailyReportSubscribe,
-    countSuccessSubscribe,
-    fetchComputerDataList,
-    getStatisticSubscribeReport,
-    countErrorSubscribe,
-    ratioSubscribeAverage,
-    statisticCommentByOrderReport,
-    statisticTaskSuccessInMinutesAPI,
-    statisticAccountOnComputerAPI,
-    statisticAccountStatusAPI,
-    statisticByStatusOrderAPI,
-    statisticCommentByDayAPI,
-    statisticComputerThreadAPI,
-    statisticRunningComputerAPI,
-    statisticTaskOfToolAPI,
-    statisticOrderAmountAPI,
-    statisticPerformanceAPI,
-    statisticRunningUserOrderAPI,
-    statisticUserPointAPI,
-    statisticTaskDurationInMinutesAPI,
+    getDailyReportSubscribeAPI,
+    countSuccessSubscribeAPI,
+    fetchComputerDataListAPI,
+    getStatisticSubscribeReportAPI,
+    countErrorSubscribeAPI,
+    ratioSubscribeAverageAPI,
+
+    commentStatisticCommentByOrderReportAPI,
+    commentStatisticTaskSuccessInMinutesAPI,
+    commentStatisticAccountOnComputerAPI,
+    commentStatisticAccountStatusAPI,
+    commentStatisticByStatusOrderAPI,
+    commentStatisticCommentByDayAPI,
+    commentStatisticComputerThreadAPI,
+    commentStatisticRunningComputerAPI,
+    commentStatisticTaskOfToolAPI,
+    commentStatisticOrderAmountAPI,
+    commentStatisticPerformanceAPI,
+    commentStatisticRunningUserOrderAPI,
+    commentStatisticUserPointAPI,
+    commentStatisticTaskDurationInMinutesAPI,
+
     validateYoutubeLinkCommentVideoAPI,
-    validateYoutubeLinkLikeVideoAPI
+    validateYoutubeLinkLikeVideoAPI,
+    validateYoutubeLinkSubscribeVideoAPI,
+
+    likeStatisticCommentByOrderReportAPI,
+    likeStatisticTaskSuccessInMinutesAPI,
+    likeStatisticAccountOnComputerAPI,
+    likeStatisticAccountStatusAPI,
+    likeStatisticByStatusOrderAPI,
+    likeStatisticCommentByDayAPI,
+    likeStatisticComputerThreadAPI,
+    likeStatisticRunningComputerAPI,
+    likeStatisticTaskOfToolAPI,
+    likeStatisticOrderAmountAPI,
+    likeStatisticPerformanceAPI,
+    likeStatisticRunningUserOrderAPI,
+    likeStatisticUserPointAPI,
+    likeStatisticTaskDurationInMinutesAPI,
 }

@@ -2,43 +2,62 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
-  countErrorSubscribe,
-  countSuccessSubscribe,
-  fetchComputerDataList,
-  getDailyReportSubscribe,
-  ratioSubscribeAverage,
-  getStatisticSubscribeReport,
-  statisticCommentByOrderReport,
-  statisticAccountOnComputerAPI,
-  statisticAccountStatusAPI,
-  statisticByStatusOrderAPI,
-  statisticCommentByDayAPI,
-  statisticComputerThreadAPI,
-  statisticRunningComputerAPI,
-  statisticTaskOfToolAPI,
-  statisticOrderAmountAPI,
-  statisticPerformanceAPI,
-  statisticRunningUserOrderAPI,
-  statisticTaskSuccessInMinutesAPI,
-  statisticTaskDurationInMinutesAPI,
-  statisticUserPointAPI,
-  validateYoutubeLinkCommentVideoAPI
+  countErrorSubscribeAPI,
+  countSuccessSubscribeAPI,
+  fetchComputerDataListAPI,
+  getDailyReportSubscribeAPI,
+  ratioSubscribeAverageAPI,
+  getStatisticSubscribeReportAPI,
+  
+  commentStatisticCommentByOrderReportAPI,
+  commentStatisticAccountStatusAPI,
+  commentStatisticCommentByDayAPI,
+  commentStatisticComputerThreadAPI,
+  commentStatisticOrderAmountAPI,
+  commentStatisticPerformanceAPI,
+  commentStatisticTaskSuccessInMinutesAPI,
+  commentStatisticTaskDurationInMinutesAPI,
+  commentStatisticAccountOnComputerAPI,
+  commentStatisticByStatusOrderAPI,
+  commentStatisticRunningComputerAPI,
+  commentStatisticTaskOfToolAPI,
+  commentStatisticRunningUserOrderAPI,
+  commentStatisticUserPointAPI,
+
+  likeStatisticCommentByOrderReportAPI,
+  likeStatisticTaskSuccessInMinutesAPI,
+  likeStatisticAccountOnComputerAPI,
+  likeStatisticAccountStatusAPI,
+  likeStatisticByStatusOrderAPI,
+  likeStatisticCommentByDayAPI,
+  likeStatisticComputerThreadAPI,
+  likeStatisticRunningComputerAPI,
+  likeStatisticTaskOfToolAPI,
+  likeStatisticOrderAmountAPI,
+  likeStatisticPerformanceAPI,
+  likeStatisticRunningUserOrderAPI,
+  likeStatisticUserPointAPI,
+  likeStatisticTaskDurationInMinutesAPI,
+
+  validateYoutubeLinkCommentVideoAPI,
+  validateYoutubeLinkLikeVideoAPI,
+  validateYoutubeLinkSubscribeVideoAPI,
 } from '../../config/apiFactory/Reports/index';
 import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
-function* statisticComputerThreadFunc(params) {
+function* commentStatisticComputerThreadFunc(params) {
   try {
-    const response = yield call(statisticComputerThreadAPI, params?.payload);
+    const response = yield call(commentStatisticComputerThreadAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.statisticComputerThreadSuccess(response?.data?.data)
+        actions.commentStatisticComputerThreadSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.statisticComputerThreadErr({ error: errorMessage || 'Fetch computer thread failed' })
+      actions.commentStatisticComputerThreadErr({ error: errorMessage || 'Fetch computer thread failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -49,19 +68,19 @@ function* statisticComputerThreadFunc(params) {
   } finally { /* empty */ }
 }
 
-function* statisticCommentByDayFunc(params) {
+function* commentStatisticCommentByDayFunc(params) {
   try {
-    const response = yield call(statisticCommentByDayAPI, params?.payload);
+    const response = yield call(commentStatisticCommentByDayAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.statisticCommentByDaySuccess(response?.data?.data?.reverse())
+        actions.commentStatisticCommentByDaySuccess(response?.data?.data?.reverse())
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.statisticCommentByDayErr({ error: errorMessage || 'Fetch comment by day failed' })
+      actions.commentStatisticCommentByDayErr({ error: errorMessage || 'Fetch comment by day failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -72,20 +91,20 @@ function* statisticCommentByDayFunc(params) {
   } finally { /* empty */ }
 }
 
-function* statisticPerformanceCommentFunc(params) {
+function* commentStatisticPerformanceCommentFunc(params) {
   try {
-    const response = yield call(statisticPerformanceAPI, params?.payload);
+    const response = yield call(commentStatisticPerformanceAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       const reverseTempData = response?.data?.data?.reverse()
       yield put(
-        actions.statisticPerformanceCommentSuccess(reverseTempData)
+        actions.commentStatisticPerformanceCommentSuccess(reverseTempData)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.statisticPerformanceCommentErr({ error: errorMessage || 'Fetch performance comment in minute failed' })
+      actions.commentStatisticPerformanceCommentErr({ error: errorMessage || 'Fetch performance comment in minute failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -96,19 +115,19 @@ function* statisticPerformanceCommentFunc(params) {
   } finally { /* empty */ }
 }
 
-function* statisticAccountStatusCommentFunc(params) {
+function* commentStatisticAccountStatusCommentFunc(params) {
   try {
-    const response = yield call(statisticAccountStatusAPI, params?.payload);
+    const response = yield call(commentStatisticAccountStatusAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.statisticAccountStatusCommentSuccess(response?.data?.data)
+        actions.commentStatisticAccountStatusCommentSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.statisticAccountStatusCommentErr({ error: errorMessage || 'Fetch account status in minute failed' })
+      actions.commentStatisticAccountStatusCommentErr({ error: errorMessage || 'Fetch account status in minute failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -119,20 +138,20 @@ function* statisticAccountStatusCommentFunc(params) {
   } finally { /* empty */ }
 }
 
-function* statisticOrderAmountFunc(params) {
+function* commentStatisticOrderAmountFunc(params) {
   try {
-    const response = yield call(statisticOrderAmountAPI, params?.payload);
+    const response = yield call(commentStatisticOrderAmountAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       const reverseTempData = response?.data?.data?.reverse();
       yield put(
-        actions.statisticOrderAmountSuccess(reverseTempData)
+        actions.commentStatisticOrderAmountSuccess(reverseTempData)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.statisticOrderAmountErr({ error: errorMessage || 'Fetch order amount in minute failed' })
+      actions.commentStatisticOrderAmountErr({ error: errorMessage || 'Fetch order amount in minute failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -143,19 +162,19 @@ function* statisticOrderAmountFunc(params) {
   } finally { /* empty */ }
 }
 
-function* statisticTaskSuccessInMinuteFunc(params) {
+function* commentStatisticTaskSuccessInMinuteFunc(params) {
   try {
-    const response = yield call(statisticTaskSuccessInMinutesAPI, params?.payload);
+    const response = yield call(commentStatisticTaskSuccessInMinutesAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.statisticTaskSuccessInMinuteSuccess(response?.data?.data)
+        actions.commentStatisticTaskSuccessInMinuteSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.statisticTaskSuccessInMinuteErr({ error: errorMessage || 'Fetch task success in minute failed' })
+      actions.commentStatisticTaskSuccessInMinuteErr({ error: errorMessage || 'Fetch task success in minute failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -166,19 +185,19 @@ function* statisticTaskSuccessInMinuteFunc(params) {
   } finally { /* empty */ }
 }
 
-function* statisticTaskDurationInMinuteFunc(params) {
+function* commentStatisticTaskDurationInMinuteFunc(params) {
   try {
-    const response = yield call(statisticTaskDurationInMinutesAPI, params?.payload);
+    const response = yield call(commentStatisticTaskDurationInMinutesAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.statisticTaskDurationInMinuteSuccess(response?.data?.data)
+        actions.commentStatisticTaskDurationInMinuteSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.statisticTaskDurationInMinuteErr({ error: errorMessage || 'Fetch task duration in minute failed' })
+      actions.commentStatisticTaskDurationInMinuteErr({ error: errorMessage || 'Fetch task duration in minute failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -191,7 +210,7 @@ function* statisticTaskDurationInMinuteFunc(params) {
 
 function* reportDataSubscribeFunc(params) {
   try {
-    const response = yield call(getDailyReportSubscribe, params?.payload);
+    const response = yield call(getDailyReportSubscribeAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -214,7 +233,7 @@ function* reportDataSubscribeFunc(params) {
 
 function* countSuccessSubscribeFunc() {
   try {
-    const response = yield call(countSuccessSubscribe, {});
+    const response = yield call(countSuccessSubscribeAPI, {});
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -231,7 +250,7 @@ function* countSuccessSubscribeFunc() {
 
 function* fetchComputerDataListFunc(params) {
   try {
-    const response = yield call(fetchComputerDataList, {});
+    const response = yield call(fetchComputerDataListAPI, {});
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -263,7 +282,7 @@ function* validateYoutubeVideoLinkFunc(params) {
 
 function* countErrorSubscribeFunc() {
   try {
-    const response = yield call(countErrorSubscribe, {});
+    const response = yield call(countErrorSubscribeAPI, {});
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -277,25 +296,25 @@ function* countErrorSubscribeFunc() {
   }
 }
 
-function* statisticCommentByOrderReportFunc(params) {
+function* commentStatisticCommentByOrderReportFunc(params) {
   try {
-    const response = yield call(statisticCommentByOrderReport, params?.payload);
+    const response = yield call(commentStatisticCommentByOrderReportAPI, params?.payload);
 
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.statisticCommentByOrderReportSuccess(response?.data?.data)
+        actions.commentStatisticCommentByOrderReportSuccess(response?.data?.data)
       );
     }
   } catch (err) {
     yield put(
-      actions.statisticCommentByOrderReportErr({ error: err || 'Count error subscribe failed' })
+      actions.commentStatisticCommentByOrderReportErr({ error: err || 'Count error subscribe failed' })
     )
   }
 }
 
 function* getStatisticsSubscribeFunc() {
   try {
-    const response = yield call(ratioSubscribeAverage, {});
+    const response = yield call(ratioSubscribeAverageAPI, {});
 
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -316,9 +335,9 @@ function* changeServiceTypeFunc(params) {
     );
 
     if (params?.payload === SERVICE_TYPE.COMMENT.title) {
-      yield put(actions.statisticCommentByOrderReportBegin());
-      yield put(actions.statisticTaskSuccessInMinuteBegin());
-      yield put(actions.statisticTaskDurationInMinuteBegin());
+      yield put(actions.commentStatisticCommentByOrderReportBegin());
+      yield put(actions.commentStatisticTaskSuccessInMinuteBegin());
+      yield put(actions.commentStatisticTaskDurationInMinuteBegin());
     }
     if (params?.payload === SERVICE_TYPE.LIKE.title) {
       console.log('--- THAY ĐỔI STATISTIC LIKE ---')
@@ -363,15 +382,21 @@ function* setRangeDateFilterFunc(params) {
     }
     
     if (params?.payload?.typeService === SERVICE_TYPE.COMMENT.title) {
-  
-      yield put(actions.statisticCommentByOrderReportBegin());
-      yield put(actions.statisticTaskSuccessInMinuteBegin());
-      yield put(actions.statisticTaskDurationInMinuteBegin());
-      yield put(actions.statisticOrderAmountBegin(initialFilter));
-      yield put(actions.statisticAccountStatusCommentBegin(initialFilter));
-      yield put(actions.statisticPerformanceCommentBegin(initialFilter));
-      yield put(actions.statisticCommentByDayBegin(initialFilter));
-      yield put(actions.statisticComputerThreadBegin(initialFilter));
+      yield put(actions.commentStatisticCommentByOrderReportBegin());
+      yield put(actions.commentStatisticTaskSuccessInMinuteBegin());
+      yield put(actions.commentStatisticTaskDurationInMinuteBegin());
+      yield put(actions.commentStatisticOrderAmountBegin(initialFilter));
+      yield put(actions.commentStatisticAccountStatusCommentBegin(initialFilter));
+      yield put(actions.commentStatisticPerformanceCommentBegin(initialFilter));
+      yield put(actions.commentStatisticCommentByDayBegin(initialFilter));
+      yield put(actions.commentStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actions.commentStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actions.commentStatisticByStatusOrderBegin(initialFilter));
+      yield put(actions.commentStatisticRunningOrderBegin(initialFilter));
+      yield put(actions.commentStatisticTaskOfToolBegin(initialFilter));
+      yield put(actions.commentStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actions.commentStatisticUserPointBegin(initialFilter));
     }
   } catch (err) {
     yield put(
@@ -380,20 +405,113 @@ function* setRangeDateFilterFunc(params) {
   }
 }
 
-export function* statisticCommentByDayWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_COMMENT_BY_DAY_BEGIN, statisticCommentByDayFunc);
+function* commentStatisticAccountOnComputerFunc(params) {
+  try {
+    const response = yield call(commentStatisticAccountOnComputerAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentStatisticAccountOnComputerSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticAccountOnComputerErr({ error: err || 'Statistic account on computer failed' })
+    )
+  }
 }
 
-export function* statisticComputerThreadWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_COMPUTER_THREAD_BEGIN, statisticComputerThreadFunc);
+function* commentStatisticByStatusOrderFunc(params) {
+  try {
+    const response = yield call(commentStatisticByStatusOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentStatisticByStatusOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticByStatusOrderErr({ error: err || 'Statistic by status order failed' })
+    )
+  }
 }
 
-export function* statisticTaskDurationInMinuteWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN, statisticTaskDurationInMinuteFunc);
+function* commentStatisticRunningComputerFunc(params) {
+  try {
+    const response = yield call(commentStatisticRunningComputerAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentStatisticRunningOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticRunningOrderErr({ error: err || 'Statistic running computer failed' })
+    )
+  }
 }
 
-export function* statisticTaskSuccessInMinuteWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN, statisticTaskSuccessInMinuteFunc);
+function* commentStatisticTaskOfToolFunc(params) {
+  try {
+    const response = yield call(commentStatisticTaskOfToolAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentStatisticTaskOfToolSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticTaskOfToolErr({ error: err || 'Statistic task of tool failed' })
+    )
+  }
+}
+
+function* commentStatisticRunningUserOrderFunc(params) {
+  try {
+    const response = yield call(commentStatisticRunningUserOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentStatisticRunningUserOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticRunningUserOrderErr({ error: err || 'Statistic running user failed' })
+    )
+  }
+}
+
+function* commentStatisticUserPointFunc(params) {
+  try {
+    const response = yield call(commentStatisticUserPointAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      console.log('---- user point -----', response?.data)
+      yield put(
+        actions.commentStatisticUserPointSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticUserPointErr({ error: err || 'Statistic user point failed' })
+    )
+  }
+}
+
+export function* countErrorSubscribeWatcherSaga() {
+  yield takeLatest(actions.COUNT_ERROR_SUBSCRIBE_BEGIN, countErrorSubscribeFunc);
+}
+
+export function* countSuccessSubscribeWatcherSaga() {
+  yield takeLatest(actions.COUNT_SUCCESS_SUBSCRIBE_BEGIN, countSuccessSubscribeFunc);
+}
+
+export function* fetchComputerDataListWatcherSaga() {
+  yield takeLatest(actions.COMPUTER_DATA_LIST_BEGIN, fetchComputerDataListFunc);
 }
 
 export function* resportSubscribeWatcherSaga() {
@@ -408,42 +526,74 @@ export function* changeServiceTypeWatcherSaga() {
   yield takeLatest(actions.CHANGE_SERVICE_TYPE_BEGIN, changeServiceTypeFunc);
 }
 
-export function* countSuccessSubscribeWatcherSaga() {
-  yield takeLatest(actions.COUNT_SUCCESS_SUBSCRIBE_BEGIN, countSuccessSubscribeFunc);
-}
-
-export function* fetchComputerDataListWatcherSaga() {
-  yield takeLatest(actions.COMPUTER_DATA_LIST_BEGIN, fetchComputerDataListFunc);
-}
-
-export function* countErrorSubscribeWatcherSaga() {
-  yield takeLatest(actions.COUNT_ERROR_SUBSCRIBE_BEGIN, countErrorSubscribeFunc);
-}
-
-export function* statisticOrderAmountWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_ORDER_AMOUNT_BEGIN, statisticOrderAmountFunc);
-}
-
-export function* statisticPerformanceCommentWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_PERFORMANCE_COMMENT_BEGIN, statisticPerformanceCommentFunc);
-}
-
-export function* statisticAccountStatusCommentWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN, statisticAccountStatusCommentFunc);
-}
-
 export function* getStatisticsSubscribeReporWatcherSaga() {
   yield takeLatest(actions.GET_STATISTICS_SUBSCRIBE_REPORT_BEGIN, getStatisticsSubscribeFunc);
-}
-
-export function* getStatisticsByOrderStatusReportWatcherSaga() {
-  yield takeLatest(actions.STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN, statisticCommentByOrderReportFunc);
 }
 
 export function* toggleStateModalCreateOrderWatcherSaga() {
   yield takeLatest(actions.OPEN_MODAL_CREATE_NEW_ORDER_BEGIN, toggleStateModalCreateOrderFunc);
 }
 
+
+// COMMENT
+export function* commentStatisticCommentByDayWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_COMMENT_BY_DAY_BEGIN, commentStatisticCommentByDayFunc);
+}
+
+export function* commentStatisticComputerThreadWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_COMPUTER_THREAD_BEGIN, commentStatisticComputerThreadFunc);
+}
+
+export function* commentStatisticTaskDurationInMinuteWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN, commentStatisticTaskDurationInMinuteFunc);
+}
+
+export function* commentStatisticTaskSuccessInMinuteWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN, commentStatisticTaskSuccessInMinuteFunc);
+}
+
+export function* commentStatisticOrderAmountWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN, commentStatisticOrderAmountFunc);
+}
+
+export function* commentStatisticPerformanceCommentWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_PERFORMANCE_COMMENT_BEGIN, commentStatisticPerformanceCommentFunc);
+}
+
+export function* commentStatisticAccountStatusCommentWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN, commentStatisticAccountStatusCommentFunc);
+}
+
+export function* commentStatisticsByOrderStatusReportWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN, commentStatisticCommentByOrderReportFunc);
+}
+
+
+export function* commentStatisticAccountOnComputerWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN, commentStatisticAccountOnComputerFunc);
+}
+
+export function* commentStatisticByStatusOrderWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_BY_STATUS_ORDER_BEGIN, commentStatisticByStatusOrderFunc);
+}
+
+export function* commentStatisticRunningComputerWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_RUNNING_COMPUTER_BEGIN, commentStatisticRunningComputerFunc);
+}
+
+export function* commentStatisticTaskOfToolWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_TASK_OF_TOOL_BEGIN, commentStatisticTaskOfToolFunc);
+}
+
+export function* commentStatisticRunningUserOrderWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_RUNNING_USER_ORDER_BEGIN, commentStatisticRunningUserOrderFunc);
+}
+
+export function* commentStatisticUserPointWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_USER_POINT_BEGIN, commentStatisticUserPointFunc);
+}
+
+// Validation youtube link
 export function* validateYoutubeVideoLinkWatcherSaga() {
   yield takeLatest(actions.VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN, validateYoutubeVideoLinkFunc);
 }

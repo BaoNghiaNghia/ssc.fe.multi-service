@@ -1,13 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import actions from "./actions";
 import {
-  fetchComputerDataList,
+  fetchComputerDataListAPI,
 } from '../../config/apiFactory/Reports/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 function* fetchComputerDataListFunc() {
   try {
-    const response = yield call(fetchComputerDataList, {});
+    const response = yield call(fetchComputerDataListAPI, {});
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(

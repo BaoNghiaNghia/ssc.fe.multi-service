@@ -25,6 +25,12 @@ const initialState = {
   orderAmount: [],
   accountStatus: {},
   computerThread: {},
+  commentAccountOnComputer: {},
+  commentByStatusOrder: {},
+  commentRunningComputer: {},
+  commentRunningUserOrder: {},
+  commentTaskOfTool: {},
+  commentUserPoint: {},
   performance: [],
   ratioSubSvg: 0,
   countError: {},
@@ -73,37 +79,63 @@ const {
   OPEN_MODAL_CREATE_NEW_ORDER_SUCCESS,
   OPEN_MODAL_CREATE_NEW_ORDER_ERR,
 
-  STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
-  STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
-  STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
 
-  STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
-  STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
-  STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS,
+  COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
+  COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
+  COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
 
-  STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN,
-  STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
-  STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS,
+  COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
+  COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
+  COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS,
 
-  STATISTIC_COMMENT_BY_DAY_BEGIN,
-  STATISTIC_COMMENT_BY_DAY_ERR,
-  STATISTIC_COMMENT_BY_DAY_SUCCESS,
+  COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN,
+  COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
+  COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS,
 
-  STATISTIC_COMPUTER_THREAD_BEGIN,
-  STATISTIC_COMPUTER_THREAD_ERR,
-  STATISTIC_COMPUTER_THREAD_SUCCESS,
+  COMMENT_STATISTIC_COMMENT_BY_DAY_BEGIN,
+  COMMENT_STATISTIC_COMMENT_BY_DAY_ERR,
+  COMMENT_STATISTIC_COMMENT_BY_DAY_SUCCESS,
 
-  STATISTIC_ORDER_AMOUNT_BEGIN,
-  STATISTIC_ORDER_AMOUNT_ERR,
-  STATISTIC_ORDER_AMOUNT_SUCCESS,
+  COMMENT_STATISTIC_COMPUTER_THREAD_BEGIN,
+  COMMENT_STATISTIC_COMPUTER_THREAD_ERR,
+  COMMENT_STATISTIC_COMPUTER_THREAD_SUCCESS,
 
-  STATISTIC_PERFORMANCE_COMMENT_BEGIN,
-  STATISTIC_PERFORMANCE_COMMENT_ERR,
-  STATISTIC_PERFORMANCE_COMMENT_SUCCESS,
+  COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN,
+  COMMENT_STATISTIC_ORDER_AMOUNT_ERR,
+  COMMENT_STATISTIC_ORDER_AMOUNT_SUCCESS,
 
-  STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN,
-  STATISTIC_ACCOUNT_STATUS_COMMENT_ERR,
-  STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS,
+  COMMENT_STATISTIC_PERFORMANCE_COMMENT_BEGIN,
+  COMMENT_STATISTIC_PERFORMANCE_COMMENT_ERR,
+  COMMENT_STATISTIC_PERFORMANCE_COMMENT_SUCCESS,
+
+  COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN,
+  COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_ERR,
+  COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS,
+
+  COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN,
+  COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ERR,
+  COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_SUCCESS,
+
+  COMMENT_STATISTIC_BY_STATUS_ORDER_BEGIN,
+  COMMENT_STATISTIC_BY_STATUS_ORDER_ERR,
+  COMMENT_STATISTIC_BY_STATUS_ORDER_SUCCESS,
+
+  COMMENT_STATISTIC_RUNNING_COMPUTER_BEGIN,
+  COMMENT_STATISTIC_RUNNING_COMPUTER_ERR,
+  COMMENT_STATISTIC_RUNNING_COMPUTER_SUCCESS,
+
+  COMMENT_STATISTIC_RUNNING_USER_ORDER_BEGIN,
+  COMMENT_STATISTIC_RUNNING_USER_ORDER_ERR,
+  COMMENT_STATISTIC_RUNNING_USER_ORDER_SUCCESS,
+
+  COMMENT_STATISTIC_TASK_OF_TOOL_BEGIN,
+  COMMENT_STATISTIC_TASK_OF_TOOL_ERR,
+  COMMENT_STATISTIC_TASK_OF_TOOL_SUCCESS,
+
+  COMMENT_STATISTIC_USER_POINT_BEGIN,
+  COMMENT_STATISTIC_USER_POINT_ERR,
+  COMMENT_STATISTIC_USER_POINT_SUCCESS,
+
 
   VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN,
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR,
@@ -114,6 +146,126 @@ const {
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case COMMENT_STATISTIC_USER_POINT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_STATISTIC_USER_POINT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentUserPoint: data,
+      };
+
+    case COMMENT_STATISTIC_USER_POINT_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case COMMENT_STATISTIC_TASK_OF_TOOL_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_STATISTIC_TASK_OF_TOOL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentTaskOfTool: data,
+      };
+
+    case COMMENT_STATISTIC_TASK_OF_TOOL_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case COMMENT_STATISTIC_RUNNING_USER_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_STATISTIC_RUNNING_USER_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentRunningUserOrder: data,
+      };
+
+    case COMMENT_STATISTIC_RUNNING_USER_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case COMMENT_STATISTIC_RUNNING_COMPUTER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_STATISTIC_RUNNING_COMPUTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentRunningComputer: data,
+      };
+
+    case COMMENT_STATISTIC_RUNNING_COMPUTER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case COMMENT_STATISTIC_BY_STATUS_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_STATISTIC_BY_STATUS_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentByStatusOrder: data,
+      };
+
+    case COMMENT_STATISTIC_BY_STATUS_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentAccountOnComputer: data,
+      };
+
+    case COMMENT_STATISTIC_ACCOUNT_ON_COMPUTER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN:
       return {
         ...state,
@@ -134,138 +286,138 @@ const ReportsReducer = (state = initialState, action) => {
         error: err
       };
     
-    case STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN:
+    case COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS:
+    case COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
         accountStatus: data,
       };
 
-    case STATISTIC_ACCOUNT_STATUS_COMMENT_ERR:
+    case COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_ERR:
       return {
         ...state,
         loading: false,
         error: err
       };
 
-    case STATISTIC_PERFORMANCE_COMMENT_BEGIN:
+    case COMMENT_STATISTIC_PERFORMANCE_COMMENT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_PERFORMANCE_COMMENT_SUCCESS:
+    case COMMENT_STATISTIC_PERFORMANCE_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
         performance: data,
       };
 
-    case STATISTIC_PERFORMANCE_COMMENT_ERR:
+    case COMMENT_STATISTIC_PERFORMANCE_COMMENT_ERR:
       return {
         ...state,
         loading: false,
         error: err
       };
 
-    case STATISTIC_ORDER_AMOUNT_BEGIN:
+    case COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_ORDER_AMOUNT_SUCCESS:
+    case COMMENT_STATISTIC_ORDER_AMOUNT_SUCCESS:
       return {
         ...state,
         loading: false,
         orderAmount: data,
       };
 
-    case STATISTIC_ORDER_AMOUNT_ERR:
+    case COMMENT_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
         loading: false,
         error: err
       };
 
-    case STATISTIC_COMPUTER_THREAD_BEGIN:
+    case COMMENT_STATISTIC_COMPUTER_THREAD_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_COMPUTER_THREAD_SUCCESS:
+    case COMMENT_STATISTIC_COMPUTER_THREAD_SUCCESS:
       return {
         ...state,
         loading: false,
         computerThread: data,
       };
 
-    case STATISTIC_COMPUTER_THREAD_ERR:
+    case COMMENT_STATISTIC_COMPUTER_THREAD_ERR:
       return {
         ...state,
         loading: false,
         error: err
       };
 
-    case STATISTIC_COMMENT_BY_DAY_BEGIN:
+    case COMMENT_STATISTIC_COMMENT_BY_DAY_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_COMMENT_BY_DAY_SUCCESS:
+    case COMMENT_STATISTIC_COMMENT_BY_DAY_SUCCESS:
       return {
         ...state,
         loading: false,
         commentByDay: data,
       };
 
-    case STATISTIC_COMMENT_BY_DAY_ERR:
+    case COMMENT_STATISTIC_COMMENT_BY_DAY_ERR:
       return {
         ...state,
         loading: false,
         error: err
       };
-    case STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
+    case COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS:
+    case COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS:
       return {
         ...state,
         taskSuccessInMinutes: data,
         loading: false,
       };
 
-    case STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR:
+    case COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR:
       return {
         ...state,
         loading: false,
         error: err
       };
-    case STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN:
+    case COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS:
+    case COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_SUCCESS:
       return {
         ...state,
         taskDurationInMinutes: data,
         loading: false,
       };
 
-    case STATISTIC_TASK_DURATION_IN_MINUTE_ERR:
+    case COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ERR:
       return {
         ...state,
         error: err,
@@ -292,20 +444,20 @@ const ReportsReducer = (state = initialState, action) => {
         error: err
       };
 
-    case STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN:
+    case COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS:
+    case COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS:
       return {
         ...state,
         loading: false,
         statisticComment: data,
       };
 
-    case STATISTIC_COMMENT_BY_ORDER_REPORT_ERR:
+    case COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR:
       return {
         ...state,
         loading: false,

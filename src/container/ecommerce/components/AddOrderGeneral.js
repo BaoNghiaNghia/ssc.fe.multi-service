@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image, InputNumber } from 'antd';
 import { MdAddchart, MdCancel } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
+import { FaMoneyBillWave } from "react-icons/fa6";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { TiTick } from "react-icons/ti";
 import { isEmpty } from 'lodash';
@@ -475,6 +476,7 @@ function AddOrderGeneral() {
         }
         onOk={handleOk}
         onCancel={handleCancel}
+        style={{ backgroundColor: 'gray' }}
         footer={[
           <Button key="back" onClick={handleCancel}>
             Hủy
@@ -695,9 +697,9 @@ function AddOrderGeneral() {
                             color: 'black'
                           }}
                         >
-                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'space-between', padding: '7px' }}>
-                            <span style={{ fontSize: '0.8em' }}>TỔNG CỘNG </span>
-                            <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center'}}>
+                            <FaMoneyBillWave color="green" style={{ fontSize: '19px', marginLeft: '6px', }}/>
+                            <span style={{ fontWeight: '800', color: '#00a10e', padding: '0px 10px', fontSize: '15px'  }}>
                               {numberWithCommas((stateCurr?.amountChange ?? 1)*(detailService?.price_per_10 ?? 1)/10 || 0)} {VIETNAMES_CURRENCY}
                             </span>
                           </div>

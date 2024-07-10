@@ -53,9 +53,7 @@ function* loginSagaFunc(params) {
         actions.loginSuccess(respLoggged)
       );
 
-      window.location.href = '/admin/tong-quan'; // Directly set window location for redirection
-      // params?.payload?.history.push('/admin/tong-quan');
-      // window.location.reload();
+      window.location.href = '/admin/tong-quan'; // Directly set window location for redirections
     }
 
   } catch (error) {

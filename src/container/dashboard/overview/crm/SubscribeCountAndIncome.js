@@ -59,8 +59,6 @@ function SubscribeCountAndIncome(props) {
     },
   ];
 
-  console.log('-- loading nè ----', isLoading);
-
   // eslint-disable-next-line no-unsafe-optional-chaining
   const totalPoint = orderAmount?.map(item => Math.round(item?.total)) || [];
   const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
