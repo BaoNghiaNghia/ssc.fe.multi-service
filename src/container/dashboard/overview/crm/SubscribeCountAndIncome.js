@@ -32,12 +32,6 @@ function SubscribeCountAndIncome(props) {
     if (closeDealGetData) {
       dispatch(closeDealGetData());
     }
-
-    dispatch(actions.countProfitDataTodayBegin());
-    dispatch(actions.fetchSubscribeWithPointEverydayBegin({
-      from: fromDate,
-      to: toDate,
-    }));
   }, [dispatch]);
 
   const closeDealDatasets = orderAmount !== null && [

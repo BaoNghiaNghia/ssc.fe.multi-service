@@ -107,14 +107,6 @@ function* setRangeDateOrderHistoryFunc(params) {
       actions.setRangeDateFilterSuccess(params?.payload)
     );
 
-    yield put(
-      actions.reportSubscribeBegin(params?.payload)
-    );
-
-    yield put(
-      actions.fetchSubscribeWithPointEverydayBegin(params?.payload)
-    );
-
   } catch (err) {
     yield put(
       actions.setRangeDateFilterErr({ error: err || 'Set range filter failed' })

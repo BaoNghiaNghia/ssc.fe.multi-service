@@ -64,13 +64,6 @@ function Overview() {
       status: 1
     };
 
-    if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
-      dispatch(actions.reportSubscribeBegin(initialFilter));
-      dispatch(actions.countSuccessSubscribeBegin());
-      dispatch(actions.computerDataListBegin());
-      dispatch(actions.getStatisticsSubscribeReportBegin());
-    }
-
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.commentStatisticCommentByOrderReportBegin(initialFilter));
       dispatch(actions.commentStatisticTaskSuccessInMinuteBegin());
@@ -88,10 +81,6 @@ function Overview() {
       dispatch(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       dispatch(actions.commentStatisticUserPointBegin(initialFilter));
     }
-
-    if (typeService === SERVICE_TYPE.LIKE.title) {
-      console.log("---- like data ----");
-    }
   }, [dispatch]);
 
   const [state, setState] = useState({
@@ -101,7 +90,13 @@ function Overview() {
   });
 
   const handleChange = (value) => {
-    dispatch(actions.changeServiceTypeBegin(value));
+    console.log('---- value change type ----', value);
+    dispatch(actions.changeServiceTypeBegin({
+      value,
+      from: fromDate,
+      to: toDate
+    }));
+
     setState({ ...state, activeClass: value });
   };
 

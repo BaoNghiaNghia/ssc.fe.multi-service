@@ -8,10 +8,7 @@ import {
 } from './authentication/sagas';
 
 import {
-    resportSubscribeWatcherSaga,
     setRangeDateFilterWatcherSaga,
-    countErrorSubscribeWatcherSaga,
-    getStatisticsSubscribeReporWatcherSaga,
     changeServiceTypeWatcherSaga,
     commentStatisticsByOrderStatusReportWatcherSaga,
     toggleStateModalCreateOrderWatcherSaga,
@@ -28,7 +25,21 @@ import {
     commentStatisticRunningComputerWatcherSaga,
     commentStatisticTaskOfToolWatcherSaga,
     commentStatisticRunningUserOrderWatcherSaga,
-    commentStatisticUserPointWatcherSaga
+    commentStatisticUserPointWatcherSaga,
+    likeStatisticCommentByDayWatcherSaga,
+    likeStatisticComputerThreadWatcherSaga,
+    likeStatisticTaskDurationInMinuteWatcherSaga,
+    likeStatisticTaskSuccessInMinuteWatcherSaga,
+    likeStatisticOrderAmountWatcherSaga,
+    likeStatisticPerformanceCommentWatcherSaga,
+    likeStatisticAccountStatusCommentWatcherSaga,
+    likeStatisticsByOrderStatusReportWatcherSaga,
+    likeStatisticAccountOnComputerWatcherSaga,
+    likeStatisticByStatusOrderWatcherSaga,
+    likeStatisticRunningComputerWatcherSaga,
+    likeStatisticTaskOfToolWatcherSaga,
+    likeStatisticRunningUserOrderWatcherSaga,
+    likeStatisticUserPointWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -124,11 +135,8 @@ export default function* rootSaga() {
         loginWatcherSaga(),
         logoutWatcherSaga(),
         fetchUserProfileSaga(),
-        resportSubscribeWatcherSaga(),
         setRangeDateFilterWatcherSaga(),
         fetchComputerDataListWatcherSaga(),
-        countErrorSubscribeWatcherSaga(),
-        getStatisticsSubscribeReporWatcherSaga(),
         fetchAdminSettingWatcherSaga(),
         fetchListOrderSubscribeWatcherSaga(),
         fetchServicePackageListWatcherSaga(),
@@ -213,6 +221,21 @@ export default function* rootSaga() {
         fetchWarrantyLikeOrderWatcherSaga(),
         activeWarrantyLikeOrderWatcherSaga(),
         refundhWarrantyLikeOrderWatcherSaga(),
-        deleteComputerLikeWatcherSaga()
+        deleteComputerLikeWatcherSaga(),
+
+        likeStatisticCommentByDayWatcherSaga(),
+        likeStatisticComputerThreadWatcherSaga(),
+        likeStatisticTaskDurationInMinuteWatcherSaga(),
+        likeStatisticTaskSuccessInMinuteWatcherSaga(),
+        likeStatisticOrderAmountWatcherSaga(),
+        likeStatisticPerformanceCommentWatcherSaga(),
+        likeStatisticAccountStatusCommentWatcherSaga(),
+        likeStatisticsByOrderStatusReportWatcherSaga(),
+        likeStatisticAccountOnComputerWatcherSaga(),
+        likeStatisticByStatusOrderWatcherSaga(),
+        likeStatisticRunningComputerWatcherSaga(),
+        likeStatisticTaskOfToolWatcherSaga(),
+        likeStatisticRunningUserOrderWatcherSaga(),
+        likeStatisticUserPointWatcherSaga(),
     ]);
 }
