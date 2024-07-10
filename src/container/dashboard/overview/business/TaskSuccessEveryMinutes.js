@@ -43,7 +43,6 @@ function TaskSuccessEveryMinutes({ title }) {
     return {
       performanceState: state.chartContent.performanceData,
       preIsLoading: state.chartContent.perLoading,
-      countSubscribeSuccess: state?.reports?.reportCountSuccess,
       taskSuccessInMinutes: state?.reports?.taskSuccessInMinutes,
       typeService: state?.reports?.typeService,
     };

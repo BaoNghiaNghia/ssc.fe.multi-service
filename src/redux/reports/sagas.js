@@ -3,11 +3,9 @@ import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
   countErrorSubscribeAPI,
-  countSuccessSubscribeAPI,
   fetchComputerDataListAPI,
   getDailyReportSubscribeAPI,
   ratioSubscribeAverageAPI,
-  getStatisticSubscribeReportAPI,
   
   commentStatisticCommentByOrderReportAPI,
   commentStatisticAccountStatusAPI,
@@ -229,23 +227,6 @@ function* reportDataSubscribeFunc(params) {
       toast.error('Fetch daily subscribe failed');
     }
   } finally { /* empty */ }
-}
-
-function* countSuccessSubscribeFunc() {
-  try {
-    const response = yield call(countSuccessSubscribeAPI, {});
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.countSuccessSubscribeSuccess(response?.data?.data)
-      );
-    }
-
-  } catch (err) {
-    yield put(
-      actions.countSuccessSubscribeErr({ error: err || 'Count subscribe failed' })
-    );
-  }
 }
 
 function* fetchComputerDataListFunc(params) {
@@ -490,7 +471,6 @@ function* commentStatisticUserPointFunc(params) {
     const response = yield call(commentStatisticUserPointAPI, params?.payload);
 
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      console.log('---- user point -----', response?.data)
       yield put(
         actions.commentStatisticUserPointSuccess(response?.data?.data)
       );
@@ -504,10 +484,6 @@ function* commentStatisticUserPointFunc(params) {
 
 export function* countErrorSubscribeWatcherSaga() {
   yield takeLatest(actions.COUNT_ERROR_SUBSCRIBE_BEGIN, countErrorSubscribeFunc);
-}
-
-export function* countSuccessSubscribeWatcherSaga() {
-  yield takeLatest(actions.COUNT_SUCCESS_SUBSCRIBE_BEGIN, countSuccessSubscribeFunc);
 }
 
 export function* fetchComputerDataListWatcherSaga() {
