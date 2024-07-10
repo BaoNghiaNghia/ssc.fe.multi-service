@@ -34,8 +34,6 @@ function SubscribeCountAndIncome(props) {
     }
   }, [dispatch]);
 
-  console.log('----- loading -----', isLoading);
-
   const closeDealDatasets = orderAmount !== null && [
     {
       backgroundColor: '#20C99780',

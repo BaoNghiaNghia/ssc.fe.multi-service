@@ -43,7 +43,8 @@ function Overview() {
     typeService, 
     computerThread, 
     accountStatus,
-    orderAmount
+    orderAmount,
+    taskOfTool
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
@@ -52,6 +53,7 @@ function Overview() {
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
       computerThread: state?.reports?.computerThread,
+      taskOfTool: state?.reports?.taskOfTool,
       accountStatus: state?.reports?.accountStatus,
       orderAmount: state?.reports?.orderAmount
     };
@@ -109,6 +111,8 @@ function Overview() {
   const todayLikePoint = 0;
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
+
+  const styleMail = { marginRight: '12px', padding:' 0px 5px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', backgroundColor: '#e5e5e585', borderRadius: '5px'};
 
   const moreContent = (
     <>
@@ -377,6 +381,45 @@ function Overview() {
                   <Heading as="h4">
                     {numberWithCommas(computerThread?.current_thread) || 0}/{numberWithCommas(computerThread?.free_thread) || 0}
                   </Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white' >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                    <span>Máy {typeService}</span>
+                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
+                  </span>
+                  <Heading as="h4">
+                    {numberWithCommas(taskOfTool?.current_thread) || 0}/{numberWithCommas(taskOfTool?.free_thread) || 0}
+                  </Heading>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
+        <Col xxl={24} md={24} sm={24} xs={24} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white' >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                    <div>Tổng task</div>
+                    <Tooltip title="Thất bại">
+                      <Heading as="h4" className="mr-3" color="red" style={styleMail}>{numberWithCommas(taskOfTool[-1]) || 0}</Heading>
+                    </Tooltip>
+                    <Tooltip title="Đang chạy">
+                      <Heading as="h4" className="mr-3" color="green" style={styleMail}>{numberWithCommas(taskOfTool[0]) || 0}</Heading>
+                    </Tooltip>
+                    <Tooltip title="Thành công">
+                      <Heading as="h4" className="mr-3" color={COLOR_GENERAL.primary} style={styleMail}>{numberWithCommas(taskOfTool[1]) || 0}</Heading>
+                    </Tooltip>
+                  </span>
                 </CardBarChart2>
               </div>
             </EChartCard>
