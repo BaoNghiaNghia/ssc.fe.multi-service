@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Switch } from 'antd';
+import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";

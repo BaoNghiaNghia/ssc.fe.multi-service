@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Col, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import FeatherIcon from 'feather-icons-react';
-import { NavLink, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ChartYoutubeAnalyse from './ChartYoutubeAnalyse';
 import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
@@ -127,27 +127,6 @@ function AnalyseYoutube(props) {
   return (    
     avgPerformance !== null && (
         <Cards
-          // isbutton={
-          //   <div className="card-nav">
-          //     <ul>
-          //       <li className={state.cashFlowActive === 'week' ? 'active' : 'regular'}>
-          //         <Link onClick={() => handleActiveChangeCash('week')} to="#">
-          //           Week
-          //         </Link>
-          //       </li>
-          //       <li className={state.cashFlowActive === 'month' ? 'active' : 'regular'}>
-          //         <Link onClick={() => handleActiveChangeCash('month')} to="#">
-          //           Month
-          //         </Link>
-          //       </li>
-          //       <li className={state.cashFlowActive === 'year' ? 'active' : 'regular'}>
-          //         <Link onClick={() => handleActiveChangeCash('year')} to="#">
-          //           Year
-          //         </Link>
-          //       </li>
-          //     </ul>
-          //   </div>
-          // }
           title={
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>
               <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p> 
