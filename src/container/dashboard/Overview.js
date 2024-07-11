@@ -44,7 +44,8 @@ function Overview() {
     computerThread, 
     accountStatus,
     orderAmount,
-    taskOfTool
+    taskOfTool,
+    accountOnComputer
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
@@ -55,7 +56,8 @@ function Overview() {
       computerThread: state?.reports?.computerThread,
       taskOfTool: state?.reports?.taskOfTool,
       accountStatus: state?.reports?.accountStatus,
-      orderAmount: state?.reports?.orderAmount
+      orderAmount: state?.reports?.orderAmount,
+      accountOnComputer: state?.reports?.accountOnComputer
     };
   });
 
@@ -112,7 +114,16 @@ function Overview() {
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
 
-  const styleMail = { marginRight: '12px', padding:' 0px 5px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', backgroundColor: '#e5e5e585', borderRadius: '5px'};
+  const styleMail = {
+    marginLeft: '12px',
+    padding:' 0px 5px',
+    fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
+    backgroundColor: '#e5e5e585',
+    borderRadius: '5px',
+    fontSize: '15px'
+  };
 
   const moreContent = (
     <>
@@ -154,9 +165,9 @@ function Overview() {
                   <Row style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                     <Col sm="6">
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                        Tổng point hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
+                        Tổng point (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
                       </span>
-                      <Heading as="h2" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
+                      <Heading as="h2" textShadow="1px 1px 2px #75f500" weight={700} color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayPoint)}</Heading>
                     </Col>
                     <Col sm="6">
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
@@ -330,7 +341,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                    <span>Quest Lỗi/Tổng Quest</span>
+                    <span>Quest (Lỗi/Tổng)</span>
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">0/0</Heading>
@@ -393,10 +404,10 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Máy {typeService}</span>
-                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
+                    <HiOutlineDotsVertical fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
-                    {numberWithCommas(taskOfTool?.current_thread) || 0}/{numberWithCommas(taskOfTool?.free_thread) || 0}
+                    {accountOnComputer?.length || 0}
                   </Heading>
                 </CardBarChart2>
               </div>
@@ -410,15 +421,17 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <div>Tổng task</div>
-                    <Tooltip title="Thất bại">
-                      <Heading as="h4" className="mr-3" color="red" style={styleMail}>{numberWithCommas(taskOfTool[-1]) || 0}</Heading>
-                    </Tooltip>
-                    <Tooltip title="Đang chạy">
-                      <Heading as="h4" className="mr-3" color="green" style={styleMail}>{numberWithCommas(taskOfTool[0]) || 0}</Heading>
-                    </Tooltip>
-                    <Tooltip title="Thành công">
-                      <Heading as="h4" className="mr-3" color={COLOR_GENERAL.primary} style={styleMail}>{numberWithCommas(taskOfTool[1]) || 0}</Heading>
-                    </Tooltip>
+                    <div>
+                      <Tooltip title="Thất bại">
+                        <span className="mr-3" style={{color: 'orangered', ...styleMail}}>{numberWithCommas(taskOfTool[-1]) || 0}</span>
+                      </Tooltip>
+                      <Tooltip title="Đang chạy">
+                        <span className="mr-3" style={{color: 'orange', ...styleMail}}>{numberWithCommas(taskOfTool[0]) || 0}</span>
+                      </Tooltip>
+                      <Tooltip title="Thành công">
+                        <span className="mr-3" style={{color: 'green', ...styleMail}}>{numberWithCommas(taskOfTool[1]) || 0}</span>
+                      </Tooltip>
+                    </div>
                   </span>
                 </CardBarChart2>
               </div>
