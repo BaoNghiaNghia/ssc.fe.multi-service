@@ -47,9 +47,9 @@ const actions = {
     DELETE_COMPUTER_RUN_COMMENT_SUCCESS: 'DELETE_COMPUTER_RUN_COMMENT_SUCCESS',
     DELETE_COMPUTER_RUN_COMMENT_ERR: 'DELETE_COMPUTER_RUN_COMMENT_ERR',
 
-    FETCH_WARRANTY_ORDER_BEGIN: 'FETCH_WARRANTY_ORDER_BEGIN',
-    FETCH_WARRANTY_ORDER_SUCCESS: 'FETCH_WARRANTY_ORDER_SUCCESS',
-    FETCH_WARRANTY_ORDER_ERR: 'FETCH_WARRANTY_ORDER_ERR',
+    FETCH_WARRANTY_COMMENT_ORDER_BEGIN: 'FETCH_WARRANTY_COMMENT_ORDER_BEGIN',
+    FETCH_WARRANTY_COMMENT_ORDER_SUCCESS: 'FETCH_WARRANTY_COMMENT_ORDER_SUCCESS',
+    FETCH_WARRANTY_COMMENT_ORDER_ERR: 'FETCH_WARRANTY_COMMENT_ORDER_ERR',
 
     ACTIVE_WARRANTY_ORDER_BEGIN: 'ACTIVE_WARRANTY_ORDER_BEGIN',
     ACTIVE_WARRANTY_ORDER_SUCCESS: 'ACTIVE_WARRANTY_ORDER_SUCCESS',
@@ -126,23 +126,23 @@ const actions = {
         };
     },
 
-    fetchWarrantyOrderBegin: (payload) => {
+    fetchWarrantyCommentOrderBegin: (payload) => {
         return {
-            type: actions.FETCH_WARRANTY_ORDER_BEGIN,
+            type: actions.FETCH_WARRANTY_COMMENT_ORDER_BEGIN,
             payload
         };
     },
 
-    fetchWarrantyOrderSuccess: (data) => {
+    fetchWarrantyCommentOrderSuccess: (data) => {
         return {
-            type: actions.FETCH_WARRANTY_ORDER_SUCCESS,
+            type: actions.FETCH_WARRANTY_COMMENT_ORDER_SUCCESS,
             data,
         };
     },
 
-    fetchWarrantyOrderErr: (err) => {
+    fetchWarrantyCommentOrderErr: (err) => {
         return {
-            type: actions.FETCH_WARRANTY_ORDER_ERR,
+            type: actions.FETCH_WARRANTY_COMMENT_ORDER_ERR,
             err,
         };
     },

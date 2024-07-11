@@ -69,9 +69,9 @@ const {
     ACTIVE_WARRANTY_ORDER_ERR,
     ACTIVE_WARRANTY_ORDER_SUCCESS,
 
-    FETCH_WARRANTY_ORDER_BEGIN,
-    FETCH_WARRANTY_ORDER_ERR,
-    FETCH_WARRANTY_ORDER_SUCCESS,
+    FETCH_WARRANTY_COMMENT_ORDER_BEGIN,
+    FETCH_WARRANTY_COMMENT_ORDER_ERR,
+    FETCH_WARRANTY_COMMENT_ORDER_SUCCESS,
 
     REFUND_WARRANTY_ORDER_BEGIN,
     REFUND_WARRANTY_ORDER_ERR,
@@ -85,20 +85,20 @@ const {
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
-    case FETCH_WARRANTY_ORDER_BEGIN:
+    case FETCH_WARRANTY_COMMENT_ORDER_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case FETCH_WARRANTY_ORDER_SUCCESS:
+    case FETCH_WARRANTY_COMMENT_ORDER_SUCCESS:
       return {
         ...state,
         loading: false,
         listWarrantyOrder: data
       };
 
-    case FETCH_WARRANTY_ORDER_ERR:
+    case FETCH_WARRANTY_COMMENT_ORDER_ERR:
       return {
         ...state,
         loading: false,

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip, Progress} from 'antd';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund } from "react-icons/tb";
+import { RiScan2Fill } from "react-icons/ri";
 import { BsFire } from "react-icons/bs";
 import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
@@ -102,14 +103,14 @@ function PendingBuffComment() {
     }));
   }, [dispatch, currentPage, limitPage]);
 
-  useEffect(() => {
-    dispatch(actions.fetchWarrantyOrderBegin({
-      page: currentPage,
-      limit: limitPage,
-      start_date: `${filterRange?.from} 00:00:00`,
-      end_date: `${filterRange?.to} 23:59:59`,
-    }));
-  }, [dispatch, currentPage, limitPage]);
+  // useEffect(() => {
+  //   dispatch(actions.fetchWarrantyOrderBegin({
+  //     page: currentPage,
+  //     limit: limitPage,
+  //     start_date: `${filterRange?.from} 00:00:00`,
+  //     end_date: `${filterRange?.to} 23:59:59`,
+  //   }));
+  // }, [dispatch, currentPage, limitPage]);
 
   useEffect(() => {
     dispatch(userActions.fetchUserListBegin());
@@ -385,7 +386,21 @@ function PendingBuffComment() {
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listWarrantyOrder?.meta?.total || 0)}</span> order</span>
-                    <Button type="">Quét</Button>
+                    <Button
+                      size="small"
+                      type="primary"
+                      onClick={() => {
+                        dispatch(actions.fetchWarrantyCommentOrderBegin({
+                          page: currentPage,
+                          limit: limitPage,
+                          start_date: `${filterRange?.from} 00:00:00`,
+                          end_date: `${filterRange?.to} 23:59:59`,
+                        }));
+                      }}
+                    >
+                      <RiScan2Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
+                      <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro' , margin: 0, padding: 0 }}>Quét</span>
+                    </Button>
                   </Col>
                 </Row>
               </TopToolBox>

@@ -45,13 +45,13 @@ function* listComputerRunCommentFunc(params) {
   } finally { /* empty */ }
 }
 
-function* fetchWarrantyOrderFunc(params) {
+function* fetchWarrantyCommentOrderFunc(params) {
   try {
     const response = yield call(fetchListWarrantyOrderAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.fetchWarrantyOrderSuccess(response?.data?.data)
+        actions.fetchWarrantyCommentOrderSuccess(response?.data?.data)
       );
     }
 
@@ -59,7 +59,7 @@ function* fetchWarrantyOrderFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.fetchWarrantyOrderErr({ error: errorMessage || 'Fetch Warranty Order failed' })
+      actions.fetchWarrantyCommentOrderErr({ error: errorMessage || 'Fetch Warranty Order failed' })
     );
 
     if (errorMessage?.response?.data?.message) {
@@ -405,7 +405,7 @@ function* setRangeDateWarrantyFilterFunc(params) {
     }
 
     yield put(
-      actions.fetchWarrantyOrderBegin(requestData)
+      actions.fetchWarrantyCommentOrderBegin(requestData)
     );
 
   } catch (err) {
@@ -459,8 +459,8 @@ export function* commentInOrderCommentWatcherSaga() {
   yield takeLatest(actions.COMMENT_IN_ORDER_COMMENT_BEGIN, commentInOrderCommentFunc);
 }
 
-export function* fetchWarrantyOrderWatcherSaga() {
-  yield takeLatest(actions.FETCH_WARRANTY_ORDER_BEGIN, fetchWarrantyOrderFunc);
+export function* fetchWarrantyCommentOrderWatcherSaga() {
+  yield takeLatest(actions.FETCH_WARRANTY_COMMENT_ORDER_BEGIN, fetchWarrantyCommentOrderFunc);
 }
 
 export function* activeWarrantyOrderWatcherSaga() {
