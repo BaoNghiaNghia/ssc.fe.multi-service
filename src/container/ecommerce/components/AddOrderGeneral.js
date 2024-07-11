@@ -7,7 +7,7 @@ import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, 
 import { MdAddchart, MdCancel } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { FaMoneyBillWave } from "react-icons/fa6";
-import { IoIosCheckmarkCircle } from "react-icons/io";
+import { IoMdCheckmarkCircle } from "react-icons/io";
 import { TiTick } from "react-icons/ti";
 import { isEmpty } from 'lodash';
 
@@ -117,9 +117,9 @@ function AddOrderGeneral() {
       }
 
       const mapping = {
-        'Cho phép comment': 'is_allow_cmt',
-        'Cho phép like': 'is_allow_like',
-        'Cho phép live': 'is_live',
+        'Comment': 'is_allow_cmt',
+        'Like': 'is_allow_like',
+        'Livestream': 'is_live',
         'Thời gian video': 'is_valid_video_duration',
         'Hiệu lực đường dẫn': 'is_valid_link',
         'Video tồn tại': 'is_exist_video',
@@ -142,12 +142,12 @@ function AddOrderGeneral() {
                         mappedObj['Video tồn tại'];
 
         const customHelp = (
-          <div style={{ textAlign: 'end' }}>
+          <div style={{ textAlign: 'end', marginBottom: '8px', backgroundColor: '#f1fffa' }}>
             {
               Object.entries(mappedObj).map(([key, value]) => (
-                <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '12px' }}>
-                  <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '2px' }}>{key}</span>
-                  {value === true ? <IoIosCheckmarkCircle color='green'/> : <MdCancel color='orangered'/> }
+                <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '10px' }}>
+                  <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '1px' }}>{key}</span>
+                  {value === true ? <IoMdCheckmarkCircle color='green'/> : <MdCancel color='orangered'/> }
                 </span>
               ))
             }

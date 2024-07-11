@@ -2,7 +2,7 @@ import React from 'react';
 import { Badge, Button, Menu } from 'antd';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { FiHome } from "react-icons/fi";
-import { LuServer } from "react-icons/lu";
+import { BiLogoGmail } from "react-icons/bi";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { TbScan } from "react-icons/tb";
 import FeatherIcon from 'feather-icons-react';
@@ -263,6 +263,20 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           checkMatchRole ? (
             <>
               {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>ADD-ON</NavTitle>}
+              <Menu.Item
+                icon={
+                  !topMenu && (
+                    <NavLink className="menuItem-icon" to={`${path}/gmail`}>
+                      <BiLogoGmail  size={17} style={{ paddingBottom: '1px' }}/>
+                    </NavLink>
+                  )
+                }
+                key="gmail-management"
+              >
+                <NavLink onClick={toggleCollapsed} to={`${path}/gmail`}>
+                  Quản lí Gmail
+                </NavLink>
+              </Menu.Item>
               <Menu.Item
                 disabled
                 icon={

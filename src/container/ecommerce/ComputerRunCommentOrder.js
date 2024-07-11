@@ -135,7 +135,7 @@ function ComputerRunCommentOrder() {
 
   const aBitThreadServer = listServer?.items?.filter(item => {
     const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
-    return percentThread < 0.3;
+    return percentThread <= 0.3;
   })?.length;
 
   const totalThread = listServer?.items?.reduce((total, comp) => total + comp.thread, 0) || 0;
