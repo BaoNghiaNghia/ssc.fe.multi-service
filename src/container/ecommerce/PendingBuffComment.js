@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover } from 'antd';
 import FeatherIcon from 'feather-icons-react';
@@ -51,6 +51,7 @@ const columns = [
     title: 'Order ID',
     dataIndex: 'order_id',
     key: 'order_id',
+    width: 50,
   },
   {
     title: 'Thời gian tạo',
@@ -110,6 +111,11 @@ const columns = [
 ];
 
 function PendingBuffComment() {
+  const tableRef = useRef();
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
   const dispatch = useDispatch();
   const { searchData,  listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
     return {
@@ -161,6 +167,42 @@ function PendingBuffComment() {
     dispatch(userActions.fetchUserListBegin());
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
+
+  useEffect(() => {
+    const table = tableRef.current;
+
+    const onMouseDown = (e) => {
+      if (e.button === 2) { // Right mouse button
+        isDragging.current = true;
+        startX.current = e.pageX - table.offsetLeft;
+        scrollLeft.current = table.scrollLeft;
+      }
+    };
+
+    const onMouseMove = (e) => {
+      if (!isDragging.current) return;
+      e.preventDefault();
+      const x = e.pageX - table.offsetLeft;
+      const walk = (x - startX.current) * 2; // Scroll speed
+      table.scrollLeft = scrollLeft.current - walk;
+    };
+
+    const onMouseUp = () => {
+      isDragging.current = false;
+    };
+
+    table.addEventListener('mousedown', onMouseDown);
+    table.addEventListener('mousemove', onMouseMove);
+    table.addEventListener('mouseup', onMouseUp);
+    table.addEventListener('mouseleave', onMouseUp);
+
+    return () => {
+      table.removeEventListener('mousedown', onMouseDown);
+      table.removeEventListener('mousemove', onMouseMove);
+      table.removeEventListener('mouseup', onMouseUp);
+      table.removeEventListener('mouseleave', onMouseUp);
+    };
+  }, []);
 
   const handleSearch = (searchText) => {
     if (!searchText) {
@@ -799,7 +841,11 @@ function PendingBuffComment() {
           </Row>
           <Row gutter={15}>
             <Col md={24}>
-              <TableWrapper className="table-order table-responsive">
+              <TableWrapper
+                className="table-order table-responsive"
+                ref={tableRef}
+                onContextMenu={(e) => e.preventDefault()} // Prevent the default context menu from appearing
+              >
                 <Table
                   loading={isLoading}
                   rowSelection={rowSelection}

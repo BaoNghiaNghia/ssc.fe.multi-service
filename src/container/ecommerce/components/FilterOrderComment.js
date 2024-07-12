@@ -5,10 +5,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Button, Modal, Select, Badge, Tooltip } from 'antd';
+import { Row, Col, Form, Button, Modal, Select, Badge } from 'antd';
 import { IoMdRefresh } from "react-icons/io";
 import { MdAddchart } from "react-icons/md";
-import { FaLocationArrow, FaRegUserCircle, FaYoutube } from 'react-icons/fa';
+import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
+import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import actions from '../../../redux/buffComment/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../../utility/utility';
@@ -215,7 +216,6 @@ function FilterOrderComment({ orderState, setState }) {
                 <Select
                   defaultActiveFirstOption
                   style={{ width: '100%', margin: 0, padding: 0 }}
-                  size='small'
                   placeholder='Chọn người dùng'
                   allowClear
                 >
@@ -223,11 +223,14 @@ function FilterOrderComment({ orderState, setState }) {
                     userList.map((itemUser, index) => {
                       return (
                         <Option value={itemUser?.id} key={index}>
-                          <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-                            <FaRegUserCircle color='gray' fontSize={20} style={{ marginRight: '10px', marginTop: '5px' }}/> 
+                          <div style={{ display: 'inline-flex', alignItems: 'flex-start', alignContent: 'center' }}>
+                            <ReactNiceAvatar
+                              style={{ width: '2.2rem', height: '2.2rem', outline: '2px solid orange', border: '2px solid white', margin: '7px' }}
+                              {...genConfig(itemUser[0]?.fullname?.charAt(0))}
+                            />
                             <span>
-                              <p style={{ margin: 0, padding: 0, fontWeight: '800' }}>{itemUser?.fullname}</p>
-                              <p style={{ margin: 0, padding: 0, fontSize: '0.7em' }}>{itemUser?.email}</p>
+                              <div style={{ margin: 0, padding: 0, fontWeight: '800', height: '19px' }}>{itemUser?.fullname}</div>
+                              <div style={{ margin: 0, padding: 0, fontSize: '0.7em', height: '19px' }}>{itemUser?.email}</div>
                             </span>
                           </div>
                         </Option>

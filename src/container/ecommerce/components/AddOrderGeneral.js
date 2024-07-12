@@ -128,7 +128,6 @@ function AddOrderGeneral() {
       if (responseValidVideo?.data?.error_code === 0) {
         const validData = responseValidVideo.data?.data;
         const mappedObj = Object.keys(mapping).reduce((acc, title) => {
-          console.log('--- ghghg ---', title);
           if (Object.keys(validData).includes(mapping[title])) {
             acc[title] = validData[mapping[title]];
           }
@@ -167,7 +166,7 @@ function AddOrderGeneral() {
       }
     } catch (error) {
       status = 'error';
-      help = 'Error validating YouTube link';
+      help = 'Lỗi xác thực liên kết YouTube';
     }
 
     setHelpMessage((prevHelp) => ({ ...prevHelp, 'link': help }));
@@ -488,8 +487,85 @@ function AddOrderGeneral() {
       >
         <Form layout="vertical" form={formCreateService}>
           <Row gutter={15}>
-            <Col sm={!isEmpty(detailService) ? 16 : 24}>
+            <Col
+              // sm={!isEmpty(detailService) ? 16 : 24}
+              sm={16}
+            >
               <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px' }}>
+                <Row gutter="10">
+                  <Col sm={24}>
+                    <Form.Item
+                      name="search"
+                      label="Tìm nhanh dịch vụ"
+                      style={{ marginBottom: '0px' }}
+                    >
+                      <Select 
+                        allowClear
+                        showSearch
+                        size='middle'
+                        className='full-height-dropdown'
+                        style={{ width: '100%' }}
+                        placeholder="Tìm theo ID hoặc tên của dịch vụ"
+                      >
+                        {
+                          listService?.map((itemService, index) => {
+                            return <>
+                              {
+                                itemService?.enabled ? (
+                                  <Option key={index} value={itemService?.service_id}>
+                                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</p>
+                                  </Option>
+                                ) : null
+                              }
+                            </>;
+                          })
+                        }
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter="10">
+                  <Col sm={12}>
+                    <Form.Item
+                      name="platform"
+                      label="Nền tảng"
+                      style={{ marginBottom: '0px' }}
+                    >
+                      <Input 
+                        value={
+                          <div style={{ display: 'inline-flex' }}>
+                            <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
+                            <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
+                          </div>
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col sm={12}>
+                    <Form.Item
+                      name="category"
+                      label="Phân loại "
+                      style={{ marginBottom: '0px' }}
+                    >
+                      <Select 
+                        allowClear
+                        showSearch
+                        size='middle'
+                        className='full-height-dropdown'
+                        style={{ width: '100%' }}
+                        placeholder="Tìm theo ID của dịch vụ"
+                      >
+                        {
+                          listService?.map((itemService, index) => {
+                            return <>
+
+                            </>;
+                          })
+                        }
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                </Row>
                 <Row gutter="10">
                   <Col sm={24}>
                     <Form.Item
@@ -504,9 +580,8 @@ function AddOrderGeneral() {
                       <Select 
                         allowClear
                         showSearch
-                        size='small'
+                        size='middle'
                         className='full-height-dropdown'
-                        style={{ width: '100%' }}
                         placeholder="Tìm theo ID của dịch vụ"
                         onSearch={(values) => {
                           setStateCurr({
@@ -550,9 +625,9 @@ function AddOrderGeneral() {
                                 itemService?.enabled ? (
                                   <Option key={index} value={itemService?.service_id}>
                                     <div style={{ paddingBottom: '8px', borderBottom: '1px dashed #cbcbcb' }}>
-                                      <Row style={{ margin: 0, padding: 0 }}>
-                                        <Col style={{ margin: 0, padding: 0 }}>
-                                          <span className="label" style={{ display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                                      <Row style={{ margin: 0, padding: 0, height: '20px !important' }}>
+                                        <Col style={{ margin: 0, padding: 0, height: '20px !important'  }}>
+                                          <div className="label" style={{ display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0, height: '20px !important' }}>
                                             <FaYoutube color="red" fontSize={20} style={{ margin: '2px 7px 0 0' }} />
                                             {
                                               itemService?.geo ? (
@@ -568,10 +643,10 @@ function AddOrderGeneral() {
                                             <span style={{ fontWeight: 500 }}>{itemService?.name}</span>
                                             <span style={{ padding: '0 5px' }}>-</span>
                                             <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
-                                          </span>
+                                          </div>
                                         </Col>
                                       </Row>
-                                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</p>
+                                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px', height: '20px !important' }}>{itemService?.description}</p>
                                       <Row>
                                         <Col style={{ display: 'inline-flex', alignItems: 'center' }}>
                                           {
@@ -610,105 +685,107 @@ function AddOrderGeneral() {
                     </Form.Item>
                   </Col>
                 </Row>
-                {
-                  !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : (
-                    <div className="text-center">
-                      <Image src={EmptyBackground} style={{ width: '40%' }} preview={false} />
-                    </div>
-                  )
-                }
               </Card>
-            </Col>
               {
-                !isEmpty(detailService) ? (
-                  <Col sm={8}>
-                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
-                      <div style={{ padding: '5px' }}>
-                        <Row style={{ margin: 0, padding: 0 }}>
-                          <Col style={{ margin: 0, padding: 0 }}>
-                            <p style={{ fontWeight: 600, color: 'green', fontSize: '1.1em' }}>{detailService?.name}</p>
-                            <div className='my-2' style={{ borderTop: '1px dashed #e7e7e7' }}>
-                              <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
-                                Platform: &nbsp;<FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} /> Youtube
-                              </p>
-                              <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
-                                GEO: &nbsp;
-                                {
-                                  detailService?.geo ? (
-                                    <Tooltip title={detailService?.geo?.toUpperCase()}>
-                                      <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                        <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                                        <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
-                                      </span>
-                                    </Tooltip>
-                                  ) : 'Không có'
-                                }
-                              </p>
-                              <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
-                              <span style={{ fontSize: '0.9em' }}>Giá tiền : </span>
-                              <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
-                              <span style={{ fontSize: '0.9em' }}>/ 10 {stateCurr?.selectedCategory} </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Card>
-                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
-                      <div style={{ padding: '5px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
-                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>
-                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: {numberWithCommas(detailService?.max)} {stateCurr?.selectedCategory}</p>
-                        </div>
-                        <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '4px 0px' }}>{detailService?.description}</p>
-                        {
-                          detailService?.enabled ? (
-                            <span className="label" style={badgeGreenStyle}>
-                              <Badge color='green' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
-                              Đang hoạt động
-                            </span>
-                          ) : (
-                            <span className="label" style={badgeRedStyle}>
-                              <Badge color='red' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
-                              Đang tắt
-                            </span>
-                          )
-                        }
-                        <span className="label" style={badgeGreenStyle}>Bảo hành</span>
-                        <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
-                        {
-                          detailService?.priority ? (
-                            <span className="label" style={badgeOrangeStyle}>
-                              <FaLocationArrow color='orange' fontSize={8} style={{  margin: '0 5px 0 0', padding: 0 }}/>
-                              Ưu tiên
-                            </span>
-                          ) : <></>
-                        }
-                      </div>
-                    </Card>
-                    {
-                      (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0)  ? (
-                        <Card
-                          size="small"
-                          style={{ 
-                            border: '3px solid #dddddd7a',
-                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
-                            color: 'black'
-                          }}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center'}}>
-                            <FaMoneyBillWave color="green" style={{ fontSize: '19px', marginLeft: '6px', }}/>
-                            <span style={{ fontWeight: '800', color: '#00a10e', padding: '0px 10px', fontSize: '15px'  }}>
-                              {numberWithCommas((stateCurr?.amountChange ?? 1)*(detailService?.price_per_10 ?? 1)/10 || 0)} {VIETNAMES_CURRENCY}
-                            </span>
-                          </div>
-                        </Card>
-                      ) : null
-                    }
-                  </Col>
-                ) : null
+                !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : null
               }
+            </Col>
+            {
+              !isEmpty(detailService) ? (
+                <Col sm={8}>
+                  <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
+                    <div style={{ padding: '5px' }}>
+                      <Row style={{ margin: 0, padding: 0 }}>
+                        <Col style={{ margin: 0, padding: 0 }}>
+                          <p style={{ fontWeight: 600, color: 'green', fontSize: '1.1em' }}>{detailService?.name}</p>
+                          <div className='my-2' style={{ borderTop: '1px dashed #e7e7e7' }}>
+                            <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                              Platform: &nbsp;<FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} /> Youtube
+                            </p>
+                            <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                              GEO: &nbsp;
+                              {
+                                detailService?.geo ? (
+                                  <Tooltip title={detailService?.geo?.toUpperCase()}>
+                                    <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                      <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                                      <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
+                                    </span>
+                                  </Tooltip>
+                                ) : 'Không có'
+                              }
+                            </p>
+                            <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
+                            <span style={{ fontSize: '0.9em' }}>Giá tiền : </span>
+                            <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
+                            <span style={{ fontSize: '0.9em' }}>/ 10 {stateCurr?.selectedCategory} </span>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  </Card>
+                  <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
+                    <div style={{ padding: '5px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
+                        <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>
+                        <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: {numberWithCommas(detailService?.max)} {stateCurr?.selectedCategory}</p>
+                      </div>
+                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '4px 0px' }}>{detailService?.description}</p>
+                      {
+                        detailService?.enabled ? (
+                          <span className="label" style={badgeGreenStyle}>
+                            <Badge color='green' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                            Đang hoạt động
+                          </span>
+                        ) : (
+                          <span className="label" style={badgeRedStyle}>
+                            <Badge color='red' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                            Đang tắt
+                          </span>
+                        )
+                      }
+                      <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                      <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                      {
+                        detailService?.priority ? (
+                          <span className="label" style={badgeOrangeStyle}>
+                            <FaLocationArrow color='orange' fontSize={8} style={{  margin: '0 5px 0 0', padding: 0 }}/>
+                            Ưu tiên
+                          </span>
+                        ) : <></>
+                      }
+                    </div>
+                  </Card>
+                  {
+                    (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0)  ? (
+                      <Card
+                        size="small"
+                        style={{ 
+                          border: '3px solid #dddddd7a',
+                          backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
+                          color: 'black'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center'}}>
+                          <FaMoneyBillWave color="green" style={{ fontSize: '19px', marginLeft: '6px', }}/>
+                          <span style={{ fontWeight: '800', color: '#00a10e', padding: '0px 10px', fontSize: '15px'  }}>
+                            {numberWithCommas((stateCurr?.amountChange ?? 1)*(detailService?.price_per_10 ?? 1)/10 || 0)} {VIETNAMES_CURRENCY}
+                          </span>
+                        </div>
+                      </Card>
+                    ) : null
+                  }
+                </Col>
+              ) : (
+                <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
+                  <div className="text-center">
+                    <Image src={EmptyBackground}  preview={false} />
+                  </div>
+                </Col>
+              )
+            }
           </Row>
         </Form>
       </Modal>

@@ -138,8 +138,7 @@ function AddService({ serviceState, setState }) {
             <Col sm={8}>
               <Form.Item
                 name="rest_api"
-                label="Rest API"
-                style={{ marginBottom: '7px' }}
+                label=""
               >
                 <Switch checkedChildren="Rest API" unCheckedChildren="No Rest API" checked={state?.rest_api} onChange={(check) => {
                   setStateModal({

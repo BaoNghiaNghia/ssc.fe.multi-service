@@ -1536,6 +1536,11 @@ html[dir='rtl'] .sDash_upload-basic .sDash_upload-browse{
   padding: 0 12px 0 0;
 }
 
+.ant-form-item-control-input {
+  min-height: min-content !important;
+  margin-bottom: 12px;
+}
+
 /* Leaflet COntainer */
 
 .leaflet-container {

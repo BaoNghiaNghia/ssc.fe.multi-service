@@ -53,6 +53,10 @@ function* fetchWarrantyCommentOrderFunc(params) {
       yield put(
         actions.fetchWarrantyCommentOrderSuccess(response?.data?.data)
       );
+
+      if (response?.data?.data?.items === null) {
+        toast.info('Không có thông tin đơn bảo hành');
+      }
     }
 
   } catch (error) {
