@@ -26,6 +26,7 @@ const initialState = {
   accountOnComputer: {},
   statByStatusOrder: {},
   runningComputer: {},
+  totalOrder: 0,
   runningUserOrder: {},
   taskOfTool: {},
   userPoint: {},
@@ -110,6 +111,10 @@ const {
   COMMENT_STATISTIC_USER_POINT_ERR,
   COMMENT_STATISTIC_USER_POINT_SUCCESS,
 
+  COMMENT_STATISTIC_TOTAL_ORDER_BEGIN,
+  COMMENT_STATISTIC_TOTAL_ORDER_ERR,
+  COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS,
+
 
 
   LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
@@ -168,6 +173,10 @@ const {
   LIKE_STATISTIC_USER_POINT_ERR,
   LIKE_STATISTIC_USER_POINT_SUCCESS,
 
+  LIKE_STATISTIC_TOTAL_ORDER_BEGIN,
+  LIKE_STATISTIC_TOTAL_ORDER_ERR,
+  LIKE_STATISTIC_TOTAL_ORDER_SUCCESS,
+
 
   VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN,
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR,
@@ -178,6 +187,26 @@ const {
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case COMMENT_STATISTIC_TOTAL_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        totalOrder: data,
+      };
+
+    case COMMENT_STATISTIC_TOTAL_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case COMMENT_STATISTIC_USER_POINT_BEGIN:
       return {
         ...state,
@@ -734,6 +763,27 @@ const ReportsReducer = (state = initialState, action) => {
         loading: false,
         error: err
       };
+
+    case LIKE_STATISTIC_TOTAL_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LIKE_STATISTIC_TOTAL_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        totalOrder: data,
+      };
+
+    case LIKE_STATISTIC_TOTAL_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
 
   
 

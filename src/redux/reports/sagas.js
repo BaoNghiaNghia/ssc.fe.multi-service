@@ -17,6 +17,7 @@ import {
   commentStatisticTaskOfToolAPI,
   commentStatisticRunningUserOrderAPI,
   commentStatisticUserPointAPI,
+  commentStatisticTotalOrderAPI,
 
   likeStatisticCommentByOrderReportAPI,
   likeStatisticTaskSuccessInMinutesAPI,
@@ -32,6 +33,7 @@ import {
   likeStatisticRunningUserOrderAPI,
   likeStatisticUserPointAPI,
   likeStatisticTaskDurationInMinutesAPI,
+  likeStatisticTotalOrderAPI,
 
   validateYoutubeLinkCommentVideoAPI,
   validateYoutubeLinkLikeVideoAPI,
@@ -312,6 +314,22 @@ function* commentStatisticUserPointFunc(params) {
   } catch (err) {
     yield put(
       actions.commentStatisticUserPointErr({ error: err || 'Statistic user point failed' })
+    )
+  }
+}
+
+function* commentStatisticTotalOrderFunc(params) {
+  try {
+    const response = yield call(commentStatisticTotalOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentStatisticTotalOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticTotalOrderErr({ error: err || 'Statistic total order failed' })
     )
   }
 }
@@ -597,6 +615,21 @@ function* likeStatisticUserPointFunc(params) {
   }
 }
 
+function* likeStatisticTotalOrderFunc(params) {
+  try {
+    const response = yield call(likeStatisticTotalOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.likeStatisticTotalOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.likeStatisticTotalOrderErr({ error: err || 'Statistic total order failed' })
+    )
+  }
+}
 
 
 
@@ -650,6 +683,7 @@ function* changeServiceTypeFunc(params) {
       yield put(actions.commentStatisticTaskOfToolBegin(initialFilter));
       yield put(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.commentStatisticUserPointBegin(initialFilter));
+      yield put(actions.commentStatisticTotalOrderBegin(initialFilter));
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
@@ -668,6 +702,7 @@ function* changeServiceTypeFunc(params) {
       yield put(actions.likeStatisticTaskOfToolBegin(initialFilter));
       yield put(actions.likeStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.likeStatisticUserPointBegin(initialFilter));
+      yield put(actions.likeStatisticTotalOrderBegin(initialFilter));
     }
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
       console.log('--- THAY ĐỔI STATISTIC SUBSCRIBE ---')
@@ -725,6 +760,7 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.commentStatisticTaskOfToolBegin(initialFilter));
       yield put(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.commentStatisticUserPointBegin(initialFilter));
+      yield put(actions.commentStatisticTotalOrderBegin(initialFilter));
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
@@ -743,6 +779,7 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.likeStatisticTaskOfToolBegin(initialFilter));
       yield put(actions.likeStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.likeStatisticUserPointBegin(initialFilter));
+      yield put(actions.likeStatisticTotalOrderBegin(initialFilter));
     }
   } catch (err) {
     yield put(
@@ -823,6 +860,12 @@ export function* commentStatisticUserPointWatcherSaga() {
   yield takeLatest(actions.COMMENT_STATISTIC_USER_POINT_BEGIN, commentStatisticUserPointFunc);
 }
 
+export function* commentStatisticTotalOrderWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_TOTAL_ORDER_BEGIN, commentStatisticTotalOrderFunc);
+}
+
+
+
 // LIKE
 export function* likeStatisticCommentByDayWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_LIKE_BY_DAY_BEGIN, likeStatisticCommentByDayFunc);
@@ -878,6 +921,10 @@ export function* likeStatisticRunningUserOrderWatcherSaga() {
 
 export function* likeStatisticUserPointWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_USER_POINT_BEGIN, likeStatisticUserPointFunc);
+}
+
+export function* likeStatisticTotalOrderWatcherSaga() {
+  yield takeLatest(actions.LIKE_STATISTIC_TOTAL_ORDER_BEGIN, likeStatisticTotalOrderFunc);
 }
 
 // Validation youtube link

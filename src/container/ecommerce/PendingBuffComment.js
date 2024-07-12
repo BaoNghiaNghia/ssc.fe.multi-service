@@ -41,7 +41,6 @@ const columns = [
     title: 'Người dùng',
     dataIndex: 'user_id',
     key: 'user_id',
-    fixed: 'left',
   },
   {
     title: 'Video',
@@ -114,18 +113,10 @@ const columns = [
 ];
 
 function PendingBuffComment() {
-  const tableBodyRef = useRef(null);
-  const isScrolling = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-
-  
-
   const dispatch = useDispatch();
-  const { searchData,  listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
+  const { listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
     return {
       isLoading: state?.buffComment?.loading,
-      searchData: state.headerSearchData,
       listOrderComment: state?.buffComment?.listOrderComment,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
@@ -173,48 +164,19 @@ function PendingBuffComment() {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
-  useEffect(() => {
-    const tableBody = document.querySelector('.ant-table-tbody');
+  const tableRef = useRef(null);
 
-    if (tableBody) {
-      tableBodyRef.current = tableBody;
-
-      const handleMouseDown = (e) => {
-        if (e.button === 2) { // Right mouse button
-          isScrolling.current = true;
-          startX.current = e.pageX - tableBody.offsetLeft;
-          scrollLeft.current = tableBody.scrollLeft;
-          tableBody.style.cursor = 'grabbing';
-        }
-      };
-
-      const handleMouseMove = (e) => {
-        if (!isScrolling.current) return;
-        e.preventDefault();
-        const x = e.pageX - tableBody.offsetLeft;
-        const walk = (x - startX.current) * 2; // Scroll-fast
-        tableBody.scrollLeft = scrollLeft.current - walk;
-      };
-
-      const handleMouseUp = () => {
-        isScrolling.current = false;
-        tableBody.style.cursor = 'default';
-      };
-
-      tableBody.addEventListener('mousedown', handleMouseDown);
-      tableBody.addEventListener('mousemove', handleMouseMove);
-      tableBody.addEventListener('mouseup', handleMouseUp);
-      tableBody.addEventListener('mouseleave', handleMouseUp);
-
-      return () => {
-        tableBody.removeEventListener('mousedown', handleMouseDown);
-        tableBody.removeEventListener('mousemove', handleMouseMove);
-        tableBody.removeEventListener('mouseup', handleMouseUp);
-        tableBody.removeEventListener('mouseleave', handleMouseUp);
-      };
+  const scrollToStart = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollLeft = 0;
     }
-  }, []);
+  };
 
+  const scrollToEnd = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollLeft = tableRef.current.scrollWidth;
+    }
+  };
 
   const handleSearch = (searchText) => {
     if (!searchText) {
@@ -848,10 +810,18 @@ function PendingBuffComment() {
               </TopToolBox>
             </Col>
           </Row>
+          <Row gutter={16} style={{ marginBottom: 16 }}>
+            <Col>
+              <Button onClick={scrollToStart}>Scroll to Start</Button>
+            </Col>
+            <Col>
+              <Button onClick={scrollToEnd}>Scroll to End</Button>
+            </Col>
+          </Row>
           <Row gutter={15}>
             <Col md={24}>
               <TableWrapper
-                className="table-order table-responsive"
+                className="table-order table-responsive" ref={tableRef} style={{ overflowX: 'auto' }}
               >
                 <Table
                   loading={isLoading}

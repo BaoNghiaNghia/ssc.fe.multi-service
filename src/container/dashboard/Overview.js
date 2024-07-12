@@ -48,7 +48,8 @@ function Overview() {
     taskOfTool,
     accountOnComputer,
     commentByDay,
-    performance
+    performance,
+    totalOrder
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
@@ -63,6 +64,7 @@ function Overview() {
       orderAmount: state?.reports?.orderAmount,
       accountOnComputer: state?.reports?.accountOnComputer,
       commentByDay: state?.reports?.commentByDay,
+      totalOrder: state?.reports?.totalOrder,
     };
   });
 
@@ -89,6 +91,7 @@ function Overview() {
       dispatch(actions.commentStatisticTaskOfToolBegin(initialFilter));
       dispatch(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       dispatch(actions.commentStatisticUserPointBegin(initialFilter));
+      dispatch(actions.commentStatisticTotalOrderBegin(initialFilter));
     }
   }, [dispatch]);
 
@@ -389,7 +392,7 @@ function Overview() {
                     <span>Tổng Order <br/> hôm nay</span>
                     <TbBrandStackoverflow fontSize={18} style={{ marginTop: '3px' }}/>
                   </span>
-                  <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
+                  <Heading as="h4">{numberWithCommas(Math.abs(Number(totalOrder)) || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>

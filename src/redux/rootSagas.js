@@ -39,7 +39,9 @@ import {
     likeStatisticRunningComputerWatcherSaga,
     likeStatisticTaskOfToolWatcherSaga,
     likeStatisticRunningUserOrderWatcherSaga,
-    likeStatisticUserPointWatcherSaga
+    likeStatisticUserPointWatcherSaga,
+    commentStatisticTotalOrderWatcherSaga,
+    likeStatisticTotalOrderWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -198,6 +200,7 @@ export default function* rootSaga() {
         commentStatisticTaskOfToolWatcherSaga(),
         commentStatisticRunningUserOrderWatcherSaga(),
         commentStatisticUserPointWatcherSaga(),
+        commentStatisticTotalOrderWatcherSaga(),
 
         validateYoutubeVideoLinkWatcherSaga(),
 
@@ -237,5 +240,7 @@ export default function* rootSaga() {
         likeStatisticTaskOfToolWatcherSaga(),
         likeStatisticRunningUserOrderWatcherSaga(),
         likeStatisticUserPointWatcherSaga(),
+        likeStatisticTotalOrderWatcherSaga()
+
     ]);
 }

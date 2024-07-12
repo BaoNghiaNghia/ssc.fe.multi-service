@@ -70,6 +70,10 @@ const actions = {
   COMMENT_STATISTIC_USER_POINT_SUCCESS: 'COMMENT_STATISTIC_USER_POINT_SUCCESS',
   COMMENT_STATISTIC_USER_POINT_ERR: 'COMMENT_STATISTIC_USER_POINT_ERR',
 
+  COMMENT_STATISTIC_TOTAL_ORDER_BEGIN: 'COMMENT_STATISTIC_TOTAL_ORDER_BEGIN',
+  COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS: 'COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS',
+  COMMENT_STATISTIC_TOTAL_ORDER_ERR: 'COMMENT_STATISTIC_TOTAL_ORDER_ERR',
+
   // LIKE
   LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN',
   LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
@@ -127,12 +131,37 @@ const actions = {
   LIKE_STATISTIC_USER_POINT_SUCCESS: 'LIKE_STATISTIC_USER_POINT_SUCCESS',
   LIKE_STATISTIC_USER_POINT_ERR: 'LIKE_STATISTIC_USER_POINT_ERR',
 
+  LIKE_STATISTIC_TOTAL_ORDER_BEGIN: 'LIKE_STATISTIC_TOTAL_ORDER_BEGIN',
+  LIKE_STATISTIC_TOTAL_ORDER_SUCCESS: 'LIKE_STATISTIC_TOTAL_ORDER_SUCCESS',
+  LIKE_STATISTIC_TOTAL_ORDER_ERR: 'LIKE_STATISTIC_TOTAL_ORDER_ERR',
+
   // VALIDATE
 
   VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN: 'VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN',
   VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS: 'VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS',
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR: 'VALIDATE_YOUTUBE_VIDEO_LINK_ERR',
   
+
+  commentStatisticTotalOrderBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_TOTAL_ORDER_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticTotalOrderSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticTotalOrderErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_TOTAL_ORDER_ERR,
+      err,
+    };
+  },
 
   commentStatisticUserPointBegin: (payload) => {
     return {
@@ -711,7 +740,7 @@ const actions = {
 
   likeStatisticCommentByOrderReportSuccess: (data) => {
     return {
-      type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
+      type: actions.likeSTATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
       data,
     };
   },
@@ -719,6 +748,27 @@ const actions = {
   likeStatisticCommentByOrderReportErr: (err) => {
     return {
       type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
+      err,
+    };
+  },
+
+  likeStatisticTotalOrderBegin: (payload) => {
+    return {
+      type: actions.LIKE_STATISTIC_TOTAL_ORDER_BEGIN,
+      payload
+    };
+  },
+
+  likeStatisticTotalOrderSuccess: (data) => {
+    return {
+      type: actions.LIKE_STATISTIC_TOTAL_ORDER_SUCCESS,
+      data,
+    };
+  },
+
+  likeStatisticTotalOrderErr: (err) => {
+    return {
+      type: actions.LIKE_STATISTIC_TOTAL_ORDER_ERR,
       err,
     };
   },
