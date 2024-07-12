@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import { Spin } from 'antd';
 import PropTypes from 'prop-types';
@@ -8,9 +8,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import moment from 'moment';
 import { RevenueWrapper } from '../../style';
-import { ChartjsAreaChart, ChartjsLineChart } from '../../../../components/charts/chartjs';
-import { customTooltips, chartLinearGradient } from '../../../../components/utilities/utilities';
-import { performanceFilterData, performanceGetData } from '../../../../redux/chartContent/actionCreator';
+import { performanceGetData } from '../../../../redux/chartContent/actionCreator';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 
 const moreContent = (
@@ -134,11 +132,6 @@ function TaskSuccessEveryMinutes({ title }) {
           threshold: null
       }
   },
-    // accessibility: {
-    //   screenReaderSection: {
-    //       beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
-    //   }
-    // },
   accessibility: {
     screenReaderSection: {
         beforeChartFormat: '<{headingTagName}>' +
@@ -157,27 +150,6 @@ function TaskSuccessEveryMinutes({ title }) {
     <RevenueWrapper>
       {performanceState !== null && (
         <Cards
-          // isbutton={
-          //   <div className="card-nav">
-          //     <ul>
-          //       <li className={state.revenue === 'week' ? 'active' : 'deactivate'}>
-          //         <Link onClick={() => handleActiveChangeRevenue('week')} to="#">
-          //           Week
-          //         </Link>
-          //       </li>
-          //       <li className={state.revenue === 'month' ? 'active' : 'deactivate'}>
-          //         <Link onClick={() => handleActiveChangeRevenue('month')} to="#">
-          //           Month
-          //         </Link>
-          //       </li>
-          //       <li className={state.revenue === 'year' ? 'active' : 'deactivate'}>
-          //         <Link onClick={() => handleActiveChangeRevenue('year')} to="#">
-          //           Year
-          //         </Link>
-          //       </li>
-          //     </ul>
-          //   </div>
-          // }
           more={moreContent}
           title={
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -195,23 +167,6 @@ function TaskSuccessEveryMinutes({ title }) {
             </div>
           ) : (
             <div className="performance-lineChart">
-              {/* {performanceDatasets &&
-                performanceDatasets.map((item, key) => {
-                  return (
-                    <li key={key + 1} className="custom-label">
-                      <strong className={item.amountClass}>{item.amount}</strong>
-                      <div>
-                        <span
-                          style={{
-                            backgroundColor: item.borderColor,
-                          }}
-                        />
-                        {item.label}
-                      </div>
-                    </li>
-                  )
-                })} */}
-
               <HighchartsReact highcharts={Highcharts} options={optionTaskSuccess} />
             </div>
           )}
