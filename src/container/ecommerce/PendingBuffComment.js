@@ -41,12 +41,14 @@ const columns = [
     title: 'Người dùng',
     dataIndex: 'user_id',
     key: 'user_id',
+    fixed: 'left',
   },
   {
     title: 'Video',
     dataIndex: 'video_id',
     key: 'video_id',
     width: 150,
+    fixed: 'left',
   },
   {
     title: 'Order ID',
@@ -706,10 +708,10 @@ function PendingBuffComment() {
   };
 
   const onSelectChange = (selectedRowKey) => {
-    if (selectedRowKey.length > 0) {
+    if (selectedRowKey?.length > 0) {
       const matchedOrder = listOrderComment?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
       if (matchedOrder?.length > 0) {
-        const matchState = ORDER_YOUTUBE_STATUS.find(item => item?.value === matchedOrder[0]?.status)?.name;
+        const matchState = ORDER_YOUTUBE_STATUS?.find(item => item?.value === matchedOrder[0]?.status)?.name;
         const checkUpdateOrderStatus = [
           'OrderStatusCancelNoRefund',
           'OrderStatusCancelRefund',
@@ -751,7 +753,7 @@ function PendingBuffComment() {
         setState={setState}
       />
       <UpdateOrderComment
-        state={state}
+        orderState={state}
         setState={setState}
       />
       <CancelAndRefundOrderComment

@@ -126,7 +126,7 @@ function Overview() {
     alignItems: 'center',
     backgroundColor: '#e5e5e585',
     borderRadius: '5px',
-    fontSize: '15px'
+    fontSize: '14px'
   };
 
   const moreContent = (

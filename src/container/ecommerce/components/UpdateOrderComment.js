@@ -4,20 +4,15 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
-import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
-import userActions from '../../../redux/member/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import commentActions from '../../../redux/buffComment/actions';
 import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 
 const { Option } = Select;
 
-function UpdateOrderComment({ setState, state }) {
+function UpdateOrderComment({ setState, orderState }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
-
   const { postLoading, detailOrderComment, userList, listService } = useSelector(state => {
     return {
       postLoading: state?.buffComment?.loading,
@@ -62,7 +57,13 @@ function UpdateOrderComment({ setState, state }) {
             status: values?.status
           }));
 
-          setState({ isUpdateCommentOrderModal: false });
+          console.log('----- order state ----', orderState)
+
+          setState({ 
+            ...orderState,
+            isUpdateCommentOrderModal: false,
+            statusNumber: 'all'
+          });
 
           formUpdateService.resetFields();
         })
@@ -71,7 +72,8 @@ function UpdateOrderComment({ setState, state }) {
         });
     } catch (err) {
       console.log(err);
-      setState({ isUpdateCommentOrderModal: false });
+      setState({
+        isUpdateCommentOrderModal: false });
       formUpdateService.resetFields();
     }
   };
@@ -80,7 +82,7 @@ function UpdateOrderComment({ setState, state }) {
     <>
       <Modal
         width='600px'
-        open={state?.isUpdateCommentOrderModal}
+        open={orderState?.isUpdateCommentOrderModal}
         centered
         title={
           <>
@@ -107,7 +109,7 @@ function UpdateOrderComment({ setState, state }) {
         <Form name="add_service" layout="vertical" form={formUpdateService}>
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="max_thread" initialValue={ state?.max_threads } label="Số luồng tối đa" rules={[{
+              <Form.Item name="max_thread" initialValue={ orderState?.max_threads } label="Số luồng tối đa" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -167,7 +169,7 @@ function UpdateOrderComment({ setState, state }) {
 
 UpdateOrderComment.propTypes = {
   setState: PropTypes.func,
-  state: PropTypes.object
+  orderState: PropTypes.object
 };
 
 export default UpdateOrderComment;
