@@ -296,7 +296,7 @@ function PendingBuffComment() {
             return {
               color: 'green',
               backgroundColor: '#ffdfa5',
-              blurColor: 'black'
+              blurColor: '#f0ff10'
             }
           case (performance < 50 && performance > 30):
             
