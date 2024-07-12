@@ -12,7 +12,7 @@ const ChartSubscribePoint = ({
         chart: {
             height: 250,
             width: '100%',
-            type: 'line',
+            type: 'area',
             dropShadow: {
                 enabled: true,
                 color: '#000',
@@ -64,6 +64,13 @@ const ChartSubscribePoint = ({
         xaxis: {
             categories: chartData?.wave_date || [],
         },
+        fill: {
+            gradient: {
+              enabled: true,
+              opacityFrom: 0.65,
+              opacityTo: 0
+            }
+          },
         yaxis: {
             title: {
                 text: 'Tỉ lệ / Tổng Sub'
@@ -119,7 +126,7 @@ const ChartSubscribePoint = ({
             spinner
             text='Đang cập nhật...'
         >
-            <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="line" height={180}/>
+            <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="area" height={180}/>
         </LoadingOverlay>
     )
 }

@@ -12,7 +12,7 @@ const ChartYoutubeAnalyse = ({
         chart: {
             height: 250,
             width: '100%',
-            type: 'line',
+            type: 'area',
             dropShadow: {
                 enabled: true,
                 color: '#000',
@@ -74,6 +74,13 @@ const ChartYoutubeAnalyse = ({
                 }
             },
         },
+        fill: {
+            gradient: {
+              enabled: true,
+              opacityFrom: 0.65,
+              opacityTo: 0
+            }
+          },
         legend: {
             position: 'top',
             horizontalAlign: 'right',
@@ -113,13 +120,33 @@ const ChartYoutubeAnalyse = ({
         series: chartData?.wave_timeline || [],
     }
 
+    const loadingOverlayStyles = {
+        overlay: {
+            background: 'linear-gradient(to right, #005473, #ff8800)', // Adjust gradient colors as needed
+            zIndex: 9999, // Ensure overlay is on top of the chart
+        },
+        spinner: {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+        },
+        text: {
+            color: 'white', // Adjust text color for better readability against the gradient
+            fontFamily: 'Poppins, sans-serif',
+            fontSize: '16px',
+            fontWeight: 'bold',
+        }
+    };
+
     return (
         <LoadingOverlay
             active={loadingChart}
             spinner
             text='Đang cập nhật...'
+            styles={loadingOverlayStyles}
         >
-            <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="line" height={180}/>
+            <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="area" height={180}/>
         </LoadingOverlay>
     )
 }
@@ -128,6 +155,5 @@ ChartYoutubeAnalyse.propTypes = {
     chartData: PropTypes.object,
     loadingChart: PropTypes.bool
 };
-  
 
 export default ChartYoutubeAnalyse;
