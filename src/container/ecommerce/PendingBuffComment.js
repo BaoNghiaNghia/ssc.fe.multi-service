@@ -250,7 +250,7 @@ function PendingBuffComment() {
               backgroundColor: 'green',
               blurColor: 'darkgreen'
             }
-          case (performance > 80 && performance < 100):
+          case (performance >= 80 && performance < 100):
             return {
               color: 'darkgreen',
               backgroundColor: '#84d984',
@@ -262,7 +262,7 @@ function PendingBuffComment() {
               backgroundColor: '#ffdfa5',
               blurColor: '#f0ff10'
             }
-          case (performance < 50 && performance > 30):
+          case (performance <= 50 && performance >= 30):
             
             return {
               color: 'white',

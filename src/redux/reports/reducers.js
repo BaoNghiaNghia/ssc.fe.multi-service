@@ -203,6 +203,7 @@ const ReportsReducer = (state = initialState, action) => {
     case COMMENT_STATISTIC_TOTAL_ORDER_ERR:
       return {
         ...state,
+        totalOrder: 0,
         loading: false,
         error: err
       };

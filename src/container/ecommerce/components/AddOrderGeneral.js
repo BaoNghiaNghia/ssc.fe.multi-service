@@ -18,7 +18,7 @@ import actionsSubscribe from '../../../redux/buffSubscribe/actions';
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI } from '../../../config/apiFactory/Reports';
 
@@ -502,7 +502,7 @@ function AddOrderGeneral() {
                       <Select 
                         allowClear
                         showSearch
-                        size='middle'
+                        size='small'
                         className='full-height-dropdown'
                         style={{ width: '100%' }}
                         placeholder="Tìm theo ID hoặc tên của dịch vụ"
@@ -525,23 +525,30 @@ function AddOrderGeneral() {
                   </Col>
                 </Row>
                 <Row gutter="10">
-                  <Col sm={12}>
+                  <Col sm={8}>
                     <Form.Item
                       name="platform"
+                      initialValue='youtube'
                       label="Nền tảng"
                       style={{ marginBottom: '0px' }}
                     >
-                      <Input 
-                        value={
-                          <div style={{ display: 'inline-flex' }}>
-                            <FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} />
-                            <span style={{ fontSize: '16px', fontWeight: '700' }}>Youtube</span>
+                      <Select
+                        defaultActiveFirstOption
+                        size='small'
+                        className='full-height-dropdown'
+                        style={{ width: '100%' }}
+                        placeholder="Tìm theo ID hoặc tên của dịch vụ"
+                      >
+                        <Option key={1} value='youtube'>
+                          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                            <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+                            <span style={{ fontSize: '14px', fontWeight: '500' }}>Youtube</span>
                           </div>
-                        }
-                      />
+                        </Option>
+                      </Select>
                     </Form.Item>
                   </Col>
-                  <Col sm={12}>
+                  <Col sm={16}>
                     <Form.Item
                       name="category"
                       label="Phân loại "
@@ -550,15 +557,24 @@ function AddOrderGeneral() {
                       <Select 
                         allowClear
                         showSearch
-                        size='middle'
+                        size='small'
                         className='full-height-dropdown'
                         style={{ width: '100%' }}
                         placeholder="Tìm theo ID của dịch vụ"
                       >
                         {
-                          listService?.map((itemService, index) => {
+                          LIST_SERVICE_SUPPLY?.map((itemService, index) => {
                             return <>
-
+                                <Option key={index} value={itemService?.category}>
+                                  <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                                    <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+                                    <span style={{ fontSize: '12px', fontWeight: '500', marginRight: '7px' }}>{itemService?.platform}</span>
+                                    <span style={{ padding: '0 5px' }}>-</span>
+                                    <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.category}</span>
+                                    <span style={{ padding: '0 5px' }}>|</span>
+                                    <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.type}</span>
+                                  </div>
+                                </Option>
                             </>;
                           })
                         }
@@ -633,14 +649,14 @@ function AddOrderGeneral() {
                                               itemService?.geo ? (
                                                 <Tooltip title={itemService?.geo?.toUpperCase()}>
                                                   <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                                    <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                                                    <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="15px" height="15px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
                                                   </span>
                                                 </Tooltip>
                                               ) : null
                                             }
-                                            <span style={{ fontWeight: 'bold', marginRight: '7px' }}>{itemService?.service_id}</span>
+                                            <span style={{ fontWeight: 'bold', marginRight: '3px' }}>{itemService?.service_id}</span>
                                             <span style={{ padding: '0 5px' }}>-</span>
-                                            <span style={{ fontWeight: 500 }}>{itemService?.name}</span>
+                                            <span style={{ fontWeight: 500 }}>{ `${itemService?.name?.substring(0, 17)  }...` }</span>
                                             <span style={{ padding: '0 5px' }}>-</span>
                                             <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
                                           </div>
