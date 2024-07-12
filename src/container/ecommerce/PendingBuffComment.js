@@ -111,10 +111,12 @@ const columns = [
 ];
 
 function PendingBuffComment() {
-  const tableRef = useRef();
-  const isDragging = useRef(false);
+  const tableBodyRef = useRef(null);
+  const isScrolling = useRef(false);
   const startX = useRef(0);
   const scrollLeft = useRef(0);
+
+  
 
   const dispatch = useDispatch();
   const { searchData,  listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
@@ -169,40 +171,47 @@ function PendingBuffComment() {
   }, [dispatch]);
 
   useEffect(() => {
-    const table = tableRef.current;
+    const tableBody = document.querySelector('.ant-table-tbody');
 
-    const onMouseDown = (e) => {
-      if (e.button === 2) { // Right mouse button
-        isDragging.current = true;
-        startX.current = e.pageX - table.offsetLeft;
-        scrollLeft.current = table.scrollLeft;
-      }
-    };
+    if (tableBody) {
+      tableBodyRef.current = tableBody;
 
-    const onMouseMove = (e) => {
-      if (!isDragging.current) return;
-      e.preventDefault();
-      const x = e.pageX - table.offsetLeft;
-      const walk = (x - startX.current) * 2; // Scroll speed
-      table.scrollLeft = scrollLeft.current - walk;
-    };
+      const handleMouseDown = (e) => {
+        if (e.button === 2) { // Right mouse button
+          isScrolling.current = true;
+          startX.current = e.pageX - tableBody.offsetLeft;
+          scrollLeft.current = tableBody.scrollLeft;
+          tableBody.style.cursor = 'grabbing';
+        }
+      };
 
-    const onMouseUp = () => {
-      isDragging.current = false;
-    };
+      const handleMouseMove = (e) => {
+        if (!isScrolling.current) return;
+        e.preventDefault();
+        const x = e.pageX - tableBody.offsetLeft;
+        const walk = (x - startX.current) * 2; // Scroll-fast
+        tableBody.scrollLeft = scrollLeft.current - walk;
+      };
 
-    table.addEventListener('mousedown', onMouseDown);
-    table.addEventListener('mousemove', onMouseMove);
-    table.addEventListener('mouseup', onMouseUp);
-    table.addEventListener('mouseleave', onMouseUp);
+      const handleMouseUp = () => {
+        isScrolling.current = false;
+        tableBody.style.cursor = 'default';
+      };
 
-    return () => {
-      table.removeEventListener('mousedown', onMouseDown);
-      table.removeEventListener('mousemove', onMouseMove);
-      table.removeEventListener('mouseup', onMouseUp);
-      table.removeEventListener('mouseleave', onMouseUp);
-    };
+      tableBody.addEventListener('mousedown', handleMouseDown);
+      tableBody.addEventListener('mousemove', handleMouseMove);
+      tableBody.addEventListener('mouseup', handleMouseUp);
+      tableBody.addEventListener('mouseleave', handleMouseUp);
+
+      return () => {
+        tableBody.removeEventListener('mousedown', handleMouseDown);
+        tableBody.removeEventListener('mousemove', handleMouseMove);
+        tableBody.removeEventListener('mouseup', handleMouseUp);
+        tableBody.removeEventListener('mouseleave', handleMouseUp);
+      };
+    }
   }, []);
+
 
   const handleSearch = (searchText) => {
     if (!searchText) {
@@ -843,8 +852,6 @@ function PendingBuffComment() {
             <Col md={24}>
               <TableWrapper
                 className="table-order table-responsive"
-                ref={tableRef}
-                onContextMenu={(e) => e.preventDefault()} // Prevent the default context menu from appearing
               >
                 <Table
                   loading={isLoading}
@@ -860,15 +867,15 @@ function PendingBuffComment() {
                     showSizeChanger: true,
                     pageSizeOptions: DEFAULT_PAGESIZE,
                     onChange(page, pageSize) {
-                        setCurrentPage(page);
-                        setLimitPage(pageSize)
+                      setCurrentPage(page);
+                      setLimitPage(pageSize);
                     },
                     position: ['bottomCenter'],
                     responsive: true,
                     showTotal(total, range) {
-                        return <>
-                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> order</p>
-                        </>
+                      return <>
+                        <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> order</p>
+                      </>;
                     },
                     totalBoundaryShowSizeChanger: 100,
                     size: "small"

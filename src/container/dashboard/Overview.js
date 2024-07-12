@@ -45,7 +45,9 @@ function Overview() {
     accountStatus,
     orderAmount,
     taskOfTool,
-    accountOnComputer
+    accountOnComputer,
+    commentByDay,
+    performance
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
@@ -56,8 +58,10 @@ function Overview() {
       computerThread: state?.reports?.computerThread,
       taskOfTool: state?.reports?.taskOfTool,
       accountStatus: state?.reports?.accountStatus,
+      performance: state?.reports?.performance,
       orderAmount: state?.reports?.orderAmount,
-      accountOnComputer: state?.reports?.accountOnComputer
+      accountOnComputer: state?.reports?.accountOnComputer,
+      commentByDay: state?.reports?.commentByDay,
     };
   });
 
@@ -94,7 +98,6 @@ function Overview() {
   });
 
   const handleChange = (value) => {
-    console.log('---- value change type ----', value);
     dispatch(actions.changeServiceTypeBegin({
       value,
       from: fromDate,
@@ -320,6 +323,30 @@ function Overview() {
   const statisticMultipleData = () => {
     return (
       <Row gutter={10}>
+        <Col xxl={24} md={24} sm={24} xs={24} style={{ display: 'flex' }}>
+          <Cards headless gradient='64deg, white, white' >
+            <EChartCard>
+              <div className="card-chunk">
+                <CardBarChart2>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                    <div>Tổng task</div>
+                    <div>
+                      <Tooltip title="Thất bại">
+                        <span className="mr-3" style={{color: 'orangered', ...styleMail}}>{numberWithCommas(taskOfTool[-1]) || 0}</span>
+                      </Tooltip>
+                      <Tooltip title="Đang chạy">
+                        <span className="mr-3" style={{color: 'orange', ...styleMail}}>{numberWithCommas(taskOfTool[0]) || 0}</span>
+                      </Tooltip>
+                      <Tooltip title="Thành công">
+                        <span className="mr-3" style={{color: 'green', ...styleMail}}>{numberWithCommas(taskOfTool[1]) || 0}</span>
+                      </Tooltip>
+                    </div>
+                  </span>
+                </CardBarChart2>
+              </div>
+            </EChartCard>
+          </Cards>
+        </Col>
         <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
           <Cards headless gradient='64deg, white, white'>
             <EChartCard>
@@ -329,7 +356,7 @@ function Overview() {
                     <span>Tỉ lệ {typeService}</span>
                     <TbSquareRoundedPercentage fontSize={17}/>
                   </span>
-                  <Heading as="h4">{Math.round(ratioSubSvg || 0)} %</Heading>
+                  <Heading as="h4">{numberWithCommas(Math.round(findObjectByValue(performance, 'is_current', true)?.avg_performance) || 0)} %</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -344,7 +371,9 @@ function Overview() {
                     <span>Quest (Lỗi/Tổng)</span>
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
-                  <Heading as="h4">0/0</Heading>
+                  <Heading as="h4">
+                    {numberWithCommas(taskOfTool[-1])}/{numberWithCommas(Object.values(taskOfTool).reduce((accumulator, currentValue) => accumulator + currentValue, 0))}
+                  </Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -374,7 +403,7 @@ function Overview() {
                     <span>Tổng {typeService} <br/> hôm nay</span>
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
-                  <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.total_sub)) || 0)}</Heading>
+                  <Heading as="h4">{numberWithCommas(Math.abs(Number(findObjectByValue(commentByDay, 'is_current', true)?.comments || 0)) || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
@@ -414,30 +443,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={24} md={24} sm={24} xs={24} style={{ display: 'flex' }}>
-          <Cards headless gradient='64deg, white, white' >
-            <EChartCard>
-              <div className="card-chunk">
-                <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                    <div>Tổng task</div>
-                    <div>
-                      <Tooltip title="Thất bại">
-                        <span className="mr-3" style={{color: 'orangered', ...styleMail}}>{numberWithCommas(taskOfTool[-1]) || 0}</span>
-                      </Tooltip>
-                      <Tooltip title="Đang chạy">
-                        <span className="mr-3" style={{color: 'orange', ...styleMail}}>{numberWithCommas(taskOfTool[0]) || 0}</span>
-                      </Tooltip>
-                      <Tooltip title="Thành công">
-                        <span className="mr-3" style={{color: 'green', ...styleMail}}>{numberWithCommas(taskOfTool[1]) || 0}</span>
-                      </Tooltip>
-                    </div>
-                  </span>
-                </CardBarChart2>
-              </div>
-            </EChartCard>
-          </Cards>
-        </Col>
+        
       </Row>
     )
   }

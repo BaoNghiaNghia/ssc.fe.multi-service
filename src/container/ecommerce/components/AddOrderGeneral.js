@@ -718,7 +718,7 @@ function AddOrderGeneral() {
                             <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
-                            <span style={{ fontSize: '0.9em' }}>Giá tiền : </span>
+                            <span style={{ fontSize: '0.9em' }}>Giá </span>
                             <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
                             <span style={{ fontSize: '0.9em' }}>/ 10 {stateCurr?.selectedCategory} </span>
                           </div>
