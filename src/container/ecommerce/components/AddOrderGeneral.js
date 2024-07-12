@@ -120,8 +120,8 @@ function AddOrderGeneral() {
         'Comment': 'is_allow_cmt',
         'Like': 'is_allow_like',
         'Livestream': 'is_live',
-        'Thời gian video': 'is_valid_video_duration',
-        'Hiệu lực đường dẫn': 'is_valid_link',
+        'Thời gian': 'is_valid_video_duration',
+        'Đường dẫn': 'is_valid_link',
         'Video tồn tại': 'is_exist_video',
       };
 
@@ -136,8 +136,8 @@ function AddOrderGeneral() {
 
 
         // Check if any of the required fields are false
-        const isValid = mappedObj['Thời gian video'] &&
-                        mappedObj['Hiệu lực đường dẫn'] &&
+        const isValid = mappedObj['Thời gian'] &&
+                        mappedObj['Đường dẫn'] &&
                         mappedObj['Video tồn tại'];
 
         const customHelp = (
@@ -542,7 +542,7 @@ function AddOrderGeneral() {
                         <Option key={1} value='youtube'>
                           <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
                             <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
-                            <span style={{ fontSize: '14px', fontWeight: '500' }}>Youtube</span>
+                            <span style={{ fontSize: '12px', fontWeight: '500' }}>Youtube</span>
                           </div>
                         </Option>
                       </Select>
@@ -639,57 +639,49 @@ function AddOrderGeneral() {
                             return <>
                               {
                                 itemService?.enabled ? (
-                                  <Option key={index} value={itemService?.service_id}>
-                                    <div style={{ paddingBottom: '8px', borderBottom: '1px dashed #cbcbcb' }}>
-                                      <Row style={{ margin: 0, padding: 0, height: '20px !important' }}>
-                                        <Col style={{ margin: 0, padding: 0, height: '20px !important'  }}>
-                                          <div className="label" style={{ display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0, height: '20px !important' }}>
-                                            <FaYoutube color="red" fontSize={20} style={{ margin: '2px 7px 0 0' }} />
-                                            {
-                                              itemService?.geo ? (
-                                                <Tooltip title={itemService?.geo?.toUpperCase()}>
-                                                  <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                                    <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="15px" height="15px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                                                  </span>
-                                                </Tooltip>
-                                              ) : null
-                                            }
-                                            <span style={{ fontWeight: 'bold', marginRight: '3px' }}>{itemService?.service_id}</span>
-                                            <span style={{ padding: '0 5px' }}>-</span>
-                                            <span style={{ fontWeight: 500 }}>{ `${itemService?.name?.substring(0, 17)  }...` }</span>
-                                            <span style={{ padding: '0 5px' }}>-</span>
-                                            <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
-                                          </div>
-                                        </Col>
-                                      </Row>
-                                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px', height: '20px !important' }}>{itemService?.description}</p>
-                                      <Row>
-                                        <Col style={{ display: 'inline-flex', alignItems: 'center' }}>
-                                          {
-                                            itemService?.enabled ? (
-                                              <span className="label" style={badgeGreenStyle}>
-                                                <Badge color='green' dot style={{ marginRight: '5px' }} />
-                                                Đang hoạt động
-                                              </span>
-                                            ) : (
-                                              <span className="label" style={badgeRedStyle}>
-                                                <Badge color='red' dot style={{ marginRight: '5px' }} />
-                                                Đang tắt
-                                              </span>
-                                            )
-                                          }
-                                          <span className="label" style={badgeGreenStyle}>Bảo hành</span>
-                                          <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
-                                          {
-                                            itemService?.priority ? (
-                                              <span className="label" style={badgeOrangeStyle}>
-                                                <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
-                                                Ưu tiên
-                                              </span>
-                                            ) : <></>
-                                          }
-                                        </Col>
-                                      </Row>
+                                  <Option key={index} value={itemService?.service_id} style={{ padding: '12px 0px', borderBottom: '1px dashed #cbcbcb' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', height: '20px', paddingTop: '5px' }}>
+                                      <FaYoutube color="red" fontSize={20} style={{ margin: '0px 7px 0 0' }} />
+                                      {
+                                        itemService?.geo ? (
+                                          <Tooltip title={itemService?.geo?.toUpperCase()}>
+                                            <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                              <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="14px" height="14px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                                            </span>
+                                          </Tooltip>
+                                        ) : null
+                                      }
+                                      <span style={{ fontWeight: 'bold', marginRight: '3px' }}>{itemService?.service_id}</span>
+                                      <span style={{ padding: '0 5px' }}>-</span>
+                                      <span style={{ fontWeight: 500 }}>{ `${itemService?.name?.substring(0, 37)  }...` }</span>
+                                      <span style={{ padding: '0 5px' }}>-</span>
+                                      <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
+                                    </div>
+                                    <div style={{ color: 'gray', fontSize: '0.8em' }}>{itemService?.description}</div>
+                                    <div>
+                                      {
+                                        itemService?.enabled ? (
+                                          <span className="label" style={badgeGreenStyle}>
+                                            <Badge color='green' dot style={{ marginRight: '5px' }} />
+                                            Đang hoạt động
+                                          </span>
+                                        ) : (
+                                          <span className="label" style={badgeRedStyle}>
+                                            <Badge color='red' dot style={{ marginRight: '5px' }} />
+                                            Đang tắt
+                                          </span>
+                                        )
+                                      }
+                                      <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                                      <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                                      {
+                                        itemService?.priority ? (
+                                          <span className="label" style={badgeOrangeStyle}>
+                                            <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
+                                            Ưu tiên
+                                          </span>
+                                        ) : <></>
+                                      }
                                     </div>
                                   </Option>
                                 ) : null
@@ -701,10 +693,10 @@ function AddOrderGeneral() {
                     </Form.Item>
                   </Col>
                 </Row>
+                {
+                  !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : null
+                }
               </Card>
-              {
-                !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : null
-              }
             </Col>
             {
               !isEmpty(detailService) ? (
@@ -796,9 +788,11 @@ function AddOrderGeneral() {
                 </Col>
               ) : (
                 <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
-                  <div className="text-center">
-                    <Image src={EmptyBackground}  preview={false} />
-                  </div>
+                  <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px', height: '-webkit-fill-available' }}>
+                    <div className="text-center">
+                      <Image src={EmptyBackground}  preview={false} />
+                    </div>
+                  </Card>
                 </Col>
               )
             }
