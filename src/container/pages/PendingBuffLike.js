@@ -33,7 +33,7 @@ import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
-import { convertSeconds, numberWithCommas } from '../../utility/utility';
+import { convertSeconds, numberWithCommas, performanceColorBack } from '../../utility/utility';
 
 
 const columns = [
@@ -229,53 +229,6 @@ function PendingBuffLike() {
       const performanceColor = (performance !== 0) 
         ? (performance >= 0.8 ? 'green' : ((performance < 0.8 && performance > 0.5) ? 'yellow' : ((performance < 0.5 && performance > 0.3) ? 'red' : 'gray'))) : 'gray';
 
-      const performanceColorBack = (performance) => {
-        switch (true) {
-          case (performance >= 100):
-            return {
-              color: 'white',
-              backgroundColor: 'green',
-              blurColor: 'darkgreen'
-            }
-          case (performance > 80 && performance < 100):
-            return {
-              color: 'darkgreen',
-              backgroundColor: '#84d984',
-              blurColor: 'white'
-            }
-          case (performance < 80 && performance > 50):
-            return {
-              color: 'green',
-              backgroundColor: '#ffdfa5',
-              blurColor: 'black'
-            }
-          case (performance < 50 && performance > 30):
-            
-            return {
-              color: 'white',
-              backgroundColor: 'goldenrod',
-              blurColor: 'saddlebrown'
-            }
-          case (performance < 30):
-            return {
-              color: 'white',
-              backgroundColor: 'crimson',
-              blurColor: 'black'
-            }
-          case (performance === 0):
-            return {
-              color: 'gray',
-              backgroundColor: '#e7e7e7',
-              blurColor: 'black'
-            }
-          default:
-            return {
-              color: 'gray',
-              backgroundColor: '#e7e7e7',
-              blurColor: 'black'
-            }
-        }
-      }
 
       return dataSource.push({
         key: id,

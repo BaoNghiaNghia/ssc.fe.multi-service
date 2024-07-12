@@ -9,7 +9,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { LIST_SERVICE_SUPPLY, STATUS_COMMENT_ENUM } from '../../../variables/index';
-import { numberWithCommas } from '../../../utility/utility';
+import { numberWithCommas, performanceColorBack } from '../../../utility/utility';
 
 const { Option } = Select;
 
@@ -74,9 +74,6 @@ function DetailOrder({ setState, state }) {
 
   const performanceColor = (performance !== 0) 
   ? (performance >= 0.8 ? 'green' : ((performance < 0.8 && performance > 0.5) ? 'yellow' : ((performance < 0.5 && performance > 0.3) ? 'red' : 'gray'))) : 'gray';
-
-  const performanceColorBack = (performance !== 0) 
-  ? (performance >= 0.8 ? '#84d984' : ((performance < 0.8 && performance > 0.5) ? '#ffdfa5' : ((performance < 0.5 && performance > 0.3) ? '#f9c1c1' : '#e7e7e7'))) : '#e7e7e7';
 
   return (
     <>

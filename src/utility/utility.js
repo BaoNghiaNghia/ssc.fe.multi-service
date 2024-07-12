@@ -71,6 +71,54 @@ const isVietnamesePhoneNumber = (number) => {
   return /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/.test(number);
 }
 
+const performanceColorBack = (performance) => {
+  switch (true) {
+    case (performance >= 100):
+      return {
+        color: 'white',
+        backgroundColor: 'green',
+        blurColor: 'darkgreen'
+      }
+    case (performance >= 80 && performance < 100):
+      return {
+        color: 'darkgreen',
+        backgroundColor: '#84d984',
+        blurColor: 'white'
+      }
+    case (performance < 80 && performance > 50):
+      return {
+        color: 'green',
+        backgroundColor: '#ffdfa5',
+        blurColor: '#f0ff10'
+      }
+    case (performance <= 50 && performance >= 30):
+      
+      return {
+        color: 'white',
+        backgroundColor: 'goldenrod',
+        blurColor: 'saddlebrown'
+      }
+    case (performance < 30):
+      return {
+        color: 'white',
+        backgroundColor: 'crimson',
+        blurColor: 'black'
+      }
+    case (performance === 0):
+      return {
+        color: 'gray',
+        backgroundColor: '#e7e7e7',
+        blurColor: 'black'
+      }
+    default:
+      return {
+        color: 'gray',
+        backgroundColor: '#e7e7e7',
+        blurColor: 'black'
+      }
+  }
+}
+
 export {
   ellipsis,
   numberWithCommas,
@@ -79,5 +127,6 @@ export {
   previousDate,
   convertSeconds,
   isEmptyObject,
-  isVietnamesePhoneNumber
+  isVietnamesePhoneNumber,
+  performanceColorBack
 };
