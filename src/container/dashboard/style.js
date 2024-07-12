@@ -993,7 +993,7 @@ const CardBarChartCenter = Styled.div`
     h1{
         text-align: center !important;
         font-weight: bold;
-        font-family: 'Be Vietnam Pro';
+        font-family: 'Poppins', sans-serif;
         margin-bottom: 0px;
         padding-bottom: 0px;
     }
@@ -1010,7 +1010,7 @@ const CardBarChartCenter = Styled.div`
         text-align: center !important;
         font-size: 13px;
         font-weight: 500;
-        font-family: 'Be Vietnam Pro',
+        font-family: 'Poppins', sans-serif,
         margin-bottom: 0px;
         padding-bottom: 0px;
     }
@@ -1073,7 +1073,7 @@ const CardBarChart2 = Styled.div`
         }
     }
     & > span{
-        font-family: 'Be Vietnam Pro',
+        font-family: 'Poppins', sans-serif,
         color: ${({ theme }) => theme['heading-color']};
     }
     p{

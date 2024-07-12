@@ -9,7 +9,7 @@ import { numberWithCommas } from '../../../utility/utility';
 import commentActions from '../../../redux/buffComment/actions';
 
 const badgeGreenStyle = {
-  fontFamily: 'Be Vietnam Pro',
+  fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
   padding: '2px 7px',
   fontSize: '0.7em',
@@ -23,7 +23,7 @@ const badgeGreenStyle = {
 }
 
 const badgeRedStyle = {
-  fontFamily: 'Be Vietnam Pro',
+  fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
   padding: '2px 7px',
   fontSize: '0.7em',

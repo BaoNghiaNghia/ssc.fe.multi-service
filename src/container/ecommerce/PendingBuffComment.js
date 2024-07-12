@@ -164,20 +164,6 @@ function PendingBuffComment() {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
-  const tableRef = useRef(null);
-
-  const scrollToStart = () => {
-    if (tableRef.current) {
-      tableRef.current.scrollLeft = 0;
-    }
-  };
-
-  const scrollToEnd = () => {
-    if (tableRef.current) {
-      tableRef.current.scrollLeft = tableRef.current.scrollWidth;
-    }
-  };
-
   const handleSearch = (searchText) => {
     if (!searchText) {
       dispatch(actions.fetchListOrderCommentBegin({}));
@@ -297,7 +283,7 @@ function PendingBuffComment() {
                       margin: 0,
                       padding: 0,
                       color: priority ? 'green' : 'darkslategray',
-                      fontFamily: 'Be Vietnam Pro',
+                      fontFamily: 'Poppins, sans-serif',
                       fontWeight:600,
                       textShadow: priority ? `1px 1px 3px yellowgreen ` : 'none'
                     }}
@@ -364,7 +350,7 @@ function PendingBuffComment() {
                             fontSize: '0.8em',
                             fontWeight: 800,
                             padding:'0 5px',
-                            fontFamily: 'Be Vietnam Pro',
+                            fontFamily: 'Poppins, sans-serif',
                             borderRadius: '5px',
                             // border: `1px solid ${performanceColorBack(performance)?.blurColor}`,
                             textShadow: `1px 1px 2px ${performanceColorBack(performance)?.blurColor}`,
@@ -380,7 +366,7 @@ function PendingBuffComment() {
                           style={{ 
                             fontSize: '0.8em',
                             fontWeight: 700,
-                            fontFamily: 'Be Vietnam Pro',
+                            fontFamily: 'Poppins, sans-serif',
                             padding:'0 5px',
                             borderRadius: '5px',
                             // border: '1px solid gray',
@@ -752,7 +738,7 @@ function PendingBuffComment() {
                             }}
                           >
                             <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                            <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro' , margin: 0, padding: 0 }}>Đặt hàng</span>
+                            <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Đặt hàng</span>
                           </Button>
                         )
                       }
@@ -762,18 +748,10 @@ function PendingBuffComment() {
               </TopToolBox>
             </Col>
           </Row>
-          <Row gutter={16} style={{ marginBottom: 16 }}>
-            <Col>
-              <Button onClick={scrollToStart}>Scroll to Start</Button>
-            </Col>
-            <Col>
-              <Button onClick={scrollToEnd}>Scroll to End</Button>
-            </Col>
-          </Row>
           <Row gutter={15}>
             <Col md={24}>
               <TableWrapper
-                className="table-order table-responsive" ref={tableRef} style={{ overflowX: 'auto' }}
+                className="table-order table-responsive"
               >
                 <Table
                   loading={isLoading}

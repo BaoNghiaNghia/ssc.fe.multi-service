@@ -1,4 +1,8 @@
 /* Utilitiy classes */
+body {
+  font-family: 'Poppins', sans-serif !important;
+}
+
 
 .spin {
   height: 100vh;

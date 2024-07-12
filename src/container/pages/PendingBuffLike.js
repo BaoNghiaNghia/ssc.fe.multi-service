@@ -285,7 +285,7 @@ function PendingBuffLike() {
                       margin: 0,
                       padding: 0,
                       color: priority ? 'green' : 'darkslategray',
-                      fontFamily: 'Be Vietnam Pro',
+                      fontFamily: 'Poppins, sans-serif',
                       fontWeight:600,
                       textShadow: priority ? `1px 1px 3px yellowgreen ` : 'none'
                     }}
@@ -352,7 +352,7 @@ function PendingBuffLike() {
                             fontSize: '0.8em',
                             fontWeight: 800,
                             padding:'0 5px',
-                            fontFamily: 'Be Vietnam Pro',
+                            fontFamily: 'Poppins, sans-serif',
                             borderRadius: '5px',
                             // border: `1px solid ${performanceColorBack(performance)?.blurColor}`,
                             textShadow: `1px 1px 2px ${performanceColorBack(performance)?.blurColor}`,
@@ -368,7 +368,7 @@ function PendingBuffLike() {
                           style={{ 
                             fontSize: '0.8em',
                             fontWeight: 700,
-                            fontFamily: 'Be Vietnam Pro',
+                            fontFamily: 'Poppins, sans-serif',
                             padding:'0 5px',
                             borderRadius: '5px',
                             // border: '1px solid gray',
@@ -724,7 +724,7 @@ function PendingBuffLike() {
                             }}
                           >
                             <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                            <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro' , margin: 0, padding: 0 }}>Đặt hàng</span>
+                            <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Đặt hàng</span>
                           </Button>
                         )
                       }

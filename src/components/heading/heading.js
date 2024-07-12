@@ -7,7 +7,7 @@ const Heading = props => {
   const StyledHeading = as ? headings[as.toUpperCase()] : headings.H1;
 
   return (
-    <StyledHeading style={{ color: color || 'black', fontWeight: weight || 500, fontFamily: 'Be Vietnam Pro', textShadow: textShadow || 'none' }} className={className} id={id}>
+    <StyledHeading style={{ color: color || 'black', fontWeight: weight || 500, textShadow: textShadow || 'none' }} className={className} id={id}>
       {children}
     </StyledHeading>
   );

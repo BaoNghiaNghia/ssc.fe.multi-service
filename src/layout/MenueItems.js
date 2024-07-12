@@ -83,7 +83,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
                     }}
                   >
                     <span style={{ display: "inline-flex", alignItems: "center" }}>
-                      <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro', marginRight: '10px'}}>Đặt hàng</span>
+                      <span style={{ fontWeight: 600, fontFamily: 'Poppins, sans-serif', marginRight: '10px'}}>Đặt hàng</span>
                       <RiShoppingBag3Fill size={15} style={{ paddingBottom: '1px' }}/>
                     </span>
                   </Button>

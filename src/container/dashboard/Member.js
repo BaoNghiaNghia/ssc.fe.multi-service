@@ -98,7 +98,7 @@ const columnsToup = [
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
-  fontFamily: 'Be Vietnam Pro',
+  fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
   padding: '2px 7px',
   fontSize: '0.7em',
@@ -113,7 +113,7 @@ const badgeGreenStyle = {
 
 const badgeOrangeStyle = {
   border: '1.3px solid orange',
-  fontFamily: 'Be Vietnam Pro',
+  fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
   padding: '2px 7px',
   fontSize: '0.7em',
@@ -128,7 +128,7 @@ const badgeOrangeStyle = {
 
 const badgeRedStyle = {
   border: '1.3px solid red',
-  fontFamily: 'Be Vietnam Pro',
+  fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
   padding: '2px 7px',
   fontSize: '0.7em',

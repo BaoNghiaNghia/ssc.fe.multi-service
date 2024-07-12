@@ -81,7 +81,7 @@ function TaskDurationEveryMinutes({ title }) {
       style: {
           color: 'black',
           fontSize: '17px',
-          fontFamily: 'Be Vietnam Pro'
+          fontFamily: 'Poppins, sans-serif',
       },
     },
     series: [

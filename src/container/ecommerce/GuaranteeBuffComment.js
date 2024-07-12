@@ -213,7 +213,7 @@ function PendingBuffComment() {
                 <a href={link} color='black' target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
                   {
                     video_title ? (
-                      <span style={{ margin: 0, padding: 0, color: priority ? '#00ad00' : 'black', fontFamily: 'Be Vietnam Pro' }}>{ `${video_title?.substring(0, 30)  }...` }</span>
+                      <span style={{ margin: 0, padding: 0, color: priority ? '#00ad00' : 'black', fontFamily: 'Poppins, sans-serif', }}>{ `${video_title?.substring(0, 30)  }...` }</span>
                     ) : (
                       <span>{video_link}</span>
                     )
@@ -399,7 +399,7 @@ function PendingBuffComment() {
                       }}
                     >
                       <RiScan2Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                      <span style={{ fontWeight: 600, fontFamily: 'Be Vietnam Pro' , margin: 0, padding: 0 }}>Quét</span>
+                      <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét</span>
                     </Button>
                   </Col>
                 </Row>
