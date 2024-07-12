@@ -9,8 +9,9 @@ import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { TiTick } from "react-icons/ti";
-import { isEmpty } from 'lodash';
+import { filter, isEmpty } from 'lodash';
 
+import { toast } from 'react-toastify';
 import actionsComment from '../../../redux/buffComment/actions';
 import actionsLike from '../../../redux/buffLike/actions';
 import actionsSubscribe from '../../../redux/buffSubscribe/actions';
@@ -67,6 +68,8 @@ const badgeRedStyle = {
   marginRight: '5px'
 };
 
+const DEFAULT_CATEGORY = 'Comments'
+
 const { Option } = Select;
 
 function AddOrderGeneral() {
@@ -83,7 +86,8 @@ function AddOrderGeneral() {
   });
 
   const [stateCurr, setStateCurr] = useState({
-    selectedCategory: 'Comments',
+    selectedCategory: DEFAULT_CATEGORY,
+    listServiceCollection: listService?.filter(service => service?.category === DEFAULT_CATEGORY),
     amountChange: 0
   });
 
@@ -246,7 +250,8 @@ function AddOrderGeneral() {
   const handleCancel = () => {
     setStateCurr({
       ...stateCurr,
-      selectedCategory: 'Comments',
+      selectedCategory: DEFAULT_CATEGORY,
+      listServiceCollection: listService?.filter(service => service?.category === DEFAULT_CATEGORY)
     });
 
     setHelpMessage({});
@@ -285,8 +290,10 @@ function AddOrderGeneral() {
                 },
                 {
                   validator: async (_, link) => {
-                    const { status, help } = await handleValidateLink(link);
-                    if (!status) { return Promise.reject(help); }
+                    if (link) {
+                      const { status, help } = await handleValidateLink(link);
+                      if (!status) { return Promise.reject(help); }
+                    }
                   },
                 },
               ]}
@@ -392,8 +399,10 @@ function AddOrderGeneral() {
                 },
                 {
                   validator: async (_, link) => {
-                    const { status, help } = await handleValidateLink(link);
-                    if (!status) { return Promise.reject(help); }
+                    if (link) {
+                      const { status, help } = await handleValidateLink(link);
+                      if (!status) { return Promise.reject(help); }
+                    }
                   },
                 },
               ]}
@@ -492,7 +501,7 @@ function AddOrderGeneral() {
               sm={16}
             >
               <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px' }}>
-                <Row gutter="10">
+                {/* <Row gutter="10">
                   <Col sm={24}>
                     <Form.Item
                       name="search"
@@ -523,7 +532,7 @@ function AddOrderGeneral() {
                       </Select>
                     </Form.Item>
                   </Col>
-                </Row>
+                </Row> */}
                 <Row gutter="10">
                   <Col sm={8}>
                     <Form.Item
@@ -551,16 +560,36 @@ function AddOrderGeneral() {
                   <Col sm={16}>
                     <Form.Item
                       name="category"
+                      initialValue={stateCurr?.selectedCategory}
                       label="Phân loại "
                       style={{ marginBottom: '0px' }}
                     >
-                      <Select 
-                        allowClear
+                      <Select
                         showSearch
                         size='small'
                         className='full-height-dropdown'
                         style={{ width: '100%' }}
                         placeholder="Tìm theo ID của dịch vụ"
+                        onChange={(values) => {
+                          const childService = listService?.filter(service => service?.category === values);
+
+                          setStateCurr({
+                            ...stateCurr,
+                            listServiceCollection: listService?.filter(service => service?.category === values),
+                            selectedCategory: values
+                          });
+
+
+                          if (stateCurr?.selectedCategory !== values) {
+                            dispatch(actionsService.modalDetailServiceBegin({}));
+                            setHelpMessage({});
+                            formCreateService.resetFields(['link', 'service_id']);
+
+                            if (childService?.length === 0) {
+                              toast.info('Không có dịch vụ phù hợp')
+                            }
+                          }
+                        }}
                       >
                         {
                           LIST_SERVICE_SUPPLY?.map((itemService, index) => {
@@ -590,7 +619,7 @@ function AddOrderGeneral() {
                       style={{ marginBottom: '0px' }}
                       rules={[{
                         required: true,
-                        message: 'Trường không được trống'
+                        message: 'Chưa chọn dịch vụ'
                       }]}
                     >
                       <Select 
@@ -617,9 +646,9 @@ function AddOrderGeneral() {
                                 amountChange: 0
                               });
 
-                              formCreateService.setFieldValue('link', '');
-
                               setHelpMessage({});
+                              formCreateService.resetFields(['link']);
+
 
                               dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
                             }
@@ -635,7 +664,7 @@ function AddOrderGeneral() {
                         }}
                       >
                         {
-                          listService?.map((itemService, index) => {
+                          (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === DEFAULT_CATEGORY))?.map((itemService, index) => {
                             return <>
                               {
                                 itemService?.enabled ? (
