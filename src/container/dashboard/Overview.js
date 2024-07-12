@@ -9,7 +9,8 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { TbSquareRoundedPercentage } from "react-icons/tb";
+import { GoWorkflow, GoTasklist } from "react-icons/go";
+import { TbSquareRoundedPercentage, TbServer2, TbBrandStackoverflow } from "react-icons/tb";
 import { SiGmail } from "react-icons/si";
 import { GrNotification } from "react-icons/gr";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
@@ -369,7 +370,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Quest (Lỗi/Tổng)</span>
-                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
+                    <GoTasklist fontSize={18} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
                     {numberWithCommas(taskOfTool[-1])}/{numberWithCommas(Object.values(taskOfTool).reduce((accumulator, currentValue) => accumulator + currentValue, 0))}
@@ -386,7 +387,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Tổng Order <br/> hôm nay</span>
-                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
+                    <TbBrandStackoverflow fontSize={18} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(todayProfit?.count_order)) || 0)}</Heading>
                 </CardBarChart2>
@@ -416,7 +417,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Hiện tại/Tổng luồng</span>
-                    <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
+                    <GoWorkflow fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
                     {numberWithCommas(computerThread?.current_thread) || 0}/{numberWithCommas(computerThread?.free_thread) || 0}
@@ -433,7 +434,7 @@ function Overview() {
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                     <span>Máy {typeService}</span>
-                    <HiOutlineDotsVertical fontSize={17} style={{ marginTop: '3px' }}/>
+                    <TbServer2 fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
                     {accountOnComputer?.length || 0}
