@@ -212,7 +212,7 @@ function Member() {
       return dataSource.push({
         key: id,
         username: (
-          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
             <ReactNiceAvatar
               style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }}
               {...genConfig(fullname?.charAt(0))}
@@ -363,7 +363,7 @@ function Member() {
           </>
         ),
         user_id: (
-          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
             <ReactNiceAvatar
               style={{ width: '2.3rem', height: '2.3rem', outline: '2px solid orange', border: '2px solid white' }}
               {...genConfig(findUser[0]?.fullname?.charAt(0))}
@@ -555,7 +555,7 @@ function Member() {
                       maxLength: 3,
                     }} 
                   >
-                    <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', fontSize: '1.1em' }}>
                       <BiSolidDiscount color="goldenrod" fontSize={20} style={{ marginRight: '3px' }}/>
                         <span style={{ color: 'black', display: 'inline-flex', alignItems: 'center', marginRight: '3px' }}>
                           {/* <span>Giảm giá</span>  */}

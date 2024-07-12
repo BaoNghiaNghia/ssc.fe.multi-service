@@ -164,9 +164,9 @@ function PendingBuffComment() {
 
       return dataSource.push({
         key: id,
-        order_id: <span className="order-id" style={{ fontSize: '0.9em' }}>{order_id}</span>,
+        order_id: <span style={{ fontSize: '0.9em' }}>{order_id}</span>,
         user_id: (
-          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
             {
                 findUser?.length > 0 ? (
                   <ReactNiceAvatar

@@ -331,7 +331,7 @@ function SettingAndService() {
         key: index + 1,
         email: (
           <>
-            <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
               <ReactNiceAvatar
                 style={{ width: '1.7rem', height: '1.7rem', outline: '2px solid orange', border: '2px solid white' }}
                 {...genConfig(email?.charAt(0))}

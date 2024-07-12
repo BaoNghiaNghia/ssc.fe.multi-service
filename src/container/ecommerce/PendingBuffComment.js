@@ -46,12 +46,13 @@ const columns = [
     title: 'Video',
     dataIndex: 'video_id',
     key: 'video_id',
+    width: 150,
   },
   {
     title: 'Order ID',
     dataIndex: 'order_id',
     key: 'order_id',
-    width: 50,
+    width: 25,
   },
   {
     title: 'Thời gian tạo',
@@ -277,9 +278,6 @@ function PendingBuffComment() {
       const checkInsuranceOrder = ['OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
       const checkRefundOrder = ['OrderStatusPending', 'OrderStatusProcessing', 'OrderStatusDisable', 'OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
 
-      const performanceColor = (performance !== 0) 
-        ? (performance >= 0.8 ? 'green' : ((performance < 0.8 && performance > 0.5) ? 'yellow' : ((performance < 0.5 && performance > 0.3) ? 'red' : 'gray'))) : 'gray';
-
       const performanceColorBack = (performance) => {
         switch (true) {
           case (performance >= 100):
@@ -330,9 +328,9 @@ function PendingBuffComment() {
 
       return dataSource.push({
         key: id,
-        order_id: <span className="order-id" style={{ fontSize: '0.9em' }}>{order_id}</span>,
+        order_id: <span style={{ fontSize: '0.9em' }}>{order_id}</span>,
         user_id: (
-          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
             {
                 findUser?.length > 0 ? (
                   <ReactNiceAvatar

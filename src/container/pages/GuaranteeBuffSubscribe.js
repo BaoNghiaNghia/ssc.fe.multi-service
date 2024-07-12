@@ -306,7 +306,7 @@ function GuaranteeBuffSubscribe() {
       width: 100,
       render: (value, item, index) => {
         return (
-          <span className="order-id" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
             <ReactNiceAvatar 
               style={{ width: '1.9rem', height: '1.9rem', outline: '2px solid orange', border: '2px solid white' }}
               {...genConfig(item?.username?.charAt(0))}
