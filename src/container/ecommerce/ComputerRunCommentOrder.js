@@ -88,7 +88,7 @@ function ComputerRunCommentOrder() {
     isDetailCommentServer: false,
     isDeleteCommentServer: false,
     isBatchUpdateCommentServer: false,
-    notData: searchData,
+    notData: {},
     activeClass: 'all',
     current: 0,
     pageSize: 0,
@@ -107,11 +107,6 @@ function ComputerRunCommentOrder() {
   }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = (searchText) => {
-    const data = searchData?.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
   };
 
   const handleResetComputer = (values) => {

@@ -168,7 +168,7 @@ function Member() {
     isModalAddAccount: false,
     isModalCreditHistory: false,
     isModalRegisterNewAccount: false,
-    notData: searchData,
+    notData: {},
     item: orders,
     selectedRowID: null,
     selectedRowKeys: []
@@ -196,12 +196,7 @@ function Member() {
   }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = searchText => {
-    const data = searchData?.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
 
-    setState({
-      ...state,
-      notData: data,
-    });
   };
   const dataSource = [];
   const dataSourceTopup = [];

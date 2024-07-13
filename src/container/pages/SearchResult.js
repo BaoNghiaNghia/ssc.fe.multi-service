@@ -12,7 +12,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 function SearchResult() {
   const searchData = useSelector((state) => state.headerSearchData);
   const [state, setState] = useState({
-    notData: searchData,
+    notData: {},
     activeClass: 'all',
     current: 0,
     pageSize: 0,
@@ -20,11 +20,6 @@ function SearchResult() {
   const { notData } = state;
 
   const handleSearch = (searchText) => {
-    const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
   };
 
   const handleChange = (value) => {

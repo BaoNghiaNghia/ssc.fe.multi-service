@@ -55,7 +55,7 @@ function RunningBuffSubscribe() {
   });
 
   const [state, setState] = useState({
-    notData: searchData,
+    notData: {},
     item: orders,
     selectedRowKeys: [],
   });
@@ -82,11 +82,6 @@ function RunningBuffSubscribe() {
   }, [dispatch]);
 
   const handleSearch = searchText => {
-    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
   };
 
   const handleChangeForFilter = e => {

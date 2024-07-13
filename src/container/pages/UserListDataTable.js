@@ -19,7 +19,7 @@ function UserList() {
   });
 
   const [state, setState] = useState({
-    notData: searchData,
+    notData: {},
     selectedRowKeys: 0,
     selectedRows: 0,
   });
@@ -27,11 +27,7 @@ function UserList() {
   const { notData } = state;
 
   const handleSearch = (searchText) => {
-    const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
+
   };
 
   const usersTableData = [];

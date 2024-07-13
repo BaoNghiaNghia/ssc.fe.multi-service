@@ -188,18 +188,14 @@ function SettingAndService() {
     isDelGoogkeKey: false,
     selectedService: '',
     selectedRowData: {},
-    notData: searchData,
+    notData: {},
     checkBlockVideo: listSettings?.block_video,
     item: orders,
     selectedRowKeys: [],
   });
 
   const handleSearch = searchText => {
-    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
+    
   };
 
   const dataSource = [];

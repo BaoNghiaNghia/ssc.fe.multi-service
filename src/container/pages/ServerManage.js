@@ -33,7 +33,7 @@ function ServerManage() {
   const { performance, performanceTab } = stateTab;
 
   const [state, setState] = useState({
-    notData: searchData,
+    notData: {},
     activeClass: 'all',
     current: 0,
     pageSize: 0,
@@ -46,11 +46,6 @@ function ServerManage() {
   }, []);
 
   const handleSearch = (searchText) => {
-    const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
   };
 
   const fullThreadServer = listServer.filter(item => item?.run >=15).length;

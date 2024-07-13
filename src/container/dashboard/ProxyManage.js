@@ -69,7 +69,7 @@ function ProxyManage() {
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   const [state, setState] = useState({
-    notData: searchData,
+    notData: {},
     isAddDomainModal: false,
     isDelDomainModal: false,
     isListProxyModal: false,
@@ -98,11 +98,6 @@ function ProxyManage() {
   }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = searchText => {
-    const data = searchData.filter(value => value.title.toUpperCase().startsWith(searchText.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
   };
 
   const dataSource = [];
