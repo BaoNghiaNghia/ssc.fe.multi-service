@@ -1,8 +1,7 @@
 import Cookies from 'js-cookie';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
-import memberActions from "../member/actions";
 import { 
   loginUserApi,
   fetchProfileDetail,
@@ -14,12 +13,17 @@ function* registerReferralSagaFunc(params) {
   try {
     const response = yield call(registerUserApi, params?.payload);
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      toast.success('Đăng ký thành công');
+
       yield put(
         actions.registerReferralSuccess()
       );
-      yield put(
-        memberActions.fetchUserListBegin()
-      );
+
+      // Delay for 500ms
+      yield delay(500);
+
+      // Using window.location for redirection
+      window.location.href = '/login';
     }
   } catch (error) {
     const errorMessage = error;
@@ -36,6 +40,7 @@ function* registerReferralSagaFunc(params) {
     }
   } finally { /* empty */ }
 }
+
 
 function* loginSagaFunc(params) {
   try {

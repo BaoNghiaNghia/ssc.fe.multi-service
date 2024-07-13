@@ -597,7 +597,8 @@ function AddOrderGeneral() {
                           setStateCurr({
                             ...stateCurr,
                             listServiceCollection: listService?.filter(service => service?.category === values),
-                            selectedCategory: values
+                            selectedCategory: values,
+                            amountChange: 0
                           });
 
 

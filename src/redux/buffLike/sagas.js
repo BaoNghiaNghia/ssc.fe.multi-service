@@ -34,13 +34,13 @@ function* listComputerRunLikeFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.listComputerRunLikeErr({ error: errorMessage || 'Update order like failed' })
+      actions.listComputerRunLikeErr({ error: errorMessage || 'Fetch list computer run like failed' })
     );
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Cập nhật đơn like thất bại');
+      toast.error('Fetch list computer run like failed');
     }
   } finally { /* empty */ }
 }
@@ -59,7 +59,7 @@ function* fetchWarrantyOrderFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.fetchWarrantyOrderErr({ error: errorMessage || 'Fetch Warranty Order failed' })
+      actions.fetchWarrantyOrderErr({ error: errorMessage || 'Lấy đơn bảo hành không thành công' })
     );
 
     if (errorMessage?.response?.data?.message) {
@@ -139,13 +139,13 @@ function* updateOrderLikeFunc(params) {
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.updateOrderLikeAdminErr({ error: errorMessage || 'Update order like failed' })
+      actions.updateOrderLikeAdminErr({ error: errorMessage || 'Cập nhật đơn like thất bại' })
     );
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Update order like failed');
+      toast.error('Cập nhật đơn like thất bại');
     }
   } finally { /* empty */ }
 }

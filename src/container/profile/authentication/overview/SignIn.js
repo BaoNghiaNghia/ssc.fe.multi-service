@@ -83,14 +83,6 @@ function SignIn() {
             </Button>
           </Form.Item>
           <span className='text-center'>Chưa có tài khoản? <NavLink to="/register">Đăng ký ngay</NavLink></span>
-          {/* <ul className="social-login">
-            <li>
-              <Link className="google-signup" to="#">
-                <img src={require('../../../../static/img/google.png')} alt="" />
-                <span>Sign in with Google</span>
-              </Link>
-            </li>
-          </ul> */}
         </Form>
       </div>
     </AuthWrapper>
