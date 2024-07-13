@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover } from 'antd';
+import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover, Image } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
@@ -134,7 +134,7 @@ function PendingBuffComment() {
     isInsuranceCommentOrderModal: false,
     isFilterCommentOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
-    statusNumber: 1,
+    statusNumber: 1, // OrderStatusProcessing
     notData: {},
     rowData: {},
     item: listOrderComment,
@@ -759,6 +759,31 @@ function PendingBuffComment() {
                   size='small'
                   dataSource={dataSource}
                   columns={columns}
+                  locale={{ emptyText: (
+                    <div>
+                      <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
+                      <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
+                      <span style={{ color: 'gray', wordSpacing: '3px', marginBottom: '20px', fontWeight: '200' }}>
+                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase()}
+                      </span>
+                      {
+                        state?.statusNumber === 0 ? (
+                          <Button
+                            size="small"
+                            type="dashed"
+                            style={{ borderRadius: '20px', backgroundColor: '#dae0ec5c' }}
+                            onClick={() => {
+                              setState({...state, isCreateCommentOrderModal: true });
+                              dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                            }}
+                          >
+                            <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
+                            <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Đặt hàng</span>
+                          </Button>
+                        ) : null
+                      }
+                    </div>
+                  ) }}
                   pagination={{
                     current: listOrderComment?.meta?.current_page,
                     defaultPageSize: listOrderComment?.meta?.count,
