@@ -173,12 +173,12 @@ function ComputerRunCommentOrder() {
               <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || '...'}</p>
               <a href={value?.link} target="_blank" rel="noopener noreferrer" style={{ margin: 0, padding: 0 }}>
                 <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'inline-flex', alignItems: 'center' }}>
-                  <LuLink2 style={{ fontWeight: 700, marginRight: '5px' }}/>
-                  {value?.link || '...'}
+                  <LuLink2 style={{ fontWeight: 700, marginRight: '5px', color: 'gray' }}/>
+                  <span style={{ color: 'gray' }}>{`${value?.link?.substring(0, 25)  }...` || '...'}</span>
                 </div>
               </a>
               <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
-                <MdOutlineNumbers style={{ fontWeight: 700, marginRight: '5px' }} />
+                <MdOutlineNumbers style={{ fontWeight: 700, marginRight: '5px', color: 'gray' }} />
                 {<strong>{value?.ip}</strong> || '...'}
               </div>
             </div>

@@ -1,20 +1,38 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
-import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
+import React, { useCallback, useState} from 'react';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { Form, Input, Button, Row, Col } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { UserOutlined } from '@ant-design/icons';
+import { MdOutlinePassword, MdOutlineAlternateEmail, MdOutlinePhoneAndroid } from "react-icons/md";
 import { AuthWrapper } from './style';
+import actionAuths from '../../../../redux/authentication/actions';
 import { Checkbox } from '../../../../components/checkbox/checkbox';
 import Heading from '../../../../components/heading/heading';
 
+const { registerReferralBegin } = actionAuths;
+
 function SignUp() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.loading);
+  const [form] = Form.useForm();
   const [state, setState] = useState({
-    values: null,
-    checked: null,
+    checked: true,
   });
-  const handleSubmit = (values) => {
-    setState({ ...state, values });
-  };
+
+  const handleSubmit = useCallback(() => {
+    const loginAction = registerReferralBegin({
+      request: {
+        email: form.getFieldValue('username'),
+        password: form.getFieldValue('password'),
+      },
+      history
+    });
+
+    dispatch(loginAction);
+  }, [history, dispatch]);
 
   const onChange = (checked) => {
     setState({ ...state, checked });
@@ -32,61 +50,56 @@ function SignUp() {
               <Heading as="h2" weight="700">ĐĂNG KÝ</Heading>
             </Col>
           </Row>
-          <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please input your Full name!' }]}>
-            <Input placeholder="Full name" />
-          </Form.Item>
           <Form.Item
             name="username"
-            label="Username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            className='m-0'
+            rules={[
+              { message: 'Vui lòng nhập tên người dùng hoặc Email!', required: true }
+            ]}
+            label="Email"
           >
-            <Input placeholder="Username" />
+            <Input size='middle' prefix={<MdOutlineAlternateEmail />} placeholder="Nhập tên đăng nhập" />
           </Form.Item>
           <Form.Item
-            name="email"
-            label="Email Address"
-            rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}
+            name="fullname"
+            className='m-0'
+            rules={[
+              { message: 'Vui lòng nhập tên người dùng hoặc Email!', required: true }
+            ]}
+            label="Tên người dùng"
           >
-            <Input placeholder="name@example.com" />
+            <Input size='middle' prefix={<UserOutlined />} placeholder="Nhập tên đăng nhập" />
           </Form.Item>
           <Form.Item
-            label="Password"
             name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
+            className='m-0'
+            label="Mật khẩu"
+            rules={[
+              {required: true, message: 'Trường không được trống' }
+            ]}
           >
-            <Input.Password placeholder="Password" />
+            <Input.Password size='middle' prefix={<MdOutlinePassword />} placeholder="Mật khẩu" />
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            className='m-0'
+            rules={[
+              { message: 'Vui lòng nhập tên người dùng hoặc Email!', required: true }
+            ]}
+            label="Số điện thoại"
+          >
+            <Input size='middle' prefix={<MdOutlinePhoneAndroid />} placeholder="Nhập tên đăng nhập" />
           </Form.Item>
           <div className="auth-form-action">
             <Checkbox onChange={onChange} checked={state.checked}>
-              Creating an account means you’re okay with our Terms of Service and Privacy Policy
+              Tạo tài khoản có nghĩa là bạn đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư của chúng tôi
             </Checkbox>
           </div>
           <Form.Item>
-            <Button className="btn-create" htmlType="submit" type="primary" size="large">
-              Create Account
+            <Button loading={isLoading} className="btn-signin" htmlType="submit" style={{ width: '100%' }} type="primary" size="large">
+              {isLoading ? 'Đang tải...' : 'Đăng ký'}
             </Button>
           </Form.Item>
-          <p className="form-divider">
-            <span>Or</span>
-          </p>
-          <ul className="social-login signin-social">
-            <li>
-              <a className="google-signup" href="/">
-                <img src={require('../../../../static/img/google.png')} alt="" />
-                <span>Sign up with Google</span>
-              </a>
-            </li>
-            <li>
-              <a className="facebook-sign" href="/">
-                <FacebookOutlined />
-              </a>
-            </li>
-            <li>
-              <a className="twitter-sign" href="/">
-                <TwitterOutlined />
-              </a>
-            </li>
-          </ul>
         </Form>
       </div>
     </AuthWrapper>

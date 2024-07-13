@@ -51,6 +51,7 @@ function SignIn() {
           </Row>
           <Form.Item
             name="username"
+            className='m-0'
             rules={[
               { message: 'Vui lòng nhập tên người dùng hoặc Email!', required: true }
             ]}
@@ -61,6 +62,7 @@ function SignIn() {
           <Form.Item
             name="password"
             label="Mật khẩu"
+            className='m-0'
             rules={[
               {required: true, message: 'Trường không được trống' }
             ]}

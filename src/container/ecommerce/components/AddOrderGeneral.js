@@ -188,6 +188,16 @@ function AddOrderGeneral() {
   const handleSubmitComment = () => {
     formCreateService.validateFields()
       .then((values) => {
+        console.log(values);
+
+        // Split the input into rows
+        const rows = values?.comments?.split('\n');
+
+        // Filter out empty rows
+        const nonEmptyRows = rows.filter(row => row.trim().length > 0);
+
+        values.comments = nonEmptyRows.join('\n');
+
         dispatch(actionsComment.createOrderCommentAdminBegin(values));
         dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
 
@@ -264,9 +274,20 @@ function AddOrderGeneral() {
 
   const handleCountValidateCommentString = (input) => {
     const commentString = input?.target?.value;
+
+    // Split the input into rows
+    const rows = commentString.split('\n');
+
+    // Filter out empty rows
+    const nonEmptyRows = rows.filter(row => row.trim().length > 0);
+
     if (commentString === '') { return 0; } 
 
-    return commentString?.split('\n')?.length;
+    
+    // Count the non-empty rows
+    const rowCount = nonEmptyRows.length;
+
+    return rowCount;
   }
 
   const validateCommentCount = stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange <= detailService?.max;

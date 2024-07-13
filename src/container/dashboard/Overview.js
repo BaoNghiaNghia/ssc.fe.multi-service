@@ -356,7 +356,7 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span>Tỉ lệ {typeService}</span>
                     <TbSquareRoundedPercentage fontSize={17}/>
                   </span>
@@ -371,7 +371,7 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span>Quest (Lỗi/Tổng)</span>
                     <GoTasklist fontSize={18} style={{ marginTop: '3px' }}/>
                   </span>
@@ -388,7 +388,7 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span>Tổng Order <br/> hôm nay</span>
                     <TbBrandStackoverflow fontSize={18} style={{ marginTop: '3px' }}/>
                   </span>
@@ -403,7 +403,7 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span>Tổng {typeService} <br/> hôm nay</span>
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
@@ -418,7 +418,7 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span>Hiện tại/Tổng luồng</span>
                     <GoWorkflow fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
@@ -435,7 +435,7 @@ function Overview() {
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
-                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span>Máy {typeService}</span>
                     <TbServer2 fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
