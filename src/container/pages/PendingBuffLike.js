@@ -743,7 +743,7 @@ function PendingBuffLike() {
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: 'gray', wordSpacing: '3px', marginBottom: '20px', fontWeight: '200' }}>
+                      <span style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
                         Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase()}
                       </span>
                       {

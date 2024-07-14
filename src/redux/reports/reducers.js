@@ -812,20 +812,17 @@ const ReportsReducer = (state = initialState, action) => {
     case OPEN_MODAL_CREATE_NEW_ORDER_BEGIN:
       return {
         ...state,
-        loading: true,
       };
 
     case OPEN_MODAL_CREATE_NEW_ORDER_SUCCESS:
       return {
         ...state,
-        loading: false,
         isOpenCreateOrder: data,
       };
 
     case OPEN_MODAL_CREATE_NEW_ORDER_ERR:
       return {
         ...state,
-        loading: false,
         error: err
       };
 

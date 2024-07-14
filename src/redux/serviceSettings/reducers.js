@@ -7,7 +7,8 @@ const initialState = {
   postLoading: false,
   isOpenModalEdit: false,
   typeTab: SERVICE_SETTING_TYPE.SERVICE.title,
-  listSettings: {},
+  listSettingsComment: {},
+  listSettingsLike: {},
   detailService: {},
   listGoogleKey: {},
   detailGoogleKey: {},
@@ -36,13 +37,21 @@ const {
     CHANGE_TYPE_TAB_ERR,
     CHANGE_TYPE_TAB_SUCCESS,
 
-    FETCH_LIST_SETTINGS_BEGIN,
-    FETCH_LIST_SETTINGS_ERR,
-    FETCH_LIST_SETTINGS_SUCCESS,
+    FETCH_LIST_SETTINGS_COMMENT_BEGIN,
+    FETCH_LIST_SETTINGS_COMMENT_ERR,
+    FETCH_LIST_SETTINGS_COMMENT_SUCCESS,
 
-    UPDATE_SETTING_BEGIN,
-    UPDATE_SETTING_ERR,
-    UPDATE_SETTING_SUCCESS,
+    UPDATE_SETTING_COMMENT_BEGIN,
+    UPDATE_SETTING_COMMENT_ERR,
+    UPDATE_SETTING_COMMENT_SUCCESS,
+
+    FETCH_LIST_SETTINGS_LIKE_BEGIN,
+    FETCH_LIST_SETTINGS_LIKE_ERR,
+    FETCH_LIST_SETTINGS_LIKE_SUCCESS,
+
+    UPDATE_SETTING_LIKE_BEGIN,
+    UPDATE_SETTING_LIKE_ERR,
+    UPDATE_SETTING_LIKE_SUCCESS,
 
     FETCH_LIST_ALL_GOOGLE_KEY_BEGIN,
     FETCH_LIST_ALL_GOOGLE_KEY_ERR,
@@ -165,39 +174,59 @@ const reducers = (state = initialState, action) => {
         loading: false,
       };
 
-    case UPDATE_SETTING_BEGIN:
+    case UPDATE_SETTING_COMMENT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case UPDATE_SETTING_SUCCESS:
+    case UPDATE_SETTING_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
       };
 
-    case UPDATE_SETTING_ERR:
+    case UPDATE_SETTING_COMMENT_ERR:
       return {
         ...state,
         error: err,
         loading: false,
       };
 
-    case FETCH_LIST_SETTINGS_BEGIN:
+    case FETCH_LIST_SETTINGS_COMMENT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case FETCH_LIST_SETTINGS_SUCCESS:
+    case FETCH_LIST_SETTINGS_COMMENT_SUCCESS:
       return {
         ...state,
-        listSettings: data,
+        listSettingsComment: data,
         loading: false,
       };
 
-    case FETCH_LIST_SETTINGS_ERR:
+    case FETCH_LIST_SETTINGS_COMMENT_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case FETCH_LIST_SETTINGS_LIKE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case FETCH_LIST_SETTINGS_LIKE_SUCCESS:
+      return {
+        ...state,
+        listSettingsLike: data,
+        loading: false,
+      };
+
+    case FETCH_LIST_SETTINGS_LIKE_ERR:
       return {
         ...state,
         error: err,

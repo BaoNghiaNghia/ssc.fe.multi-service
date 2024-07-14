@@ -153,14 +153,14 @@ function SettingAndService() {
 
   const [formUpdateSettings] = Form.useForm();
 
-  const { searchData, orders, listService, typeTab, listSettings, listMetaService, listGoogleKey, listGoogleKeyMeta } = useSelector(state => {
+  const { searchData, orders, listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,
       listService: state?.settingService?.listService?.items,
       listMetaService: state?.settingService?.listService?.meta,
       typeTab: state?.settingService?.typeTab,
-      listSettings: state?.settingService?.listSettings,
+      listSettingsComment: state?.settingService?.listSettingsComment,
       listGoogleKey: state?.settingService?.listGoogleKey?.google_keys,
       listGoogleKeyMeta: state?.settingService?.listGoogleKey?.meta,
     };
@@ -175,7 +175,8 @@ function SettingAndService() {
       limit: limitPage,
     }));
 
-    dispatch(actions.fetchListSettingsBegin());
+    dispatch(actions.fetchListSettingsCommentBegin());
+    dispatch(actions.fetchListSettingsLikeBegin());
   }, [dispatch, currentPage, limitPage]);
 
   const [state, setState] = useState({
@@ -189,7 +190,7 @@ function SettingAndService() {
     selectedService: '',
     selectedRowData: {},
     notData: {},
-    checkBlockVideo: listSettings?.block_video,
+    checkBlockVideo: listSettingsComment?.block_video,
     item: orders,
     selectedRowKeys: [],
   });
@@ -437,7 +438,7 @@ function SettingAndService() {
       formUpdateSettings.validateFields()
         .then((values) => {
           const requestData = {
-            id: listSettings?.id,
+            id: listSettingsComment?.id,
             account_delay_time: values?.account_delay_time,
             block_video: values?.block_video,
             computer_reset_time: values?.computer_reset_time,
@@ -462,7 +463,7 @@ function SettingAndService() {
       formUpdateSettings.validateFields()
         .then((values) => {
           const requestData = {
-            id: listSettings?.id,
+            id: listSettingsComment?.id,
             account_delay_time: values?.account_delay_time,
             block_video: valueBlockVideo,
             computer_reset_time: values?.computer_reset_time,
@@ -487,7 +488,7 @@ function SettingAndService() {
   const CommentSettingComponent = () => {
     return (<>
       {
-        listSettings ? (
+        listSettingsComment ? (
           <Cards headless>
             <TopToolBox>
               <Row gutter={15} className="justify-content-center">
@@ -535,7 +536,7 @@ function SettingAndService() {
                         >
                           <Switch
                             checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
-                            checked={listSettings?.block_video}
+                            checked={listSettingsComment?.block_video}
                             onChange={(value) => handleSwitchBlockVideo(value)}
                           />
                         </Form.Item>
@@ -893,7 +894,7 @@ function SettingAndService() {
                   className={typeTab === SERVICE_SETTING_TYPE.SETTING.title ? 'active' : 'deactivate'}
                   onClick={() => {
                     handleChangeTabType(SERVICE_SETTING_TYPE.SETTING.title);
-                    if (Object.keys(listSettings).length !== 0) formUpdateSettings.setFieldsValue(listSettings);
+                    if (Object.keys(listSettingsComment).length !== 0) formUpdateSettings.setFieldsValue(listSettingsComment);
                   }}
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"

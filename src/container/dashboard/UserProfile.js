@@ -166,7 +166,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         dispatch(actions.fetchListServiceBegin({}));
-        dispatch(actions.fetchListSettingsBegin({}));
+        dispatch(actions.fetchListSettingsCommentBegin({}));
     }, [dispatch]);
 
     const renderTab = (tabNumber) => {

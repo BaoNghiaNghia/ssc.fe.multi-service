@@ -82,11 +82,13 @@ import {
     detailGoogleKeyWatcherSaga,
     fetchListAllGoogleKeyWatcherSaga,
     fetchListServicesWatcherSaga,
-    fetchListSettingsWatcherSaga,
+    fetchListSettingsCommentWatcherSaga,
     modalDetailServiceWatcherSaga,
     updateGoogleKeyWatcherSaga,
     updateServicesWatcherSaga,
-    updateSettingWatcherSaga
+    updateSettingCommentWatcherSaga,
+    fetchListSettingsLikeWatcherSaga,
+    updateSettingLikeWatcherSaga
 } from './serviceSettings/sagas';
 
 import {
@@ -130,7 +132,21 @@ import {
     getListProxyInDomainWatcherSaga,
     listGeneralDomainWatcherSaga,
     patchProxyWatcherSaga
-} from './proxy/sagas'
+} from './proxy/sagas';
+
+import {
+    changeServiceTypeInGmailWatcherSaga,
+    createAccountGmailCommentWatcherSaga,
+    createAccountGmailLikeWatcherSaga,
+    deleteAccountGmailCommentWatcherSaga,
+    deleteAccountGmailLikeWatcherSaga,
+    detailAccountGmailCommentWatcherSaga,
+    detailAccountGmailLikeWatcherSaga,
+    listAccountGmailCommentWatcherSaga,
+    listAccountGmailLikeWatcherSaga,
+    patchAccountGmailCommentWatcherSaga,
+    patchAccountGmailLikeWatcherSaga
+} from './gmailManage/sagas';
 
 export default function* rootSaga() {
     return yield all([
@@ -171,8 +187,8 @@ export default function* rootSaga() {
         updateOrderCommentWatcherSaga(),
         listComputerRunCommentWatcherSaga(),
         changeTabTypeMemberWatcherSaga(),
-        fetchListSettingsWatcherSaga(),
-        updateSettingWatcherSaga(),
+        fetchListSettingsCommentWatcherSaga(),
+        updateSettingCommentWatcherSaga(),
         getCreditHistoryMemberWatcherSaga(),
         updateManyOrderCommentWatcherSaga(),
         updateManyComputerCommentWatcherSaga(),
@@ -240,7 +256,22 @@ export default function* rootSaga() {
         likeStatisticTaskOfToolWatcherSaga(),
         likeStatisticRunningUserOrderWatcherSaga(),
         likeStatisticUserPointWatcherSaga(),
-        likeStatisticTotalOrderWatcherSaga()
+        likeStatisticTotalOrderWatcherSaga(),
 
+        changeServiceTypeInGmailWatcherSaga(),
+
+        listAccountGmailCommentWatcherSaga(),
+        detailAccountGmailCommentWatcherSaga(),
+        createAccountGmailCommentWatcherSaga(),
+        deleteAccountGmailCommentWatcherSaga(),
+        patchAccountGmailCommentWatcherSaga(),
+        listAccountGmailLikeWatcherSaga(),
+        detailAccountGmailLikeWatcherSaga(),
+        createAccountGmailLikeWatcherSaga(),
+        deleteAccountGmailLikeWatcherSaga(),
+        patchAccountGmailLikeWatcherSaga(),
+
+        fetchListSettingsLikeWatcherSaga(),
+        updateSettingLikeWatcherSaga(),
     ]);
 }

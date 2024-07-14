@@ -1,30 +1,39 @@
 /* eslint-disable */
 import {
-    GENERAL_DOMAIN_ENPOINT,
-    LIST_PROXY_BY_DOMAIN_ENDPOINT,
-    PATCH_PROXY_ENDPOINT
+    ACCOUNT_GMAIL_COMMENT_ENPOINT,
+    ACCOUNT_GMAIL_LIKE_ENPOINT,
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
 const GmailAPI = new ApiFactory({ url: process.env.REACT_APP_API_ENDPOINT });
 
 GmailAPI.createEntities([
-    { name: GENERAL_DOMAIN_ENPOINT },
-    { name: LIST_PROXY_BY_DOMAIN_ENDPOINT },
-    { name: PATCH_PROXY_ENDPOINT },
+    { name: ACCOUNT_GMAIL_COMMENT_ENPOINT },
+    { name: ACCOUNT_GMAIL_LIKE_ENPOINT },
 ]);
 
-const listGeneralDomainAPI = (data) => GmailAPI.createBasicCRUDEndpoints({ name: GENERAL_DOMAIN_ENPOINT }).get(data);
-const createDomainAPI = (data) => GmailAPI.createBasicCRUDEndpoints({ name: GENERAL_DOMAIN_ENPOINT }).post(data);
-const deleteDomainAPI = (id) => GmailAPI.createBasicCRUDEndpoints({ name: GENERAL_DOMAIN_ENPOINT }).delete(id);
-const getListProxyInDomainAPI = (query) => GmailAPI.createBasicCRUDEndpoints({ name: LIST_PROXY_BY_DOMAIN_ENDPOINT }).submitGet(query);
+const listAccountGmailCommentAPI = (data) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_COMMENT_ENPOINT }).get(data);
+const createAccountGmailCommentAPI = (data) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_COMMENT_ENPOINT }).post(data);
+const detailAccountGmailCommentAPI = (id) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_COMMENT_ENPOINT }).getOne(id);
+const deleteAccountGmailCommentAPI = (id) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_COMMENT_ENPOINT }).delete(id);
+const patchAccountGmailCommentAPI = (id) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_COMMENT_ENPOINT }).patch(id);
 
-const patchProxyAPI = (query) => GmailAPI.createBasicCRUDEndpoints({ name: PATCH_PROXY_ENDPOINT }).patch(query);
+const listAccountGmailLikeAPI = (data) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_LIKE_ENPOINT }).get(data);
+const createAccountGmailLikeAPI = (data) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_LIKE_ENPOINT }).post(data);
+const detailAccountGmailLikeAPI = (id) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_LIKE_ENPOINT }).getOne(id);
+const deleteAccountGmailLikeAPI = (id) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_LIKE_ENPOINT }).delete(id);
+const patchAccountGmailLikeAPI = (id) => GmailAPI.createBasicCRUDEndpoints({ name: ACCOUNT_GMAIL_LIKE_ENPOINT }).patch(id);
 
 export {
-    listGeneralDomainAPI,
-    createDomainAPI,
-    deleteDomainAPI,
-    getListProxyInDomainAPI,
-    patchProxyAPI
+    listAccountGmailCommentAPI,
+    detailAccountGmailCommentAPI,
+    createAccountGmailCommentAPI,
+    deleteAccountGmailCommentAPI,
+    patchAccountGmailCommentAPI,
+
+    listAccountGmailLikeAPI,
+    createAccountGmailLikeAPI,
+    detailAccountGmailLikeAPI,
+    deleteAccountGmailLikeAPI,
+    patchAccountGmailLikeAPI,
 }

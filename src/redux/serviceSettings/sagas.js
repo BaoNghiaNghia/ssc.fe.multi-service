@@ -6,8 +6,10 @@ import {
   createServiceAPI,
   updateServiceAPI,
   fetchListServiceAPI,
-  fetchListSettingAPI,
-  updateSettingAPI,
+  fetchListSettingCommentAPI,
+  updateSettingCommentAPI,
+  fetchListSettingLikeAPI,
+  updateSettingLikeAPI,
 
   createGoogleKeyAPI,
   deleteGoogleKeyAPI,
@@ -147,26 +149,111 @@ function* fetchListAllGoogleKeyFunc(params) {
   } finally { /* empty */ }
 }
 
-function* fetchListSettingsFunc(params) {
+function* fetchListSettingsCommentFunc(params) {
   try {
-    const response = yield call(fetchListSettingAPI, params?.payload);
+    const response = yield call(fetchListSettingCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.fetchListSettingsSuccess(response?.data?.data)
+        actions.fetchListSettingsCommentSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.fetchListSettingsErr({ error: errorMessage || 'Fetch services list failed' })
+      actions.fetchListSettingsCommentErr({ error: errorMessage || 'Comment - Fetch services list failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else {
-      toast.error('Fetch list settings failed');
+      toast.error('Comment - Fetch list settings failed');
     }
+  } finally { /* empty */ }
+}
+
+function* updateSettingCommentFunc(params) {
+  try {
+    const response = yield call(updateSettingCommentAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateListSettingsCommentSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListSettingsCommentBegin()
+      );
+
+      toast.success(response?.data?.message);
+    }
+  } catch (error) {
+      const errorMessage = error;
+      yield put(
+        actions.updateListSettingsCommentErr({ error: errorMessage || 'Comment - Update settings list failed' })
+      );
+  
+      if (errorMessage?.response?.data?.data?.error) {
+        toast.error(errorMessage?.response?.data?.data?.error);
+      } else if (errorMessage?.response?.data?.message) {
+        toast.error(errorMessage?.response?.data?.message);
+      } else {
+        toast.error('Comment - Update settings list failed');
+      }
+  } finally { /* empty */ }
+}
+
+function* fetchListSettingsLikeFunc(params) {
+  try {
+    const response = yield call(fetchListSettingLikeAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchListSettingsLikeSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.fetchListSettingsLikeErr({ error: errorMessage || 'Like - Fetch services list failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Fetch list settings failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* updateSettingLikeFunc(params) {
+  try {
+    const response = yield call(updateSettingLikeAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateListSettingsLikeSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListSettingsLikeBegin()
+      );
+
+      toast.success(response?.data?.message);
+    }
+  } catch (error) {
+      const errorMessage = error;
+      yield put(
+        actions.updateListSettingsLikeErr({ error: errorMessage || 'Like - Update settings list failed' })
+      );
+  
+      if (errorMessage?.response?.data?.data?.error) {
+        toast.error(errorMessage?.response?.data?.data?.error);
+      } else if (errorMessage?.response?.data?.message) {
+        toast.error(errorMessage?.response?.data?.message);
+      } else {
+        toast.error('Like - Update settings list failed');
+      }
   } finally { /* empty */ }
 }
 
@@ -229,37 +316,6 @@ function* createServicesFunc(params) {
     } finally { /* empty */ }
 }
 
-function* updateSettingFunc(params) {
-  try {
-    const response = yield call(updateSettingAPI, params?.payload);
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.updateListSettingsSuccess(response?.data?.data)
-      );
-
-      yield put(
-        actions.fetchListSettingsBegin()
-      );
-
-      toast.success(response?.data?.message);
-    }
-  } catch (error) {
-      const errorMessage = error;
-      yield put(
-        actions.updateListSettingsErr({ error: errorMessage || 'Update settings list failed' })
-      );
-  
-      if (errorMessage?.response?.data?.data?.error) {
-        toast.error(errorMessage?.response?.data?.data?.error);
-      } else if (errorMessage?.response?.data?.message) {
-        toast.error(errorMessage?.response?.data?.message);
-      } else {
-        toast.error('Update settings list failed');
-      }
-  } finally { /* empty */ }
-}
-
 function* updateServicesFunc(params) {
   try {
     const response = yield call(updateServiceAPI, params?.payload);
@@ -313,7 +369,7 @@ function* changeTabTypeFunc(params) {
     switch (params?.payload) {
       case SERVICE_SETTING_TYPE.SETTING.title:
         yield put(
-          actions.fetchListSettingsBegin()
+          actions.fetchListSettingsCommentBegin()
         );
         break;
       case SERVICE_SETTING_TYPE.SERVICE.title:
@@ -345,17 +401,26 @@ export function* fetchListServicesWatcherSaga() {
   yield takeLatest(actions.FETCH_LIST_SERVICES_BEGIN, fetchListServicesFunc);
 }
 
-export function* fetchListSettingsWatcherSaga() {
-  yield takeLatest(actions.FETCH_LIST_SETTINGS_BEGIN, fetchListSettingsFunc);
+export function* fetchListSettingsCommentWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_SETTINGS_COMMENT_BEGIN, fetchListSettingsCommentFunc);
+}
+
+export function* updateSettingCommentWatcherSaga() {
+  yield takeLatest(actions.UPDATE_SETTING_COMMENT_BEGIN, updateSettingCommentFunc);
+}
+
+export function* fetchListSettingsLikeWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_SETTINGS_LIKE_BEGIN, fetchListSettingsLikeFunc);
+}
+
+export function* updateSettingLikeWatcherSaga() {
+  yield takeLatest(actions.UPDATE_SETTING_LIKE_BEGIN, updateSettingLikeFunc);
 }
 
 export function* createServicesWatcherSaga() {
   yield takeLatest(actions.CREATE_SERVICES_BEGIN, createServicesFunc);
 }
 
-export function* updateSettingWatcherSaga() {
-  yield takeLatest(actions.UPDATE_SETTING_BEGIN, updateSettingFunc);
-}
 
 export function* updateServicesWatcherSaga() {
   yield takeLatest(actions.UPDATE_SERVICES_BEGIN, updateServicesFunc);

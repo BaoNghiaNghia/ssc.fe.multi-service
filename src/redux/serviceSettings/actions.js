@@ -3,9 +3,21 @@ const actions = {
     FETCH_LIST_SERVICES_SUCCESS: 'FETCH_LIST_SERVICES_SUCCESS',
     FETCH_LIST_SERVICES_ERR: 'FETCH_LIST_SERVICES_ERR',
 
-    FETCH_LIST_SETTINGS_BEGIN: 'FETCH_LIST_SETTINGS_BEGIN',
-    FETCH_LIST_SETTINGS_SUCCESS: 'FETCH_LIST_SETTINGS_SUCCESS',
-    FETCH_LIST_SETTINGS_ERR: 'FETCH_LIST_SETTINGS_ERR',
+    FETCH_LIST_SETTINGS_COMMENT_BEGIN: 'FETCH_LIST_SETTINGS_COMMENT_BEGIN',
+    FETCH_LIST_SETTINGS_COMMENT_SUCCESS: 'FETCH_LIST_SETTINGS_COMMENT_SUCCESS',
+    FETCH_LIST_SETTINGS_COMMENT_ERR: 'FETCH_LIST_SETTINGS_COMMENT_ERR',
+
+    UPDATE_SETTING_COMMENT_BEGIN: 'UPDATE_SETTING_COMMENT_BEGIN',
+    UPDATE_SETTING_COMMENT_SUCCESS: 'UPDATE_SETTING_COMMENT_SUCCESS',
+    UPDATE_SETTING_COMMENT_ERR: 'UPDATE_SETTING_COMMENT_ERR',
+
+    FETCH_LIST_SETTINGS_LIKE_BEGIN: 'FETCH_LIST_SETTINGS_LIKE_BEGIN',
+    FETCH_LIST_SETTINGS_LIKE_SUCCESS: 'FETCH_LIST_SETTINGS_LIKE_SUCCESS',
+    FETCH_LIST_SETTINGS_LIKE_ERR: 'FETCH_LIST_SETTINGS_LIKE_ERR',
+
+    UPDATE_SETTING_LIKE_BEGIN: 'UPDATE_SETTING_LIKE_BEGIN',
+    UPDATE_SETTING_LIKE_SUCCESS: 'UPDATE_SETTING_LIKE_SUCCESS',
+    UPDATE_SETTING_LIKE_ERR: 'UPDATE_SETTING_LIKE_ERR',
 
     CREATE_SERVICES_BEGIN: 'CREATE_SERVICES_BEGIN',
     CREATE_SERVICES_SUCCESS: 'CREATE_SERVICES_SUCCESS',
@@ -14,10 +26,6 @@ const actions = {
     UPDATE_SERVICES_BEGIN: 'UPDATE_SERVICES_BEGIN',
     UPDATE_SERVICES_SUCCESS: 'UPDATE_SERVICES_SUCCESS',
     UPDATE_SERVICES_ERR: 'UPDATE_SERVICES_ERR',
-
-    UPDATE_SETTING_BEGIN: 'UPDATE_SETTING_BEGIN',
-    UPDATE_SETTING_SUCCESS: 'UPDATE_SETTING_SUCCESS',
-    UPDATE_SETTING_ERR: 'UPDATE_SETTING_ERR',
 
     MODAL_DETAIL_SERVICE_BEGIN: 'MODAL_DETAIL_SERVICE_BEGIN',
     MODAL_DETAIL_SERVICE_SUCCESS: 'MODAL_DETAIL_SERVICE_SUCCESS',
@@ -153,44 +161,86 @@ const actions = {
         };
     },
 
-    updateListSettingsBegin: (payload) => {
+    updateListSettingsCommentBegin: (payload) => {
         return {
-            type: actions.UPDATE_SETTING_BEGIN,
+            type: actions.UPDATE_SETTING_COMMENT_BEGIN,
             payload
         };
     },
 
-    updateListSettingsSuccess: (data) => {
+    updateListSettingsCommentSuccess: (data) => {
         return {
-            type: actions.UPDATE_SETTING_SUCCESS,
+            type: actions.UPDATE_SETTING_COMMENT_SUCCESS,
             data,
         };
     },
 
-    updateListSettingsErr: (err) => {
+    updateListSettingsCommentErr: (err) => {
         return {
-            type: actions.UPDATE_SETTING_ERR,
+            type: actions.UPDATE_SETTING_COMMENT_ERR,
             err,
         };
     },
 
-    fetchListSettingsBegin: (payload) => {
+    updateListSettingsLikeBegin: (payload) => {
         return {
-            type: actions.FETCH_LIST_SETTINGS_BEGIN,
+            type: actions.UPDATE_SETTING_LIKE_BEGIN,
             payload
         };
     },
 
-    fetchListSettingsSuccess: (data) => {
+    updateListSettingsLikeSuccess: (data) => {
         return {
-            type: actions.FETCH_LIST_SETTINGS_SUCCESS,
+            type: actions.UPDATE_SETTING_LIKE_SUCCESS,
             data,
         };
     },
 
-    fetchListSettingsErr: (err) => {
+    updateListSettingsLikeErr: (err) => {
         return {
-            type: actions.FETCH_LIST_SETTINGS_ERR,
+            type: actions.UPDATE_SETTING_LIKE_ERR,
+            err,
+        };
+    },
+
+    fetchListSettingsCommentBegin: (payload) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_COMMENT_BEGIN,
+            payload
+        };
+    },
+
+    fetchListSettingsCommentSuccess: (data) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_COMMENT_SUCCESS,
+            data,
+        };
+    },
+
+    fetchListSettingsCommentErr: (err) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_COMMENT_ERR,
+            err,
+        };
+    },
+
+    fetchListSettingsLikeBegin: (payload) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_LIKE_BEGIN,
+            payload
+        };
+    },
+
+    fetchListSettingsLikeSuccess: (data) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_LIKE_SUCCESS,
+            data,
+        };
+    },
+
+    fetchListSettingsLikeErr: (err) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_LIKE_ERR,
             err,
         };
     },

@@ -9,7 +9,7 @@ import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { TiTick } from "react-icons/ti";
-import { filter, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { toast } from 'react-toastify';
 import actionsComment from '../../../redux/buffComment/actions';

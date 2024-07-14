@@ -1,5 +1,7 @@
 /* eslint-disable */
-export const GENERAL_DOMAIN_ENPOINT = 'proxy/api/v1/admin/domains';
-export const LIST_PROXY_BY_DOMAIN_ENDPOINT = 'proxy/api/v1/admin/domains/id/proxies';
 
-export const PATCH_PROXY_ENDPOINT = 'proxy/api/v1/admin/domains';
+// COMMENT
+export const ACCOUNT_GMAIL_COMMENT_ENPOINT = 'ytb-comment/api/v1/admin/accounts';
+
+// LIKE
+export const ACCOUNT_GMAIL_LIKE_ENPOINT = 'ytb-like/api/v1/admin/accounts';

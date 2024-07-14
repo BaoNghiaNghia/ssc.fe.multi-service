@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Switch, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
+import { Link } from 'react-router-dom';
 import { LuListFilter } from 'react-icons/lu';
-import { TopToolBox } from './style';
+import { FaRegCommentDots } from 'react-icons/fa';
+import { GrNotification } from 'react-icons/gr';
+import { AiOutlineLike } from 'react-icons/ai';
+import { GalleryNav, TopToolBox } from './style';
 import AddDomain from './component/AddDomain';
 import DelDomain from './component/DelDomain';
 import ListProxyInDomain from './component/ListProxyInDomain';
@@ -13,35 +17,31 @@ import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import actions from '../../redux/proxy/actions';
+import gmailActions from '../../redux/gmailManage/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE } from '../../variables';
+
 
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'domain',
-    key: 'domain',
+    title: 'Tài khoản',
+    dataIndex: 'channel_id',
+    key: 'channel_id',
   },
   {
-    title: 'Email',
-    dataIndex: 'geo',
-    key: 'geo',
+    title: 'Máy',
+    dataIndex: 'computer',
+    key: 'computer',
   },
   {
-    title: 'Last Sign In',
-    dataIndex: 'total',
-    key: 'total',
+    title: 'Tổng nhiệm vụ',
+    dataIndex: 'total_task',
+    key: 'total_task',
   },
   {
-    title: 'Email Usage',
-    dataIndex: 'used_count',
-    key: 'used_count',
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'enable',
-    key: 'enable',
+    title: 'Trạng thái',
+    dataIndex: 'live',
+    key: 'live',
   },
   {
     title: 'Hành động',
@@ -52,12 +52,13 @@ const columns = [
 
 function GmailManagement() {
   const dispatch = useDispatch();
-  const { searchData, orders, isLoading, listDomain } = useSelector(state => {
+  const { orders, isLoading, typeService, listAccountgGmail, listAccountgGmailMeta } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
-      isLoading: state?.proxy?.loading,
-      listDomain: state?.proxy?.listDomain
+      isLoading: state?.gmailManage?.loading,
+      typeService: state?.gmailManage?.typeService,
+      listAccountgGmail: state?.gmailManage?.listAccountgGmail?.items,
+      listAccountgGmailMeta: state?.gmailManage?.listAccountgGmail?.meta,
     };
   });
 
@@ -65,14 +66,13 @@ function GmailManagement() {
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   const [state, setState] = useState({
+    activeClass: SERVICE_TYPE.COMMENT.title,
     notData: {},
-    isAddDomainModal: false,
-    isDelDomainModal: false,
-    isListProxyModal: false,
     dataRow: {},
     item: orders,
     selectedRowKeys: [],
   });
+  
 
   const { notData, item, selectedRowKeys } = state;
 
@@ -87,99 +87,69 @@ function GmailManagement() {
   }, [orders, selectedRowKeys]);
 
   useEffect(() => {
-    dispatch(actions.listAllDomainBegin({
+    dispatch(gmailActions.listAccountGmailCommentBegin({
       page: currentPage,
       limit: limitPage,
     }));
   }, [dispatch, currentPage, limitPage]);
-
+  
   const handleSearch = searchText => {
 
   };
 
+  const handleChange = (value) => {
+    console.log('---- class nè ---', value);
+    dispatch(gmailActions.changeServiceTypeInGmailBegin({
+      value,
+    }));
+
+    setState({ ...state, activeClass: value });
+  };
+
   const dataSource = [];
   
-  if (listDomain?.items?.length) {
-    // listDomain?.items?.map((value, key) => {
-    //   const { id, port_start, geo, domain, used_count, total, enable } = value;
-    //   return dataSource.push({
-    //     key: key + 1,
-    //     id: <span className="customer-name">{id}</span>,
-    //     domain: (
-    //       <>
-    //         <span className="customer-name" style={{ fontWeight: '700' }}>{domain}</span>
-    //         <span className="customer-name" style={{ fontSize: '0.7em' }}>ID: {id}</span>
-    //       </>
-    //     ),
-    //     geo: (
-    //       <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-    //         <img src={require(`../../static/img/flag/${geo}.png`)} alt="" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
-    //         <span style={{ marginLeft: '8px' }}>{geo.toUpperCase()}</span>
-    //       </div>
-    //     ),
-    //     port_start: <span className="customer-name">{port_start}</span>,
-    //     total: <span className="customer-name">{numberWithCommas(total || 0)}</span>,
-    //     used_count: <>
-    //       {
-    //         used_count ? <>
-    //           <span style={{ fontWeight: '700' }}>{numberWithCommas(used_count || 0)}</span>
-    //         </> : <>
-    //           <span style={{ color: 'gray' }}>0</span>
-    //         </>
-    //       }
-    //     </>,
-    //     enable: (
-    //       <Tooltip title={enable ? 'Đang hoạt động' : 'Không hoạt động'}>
-    //         <Switch checkedChildren="Hoạt động" unCheckedChildren="Dừng hoạt động"  checked={enable} onChange={(state) => {
-    //           const dataRequest = {
-    //             domain,
-    //             enable: state,
-    //             id
-    //           }
-    //           dispatch(actions.patchProxyBegin(dataRequest));
-    //         }}/>
-    //       </Tooltip>
-    //     ),
-    //     action: (
-    //       <div className="table-actions">
-    //         <Tooltip title="Danh sách proxy">
-    //           <Button 
-    //             className="btn-icon"
-    //             type="danger" 
-    //             shape="circle"
-    //             onClick={() => {
-    //               dispatch(actions.getListProxyInDomainBegin({
-    //                 id: value?.id,
-    //                 page: 1,
-    //                 limit: DEFAULT_PERPAGE
-    //               }));
-    //               setState({
-    //                 ...state,
-    //                 isListProxyModal: true,
-    //                 dataRow: value
-    //               });
-    //             }}
-    //           >
-    //             <FeatherIcon icon="repeat" size={16} />
-    //           </Button>
-    //         </Tooltip>
-    //         <Tooltip title="Xóa">
-    //           <Button 
-    //             className="btn-icon"
-    //             type="danger" 
-    //             shape="circle"
-    //             onClick={() => {
-    //               dispatch(actions.detailDomainBegin(value));
-    //               setState({ ...state, isDelDomainModal: true });
-    //             }}
-    //           >
-    //             <FeatherIcon icon="trash-2" size={16} />
-    //           </Button>
-    //         </Tooltip>
-    //       </div>
-    //     )
-    //   });
-    // });
+  if (listAccountgGmail?.length) {
+    listAccountgGmail?.map((value, key) => {
+      const { channel_id, computer, email, live, total_task } = value;
+      return dataSource.push({
+        key: key + 1,
+        channel_id: (
+          <>
+            <span className="customer-name" style={{ fontWeight: '700' }}>{email}</span>
+            <span className="customer-name" style={{ fontSize: '0.7em' }}>{channel_id}</span>
+          </>
+        ),
+        computer: (
+          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>{computer}</div>
+        ),
+        live: <span className="customer-name">{live}</span>,
+        total_task: (
+          <span className="customer-name">{total_task}</span>
+        ),
+        action: (
+          <div className="table-actions">
+            <Tooltip title="Danh sách proxy">
+              <Button 
+                className="btn-icon"
+                type="danger" 
+                shape="circle"
+              >
+                <FeatherIcon icon="repeat" size={16} />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Xóa">
+              <Button 
+                className="btn-icon"
+                type="danger" 
+                shape="circle"
+              >
+                <FeatherIcon icon="trash-2" size={16} />
+              </Button>
+            </Tooltip>
+          </div>
+        )
+      });
+    });
   }
 
   const onSelectChange = selectedRowKey => {
@@ -211,6 +181,42 @@ function GmailManagement() {
       <PageHeader
         ghost
         title="Quản lý Gmail"
+        buttons={[ 
+          <div key="1" className="page-header-actions">
+            <GalleryNav>
+              <ul>
+                <li>
+                  <Link
+                    className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.SUBSCRIBE.title)}
+                    to="#"
+                    style={{ display: 'inline-flex', alignItems: 'center' }}
+                  >
+                    <GrNotification fontSize={15} className='pr-3'/> <span>Subscribe</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className={typeService === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.COMMENT.title)}
+                    to="#"
+                  >
+                    <FaRegCommentDots fontSize={15} className='mr-3'/> <span>Comment</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className={typeService === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.LIKE.title)}
+                    to="#"
+                  >
+                    <AiOutlineLike fontSize={17} className='mr-3'/> <span>Like</span>
+                  </Link>
+                </li>
+              </ul>
+            </GalleryNav>
+          </div>,
+        ]}
       />
       <Main>
         <Cards headless>
@@ -259,10 +265,10 @@ function GmailManagement() {
                   columns={columns}
                   loading={isLoading}
                   pagination={{
-                    current: listDomain?.meta?.current_page,
-                    defaultPageSize: listDomain?.meta?.count,
-                    pageSize: listDomain?.meta?.per_page,
-                    total: listDomain?.meta?.total,
+                    current: listAccountgGmailMeta?.current_page,
+                    defaultPageSize: listAccountgGmailMeta?.count,
+                    pageSize: listAccountgGmailMeta?.per_page,
+                    total: listAccountgGmailMeta?.total,
                     showSizeChanger: true,
                     pageSizeOptions: DEFAULT_PAGESIZE,
                     onChange(page, pageSize) {
@@ -273,7 +279,7 @@ function GmailManagement() {
                     responsive: true,
                     showTotal(total, range) {
                         return <>
-                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
+                            <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> tài khoản</p>
                         </>
                     },
                     totalBoundaryShowSizeChanger: 100,

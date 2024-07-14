@@ -18,6 +18,7 @@ import BuffCommentReducer from './buffComment/reducers';
 import BuffLikeReducer from './buffLike/reducers';
 import SettingsServiceReducer from './serviceSettings/reducers';
 import ProxyReducer from './proxy/reducers';
+import GmailManageReducer from './gmailManage/reducers';
 
 const rootReducers = combineReducers({
   gallery: galleryReducer,
@@ -39,6 +40,7 @@ const rootReducers = combineReducers({
   member: MemberReducer,
   proxy: ProxyReducer,
   settingService: SettingsServiceReducer,
+  gmailManage: GmailManageReducer
 });
 
 export default rootReducers;
