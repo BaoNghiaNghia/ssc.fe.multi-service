@@ -14,7 +14,7 @@ import {
   deleteAccountGmailLikeAPI,
   patchAccountGmailLikeAPI,
 } from '../../config/apiFactory/Gmail/index';
-import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
+import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
 
 function* changeServiceTypeInGmailFunc(params) {
@@ -27,10 +27,22 @@ function* changeServiceTypeInGmailFunc(params) {
 
     if (isType === SERVICE_TYPE.COMMENT.title) {
         console.log('--- THAY ĐỔI COMMENT ---')
+        yield put(
+          actions.listAccountGmailCommentBegin({
+            page: 1,
+            limit: DEFAULT_PERPAGE
+          })
+        )
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
         console.log('--- THAY ĐỔI LIKE ---')
+        yield put(
+          actions.listAccountGmailLikeBegin({
+            page: 1,
+            limit: DEFAULT_PERPAGE 
+          })
+        )
     }
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
         console.log('--- THAY ĐỔI SUBSCRIBE ---')
@@ -72,7 +84,7 @@ function* detailAccountGmailCommentFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.detailAccountGmailCommentSuccess(response?.data?.data?.reverse())
+        actions.detailAccountGmailCommentSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -95,7 +107,7 @@ function* createAccountGmailCommentFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.createAccountGmailCommentSuccess(response?.data?.data?.reverse())
+        actions.createAccountGmailCommentSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -118,7 +130,7 @@ function* deleteAccountGmailCommentFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.deleteAccountGmailCommentSuccess(response?.data?.data?.reverse())
+        actions.deleteAccountGmailCommentSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -141,7 +153,7 @@ function* patchAccountGmailCommentFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.patchAccountGmailCommentSuccess(response?.data?.data?.reverse())
+        actions.patchAccountGmailCommentSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -167,7 +179,7 @@ function* listAccountGmailLikeFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.listAccountGmailLikeSuccess(response?.data?.data?.reverse())
+        actions.listAccountGmailLikeSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -190,7 +202,7 @@ function* detailAccountGmailLikeFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.detailAccountGmailLikeSuccess(response?.data?.data?.reverse())
+        actions.detailAccountGmailLikeSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -213,7 +225,7 @@ function* createAccountGmailLikeFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.createAccountGmailLikeSuccess(response?.data?.data?.reverse())
+        actions.createAccountGmailLikeSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -236,7 +248,7 @@ function* deleteAccountGmailLikeFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.deleteAccountGmailLikeSuccess(response?.data?.data?.reverse())
+        actions.deleteAccountGmailLikeSuccess(response?.data?.data)
       );
     }
   } catch (error) {
@@ -259,7 +271,7 @@ function* patchAccountGmailLikeFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.patchAccountGmailLikeSuccess(response?.data?.data?.reverse())
+        actions.patchAccountGmailLikeSuccess(response?.data?.data)
       );
     }
   } catch (error) {

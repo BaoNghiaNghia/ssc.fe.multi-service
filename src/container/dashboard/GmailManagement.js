@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +9,7 @@ import { LuListFilter } from 'react-icons/lu';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { GrNotification } from 'react-icons/gr';
 import { AiOutlineLike } from 'react-icons/ai';
+import { TbCreditCardRefund } from 'react-icons/tb';
 import { GalleryNav, TopToolBox } from './style';
 import AddDomain from './component/AddDomain';
 import DelDomain from './component/DelDomain';
@@ -50,6 +52,34 @@ const columns = [
   },
 ];
 
+function Avatar({ name }) {
+  // Function to extract initials from the name
+  const getInitials = (name) => {
+      const initials = name.split(' ').map(word => word[0].toUpperCase()).join('');
+      return initials;
+  };
+
+  // Inline styles
+  const styles = {
+      width: '30px',
+      height: '30px',
+      borderRadius: '50%',  // Makes the div circular
+      backgroundColor: '#4CAF50',  // Green background
+      color: 'white',
+      display: 'flex',
+      alignItems: 'center',  // Vertical alignment
+      justifyContent: 'center',  // Horizontal alignment
+      fontSize: '15px',
+      fontWeight: '500'
+  };
+
+  return (
+      <div style={styles}>
+          {getInitials(name)}
+      </div>
+  );
+}
+
 function GmailManagement() {
   const dispatch = useDispatch();
   const { orders, isLoading, typeService, listAccountgGmail, listAccountgGmailMeta } = useSelector(state => {
@@ -87,10 +117,19 @@ function GmailManagement() {
   }, [orders, selectedRowKeys]);
 
   useEffect(() => {
-    dispatch(gmailActions.listAccountGmailCommentBegin({
-      page: currentPage,
-      limit: limitPage,
-    }));
+    if (typeService === SERVICE_TYPE.COMMENT.title) {
+      dispatch(gmailActions.listAccountGmailCommentBegin({
+        page: currentPage,
+        limit: limitPage,
+      }));
+    } else if (typeService === SERVICE_TYPE.LIKE.title) {
+      dispatch(gmailActions.listAccountGmailLikeBegin({
+        page: currentPage,
+        limit: limitPage,
+      }));
+    } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+      console.log('--- subscribe ---')
+    }
   }, [dispatch, currentPage, limitPage]);
   
   const handleSearch = searchText => {
@@ -107,43 +146,88 @@ function GmailManagement() {
   };
 
   const dataSource = [];
-  
+
   if (listAccountgGmail?.length) {
     listAccountgGmail?.map((value, key) => {
-      const { channel_id, computer, email, live, total_task } = value;
+      const { channel_id, computer, email, live, total_task, _id } = value;
       return dataSource.push({
         key: key + 1,
         channel_id: (
           <>
-            <span className="customer-name" style={{ fontWeight: '700' }}>{email}</span>
-            <span className="customer-name" style={{ fontSize: '0.7em' }}>{channel_id}</span>
+            <span className="customer-name" style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+              <Avatar name={email} />
+              <span style={{ marginLeft: '9px' }} >
+                <p style={{ margin: 0, padding: 0, fontWeight: '600' }}>{email}</p>
+                <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}>{channel_id}</p>
+              </span>
+            </span>
           </>
         ),
         computer: (
-          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>{computer}</div>
+          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', color: 'gray' }}>{computer}</div>
         ),
-        live: <span className="customer-name">{live}</span>,
+        live: <Switch checkedChildren="Mail sống" unCheckedChildren="Mail chết" checked={live}/>,
         total_task: (
-          <span className="customer-name">{total_task}</span>
+          <span className="customer-name">{numberWithCommas(total_task || 0)}</span>
         ),
         action: (
           <div className="table-actions">
-            <Tooltip title="Danh sách proxy">
-              <Button 
-                className="btn-icon"
-                type="danger" 
-                shape="circle"
+            <Tooltip title="Chi tiết">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                onClick={() => {
+                  if (typeService === SERVICE_TYPE.COMMENT.title) {
+                    dispatch(gmailActions.detailAccountGmailCommentBegin(_id));
+                  } else if (typeService === SERVICE_TYPE.LIKE.title) {
+                    dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
+                  } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+                    console.log('--- subscribe ---')
+                  }
+
+                  setState({ 
+                    ...state,
+                    isDetailAccountModal: true
+                  });
+                }}
               >
-                <FeatherIcon icon="repeat" size={16} />
+                <FeatherIcon icon="eye" size={16} />
               </Button>
             </Tooltip>
-            <Tooltip title="Xóa">
-              <Button 
-                className="btn-icon"
-                type="danger" 
-                shape="circle"
+
+            <Tooltip title="Chỉnh sửa">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                onClick={() => {
+                  if (typeService === SERVICE_TYPE.COMMENT.title) {
+                    dispatch(gmailActions.detailAccountGmailCommentBegin(_id));
+                  } else if (typeService === SERVICE_TYPE.LIKE.title) {
+                    dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
+                  } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+                    console.log('--- subscribe ---')
+                  }
+                  setState({ ...state, isUpdateAccountModal: true });
+                }}
               >
-                <FeatherIcon icon="trash-2" size={16} />
+                <FeatherIcon icon="edit" size={16} />
+              </Button>
+            </Tooltip>
+            
+            <Tooltip title="Xóa">
+              <Button className="btn-icon" type="primary" to="#" shape="circle"
+                onClick={() => {
+                  if (typeService === SERVICE_TYPE.COMMENT.title) {
+                    dispatch(gmailActions.detailAccountGmailCommentBegin(_id));
+                  } else if (typeService === SERVICE_TYPE.LIKE.title) {
+                    dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
+                  } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+                    console.log('--- subscribe ---')
+                  }
+                  setState({
+                    ...state,
+                    rowData: value,
+                    isAccountModal: true
+                  });
+                }}
+              >
+                <FaRegCommentDots fontSize={15}/>
               </Button>
             </Tooltip>
           </div>

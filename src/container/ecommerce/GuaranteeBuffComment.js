@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Tooltip, Progress} from 'antd';
+import { Row, Col, Table, Tooltip, Progress, Image} from 'antd';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund } from "react-icons/tb";
 import { RiScan2Fill } from "react-icons/ri";
@@ -399,7 +399,7 @@ function PendingBuffComment() {
                       }}
                     >
                       <RiScan2Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                      <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét</span>
+                      <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét đơn</span>
                     </Button>
                   </Col>
                 </Row>
@@ -415,6 +415,31 @@ function PendingBuffComment() {
                   size='small'
                   dataSource={dataSource}
                   columns={columns}
+                  locale={{ emptyText: (
+                    <div>
+                      <Image src={require(`../../static/img/scan_order_1.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
+                      <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
+                      <span style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                        Hiện tại chưa có danh sách đơn bảo hành
+                      </span>
+                      <Button
+                        size="small"
+                        type="dashed"
+                        style={{ borderRadius: '20px', backgroundColor: '#dae0ec5c' }}
+                        onClick={() => {
+                          dispatch(actions.fetchWarrantyCommentOrderBegin({
+                            page: currentPage,
+                            limit: limitPage,
+                            start_date: `${filterRange?.from} 00:00:00`,
+                            end_date: `${filterRange?.to} 23:59:59`,
+                          }));
+                        }}
+                      >
+                        <RiScan2Fill size={18} style={{ marginRight: '7px', padding: 0 }} />
+                        <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét đơn</span>
+                      </Button>
+                    </div>
+                  ) }}
                   pagination={{
                     current: listWarrantyOrder?.meta?.current_page,
                     defaultPageSize: listWarrantyOrder?.meta?.count,

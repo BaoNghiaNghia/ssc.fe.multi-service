@@ -151,16 +151,17 @@ const columnsGoogleKey = [
 function SettingAndService() {
   const dispatch = useDispatch();
 
-  const [formUpdateSettings] = Form.useForm();
+  const [formUpdateSettingsComment] = Form.useForm();
+  const [formUpdateSettingsLike] = Form.useForm();
 
-  const { searchData, orders, listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta } = useSelector(state => {
+  const { orders, listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta, listSettingsLike } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
       listService: state?.settingService?.listService?.items,
       listMetaService: state?.settingService?.listService?.meta,
       typeTab: state?.settingService?.typeTab,
       listSettingsComment: state?.settingService?.listSettingsComment,
+      listSettingsLike: state?.settingService?.listSettingsLike,
       listGoogleKey: state?.settingService?.listGoogleKey?.google_keys,
       listGoogleKeyMeta: state?.settingService?.listGoogleKey?.meta,
     };
@@ -170,14 +171,19 @@ function SettingAndService() {
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
   useEffect(() => {
+    dispatch(actions.fetchListSettingsCommentBegin());
+    dispatch(actions.fetchListSettingsLikeBegin());
+  }, [dispatch]);
+
+  useEffect(() => {
     dispatch(actions.fetchListServiceBegin({
       page: currentPage,
       limit: limitPage,
     }));
-
-    dispatch(actions.fetchListSettingsCommentBegin());
-    dispatch(actions.fetchListSettingsLikeBegin());
   }, [dispatch, currentPage, limitPage]);
+
+  formUpdateSettingsComment.setFieldsValue(listSettingsComment);
+  formUpdateSettingsLike.setFieldsValue(listSettingsLike);
 
   const [state, setState] = useState({
     isOpenAdd: false,
@@ -433,9 +439,35 @@ function SettingAndService() {
     }
   }
 
-  const handleUpdateSetting = () => {
+  const handleUpdateSettingLike = () => {
     try {
-      formUpdateSettings.validateFields()
+      formUpdateSettingsLike.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettingsLike?.id,
+            account_delay_time: values?.account_delay_time,
+            block_video: values?.block_video,
+            computer_reset_time: values?.computer_reset_time,
+            max_order: values?.max_order,
+            max_random_time: values?.max_random_time,
+            min_random_time: values?.min_random_time,
+            min_video_time: values?.min_video_time,
+            bonus_lager_500: values?.bonus_lager_500,
+            bonus_smaller_500: values?.bonus_smaller_500,
+        }
+
+        dispatch(actions.updateListSettingsLikeBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleUpdateSettingComment = () => {
+    try {
+      formUpdateSettingsComment.validateFields()
         .then((values) => {
           const requestData = {
             id: listSettingsComment?.id,
@@ -448,7 +480,7 @@ function SettingAndService() {
             min_video_time: values?.min_video_time
         }
 
-        dispatch(actions.updateListSettingsBegin(requestData));
+        dispatch(actions.updateListSettingsCommentBegin(requestData));
       })
       .catch((err) => {
           console.error("handle Real Error: ", err);
@@ -458,9 +490,9 @@ function SettingAndService() {
     }
   }
 
-  const handleSwitchBlockVideo = (valueBlockVideo) => {
+  const handleSwitchBlockVideoComment = (valueBlockVideo) => {
     try {
-      formUpdateSettings.validateFields()
+      formUpdateSettingsComment.validateFields()
         .then((values) => {
           const requestData = {
             id: listSettingsComment?.id,
@@ -473,7 +505,34 @@ function SettingAndService() {
             min_video_time: values?.min_video_time
         }
 
-        dispatch(actions.updateListSettingsBegin(requestData));
+        dispatch(actions.updateListSettingsCommentBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleSwitchBlockVideoLike = (valueBlockVideo) => {
+    try {
+      formUpdateSettingsLike.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettingsLike?.id,
+            account_delay_time: values?.account_delay_time,
+            block_video: valueBlockVideo,
+            computer_reset_time: values?.computer_reset_time,
+            max_order: values?.max_order,
+            max_random_time: values?.max_random_time,
+            min_random_time: values?.min_random_time,
+            min_video_time: values?.min_video_time,
+            bonus_lager_500: values?.bonus_lager_500,
+            bonus_smaller_500: values?.bonus_smaller_500,
+        }
+
+        dispatch(actions.updateListSettingsLikeBegin(requestData));
       })
       .catch((err) => {
           console.error("handle Real Error: ", err);
@@ -499,16 +558,16 @@ function SettingAndService() {
                 </Col>
                 <Col xxl={18} xs={24}>
                   <div className="table-toolbox-actions">
-                    <Button size="small" key="4" type="primary" onClick={handleUpdateSetting}>
+                    <Button size="small" key="4" type="primary" onClick={handleUpdateSettingComment}>
                       <FeatherIcon icon="save" size={14} />
-                      Cập nhật
+                      Cập nhật Comment
                     </Button>
                   </div>
                 </Col>
               </Row>
             </TopToolBox>
-            <Form name='form-update-settings' layout="vertical" form={formUpdateSettings}>
-              <Row gutter={50}>
+            <Form name='form-update-settings' layout="vertical" form={formUpdateSettingsComment}>
+              <Row gutter={30}>
                 <Col xs={12}>
                     <Row gutter="15">
                       <Col sm={12}>
@@ -537,7 +596,7 @@ function SettingAndService() {
                           <Switch
                             checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
                             checked={listSettingsComment?.block_video}
-                            onChange={(value) => handleSwitchBlockVideo(value)}
+                            onChange={(value) => handleSwitchBlockVideoComment(value)}
                           />
                         </Form.Item>
                       </Col>
@@ -627,31 +686,156 @@ function SettingAndService() {
   }
 
   const LikeSettingComponent = () => {
-    return (
-      <Cards headless>
-        <TopToolBox>
-          <Row gutter={15} className="justify-content-center">
-            <Col lg={6} xs={24}>
-              <div style={{ display: 'inline-flex' }}>
-                <span style={{ fontSize: '16px', fontWeight: '700' }}>Cài đặt Like</span>
-              </div>
-            </Col>
-            <Col xxl={18} xs={24}>
-              <div className="table-toolbox-actions">
-                <Button size="small" key="4" type="primary" disabled onClick={handleUpdateSetting}>
-                  <FeatherIcon icon="save" size={14} />
-                  Cập nhật
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </TopToolBox>
-        <Row gutter={50}>
-          <Col xs={12}>
-            <span>Đang cập nhật</span>
-          </Col>
-        </Row>
-      </Cards>
+    return (<>
+      {
+        listSettingsLike ? (
+          <Cards headless>
+            <TopToolBox>
+              <Row gutter={15} className="justify-content-center">
+                <Col lg={6} xs={24}>
+                  <div style={{ display: 'inline-flex' }}>
+                    <span style={{ fontSize: '16px', fontWeight: '700' }}>Cài đặt Like</span>
+                  </div>
+                </Col>
+                <Col xxl={18} xs={24}>
+                  <div className="table-toolbox-actions">
+                    <Button size="small" key="4" type="primary" onClick={handleUpdateSettingLike}>
+                      <FeatherIcon icon="save" size={14} />
+                      Cập nhật Like
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            </TopToolBox>
+            <Form name='form-update-settings' layout="vertical" form={formUpdateSettingsLike}>
+              <Row gutter={20}>
+                <Col sm={4}>
+                  <Form.Item
+                    name="account_delay_time"
+                    label="Thời gian bốc lại account"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber size='small' addonAfter="phút" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+                <Col sm={3}>
+                  <Form.Item
+                    name="block_video"
+                    label="Màn hình đen"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <Switch
+                      checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
+                      checked={listSettingsLike?.block_video}
+                      onChange={(value) => handleSwitchBlockVideoLike(value)}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col sm={5}>
+                  <Form.Item
+                    name="computer_reset_time"
+                    label="Thời gian reset luồng sau khi OFF"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+                <Col sm={4}>
+                  <Form.Item
+                    name="max_order"
+                    label="Số luồng tối đa hệ thống"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+                <Col sm={4}>
+                  <Form.Item
+                    name="max_random_time"
+                    label="Thời gian xem tối đa"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+                <Col sm={4}>
+                  <Form.Item
+                    name="min_random_time"
+                    label="Thời gian xem tối thiểu"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+                <Col sm={4}>
+                  <Form.Item
+                    name="min_video_time"
+                    label="Số giây tối đa lấy video"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+                <Col sm={4}>
+                  <Form.Item
+                    name="bonus_lager_500"
+                    label="Bonus lớn hơn 500"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+                <Col sm={4}>
+                  <Form.Item
+                    name="bonus_smaller_500"
+                    label="Bonus nhỏ hơn 500"
+                    style={{ marginBottom: '7px' }}
+                    rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}
+                  >
+                    <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </Cards>
+        ) : null
+      }
+    </>
     )
   }
 
@@ -667,7 +851,7 @@ function SettingAndService() {
             </Col>
             <Col xxl={18} xs={24}>
               <div className="table-toolbox-actions">
-                <Button size="small" key="4" type="primary" disabled onClick={handleUpdateSetting}>
+                <Button size="small" key="4" type="primary" disabled onClick={() => console.log('-- update setting subscribe --')}>
                   <FeatherIcon icon="save" size={14} />
                   Cập nhật
                 </Button>
@@ -894,7 +1078,7 @@ function SettingAndService() {
                   className={typeTab === SERVICE_SETTING_TYPE.SETTING.title ? 'active' : 'deactivate'}
                   onClick={() => {
                     handleChangeTabType(SERVICE_SETTING_TYPE.SETTING.title);
-                    if (Object.keys(listSettingsComment).length !== 0) formUpdateSettings.setFieldsValue(listSettingsComment);
+                    if (Object.keys(listSettingsComment).length !== 0) formUpdateSettingsComment.setFieldsValue(listSettingsComment);
                   }}
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"
