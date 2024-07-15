@@ -171,7 +171,7 @@ function DetailAccountGmail({ gmailState, setState }) {
                         <Form.Item 
                             name="last_call_at"
                             initialValue
-                            label=""
+                            label="Lần gọi cuối"
                             style={{ marginBottom: '0px' }}
                             rules={[{
                             required: true,
@@ -185,7 +185,7 @@ function DetailAccountGmail({ gmailState, setState }) {
                         <Form.Item 
                             name="last_success_at"
                             initialValue
-                            label="Tổng nhiệm vụ"
+                            label="Lần hoàn thành cuối"
                             style={{ marginBottom: '0px' }}
                             rules={[{
                             required: true,
