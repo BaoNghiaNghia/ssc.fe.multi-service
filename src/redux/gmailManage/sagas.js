@@ -129,8 +129,13 @@ function* deleteAccountGmailCommentFunc(params) {
     const response = yield call(deleteAccountGmailCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      toast.error('Xóa tài khoản gmail thành công');
       yield put(
         actions.deleteAccountGmailCommentSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.listAccountGmailCommentBegin()
       );
     }
   } catch (error) {
@@ -247,8 +252,14 @@ function* deleteAccountGmailLikeFunc(params) {
     const response = yield call(deleteAccountGmailLikeAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      toast.error('Xóa tài khoản gmail thành công');
+
       yield put(
         actions.deleteAccountGmailLikeSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.listAccountGmailLikeBegin()
       );
     }
   } catch (error) {

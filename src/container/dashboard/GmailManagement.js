@@ -8,12 +8,11 @@ import { Link } from 'react-router-dom';
 import { LuListFilter } from 'react-icons/lu';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { GrNotification } from 'react-icons/gr';
-import { AiOutlineLike } from 'react-icons/ai';
-import { TbCreditCardRefund } from 'react-icons/tb';
+import { AiOutlineLike, AiTwotoneDelete } from 'react-icons/ai';
 import { GalleryNav, TopToolBox } from './style';
-import AddDomain from './component/AddDomain';
-import DelDomain from './component/DelDomain';
-import ListProxyInDomain from './component/ListProxyInDomain';
+import AddAccountGmail from './component/AddAccountGmail';
+import DetailAccountGmail from './component/DetailAccountGmail';
+import EditAccountGmail from './component/EditAccountGmail';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -22,6 +21,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import gmailActions from '../../redux/gmailManage/actions';
 import { numberWithCommas } from '../../utility/utility';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE } from '../../variables';
+import ConfirmRequestModal from '../ecommerce/components/ConfirmRequestModal';
 
 
 const columns = [
@@ -97,12 +97,15 @@ function GmailManagement() {
 
   const [state, setState] = useState({
     activeClass: SERVICE_TYPE.COMMENT.title,
+    isAddAccountGmailModal: false,
+    isDetailAccountGmailModal: false,
+    isUpdateAccountGmailModal: false,
+    isDeleteAccountGmailModal: false,
     notData: {},
     dataRow: {},
     item: orders,
     selectedRowKeys: [],
-  });
-  
+  }); 
 
   const { notData, item, selectedRowKeys } = state;
 
@@ -185,7 +188,8 @@ function GmailManagement() {
 
                   setState({ 
                     ...state,
-                    isDetailAccountModal: true
+                    dataRow: value,
+                    isDetailAccountGmailModal: true
                   });
                 }}
               >
@@ -203,7 +207,11 @@ function GmailManagement() {
                   } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
                     console.log('--- subscribe ---')
                   }
-                  setState({ ...state, isUpdateAccountModal: true });
+                  setState({
+                    ...state,
+                    dataRow: value,
+                    isUpdateAccountGmailModal: true
+                  });
                 }}
               >
                 <FeatherIcon icon="edit" size={16} />
@@ -213,21 +221,14 @@ function GmailManagement() {
             <Tooltip title="Xóa">
               <Button className="btn-icon" type="primary" to="#" shape="circle"
                 onClick={() => {
-                  if (typeService === SERVICE_TYPE.COMMENT.title) {
-                    dispatch(gmailActions.detailAccountGmailCommentBegin(_id));
-                  } else if (typeService === SERVICE_TYPE.LIKE.title) {
-                    dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
-                  } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
-                    console.log('--- subscribe ---')
-                  }
                   setState({
                     ...state,
-                    rowData: value,
-                    isAccountModal: true
+                    dataRow: value,
+                    isDeleteAccountGmailModal: true
                   });
                 }}
               >
-                <FaRegCommentDots fontSize={15}/>
+                <AiTwotoneDelete size={16} style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
           </div>
@@ -246,21 +247,34 @@ function GmailManagement() {
     },
   };
 
-  const { isAddDomainModal, isDelDomainModal } = state;
-
   return (
     <>
-      <AddDomain
-        isOpen={isAddDomainModal}
+      <AddAccountGmail
+        gmailState={state}
         setState={setState}
       />
-      <DelDomain
-        isOpen={isDelDomainModal}
+      <DetailAccountGmail
+        gmailState={state}
         setState={setState}
       />
-      <ListProxyInDomain
-        currentState={state}
+      <EditAccountGmail
+        gmailState={state}
         setState={setState}
+      />
+      <ConfirmRequestModal
+        isOpen={state?.isDeleteAccountGmailModal}
+        setState={setState}
+        descriptions={`Xác nhận xóa tài khoản ${state?.dataRow?.email}`}
+        title="Xác nhận"
+        subtitle="Xóa thông tin tài khoản"
+        handleOk={() => {
+          // eslint-disable-next-line no-underscore-dangle
+          dispatch(gmailActions.deleteAccountGmailCommentBegin({id: state?.dataRow?._id}));
+          setState({ 
+            ...state,
+            isDeleteAccountGmailModal: false
+          });
+        }}
       />
       <PageHeader
         ghost

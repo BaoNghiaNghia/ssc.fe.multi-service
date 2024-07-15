@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { BsPersonCheck } from "react-icons/bs";
 import { Row, Col, Form, Input, Modal, InputNumber, Divider, Button } from 'antd';
 import { RiKey2Line } from "react-icons/ri";
-import { MdAddchart, MdAlternateEmail } from "react-icons/md";
+import { MdAlternateEmail } from "react-icons/md";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaUser } from "react-icons/fa";
 import userActions from '../../../redux/member/actions';

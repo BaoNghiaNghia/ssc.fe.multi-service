@@ -313,7 +313,7 @@ function SettingAndService() {
             </Button>
           </Tooltip>
           <Tooltip title={`${enabled ? 'Tắt' : 'Bật'} dịch vụ`}>
-            <Switch checked={enabled} size='small' onChange={() => {
+            <Switch checked={enabled} checkedChildren="Bật" unCheckedChildren="Tắt" size='small' onChange={() => {
               setState({
                 ...state,
                 isOpenDel: true
