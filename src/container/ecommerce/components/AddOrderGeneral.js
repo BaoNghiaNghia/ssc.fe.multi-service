@@ -841,7 +841,7 @@ function AddOrderGeneral() {
                 <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
                   <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px', height: '-webkit-fill-available' }}>
                     <div className="text-center">
-                      <Image src={EmptyBackground}  preview={false} />
+                      <Image src={EmptyBackground}  preview={false} width="86%"/>
                     </div>
                   </Card>
                 </Col>

@@ -10,7 +10,7 @@ import { STATUS_COMMENT_ENUM } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
 
 function DetailLikeComputer({ setState, computerState }) {
-    const { isDetailCommentServer } = computerState;
+    const { isDetailCommentServer, selectedItem } = computerState;
 
     const [formDetailComputerCmt] = Form.useForm();
 
@@ -22,8 +22,8 @@ function DetailLikeComputer({ setState, computerState }) {
     });
 
     useEffect(() => {
-        if (!isEmptyObject(detailComputerComment)) {
-            formDetailComputerCmt.setFieldsValue(detailComputerComment);
+        if (!isEmptyObject(selectedItem)) {
+            formDetailComputerCmt.setFieldsValue(selectedItem);
         }
     });
 

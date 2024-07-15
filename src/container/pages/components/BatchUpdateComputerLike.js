@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { STATUS_COMMENT_ENUM } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
-import actions from '../../../redux/buffComment/actions';
+import actions from '../../../redux/buffLike/actions';
 
 const { Option } = Select;
 
@@ -39,7 +39,7 @@ function BatchUpdateComputerLike({ setState, computerState }) {
                     if (selectedRowKeys?.length > 0) {
                         values.ids = selectedRowKeys;
                     }
-                    dispatch(actions.updateManyComputerCommentAdminBegin(values));
+                    dispatch(actions.updateManyComputerLikeAdminBegin(values));
 
                     setState({
                         isModalEditMem: false,

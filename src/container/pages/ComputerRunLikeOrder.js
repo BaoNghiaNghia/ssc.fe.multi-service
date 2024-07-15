@@ -286,6 +286,7 @@ function ComputerRunLikeOrder() {
                   }));
                   setState({
                     ...state,
+                    selectedItem: value,
                     isEditCommentServer: true
                   })
                 }}
@@ -307,6 +308,7 @@ function ComputerRunLikeOrder() {
                   }));
                   setState({
                     ...state,
+                    selectedItem: value,
                     isDetailCommentServer: true
                   })
                 }}

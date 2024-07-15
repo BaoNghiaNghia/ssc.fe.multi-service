@@ -6,14 +6,14 @@ import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Button } fr
 import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
 import { isEmptyObject } from '../../../utility/utility';
-import actions from '../../../redux/buffComment/actions';
+import actions from '../../../redux/buffLike/actions';
 
 const { Option } = Select;
 
 function EditLikeComputer({ setState, computerState }) {
     const dispatch = useDispatch();
 
-    const { isEditCommentServer } = computerState;
+    const { isEditCommentServer, selectedItem } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
     const { isLoading, detailComputerComment } = useSelector(state => {
@@ -24,7 +24,7 @@ function EditLikeComputer({ setState, computerState }) {
     });
 
     useEffect(() => {
-        if (!isEmptyObject(detailComputerComment)) formDetailComputerCmt.setFieldsValue(detailComputerComment);
+        if (!isEmptyObject(selectedItem)) formDetailComputerCmt.setFieldsValue(selectedItem);
     });
 
     const handleOk = () => {
@@ -32,9 +32,10 @@ function EditLikeComputer({ setState, computerState }) {
             formDetailComputerCmt.validateFields()
                 .then((values) => {
                     const requestData = {
-                        id: detailComputerComment?.id,
+                        id: selectedItem?.id,
                         action: values?.action,
                         cpu: values?.cpu,
+                        name: values?.name,
                         ip: values?.ip,
                         limit_per_day: values?.limit_per_day,
                         link: values?.link,
@@ -42,7 +43,7 @@ function EditLikeComputer({ setState, computerState }) {
                         thread: values?.thread
                     }
 
-                    dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
+                    dispatch(actions.updateOneComputerLikeAdminBegin(requestData));
 
                     setState({
                         isModalEditMem: false,
@@ -107,13 +108,21 @@ function EditLikeComputer({ setState, computerState }) {
 
                                 <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
 
-                                <Row gutter="10"> 
-                                    <Col sm={12}>
+                                <Row gutter="10">
+                                    <Col sm={8}>
+                                        <Form.Item name="name" label="Tên máy" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input size='small' style={{ width: '100%' }} placeholder='Tên máy' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
                                         <Form.Item name="cpu" label="CPU">
                                             <Input size='small' style={{ width: '100%' }} placeholder='CPU của server' />
                                         </Form.Item>
                                     </Col>
-                                    <Col sm={12}>
+                                    <Col sm={8}>
                                         <Form.Item name="ram" label="Ram">
                                             <Input size='small' style={{ width: '100%' }} placeholder='Ram của server' />
                                         </Form.Item>

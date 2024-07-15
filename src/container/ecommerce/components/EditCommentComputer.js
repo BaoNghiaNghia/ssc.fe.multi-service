@@ -35,6 +35,7 @@ function EditCommentComputer({ setState, computerState }) {
                         id: detailComputerComment?.id,
                         action: values?.action,
                         cpu: values?.cpu,
+                        name: values?.name,
                         ip: values?.ip,
                         limit_per_day: values?.limit_per_day,
                         link: values?.link,
@@ -108,12 +109,20 @@ function EditCommentComputer({ setState, computerState }) {
                                 <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
 
                                 <Row gutter="10"> 
-                                    <Col sm={12}>
+                                    <Col sm={8}>
+                                        <Form.Item name="name" label="Tên máy" rules={[{
+                                            required: true,
+                                            message: 'Trường không được trống'
+                                        }]}>
+                                            <Input size='small' style={{ width: '100%' }} placeholder='Tên máy' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col sm={8}>
                                         <Form.Item name="cpu" label="CPU">
                                             <Input size='small' style={{ width: '100%' }} placeholder='CPU của server' />
                                         </Form.Item>
                                     </Col>
-                                    <Col sm={12}>
+                                    <Col sm={8}>
                                         <Form.Item name="ram" label="Ram">
                                             <Input size='small' style={{ width: '100%' }} placeholder='Ram của server' />
                                         </Form.Item>

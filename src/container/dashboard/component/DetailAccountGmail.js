@@ -2,20 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Modal, Switch } from 'antd';
+import { Row, Col, Form, Input, Modal, Switch, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
 
 function DetailAccountGmail({ gmailState, setState }) {
     const dispatch = useDispatch();
-    const [formCreateGoogleKey] = Form.useForm();
+    const [formDetailAccountGmail] = Form.useForm();
 
     const { isDetailAccountGmailModal, selectedRowData} = gmailState;
 
-    const { postLoading, detailGoogleKey } = useSelector(state => {
+    const { postLoading, detailAccountGmail } = useSelector(state => {
         return {
-            postLoading: state?.settingService?.postLoading,
-            detailGoogleKey: state?.settingService?.detailGoogleKey
+            postLoading: state?.gmailManage?.loading,
+            detailAccountGmail: state?.gmailManage?.detailAccountGmail
         };
     });
 
@@ -28,12 +28,12 @@ function DetailAccountGmail({ gmailState, setState }) {
     };
 
     useEffect(() => {
-        formCreateGoogleKey.setFieldsValue(detailGoogleKey);
+        formDetailAccountGmail.setFieldsValue(detailAccountGmail);
     });
 
     const handleOk = () => {
         try {
-            formCreateGoogleKey.validateFields()
+            formDetailAccountGmail.validateFields()
                 .then((values) => {
                     const requestData = {
                         email: values?.email,
@@ -48,7 +48,7 @@ function DetailAccountGmail({ gmailState, setState }) {
                         isDetailAccountGmailModal: false,
                     });
 
-                    formCreateGoogleKey.resetFields();
+                    formDetailAccountGmail.resetFields();
                 })
                 .catch((err) => {
                     console.error("handle Real Error: ", err);
@@ -65,20 +65,20 @@ function DetailAccountGmail({ gmailState, setState }) {
             isDetailAccountGmailModal: false,
         });
 
-        formCreateGoogleKey.resetFields();
+        formDetailAccountGmail.resetFields();
     }
 
     return (
         <Modal
-            width='500px'
+            width='600px'
             open={isDetailAccountGmailModal}
             centered
             title={
                 <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                     <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                     <div>
-                        <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin Google Key</p>
-                        <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Thông tin google key</p>
+                        <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin tài khoản</p>
+                        <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Thông tin tài khoản gmail</p>
                     </div>
                 </div>
             }
@@ -86,9 +86,9 @@ function DetailAccountGmail({ gmailState, setState }) {
             onCancel={handleCancel}
             footer={[ ]}
         >
-            <Form name="add_service" layout="vertical" form={formCreateGoogleKey} onFinish={handleSubmit}>
+            <Form name="add_service" layout="vertical" form={formDetailAccountGmail} onFinish={handleSubmit}>
                 <Row gutter="10">
-                    <Col sm={18}>
+                    <Col sm={13}>
                         <Form.Item
                             name="email"
                             label="Email"
@@ -101,38 +101,98 @@ function DetailAccountGmail({ gmailState, setState }) {
                                 { message: 'Nhập định dạng email', type: 'email' }
                             ]}
                         >
-                            <Input size='small' readOnly style={{ fontWeight: 'bold' }} placeholder='Email người dùng' />
+                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
                         </Form.Item>
                     </Col>
-                    <Col sm={6}>
-                    <Form.Item 
-                        name="status"
-                        initialValue
-                        label="Hoạt động"
-                        style={{ marginBottom: '7px', textAlign: 'center' }}
-                        rules={[{
-                        required: true,
-                        message: 'Trường không được trống'
-                        }]}
-                    >
-                        <Switch checked={detailGoogleKey?.status} onChange={(value) => {
-                            formCreateGoogleKey.setFieldValue('status', value)
-                        }} />
-                    </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm={24}>
-                        <Form.Item
-                            name="key"
-                            label="Google Key"
-                            style={{ marginBottom: '7px' }}
+                    <Col sm={11}>
+                        <Form.Item 
+                            name="channel_id"
+                            initialValue
+                            label="ID Channel"
+                            style={{ marginBottom: '7px', textAlign: 'center' }}
                             rules={[{
                                 required: true,
                                 message: 'Trường không được trống'
                             }]}
                         >
-                            <Input.Password size='small' readOnly style={{ fontWeight: 'bold' }} placeholder='Google Key' />
+                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '15px', margin: '0px' }}>Thông tin cơ bản</Divider>
+                <Row gutter="10">
+                    <Col sm={10}>
+                        <Form.Item 
+                            name="computer"
+                            initialValue
+                            label="Máy"
+                            style={{ marginBottom: '7px', textAlign: 'center' }}
+                            rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                            }]}
+                        >
+                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                        </Form.Item>
+                    </Col>
+                    <Col sm={8}>
+                        <Form.Item 
+                            name="total_task"
+                            initialValue
+                            label="Tổng nhiệm vụ"
+                            style={{ marginBottom: '7px', textAlign: 'center' }}
+                            rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                            }]}
+                        >
+                            <Input size='small' readOnly style={{ fontWeight: '600' }} placeholder='Email người dùng' />
+                        </Form.Item>
+                    </Col>
+                    <Col sm={6}>
+                        <Form.Item 
+                            name="status"
+                            initialValue
+                            label="Hoạt động"
+                            style={{ marginBottom: '7px' }}
+                            rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                            }]}
+                        >
+                            <Switch checkedChildren="Mail sống" unCheckedChildren="Mail chết" checked={detailAccountGmail?.live} onChange={(value) => {
+                                formDetailAccountGmail.setFieldValue('status', value)
+                            }} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter="10">
+                    <Col sm={12}>
+                        <Form.Item 
+                            name="last_call_at"
+                            initialValue
+                            label=""
+                            style={{ marginBottom: '0px' }}
+                            rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                            }]}
+                        >
+                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                        </Form.Item>
+                    </Col>
+                    <Col sm={12}>
+                        <Form.Item 
+                            name="last_success_at"
+                            initialValue
+                            label="Tổng nhiệm vụ"
+                            style={{ marginBottom: '0px' }}
+                            rules={[{
+                            required: true,
+                            message: 'Trường không được trống'
+                            }]}
+                        >
+                            <Input size='small' readOnly style={{ fontWeight: '600' }} placeholder='Email người dùng' />
                         </Form.Item>
                     </Col>
                 </Row>

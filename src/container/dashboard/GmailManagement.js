@@ -197,7 +197,7 @@ function GmailManagement() {
               </Button>
             </Tooltip>
 
-            <Tooltip title="Chỉnh sửa">
+            {/* <Tooltip title="Chỉnh sửa">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
                   if (typeService === SERVICE_TYPE.COMMENT.title) {
@@ -216,7 +216,7 @@ function GmailManagement() {
               >
                 <FeatherIcon icon="edit" size={16} />
               </Button>
-            </Tooltip>
+            </Tooltip> */}
             
             <Tooltip title="Xóa">
               <Button className="btn-icon" type="primary" to="#" shape="circle"
