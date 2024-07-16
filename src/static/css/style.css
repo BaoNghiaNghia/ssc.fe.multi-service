@@ -2745,10 +2745,10 @@ li.active > .display {
 }
 
 
-.ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+.ant-pagination-options .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
   height: 25px !important;
 }
 
 .ant-pagination .ant-select-single .ant-select-selector .ant-select-selection-item {
-  line-height: 19px !important;
+  line-height: 25px !important;
 }
