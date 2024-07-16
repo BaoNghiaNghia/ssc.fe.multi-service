@@ -2743,3 +2743,12 @@ li.active > .display {
 .full-height-dropdown .ant-select-single .ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
   height: 109px !important;
 }
+
+
+.ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+  height: 25px !important;
+}
+
+.ant-pagination .ant-select-single .ant-select-selector .ant-select-selection-item {
+  line-height: 19px !important;
+}
