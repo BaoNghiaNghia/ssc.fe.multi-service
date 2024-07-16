@@ -515,7 +515,13 @@ function* likeStatisticCommentByOrderReportFunc(params) {
   } catch (err) {
     yield put(
       actions.likeStatisticCommentByOrderReportErr({ error: err || 'Like - Count error subscribe failed' })
-    )
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Count error subscribe failed');
+    }
   }
 }
 
@@ -531,7 +537,13 @@ function* likeStatisticAccountOnComputerFunc(params) {
   } catch (err) {
     yield put(
       actions.likeStatisticAccountOnComputerErr({ error: err || 'Like - Statistic account on computer failed' })
-    )
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Statistic account on computer failed');
+    }
   }
 }
 
@@ -547,7 +559,13 @@ function* likeStatisticByStatusOrderFunc(params) {
   } catch (err) {
     yield put(
       actions.likeStatisticByStatusOrderErr({ error: err || 'Like - Statistic by status order failed' })
-    )
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Statistic by status order failed');
+    }
   }
 }
 
@@ -563,7 +581,13 @@ function* likeStatisticRunningComputerFunc(params) {
   } catch (err) {
     yield put(
       actions.likeStatisticRunningOrderErr({ error: err || 'Like - Statistic running computer failed' })
-    )
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Statistic running computer failed');
+    }
   }
 }
 
@@ -579,7 +603,13 @@ function* likeStatisticTaskOfToolFunc(params) {
   } catch (err) {
     yield put(
       actions.likeStatisticTaskOfToolErr({ error: err || 'Like - Statistic task of tool failed' })
-    )
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Statistic task of tool failed');
+    }
   }
 }
 
@@ -596,6 +626,12 @@ function* likeStatisticRunningUserOrderFunc(params) {
     yield put(
       actions.likeStatisticRunningUserOrderErr({ error: err || 'Like - Statistic running user failed' })
     )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Statistic running user failed');
+    }
   }
 }
 
@@ -612,6 +648,12 @@ function* likeStatisticUserPointFunc(params) {
     yield put(
       actions.likeStatisticUserPointErr({ error: err || 'Like - Statistic user point failed' })
     )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Statistic user point failed');
+    }
   }
 }
 
@@ -626,8 +668,14 @@ function* likeStatisticTotalOrderFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.likeStatisticTotalOrderErr({ error: err || 'Statistic total order failed' })
+      actions.likeStatisticTotalOrderErr({ error: err || 'Like - Statistic total order failed' })
     )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Statistic total order failed');
+    }
   }
 }
 
@@ -646,7 +694,7 @@ function* validateYoutubeVideoLinkFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.validateYoutubeVideoLinkErr({ error: err || 'validate youtube video failed' })
+      actions.validateYoutubeVideoLinkErr({ error: err || 'Validate youtube video failed' })
     );
   }
 }
@@ -658,8 +706,6 @@ function* changeServiceTypeFunc(params) {
     );
 
     const isType = params?.payload?.value;
-
-    console.log('--- THAY ĐỔI STATISTIC  ---', isType);
 
     const initialFilter = {
       start_date: `${params?.payload?.from  } 00:00:00`,

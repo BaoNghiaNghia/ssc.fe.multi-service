@@ -60,12 +60,12 @@ class ApiFactory {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const expiryTime = decodedToken.exp * 1000; // Convert to milliseconds
   
-      const date = new Date(expiryTime);
-      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-      const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+      // const date = new Date(expiryTime);
+      // const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      // const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
   
       const timeUntilExpiry = expiryTime - Date.now();
-      console.log('Token Expiry Time: ', formattedDate, 'Time Until Expiry (ms):', timeUntilExpiry);
+      // console.log('Token Expiry Time: ', formattedDate, 'Time Until Expiry (ms):', timeUntilExpiry);
   
       if (timeUntilExpiry <= 0) {
         console.error('Token has expired.');
