@@ -514,13 +514,13 @@ function* likeStatisticCommentByOrderReportFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.likeStatisticCommentByOrderReportErr({ error: err || 'Like - Count error subscribe failed' })
+      actions.likeStatisticCommentByOrderReportErr({ error: err || 'Like - Count comment by order failed' })
     );
 
     if (err?.response?.data?.data?.error) {
       toast.error(err?.response?.data?.data?.error);
     } else {
-      toast.error('Like - Count error subscribe failed');
+      toast.error('Like - Count comment by order failed');
     }
   }
 }
