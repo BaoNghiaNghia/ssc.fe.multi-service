@@ -3,6 +3,7 @@ import { Row, Col, Image } from 'antd';
 import { Aside, Content } from './overview/style';
 import Heading from '../../../components/heading/heading';
 import logoSSC from '../../../static/img/Logo_Dark.svg';
+import { COLOR_GENERAL } from '../../../variables';
 
 const AuthLayout = (WraperContent) => {
   return function () {
@@ -12,15 +13,15 @@ const AuthLayout = (WraperContent) => {
           <Aside>
             <div className="auth-side-content">
               <Content>
-                <Image width="50%" style={{ width: '65px !important', marginBottom: '70px' }} src={logoSSC} alt="" />
+                <Image width="30%" style={{ width: '65px !important', marginBottom: '70px' }} src={logoSSC} alt="" />
                 <Heading as="h4" weight="800">
                   YOUTUBE
                 </Heading>
-                <Heading as="h2" weight="800" color="#b70000">
+                <Heading as="h2" weight="800" color={COLOR_GENERAL.primary}>
                   SUBSCRIBE - COMMENT - LIKE
                 </Heading>
                 <img
-                  className="auth-content-figure"
+                  className="auth-content-figure mt-30"
                   src={require('../../../static/img/youtube_1.png')}
                   alt="youtube-background"
                   width="100%"

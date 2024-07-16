@@ -13,15 +13,15 @@ import { numberWithCommas, performanceColorBack } from '../../../utility/utility
 
 const { Option } = Select;
 
-function DetailOrder({ setState, state }) {
+function DetailOrderLike({ setState, orderState }) {
   const dispatch = useDispatch();
 
   const [formUpdateService] = Form.useForm();
 
-  const { postLoading, detailOrderComment, userList, listService } = useSelector(state => {
+  const { postLoading, detailOrderLike, userList, listService } = useSelector(state => {
     return {
-      postLoading: state?.buffComment?.loading,
-      detailOrderComment: state?.buffComment?.detailOrderComment,
+      postLoading: state?.buffLike?.loading,
+      detailOrderLike: state?.buffLike?.detailOrderLike,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
     };
@@ -31,13 +31,13 @@ function DetailOrder({ setState, state }) {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
-  const { performance } = detailOrderComment;
+  const { performance } = detailOrderLike;
 
-  const findUser = userList?.filter((item) => item.id === detailOrderComment?.user_id);
-  const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
+  const findUser = userList?.filter((item) => item.id === detailOrderLike?.user_id);
+  const findService = listService?.filter((item) => item.service_id === detailOrderLike?.service_id);
 
   useEffect(() => {
-    formUpdateService.setFieldsValue(detailOrderComment);
+    formUpdateService.setFieldsValue(detailOrderLike);
     if (findService?.length > 0) {
       formUpdateService.setFieldValue('category', findService[0]?.category);
     }
@@ -47,8 +47,8 @@ function DetailOrder({ setState, state }) {
       formUpdateService.setFieldValue('user_email', findUser[0]?.email);
     }
 
-    formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
-    formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderComment?.status)?.title);
+    formUpdateService.setFieldValue('priority', String(detailOrderLike?.priority));
+    formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderLike?.status)?.title);
   });
 
   const handleCancel = () => {
@@ -79,14 +79,14 @@ function DetailOrder({ setState, state }) {
     <>
       <Modal
         width='600px'
-        open={state?.isDetailOrderModal}
+        open={orderState?.isDetailOrderLikeModal}
         centered
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin đơn Comment</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin đơn Like</p>
                 <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin đơn</p>
               </div>
             </div>
@@ -117,7 +117,7 @@ function DetailOrder({ setState, state }) {
                     }]}
                   >
                     <Select
-                      style={{ width: '100%', margin: '0px', padding: '0px' }}
+                      style={{ width: '100%', margin: '5px 0px 0 0', padding: '0px' }}
                       bordered={false}
                       initialValue="Comments"
                       disabled
@@ -249,7 +249,7 @@ function DetailOrder({ setState, state }) {
               >
                 <div style={{ alignContent: 'center', width: '100%' }}>
                   {
-                    detailOrderComment?.performance !== 0 ? (
+                    detailOrderLike?.performance !== 0 ? (
                       <span
                         style={{ 
                           fontSize: '0.8em',
@@ -260,7 +260,7 @@ function DetailOrder({ setState, state }) {
                           backgroundColor: performanceColorBack
                         }}
                       >
-                        Hiệu suất: {numberWithCommas(Math.floor(detailOrderComment?.performance, 1) || 0)} %
+                        Hiệu suất: {numberWithCommas(Math.floor(detailOrderLike?.performance, 1) || 0)} %
                       </span>
                     ) : (
                       <span
@@ -273,7 +273,7 @@ function DetailOrder({ setState, state }) {
                           backgroundColor: '#ebebeb'
                         }}
                       >
-                        Hiệu suất: {numberWithCommas(Math.floor(detailOrderComment?.performance, 1) || 0)} %
+                        Hiệu suất: {numberWithCommas(Math.floor(detailOrderLike?.performance, 1) || 0)} %
                       </span>
                     )
                   }
@@ -286,7 +286,7 @@ function DetailOrder({ setState, state }) {
 
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="max_thread" initialValue={ state?.max_threads } label="Số luồng tối đa" rules={[{
+              <Form.Item name="max_thread" initialValue={ orderState?.max_threads } label="Số luồng tối đa" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -319,9 +319,9 @@ function DetailOrder({ setState, state }) {
   );
 }
 
-DetailOrder.propTypes = {
+DetailOrderLike.propTypes = {
   setState: PropTypes.func,
-  state: PropTypes.object
+  orderState: PropTypes.object
 };
 
-export default DetailOrder;
+export default DetailOrderLike;

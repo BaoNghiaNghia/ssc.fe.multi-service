@@ -167,34 +167,42 @@ function DetailAccountGmail({ gmailState, setState }) {
                     </Col>
                 </Row>
                 <Row gutter="10">
-                    <Col sm={12}>
-                        <Form.Item 
-                            name="last_call_at"
-                            initialValue
-                            label="Lần gọi cuối"
-                            style={{ marginBottom: '0px' }}
-                            rules={[{
-                            required: true,
-                            message: 'Trường không được trống'
-                            }]}
-                        >
-                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
-                        </Form.Item>
-                    </Col>
-                    <Col sm={12}>
-                        <Form.Item 
-                            name="last_success_at"
-                            initialValue
-                            label="Lần hoàn thành cuối"
-                            style={{ marginBottom: '0px' }}
-                            rules={[{
-                            required: true,
-                            message: 'Trường không được trống'
-                            }]}
-                        >
-                            <Input size='small' readOnly style={{ fontWeight: '600' }} placeholder='Email người dùng' />
-                        </Form.Item>
-                    </Col>
+                    {
+                        detailAccountGmail?.last_call_at ? (
+                            <Col sm={12}>
+                                <Form.Item 
+                                    name="last_call_at"
+                                    initialValue
+                                    label="Lần gọi cuối"
+                                    style={{ marginBottom: '0px' }}
+                                    rules={[{
+                                    required: true,
+                                    message: 'Trường không được trống'
+                                    }]}
+                                >
+                                    <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                                </Form.Item>
+                            </Col>
+                        ) : null
+                    }
+                    {
+                        detailAccountGmail?.last_success_at ? (
+                            <Col sm={12}>
+                                <Form.Item 
+                                    name="last_success_at"
+                                    initialValue
+                                    label="Lần hoàn thành cuối"
+                                    style={{ marginBottom: '0px' }}
+                                    rules={[{
+                                    required: true,
+                                    message: 'Trường không được trống'
+                                    }]}
+                                >
+                                    <Input size='small' readOnly style={{ fontWeight: '600' }} placeholder='Email người dùng' />
+                                </Form.Item>
+                            </Col>
+                        ) : null
+                    }
                 </Row>
             </Form>
         </Modal>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover, Image } from 'antd';
 import FeatherIcon from 'feather-icons-react';
-import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { WiTime7 } from "react-icons/wi";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
@@ -15,13 +15,12 @@ import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
 
 import moment from 'moment';
-import ListCommentOfOrder from '../ecommerce/components/ListCommentOfOrder';
+import UpdateOrderLike from './components/UpdateOrderLike';
+import DetailOrderLike from './components/DetailOrderLike';
 import CancelAndRefundOrderComment from '../ecommerce/components/CancelAndRefundOrderComment';
-import UpdateOrderComment from '../ecommerce/components/UpdateOrderComment';
 import InsuranceOrderComment from '../ecommerce/components/InsuranceOrderComment';
 import FilterOrderComment from '../ecommerce/components/FilterOrderComment';
 import BatchUpdateOrderComment from '../ecommerce/components/BatchUpdateOrderComment';
-import DetailOrder from '../ecommerce/components/DetailOrder';
 import { TopToolBox } from '../ecommerce/Style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -46,6 +45,7 @@ const columns = [
     title: 'Video',
     dataIndex: 'video_id',
     key: 'video_id',
+    fixed: 'left',
   },
   {
     title: 'Order ID',
@@ -124,10 +124,9 @@ function PendingBuffLike() {
   });
 
   const [state, setState] = useState({
-    isDetailOrderModal: false,
-    isListCommentModal: false,
+    isDetailOrderLikeModal: false,
     isCreateCommentOrderModal: false,
-    isUpdateCommentOrderModal: false,
+    isUpdateLikeOrderModal: false,
     isCancelRefundCommentOrderModal: false,
     isInsuranceCommentOrderModal: false,
     isFilterCommentOrderModal: false,
@@ -142,7 +141,7 @@ function PendingBuffLike() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { isListCommentModal, isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
+  const { isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
 
   useEffect(() => {
     let initParams = {
@@ -505,7 +504,7 @@ function PendingBuffLike() {
                       dispatch(actions.detailOrderLikeBegin({
                         ...value,
                       }));
-                      setState({ ...state, isUpdateCommentOrderModal: true });
+                      setState({ ...state, isUpdateLikeOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="edit" size={16} />
@@ -557,7 +556,7 @@ function PendingBuffLike() {
                   }));
                   setState({ 
                     ...state, 
-                    isDetailOrderModal: true
+                    isDetailOrderLikeModal: true
                   });
                 }}
               >
@@ -621,21 +620,16 @@ function PendingBuffLike() {
 
   return (
     <>
-      <DetailOrder
-        state={state}
-        setState={setState}
-      />
-      <ListCommentOfOrder
+      <DetailOrderLike
         orderState={state}
-        isOpen={isListCommentModal}
         setState={setState}
       />
       <BatchUpdateOrderComment
         orderState={state}
         setState={setState}
       />
-      <UpdateOrderComment
-        state={state}
+      <UpdateOrderLike
+        orderState={state}
         setState={setState}
       />
       <CancelAndRefundOrderComment

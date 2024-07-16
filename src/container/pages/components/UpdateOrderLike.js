@@ -5,19 +5,19 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import serviceActions from '../../../redux/serviceSettings/actions';
-import commentActions from '../../../redux/buffComment/actions';
+import likeActions from '../../../redux/buffLike/actions';
 import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 
 const { Option } = Select;
 
 function UpdateOrderLike({ setState, orderState }) {
   const dispatch = useDispatch();
-  const [formUpdateService] = Form.useForm();
-  const { postLoading, detailOrderComment, userList, listService } = useSelector(state => {
+  const [formUpdateLikeOrder] = Form.useForm();
+
+  const { postLoading, detailOrderLike, listService } = useSelector(state => {
     return {
       postLoading: state?.buffComment?.loading,
-      detailOrderComment: state?.buffComment?.detailOrderComment,
-      userList: state?.member?.userList,
+      detailOrderLike: state?.buffLike?.detailOrderLike,
       listService: state?.settingService?.listService?.items
     };
   });
@@ -26,31 +26,31 @@ function UpdateOrderLike({ setState, orderState }) {
     dispatch(serviceActions.fetchListServiceBegin());
   }, [dispatch]);
 
-  const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
+  const findService = listService?.filter((item) => item.service_id === detailOrderLike?.service_id);
 
   useEffect(() => {
-    formUpdateService.setFieldsValue(detailOrderComment);
+    formUpdateLikeOrder.setFieldsValue(detailOrderLike);
     if (findService?.length > 0) {
-      formUpdateService.setFieldValue('category', findService[0]?.category);
+      formUpdateLikeOrder.setFieldValue('category', findService[0]?.category);
     }
-    formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
-    formUpdateService.setFieldValue('note', detailOrderComment?.note);
+    formUpdateLikeOrder.setFieldValue('priority', String(detailOrderLike?.priority));
+    formUpdateLikeOrder.setFieldValue('note', detailOrderLike?.note);
   });
 
   const handleCancel = () => {
     setState({
-      isUpdateCommentOrderModal: false,
+      isUpdateLikeOrderModal: false,
     });
 
-    formUpdateService.resetFields();
+    formUpdateLikeOrder.resetFields();
   }
 
   const handleOk = () => {
     try {
-      formUpdateService.validateFields()
+      formUpdateLikeOrder.validateFields()
         .then((values) => {
-          dispatch(commentActions.updateOrderCommentAdminBegin({
-            id: detailOrderComment?.id,
+          dispatch(likeActions.updateOrderLikeAdminBegin({
+            id: detailOrderLike?.id,
             max_thread: values?.max_thread,
             note: values?.note,
             priority: values?.priority === "true",
@@ -61,11 +61,11 @@ function UpdateOrderLike({ setState, orderState }) {
 
           setState({ 
             ...orderState,
-            isUpdateCommentOrderModal: false,
+            isUpdateLikeOrderModal: false,
             statusNumber: 'all'
           });
 
-          formUpdateService.resetFields();
+          formUpdateLikeOrder.resetFields();
         })
         .catch((err) => {
           console.error("Handle Real Error: ", err);
@@ -73,8 +73,8 @@ function UpdateOrderLike({ setState, orderState }) {
     } catch (err) {
       console.log(err);
       setState({
-        isUpdateCommentOrderModal: false });
-      formUpdateService.resetFields();
+        isUpdateLikeOrderModal: false });
+      formUpdateLikeOrder.resetFields();
     }
   };
 
@@ -82,7 +82,7 @@ function UpdateOrderLike({ setState, orderState }) {
     <>
       <Modal
         width='600px'
-        open={orderState?.isUpdateCommentOrderModal}
+        open={orderState?.isUpdateLikeOrderModal}
         centered
         title={
           <>
@@ -106,7 +106,7 @@ function UpdateOrderLike({ setState, orderState }) {
           </Button>
         ]}
       >
-        <Form name="add_service" layout="vertical" form={formUpdateService}>
+        <Form name="add_service" layout="vertical" form={formUpdateLikeOrder}>
           <Row gutter="10">
             <Col sm={8}>
               <Form.Item name="max_thread" initialValue={ orderState?.max_threads } label="Số luồng tối đa" rules={[{
