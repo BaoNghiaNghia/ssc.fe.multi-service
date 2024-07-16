@@ -522,38 +522,6 @@ function AddOrderGeneral() {
               sm={16}
             >
               <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px' }}>
-                {/* <Row gutter="10">
-                  <Col sm={24}>
-                    <Form.Item
-                      name="search"
-                      label="Tìm nhanh dịch vụ"
-                      style={{ marginBottom: '0px' }}
-                    >
-                      <Select 
-                        allowClear
-                        showSearch
-                        size='small'
-                        className='full-height-dropdown'
-                        style={{ width: '100%' }}
-                        placeholder="Tìm theo ID hoặc tên của dịch vụ"
-                      >
-                        {
-                          listService?.map((itemService, index) => {
-                            return <>
-                              {
-                                itemService?.enabled ? (
-                                  <Option key={index} value={itemService?.service_id}>
-                                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>{itemService?.description}</p>
-                                  </Option>
-                                ) : null
-                              }
-                            </>;
-                          })
-                        }
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                </Row> */}
                 <Row gutter="10">
                   <Col sm={8}>
                     <Form.Item
