@@ -19,7 +19,7 @@ import {
   commentStatisticUserPointAPI,
   commentStatisticTotalOrderAPI,
 
-  likeStatisticCommentByOrderReportAPI,
+  // likeStatisticCommentByOrderReportAPI,
   likeStatisticTaskSuccessInMinutesAPI,
   likeStatisticAccountOnComputerAPI,
   likeStatisticAccountStatusAPI,
@@ -503,27 +503,27 @@ function* likeStatisticTaskDurationInMinuteFunc(params) {
 }
 
 
-function* likeStatisticCommentByOrderReportFunc(params) {
-  try {
-    const response = yield call(likeStatisticCommentByOrderReportAPI, params?.payload);
+// function* likeStatisticCommentByOrderReportFunc(params) {
+//   try {
+//     const response = yield call(likeStatisticCommentByOrderReportAPI, params?.payload);
 
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.likeStatisticCommentByOrderReportSuccess(response?.data?.data)
-      );
-    }
-  } catch (err) {
-    yield put(
-      actions.likeStatisticCommentByOrderReportErr({ error: err || 'Like - Count comment by order failed' })
-    );
+//     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+//       yield put(
+//         actions.likeStatisticCommentByOrderReportSuccess(response?.data?.data)
+//       );
+//     }
+//   } catch (err) {
+//     yield put(
+//       actions.likeStatisticCommentByOrderReportErr({ error: err || 'Like - Count comment by order failed' })
+//     );
 
-    if (err?.response?.data?.data?.error) {
-      toast.error(err?.response?.data?.data?.error);
-    } else {
-      toast.error('Like - Count comment by order failed');
-    }
-  }
-}
+//     if (err?.response?.data?.data?.error) {
+//       toast.error(err?.response?.data?.data?.error);
+//     } else {
+//       toast.error('Like - Count comment by order failed');
+//     }
+//   }
+// }
 
 function* likeStatisticAccountOnComputerFunc(params) {
   try {
@@ -733,7 +733,7 @@ function* changeServiceTypeFunc(params) {
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
-      yield put(actions.likeStatisticCommentByOrderReportBegin());
+      // yield put(actions.likeStatisticCommentByOrderReportBegin());
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.likeStatisticTaskDurationInMinuteBegin());
       yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
@@ -810,7 +810,7 @@ function* setRangeDateFilterFunc(params) {
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
-      yield put(actions.likeStatisticCommentByOrderReportBegin());
+      // yield put(actions.likeStatisticCommentByOrderReportBegin());
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.likeStatisticTaskDurationInMinuteBegin());
       yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
@@ -941,9 +941,9 @@ export function* likeStatisticAccountStatusCommentWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN, likeStatisticAccountStatusCommentFunc);
 }
 
-export function* likeStatisticsByOrderStatusReportWatcherSaga() {
-  yield takeLatest(actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN, likeStatisticCommentByOrderReportFunc);
-}
+// export function* likeStatisticsByOrderStatusReportWatcherSaga() {
+//   yield takeLatest(actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN, likeStatisticCommentByOrderReportFunc);
+// }
 
 export function* likeStatisticAccountOnComputerWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN, likeStatisticAccountOnComputerFunc);

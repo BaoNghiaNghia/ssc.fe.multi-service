@@ -75,9 +75,9 @@ const actions = {
   COMMENT_STATISTIC_TOTAL_ORDER_ERR: 'COMMENT_STATISTIC_TOTAL_ORDER_ERR',
 
   // LIKE
-  LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN',
-  LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
-  LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR',
+  // LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN',
+  // LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
+  // LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR',
 
   LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN: 'LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN',
   LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS: 'LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS',
@@ -731,26 +731,26 @@ const actions = {
     };
   },
 
-  likeStatisticCommentByOrderReportBegin: (payload) => {
-    return {
-      type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
-      payload
-    };
-  },
+  // likeStatisticCommentByOrderReportBegin: (payload) => {
+  //   return {
+  //     type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
+  //     payload
+  //   };
+  // },
 
-  likeStatisticCommentByOrderReportSuccess: (data) => {
-    return {
-      type: actions.likeSTATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
-      data,
-    };
-  },
+  // likeStatisticCommentByOrderReportSuccess: (data) => {
+  //   return {
+  //     type: actions.likeSTATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
+  //     data,
+  //   };
+  // },
 
-  likeStatisticCommentByOrderReportErr: (err) => {
-    return {
-      type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
-      err,
-    };
-  },
+  // likeStatisticCommentByOrderReportErr: (err) => {
+  //   return {
+  //     type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
+  //     err,
+  //   };
+  // },
 
   likeStatisticTotalOrderBegin: (payload) => {
     return {
