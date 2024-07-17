@@ -20,7 +20,9 @@ const initialState = {
   commentByDay: [],
   taskSuccessInMinutes: [],
   taskDurationInMinutes: [],
-  orderAmount: [],
+  orderAmountComment: [],
+  orderAmountLike: [],
+  orderAmountSubscribe: [],
   accountStatus: {},
   computerThread: {},
   accountOnComputer: {},
@@ -378,7 +380,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         chartLoading: false,
-        orderAmount: data,
+        orderAmountComment: data,
       };
 
     case COMMENT_STATISTIC_ORDER_AMOUNT_ERR:
@@ -657,7 +659,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        orderAmount: data,
+        orderAmountLike: data,
       };
 
     case LIKE_STATISTIC_ORDER_AMOUNT_ERR:

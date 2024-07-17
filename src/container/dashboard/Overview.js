@@ -39,12 +39,13 @@ function Overview() {
   const { 
     fromDate,
     toDate, 
-    todayProfit, 
+    profitToday, 
     ratioSubSvg, 
     typeService, 
     computerThread, 
     accountStatus,
-    orderAmount,
+    orderAmountComment,
+    orderAmountLike,
     taskOfTool,
     accountOnComputer,
     commentByDay,
@@ -54,14 +55,15 @@ function Overview() {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
-      todayProfit: state?.reports?.profitToday,
+      profitToday: state?.reports?.profitToday,
       ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
       computerThread: state?.reports?.computerThread,
       taskOfTool: state?.reports?.taskOfTool,
       accountStatus: state?.reports?.accountStatus,
       performance: state?.reports?.performance,
-      orderAmount: state?.reports?.orderAmount,
+      orderAmountComment: state?.reports?.orderAmountComment,
+      orderAmountLike: state?.reports?.orderAmountLike,
       accountOnComputer: state?.reports?.accountOnComputer,
       commentByDay: state?.reports?.commentByDay,
       totalOrder: state?.reports?.totalOrder,
@@ -75,11 +77,14 @@ function Overview() {
       status: 1
     };
 
+    dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
+    dispatch(actions.likeStatisticOrderAmountBegin(initialFilter));
+
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.commentStatisticCommentByOrderReportBegin(initialFilter));
       dispatch(actions.commentStatisticTaskSuccessInMinuteBegin());
       dispatch(actions.commentStatisticTaskDurationInMinuteBegin());
-      dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
+      // dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
       dispatch(actions.commentStatisticAccountStatusCommentBegin(initialFilter));
       dispatch(actions.commentStatisticPerformanceCommentBegin(initialFilter));
       dispatch(actions.commentStatisticCommentByDayBegin(initialFilter));
@@ -115,9 +120,9 @@ function Overview() {
     return array.find(obj => obj[key] === value);
   };
 
-  const todaySubscribePoint = (Number(todayProfit?.total_point_today))*(-1) || 0;
-  const todayCommentPoint = findObjectByValue(orderAmount, 'is_current', true)?.total || 0;
-  const todayLikePoint = 0;
+  const todaySubscribePoint = (Number(profitToday?.total_point_today))*(-1) || 0;
+  const todayCommentPoint = findObjectByValue(orderAmountComment, 'is_current', true)?.total || 0;
+  const todayLikePoint = findObjectByValue(orderAmountLike, 'is_current', true)?.total || 0;
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
 

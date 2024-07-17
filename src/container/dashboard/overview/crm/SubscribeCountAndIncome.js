@@ -11,19 +11,20 @@ import { closeDealGetData } from '../../../../redux/chartContent/actionCreator';
 import actions from '../../../../redux/reports/actions';
 import Heading from '../../../../components/heading/heading';
 import { currentDate, numberWithCommas } from '../../../../utility/utility';
-import { VIETNAMES_CURRENCY } from '../../../../variables';
+import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../../../variables';
 
 function SubscribeCountAndIncome(props) {
   const { title } = props;
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, typeService, isLoading, orderAmount, performance } = useSelector(state => {
+  const { fromDate, toDate, typeService, isLoading, orderAmountComment, performance, orderAmountLike } = useSelector(state => {
     return {
       isLoading: state?.reports?.chartLoading,
       fromDate: state?.reports.filterRange?.from,
       toDate: state?.reports.filterRange?.to,
       typeService: state?.reports?.typeService,
-      orderAmount: state?.reports?.orderAmount,
+      orderAmountComment: state?.reports?.orderAmountComment,
+      orderAmountLike: state?.reports?.orderAmountLike,
       performance: state?.reports?.performance
     };
   });
@@ -34,7 +35,7 @@ function SubscribeCountAndIncome(props) {
     }
   }, [dispatch]);
 
-  const closeDealDatasets = orderAmount !== null && [
+  const closeDealDatasets = orderAmountComment !== null && [
     {
       backgroundColor: '#20C99780',
       hoverBackgroundColor: '#5F63F2',
@@ -54,7 +55,12 @@ function SubscribeCountAndIncome(props) {
   ];
 
   // eslint-disable-next-line no-unsafe-optional-chaining
-  const totalPoint = orderAmount?.map(item => Math.round(item?.total)) || [];
+  let totalPoint = [];
+  if (typeService === SERVICE_TYPE.COMMENT.title) {
+    totalPoint = orderAmountComment?.map(item => Math.round(item?.total)) || [];
+  } else if (typeService === SERVICE_TYPE.LIKE.title) {
+    totalPoint = orderAmountLike?.map(item => Math.round(item?.total)) || [];
+  }
   const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
   const arrWaveDate = performance?.map(item => item?.date) || [];
 
@@ -101,7 +107,7 @@ function SubscribeCountAndIncome(props) {
 
   return (
     <>
-      {orderAmount !== null && (
+      {orderAmountComment !== null && (
         <Cards
           // isbutton={
           //   <div className="card-nav">

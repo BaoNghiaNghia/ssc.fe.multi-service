@@ -74,7 +74,7 @@ const { Option } = Select;
 
 function AddOrderGeneral() {
   const dispatch = useDispatch();
-  const [formCreateService] = Form.useForm();
+  const [formCreateOrder] = Form.useForm();
 
   const { postLoading, listService, isOpenCreateOrder, detailService } = useSelector((state) => {
     return {
@@ -186,7 +186,7 @@ function AddOrderGeneral() {
   }, [dispatch]);
 
   const handleSubmitComment = () => {
-    formCreateService.validateFields()
+    formCreateOrder.validateFields()
       .then((values) => {
         console.log(values);
 
@@ -201,7 +201,7 @@ function AddOrderGeneral() {
         dispatch(actionsComment.createOrderCommentAdminBegin(values));
         dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
 
-        formCreateService.resetFields();
+        formCreateOrder.resetFields();
       })
       .catch((err) => {
         console.error("handle Real Error: ", err);
@@ -209,24 +209,24 @@ function AddOrderGeneral() {
   }
 
   const handleSubmitLike = () => {
-    formCreateService.validateFields()
+    formCreateOrder.validateFields()
       .then((values) => {
         dispatch(actionsLike.createOrderLikeAdminBegin(values));
         dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
 
-        formCreateService.resetFields();
+        formCreateOrder.resetFields();
       })
       .catch((err) => {
         console.error("handle Real Error: ", err);
-    });
+      });
   }
 
   const handleSubmitSubscribe = () => {
-    formCreateService.validateFields()
+    formCreateOrder.validateFields()
       .then((values) => {
         dispatch(actionsSubscribe.createOrderCommentAdminBegin(values));
         dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-        formCreateService.resetFields();
+        formCreateOrder.resetFields();
       })
       .catch((err) => {
         console.error("handle Real Error: ", err);
@@ -266,7 +266,7 @@ function AddOrderGeneral() {
 
     setHelpMessage({});
 
-    formCreateService.resetFields();
+    formCreateOrder.resetFields();
     dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
 
     dispatch(actionsService.modalDetailServiceBegin({}));
@@ -360,7 +360,7 @@ function AddOrderGeneral() {
                   ...stateCurr,
                   amountChange: handleCountValidateCommentString(value)
                 })
-                formCreateService.setFieldsValue({ comments: value?.target?.value });
+                formCreateOrder.setFieldsValue({ comments: value?.target?.value });
               }}
             >
               <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
@@ -515,7 +515,7 @@ function AddOrderGeneral() {
           </Button>
         ]}
       >
-        <Form layout="vertical" form={formCreateService}>
+        <Form layout="vertical" form={formCreateOrder}>
           <Row gutter={15}>
             <Col
               // sm={!isEmpty(detailService) ? 16 : 24}
@@ -569,11 +569,10 @@ function AddOrderGeneral() {
                             amountChange: 0
                           });
 
-
                           if (stateCurr?.selectedCategory !== values) {
                             dispatch(actionsService.modalDetailServiceBegin({}));
                             setHelpMessage({});
-                            formCreateService.resetFields(['link', 'service_id']);
+                            formCreateOrder.resetFields(['link', 'service_id']);
 
                             if (childService?.length === 0) {
                               toast.info('Không có dịch vụ phù hợp')
@@ -637,8 +636,7 @@ function AddOrderGeneral() {
                               });
 
                               setHelpMessage({});
-                              formCreateService.resetFields(['link']);
-
+                              formCreateOrder.resetFields(['link']);
 
                               dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
                             }
