@@ -336,7 +336,7 @@ function PendingBuffLike() {
                 <span>
                   <div style={{ alignContent: 'center' }}>
                     <Tooltip title={
-                      <p>Đã chạy / Thực tế</p>
+                      <p> Thực tế / Đã chạy</p>
                     }>
                       <p style={{ margin: 0, padding: 0 }}><strong>{numberWithCommas((Math.abs(current_count - start_count)) || 0)} / {numberWithCommas(done_count || 0)}</strong></p>
                     </Tooltip>
