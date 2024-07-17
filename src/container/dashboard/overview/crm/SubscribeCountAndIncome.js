@@ -37,20 +37,20 @@ function SubscribeCountAndIncome(props) {
 
   const closeDealDatasets = orderAmountComment !== null && [
     {
-      backgroundColor: '#20C99780',
-      hoverBackgroundColor: '#5F63F2',
-      label: 'Tổng point (đ)',
-      maxBarThickness: 10,
-      barThickness: 7,
-      percent: 49,
-    },
-    {
       backgroundColor: '#008000',
       hoverBackgroundColor: '#008000',
-      label: `${typeService} yêu cầu`,
+      label: `Tổng ${typeService} yêu cầu`,
       maxBarThickness: 10,
       barThickness: 7,
       percent: 60,
+    },
+    {
+      backgroundColor: '#20C99780',
+      hoverBackgroundColor: '#5F63F2',
+      label: `Tổng point (${VIETNAMES_CURRENCY})`,
+      maxBarThickness: 10,
+      barThickness: 7,
+      percent: 49,
     },
   ];
 
@@ -61,8 +61,7 @@ function SubscribeCountAndIncome(props) {
   } else if (typeService === SERVICE_TYPE.LIKE.title) {
     totalPoint = orderAmountLike?.map(item => Math.round(item?.total)) || [];
   }
-  
-  const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
+
   const arrWaveDate = performance?.map(item => item?.date) || [];
 
   const chartSubscribePoint = {

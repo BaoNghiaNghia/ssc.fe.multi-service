@@ -220,7 +220,7 @@ function Member() {
           </span>
         ),
         point: (
-          <Tooltip title="Số tiền đã sử dụng / Tổng số dư">
+          <Tooltip title="Số tiền đã dùng / Số dư">
             <span style={{ color: 'green', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>
               {numberWithCommas(Math.round(credit_used))} / {numberWithCommas(Math.round(credit))} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
             </span>
