@@ -185,19 +185,19 @@ function Overview() {
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
                         Subscribe
                       </span>
-                      <Heading as="h4" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todaySubscribePoint)}</Heading>
+                      <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todaySubscribePoint)}</Heading>
                     </Col>
                     <Col sm="6">
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
                         Comment
                       </span>
-                      <Heading as="h4" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayCommentPoint)}</Heading>
+                      <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayCommentPoint)}</Heading>
                     </Col>
                     <Col sm="6">
                       <span style={{ fontWeight: 600, fontSize: '1em' }}>
                         Like
                       </span>
-                      <Heading as="h4" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayLikePoint)}</Heading>
+                      <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(todayLikePoint)}</Heading>
                     </Col>
                   </Row>
                 </CardBarChartCenter>

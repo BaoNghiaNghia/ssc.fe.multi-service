@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
+import { IoMdCheckmarkCircle } from "react-icons/io";
 import PropTypes from 'prop-types';
 import { Form, Modal, Table, Badge, Tooltip } from 'antd';
 import { MdAddchart } from "react-icons/md";
@@ -12,8 +13,8 @@ const badgeGreenStyle = {
   fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
   padding: '2px 7px',
-  fontSize: '0.7em',
-  color: '#00ab00',
+  fontSize: '0.8em',
+  color: '#009500',
   fontWeight: 'bold',
   display: 'inline-flex',
   alignItems: 'center',
@@ -26,7 +27,7 @@ const badgeRedStyle = {
   fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
   padding: '2px 7px',
-  fontSize: '0.7em',
+  fontSize: '0.8em',
   color: 'gray',
   fontWeight: 'bold',
   display: 'inline-flex',
@@ -71,6 +72,33 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
     commentInOrder?.items?.map((value, key) => {
       const { status, id, order_id, message } = value;
 
+      console.log('---- status ----', status);
+
+      const statusTooltip = () => {
+        switch (status) {
+          case 0:
+            return 'Chờ';
+          case 1:
+            return 'Đang chạy';
+          case 2:
+            return 'Hoàn thành';
+          default:
+            return '';
+        }
+      }
+      const statusContainer = () => {
+        switch (status) {
+          case 0:
+            return <span style={{ color: 'gray', fontSize: '0.8em', fontWeight: 'bold', lineHeight: 1.1}}>Chờ</span>;
+          case 1:
+            return <span style={{ color: 'orange', fontSize: '0.8em',fontWeight: 'bold', lineHeight: 1.1 }}>Đang chạy</span>;
+          case 2:
+            return <span style={badgeGreenStyle}><IoMdCheckmarkCircle fontSize={20}/></span>;
+          default:
+            return '';
+        }
+      }
+
       return dataSource.push({
         key: key + 1,
         message: <span className="order-id">{
@@ -86,21 +114,11 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
         ),
         status: (
           <>
-            {
-              status ? (
-                <Tooltip title="Đã chạy">
-                  <span className="label" style={badgeGreenStyle}>
-                    <Badge color='green' dot style={{ marginRight: '5px' }}/>
-                  </span>
-                </Tooltip>
-              ) : (
-                <Tooltip title="Chưa chạy">
-                  <span className="label" style={badgeRedStyle}>
-                    <Badge color='gray' dot style={{ marginRight: '5px' }}/>
-                  </span>
-                </Tooltip>
-              )
-            }
+            <Tooltip title={statusTooltip()}>
+              <span className="label">
+                {statusContainer()}
+              </span>
+            </Tooltip>
           </>
         ),
       });
