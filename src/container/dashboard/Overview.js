@@ -333,7 +333,7 @@ function Overview() {
     return (
       <Row gutter={10}>
         <Col xxl={24} md={24} sm={24} xs={24} style={{ display: 'flex' }}>
-          <Cards headless gradient='64deg, white, white' >
+          <Cards headless gradient='64deg, white, #91ff000d' >
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>

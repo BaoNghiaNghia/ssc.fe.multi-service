@@ -37,7 +37,7 @@ function CardGroup() {
         <Focard>
           <div className="forcast-card-box">
             <Cards bodypadding="5px" headless title={`Tổng ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
-              <div className="focard-details growth-downward">
+              <div className="focard-details growth-downward" style={{ color: '#177c00' }}>
                 <Heading as="h1"><strong>{ numberWithCommas(todayRun || 0) }</strong></Heading>
               </div>
               <ChartjsAreaChart
