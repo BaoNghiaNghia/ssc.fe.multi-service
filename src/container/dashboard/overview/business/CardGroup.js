@@ -30,7 +30,7 @@ function CardGroup() {
               <div className="focard-details growth-downward">
                 <Heading as="h1"><strong>{ numberWithCommas(totalSub || 0) }</strong></Heading>
               </div>
-              <ChartjsAreaChart
+              {/* <ChartjsAreaChart
                 id="netProfit"
                 labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'july', 'Aug', 'Sep', 'Oct']}
                 datasets={[
@@ -50,7 +50,7 @@ function CardGroup() {
                   },
                 ]}
                 height={80}
-              />
+              /> */}
             </Cards>
           </div>
         </Focard>
@@ -76,7 +76,7 @@ function CardGroup() {
                   <span>Since last month</span>
                 </p> */}
               </div>
-              <ChartjsAreaChart
+              {/* <ChartjsAreaChart
                 id="grossProfit"
                 labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'july', 'Aug', 'Sep', 'Oct']}
                 datasets={[
@@ -96,7 +96,7 @@ function CardGroup() {
                   },
                 ]}
                 height={80}
-              />
+              /> */}
             </Cards>
           </div>
         </Focard>

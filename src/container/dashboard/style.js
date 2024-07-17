@@ -1002,12 +1002,12 @@ const CardBarChartCenter = Styled.div`
         }
         text-align: center !important;
         h1{
-            font-size: 30px;
+            font-size: 19px;
         }
     }
     & > span {
         text-align: center !important;
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 500;
         font-family: 'Poppins', sans-serif,
         margin-bottom: 0px;
@@ -1047,7 +1047,7 @@ const CardBarChartCenter = Styled.div`
         }
         span{
             color: ${({ theme }) => theme['light-gray-color']};
-            font-size: 13px;
+            font-size: 11px;
             display: inline-block;
         }
     }

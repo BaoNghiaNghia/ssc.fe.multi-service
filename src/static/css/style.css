@@ -2361,7 +2361,7 @@ html[dir='rtl'] .sDash_task-details .ant-modal-body .sDash_checklist-row .sDash_
   }
   /* Card Heading */
   .ant-card-head-wrapper {
-    flex-flow: column;
+    /* flex-flow: column; */
     align-items: center;
   }
   .ant-card-head-wrapper .ant-card-extra {
