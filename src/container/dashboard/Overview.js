@@ -81,9 +81,9 @@ function Overview() {
     dispatch(actions.likeStatisticOrderAmountBegin(initialFilter));
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
+      dispatch(actions.commentStatisticTaskDurationInMinuteBegin());
       dispatch(actions.commentStatisticCommentByOrderReportBegin(initialFilter));
       dispatch(actions.commentStatisticTaskSuccessInMinuteBegin());
-      dispatch(actions.commentStatisticTaskDurationInMinuteBegin());
       // dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
       dispatch(actions.commentStatisticAccountStatusCommentBegin(initialFilter));
       dispatch(actions.commentStatisticPerformanceCommentBegin(initialFilter));
@@ -547,7 +547,7 @@ function Overview() {
           </Col>
         </Row>
         <Row gutter={15}>
-          <Col xxl={12} xs={12}>
+          <Col xxl={12} xs={24} sm={24}>
             <Suspense
               fallback={
                 <Cards headless>
@@ -558,7 +558,7 @@ function Overview() {
               <TaskSuccessEveryMinutes title={`Số lượng ${typeService} mỗi phút`} />
             </Suspense>
           </Col>
-          <Col xxl={12} xs={12}>
+          <Col xxl={12} xs={24} sm={24}>
             <Suspense
               fallback={
                 <Cards headless>

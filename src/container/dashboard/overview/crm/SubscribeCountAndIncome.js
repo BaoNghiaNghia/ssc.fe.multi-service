@@ -61,6 +61,7 @@ function SubscribeCountAndIncome(props) {
   } else if (typeService === SERVICE_TYPE.LIKE.title) {
     totalPoint = orderAmountLike?.map(item => Math.round(item?.total)) || [];
   }
+  
   const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
   const arrWaveDate = performance?.map(item => item?.date) || [];
 
@@ -146,7 +147,7 @@ function SubscribeCountAndIncome(props) {
           ) : (
             <CardBarChart>
               <Row justify="start" style={{ marginLeft: '10px' }}> 
-                <Col xxl={3} md={3} sm={3} xs={3}>
+                <Col xxl={3} md={3} sm={3} xs={8}>
                   <div className="flex-grid-child">
                     <p style={{ margin: 0, padding: 0}}>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
                     <Heading as="h5" className="color-primary">
@@ -154,7 +155,7 @@ function SubscribeCountAndIncome(props) {
                     </Heading>
                   </div>
                 </Col>
-                <Col xxl={3} md={3} sm={3} xs={3}>
+                <Col xxl={3} md={3} sm={3} xs={8}>
                   {
                     totalPoint?.length > 0 ? (
                       <div className="flex-grid-child">
@@ -164,7 +165,7 @@ function SubscribeCountAndIncome(props) {
                     ) : null
                   }
                 </Col>
-                <Col xxl={3} md={3} sm={3} xs={3}>
+                <Col xxl={3} md={3} sm={3} xs={8}>
                   {
                     totalPoint?.length > 0 ? (
                       <div className="flex-grid-child">
@@ -181,13 +182,18 @@ function SubscribeCountAndIncome(props) {
                 {closeDealDatasets &&
                   closeDealDatasets.map((item, key) => {
                     return (
-                      <li key={key + 1} className="custom-label">
+                      <li key={key + 1} style={{ display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0, fontSize: '12px', color: 'gray' }}>
                         <span
                           style={{
-                            backgroundColor: item.hoverBackgroundColor,
+                            width: '10px',
+                            height: '10px',
+                            display: 'flex',
+                            backgroundColor: item?.hoverBackgroundColor,
+                            borderRadius: '50%',
+                            margin: '0px 6.5px',
                           }}
                         />
-                        {item.label}
+                        {item?.label}
                       </li>
                     );
                   })}

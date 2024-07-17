@@ -719,9 +719,9 @@ function* changeServiceTypeFunc(params) {
 
 
     if (isType === SERVICE_TYPE.COMMENT.title) {
+      yield put(actions.commentStatisticTaskDurationInMinuteBegin());
       yield put(actions.commentStatisticCommentByOrderReportBegin());
       yield put(actions.commentStatisticTaskSuccessInMinuteBegin());
-      yield put(actions.commentStatisticTaskDurationInMinuteBegin());
       // yield put(actions.commentStatisticOrderAmountBegin(initialFilter));
       yield put(actions.commentStatisticAccountStatusCommentBegin(initialFilter));
       yield put(actions.commentStatisticPerformanceCommentBegin(initialFilter));
@@ -738,9 +738,9 @@ function* changeServiceTypeFunc(params) {
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
+      yield put(actions.likeStatisticTaskDurationInMinuteBegin());
       // yield put(actions.likeStatisticCommentByOrderReportBegin());
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
-      yield put(actions.likeStatisticTaskDurationInMinuteBegin());
       // yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
       yield put(actions.likeStatisticAccountStatusCommentBegin(initialFilter));
       yield put(actions.likeStatisticPerformanceCommentBegin(initialFilter));

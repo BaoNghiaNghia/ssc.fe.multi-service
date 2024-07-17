@@ -144,7 +144,7 @@ function AnalyseYoutube(props) {
           ) : (
             <CardBarChart>
               <Row justify="start" style={{ marginLeft: '10px' }}>
-                <Col xxl={3} md={3} sm={3} xs={3}>
+                <Col xxl={3} md={3} sm={3} xs={8}>
                   <div className="flex-grid-child">
                     <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
                     <Heading as="h5" style={{ margin: 0, padding: 0 }}>
@@ -152,7 +152,7 @@ function AnalyseYoutube(props) {
                     </Heading>
                   </div>
                 </Col>
-                <Col xxl={3} md={3} sm={3} xs={3}>
+                <Col xxl={3} md={3} sm={3} xs={8}>
                   {
                     arrTotalSub?.length > 0 ? (
                       <div className="flex-grid-child">
@@ -162,7 +162,7 @@ function AnalyseYoutube(props) {
                     ) : null
                   }
                 </Col>
-                <Col xxl={3} md={3} sm={3} xs={3}>
+                <Col xxl={3} md={3} sm={3} xs={8}>
                   {
                     arrTotalSub?.length > 0 ? (
                       <div className="flex-grid-child">

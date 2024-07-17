@@ -364,9 +364,9 @@ function ComputerRunLikeOrder() {
       <ConfirmRequestModal
         isOpen={state?.isDeleteCommentServer}
         setState={setState}
-        descriptions={`Xác nhận xóa máy chạy comment ${state?.selectedItem?.name}`}
+        descriptions={`Xác nhận xóa máy chạy like ${state?.selectedItem?.name}`}
         title="Xác nhận"
-        subtitle="Xóa thông tin máy chạy comment"
+        subtitle="Xóa thông tin máy chạy like"
         handleOk={() => {
           dispatch(actions.deleteComputerRunLikeBegin({id: state?.selectedItem?.id}));
           setState({ 

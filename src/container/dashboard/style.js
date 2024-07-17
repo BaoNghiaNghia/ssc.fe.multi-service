@@ -208,7 +208,6 @@ const Focard = Styled.div`
 const CardBarChart = Styled.div`
     >div{
         @media only screen and (max-width: 575px) {
-            flex-flow: column;
             align-items: flex-start !important;
             ul{
                 margin: 0 0 15px;

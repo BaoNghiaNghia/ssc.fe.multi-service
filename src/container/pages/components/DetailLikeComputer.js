@@ -45,8 +45,8 @@ function DetailLikeComputer({ setState, computerState }) {
                     <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                         <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                         <div>
-                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Chi tiết Comment Server</p>
-                            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin máy chạy comment</p>
+                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Chi tiết Like Server</p>
+                            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin máy chạy like</p>
                         </div>
                     </div>
                 }
