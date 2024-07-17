@@ -409,7 +409,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span>Tổng {typeService} <br/> hôm nay</span>
+                    <span>Tổng {typeService} <br/> order</span>
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">{numberWithCommas(Math.abs(Number(findObjectByValue(commentByDay, 'is_current', true)?.comments || 0)) || 0)}</Heading>

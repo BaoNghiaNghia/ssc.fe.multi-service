@@ -71,7 +71,7 @@ function AnalyseYoutube(props) {
     },
   ];
 
-  const arrTotalSub = commentByDay?.map(item => {
+  const arrTotalSubRun = commentByDay?.map(item => {
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       return item?.comments;
     }
@@ -90,7 +90,7 @@ function AnalyseYoutube(props) {
       },
       {
         name: `Tổng ${typeService} chạy (${typeService})`,
-        data: arrTotalSub
+        data: arrTotalSubRun
       },
     ],
   };
@@ -122,7 +122,7 @@ function AnalyseYoutube(props) {
     </ul>
   );
 
-  const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? arrTotalSub[arrWaveDate?.indexOf(currentDate)] : 0;
+  const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? arrTotalSubRun[arrWaveDate?.indexOf(currentDate)] : 0;
 
   return (    
     avgPerformance !== null && (
@@ -154,20 +154,20 @@ function AnalyseYoutube(props) {
                 </Col>
                 <Col xxl={3} md={3} sm={3} xs={8}>
                   {
-                    arrTotalSub?.length > 0 ? (
+                    arrTotalSubRun?.length > 0 ? (
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Cao nhất</p>
-                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSub))}</Heading>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSubRun))}</Heading>
                       </div>
                     ) : null
                   }
                 </Col>
                 <Col xxl={3} md={3} sm={3} xs={8}>
                   {
-                    arrTotalSub?.length > 0 ? (
+                    arrTotalSubRun?.length > 0 ? (
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Thấp nhất</p>
-                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSub))}</Heading>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSubRun))}</Heading>
                       </div>
                     ) : null
                   }

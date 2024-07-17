@@ -8,18 +8,28 @@ import { Cards } from '../../../../components/cards/frame/cards-frame';
 import { ChartjsAreaChart } from '../../../../components/charts/chartjs';
 import { chartLinearGradient } from '../../../../components/utilities/utilities';
 import { numberWithCommas } from '../../../../utility/utility';
+import { SERVICE_TYPE } from '../../../../variables';
 
 function CardGroup() {
-  const { reportData, typeService, statisticComment, isLoading } = useSelector((state) => {
+  const { reportData, typeService, statisticComment, isLoading, commentByDay } = useSelector((state) => {
     return {
       isLoading: state?.reports?.chartLoading,
       reportData: state?.reports?.usuallyReportData?.report,
       typeService: state?.reports?.typeService,
-      statisticComment: state?.reports?.statisticComment
+      statisticComment: state?.reports?.statisticComment,
+      commentByDay: state?.reports?.commentByDay,
     }
   });
   const getValueByKey = (object, row) => object[row];
-  const totalSub = reportData && reportData.map((item) => item.total_run).reduce((partialSum, a) => partialSum + Number(a), 0);
+
+  const arrTotalSubRun = commentByDay?.map(item => {
+    if (typeService === SERVICE_TYPE.COMMENT.title) {
+      return item?.comments;
+    }
+    return item?.likes;
+  }) || [];
+
+  const todayRun = arrTotalSubRun.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
   return (
     <Row gutter={10}>
@@ -28,9 +38,9 @@ function CardGroup() {
           <div className="forcast-card-box">
             <Cards bodypadding="5px" headless title={`Tổng ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
-                <Heading as="h1"><strong>{ numberWithCommas(totalSub || 0) }</strong></Heading>
+                <Heading as="h1"><strong>{ numberWithCommas(todayRun || 0) }</strong></Heading>
               </div>
-              {/* <ChartjsAreaChart
+              <ChartjsAreaChart
                 id="netProfit"
                 labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'july', 'Aug', 'Sep', 'Oct']}
                 datasets={[
@@ -50,7 +60,7 @@ function CardGroup() {
                   },
                 ]}
                 height={80}
-              /> */}
+              />
             </Cards>
           </div>
         </Focard>
@@ -76,7 +86,7 @@ function CardGroup() {
                   <span>Since last month</span>
                 </p> */}
               </div>
-              {/* <ChartjsAreaChart
+              <ChartjsAreaChart
                 id="grossProfit"
                 labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'july', 'Aug', 'Sep', 'Oct']}
                 datasets={[
@@ -96,7 +106,7 @@ function CardGroup() {
                   },
                 ]}
                 height={80}
-              /> */}
+              />
             </Cards>
           </div>
         </Focard>
