@@ -61,7 +61,7 @@ const columns = [
     key: 'created_at',
   },
   {
-    title: 'Đã chạy / Thực tế',
+    title: 'Thực tế / Đã chạy',
     dataIndex: 'quantity',
     key: 'quantity',
   },
