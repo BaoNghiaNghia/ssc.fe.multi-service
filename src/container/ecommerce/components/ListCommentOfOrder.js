@@ -68,6 +68,9 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
   }
 
   const dataSource = [];
+  let countWaiting = 0;
+  let countRunning = 0;
+  let countSuccess = 0;
   if (commentInOrder?.items?.length) {
     commentInOrder?.items?.map((value, key) => {
       const { status, id, order_id, message } = value;
@@ -89,10 +92,13 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
       const statusContainer = () => {
         switch (status) {
           case 0:
+            countWaiting += 1;
             return <span style={{ color: 'gray', fontSize: '0.8em', fontWeight: 'bold', lineHeight: 1.1}}>Chờ</span>;
           case 1:
+            countRunning += 1;
             return <span style={{ color: 'orange', fontSize: '0.8em',fontWeight: 'bold', lineHeight: 1.1 }}>Đang chạy</span>;
           case 2:
+            countSuccess += 1;
             return <span style={badgeGreenStyle}><IoMdCheckmarkCircle fontSize={20}/></span>;
           default:
             return '';
@@ -144,55 +150,57 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
   ];
 
   return (
-    <>
-      <Modal
-        open={isOpen}
-        width="700px"
-        centered
-        title={
-          <>
-            <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-              <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Danh sách comment</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Danh sách comment trong đơn chạy comment</p>
-              </div>
+    <Modal
+      open={isOpen}
+      width="700px"
+      centered
+      title={
+        <>
+          <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+            <div>
+              <p style={{ fontSize: '1.1em', marginBottom: '4px', fontWeight: '700' }}>Danh sách comment</p>
+              <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>
+                <span style={{ fontSize: '1.1em', padding: '1px 5px', border: '1px solid #cdcdcd', borderRadius: '5px', fontWeight: 'bold', marginRight: '5px' }}>{countWaiting}</span><span style={{ color: 'gray', fontSize: '1.1em', fontWeight: '600', marginRight: '20px' }}>Đang chờ</span>
+                <span style={{ fontSize: '1.1em', padding: '1px 5px', border: '1px solid #cdcdcd', borderRadius: '5px',fontWeight: 'bold', marginRight: '5px' }}>{countRunning}</span> <span style={{ color: 'orange', fontSize: '1.1em',fontWeight: '600', marginRight: '20px' }}>Đang chạy</span>
+                <span style={{ fontSize: '1.1em', padding: '1px 5px', border: '1px solid #cdcdcd', borderRadius: '5px', fontWeight: 'bold', marginRight: '5px' }}>{countSuccess}</span> <span style={{ color: '#009500', fontSize: '1.1em',fontWeight: '600', marginRight: '20px' }}>Hoàn thành</span>
+              </p>
             </div>
-          </>
-        }
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <Table
-          style={{ margin: '0px !important', padding: '0px !important' }}
-          className='table-fill-modal'
-          dataSource={dataSource}
-          size='small'
-          columns={columns}
-          pagination={{
-            current: commentInOrder?.meta?.current_page,
-            defaultPageSize: commentInOrder?.meta?.count,
-            pageSize: commentInOrder?.meta?.per_page,
-            total: commentInOrder?.meta?.total,
-            showSizeChanger: true,
-            pageSizeOptions: DEFAULT_PAGESIZE,
-            onChange(page, pageSize) {
-                setCurrentPage(page);
-                setLimitPage(pageSize)
-            },
-            position: ['bottomCenter'],
-            responsive: true,
-            showTotal(total, range) {
-                return <>
-                    <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> comment</p>
-                </>
-            },
-            totalBoundaryShowSizeChanger: 100,
-            size: "small"
-          }}
-        />
-      </Modal>
-    </>
+          </div>
+        </>
+      }
+      onCancel={handleCancel}
+      footer={null}
+    >
+      <Table
+        style={{ margin: '0px !important', padding: '0px !important' }}
+        className='table-fill-modal'
+        dataSource={dataSource}
+        size='small'
+        columns={columns}
+        pagination={{
+          current: commentInOrder?.meta?.current_page,
+          defaultPageSize: commentInOrder?.meta?.count,
+          pageSize: commentInOrder?.meta?.per_page,
+          total: commentInOrder?.meta?.total,
+          showSizeChanger: true,
+          pageSizeOptions: DEFAULT_PAGESIZE,
+          onChange(page, pageSize) {
+              setCurrentPage(page);
+              setLimitPage(pageSize)
+          },
+          position: ['bottomCenter'],
+          responsive: true,
+          showTotal(total, range) {
+              return <>
+                  <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> comment</p>
+              </>
+          },
+          totalBoundaryShowSizeChanger: 100,
+          size: "small"
+        }}
+      />
+    </Modal>
   );
 }
 
