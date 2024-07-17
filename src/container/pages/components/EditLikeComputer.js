@@ -154,9 +154,7 @@ function EditLikeComputer({ setState, computerState }) {
                                 </Col>
                             </Row>
                         </>
-                    ) : (
-                        <div>Đang tải</div>
-                    )
+                    ) : <div>Đang tải</div>
                 }
             </Form>
         </Modal>

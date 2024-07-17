@@ -1068,7 +1068,7 @@ const CardBarChart2 = Styled.div`
             font-size: 25px;
         }
         span {
-            font-size: 16px !important;
+            font-size: 13px !important;
         }
     }
     & > span{

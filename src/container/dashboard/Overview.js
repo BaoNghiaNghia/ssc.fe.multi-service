@@ -164,7 +164,7 @@ function Overview() {
 
   const generalHeaderStatistic = () => {
     return (
-      <Row gutter={12}>
+      <Row gutter={6}>
         <Col xxl={8} md={8} sm={24} xs={24}>
           <Cards
             headless
@@ -205,7 +205,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={4} md={8} sm={12} xs={12}>
+        <Col xxl={4} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}
@@ -239,7 +239,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={4} md={8} sm={12} xs={12}>
+        <Col xxl={4} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}
@@ -265,7 +265,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={4} md={8} sm={8} xs={12}>
+        <Col xxl={4} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}
@@ -299,7 +299,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={4} md={8} sm={8} xs={12}>
+        <Col xxl={4} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}
@@ -403,7 +403,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
+        <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
           <Cards headless gradient='64deg, white, white' >
             <EChartCard>
               <div className="card-chunk">
@@ -418,7 +418,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
+        <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
           <Cards headless gradient='64deg, white, white' >
             <EChartCard>
               <div className="card-chunk">
@@ -435,7 +435,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={12} md={12} sm={12} xs={12} style={{ display: 'flex' }}>
+        <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
           <Cards headless gradient='64deg, white, white' >
             <EChartCard>
               <div className="card-chunk">
