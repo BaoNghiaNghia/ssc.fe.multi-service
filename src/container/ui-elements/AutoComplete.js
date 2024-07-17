@@ -23,7 +23,7 @@ function AutoCompletess() {
 
   const onSearch = (searchText) => {
     let arrayData = [];
-    const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    const data = searchData.filter((item) => item.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
     if (data.length) {
       data.map((item) => arrayData.push(item.title));
     } else {
@@ -35,7 +35,7 @@ function AutoCompletess() {
   };
 
   const patternSearch = (searchText) => {
-    const data = searchData.filter((item) => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    const data = searchData.filter((item) => item.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
     setState({
       notData: data,
     });

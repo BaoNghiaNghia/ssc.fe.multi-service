@@ -39,7 +39,7 @@ function Content({ searchData, email }) {
   const handleSearch = searchText => {
     const data =
       searchData !== undefined &&
-      searchData.filter(item => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
+      searchData.filter(item => item.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
     setState({
       ...state,
       notData: data,

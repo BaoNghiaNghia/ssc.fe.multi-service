@@ -40,7 +40,7 @@ const contactSearchData = (value) => {
   return async (dispatch) => {
     try {
       dispatch(readBegin());
-      const data = initialState.filter((item) => item.name.toUpperCase().startsWith(value.toUpperCase()));
+      const data = initialState.filter((item) => item.name?.toUpperCase().startsWith(value?.toUpperCase()));
       dispatch(readSuccess(data));
     } catch (err) {
       dispatch(readErr(err));

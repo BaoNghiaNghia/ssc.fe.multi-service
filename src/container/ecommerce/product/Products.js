@@ -31,7 +31,7 @@ function Product() {
   const { notData } = state;
 
   const handleSearch = searchText => {
-    const data = searchData.filter(item => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    const data = searchData.filter(item => item.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
     setState({
       ...state,
       notData: data,

@@ -4,7 +4,7 @@ import * as headings from './style';
 
 const Heading = props => {
   const { as, children, className, id, color, weight, textShadow } = props;
-  const StyledHeading = as ? headings[as.toUpperCase()] : headings.H1;
+  const StyledHeading = as ? headings[as?.toUpperCase()] : headings.H1;
 
   return (
     <StyledHeading style={{ color: color || 'black', fontWeight: weight || 500, textShadow: textShadow || 'none' }} className={className} id={id}>

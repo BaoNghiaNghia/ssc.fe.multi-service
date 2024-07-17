@@ -38,7 +38,7 @@ function ChatApp({ match }) {
   const { notData } = state;
 
   const patternSearch = searchText => {
-    const data = searchData.filter(item => item.title.toUpperCase().startsWith(searchText.toUpperCase()));
+    const data = searchData.filter(item => item.title?.toUpperCase()?.startsWith(searchText?.toUpperCase()));
     setState({
       ...state,
       search: data,

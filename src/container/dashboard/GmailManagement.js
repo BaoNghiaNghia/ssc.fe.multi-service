@@ -55,7 +55,7 @@ const columns = [
 function Avatar({ name }) {
   // Function to extract initials from the name
   const getInitials = (name) => {
-      const initials = name.split(' ').map(word => word[0].toUpperCase()).join('');
+      const initials = name.split(' ').map(word => word[0]?.toUpperCase())?.join('');
       return initials;
   };
 

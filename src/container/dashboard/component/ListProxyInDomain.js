@@ -173,7 +173,7 @@ function ListProxyInDomain({ currentState, setState }) {
                           <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '40px' }}>
                             <span style={{ fontSize: '0.6em', marginRight: '10px' }}>GEO  </span>
                             <img src={require(`../../../static/img/flag/${listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo}.png`)} alt="" width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
-                            <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo.toUpperCase()}</span>
+                            <span style={{ marginLeft: '8px' }}>{listProxyInDomain?.items && listProxyInDomain?.items[0]?.geo?.toUpperCase()}</span>
                           </div>
                         ) : <></>
                       }
