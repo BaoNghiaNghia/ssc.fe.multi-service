@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import moment from "moment";
-import { FORMAT_DATESTRING, REGEX_VALIDATE_YOUTUBE_VIDEO_LINK } from "../variables/index";
+import { FORMAT_DATESTRING, REGEX_VALIDATE_YOUTUBE_VIDEO_LINK, REGION_IDENTIFIER } from "../variables/index";
 
 /**
  * Return ellipsis of a given string
@@ -119,6 +119,17 @@ const performanceColorBack = (performance) => {
   }
 }
 
+function getPathLocalFromString(inputString) {
+  // Extract the shortcode from the input string
+  const shortcode = inputString.split('_').pop();
+
+  // Find the region object that matches the shortcode
+  const region = REGION_IDENTIFIER.find(region => region.shortcode === shortcode);
+
+  // Return the path if the region is found, otherwise return null
+  return region ? region.path : null;
+}
+
 export {
   ellipsis,
   numberWithCommas,
@@ -128,5 +139,6 @@ export {
   convertSeconds,
   isEmptyObject,
   isVietnamesePhoneNumber,
-  performanceColorBack
+  performanceColorBack,
+  getPathLocalFromString
 };

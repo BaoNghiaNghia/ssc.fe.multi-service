@@ -22,7 +22,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import actions from '../../redux/buffComment/actions';
 import Heading from '../../components/heading/heading';
-import { numberWithCommas } from '../../utility/utility';
+import { getPathLocalFromString, numberWithCommas } from '../../utility/utility';
 import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 const columns = [
@@ -163,7 +163,17 @@ function ComputerRunCommentOrder() {
         key: value?.id,
         server: (
           <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
-            <TbServerBolt fontSize={17} style={{ marginRight: '5px', marginTop: '5px' }} />
+            {
+              getPathLocalFromString(value?.name) !== null
+                ? <img 
+                    src={require(`../../${getPathLocalFromString(value?.name)}`)}
+                    alt={getPathLocalFromString(value?.name)}
+                    width="18px"
+                    height="18px"
+                    style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
+                  />
+                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
+            }
             <div style={{ margin: 0, padding: 0 }}>
               <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || '...'}</p>
               <a href={value?.link} target="_blank" rel="noopener noreferrer" style={{ margin: 0, padding: 0 }}>
