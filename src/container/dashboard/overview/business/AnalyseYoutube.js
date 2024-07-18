@@ -157,7 +157,7 @@ function AnalyseYoutube(props) {
                     arrTotalSubRun?.length > 0 ? (
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Cao nhất</p>
-                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSubRun))}</Heading>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSubRun) || 0)}</Heading>
                       </div>
                     ) : null
                   }
@@ -167,7 +167,7 @@ function AnalyseYoutube(props) {
                     arrTotalSubRun?.length > 0 ? (
                       <div className="flex-grid-child">
                         <p style={{ margin: 0, padding: 0 }}>Thấp nhất</p>
-                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSubRun))}</Heading>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSubRun) || 0)}</Heading>
                       </div>
                     ) : null
                   }
