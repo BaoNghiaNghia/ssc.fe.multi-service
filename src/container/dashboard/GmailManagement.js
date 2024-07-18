@@ -20,7 +20,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import gmailActions from '../../redux/gmailManage/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE } from '../../variables';
+import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE } from '../../variables';
 import ConfirmRequestModal from '../ecommerce/components/ConfirmRequestModal';
 
 
@@ -338,10 +338,23 @@ function GmailManagement() {
                       <Button
                         size="small"
                         type="primary"
+                        style={{ backgroundColor: 'white', color: COLOR_GENERAL.primary, border: `2px solid ${COLOR_GENERAL.primary}` }}
                         onClick={() => {
                           setState({
                             ...state,
-                            isAddDomainModal: true,
+                            isAddAccountGmailModal: true,
+                          });
+                        }}
+                      >
+                        <FeatherIcon style={{ color: COLOR_GENERAL.primary }} icon="plus" size={12} /> Tải lên .txt
+                      </Button>
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => {
+                          setState({
+                            ...state,
+                            isAddAccountGmailModal: true,
                           });
                         }}
                       >

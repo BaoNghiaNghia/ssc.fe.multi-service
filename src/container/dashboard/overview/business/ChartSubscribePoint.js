@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { useEffect, useState } from 'react';
 import { numberWithCommas } from '../../../../utility/utility';
 import { FORMAT_DATESTRING } from '../../../../variables/index';
 
@@ -8,6 +9,18 @@ const ChartSubscribePoint = ({
     chartData,
     loadingChart
 }) => {
+
+    const [loadingF, setLoadingF] = useState(true);
+
+    // Fallback in case `rendered` event doesn't trigger
+    useEffect(() => {
+    const timeout = setTimeout(() => {
+        setLoadingF(false);
+    }, 500); // Set a fallback timeout of 3 seconds
+
+    return () => clearTimeout(timeout);
+  }, []);
+
     const chartDataGeneral = {
         chart: {
             height: 250,
@@ -45,7 +58,12 @@ const ChartSubscribePoint = ({
                     enabled: true,
                     speed: 350
                 }
-            }
+            },
+            events: {
+                rendered: () => {
+                  setLoadingF(false);
+                }
+              }
         },
         colors: ['#5F63F2', "#008000"],
         stroke: {
@@ -122,7 +140,7 @@ const ChartSubscribePoint = ({
 
     return (
         <LoadingOverlay
-            active={loadingChart}
+            active={loadingF}
             spinner
             text='Đang cập nhật...'
         >

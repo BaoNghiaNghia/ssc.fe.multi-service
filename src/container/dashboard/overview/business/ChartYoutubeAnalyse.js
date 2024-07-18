@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { useEffect, useState } from 'react';
 import { numberWithCommas } from '../../../../utility/utility';
 import { FORMAT_DATESTRING } from '../../../../variables/index';
 
@@ -8,6 +9,16 @@ const ChartYoutubeAnalyse = ({
     chartData,
     loadingChart
 }) => {
+    const [loadingF, setLoadingF] = useState(true);
+
+    // Fallback in case `rendered` event doesn't trigger
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setLoadingF(false);
+        }, 500); // Set a fallback timeout of 3 seconds
+
+        return () => clearTimeout(timeout);
+    }, []);
     const chartDataGeneral = {
         chart: {
             height: 250,
@@ -121,16 +132,6 @@ const ChartYoutubeAnalyse = ({
     }
 
     const loadingOverlayStyles = {
-        overlay: {
-            background: 'linear-gradient(to right, #005473, #ff8800)', // Adjust gradient colors as needed
-            zIndex: 9999, // Ensure overlay is on top of the chart
-        },
-        spinner: {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-        },
         text: {
             color: 'white', // Adjust text color for better readability against the gradient
             fontFamily: 'Poppins, sans-serif',
@@ -141,7 +142,7 @@ const ChartYoutubeAnalyse = ({
 
     return (
         <LoadingOverlay
-            active={loadingChart}
+            active={loadingF}
             spinner
             text='Đang cập nhật...'
             styles={loadingOverlayStyles}
