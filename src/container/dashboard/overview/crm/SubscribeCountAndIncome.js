@@ -155,7 +155,7 @@ function SubscribeCountAndIncome(props) {
                       <span style={{ color: 'gray' }}>Hôm nay</span>
                     </p>
                     <Heading as="h5" className="color-primary">
-                      {numberWithCommas(totalSubToday)}
+                      {numberWithCommas(totalSubToday || 0)}
                       <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
                     </Heading>
                   </div>
@@ -200,7 +200,7 @@ function SubscribeCountAndIncome(props) {
                           <span style={{ color: 'gray' }}>Trung bình</span>
                         </p>
                         <Heading as="h5">
-                          {numberWithCommas(Math.round(averagePoint))}
+                          {numberWithCommas(Math.round(averagePoint) || 0)}
                           <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
                         </Heading>
                       </div>
@@ -215,7 +215,7 @@ function SubscribeCountAndIncome(props) {
                           <span style={{ color: 'gray' }}>Tổng cộng</span>
                         </p>
                         <Heading as="h5">
-                          {numberWithCommas(sumPoint)}
+                          {numberWithCommas(sumPoint || 0)}
                           <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
                         </Heading>
                       </div>

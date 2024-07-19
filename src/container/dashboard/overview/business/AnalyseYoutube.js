@@ -149,7 +149,9 @@ function AnalyseYoutube(props) {
               <Row justify="start" style={{ marginLeft: '10px' }}>
                 <Col xxl={3} md={3} sm={3} xs={8}>
                   <div className="flex-grid-child">
-                    <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
+                    <p style={{ margin: 0, padding: 0 }}>
+                      <span style={{ color: 'gray' }}>Hôm nay</span>
+                    </p>
                     <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                       {numberWithCommas(totalSubToday || 0)}
                       <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
