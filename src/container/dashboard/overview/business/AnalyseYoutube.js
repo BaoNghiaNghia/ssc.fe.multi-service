@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FeatherIcon from 'feather-icons-react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import ChartYoutubeAnalyse from './ChartYoutubeAnalyse';
 import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
@@ -123,6 +124,8 @@ function AnalyseYoutube(props) {
   );
 
   const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? arrTotalSubRun[arrWaveDate?.indexOf(currentDate)] : 0;
+  const sumPoint = arrTotalSubRun.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const averagePoint = (Array.isArray(arrTotalSubRun) && arrTotalSubRun.length > 0) ? (sumPoint / arrTotalSubRun.length) : 0;
 
   return (    
     avgPerformance !== null && (
@@ -149,6 +152,7 @@ function AnalyseYoutube(props) {
                     <p style={{ margin: 0, padding: 0 }}>Hôm nay</p>
                     <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                       {numberWithCommas(totalSubToday || 0)}
+                      <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
                     </Heading>
                   </div>
                 </Col>
@@ -156,8 +160,14 @@ function AnalyseYoutube(props) {
                   {
                     arrTotalSubRun?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Cao nhất</p>
-                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.max(...arrTotalSubRun) || 0)}</Heading>
+                        <p style={{ margin: 0, padding: 0, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                          <span style={{ color: 'gray' }}>Cao nhất </span>
+                          <IoArrowUpCircle color='green' fontSize={17} style={{ marginLeft: '7px' }} />
+                        </p>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>
+                          {numberWithCommas(Math.max(...arrTotalSubRun) || 0)}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                        </Heading>
                       </div>
                     ) : null
                   }
@@ -166,8 +176,44 @@ function AnalyseYoutube(props) {
                   {
                     arrTotalSubRun?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Thấp nhất</p>
-                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>{numberWithCommas(Math.min(...arrTotalSubRun) || 0)}</Heading>
+                        <p style={{ margin: 0, padding: 0, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                          <span style={{ color: 'gray' }}>Thấp nhất</span>
+                          <IoArrowDownCircle color='orangered' fontSize={17} style={{ marginLeft: '7px' }} />
+                        </p>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>
+                          {numberWithCommas(Math.min(...arrTotalSubRun) || 0)}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                        </Heading>
+                      </div>
+                    ) : null
+                  }
+                </Col>
+                <Col xxl={3} md={3} sm={3} xs={8}>
+                  {
+                    arrTotalSubRun?.length > 0 ? (
+                      <div className="flex-grid-child">
+                        <p style={{ margin: 0, padding: 0, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                          <span style={{ color: 'gray' }}>Trung bình</span>
+                        </p>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>
+                          {numberWithCommas(Math.round(averagePoint) || 0)}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                        </Heading>
+                      </div>
+                    ) : null
+                  }
+                </Col>
+                <Col xxl={3} md={3} sm={3} xs={8}>
+                  {
+                    arrTotalSubRun?.length > 0 ? (
+                      <div className="flex-grid-child">
+                        <p style={{ margin: 0, padding: 0, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                          <span style={{ color: 'gray' }}>Tổng cộng</span>
+                        </p>
+                        <Heading as="h5" style={{ margin: 0, padding: 0 }}>
+                          {numberWithCommas(Math.round(sumPoint) || 0)}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                        </Heading>
                       </div>
                     ) : null
                   }

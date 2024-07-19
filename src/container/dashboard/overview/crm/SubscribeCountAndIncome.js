@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
+import { IoArrowUpCircle, IoArrowDownCircle } from "react-icons/io5";
 import FeatherIcon from 'feather-icons-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
@@ -104,6 +105,8 @@ function SubscribeCountAndIncome(props) {
   );
 
   const totalSubToday = arrWaveDate?.indexOf(currentDate) > 0 ? totalPoint[arrWaveDate?.indexOf(currentDate)] : 0;
+  const sumPoint = totalPoint.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const averagePoint = (Array.isArray(totalPoint) && totalPoint.length > 0) ? (sumPoint / totalPoint.length) : 0;
 
   return (
     <>
@@ -148,9 +151,12 @@ function SubscribeCountAndIncome(props) {
               <Row justify="start" style={{ marginLeft: '10px' }}> 
                 <Col xxl={3} md={3} sm={3} xs={8}>
                   <div className="flex-grid-child">
-                    <p style={{ margin: 0, padding: 0}}>Hôm nay (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
+                    <p style={{ margin: 0, padding: 0}}>
+                      <span style={{ color: 'gray' }}>Hôm nay</span>
+                    </p>
                     <Heading as="h5" className="color-primary">
                       {numberWithCommas(totalSubToday)}
+                      <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
                     </Heading>
                   </div>
                 </Col>
@@ -158,8 +164,30 @@ function SubscribeCountAndIncome(props) {
                   {
                     totalPoint?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Cao nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
-                        <Heading as="h5">{numberWithCommas(Math.max(...totalPoint || 0))}</Heading>
+                        <p style={{ margin: 0, padding: 0, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                          <span style={{ color: 'gray' }}>Cao nhất </span>
+                          <IoArrowUpCircle color='green' fontSize={17} style={{ marginLeft: '7px' }} />
+                        </p>
+                        <Heading as="h5">
+                          {numberWithCommas(Math.max(...totalPoint || 0))}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                        </Heading>
+                      </div>
+                    ) : null
+                  }
+                </Col>
+                <Col xxl={3} md={3} sm={3} xs={8}>
+                  {
+                    totalPoint?.length > 0 ? (
+                      <div className="flex-grid-child" >
+                        <p style={{ margin: 0, padding: 0, display: 'flex', alignContent: 'center', alignItems: 'center'}}>
+                          <span style={{ color: 'gray' }}>Thấp nhất</span>
+                          <IoArrowDownCircle color='orangered' fontSize={17} style={{ marginLeft: '7px' }} />
+                        </p>
+                        <Heading as="h5">
+                          {numberWithCommas(Math.min(...totalPoint || 0))}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                        </Heading>
                       </div>
                     ) : null
                   }
@@ -168,8 +196,28 @@ function SubscribeCountAndIncome(props) {
                   {
                     totalPoint?.length > 0 ? (
                       <div className="flex-grid-child">
-                        <p style={{ margin: 0, padding: 0 }}>Thấp nhất (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)</p>
-                        <Heading as="h5">{numberWithCommas(Math.min(...totalPoint || 0))}</Heading>
+                        <p style={{ margin: 0, padding: 0 }}>
+                          <span style={{ color: 'gray' }}>Trung bình</span>
+                        </p>
+                        <Heading as="h5">
+                          {numberWithCommas(Math.round(averagePoint))}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                        </Heading>
+                      </div>
+                    ) : null
+                  }
+                </Col>
+                <Col xxl={3} md={3} sm={3} xs={8}>
+                  {
+                    totalPoint?.length > 0 ? (
+                      <div className="flex-grid-child">
+                        <p style={{ margin: 0, padding: 0 }}>
+                          <span style={{ color: 'gray' }}>Tổng cộng</span>
+                        </p>
+                        <Heading as="h5">
+                          {numberWithCommas(sumPoint)}
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                        </Heading>
                       </div>
                     ) : null
                   }
