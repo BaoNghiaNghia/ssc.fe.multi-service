@@ -154,7 +154,7 @@ function AnalyseYoutube(props) {
                     </p>
                     <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                       {numberWithCommas(totalSubToday || 0)}
-                      <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                      <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{typeService}</span>
                     </Heading>
                   </div>
                 </Col>
@@ -168,7 +168,7 @@ function AnalyseYoutube(props) {
                         </p>
                         <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                           {numberWithCommas(Math.max(...arrTotalSubRun) || 0)}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{typeService}</span>
                         </Heading>
                       </div>
                     ) : null
@@ -184,7 +184,7 @@ function AnalyseYoutube(props) {
                         </p>
                         <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                           {numberWithCommas(Math.min(...arrTotalSubRun) || 0)}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{typeService}</span>
                         </Heading>
                       </div>
                     ) : null
@@ -199,7 +199,7 @@ function AnalyseYoutube(props) {
                         </p>
                         <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                           {numberWithCommas(Math.round(averagePoint) || 0)}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{typeService}</span>
                         </Heading>
                       </div>
                     ) : null
@@ -214,7 +214,7 @@ function AnalyseYoutube(props) {
                         </p>
                         <Heading as="h5" style={{ margin: 0, padding: 0 }}>
                           {numberWithCommas(Math.round(sumPoint) || 0)}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({typeService})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{typeService}</span>
                         </Heading>
                       </div>
                     ) : null

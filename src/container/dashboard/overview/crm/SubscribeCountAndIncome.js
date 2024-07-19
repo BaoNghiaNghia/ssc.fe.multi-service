@@ -156,7 +156,7 @@ function SubscribeCountAndIncome(props) {
                     </p>
                     <Heading as="h5" className="color-primary">
                       {numberWithCommas(totalSubToday || 0)}
-                      <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                      <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{VIETNAMES_CURRENCY}</span>
                     </Heading>
                   </div>
                 </Col>
@@ -170,7 +170,7 @@ function SubscribeCountAndIncome(props) {
                         </p>
                         <Heading as="h5">
                           {numberWithCommas(Math.max(...totalPoint || 0))}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{VIETNAMES_CURRENCY}</span>
                         </Heading>
                       </div>
                     ) : null
@@ -186,7 +186,7 @@ function SubscribeCountAndIncome(props) {
                         </p>
                         <Heading as="h5">
                           {numberWithCommas(Math.min(...totalPoint || 0))}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{VIETNAMES_CURRENCY}</span>
                         </Heading>
                       </div>
                     ) : null
@@ -201,7 +201,7 @@ function SubscribeCountAndIncome(props) {
                         </p>
                         <Heading as="h5">
                           {numberWithCommas(Math.round(averagePoint) || 0)}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{VIETNAMES_CURRENCY}</span>
                         </Heading>
                       </div>
                     ) : null
@@ -216,7 +216,7 @@ function SubscribeCountAndIncome(props) {
                         </p>
                         <Heading as="h5">
                           {numberWithCommas(sumPoint || 0)}
-                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>({VIETNAMES_CURRENCY})</span>
+                          <span style={{ fontStyle: 'italic', fontSize: '0.6em',opacity: '70%' }}>{VIETNAMES_CURRENCY}</span>
                         </Heading>
                       </div>
                     ) : null
