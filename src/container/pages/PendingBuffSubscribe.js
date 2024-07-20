@@ -351,16 +351,6 @@ function PendingBuffSubscribe() {
             <i className="feather icon-trash-2" /> Hủy
           </Button>
         }
-        // if (state === "cancel") {
-        //   return (
-        //     <Button
-        //       onClick={() => setCurrentCancelChannel(record?.order_id)}
-        //     >
-        //       Duyệt hủy
-        //     </Button>
-        //   )
-        // }
-
         const menuDropdown = (
           <Menu>
             <Menu.Item onClick={() => clickShowListVideo(record)}>
