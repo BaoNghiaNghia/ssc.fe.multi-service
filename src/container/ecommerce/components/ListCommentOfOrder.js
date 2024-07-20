@@ -103,7 +103,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
         key: key + 1,
         message: <span className="order-id">{
           message ? (
-            <span>{message}</span>
+            <span style={{ wordWrap: 'break-word', wordBreak: 'break-all', maxWidth: '300px' }}>{message}</span>
           ) : "..."
         }</span>,
         id: (
