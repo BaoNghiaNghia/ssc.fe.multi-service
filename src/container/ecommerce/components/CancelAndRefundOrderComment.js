@@ -63,7 +63,7 @@ const { Option } = Select;
 
 function CancelAndRefundOrderComment({ isOpen, setState }) {
   const dispatch = useDispatch();
-  const [formCreateService] = Form.useForm();
+  const [formCancelAndRefundOrder] = Form.useForm();
 
   const { postLoading, listService } = useSelector(state => {
     return {
@@ -83,17 +83,17 @@ function CancelAndRefundOrderComment({ isOpen, setState }) {
   });
 
   if (validatedServiceComment?.length > 0) {
-    formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
+    formCancelAndRefundOrder.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
   }
 
   const handleOk = () => {
     try {
-      formCreateService.validateFields()
+      formCancelAndRefundOrder.validateFields()
         .then((values) => {
           dispatch(actions.createOrderCommentAdminBegin(values));
 
           setState({ isCancelRefundCommentOrderModal: false });
-          formCreateService.resetFields();
+          formCancelAndRefundOrder.resetFields();
         })
         .catch((err) => {
           console.error("handle Real Error: ", err);
@@ -137,7 +137,7 @@ function CancelAndRefundOrderComment({ isOpen, setState }) {
           </Button>
         ]}
       >
-        <Form name="add_service" layout="vertical" form={formCreateService}>
+        <Form name="cancelAndRefund" layout="vertical" form={formCancelAndRefundOrder}>
           <span>Đang cập nhật</span>
         </Form>
       </Modal>

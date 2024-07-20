@@ -11,13 +11,14 @@ import { numberWithCommas } from '../../../../utility/utility';
 import { SERVICE_TYPE } from '../../../../variables';
 
 function CardGroup() {
-  const { reportData, typeService, statisticComment, isLoading, commentByDay } = useSelector((state) => {
+  const { reportData, typeService, statisticComment, isLoading, commentByDay, filterRange } = useSelector((state) => {
     return {
       isLoading: state?.reports?.chartLoading,
       reportData: state?.reports?.usuallyReportData?.report,
       typeService: state?.reports?.typeService,
       statisticComment: state?.reports?.statisticComment,
       commentByDay: state?.reports?.commentByDay,
+      filterRange: state?.reports?.filterRange,
     }
   });
   const getValueByKey = (object, row) => object[row];
@@ -39,6 +40,7 @@ function CardGroup() {
             <Cards bodypadding="5px" headless title={`Tổng ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
                 <Heading as="h1" color="#136400"><strong>{ numberWithCommas(todayRun || 0) }</strong></Heading>
+                {/* <span style={{ fontSize: '0.7em', color: 'white', padding: 0, margin: 0 }}>{filterRange?.from} - {filterRange?.to}</span> */}
               </div>
               <ChartjsAreaChart
                 id="netProfit"
