@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import PropTypes from 'prop-types';
-import { Form, Modal, Table, Badge, Tooltip } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Form, Modal, Table, Badge, Tooltip, Spin } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
@@ -70,9 +71,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
   const dataSource = [];
   if (commentInOrder?.items?.length) {
     commentInOrder?.items?.map((value, key) => {
-      const { status, id, order_id, message } = value;
-
-      console.log('---- status ----', status);
+      const { status, id, order_id, message, failed_count } = value;
 
       const statusTooltip = () => {
         switch (status) {
@@ -91,7 +90,10 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
           case 0:
             return <span style={{ color: 'gray', fontSize: '0.8em', fontWeight: 'bold', lineHeight: 1.1}}>Chờ</span>;
           case 1:
-            return <span style={{ color: 'orange', fontSize: '0.8em',fontWeight: 'bold', lineHeight: 1.1 }}>Đang chạy</span>;
+            return <span style={{ color: '#ff6c00', fontSize: '0.8em',fontWeight: 'bold', lineHeight: 1.1 }}>
+              <Spin size='small' style={{ marginRight: '7px', color: '#ff6c00' }} indicator={<LoadingOutlined spin />} tip="Đang chạy" />
+              Đang chạy
+            </span>;
           case 2:
             return <span style={badgeGreenStyle}><IoMdCheckmarkCircle fontSize={20}/></span>;
           default:
@@ -113,13 +115,29 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
           </>
         ),
         status: (
-          <>
-            <Tooltip title={statusTooltip()}>
-              <span className="label">
-                {statusContainer()}
-              </span>
-            </Tooltip>
-          </>
+          <Tooltip title={statusTooltip()}>
+            <div style={{ paddingBottom: '4px' }}>
+              {statusContainer()}
+            </div>
+            {
+              failed_count > 0 ? (
+                <div
+                  style={{ 
+                    fontSize: '0.8em',
+                    fontWeight: 800,
+                    padding:'0 5px',
+                    borderRadius: '5px',
+                    textShadow: `1px 1px 2px black`,
+                    backgroundColor: 'crimson',
+                    color: 'white'
+                  }}
+                >
+                  <span style={{ fontWeight: 600 }}>Thất bại: &nbsp;</span>
+                  <span style={{ fontSize: '1.2em' }}>{numberWithCommas(failed_count || 0)}</span>
+                </div>
+              ) : null
+            }
+          </Tooltip>
         ),
       });
     });
@@ -147,7 +165,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
     <>
       <Modal
         open={isOpen}
-        width="700px"
+        width="800px"
         centered
         title={
           <>
