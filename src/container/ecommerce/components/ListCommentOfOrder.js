@@ -92,6 +92,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
           case 1:
             return <span style={{ color: '#ff6c00', fontSize: '0.8em',fontWeight: 'bold', lineHeight: 1.1 }}>
               <Spin size='small' style={{ marginRight: '7px', color: '#ff6c00' }} indicator={<LoadingOutlined spin />} tip="Đang chạy" />
+              Đang chạy
             </span>;
           case 2:
             return <span style={badgeGreenStyle}><IoMdCheckmarkCircle fontSize={20}/></span>;
@@ -115,7 +116,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
         ),
         status: (
           <Tooltip title={statusTooltip()}>
-            <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+            <div style={{}}>
               <div style={{ paddingBottom: '4px' }}>
                 {statusContainer()}
               </div>
