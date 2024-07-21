@@ -125,9 +125,10 @@ function ComputerRunCommentOrder() {
   })?.length;
 
   const nonFullThreadServer = listServer?.items?.filter(item => {
-    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
-    return percentThread > 0.7 && percentThread < 0.3;
+    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread / item?.thread : 0;
+    return percentThread < 0.3 || percentThread > 0.7;
   })?.length;
+
 
   const aBitThreadServer = listServer?.items?.filter(item => {
     const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
