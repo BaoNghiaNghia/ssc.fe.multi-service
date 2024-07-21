@@ -151,7 +151,7 @@ function TableServer() {
             <span>
               {
                 value?.last_action_at ? (
-                  <span style={{ fontWeight: '700' }}>{value?.last_action_at}</span>
+                  <span style={{ fontWeight: '700', color: '#c3c3c3' }}>{value?.last_action_at}</span>
                 ) : (
                   <span style={{ color: '#cdcdcd' }}>Chưa reset</span>
                 )

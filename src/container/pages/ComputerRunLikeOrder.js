@@ -256,7 +256,7 @@ function ComputerRunLikeOrder() {
             <span>
               {
                 value?.last_action_at ? (
-                  <span style={{ fontWeight: '500' }}>{value?.last_action_at}</span>
+                  <span style={{ fontWeight: '500', color: '#c3c3c3' }}>{value?.last_action_at}</span>
                 ) : (
                   <span style={{ color: '#cdcdcd' }}>Chưa reset</span>
                 )
