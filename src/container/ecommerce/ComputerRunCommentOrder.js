@@ -126,7 +126,7 @@ function ComputerRunCommentOrder() {
 
   const nonFullThreadServer = listServer?.items?.filter(item => {
     const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread / item?.thread : 0;
-    return percentThread < 0.3 || percentThread > 0.7;
+    return percentThread > 0.3 || percentThread < 0.7;
   })?.length;
 
 
