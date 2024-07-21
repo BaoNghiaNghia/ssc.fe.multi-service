@@ -380,7 +380,7 @@ function Overview() {
                     <span>Quest (Lỗi/Tổng)</span>
                     <GoTasklist fontSize={18} style={{ marginTop: '3px' }}/>
                   </span>
-                  <Heading as="h4">
+                  <Heading as="h5">
                     {numberWithCommas(taskOfTool[-1])}/{numberWithCommas(Object.values(taskOfTool).reduce((accumulator, currentValue) => accumulator + currentValue, 0))}
                   </Heading>
                 </CardBarChart2>

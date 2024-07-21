@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover, Image } from 'antd';
 import FeatherIcon from 'feather-icons-react';
+import { PlayCircleOutlined } from '@ant-design/icons';
 import { FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { WiTime7 } from "react-icons/wi";
@@ -268,9 +269,33 @@ function PendingBuffLike() {
 
               <Tooltip 
                 title={
-                  <span style={{ display: 'inline-flex' }}>
-                    <strong>{video_title}</strong>
-                  </span>
+                  <Row gutter={10}>
+                    <Col sm={24} style={{ position: 'relative' }}>
+                      <Image
+                        src={`https://img.youtube.com/vi/${video_id}/mqdefault.jpg`}
+                        alt={`Thumbnail for ${video_title}`}
+                        preview={false}
+                        style={{ borderRadius: '5px', marginBottom: '10px', width: '100%' }}
+                      />
+                      <PlayCircleOutlined
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          fontSize: '30px', // Size of the play button
+                          color: 'white', // Color of the play button
+                          transform: 'translate(-50%, -50%)', // Center the button
+                          cursor: 'pointer', // Change cursor on hover
+                          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' // Black shadow for better visibility
+                        }}
+                      />
+                    </Col>
+                    <Col sm={24}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center',  }}>
+                        <strong>{video_title}</strong>
+                      </span>
+                    </Col>
+                  </Row>
                 } 
                 placement='topLeft'
               >
