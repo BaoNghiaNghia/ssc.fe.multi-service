@@ -78,7 +78,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
           case 1:
             return <span style={{ color: '#ff6c00', fontSize: '0.8em',fontWeight: 'bold', lineHeight: 1.1 }}>
               <Spin size='small' style={{ marginRight: '8px', color: '#ff6c00' }} indicator={<LoadingOutlined spin />} tip="Đang chạy" />
-              Đang chạy
+              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginLeft: '4px' }}>Đang chạy</span>
             </span>;
           case 2:
             return <span style={badgeGreenStyle}>
@@ -115,11 +115,12 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
                     style={{ 
                       fontSize: '0.8em',
                       fontWeight: 300,
-                      padding:'0 5px',
+                      padding:'0 4px',
                       borderRadius: '5px',
                       textShadow: `1px 1px 2px white`,
                       backgroundColor: '#ffebeb',
-                      color: 'orangered'
+                      color: 'orangered',
+                      display: 'flex'
                     }}
                   >
                     <Badge dot color="orangered" style={{ marginRight: '5px' }}/>
