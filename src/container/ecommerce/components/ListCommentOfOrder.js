@@ -13,30 +13,16 @@ import commentActions from '../../../redux/buffComment/actions';
 const badgeGreenStyle = {
   fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
-  padding: '2px 7px',
   fontSize: '0.8em',
   color: '#009500',
   fontWeight: 'bold',
-  display: 'inline-flex',
+  display: 'flex',
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px'
 }
 
-const badgeRedStyle = {
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.8em',
-  color: 'gray',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
 
 function ListCommentOfOrder({ isOpen, setState, orderState }) {
   const dispatch = useDispatch();
@@ -91,11 +77,14 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
             return <span style={{ color: 'gray', fontSize: '0.8em', fontWeight: 'bold', lineHeight: 1.1,  marginRight: '7px',}}>Chờ</span>;
           case 1:
             return <span style={{ color: '#ff6c00', fontSize: '0.8em',fontWeight: 'bold', lineHeight: 1.1 }}>
-              <Spin size='small' style={{ marginRight: '7px', color: '#ff6c00' }} indicator={<LoadingOutlined spin />} tip="Đang chạy" />
+              <Spin size='small' style={{ marginRight: '8px', color: '#ff6c00' }} indicator={<LoadingOutlined spin />} tip="Đang chạy" />
               Đang chạy
             </span>;
           case 2:
-            return <span style={badgeGreenStyle}><IoMdCheckmarkCircle fontSize={20}/></span>;
+            return <span style={badgeGreenStyle}>
+              <IoMdCheckmarkCircle fontSize={20}/>
+              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginLeft: '4px' }}>Hoàn thành</span>
+            </span>;
           default:
             return '';
         }
@@ -125,16 +114,17 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
                   <div
                     style={{ 
                       fontSize: '0.8em',
-                      fontWeight: 800,
+                      fontWeight: 300,
                       padding:'0 5px',
                       borderRadius: '5px',
-                      textShadow: `1px 1px 2px black`,
-                      backgroundColor: 'crimson',
-                      color: 'white'
+                      textShadow: `1px 1px 2px white`,
+                      backgroundColor: '#ffebeb',
+                      color: 'orangered'
                     }}
                   >
-                    <span style={{ fontWeight: 600 }}>Thất bại: &nbsp;</span>
-                    <span style={{ fontSize: '1.2em' }}>{numberWithCommas(failed_count || 0)}</span>
+                    <Badge dot color="orangered" style={{ marginRight: '5px' }}/>
+                    <span >Thất bại: &nbsp;</span>
+                    <span style={{ fontSize: '1.2em', fontWeight: 700 }}>{numberWithCommas(failed_count || 0)}</span>
                   </div>
                 ) : null
               }
