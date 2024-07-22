@@ -662,6 +662,8 @@ function PendingBuffComment() {
     },
   };
 
+  const currentStatusLabel = ORDER_YOUTUBE_STATUS.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase();
+
   return (
     <>
       <DetailOrder
@@ -728,7 +730,9 @@ function PendingBuffComment() {
                     </div>
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderComment?.meta?.total || 0)}</span> order</span>
+                    <span style={{ marginLeft: '5px' }}>
+                      Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderComment?.meta?.total || 0)}</span> đơn {currentStatusLabel}
+                    </span>
                     <div className="table-toolbox-actions">
                       <Button
                         size="small"
@@ -789,7 +793,7 @@ function PendingBuffComment() {
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
                       <span style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
-                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase()}
+                        Chưa có thông tin đơn {currentStatusLabel}
                       </span>
                       {
                         state?.statusNumber === 0 ? (
@@ -824,7 +828,7 @@ function PendingBuffComment() {
                     responsive: true,
                     showTotal(total, range) {
                       return <>
-                        <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> order</p>
+                        <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> đơn {currentStatusLabel}</p>
                       </>;
                     },
                     totalBoundaryShowSizeChanger: 100,

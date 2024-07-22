@@ -115,16 +115,18 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
                     style={{ 
                       fontSize: '0.8em',
                       fontWeight: 300,
-                      padding:'0 4px',
+                      padding:'0 6px',
                       borderRadius: '5px',
                       textShadow: `1px 1px 2px white`,
                       backgroundColor: '#ffebeb',
                       color: 'orangered',
-                      display: 'flex'
+                      display: 'inline-flex',
+                      alignContent: 'center',
+                      alignItems: 'center'
                     }}
                   >
                     <Badge dot color="orangered" style={{ marginRight: '5px' }}/>
-                    <span >Thất bại: &nbsp;</span>
+                    <span>Thất bại: &nbsp;</span>
                     <span style={{ fontSize: '1.2em', fontWeight: 700 }}>{numberWithCommas(failed_count || 0)}</span>
                   </div>
                 ) : null
