@@ -17,9 +17,10 @@ function AddService({ serviceState, setState }) {
 
   const { isOpenAdd } = serviceState;
 
-  const { postLoading } = useSelector(state => {
+  const { postLoading, typeService } = useSelector(state => {
     return {
       postLoading: state.settingService.postLoading,
+      typeService: state?.reports?.typeService
     };
   });
 
@@ -138,9 +139,10 @@ function AddService({ serviceState, setState }) {
             <Col sm={8}>
               <Form.Item
                 name="rest_api"
-                label=""
+                style={{ margin: '0px', padding: '0px'}}
+                label="Rest API"
               >
-                <Switch checkedChildren="Rest API" unCheckedChildren="No Rest API" checked={state?.rest_api} onChange={(check) => {
+                <Switch style={{ marginTop: '15px', paddingTop: '0px' }} checkedChildren="Rest API" unCheckedChildren="No Rest API" checked={state?.rest_api} onChange={(check) => {
                   setStateModal({
                     ...state,
                     rest_api: check
@@ -214,7 +216,7 @@ function AddService({ serviceState, setState }) {
               <Form.Item
                 name="name"
                 label="Tên dịch vụ"
-                style={{ marginBottom: '7px' }}
+                style={{ margin: '0px', padding: '0px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
@@ -228,7 +230,7 @@ function AddService({ serviceState, setState }) {
                 name="geo" 
                 label="Geo"
                 initialValue="vn"
-                style={{ marginBottom: '7px' }} 
+                style={{ margin: '0px', padding: '0px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
@@ -261,14 +263,14 @@ function AddService({ serviceState, setState }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={2} />
+                <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={3} />
               </Form.Item>
             </Col>
           </Row>
 
           <Row gutter="10">
             <Col sm={9}>
-              <Form.Item name="service_type" initialValue="ytbcomment" label="Loại dịch vụ" rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="service_type" initialValue="ytbcomment" label="Loại dịch vụ" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -280,7 +282,7 @@ function AddService({ serviceState, setState }) {
               </Form.Item>
             </Col>
             <Col sm={9}>
-              <Form.Item name="type" label="Loại" initialValue="Custom Comments" rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="type" label="Loại" initialValue="Custom Comments" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -288,7 +290,7 @@ function AddService({ serviceState, setState }) {
               </Form.Item>
             </Col>
             <Col sm={6}>
-              <Form.Item name="priority" initialValue="false" label="Ưu tiên" rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="priority" initialValue="false" label="Ưu tiên" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -300,11 +302,11 @@ function AddService({ serviceState, setState }) {
             </Col>
           </Row>
 
-          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
+          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình luồng</Divider>
 
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="max_threads" label="Luồng < 3000" rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="max_threads" label="Luồng < 3000" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -312,7 +314,7 @@ function AddService({ serviceState, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max_threads_3000" label="3000 < Luồng < 5000" rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="max_threads_3000" label="3000 < Luồng < 5000" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -320,7 +322,7 @@ function AddService({ serviceState, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max_threads_5000" label="5000 < Luồng" rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="max_threads_5000" label="5000 < Luồng" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -328,12 +330,15 @@ function AddService({ serviceState, setState }) {
               </Form.Item>
             </Col>
           </Row>
+
+          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Số lượng {typeService} & Giá</Divider>
+              
           <Row gutter="10">
             <Col sm={8}>
               <Form.Item 
-                style={{ margin: '0px' }}
+                style={{ margin: '0px', padding: '0px' }}
                 name="min" 
-                label="Số sub order min"
+                label={`Số ${typeService} (MIN)`}
                 rules={[
                   {
                     required: true,
@@ -345,21 +350,21 @@ function AddService({ serviceState, setState }) {
                       if (max != null && min != null) {
                         if (max <= min) {
                           // eslint-disable-next-line prefer-promise-reject-errors
-                          return Promise.reject( `Phải nhỏ hơn ${  max} (Sub order max)`);
+                          return Promise.reject( `Phải nhỏ hơn ${  max} (${typeService?.toUpperCase()} max)`);
                         }
                       }
                     },
                   }
                 ]}
               >
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' style={{ width: '100%', margin: '0px', padding: '0px' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
             <Col sm={8}>
               <Form.Item
-                style={{ margin: '0px' }}
+                style={{ margin: '0px', padding: '0px' }}
                 name="max"
-                label="Số Sub (order max)"
+                label={`Số ${typeService} (MAX)`}
                 rules={[
                   {
                     required: true,
@@ -371,22 +376,22 @@ function AddService({ serviceState, setState }) {
                       if (max != null && min != null) {
                         if (max <= min) {
                           // eslint-disable-next-line prefer-promise-reject-errors
-                          return Promise.reject( `Phải lớn hơn ${  min} (Sub order min)`);
+                          return Promise.reject( `Phải lớn hơn ${  min} (${typeService?.toUpperCase()} min)`);
                         }
                       }
                     },
                   }
                 ]}
                 >
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' style={{ width: '100%', margin: '0px', padding: '0px' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item style={{ margin: '0px' }} name="price_per_10" label="Prices / 10 Subs" rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="price_per_10" label={`Prices / 10 ${typeService}`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' style={{ width: '100%', margin: '0px', padding: '0px' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
           </Row>
