@@ -14,8 +14,8 @@ import { BsFire } from "react-icons/bs";
 import { LuListFilter } from "react-icons/lu";
 import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
-
 import moment from 'moment';
+
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
 import ListCommentOfOrder from './components/ListCommentOfOrder';
@@ -37,7 +37,7 @@ import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURR
 import { convertSeconds, numberWithCommas, performanceColorBack } from '../../utility/utility';
 
 
-const columns = [
+const columnTableOrderComments = [
   {
     title: 'Người dùng',
     dataIndex: 'user_id',
@@ -191,8 +191,6 @@ function PendingBuffComment() {
       }
     }
   };
-
-  // const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
 
   const dataSource = [];
   if (listOrderComment?.items?.length) {
@@ -483,7 +481,6 @@ function PendingBuffComment() {
                         ) : null
                       }
                       { `${findService[0]?.name?.substring(0, 17)  }...` }
-                      {/* {findService[0]?.service_id} */}
                     </span>
                     <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</span>
                     <span style={{ margin: '0px', fontSize: '0.7em' }}><strong>ID: </strong>{findService[0]?.service_id}</span>
@@ -787,7 +784,7 @@ function PendingBuffComment() {
                   rowSelection={rowSelection}
                   size='small'
                   dataSource={dataSource}
-                  columns={columns}
+                  columns={columnTableOrderComments}
                   locale={{ emptyText: (
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
@@ -796,7 +793,11 @@ function PendingBuffComment() {
                         Chưa có thông tin đơn {currentStatusLabel}
                       </span>
                       {
-                        state?.statusNumber === 0 ? (
+                        ORDER_YOUTUBE_STATUS
+                          .filter(status => ["OrderStatusPending", "OrderStatusProcessing", "OrderStatusDone"]
+                          .includes(status.name))
+                          .map(status => status.value)
+                          .includes(state?.statusNumber) ? (
                           <Button
                             size="small"
                             type="dashed"

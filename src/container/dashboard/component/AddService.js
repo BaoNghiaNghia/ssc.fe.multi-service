@@ -176,7 +176,7 @@ function AddService({ serviceState, setState }) {
             <Col sm={12}>
               <Form.Item
                 name="category"
-                style={{ margin: '0px' }}
+                style={{ margin: '6px 0px 0 0' }}
                 initialValue="Comments"
                 bordered
                 rules={[{
