@@ -428,7 +428,16 @@ function Overview() {
                     <GoWorkflow fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
-                    {numberWithCommas(computerThread?.current_thread ?? 0) || 0}/{numberWithCommas((computerThread?.free_thread ?? 0) + (computerThread?.current_thread ?? 0)) || 0}
+                    <Tooltip title={
+                      <div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', marginRight: '7px' }}>Luồng hiện tại: <span style={{ fontWeight: '600' }}>{numberWithCommas(computerThread?.current_thread ?? 0) || 0}</span></div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', marginRight: '7px' }}>Luồng đang trống: <span style={{ fontWeight: '600' }}>{numberWithCommas(computerThread?.free_thread ?? 0) || 0}</span></div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', marginRight: '7px' }}>Tổng luồng: <span style={{ fontWeight: '600' }}>{numberWithCommas((computerThread?.free_thread ?? 0) + (computerThread?.current_thread ?? 0)) || 0}</span></div>
+                      </div>
+                    }>
+
+                      {numberWithCommas(computerThread?.current_thread ?? 0) || 0}/{numberWithCommas((computerThread?.free_thread ?? 0) + (computerThread?.current_thread ?? 0)) || 0}
+                    </Tooltip>
                   </Heading>
                 </CardBarChart2>
               </div>
