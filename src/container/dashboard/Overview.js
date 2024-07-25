@@ -428,7 +428,7 @@ function Overview() {
                     <GoWorkflow fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
-                    {numberWithCommas(computerThread?.current_thread) || 0}/{numberWithCommas(computerThread?.free_thread) || 0}
+                    {numberWithCommas(computerThread?.current_thread ?? 0) || 0}/{numberWithCommas((computerThread?.free_thread ?? 0) + (computerThread?.current_thread ?? 0)) || 0}
                   </Heading>
                 </CardBarChart2>
               </div>
