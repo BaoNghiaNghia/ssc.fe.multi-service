@@ -1,7 +1,7 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, Table, Badge, Tooltip, Button } from 'antd';
+import { Row, Col, Table, Badge, Tooltip, Button, Image } from 'antd';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt, TbShoppingBagEdit } from 'react-icons/tb';
 import FeatherIcon from 'feather-icons-react';
@@ -521,6 +521,15 @@ function ComputerRunLikeOrder() {
               rowSelection={rowSelection}
               dataSource={dataSource}
               columns={columns}
+              locale={{ emptyText: (
+                <div>
+                  <Image src={require(`../../static/img/lost_connection.svg`).default} alt="" width="300px" preview={false} style={{margin: '60px 0px', opacity: '80%'}}/>
+                  <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
+                  <span style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                    Chưa có server
+                  </span>
+                </div>
+              ) }}
               pagination={{
                 current: listServer?.meta?.current_page,
                 defaultPageSize: listServer?.meta?.count,
@@ -534,6 +543,7 @@ function ComputerRunLikeOrder() {
                 },
                 position: ['bottomCenter'],
                 responsive: true,
+                
                 showTotal(total, range) { return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p> },
                 totalBoundaryShowSizeChanger: 100,
                 size: "small"

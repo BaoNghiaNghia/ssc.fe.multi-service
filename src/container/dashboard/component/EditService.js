@@ -17,10 +17,11 @@ function EditService({ isOpen, setState, state }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
-  const { postLoading, detailService } = useSelector(item => {
+  const { postLoading, detailService, typeService } = useSelector(item => {
     return {
       postLoading: item?.settingService?.postLoading,
       detailService: item?.settingService?.detailService,
+      typeService: state?.reports?.typeService
     };
   });
 
@@ -325,7 +326,7 @@ function EditService({ isOpen, setState, state }) {
           </Row>
           <Row gutter="10" >
             <Col sm={8}>
-              <Form.Item name="min" style={{ margin: 0 }}  label="Số sub order min" rules={[{
+              <Form.Item name="min" style={{ margin: 0 }}  label={`Số ${typeService} (MIN)`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -333,7 +334,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max" style={{ margin: 0 }}  label="Số Sub (order max)" rules={[{
+              <Form.Item name="max" style={{ margin: 0 }}  label={`Số ${typeService} (MAX)`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -341,7 +342,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="price_per_10" style={{ margin: 0 }}  label="Prices / 10 Subs" rules={[{
+              <Form.Item name="price_per_10" style={{ margin: 0 }}  label={`Prices / 10 ${typeService}`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
