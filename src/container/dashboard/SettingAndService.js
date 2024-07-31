@@ -219,13 +219,20 @@ function SettingAndService() {
                 {
                   geo ? (
                     <Tooltip title={geo?.toUpperCase()}>
-                      <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                        <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="20px" height="20px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
+                      <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                        <img src={require(`../../static/img/flag/${geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
                       </span>
                     </Tooltip>
                   ) : null
                 }
-                 - <span style={{ fontWeight: 'bold', margin: '0px 7px' }}>{service_id}</span> - <Tooltip title={name} placement='right'>{name.length > 70 ? `${name?.slice(0, 70)  } ...` : name}</Tooltip>
+                <span style={{ color: 'gray', margin: '0px 7px' }}>&#8226;</span>
+                <span style={{ fontWeight: '900'}}>{service_id}</span>
+                <span style={{ color: 'gray', margin: '0px 7px' }}>&#8226;</span>
+                <Tooltip title={name} placement='right'>
+                  {
+                    name?.length > 70 ? `${name?.slice(0, 70)  } ...` : name
+                  }
+                </Tooltip>
               </span>
             </Col>
           </Row>
@@ -257,9 +264,9 @@ function SettingAndService() {
                 priority ? (
                   <span className="label" style={badgeOrangeStyle}>
                     <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
-                    Ưu tiên
+                    Ưu tiên``
                   </span>
-                ) : <></>
+                ) : null
               }
             </Col>
           </Row>
