@@ -5,6 +5,7 @@ import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover, Image } from
 import FeatherIcon from 'feather-icons-react';
 import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
+import { CgNotes } from "react-icons/cg";
 import { WiTime7 } from "react-icons/wi";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { PlayCircleOutlined } from '@ant-design/icons';
@@ -513,7 +514,18 @@ function PendingBuffComment() {
             {
               note?.length > 0 ? (
                 <Popover placement="top" content={note} action="hover">
-                  <span className="ordered-amount">{ note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}</span>
+                  <span
+                    className="ordered-amount"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      alignContent: 'center'
+                    }}>
+                    <CgNotes color='#c3c3c3' style={{ marginRight: '5px'}}/>
+                    <span style={{ inlineSize: '50px', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
+                      { note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}
+                    </span>
+                  </span>
                 </Popover>
               ) : <>...</>
             }
