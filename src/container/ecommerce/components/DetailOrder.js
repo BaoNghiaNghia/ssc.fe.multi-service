@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Progress, Tooltip } from 'antd';
+import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider} from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { LIST_SERVICE_SUPPLY, STATUS_COMMENT_ENUM } from '../../../variables/index';
-import { numberWithCommas, performanceColorBack } from '../../../utility/utility';
+import { performanceStatementTags } from '../../../utility/utility';
 
 const { Option } = Select;
 
@@ -70,10 +70,6 @@ function DetailOrder({ setState, state }) {
         return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
     }
   }
-
-
-  const performanceColor = (performance !== 0) 
-  ? (performance >= 0.8 ? 'green' : ((performance < 0.8 && performance > 0.5) ? 'yellow' : ((performance < 0.5 && performance > 0.3) ? 'red' : 'gray'))) : 'gray';
 
   return (
     <>
@@ -248,35 +244,7 @@ function DetailOrder({ setState, state }) {
                 }]}
               >
                 <div style={{ alignContent: 'center', width: '100%' }}>
-                  {
-                    detailOrderComment?.performance !== 0 ? (
-                      <span
-                        style={{ 
-                          fontSize: '0.8em',
-                          fontWeight: 700,
-                          padding:'0 5px',
-                          borderRadius: '5px',
-                          border: `1px solid ${performanceColor}`,
-                          backgroundColor: performanceColorBack
-                        }}
-                      >
-                        Hiệu suất: {numberWithCommas(Math.floor(detailOrderComment?.performance, 1) || 0)} %
-                      </span>
-                    ) : (
-                      <span
-                        style={{ 
-                          fontSize: '0.8em',
-                          fontWeight: 700,
-                          padding:'0 5px',
-                          borderRadius: '5px',
-                          border: '1px solid gray',
-                          backgroundColor: '#ebebeb'
-                        }}
-                      >
-                        Hiệu suất: {numberWithCommas(Math.floor(detailOrderComment?.performance, 1) || 0)} %
-                      </span>
-                    )
-                  }
+                  {performanceStatementTags(performance)}
                 </div>
               </Form.Item>
             </Col>

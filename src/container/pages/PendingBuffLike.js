@@ -34,7 +34,7 @@ import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
-import { convertSeconds, numberWithCommas, performanceColorBack } from '../../utility/utility';
+import { convertSeconds, numberWithCommas, performanceColorBack, performanceStatementTags } from '../../utility/utility';
 
 
 const columns = [
@@ -366,41 +366,7 @@ function PendingBuffLike() {
                     }>
                       <p style={{ margin: 0, padding: 0 }}><strong>{numberWithCommas((Math.abs(current_count - start_count)) || 0)} / {numberWithCommas(done_count || 0)}</strong></p>
                     </Tooltip>
-                    {
-                      performance !== 0 ? (
-                        <span
-                          style={{ 
-                            fontSize: '0.8em',
-                            fontWeight: 800,
-                            padding:'0 5px',
-                            fontFamily: 'Poppins, sans-serif',
-                            borderRadius: '5px',
-                            // border: `1px solid ${performanceColorBack(performance)?.blurColor}`,
-                            textShadow: `1px 1px 2px ${performanceColorBack(performance)?.blurColor}`,
-                            backgroundColor: performanceColorBack(performance)?.backgroundColor,
-                            color: performanceColorBack(performance)?.color,
-                            display: 'inline-flex', alignItems: 'center'
-                          }}
-                        >
-                          <span style={{ fontWeight: 600 }}>Hiệu suất: &nbsp;</span> <span style={{ fontSize: '1.1em' }}>{numberWithCommas(Math.floor(performance, 1) || 0)}  %</span>
-                        </span>
-                      ) : (
-                        <span
-                          style={{ 
-                            fontSize: '0.8em',
-                            fontWeight: 700,
-                            fontFamily: 'Poppins, sans-serif',
-                            padding:'0 5px',
-                            borderRadius: '5px',
-                            // border: '1px solid gray',
-                            backgroundColor: '#ebebeb',
-                            display: 'flex', alignItems: 'center'
-                          }}
-                        >
-                          <span style={{ color: 'gray' }}>Hiệu suất: &nbsp;</span> {numberWithCommas(Math.floor(performance, 1) || 0)} %
-                        </span>
-                      )
-                    }
+                    {performanceStatementTags(performance)}
                   </div>
                 </span>
               )

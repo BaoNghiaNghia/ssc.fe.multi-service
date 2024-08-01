@@ -119,6 +119,44 @@ const performanceColorBack = (performance) => {
   }
 }
 
+const performanceStatementTags = (performance) => {
+  return <>
+    {
+      performance !== 0 ? (
+        <span
+          style={{ 
+            fontSize: '0.8em',
+            fontWeight: 800,
+            padding:'0 5px',
+            fontFamily: 'Poppins, sans-serif',
+            borderRadius: '5px',
+            textShadow: `1px 1px 2px ${performanceColorBack(performance)?.blurColor}`,
+            backgroundColor: performanceColorBack(performance)?.backgroundColor,
+            color: performanceColorBack(performance)?.color,
+            display: 'inline-flex', alignItems: 'center'
+          }}
+        >
+          <span style={{ fontWeight: 600 }}>Hiệu suất: &nbsp;</span> <span style={{ fontSize: '1.1em' }}>{numberWithCommas(Math.floor(performance, 1) || 0)}  %</span>
+        </span>
+      ) : (
+        <span
+          style={{ 
+            fontSize: '0.8em',
+            fontWeight: 700,
+            fontFamily: 'Poppins, sans-serif',
+            padding:'0 5px',
+            borderRadius: '5px',
+            backgroundColor: '#ebebeb',
+            display: 'flex', alignItems: 'center'
+          }}
+        >
+          <span style={{ color: 'gray' }}>Hiệu suất: &nbsp;</span> {numberWithCommas(Math.floor(performance, 1) || 0)} %
+        </span>
+      )
+    }
+  </>;
+}
+
 function getPathLocalFromString(inputString) {
   // Extract the shortcode from the input string
   const shortcode = inputString.split('_').pop();
@@ -140,5 +178,6 @@ export {
   isEmptyObject,
   isVietnamesePhoneNumber,
   performanceColorBack,
-  getPathLocalFromString
+  getPathLocalFromString,
+  performanceStatementTags
 };
