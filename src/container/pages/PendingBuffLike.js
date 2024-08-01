@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
 
 import moment from 'moment';
+import { CgNotes } from 'react-icons/cg';
 import UpdateOrderLike from './components/UpdateOrderLike';
 import DetailOrderLike from './components/DetailOrderLike';
 import CancelAndRefundOrderComment from '../ecommerce/components/CancelAndRefundOrderComment';
@@ -34,7 +35,6 @@ import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
 import { convertSeconds, numberWithCommas, performanceColorBack } from '../../utility/utility';
-import { CgNotes } from 'react-icons/cg';
 
 
 const columns = [
