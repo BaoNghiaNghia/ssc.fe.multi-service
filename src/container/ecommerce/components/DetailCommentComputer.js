@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider } from 'antd';
 import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
-import serviceActions from '../../../redux/serviceSettings/actions';
-import { STATUS_COMMENT_ENUM } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
 
 function DetailCommentComputer({ setState, computerState }) {

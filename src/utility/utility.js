@@ -147,7 +147,7 @@ const performanceStatementTags = (performance) => {
             padding:'0 5px',
             borderRadius: '5px',
             backgroundColor: '#ebebeb',
-            display: 'flex', alignItems: 'center'
+            display: 'inline-flex', alignItems: 'center'
           }}
         >
           <span style={{ color: 'gray' }}>Hiệu suất: &nbsp;</span> {numberWithCommas(Math.floor(performance, 1) || 0)} %

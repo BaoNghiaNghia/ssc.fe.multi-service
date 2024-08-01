@@ -230,8 +230,6 @@ function PendingBuffComment() {
       const checkInsuranceOrder = ['OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
       const checkRefundOrder = ['OrderStatusPending', 'OrderStatusProcessing', 'OrderStatusDisable', 'OrderStatusDone'].includes(ORDER_YOUTUBE_STATUS.find(item => item?.value === status)?.name);
 
-      
-
       return dataSource.push({
         key: id,
         order_id: <span style={{ fontSize: '0.9em' }}>{order_id}</span>,
