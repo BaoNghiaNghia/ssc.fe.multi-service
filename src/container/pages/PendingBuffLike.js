@@ -34,6 +34,7 @@ import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
 import { convertSeconds, numberWithCommas, performanceColorBack } from '../../utility/utility';
+import { CgNotes } from 'react-icons/cg';
 
 
 const columns = [
@@ -513,7 +514,18 @@ function PendingBuffLike() {
             {
               note?.length > 0 ? (
                 <Popover placement="top" content={note} action="hover">
-                  <span className="ordered-amount">{ note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}</span>
+                  <span
+                    className="ordered-amount"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      alignContent: 'center'
+                    }}>
+                    <CgNotes color='#c3c3c3' style={{ marginRight: '5px'}}/>
+                    <span style={{ inlineSize: '50px', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
+                      { note?.length > 20 ? (`${note?.substring(0, 20)  }...`) : note}
+                    </span>
+                  </span>
                 </Popover>
               ) : <>...</>
             }

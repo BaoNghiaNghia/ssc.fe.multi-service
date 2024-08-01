@@ -338,7 +338,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                    <div>Tổng task</div>
+                    <div>Tổng Quest</div>
                     <div>
                       <Tooltip title="Thất bại">
                         <span className="mr-3" style={{color: 'orangered', ...styleMail}}>{numberWithCommas(taskOfTool[-1]) || 0}</span>

@@ -2752,3 +2752,7 @@ li.active > .display {
 .ant-pagination .ant-select-single .ant-select-selector .ant-select-selection-item {
   line-height: 25px !important;
 }
+
+.ant-table-container {
+  padding-bottom: 0px !important;
+}
