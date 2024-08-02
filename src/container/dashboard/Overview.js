@@ -214,7 +214,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail chưa được gọi</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail chưa gọi</span>
                     <Tooltip title={accountStatus?.list_uncalled ? "Danh sách mail": "Không có mail"}>
                       <Button 
                         type='text'
@@ -223,7 +223,7 @@ function Overview() {
                           ...state,
                           isMailListPopup: true,
                           selectedItem: {
-                            title: 'Mail chưa được gọi',
+                            title: 'Mail chưa gọi',
                             data: accountStatus?.list_uncalled
                           }
                         })}

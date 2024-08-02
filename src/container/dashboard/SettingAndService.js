@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Tooltip, Badge, Switch, Form, InputNumber } from 'antd';
+import { Row, Col, Table, Tooltip, Badge, Switch, Form, InputNumber, Avatar } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import { FaYoutube } from "react-icons/fa";
