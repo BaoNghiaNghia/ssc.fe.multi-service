@@ -326,7 +326,7 @@ function EditService({ isOpen, setState, state }) {
           </Row>
           <Row gutter="10" >
             <Col sm={8}>
-              <Form.Item name="min" style={{ margin: 0 }}  label={`Số ${typeService} (MIN)`} rules={[{
+              <Form.Item name="min" style={{ margin: 0 }}  label={`Số ${formUpdateService.getFieldValue('service_type')} (MIN)`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -334,7 +334,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max" style={{ margin: 0 }}  label={`Số ${typeService} (MAX)`} rules={[{
+              <Form.Item name="max" style={{ margin: 0 }}  label={`Số ${formUpdateService.getFieldValue('service_type')} (MAX)`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -342,7 +342,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="price_per_10" style={{ margin: 0 }}  label={`Prices / 10 ${typeService}`} rules={[{
+              <Form.Item name="price_per_10" style={{ margin: 0 }}  label={`Prices / 10 ${formUpdateService.getFieldValue('service_type')}`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>

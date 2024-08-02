@@ -264,7 +264,7 @@ function SettingAndService() {
                 priority ? (
                   <span className="label" style={badgeOrangeStyle}>
                     <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
-                    Ưu tiên``
+                    Ưu tiên
                   </span>
                 ) : null
               }

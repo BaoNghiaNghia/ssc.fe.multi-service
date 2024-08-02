@@ -9,6 +9,7 @@ import { LuListFilter } from 'react-icons/lu';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { GrNotification } from 'react-icons/gr';
 import { AiOutlineLike, AiTwotoneDelete } from 'react-icons/ai';
+import { TbServerBolt } from 'react-icons/tb';
 import { GalleryNav, TopToolBox } from './style';
 import AddAccountGmail from './component/AddAccountGmail';
 import DetailAccountGmail from './component/DetailAccountGmail';
@@ -19,7 +20,7 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import gmailActions from '../../redux/gmailManage/actions';
-import { numberWithCommas } from '../../utility/utility';
+import { getPathLocalFromString, numberWithCommas } from '../../utility/utility';
 import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE } from '../../variables';
 import ConfirmRequestModal from '../ecommerce/components/ConfirmRequestModal';
 
@@ -167,11 +168,33 @@ function GmailManagement() {
           </>
         ),
         computer: (
-          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', color: 'gray' }}>{computer}</div>
+          <>
+            {
+              getPathLocalFromString(computer) !== null
+                ? <img 
+                    src={require(`../../${getPathLocalFromString(computer)}`)}
+                    alt={getPathLocalFromString(computer)}
+                    width="18px"
+                    height="18px"
+                    style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
+                  />
+                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
+            }
+            <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', color: 'gray' }}>{computer}</div>
+          </>
         ),
         live: <Switch checkedChildren="Mail sống" unCheckedChildren="Mail chết" checked={live}/>,
         total_task: (
-          <span className="customer-name">{numberWithCommas(total_task || 0)}</span>
+          <>
+            {
+              total_task === 0 ? (
+                <span style={{ color: '#8080808a' }}>0</span>
+              ) : (
+
+                <span className="customer-name" style={{ fontWeight: 700 }}>{numberWithCommas(total_task || 0)}</span>
+              )
+            }
+          </>
         ),
         action: (
           <div className="table-actions">

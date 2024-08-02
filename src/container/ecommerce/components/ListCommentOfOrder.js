@@ -160,6 +160,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
     <>
       <Modal
         open={isOpen}
+        className="table-list-comments-modal"
         width="800px"
         centered
         title={

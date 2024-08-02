@@ -2756,3 +2756,7 @@ li.active > .display {
 .ant-table-container {
   padding-bottom: 0px !important;
 }
+
+.table-list-comments-modal .ant-modal-body {
+  padding: 0 0 15px 0 !important;
+}

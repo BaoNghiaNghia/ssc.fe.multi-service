@@ -29,6 +29,7 @@ function AddService({ serviceState, setState }) {
   const [state, setStateModal] = useState({
     values: null,
     rest_api: true,
+    category: 'Comments'
   });
 
   const handleSubmit = (values) => {
@@ -186,6 +187,11 @@ function AddService({ serviceState, setState }) {
                 onClick={(value) => {
                   const selectedService = LIST_SERVICE_SUPPLY.filter(item => item?.category === value?.target?.innerText);
                   if (selectedService?.length > 0) {
+                    setStateModal({
+                      ...state,
+                      category: selectedService[0]?.category
+                    });
+
                     formCreateService.setFieldValue('type', selectedService[0]?.type);
                     formCreateService.setFieldValue('service_type', selectedService[0]?.service_type);
                   }
@@ -331,14 +337,14 @@ function AddService({ serviceState, setState }) {
             </Col>
           </Row>
 
-          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Số lượng {typeService} & Giá</Divider>
+          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Số lượng {state?.category} & Giá</Divider>
               
           <Row gutter="10">
             <Col sm={8}>
               <Form.Item 
                 style={{ margin: '0px', padding: '0px' }}
                 name="min" 
-                label={`Số ${typeService} (MIN)`}
+                label={`Số ${state?.category} (MIN)`}
                 rules={[
                   {
                     required: true,
@@ -364,7 +370,7 @@ function AddService({ serviceState, setState }) {
               <Form.Item
                 style={{ margin: '0px', padding: '0px' }}
                 name="max"
-                label={`Số ${typeService} (MAX)`}
+                label={`Số ${state?.category} (MAX)`}
                 rules={[
                   {
                     required: true,
@@ -387,7 +393,7 @@ function AddService({ serviceState, setState }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item style={{ margin: '0px', padding: '0px' }} name="price_per_10" label={`Prices / 10 ${typeService}`} rules={[{
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="price_per_10" label={`Prices / 10 ${state?.category}`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
