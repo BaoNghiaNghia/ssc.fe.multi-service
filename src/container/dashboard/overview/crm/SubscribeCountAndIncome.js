@@ -9,7 +9,6 @@ import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import ChartSubscribePoint from '../business/ChartSubscribePoint';
 import { closeDealGetData } from '../../../../redux/chartContent/actionCreator';
-import actions from '../../../../redux/reports/actions';
 import Heading from '../../../../components/heading/heading';
 import { currentDate, numberWithCommas } from '../../../../utility/utility';
 import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../../../variables';
