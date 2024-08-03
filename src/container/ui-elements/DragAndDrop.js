@@ -7,7 +7,6 @@ import { Button } from '../../components/buttons/buttons';
 import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
-import DragAndDropTable from '../table/DragTable';
 
 function UserListDataTable() {
   return (
@@ -26,14 +25,6 @@ function UserListDataTable() {
           </div>,
         ]}
       />
-
-      <Main>
-        <Row gutter={15}>
-          <Col xs={24}>
-            <DragAndDropTable />
-          </Col>
-        </Row>
-      </Main>
     </>
   );
 }
