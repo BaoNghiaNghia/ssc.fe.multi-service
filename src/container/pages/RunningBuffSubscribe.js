@@ -45,7 +45,7 @@ function RunningBuffSubscribe() {
     setCurrent(e.key);
   };
 
-  const { searchData, orders, listOrderSubscribe, isLoading } = useSelector(state => {
+  const { orders, listOrderSubscribe, isLoading } = useSelector(state => {
     return {
       searchData: state.headerSearchData,
       orders: state.orders.data,

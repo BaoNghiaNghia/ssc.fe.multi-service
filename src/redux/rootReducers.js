@@ -4,9 +4,7 @@ import authReducer from './authentication/reducers';
 import ChangeLayoutMode from './themeLayout/reducers';
 import { headerSearchReducer } from './headerSearch/reducers';
 import orderReducer from './orders/reducers';
-import galleryReducer from './gallary/reducers';
 import chartContentReducer from './chartContent/reducers';
-import { projectReducer } from './project/reducers';
 
 import BlackListReducer from './blacklist/reducers';
 import MemberReducer from './member/reducers';
@@ -21,10 +19,8 @@ import ProxyReducer from './proxy/reducers';
 import GmailManageReducer from './gmailManage/reducers';
 
 const rootReducers = combineReducers({
-  gallery: galleryReducer,
   
   orders: orderReducer,
-  projects: projectReducer,
 
   fb: firebaseReducer,
   headerSearchData: headerSearchReducer,

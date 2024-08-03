@@ -154,9 +154,8 @@ function SettingAndService() {
   const [formUpdateSettingsComment] = Form.useForm();
   const [formUpdateSettingsLike] = Form.useForm();
 
-  const { orders, listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta, listSettingsLike } = useSelector(state => {
+  const { listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta, listSettingsLike } = useSelector(state => {
     return {
-      orders: state.orders.data,
       listService: state?.settingService?.listService?.items,
       listMetaService: state?.settingService?.listService?.meta,
       typeTab: state?.settingService?.typeTab,
@@ -197,7 +196,6 @@ function SettingAndService() {
     selectedRowData: {},
     notData: {},
     checkBlockVideo: listSettingsComment?.block_video,
-    item: orders,
     selectedRowKeys: [],
   });
 

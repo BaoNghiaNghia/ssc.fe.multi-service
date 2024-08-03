@@ -83,9 +83,8 @@ function Avatar({ name }) {
 
 function GmailManagement() {
   const dispatch = useDispatch();
-  const { orders, isLoading, typeService, listAccountgGmail, listAccountgGmailMeta } = useSelector(state => {
+  const { isLoading, typeService, listAccountgGmail, listAccountgGmailMeta } = useSelector(state => {
     return {
-      orders: state.orders.data,
       isLoading: state?.gmailManage?.loading,
       typeService: state?.gmailManage?.typeService,
       listAccountgGmail: state?.gmailManage?.listAccountgGmail?.items,
@@ -104,21 +103,17 @@ function GmailManagement() {
     isDeleteAccountGmailModal: false,
     notData: {},
     dataRow: {},
-    item: orders,
     selectedRowKeys: [],
   }); 
 
   const { notData, item, selectedRowKeys } = state;
 
   useEffect(() => {
-    if (orders) {
-      setState({
-        ...state,
-        item: orders,
-        selectedRowKeys,
-      });
-    }
-  }, [orders, selectedRowKeys]);
+    setState({
+      ...state,
+      selectedRowKeys,
+    });
+  }, [selectedRowKeys]);
 
   useEffect(() => {
     if (typeService === SERVICE_TYPE.COMMENT.title) {
