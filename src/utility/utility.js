@@ -168,6 +168,12 @@ function getPathLocalFromString(inputString) {
   return region ? region.path : null;
 }
 
+function getYouTubeVideoID(url) {
+  const urlParams = new URL(url).searchParams;
+  return urlParams.get('v');
+}
+
+
 export {
   ellipsis,
   numberWithCommas,
@@ -179,5 +185,6 @@ export {
   isVietnamesePhoneNumber,
   performanceColorBack,
   getPathLocalFromString,
-  performanceStatementTags
+  performanceStatementTags,
+  getYouTubeVideoID
 };

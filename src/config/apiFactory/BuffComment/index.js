@@ -7,7 +7,7 @@ import {
     UPDATE_MANY_ORDER_COMMENT_ENDPOINT,
     UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT,
 
-    ACTIVE_WARRANTY_ORDER_ENDPOINT,
+    ACTIVE_WARRANTY_ORDER_COMMENT_ENDPOINT,
     GET_WARRANTY_ORDER_ENDPOINT,
     REFUND_WARRANTY_ORDER_ENDPOINT
 } from './endpoints';
@@ -23,7 +23,7 @@ BuffCommentAPI.createEntities([
     { name: UPDATE_MANY_ORDER_COMMENT_ENDPOINT },
     { name: UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT },
 
-    { name: ACTIVE_WARRANTY_ORDER_ENDPOINT },
+    { name: ACTIVE_WARRANTY_ORDER_COMMENT_ENDPOINT },
     { name: GET_WARRANTY_ORDER_ENDPOINT },
     { name: REFUND_WARRANTY_ORDER_ENDPOINT },
 ]);
@@ -44,7 +44,7 @@ const updateOneComputerRunCommentAPI = (query) => BuffCommentAPI.createBasicCRUD
 const updateManyComputerCommentAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_COMPUTER_COMMENT_ENDPOINT }).patchMultiple(query);
 
 const fetchListWarrantyOrderAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: GET_WARRANTY_ORDER_ENDPOINT }).get(query);
-const activeWarrantyOrderAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: ACTIVE_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
+const activeWarrantyCommentOrderAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: ACTIVE_WARRANTY_ORDER_COMMENT_ENDPOINT }).submitPost(query);
 const refundWarrantyOrderAPI = (query) => BuffCommentAPI.createBasicCRUDEndpoints({ name: REFUND_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
 
 export {
@@ -60,6 +60,6 @@ export {
     detailComputerRunCommentAPI,
     deleteComputerRunCommentAPI,
     fetchListWarrantyOrderAPI,
-    activeWarrantyOrderAPI,
+    activeWarrantyCommentOrderAPI,
     refundWarrantyOrderAPI
 }

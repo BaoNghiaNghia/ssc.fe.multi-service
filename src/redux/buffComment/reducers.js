@@ -65,9 +65,9 @@ const {
     UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR,
     UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS,
 
-    ACTIVE_WARRANTY_ORDER_BEGIN,
-    ACTIVE_WARRANTY_ORDER_ERR,
-    ACTIVE_WARRANTY_ORDER_SUCCESS,
+    ACTIVE_WARRANTY_ORDER_COMMENT_BEGIN,
+    ACTIVE_WARRANTY_ORDER_COMMENT_ERR,
+    ACTIVE_WARRANTY_ORDER_COMMENT_SUCCESS,
 
     FETCH_WARRANTY_COMMENT_ORDER_BEGIN,
     FETCH_WARRANTY_COMMENT_ORDER_ERR,
@@ -144,19 +144,19 @@ const ReportsReducer = (state = initialState, action) => {
         error: err
       };
 
-    case ACTIVE_WARRANTY_ORDER_BEGIN:
+    case ACTIVE_WARRANTY_ORDER_COMMENT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case ACTIVE_WARRANTY_ORDER_SUCCESS:
+    case ACTIVE_WARRANTY_ORDER_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
       };
 
-    case ACTIVE_WARRANTY_ORDER_ERR:
+    case ACTIVE_WARRANTY_ORDER_COMMENT_ERR:
       return {
         ...state,
         loading: false,

@@ -7,7 +7,7 @@ import {
     UPDATE_MANY_ORDER_LIKE_ENDPOINT,
     UPDATE_MANY_COMPUTER_LIKE_ENDPOINT,
 
-    ACTIVE_WARRANTY_ORDER_ENDPOINT,
+    ACTIVE_WARRANTY_ORDER_LIKE_ENDPOINT,
     GET_WARRANTY_ORDER_ENDPOINT,
     REFUND_WARRANTY_ORDER_ENDPOINT, 
     VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT
@@ -24,7 +24,7 @@ BuffLikeAPI.createEntities([
     { name: UPDATE_MANY_ORDER_LIKE_ENDPOINT },
     { name: UPDATE_MANY_COMPUTER_LIKE_ENDPOINT },
 
-    { name: ACTIVE_WARRANTY_ORDER_ENDPOINT },
+    { name: ACTIVE_WARRANTY_ORDER_LIKE_ENDPOINT },
     { name: GET_WARRANTY_ORDER_ENDPOINT },
     { name: REFUND_WARRANTY_ORDER_ENDPOINT },
     { name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT },
@@ -46,7 +46,7 @@ const updateOneComputerRunLikeAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoi
 const updateManyComputerLikeAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_COMPUTER_LIKE_ENDPOINT }).patchMultiple(query);
 
 const fetchListWarrantyOrderAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: GET_WARRANTY_ORDER_ENDPOINT }).get(query);
-const activeWarrantyOrderAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: ACTIVE_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
+const activeWarrantyOrderAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: ACTIVE_WARRANTY_ORDER_LIKE_ENDPOINT }).submitPost(query);
 const refundWarrantyOrderAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: REFUND_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
 
 const validateYoutubeVideoAPI = (query) => BuffLikeAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT }).submitPost(query);

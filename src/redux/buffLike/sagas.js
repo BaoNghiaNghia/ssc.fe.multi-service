@@ -76,7 +76,7 @@ function* activeWarrantyOrderFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.activeWarrantyOrderSuccess(response?.data?.data)
+        actions.activeWarrantyOrderLikeSuccess(response?.data?.data)
       );
     }
 
@@ -84,7 +84,7 @@ function* activeWarrantyOrderFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.activeWarrantyOrderErr({ error: errorMessage || 'Activate Warranty Order failed' })
+      actions.activeWarrantyOrderLikeErr({ error: errorMessage || 'Activate Warranty Order failed' })
     );
 
     if (errorMessage?.response?.data?.message) {
@@ -447,7 +447,7 @@ export function* fetchWarrantyLikeOrderWatcherSaga() {
 }
 
 export function* activeWarrantyLikeOrderWatcherSaga() {
-  yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_BEGIN, activeWarrantyOrderFunc);
+  yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_LIKE_BEGIN, activeWarrantyOrderFunc);
 }
 
 export function* refundhWarrantyLikeOrderWatcherSaga() {

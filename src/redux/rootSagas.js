@@ -103,7 +103,7 @@ import {
     updateOneComputerCommentWatcherSaga,
     detailComputerCommentWatcherSaga,
     fetchWarrantyCommentOrderWatcherSaga,
-    activeWarrantyOrderWatcherSaga,
+    activeWarrantyOrderCommentWatcherSaga,
     refundhWarrantyOrderWatcherSaga,
     setRangeDateWarrantyFilterWatcherSaga,
     deleteComputerCommentWatcherSaga
@@ -203,7 +203,7 @@ export default function* rootSaga() {
         commentStatisticComputerThreadWatcherSaga(),
         patchProxyWatcherSaga(),
         fetchWarrantyCommentOrderWatcherSaga(),
-        activeWarrantyOrderWatcherSaga(),
+        activeWarrantyOrderCommentWatcherSaga(),
         refundhWarrantyOrderWatcherSaga(),
         setRangeDateWarrantyFilterWatcherSaga(),
         commentStatisticTaskDurationInMinuteWatcherSaga(),

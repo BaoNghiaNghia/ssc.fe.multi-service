@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip, Progress, Image} from 'antd';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import { PlayCircleOutlined } from '@ant-design/icons';
 import { TbCreditCardRefund } from "react-icons/tb";
 import { RiScan2Fill } from "react-icons/ri";
 import { BsFire } from "react-icons/bs";
@@ -23,7 +24,7 @@ import actions from '../../redux/buffComment/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS } from '../../variables';
-import { convertSeconds, numberWithCommas } from '../../utility/utility';
+import { convertSeconds, getYouTubeVideoID, numberWithCommas } from '../../utility/utility';
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 
 const columns = [
@@ -160,7 +161,11 @@ function PendingBuffComment() {
         completed_at
        } = value;
 
+       console.log('---- garuantee video ---', value);
+
       const findUser = userList?.filter((item) => item.id === user_id);
+
+      const videoID = getYouTubeVideoID(video_link);
 
       return dataSource.push({
         key: id,
@@ -204,13 +209,37 @@ function PendingBuffComment() {
 
               <Tooltip 
                 title={
-                  <span style={{ display: 'inline-flex' }}>
-                    <strong>{video_title || video_link}</strong>
-                  </span>
+                  <Row gutter={10}>
+                    <Col sm={24} style={{ position: 'relative' }}>
+                      <Image
+                        src={`https://img.youtube.com/vi/${videoID}/mqdefault.jpg`}
+                        alt={`Thumbnail for ${video_title}`}
+                        preview={false}
+                        style={{ borderRadius: '5px', marginBottom: '10px', width: '100%' }}
+                      />
+                      <PlayCircleOutlined
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          fontSize: '30px', // Size of the play button
+                          color: 'white', // Color of the play button
+                          transform: 'translate(-50%, -50%)', // Center the button
+                          cursor: 'pointer', // Change cursor on hover
+                          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' // Black shadow for better visibility
+                        }}
+                      />
+                    </Col>
+                    <Col sm={24}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center',  }}>
+                        <strong>{video_title || video_link}</strong>
+                      </span>
+                    </Col>
+                    </Row>
                 } 
                 placement='topLeft'
               >
-                <a href={link} color='black' target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
+                <a href={video_link} color='black' target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
                   {
                     video_title ? (
                       <span style={{ margin: 0, padding: 0, color: priority ? '#00ad00' : 'black', fontFamily: 'Poppins, sans-serif', }}>{ `${video_title?.substring(0, 30)  }...` }</span>
@@ -223,7 +252,7 @@ function PendingBuffComment() {
             </div>
 
             <span style={{ fontSize: '0.8em' }}>
-              <strong>Video ID: </strong> {video_id || 'Không có'}
+              <strong>Video ID: </strong> {videoID || 'Không có'}
             </span>
 
             <span style={{ fontSize: '0.8em' }}>
@@ -341,7 +370,7 @@ function PendingBuffComment() {
         title="Xác nhận"
         subtitle="Gửi yêu cầu bảo hành"
         handleOk={() => {
-          dispatch(actions.activeWarrantyOrderBegin({id: selectedItem?.order_id}));
+          dispatch(actions.activeWarrantyOrderCommentBegin({id: selectedItem?.order_id}));
           setState({ 
             ...state,
             isSendRequestModal: false

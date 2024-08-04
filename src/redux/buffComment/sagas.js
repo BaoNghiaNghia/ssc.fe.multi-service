@@ -14,7 +14,7 @@ import {
     deleteComputerRunCommentAPI,
     updateOneComputerRunCommentAPI,
 
-    activeWarrantyOrderAPI,
+    activeWarrantyCommentOrderAPI,
     fetchListWarrantyOrderAPI,
     refundWarrantyOrderAPI,
 } from '../../config/apiFactory/BuffComment/index';
@@ -74,13 +74,13 @@ function* fetchWarrantyCommentOrderFunc(params) {
   } finally { /* empty */ }
 }
 
-function* activeWarrantyOrderFunc(params) {
+function* activeWarrantyOrderCommentFunc(params) {
   try {
-    const response = yield call(activeWarrantyOrderAPI, params?.payload);
+    const response = yield call(activeWarrantyCommentOrderAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.activeWarrantyOrderSuccess(response?.data?.data)
+        actions.activeWarrantyOrderCommentSuccess(response?.data?.data)
       );
     }
 
@@ -88,7 +88,7 @@ function* activeWarrantyOrderFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.activeWarrantyOrderErr({ error: errorMessage || 'Activate Warranty Order failed' })
+      actions.activeWarrantyOrderCommentErr({ error: errorMessage || 'Activate Warranty Order failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -467,8 +467,8 @@ export function* fetchWarrantyCommentOrderWatcherSaga() {
   yield takeLatest(actions.FETCH_WARRANTY_COMMENT_ORDER_BEGIN, fetchWarrantyCommentOrderFunc);
 }
 
-export function* activeWarrantyOrderWatcherSaga() {
-  yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_BEGIN, activeWarrantyOrderFunc);
+export function* activeWarrantyOrderCommentWatcherSaga() {
+  yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_COMMENT_BEGIN, activeWarrantyOrderCommentFunc);
 }
 
 export function* refundhWarrantyOrderWatcherSaga() {

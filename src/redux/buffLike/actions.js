@@ -51,9 +51,9 @@ const actions = {
     FETCH_WARRANTY_ORDER_SUCCESS: 'FETCH_WARRANTY_ORDER_SUCCESS',
     FETCH_WARRANTY_ORDER_ERR: 'FETCH_WARRANTY_ORDER_ERR',
 
-    ACTIVE_WARRANTY_ORDER_BEGIN: 'ACTIVE_WARRANTY_ORDER_BEGIN',
-    ACTIVE_WARRANTY_ORDER_SUCCESS: 'ACTIVE_WARRANTY_ORDER_SUCCESS',
-    ACTIVE_WARRANTY_ORDER_ERR: 'ACTIVE_WARRANTY_ORDER_ERR',
+    ACTIVE_WARRANTY_ORDER_LIKE_BEGIN: 'ACTIVE_WARRANTY_ORDER_LIKE_BEGIN',
+    ACTIVE_WARRANTY_ORDER_LIKE_SUCCESS: 'ACTIVE_WARRANTY_ORDER_LIKE_SUCCESS',
+    ACTIVE_WARRANTY_ORDER_LIKE_ERR: 'ACTIVE_WARRANTY_ORDER_LIKE_ERR',
 
     REFUND_WARRANTY_ORDER_BEGIN: 'REFUND_WARRANTY_ORDER_BEGIN',
     REFUND_WARRANTY_ORDER_SUCCESS: 'REFUND_WARRANTY_ORDER_SUCCESS',
@@ -105,23 +105,23 @@ const actions = {
         };
     },
 
-    activeWarrantyOrderBegin: (payload) => {
+    activeWarrantyOrderLikeBegin: (payload) => {
         return {
-            type: actions.ACTIVE_WARRANTY_ORDER_BEGIN,
+            type: actions.ACTIVE_WARRANTY_ORDER_LIKE_BEGIN,
             payload
         };
     },
 
-    activeWarrantyOrderSuccess: (data) => {
+    activeWarrantyOrderLikeSuccess: (data) => {
         return {
-            type: actions.ACTIVE_WARRANTY_ORDER_SUCCESS,
+            type: actions.ACTIVE_WARRANTY_ORDER_LIKE_SUCCESS,
             data,
         };
     },
 
-    activeWarrantyOrderErr: (err) => {
+    activeWarrantyOrderLikeErr: (err) => {
         return {
-            type: actions.ACTIVE_WARRANTY_ORDER_ERR,
+            type: actions.ACTIVE_WARRANTY_ORDER_LIKE_ERR,
             err,
         };
     },
