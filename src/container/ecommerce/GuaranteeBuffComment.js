@@ -145,9 +145,7 @@ function PendingBuffComment() {
       const {
         order_id, 
         amount,
-        user_id, 
-        link, 
-        video_id,
+        user_id,
         priority,
         performance, 
         max_thread, 
@@ -160,8 +158,6 @@ function PendingBuffComment() {
         lost_count,
         completed_at
        } = value;
-
-       console.log('---- garuantee video ---', value);
 
       const findUser = userList?.filter((item) => item.id === user_id);
 

@@ -29,6 +29,7 @@ export const COMMENT_STATISTIC_TASK_OF_TOOL_ENDPOINT = "ytb-comment/api/v1/admin
 export const COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT = "ytb-comment/api/v1/admin/stats/tasks-success";
 export const COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT = "ytb-comment/api/v1/admin/stats/tasks-duration";
 export const COMMENT_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/stats/total-order";
+export const COMMENT_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-comments-by-day";
 
 // LIKE
 export const LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-like/api/v1/admin/stats/order-status";
@@ -46,3 +47,4 @@ export const LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT = "ytb-like/api/v1/
 export const LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-like/api/v1/admin/stats/user-order";
 export const LIKE_STATISTIC_USER_POINT_ENDPOINT = "ytb-like/api/v1/admin/stats/user-point";
 export const LIKE_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-like/api/v1/admin/stats/total-order";
+export const LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-like/api/v1/admin/stats/order-comments-by-day";
