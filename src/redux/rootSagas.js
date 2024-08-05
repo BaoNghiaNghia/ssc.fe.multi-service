@@ -41,7 +41,9 @@ import {
     likeStatisticRunningUserOrderWatcherSaga,
     likeStatisticUserPointWatcherSaga,
     commentStatisticTotalOrderWatcherSaga,
-    likeStatisticTotalOrderWatcherSaga
+    likeStatisticTotalOrderWatcherSaga,
+    likeStatisticOrderByDaysWatcherSaga,
+    commentStatisticOrderByDaysWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -217,6 +219,7 @@ export default function* rootSaga() {
         commentStatisticRunningUserOrderWatcherSaga(),
         commentStatisticUserPointWatcherSaga(),
         commentStatisticTotalOrderWatcherSaga(),
+        commentStatisticOrderByDaysWatcherSaga(),
 
         validateYoutubeVideoLinkWatcherSaga(),
 
@@ -257,6 +260,7 @@ export default function* rootSaga() {
         likeStatisticRunningUserOrderWatcherSaga(),
         likeStatisticUserPointWatcherSaga(),
         likeStatisticTotalOrderWatcherSaga(),
+        likeStatisticOrderByDaysWatcherSaga(),
 
         changeServiceTypeInGmailWatcherSaga(),
 

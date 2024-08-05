@@ -65,7 +65,7 @@ const ChartSubscribePoint = ({
                 }
               }
         },
-        colors: ['#5F63F2', "#008000"],
+        colors: ['chocolate', "#008000"],
         stroke: {
             curve: 'smooth'
         },

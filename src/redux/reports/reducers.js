@@ -35,6 +35,7 @@ const initialState = {
   performance: [],
   ratioSubSvg: 0,
   countError: {},
+  orderByDays: [],
   loading: false,
   error: null
 };
@@ -117,6 +118,10 @@ const {
   COMMENT_STATISTIC_TOTAL_ORDER_ERR,
   COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS,
 
+  COMMENT_STATISTIC_ORDER_BY_DAYS_BEGIN,
+  COMMENT_STATISTIC_ORDER_BY_DAYS_ERR,
+  COMMENT_STATISTIC_ORDER_BY_DAYS_SUCCESS,
+
 
 
   LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
@@ -179,6 +184,10 @@ const {
   LIKE_STATISTIC_TOTAL_ORDER_ERR,
   LIKE_STATISTIC_TOTAL_ORDER_SUCCESS,
 
+  LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN,
+  LIKE_STATISTIC_ORDER_BY_DAYS_ERR,
+  LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS,
+
 
   VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN,
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR,
@@ -189,6 +198,26 @@ const {
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case COMMENT_STATISTIC_ORDER_BY_DAYS_BEGIN:
+      return {
+        ...state,
+        chartLoading: true,
+      };
+
+    case COMMENT_STATISTIC_ORDER_BY_DAYS_SUCCESS:
+      return {
+        ...state,
+        chartLoading: false,
+        orderByDays: data,
+      };
+
+    case COMMENT_STATISTIC_ORDER_BY_DAYS_ERR:
+      return {
+        ...state,
+        chartLoading: false,
+        error: err
+      };
+
     case COMMENT_STATISTIC_TOTAL_ORDER_BEGIN:
       return {
         ...state,
@@ -784,6 +813,26 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        error: err
+      };
+
+    case LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN:
+      return {
+        ...state,
+        chartLoading: true,
+      };
+
+    case LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS:
+      return {
+        ...state,
+        chartLoading: false,
+        orderByDays: data,
+      };
+
+    case LIKE_STATISTIC_ORDER_BY_DAYS_ERR:
+      return {
+        ...state,
+        chartLoading: false,
         error: err
       };
 

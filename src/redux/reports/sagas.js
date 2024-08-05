@@ -1,6 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
+import actionBuffComment from '../buffComment/actions';
+import actionBuffLike from '../buffLike/actions';
 import {
   commentStatisticCommentByOrderReportAPI,
   commentStatisticAccountStatusAPI,
@@ -17,6 +19,7 @@ import {
   commentStatisticRunningUserOrderAPI,
   commentStatisticUserPointAPI,
   commentStatisticTotalOrderAPI,
+  commentStatisticOrderByDaysAPI,
 
   // likeStatisticCommentByOrderReportAPI,
   likeStatisticTaskSuccessInMinutesAPI,
@@ -33,12 +36,13 @@ import {
   likeStatisticUserPointAPI,
   likeStatisticTaskDurationInMinutesAPI,
   likeStatisticTotalOrderAPI,
+  likeStatisticOrderByDaysAPI,
 
   validateYoutubeLinkCommentVideoAPI,
   validateYoutubeLinkLikeVideoAPI,
   validateYoutubeLinkSubscribeVideoAPI,
 } from '../../config/apiFactory/Reports/index';
-import { MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
+import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
 // COMMENT
 function* commentStatisticComputerThreadFunc(params) {
@@ -216,7 +220,7 @@ function* commentStatisticCommentByOrderReportFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticCommentByOrderReportErr({ error: err || 'Count error subscribe failed' })
+      actions.commentStatisticCommentByOrderReportErr({ error: err || 'Comment - Count error subscribe failed' })
     )
   }
 }
@@ -232,7 +236,7 @@ function* commentStatisticAccountOnComputerFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticAccountOnComputerErr({ error: err || 'Statistic account on computer failed' })
+      actions.commentStatisticAccountOnComputerErr({ error: err || 'Comment - Statistic account on computer failed' })
     )
   }
 }
@@ -248,7 +252,7 @@ function* commentStatisticByStatusOrderFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticByStatusOrderErr({ error: err || 'Statistic by status order failed' })
+      actions.commentStatisticByStatusOrderErr({ error: err || 'Comment - Statistic by status order failed' })
     )
   }
 }
@@ -264,7 +268,7 @@ function* commentStatisticRunningComputerFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticRunningOrderErr({ error: err || 'Statistic running computer failed' })
+      actions.commentStatisticRunningOrderErr({ error: err || 'Comment - Statistic running computer failed' })
     )
   }
 }
@@ -280,7 +284,7 @@ function* commentStatisticTaskOfToolFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticTaskOfToolErr({ error: err || 'Statistic task of tool failed' })
+      actions.commentStatisticTaskOfToolErr({ error: err || 'Comment - Statistic task of tool failed' })
     )
   }
 }
@@ -296,7 +300,7 @@ function* commentStatisticRunningUserOrderFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticRunningUserOrderErr({ error: err || 'Statistic running user failed' })
+      actions.commentStatisticRunningUserOrderErr({ error: err || 'Comment - Statistic running user failed' })
     )
   }
 }
@@ -312,7 +316,7 @@ function* commentStatisticUserPointFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticUserPointErr({ error: err || 'Statistic user point failed' })
+      actions.commentStatisticUserPointErr({ error: err || 'Comment - Statistic user point failed' })
     )
   }
 }
@@ -328,12 +332,26 @@ function* commentStatisticTotalOrderFunc(params) {
     }
   } catch (err) {
     yield put(
-      actions.commentStatisticTotalOrderErr({ error: err || 'Statistic total order failed' })
+      actions.commentStatisticTotalOrderErr({ error: err || 'Comment - Statistic total order failed' })
     )
   }
 }
 
+function* commentStatisticOrderByDaysFunc(params) {
+  try {
+    const response = yield call(commentStatisticOrderByDaysAPI, params?.payload);
 
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.commentStatisticOrderByDaysSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.commentStatisticOrderByDaysErr({ error: err || 'Comment - Order by days failed' })
+    )
+  }
+}
 
 
 
@@ -678,6 +696,27 @@ function* likeStatisticTotalOrderFunc(params) {
   }
 }
 
+function* likeStatisticOrderByDaysFunc(params) {
+  try {
+    const response = yield call(likeStatisticOrderByDaysAPI, params?.payload);
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.likeStatisticOrderByDaysSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.likeStatisticOrderByDaysErr({ error: err || 'Like - Order by days failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Order by days failed');
+    }
+  }
+}
+
 
 
 
@@ -712,6 +751,11 @@ function* changeServiceTypeFunc(params) {
       status: 1
     };
 
+    const initServerPagination = {
+      page: 1,
+      limit: DEFAULT_PERPAGE
+    };
+
     //  Default initial values
     yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
     yield put(actions.commentStatisticOrderAmountBegin(initialFilter));
@@ -734,6 +778,10 @@ function* changeServiceTypeFunc(params) {
       yield put(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.commentStatisticUserPointBegin(initialFilter));
       yield put(actions.commentStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.commentStatisticOrderByDaysBegin(initialFilter));
+      
+      // Fetch list computer
+      yield put(actionBuffComment.listComputerRunCommentBegin(initServerPagination));
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
@@ -753,6 +801,10 @@ function* changeServiceTypeFunc(params) {
       yield put(actions.likeStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.likeStatisticUserPointBegin(initialFilter));
       yield put(actions.likeStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.likeStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      yield put(actionBuffLike.listComputerRunLikeBegin(initServerPagination));
     }
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
       console.log('--- THAY ĐỔI STATISTIC SUBSCRIBE ---')
@@ -790,6 +842,11 @@ function* setRangeDateFilterFunc(params) {
       status: 1
     };
 
+    const initServerPagination = {
+      page: 1,
+      limit: DEFAULT_PERPAGE
+    };
+
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
       console.log('----- range filter with comment ------');
     }
@@ -811,6 +868,10 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.commentStatisticUserPointBegin(initialFilter));
       yield put(actions.commentStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.commentStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      yield put(actionBuffComment.listComputerRunCommentBegin(initServerPagination));
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
@@ -830,6 +891,10 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.likeStatisticRunningUserOrderBegin(initialFilter));
       yield put(actions.likeStatisticUserPointBegin(initialFilter));
       yield put(actions.likeStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.likeStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      yield put(actionBuffLike.listComputerRunLikeBegin(initServerPagination));
     }
   } catch (err) {
     yield put(
@@ -913,6 +978,9 @@ export function* commentStatisticUserPointWatcherSaga() {
 export function* commentStatisticTotalOrderWatcherSaga() {
   yield takeLatest(actions.COMMENT_STATISTIC_TOTAL_ORDER_BEGIN, commentStatisticTotalOrderFunc);
 }
+export function* commentStatisticOrderByDaysWatcherSaga() {
+  yield takeLatest(actions.COMMENT_STATISTIC_ORDER_BY_DAYS_BEGIN, commentStatisticOrderByDaysFunc);
+}
 
 
 
@@ -975,6 +1043,10 @@ export function* likeStatisticUserPointWatcherSaga() {
 
 export function* likeStatisticTotalOrderWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_TOTAL_ORDER_BEGIN, likeStatisticTotalOrderFunc);
+}
+
+export function* likeStatisticOrderByDaysWatcherSaga() {
+  yield takeLatest(actions.LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN, likeStatisticOrderByDaysFunc);
 }
 
 // Validation youtube link

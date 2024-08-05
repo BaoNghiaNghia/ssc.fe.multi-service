@@ -17,7 +17,7 @@ function SubscribeCountAndIncome(props) {
   const { title } = props;
   const dispatch = useDispatch();
 
-  const { fromDate, toDate, typeService, isLoading, orderAmountComment, performance, orderAmountLike } = useSelector(state => {
+  const { fromDate, toDate, typeService, isLoading, orderAmountComment, performance, orderAmountLike, orderByDays } = useSelector(state => {
     return {
       isLoading: state?.reports?.chartLoading,
       fromDate: state?.reports.filterRange?.from,
@@ -25,7 +25,8 @@ function SubscribeCountAndIncome(props) {
       typeService: state?.reports?.typeService,
       orderAmountComment: state?.reports?.orderAmountComment,
       orderAmountLike: state?.reports?.orderAmountLike,
-      performance: state?.reports?.performance
+      performance: state?.reports?.performance,
+      orderByDays: state?.reports?.orderByDays,
     };
   });
 
@@ -37,16 +38,16 @@ function SubscribeCountAndIncome(props) {
 
   const closeDealDatasets = orderAmountComment !== null && [
     {
-      backgroundColor: '#008000',
-      hoverBackgroundColor: '#008000',
+      backgroundColor: '#20C99780',
+      hoverBackgroundColor: 'chocolate',
       label: `Tổng ${typeService} yêu cầu`,
       maxBarThickness: 10,
       barThickness: 7,
       percent: 60,
     },
     {
-      backgroundColor: '#20C99780',
-      hoverBackgroundColor: '#5F63F2',
+      backgroundColor: '#008000',
+      hoverBackgroundColor: '#008000',
       label: `Tổng point (${VIETNAMES_CURRENCY})`,
       maxBarThickness: 10,
       barThickness: 7,
@@ -56,6 +57,10 @@ function SubscribeCountAndIncome(props) {
 
   // eslint-disable-next-line no-unsafe-optional-chaining
   let totalPoint = [];
+  let totalAmountByDays = [];
+
+  totalAmountByDays = orderByDays?.map(item => Math.round(item?.comments)) || [];
+
   if (typeService === SERVICE_TYPE.COMMENT.title) {
     totalPoint = orderAmountComment?.map(item => Math.round(item?.total)) || [];
   } else if (typeService === SERVICE_TYPE.LIKE.title) {
@@ -67,10 +72,10 @@ function SubscribeCountAndIncome(props) {
   const chartSubscribePoint = {
     wave_date: arrWaveDate,
     wave_timeline: [
-      // {
-      //   name: `${typeService} yêu cầu`,
-      //   data: orderRequest
-      // },
+      {
+        name: `${typeService} yêu cầu`,
+        data: totalAmountByDays
+      },
       {
         name: 'Tổng point',
         data: totalPoint
@@ -111,27 +116,6 @@ function SubscribeCountAndIncome(props) {
     <>
       {orderAmountComment !== null && (
         <Cards
-          // isbutton={
-          //   <div className="card-nav">
-          //     <ul>
-          //       <li className={state.closeDealTabActive === 'week' ? 'active' : 'deactivate'}>
-          //         <Link onClick={() => handleActiveChangeYoutube('week')} to="#">
-          //           Week
-          //         </Link>
-          //       </li>
-          //       <li className={state.closeDealTabActive === 'month' ? 'active' : 'deactivate'}>
-          //         <Link onClick={() => handleActiveChangeYoutube('month')} to="#">
-          //           Month
-          //         </Link>
-          //       </li>
-          //       <li className={state.closeDealTabActive === 'year' ? 'active' : 'deactivate'}>
-          //         <Link onClick={() => handleActiveChangeYoutube('year')} to="#">
-          //           Year
-          //         </Link>
-          //       </li>
-          //     </ul>
-          //   </div>
-          // }
           more={moreContent}
           title={
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>

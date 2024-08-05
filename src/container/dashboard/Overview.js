@@ -23,8 +23,9 @@ import { Main } from '../styled';
 import Heading from '../../components/heading/heading';
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 import actions from '../../redux/reports/actions';
+import actionsBuffComment from '../../redux/buffComment/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { COLOR_GENERAL, SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
+import { COLOR_GENERAL, DEFAULT_PERPAGE, SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const TaskSuccessEveryMinutes = lazy(() => import('./overview/business/TaskSuccessEveryMinutes'));
 const TaskDurationEveryMinutes = lazy(() => import('./overview/business/TaskDurationEveryMinutes'));
@@ -40,7 +41,6 @@ function Overview() {
     fromDate,
     toDate, 
     profitToday, 
-    ratioSubSvg, 
     typeService, 
     computerThread, 
     accountStatus,
@@ -50,13 +50,14 @@ function Overview() {
     accountOnComputer,
     commentByDay,
     performance,
-    totalOrder
+    totalOrder,
+    listComputerComment,
+    listComputerLike
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
       profitToday: state?.reports?.profitToday,
-      ratioSubSvg: state?.reports?.ratioSubSvg,
       typeService: state?.reports?.typeService,
       computerThread: state?.reports?.computerThread,
       taskOfTool: state?.reports?.taskOfTool,
@@ -67,6 +68,8 @@ function Overview() {
       accountOnComputer: state?.reports?.accountOnComputer,
       commentByDay: state?.reports?.commentByDay,
       totalOrder: state?.reports?.totalOrder,
+      listComputerComment: state?.buffComment?.listComputer,
+      listComputerLike: state?.buffLike?.listComputer,
     };
   });
 
@@ -75,6 +78,10 @@ function Overview() {
       start_date: `${fromDate  } 00:00:00`,
       end_date: `${toDate  } 23:59:59`,
       status: 1
+    };
+    const initServerPagination = {
+      page: 1,
+      limit: DEFAULT_PERPAGE
     };
 
     dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
@@ -97,6 +104,10 @@ function Overview() {
       dispatch(actions.commentStatisticRunningUserOrderBegin(initialFilter));
       dispatch(actions.commentStatisticUserPointBegin(initialFilter));
       dispatch(actions.commentStatisticTotalOrderBegin(initialFilter));
+      dispatch(actions.commentStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      dispatch(actionsBuffComment.listComputerRunCommentBegin(initServerPagination));
     }
   }, [dispatch]);
 
@@ -125,6 +136,19 @@ function Overview() {
   const todayLikePoint = findObjectByValue(orderAmountLike, 'is_current', true)?.total || 0;
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
+
+  const listServer = () => {
+    switch(typeService) {
+      case SERVICE_TYPE.COMMENT.title:
+        return listComputerComment?.meta?.total;
+      case SERVICE_TYPE.LIKE.title:
+        return listComputerLike?.meta?.total;
+      case SERVICE_TYPE.SUBSCRIBE.title:
+        return 0;
+      default:
+        return 0;
+    }
+  }
 
   const styleMail = {
     marginLeft: '12px',
@@ -454,7 +478,7 @@ function Overview() {
                     <TbServer2 fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
-                    {accountOnComputer?.length || 0}
+                    {listServer()}
                   </Heading>
                 </CardBarChart2>
               </div>

@@ -74,6 +74,10 @@ const actions = {
   COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS: 'COMMENT_STATISTIC_TOTAL_ORDER_SUCCESS',
   COMMENT_STATISTIC_TOTAL_ORDER_ERR: 'COMMENT_STATISTIC_TOTAL_ORDER_ERR',
 
+  COMMENT_STATISTIC_ORDER_BY_DAYS_BEGIN: 'COMMENT_STATISTIC_ORDER_BY_DAYS_BEGIN',
+  COMMENT_STATISTIC_ORDER_BY_DAYS_SUCCESS: 'COMMENT_STATISTIC_ORDER_BY_DAYS_SUCCESS',
+  COMMENT_STATISTIC_ORDER_BY_DAYS_ERR: 'COMMENT_STATISTIC_ORDER_BY_DAYS_ERR',
+
   // LIKE
   // LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN',
   // LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS: 'LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS',
@@ -135,6 +139,10 @@ const actions = {
   LIKE_STATISTIC_TOTAL_ORDER_SUCCESS: 'LIKE_STATISTIC_TOTAL_ORDER_SUCCESS',
   LIKE_STATISTIC_TOTAL_ORDER_ERR: 'LIKE_STATISTIC_TOTAL_ORDER_ERR',
 
+  LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN: 'LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN',
+  LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS: 'LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS',
+  LIKE_STATISTIC_ORDER_BY_DAYS_ERR: 'LIKE_STATISTIC_ORDER_BY_DAYS_ERR',
+
   // VALIDATE
 
   VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN: 'VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN',
@@ -142,6 +150,27 @@ const actions = {
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR: 'VALIDATE_YOUTUBE_VIDEO_LINK_ERR',
   
 
+  commentStatisticOrderByDaysBegin: (payload) => {
+    return {
+      type: actions.COMMENT_STATISTIC_ORDER_BY_DAYS_BEGIN,
+      payload
+    };
+  },
+
+  commentStatisticOrderByDaysSuccess: (data) => {
+    return {
+      type: actions.COMMENT_STATISTIC_ORDER_BY_DAYS_SUCCESS,
+      data,
+    };
+  },
+
+  commentStatisticOrderByDaysErr: (err) => {
+    return {
+      type: actions.COMMENT_STATISTIC_ORDER_BY_DAYS_ERR,
+      err,
+    };
+  },
+  
   commentStatisticTotalOrderBegin: (payload) => {
     return {
       type: actions.COMMENT_STATISTIC_TOTAL_ORDER_BEGIN,
@@ -727,6 +756,27 @@ const actions = {
   likeStatisticTaskDurationInMinuteErr: (err) => {
     return {
       type: actions.LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ERR,
+      err,
+    };
+  },
+
+  likeStatisticOrderByDaysBegin: (payload) => {
+    return {
+      type: actions.LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN,
+      payload
+    };
+  },
+
+  likeStatisticOrderByDaysSuccess: (data) => {
+    return {
+      type: actions.LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS,
+      data,
+    };
+  },
+
+  likeStatisticOrderByDaysErr: (err) => {
+    return {
+      type: actions.LIKE_STATISTIC_ORDER_BY_DAYS_ERR,
       err,
     };
   },
