@@ -73,7 +73,7 @@ function SubscribeCountAndIncome(props) {
     wave_date: arrWaveDate,
     wave_timeline: [
       {
-        name: `${typeService} yêu cầu`,
+        name: `Tổng ${typeService} yêu cầu`,
         data: totalAmountByDays
       },
       {
@@ -81,7 +81,7 @@ function SubscribeCountAndIncome(props) {
         data: totalPoint
       }
     ],
-  }
+  };
 
   const moreContent = (
     <>

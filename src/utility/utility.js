@@ -15,6 +15,16 @@ const numberWithCommas = (x) => {
   return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
+const numberWithCommasCurrency = (x) => {
+  if (x >= 1000000) {
+    return `${(x / 1000000).toFixed(1).replace(/\.0$/, '')}M`;
+  }
+  if (x >= 1000) {
+    return `${(x / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  }
+  return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 export const validateYouTubeUrl = (urlToParse) => {
   if (urlToParse) {
       if (urlToParse.match(REGEX_VALIDATE_YOUTUBE_VIDEO_LINK)) {
@@ -185,6 +195,7 @@ export {
   isVietnamesePhoneNumber,
   performanceColorBack,
   getPathLocalFromString,
+  numberWithCommasCurrency,
   performanceStatementTags,
   getYouTubeVideoID
 };

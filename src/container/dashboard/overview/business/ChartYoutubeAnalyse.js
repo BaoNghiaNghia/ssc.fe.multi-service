@@ -3,7 +3,7 @@ import ReactApexChart from "react-apexcharts";
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { useEffect, useState } from 'react';
 import { numberWithCommas } from '../../../../utility/utility';
-import { FORMAT_DATESTRING } from '../../../../variables/index';
+import { FORMAT_DATESTRING, VIETNAMES_CURRENCY } from '../../../../variables/index';
 
 const ChartYoutubeAnalyse = ({
     chartData,
@@ -123,10 +123,14 @@ const ChartYoutubeAnalyse = ({
         },
         dataLabels: {
             enabled: true,
-            formatter (val) {
+            formatter (val, { seriesIndex }) {
                 const valueFormatted = numberWithCommas(val || 0);
-                return valueFormatted;
-            }
+                if (seriesIndex === 1) {
+                    return `${valueFormatted}`;
+                }
+                return `${valueFormatted} %`;
+            },
+            position: "top"
         },
         series: chartData?.wave_timeline || [],
     }

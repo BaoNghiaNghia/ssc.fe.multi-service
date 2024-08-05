@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts";
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { useEffect, useState } from 'react';
-import { numberWithCommas } from '../../../../utility/utility';
-import { FORMAT_DATESTRING } from '../../../../variables/index';
+import { numberWithCommas, numberWithCommasCurrency } from '../../../../utility/utility';
+import { FORMAT_DATESTRING, VIETNAMES_CURRENCY } from '../../../../variables/index';
 
 const ChartSubscribePoint = ({
     chartData,
@@ -130,10 +130,15 @@ const ChartSubscribePoint = ({
         },
         dataLabels: {
             enabled: true,
-            formatter (val) {
+            formatter (val, { seriesIndex }) {
+                if (seriesIndex === 1) {
+                    const valueFormattedCurrency = numberWithCommasCurrency(val || 0);
+                    return `${valueFormattedCurrency} ${VIETNAMES_CURRENCY}`;
+                }
                 const valueFormatted = numberWithCommas(val || 0);
-                return valueFormatted;
-            }
+                return `${valueFormatted}`;
+            },
+            position: "top"
         },
         series: chartData?.wave_timeline || [],
     }
