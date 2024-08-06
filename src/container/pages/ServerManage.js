@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form } from 'antd';
+import { debounce } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt } from 'react-icons/tb';
@@ -66,7 +67,7 @@ function ServerManage() {
         buttons={[
           <div key="search" className="page-header-actions">
             <AutoComplete
-              onSearch={handleSearch}
+              onSearch={debounce(handleSearch, 500)}
               dataSource={notData}
               placeholder="Nhập và tìm server"
               width="100%"

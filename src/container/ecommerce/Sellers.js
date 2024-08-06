@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Row, Col, Table } from 'antd';
+import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './Style';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -144,7 +145,7 @@ function Sellers() {
                 <Row gutter={15}>
                   <Col xxl={5} lg={10} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
                   <Col xxl={15} lg={5} xs={24} />

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Switch, Tooltip } from 'antd';
+import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './style';
 import AddDomain from './component/AddDomain';
@@ -14,7 +15,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/proxy/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIMIT_ITEM_REQUEST_API } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 const columns = [
   {
@@ -223,7 +224,7 @@ function ProxyManage() {
                 <Row gutter={15} className="justify-content-center">
                   <Col lg={6} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
                   <Col xxl={18} xs={24}>

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col, Table, Badge, Tooltip, Button, Image } from 'antd';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt, TbShoppingBagEdit } from 'react-icons/tb';
+import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
 import { AiTwotoneDelete } from "react-icons/ai";
 import { CgServer } from "react-icons/cg";
@@ -421,7 +422,7 @@ function ComputerRunCommentOrder() {
           </div>,
           <div key="search" className="page-header-actions">
             <AutoComplete
-              onSearch={handleSearch}
+              onSearch={debounce(handleSearch, 500)}
               dataSource={notData}
               placeholder="Nhập và tìm server"
               width="100%"

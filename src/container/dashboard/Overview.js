@@ -52,7 +52,8 @@ function Overview() {
     performance,
     totalOrder,
     listComputerComment,
-    listComputerLike
+    listComputerLike,
+    orderByDays
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
@@ -70,6 +71,7 @@ function Overview() {
       totalOrder: state?.reports?.totalOrder,
       listComputerComment: state?.buffComment?.listComputer,
       listComputerLike: state?.buffLike?.listComputer,
+      orderByDays: state?.reports?.orderByDays
     };
   });
 
@@ -134,6 +136,7 @@ function Overview() {
   const todaySubscribePoint = (Number(profitToday?.total_point_today))*(-1) || 0;
   const todayCommentPoint = findObjectByValue(orderAmountComment, 'is_current', true)?.total || 0;
   const todayLikePoint = findObjectByValue(orderAmountLike, 'is_current', true)?.total || 0;
+  const todayOrderCount = findObjectByValue(orderByDays, 'is_current', true)?.comments || 0;
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
 
@@ -436,7 +439,7 @@ function Overview() {
                     <span>Tổng {typeService} <br/> order</span>
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
-                  <Heading as="h4">{numberWithCommas(Math.abs(Number(findObjectByValue(commentByDay, 'is_current', true)?.comments || 0)) || 0)}</Heading>
+                  <Heading as="h4">{numberWithCommas(Math.abs(Number(todayOrderCount)) || 0)}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>

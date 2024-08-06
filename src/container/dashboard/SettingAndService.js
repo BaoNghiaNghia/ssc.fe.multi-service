@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
+import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Tooltip, Badge, Switch, Form, InputNumber, Avatar } from 'antd';
 import FeatherIcon from 'feather-icons-react';
@@ -884,7 +885,7 @@ function SettingAndService() {
                   <Row gutter={15} className="justify-content-center">
                     <Col lg={6} xs={24}>
                       <div className="table-search-box">
-                        <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch vụ" />
+                        <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch vụ" />
                       </div>
                     </Col>
                     <Col xxl={18} xs={24}>
@@ -959,7 +960,7 @@ function SettingAndService() {
                   <Row gutter={15} className="justify-content-center">
                     <Col lg={6} xs={24}>
                       <div className="table-search-box">
-                        <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns placeholder="Tìm key" />
+                        <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns placeholder="Tìm key" />
                       </div>
                     </Col>
                     <Col xxl={18} xs={24}>

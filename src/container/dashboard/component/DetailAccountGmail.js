@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { TbServerBolt } from 'react-icons/tb';
 import { Row, Col, Form, Input, Modal, Switch, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
+import { getPathLocalFromString } from '../../../utility/utility';
 
 function DetailAccountGmail({ gmailState, setState }) {
     const dispatch = useDispatch();
@@ -18,6 +20,8 @@ function DetailAccountGmail({ gmailState, setState }) {
             detailAccountGmail: state?.gmailManage?.detailAccountGmail
         };
     });
+
+    console.log('----  detail computer -----', detailAccountGmail);
 
     const [state, setStateModal] = useState({
         values: null,
@@ -132,7 +136,24 @@ function DetailAccountGmail({ gmailState, setState }) {
                             message: 'Trường không được trống'
                             }]}
                         >
-                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                            <Input 
+                                size='small'
+                                prefix={<>{
+                                    detailAccountGmail && getPathLocalFromString(detailAccountGmail?.computer) !== null
+                                        ? <img
+                                            src={require(`../../../${getPathLocalFromString(detailAccountGmail?.computer)}`)}
+                                            alt={getPathLocalFromString(detailAccountGmail?.computer)}
+                                            width="18px"
+                                            height="18px"
+                                            style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
+                                        />
+                                        : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
+                                    }</>
+                                } 
+                                readOnly
+                                style={{ fontWeight: '500' }}
+                                placeholder='Email người dùng'
+                            />
                         </Form.Item>
                     </Col>
                     <Col sm={8}>

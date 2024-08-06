@@ -5,7 +5,7 @@ import { Row, Col, Radio, Table, Tooltip, Badge, Dropdown, Menu } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { TiVideo } from "react-icons/ti";
+import { debounce } from 'lodash';
 import { RiRefund2Line } from "react-icons/ri";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TopToolBox } from './style';
@@ -407,7 +407,7 @@ function PendingBuffSubscribe() {
                 <Row gutter={15} className="justify-content-center">
                   <Col lg={6} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
                   <Col xxl={14} lg={16} xs={24}>

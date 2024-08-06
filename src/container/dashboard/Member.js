@@ -6,6 +6,7 @@ import { Row, Col, Table, Tooltip, Badge, Typography } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import { debounce } from 'lodash';
 import { MdVerifiedUser } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { BiSolidDiscount } from "react-icons/bi";
@@ -680,7 +681,7 @@ function Member() {
                 <Row gutter={15} className="justify-content-center">
                   <Col lg={6} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
                   <Col xxl={18} xs={24}>

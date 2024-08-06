@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table } from 'antd';
+import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
 import { TopToolBox } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -154,7 +155,7 @@ function GuaranteeBuffLike() {
                 <Row gutter={15} className="justify-content-center">
                   <Col lg={6} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
                   <Col xxl={14} lg={16} xs={24}>

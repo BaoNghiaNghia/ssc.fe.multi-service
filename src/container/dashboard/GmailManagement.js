@@ -6,6 +6,7 @@ import { Row, Col, Table, Switch, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { LuListFilter } from 'react-icons/lu';
+import { debounce } from 'lodash';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { GrNotification } from 'react-icons/gr';
 import { AiOutlineLike, AiTwotoneDelete } from 'react-icons/ai';
@@ -152,15 +153,13 @@ function GmailManagement() {
       return dataSource.push({
         key: key + 1,
         channel_id: (
-          <>
-            <span className="customer-name" style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
-              <Avatar name={email} />
-              <span style={{ marginLeft: '9px' }} >
-                <p style={{ margin: 0, padding: 0, fontWeight: '600' }}>{email}</p>
-                <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}>{channel_id}</p>
-              </span>
+          <span className="customer-name" style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+            <Avatar name={email} />
+            <span style={{ marginLeft: '9px' }} >
+              <p style={{ margin: 0, padding: 0, fontWeight: '600' }}>{email}</p>
+              <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}>{channel_id}</p>
             </span>
-          </>
+          </span>
         ),
         computer: (
           <>
@@ -342,7 +341,7 @@ function GmailManagement() {
                 <Row gutter={15} className="justify-content-center">
                   <Col lg={6} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
                   <Col xxl={18} xs={24}>

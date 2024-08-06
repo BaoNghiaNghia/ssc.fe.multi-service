@@ -6,6 +6,7 @@ import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { PiSteps } from "react-icons/pi";
+import { debounce } from 'lodash';
 import { TiVideo } from "react-icons/ti";
 import { CgPerformance } from "react-icons/cg";
 import { MdClear } from "react-icons/md";
@@ -566,7 +567,7 @@ function GuaranteeBuffSubscribe() {
                 <Row gutter={15} className="justify-content-center">
                   <Col lg={6} xs={24}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={handleSearch} dataSource={notData} width="100%" patterns />
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns />
                     </div>
                   </Col>
                   <Col xxl={14} lg={16} xs={24}>
