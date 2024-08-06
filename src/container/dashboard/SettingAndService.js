@@ -200,8 +200,28 @@ function SettingAndService() {
     selectedRowKeys: [],
   });
 
-  const handleSearch = searchText => {
-    
+  const handleSearchService = (searchText) => {
+    console.log('--- search service ---', searchText);
+
+    if (searchText) {
+      dispatch(actions.fetchListServiceBegin({
+        page: currentPage,
+        limit: limitPage,
+        name: searchText
+      }));
+    }
+  };
+
+  const handleSearchGoogleKey = (searchText) => {
+    console.log('--- search googke key ---', searchText);
+
+    if (searchText) {
+      dispatch(actions.fetchListAllGoogleKeyBegin({
+        page: currentPage,
+        limit: limitPage,
+        name: searchText
+      }));
+    }
   };
 
   const dataSource = [];
@@ -885,7 +905,7 @@ function SettingAndService() {
                   <Row gutter={15} className="justify-content-center">
                     <Col lg={6} xs={24}>
                       <div className="table-search-box">
-                        <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch vụ" />
+                        <AutoComplete onSearch={debounce(handleSearchService, 500)} dataSource={notData} width="100%" patterns placeholder="Tìm kiếm dịch vụ" />
                       </div>
                     </Col>
                     <Col xxl={18} xs={24}>
@@ -960,7 +980,7 @@ function SettingAndService() {
                   <Row gutter={15} className="justify-content-center">
                     <Col lg={6} xs={24}>
                       <div className="table-search-box">
-                        <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} width="100%" patterns placeholder="Tìm key" />
+                        <AutoComplete onSearch={debounce(handleSearchGoogleKey, 500)} dataSource={notData} width="100%" patterns placeholder="Tìm key" />
                       </div>
                     </Col>
                     <Col xxl={18} xs={24}>

@@ -169,18 +169,18 @@ const performanceStatementTags = (performance) => {
 
 function getPathLocalFromString(inputString) {
   // Extract the shortcode from the input string
-  const shortcode = inputString.split('_').pop();
+  const shortcode = inputString?.split('_')?.pop();
 
   // Find the region object that matches the shortcode
-  const region = REGION_IDENTIFIER.find(region => region.shortcode === shortcode);
+  const region = REGION_IDENTIFIER.find(region => region?.shortcode === shortcode);
 
   // Return the path if the region is found, otherwise return null
-  return region ? region.path : null;
+  return region ? region?.path : null;
 }
 
 function getYouTubeVideoID(url) {
   const urlParams = new URL(url).searchParams;
-  return urlParams.get('v');
+  return urlParams?.get('v');
 }
 
 

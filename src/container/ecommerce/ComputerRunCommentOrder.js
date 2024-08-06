@@ -109,6 +109,11 @@ function ComputerRunCommentOrder() {
   }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = (searchText) => {
+    if (searchText) {
+      dispatch(actions.listComputerRunCommentBegin({
+        name: searchText
+      }));
+    }
   };
 
   const handleResetComputer = (values) => {

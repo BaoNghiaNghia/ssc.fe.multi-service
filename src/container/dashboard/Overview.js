@@ -24,7 +24,7 @@ import Heading from '../../components/heading/heading';
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 import actions from '../../redux/reports/actions';
 import actionsBuffComment from '../../redux/buffComment/actions';
-import { numberWithCommas } from '../../utility/utility';
+import { numberWithCommas, numberWithCommasCurrency } from '../../utility/utility';
 import { COLOR_GENERAL, DEFAULT_PERPAGE, SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const TaskSuccessEveryMinutes = lazy(() => import('./overview/business/TaskSuccessEveryMinutes'));
@@ -203,28 +203,36 @@ function Overview() {
                 <CardBarChartCenter>
                   <Row style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                     <Col sm="6">
-                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                        Tổng point (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
-                      </span>
-                      <Heading as="h2" textShadow="1px 1px 2px #75f500" weight={700} color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(Math.round(todayPoint))}</Heading>
+                      <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayPoint))} ${VIETNAMES_CURRENCY}`}>
+                        <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                          Tổng point (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
+                        </span>
+                        <Heading as="h2" textShadow="1px 1px 2px #75f500" weight={700} color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todayPoint))}</Heading>
+                      </Tooltip>
                     </Col>
                     <Col sm="6">
-                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                        Subscribe
-                      </span>
-                      <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(Math.round(todaySubscribePoint))}</Heading>
+                      <Tooltip placement='top' title={`${numberWithCommas(Math.round(todaySubscribePoint))} ${VIETNAMES_CURRENCY}`}>
+                        <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                          Subscribe
+                        </span>
+                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todaySubscribePoint))}</Heading>
+                      </Tooltip>
                     </Col>
                     <Col sm="6">
-                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                        Comment
-                      </span>
-                      <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(Math.round(todayCommentPoint))}</Heading>
+                      <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayCommentPoint))} ${VIETNAMES_CURRENCY}`}>
+                        <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                          Comment
+                        </span>
+                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todayCommentPoint))}</Heading>
+                      </Tooltip>
                     </Col>
                     <Col sm="6">
-                      <span style={{ fontWeight: 600, fontSize: '1em' }}>
-                        Like
-                      </span>
-                      <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommas(Math.round(todayLikePoint))}</Heading>
+                      <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayLikePoint))} ${VIETNAMES_CURRENCY}`}>
+                        <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                          Like
+                        </span>
+                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todayLikePoint))}</Heading>
+                      </Tooltip>
                     </Col>
                   </Row>
                 </CardBarChartCenter>

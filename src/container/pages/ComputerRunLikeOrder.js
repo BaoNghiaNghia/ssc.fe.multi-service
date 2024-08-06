@@ -1,6 +1,7 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { debounce } from 'lodash';
 import { Row, Col, Table, Badge, Tooltip, Button, Image } from 'antd';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt, TbShoppingBagEdit } from 'react-icons/tb';
@@ -104,11 +105,16 @@ function ComputerRunLikeOrder() {
       page: currentPage,
       limit: limitPage,
     }));
-
   }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = (searchText) => {
-
+    if (searchText) {
+      dispatch(actions.listComputerRunLikeBegin({
+        page: currentPage,
+        limit: limitPage,
+        name: searchText
+      }));
+    }
   };
 
   const handleResetComputer = (values) => {
@@ -422,7 +428,7 @@ function ComputerRunLikeOrder() {
           </div>,
           <div key="search" className="page-header-actions">
             <AutoComplete
-              onSearch={handleSearch}
+              onSearch={debounce(handleSearch, 500)}
               dataSource={notData}
               placeholder="Nhập và tìm server"
               width="100%"

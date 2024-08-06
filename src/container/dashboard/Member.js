@@ -97,6 +97,8 @@ const columnsToup = [
   },
 ];
 
+const regexpDebounce  = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
+
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
   fontFamily: 'Poppins, sans-serif',
@@ -196,8 +198,14 @@ function Member() {
     }));
   }, [dispatch, currentPage, limitPage]);
 
-  const handleSearch = searchText => {
-
+  const handleSearch = (searchText) => {
+    if (searchText) {
+      dispatch(actions.fetchUserListBegin({
+        page: currentPage,
+        limit: limitPage,
+        name: searchText
+      }));
+    }
   };
   const dataSource = [];
   const dataSourceTopup = [];
@@ -429,8 +437,7 @@ function Member() {
       alert('Vui lòng nhập giá trị');
       return;
     }
-    const regexp = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
-    if(!regexp.test(Number(value))){
+    if(!regexpDebounce .test(Number(value))){
       alert('Vui lòng nhập dạng số. Lớn hơn 0 và nhỏ hơn 100');
       return;
     }

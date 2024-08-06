@@ -54,25 +54,26 @@ const columns = [
   },
 ];
 
+
+// Inline styles
+const styles = {
+  width: '30px',
+  height: '30px',
+  borderRadius: '50%',  // Makes the div circular
+  backgroundColor: '#4CAF50',  // Green background
+  color: 'white',
+  display: 'flex',
+  alignItems: 'center',  // Vertical alignment
+  justifyContent: 'center',  // Horizontal alignment
+  fontSize: '15px',
+  fontWeight: '500'
+};
+
 function Avatar({ name }) {
   // Function to extract initials from the name
   const getInitials = (name) => {
       const initials = name.split(' ').map(word => word[0]?.toUpperCase())?.join('');
       return initials;
-  };
-
-  // Inline styles
-  const styles = {
-      width: '30px',
-      height: '30px',
-      borderRadius: '50%',  // Makes the div circular
-      backgroundColor: '#4CAF50',  // Green background
-      color: 'white',
-      display: 'flex',
-      alignItems: 'center',  // Vertical alignment
-      justifyContent: 'center',  // Horizontal alignment
-      fontSize: '15px',
-      fontWeight: '500'
   };
 
   return (
@@ -128,12 +129,28 @@ function GmailManagement() {
         limit: limitPage,
       }));
     } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
-      console.log('--- subscribe ---')
+      console.log('--- subscribe ---');
     }
   }, [dispatch, currentPage, limitPage]);
   
   const handleSearch = searchText => {
-
+    if (searchText) {
+      if (typeService === SERVICE_TYPE.COMMENT.title) {
+        dispatch(gmailActions.listAccountGmailCommentBegin({
+          page: currentPage,
+          limit: limitPage,
+          name: searchText
+        }));
+      } else if (typeService === SERVICE_TYPE.LIKE.title) {
+        dispatch(gmailActions.listAccountGmailLikeBegin({
+          page: currentPage,
+          limit: limitPage,
+          name: searchText
+        }));
+      } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+        console.log('--- subscribe ---');
+      }
+    }
   };
 
   const handleChange = (value) => {
@@ -200,7 +217,7 @@ function GmailManagement() {
                   } else if (typeService === SERVICE_TYPE.LIKE.title) {
                     dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
                   } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
-                    console.log('--- subscribe ---')
+                    console.log('--- subscribe ---');
                   }
 
                   setState({ 

@@ -18,7 +18,7 @@ import {
   updateGoogleKeyAPI
 } from '../../config/apiFactory/ServiceSetting/index';
 
-import { MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
+import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
 
 function* deleteGoogleKeyFunc(params) {
   try {
@@ -30,7 +30,10 @@ function* deleteGoogleKeyFunc(params) {
       );
 
       yield put(
-        actions.fetchListAllGoogleKeyBegin()
+        actions.fetchListAllGoogleKeyBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
       );
     }
   } catch (error) {
@@ -57,7 +60,10 @@ function* updateGoogleKeyFunc(params) {
       );
 
       yield put(
-        actions.fetchListAllGoogleKeyBegin()
+        actions.fetchListAllGoogleKeyBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
       );
 
       toast.success('Cập nhật Google Key thành công')
@@ -86,7 +92,10 @@ function* createGoogleKeyFunc(params) {
       );
 
       yield put(
-        actions.fetchListAllGoogleKeyBegin()
+        actions.fetchListAllGoogleKeyBegin({
+          page: 1,
+          limit: DEFAULT_PERPAGE
+        })
       );
     }
   } catch (error) {
@@ -379,7 +388,10 @@ function* changeTabTypeFunc(params) {
         break;
       case SERVICE_SETTING_TYPE.GOOGLE_KEY.title:
         yield put(
-          actions.fetchListAllGoogleKeyBegin()
+          actions.fetchListAllGoogleKeyBegin({
+            page: 1,
+            limit: DEFAULT_PERPAGE
+          })
         );
         break;
       default:
