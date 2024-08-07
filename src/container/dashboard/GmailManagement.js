@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { LuListFilter } from 'react-icons/lu';
 import { debounce } from 'lodash';
 import { FaRegCommentDots } from 'react-icons/fa';
-import { GrNotification } from 'react-icons/gr';
+import { GrNotification, GrFormUpload } from 'react-icons/gr';
 import { AiOutlineLike, AiTwotoneDelete } from 'react-icons/ai';
 import { TbServerBolt } from 'react-icons/tb';
 import { GalleryNav, TopToolBox } from './style';
@@ -150,6 +150,11 @@ function GmailManagement() {
       } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
         console.log('--- subscribe ---');
       }
+    } else {
+      dispatch(gmailActions.listAccountGmailCommentBegin({
+        page: 1,
+        limit: limitPage
+      }));
     }
   };
 
@@ -372,7 +377,7 @@ function GmailManagement() {
                       <Button
                         size="small"
                         type="primary"
-                        style={{ backgroundColor: 'white', color: COLOR_GENERAL.primary, border: `2px solid ${COLOR_GENERAL.primary}` }}
+                        style={{ backgroundColor: '#26695c17', color: COLOR_GENERAL.primary, border: `1px solid ${COLOR_GENERAL.primary}`, fontWeight: 600 }}
                         onClick={() => {
                           setState({
                             ...state,
@@ -380,7 +385,7 @@ function GmailManagement() {
                           });
                         }}
                       >
-                        <FeatherIcon style={{ color: COLOR_GENERAL.primary }} icon="plus" size={12} /> Tải lên .txt
+                        <GrFormUpload color={COLOR_GENERAL.primary} /> Tải lên .txt
                       </Button>
                       <Button
                         size="small"

@@ -111,7 +111,14 @@ function ComputerRunCommentOrder() {
   const handleSearch = (searchText) => {
     if (searchText) {
       dispatch(actions.listComputerRunCommentBegin({
+        page: currentPage,
+        limit: limitPage,
         name: searchText
+      }));
+    } else {
+      dispatch(actions.listComputerRunCommentBegin({
+        page: 1,
+        limit: limitPage,
       }));
     }
   };

@@ -205,6 +205,11 @@ function Member() {
         limit: limitPage,
         name: searchText
       }));
+    } else {
+      dispatch(actions.fetchUserListBegin({
+        page: 1,
+        limit: limitPage
+      }));
     }
   };
   const dataSource = [];

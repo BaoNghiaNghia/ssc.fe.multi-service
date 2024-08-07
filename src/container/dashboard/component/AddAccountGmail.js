@@ -159,7 +159,7 @@ function AddAccountGmail({ gmailState, setState }) {
                                 }
                             ]}
                         >
-                            <Input size='small' style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                            <Input size='small' prefix='ID' style={{ fontWeight: '500' }} placeholder='Email người dùng' />
                         </Form.Item>
                     </Col>
                     <Col sm={8}>

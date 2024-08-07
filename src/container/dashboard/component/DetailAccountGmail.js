@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { TbServerBolt } from 'react-icons/tb';
 import { Row, Col, Form, Input, Modal, Switch, Divider } from 'antd';
-import { MdAddchart, MdAccessTime } from "react-icons/md";
+import { MdAddchart, MdAccessTime, MdOutlineAlternateEmail } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
 import { getPathLocalFromString } from '../../../utility/utility';
 
@@ -96,14 +96,11 @@ function DetailAccountGmail({ gmailState, setState }) {
                             label="Email"
                             style={{ marginBottom: '7px' }}
                             rules={[
-                                {
-                                    required: true,
-                                    message: 'Trường không được trống'
-                                },
+                                { required: true, message: 'Trường không được trống' },
                                 { message: 'Nhập định dạng email', type: 'email' }
                             ]}
                         >
-                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                            <Input size='small' prefix={<MdOutlineAlternateEmail/>} readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
                         </Form.Item>
                     </Col>
                     <Col sm={11}>
@@ -117,7 +114,7 @@ function DetailAccountGmail({ gmailState, setState }) {
                                 message: 'Trường không được trống'
                             }]}
                         >
-                            <Input size='small' readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                            <Input size='small' prefix={<span style={{ fontWeight: 700, color: 'gray' }}>ID</span>} readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
                         </Form.Item>
                     </Col>
                 </Row>

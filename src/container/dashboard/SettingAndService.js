@@ -209,17 +209,25 @@ function SettingAndService() {
         limit: limitPage,
         name: searchText
       }));
+    } else {
+      dispatch(actions.fetchListServiceBegin({
+        page: 1,
+        limit: limitPage
+      }));
     }
   };
 
   const handleSearchGoogleKey = (searchText) => {
-    console.log('--- search googke key ---', searchText);
-
     if (searchText) {
       dispatch(actions.fetchListAllGoogleKeyBegin({
         page: currentPage,
         limit: limitPage,
         name: searchText
+      }));
+    } else {
+      dispatch(actions.fetchListAllGoogleKeyBegin({
+        page: 1,
+        limit: limitPage
       }));
     }
   };
