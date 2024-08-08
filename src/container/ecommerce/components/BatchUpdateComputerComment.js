@@ -6,8 +6,6 @@ import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Button } fr
 import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
 import { toast } from 'react-toastify';
-import serviceActions from '../../../redux/serviceSettings/actions';
-import { STATUS_COMMENT_ENUM } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
 import actions from '../../../redux/buffComment/actions';
 

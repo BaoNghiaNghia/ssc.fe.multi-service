@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider} from 'antd';
+import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import serviceActions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY, STATUS_COMMENT_ENUM } from '../../../variables/index';
+import { LIST_SERVICE_SUPPLY, ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 import { performanceStatementTags } from '../../../utility/utility';
 
 const { Option } = Select;
@@ -48,7 +48,6 @@ function DetailOrder({ setState, state }) {
     }
 
     formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
-    formUpdateService.setFieldValue('status', STATUS_COMMENT_ENUM.find(item => item.status === detailOrderComment?.status)?.title);
   });
 
   const handleCancel = () => {
@@ -273,11 +272,26 @@ function DetailOrder({ setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="status"  label="Trạng thái" rules={[{
+              <Form.Item name="status" label="Trạng thái" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <Input readOnly size='small' />
+                <Select
+                  style={{ width: '100%', margin: '0px', padding: '0px' }}
+                  size='small'
+                  disabled
+                >
+                  {
+                    ORDER_YOUTUBE_STATUS?.map(orderState => {
+                      return (
+                        <Option value={orderState?.value}>
+                          <Badge style={{ marginRight: '8px' }} dot color={orderState?.color} />
+                          <span>{orderState?.label}</span>
+                        </Option>
+                      )
+                    })
+                  }
+                </Select>
               </Form.Item>
             </Col>
           </Row>
