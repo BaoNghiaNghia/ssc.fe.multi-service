@@ -62,7 +62,7 @@ export const ORDER_YOUTUBE_STATUS = [
   },
 ];
 
-export const FILTER_ORDER_COMMENT = [
+export const FILTER_ORDER_GENERAL = [
   {
     label: 'ID đơn hàng (Order ID)',
     value: 'sort[order_id] desc'

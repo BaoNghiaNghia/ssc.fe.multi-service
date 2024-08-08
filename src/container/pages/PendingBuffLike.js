@@ -19,10 +19,10 @@ import moment from 'moment';
 import { CgNotes } from 'react-icons/cg';
 import UpdateOrderLike from './components/UpdateOrderLike';
 import DetailOrderLike from './components/DetailOrderLike';
+import BatchUpdateOrderLike from './components/BatchUpdateOrderLike';
+import FilterOrderLike from './components/FilterOrderLike';
 import CancelAndRefundOrderComment from '../ecommerce/components/CancelAndRefundOrderComment';
 import InsuranceOrderComment from '../ecommerce/components/InsuranceOrderComment';
-import FilterOrderComment from '../ecommerce/components/FilterOrderComment';
-import BatchUpdateOrderComment from '../ecommerce/components/BatchUpdateOrderComment';
 import { TopToolBox } from '../ecommerce/Style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -127,11 +127,10 @@ function PendingBuffLike() {
 
   const [state, setState] = useState({
     isDetailOrderLikeModal: false,
-    isCreateCommentOrderModal: false,
     isUpdateLikeOrderModal: false,
     isCancelRefundCommentOrderModal: false,
     isInsuranceCommentOrderModal: false,
-    isFilterCommentOrderModal: false,
+    isFilterLikeOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
     statusNumber: 1,  // OrderStatusProcessing
     notData: {},
@@ -379,7 +378,7 @@ function PendingBuffLike() {
               max_thread === 0 ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
-                <Tooltip title="Comment thiếu / Tổng comment đã đặt">
+                <Tooltip title="Like thiếu / Đã đặt">
                   <span style={{ display: 'flex', alignItems: 'center' }}>
                     <span>{numberWithCommas(quantity - done_count || 0)}/</span><span style={{ fontWeight: 800 }}>{numberWithCommas(quantity || 0)}</span>
                   </span>
@@ -627,7 +626,7 @@ function PendingBuffLike() {
         orderState={state}
         setState={setState}
       />
-      <BatchUpdateOrderComment
+      <BatchUpdateOrderLike
         orderState={state}
         setState={setState}
       />
@@ -643,7 +642,7 @@ function PendingBuffLike() {
         state={state}
         setState={setState}
       />
-      <FilterOrderComment
+      <FilterOrderLike
         orderState={state}
         setState={setState}
       />
@@ -688,7 +687,7 @@ function PendingBuffLike() {
                         size="small"
                         type="default"
                         onClick={() => {
-                          setState({...state, isFilterCommentOrderModal: true });
+                          setState({...state, isFilterLikeOrderModal: true });
                         }}
                       >
                         <LuListFilter icon="plus" size={15} color='black' /> Bộ lọc
@@ -712,7 +711,6 @@ function PendingBuffLike() {
                             size="small"
                             type="primary"
                             onClick={() => {
-                              setState({...state, isCreateCommentOrderModal: true });
                               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                             }}
                           >
@@ -741,7 +739,7 @@ function PendingBuffLike() {
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
                       <span style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
-                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase()}
+                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS?.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase()}
                       </span>
                       {
                         state?.statusNumber === 0 ? (
@@ -750,7 +748,6 @@ function PendingBuffLike() {
                             type="dashed"
                             style={{ borderRadius: '20px', backgroundColor: '#dae0ec5c' }}
                             onClick={() => {
-                              setState({...state, isCreateCommentOrderModal: true });
                               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                             }}
                           >

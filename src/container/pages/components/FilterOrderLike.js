@@ -10,7 +10,7 @@ import { IoMdRefresh } from "react-icons/io";
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
-import actions from '../../../redux/buffComment/actions';
+import actions from '../../../redux/buffLike/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../../utility/utility';
 import { FILTER_ORDER_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
@@ -62,11 +62,11 @@ const badgeRedStyle = {
   marginRight: '5px'
 };
 
-function FilterOrderComment({ orderState, setState }) {
+function FilterOrderLike({ orderState, setState }) {
   const dispatch = useDispatch();
   const [formCreateService] = Form.useForm();
 
-  const { isFilterCommentOrderModal } = orderState;
+  const { isFilterLikeOrderModal } = orderState;
 
   const { postLoading, listService, userList } = useSelector((state) => {
     return {
@@ -76,19 +76,9 @@ function FilterOrderComment({ orderState, setState }) {
     };
   });
 
-  const [amountChange, setAmountChange] = useState(0);
-
   useEffect(() => {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
-
-  // const validatedServiceComment = listService?.filter(itemService => {
-  //   return itemService?.enabled && itemService?.category === "Comments"
-  // });
-
-  // if (validatedServiceComment?.length > 0) {
-  //   formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
-  // }
 
   const handleOk = () => {
     try {
@@ -105,16 +95,16 @@ function FilterOrderComment({ orderState, setState }) {
             rest.priority = priority === "true";
           }
 
-          dispatch(actions.fetchListOrderCommentBegin(rest));
+          dispatch(actions.fetchListOrderLikeBegin(rest));
 
-          setState({ ...orderState, isFilterCommentOrderModal: false });
+          setState({ ...orderState, isFilterLikeOrderModal: false });
         })
         .catch((err) => {
           console.error("handle Real Error: ", err);
         });
     } catch (err) {
       console.log(err);
-      setState({ ...orderState, isFilterCommentOrderModal: false });
+      setState({ ...orderState, isFilterLikeOrderModal: false });
       formCreateService.resetFields();
     }
   };
@@ -122,17 +112,17 @@ function FilterOrderComment({ orderState, setState }) {
   const handleCancel = () => {
     setState({
       ...orderState,
-      isFilterCommentOrderModal: false,
+      isFilterLikeOrderModal: false,
     });
   }
 
   const handleResetForm = () => {
     formCreateService.resetFields();
-    dispatch(actions.fetchListOrderCommentBegin({}));
+    dispatch(actions.fetchListOrderLikeBegin({}));
 
     setState({
       ...orderState,
-      isFilterCommentOrderModal: false,
+      isFilterLikeOrderModal: false,
     });
   }
 
@@ -140,18 +130,16 @@ function FilterOrderComment({ orderState, setState }) {
     <>
       <Modal
         width='400px'
-        open={isFilterCommentOrderModal}
+        open={isFilterLikeOrderModal}
         centered
         title={
-          <>
-            <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-              <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Bộ lọc</p>
-                <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Tìm order comment phù hợp</p>
-              </div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+            <div>
+              <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Bộ lọc</p>
+              <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Tìm order like phù hợp</p>
             </div>
-          </>
+          </div>
         }
         onOk={handleOk}
         onCancel={handleCancel}
@@ -252,7 +240,7 @@ function FilterOrderComment({ orderState, setState }) {
                       return (
                         <>
                           {
-                            itemService?.enabled && itemService?.category === "Comments" ? (
+                            itemService?.enabled && itemService?.category === "Likes" ? (
                               <Option key={index} value={itemService.service_id}>
                                 <>
                                   <Row style={{ margin: 0, padding: 0 }}>
@@ -313,9 +301,9 @@ function FilterOrderComment({ orderState, setState }) {
   );
 }
 
-FilterOrderComment.propTypes = {
+FilterOrderLike.propTypes = {
   orderState: PropTypes.object,
   setState: PropTypes.func
 };
 
-export default FilterOrderComment;
+export default FilterOrderLike;
