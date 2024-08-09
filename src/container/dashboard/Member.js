@@ -199,7 +199,7 @@ function Member() {
   }, [dispatch, currentPage, limitPage]);
 
   const handleSearch = (searchText) => {
-    if (searchText) {
+    if (searchText !== '') {
       dispatch(actions.fetchUserListBegin({
         page: currentPage,
         limit: limitPage,

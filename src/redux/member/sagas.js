@@ -51,9 +51,9 @@ function* getCreditHistoryMemberFunc(params) {
   }
 }
 
-function* fetchUserListFunc() {
+function* fetchUserListFunc(params) {
   try {
-    const response = yield call(fetchUserListAPI, {});
+    const response = yield call(fetchUserListAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
