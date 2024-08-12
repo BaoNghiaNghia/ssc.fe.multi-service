@@ -6,6 +6,7 @@ import { Row, Col, Table, Tooltip, Badge, Typography } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
+import { WiTime7 } from 'react-icons/wi';
 import { debounce } from 'lodash';
 import { MdVerifiedUser } from "react-icons/md";
 import { Link } from 'react-router-dom';
@@ -33,6 +34,7 @@ import actions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../utility/utility';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
+
 
 const columnsMember = [
   {
@@ -147,9 +149,8 @@ const badgeRedStyle = {
 function Member() {
   const dispatch = useDispatch();
 
-  const { searchData, orders, userList, isLoading, typeTable, topupList, listService, listMetaService } = useSelector(state => {
+  const { orders, userList, isLoading, typeTable, topupList, listService, listMetaService } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
       userList: state?.member?.userList,
       isLoading: state?.member?.loading,
@@ -246,7 +247,10 @@ function Member() {
               discount === null ? (
                 <span style={{ color: '#bdbdbd' }}>Chưa có</span>
               ) : (
-                <span><strong>{Object.keys(discount).length}</strong> dịch vụ</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <BiSolidDiscount color="#c3c3c3" fontSize={20} style={{ marginRight: '6px' }}/>
+                  <span><strong>{Object.keys(discount).length}</strong> dịch vụ</span>
+                </span>
               )
             }
           </>
@@ -269,11 +273,13 @@ function Member() {
               !last_order ? (
                 <span style={{ color: '#bdbdbd' }}>Chưa có đơn hàng</span>
               ) : (
-                <span style={{ fontWeight: 'bold' }}>
-                  {
-                    moment(last_order).format('HH:mm DD/MM')
-                  }
+                <span style={{ color: 'gray', fontSize: '1em', display: 'inline-flex', alignItems: 'center' }}>
+                  <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+                  <span style={{ fontWeight: 600 }}>
+                    {moment(last_order).format('HH:mm DD/MM')}
+                  </span>
                 </span>
+
               )
             }
           </>
@@ -726,7 +732,6 @@ function Member() {
                 {
                   typeTable === MEMBER_TABLE_TYPE.MEMBER.title ? (
                     <Table
-                      // rowSelection={rowSelection}
                       size='small'
                       dataSource={dataSource}
                       loading={isLoading}
@@ -745,9 +750,7 @@ function Member() {
                         position: ['bottomCenter'],
                         responsive: true,
                         showTotal(total, range) {
-                            return <>
-                                <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> người dùng</p>
-                            </>
+                            return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> người dùng</p>
                         },
                         totalBoundaryShowSizeChanger: 100,
                         size: "small"

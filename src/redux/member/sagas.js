@@ -99,7 +99,6 @@ function* detailTopupItemFunc(params) {
 function* createTopupItemFunc(params) {
   try {
     const response = yield call(createTopupAdminMemberAPI, params?.payload);
-    console.log('----- response saga topup nè -----', response);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -118,7 +117,6 @@ function* createTopupItemFunc(params) {
 function* confirmTopupItemFunc(params) {
   try {
     const response = yield call(topupAdminConfirmMemberAPI, params?.payload);
-    console.log('----- response saga confirm topup nè -----', response);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
