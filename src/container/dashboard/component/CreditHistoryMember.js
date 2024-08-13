@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 import { FaYoutube } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
-import { Row, Col, Form, Modal, Table, Tooltip, Popover, Input } from 'antd';
+import { Row, Col, Form, Modal, Table, Tooltip, Popover, Input, Image } from 'antd';
 import moment from 'moment';
 import { WiTime7 } from 'react-icons/wi';
 import memberActions from '../../../redux/member/actions';
@@ -263,6 +263,15 @@ function CreditHistoryMember({ historyState, setState }) {
           loading={isLoading}
           dataSource={dataSource}
           columns={columns}
+          locale={{ emptyText: (
+            <div>
+              <Image src={require(`../../../static/img/wallet_empty.svg`).default} alt="" width="200px" preview={false} style={{margin: '30px 0 0 0'}}/>
+              <p style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</p>
+              <p style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                Chưa có giao dịch
+              </p>
+            </div>
+          ) }}
           pagination={{
             current: creditHistory?.meta?.current_page,
             defaultPageSize: creditHistory?.meta?.count,
