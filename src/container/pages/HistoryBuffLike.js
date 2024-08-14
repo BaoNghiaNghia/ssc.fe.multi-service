@@ -16,15 +16,14 @@ import { CalendarButtonPageHeader } from '../../components/buttons/calendar-butt
 
 function HistoryBuffLike() {
   const dispatch = useDispatch();
-  const { searchData, orders } = useSelector(state => {
+  const { orders } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
     };
   });
 
   const [state, setState] = useState({
-    notData: searchData,
+    notData: {},
     item: orders,
     selectedRowKeys: [],
   });
@@ -42,11 +41,7 @@ function HistoryBuffLike() {
   }, [orders, selectedRowKeys]);
 
   const handleSearch = searchText => {
-    const data = searchData.filter(value => value.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
+
   };
 
   const dataSource = [];

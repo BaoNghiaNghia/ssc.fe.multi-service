@@ -77,9 +77,8 @@ function ComputerRunLikeOrder() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { searchData, listServer } = useSelector((state) => {
+  const { listServer } = useSelector((state) => {
     return {
-      searchData: state?.headerSearchData,
       listServer: state?.buffLike?.listComputer,
       preIsLoading: state.reports.loading,
     }

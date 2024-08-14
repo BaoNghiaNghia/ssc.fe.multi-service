@@ -20,9 +20,8 @@ import { numberWithCommas } from '../../utility/utility';
 function PendingBuffSubscribe() {
   const dispatch = useDispatch();
 
-  const { searchData, orders, listOrderSubscribe, isLoading } = useSelector(state => {
+  const { orders, listOrderSubscribe, isLoading } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
       listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe,
       isLoading: state?.buffSubscribe?.loading

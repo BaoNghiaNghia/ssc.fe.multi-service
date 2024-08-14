@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Input } from 'antd';
 import FeatherIcon from 'feather-icons-react';
-import { useSelector } from 'react-redux';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, AutoCompleteWrapper } from '../styled';
 import { Cards } from '../../components/cards/frame/cards-frame';
@@ -13,32 +12,21 @@ import { CalendarButtonPageHeader } from '../../components/buttons/calendar-butt
 
 const { TextArea } = Input;
 function AutoCompletess() {
-  const searchData = useSelector((state) => state.headerSearchData);
 
   const [state, setState] = useState({
     dataSource: [],
-    notData: searchData,
+    notData: {},
   });
   const { dataSource, notData } = state;
 
   const onSearch = (searchText) => {
-    let arrayData = [];
-    const data = searchData.filter((item) => item.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
-    if (data.length) {
-      data.map((item) => arrayData.push(item.title));
-    } else {
-      arrayData = ['Data Not Found!'];
-    }
+    const arrayData = [];
     setState({
       dataSource: !searchText ? [] : arrayData,
     });
   };
 
   const patternSearch = (searchText) => {
-    const data = searchData.filter((item) => item.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
-    setState({
-      notData: data,
-    });
   };
 
   return (

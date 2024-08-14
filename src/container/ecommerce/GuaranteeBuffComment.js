@@ -67,10 +67,9 @@ const columns = [
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
-  const { listOrderComment, userList, listService, isLoading, filterRange, listWarrantyOrder } = useSelector(state => {
+  const { listOrderComment, userList, isLoading, filterRange, listWarrantyOrder } = useSelector(state => {
     return {
       isLoading: state?.buffComment?.loading,
-      searchData: state.headerSearchData,
       listOrderComment: state?.buffComment?.listOrderComment,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,

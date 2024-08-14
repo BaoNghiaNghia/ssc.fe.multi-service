@@ -47,7 +47,6 @@ function RunningBuffSubscribe() {
 
   const { orders, listOrderSubscribe, isLoading } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
       listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe,
       isLoading: state?.buffSubscribe?.loading

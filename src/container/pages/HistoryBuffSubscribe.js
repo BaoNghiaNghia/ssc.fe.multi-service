@@ -14,9 +14,8 @@ import { FilterCalendar } from '../../components/buttons/calendar-button/FilterC
 
 function HistoryBuffSubscribe() {
   const dispatch = useDispatch();
-  const { searchData, orders, fromDay, toDay } = useSelector(state => {
+  const {  orders, fromDay, toDay } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
       orderHistory: state?.buffSubscribe?.orderSubHistory,
       fromDay: state?.buffSubscribe?.filterRange?.from,
@@ -25,7 +24,7 @@ function HistoryBuffSubscribe() {
   });
 
   const [state, setState] = useState({
-    notData: searchData,
+    notData: {},
     item: orders,
     selectedRowKeys: [],
   });
@@ -52,11 +51,6 @@ function HistoryBuffSubscribe() {
   }, [dispatch]);
 
   const handleSearch = searchText => {
-    const data = searchData.filter(value => value?.title?.toUpperCase().startsWith(searchText?.toUpperCase()));
-    setState({
-      ...state,
-      notData: data,
-    });
   };
 
   const dataSource = [];

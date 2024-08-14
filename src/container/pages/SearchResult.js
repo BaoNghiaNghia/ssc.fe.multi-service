@@ -10,7 +10,6 @@ import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Cards } from '../../components/cards/frame/cards-frame';
 
 function SearchResult() {
-  const searchData = useSelector((state) => state.headerSearchData);
   const [state, setState] = useState({
     notData: {},
     activeClass: 'all',

@@ -34,7 +34,7 @@ import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
-import { convertSeconds, numberWithCommas, performanceColorBack, performanceStatementTags } from '../../utility/utility';
+import { convertSeconds, numberWithCommas, performanceStatementTags } from '../../utility/utility';
 
 
 const columns = [
@@ -113,10 +113,9 @@ const columns = [
 
 function PendingBuffLike() {
   const dispatch = useDispatch();
-  const { searchData,  listOrderLike, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
+  const { listOrderLike, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
     return {
       isLoading: state?.buffComment?.loading,
-      searchData: state.headerSearchData,
       listOrderLike: state?.buffLike?.listOrderLike,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
