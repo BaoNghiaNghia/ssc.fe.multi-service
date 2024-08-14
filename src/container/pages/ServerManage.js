@@ -18,9 +18,8 @@ import { numberWithCommas } from '../../utility/utility';
 
 function ServerManage() {
   const dispatch = useDispatch();
-  const { searchData, listServer } = useSelector((state) => {
+  const {listServer } = useSelector((state) => {
     return {
-      searchData: state?.headerSearchData,
       listServer: state?.servers?.listServer,
       preIsLoading: state.chartContent.perLoading,
     }
