@@ -30,7 +30,7 @@ import { COLOR_GENERAL, DEFAULT_PERPAGE, SERVICE_TYPE, VIETNAMES_CURRENCY } from
 
 const TaskSuccessEveryMinutes = lazy(() => import('./overview/business/TaskSuccessEveryMinutes'));
 const TaskDurationEveryMinutes = lazy(() => import('./overview/business/TaskDurationEveryMinutes'));
-const SubscribeCountAndIncome = lazy(() => import('./overview/crm/SubscribeCountAndIncome'));
+const SubscribeCountAndIncome = lazy(() => import('./overview/business/SubscribeCountAndIncome'));
 const AnalyseYoutube = lazy(() => import('./overview/business/AnalyseYoutube'));
 
 const CardGroup = lazy(() => import('./overview/business/CardGroup'));
