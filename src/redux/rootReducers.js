@@ -2,10 +2,6 @@ import { combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
 import authReducer from './authentication/reducers';
 import ChangeLayoutMode from './themeLayout/reducers';
-import { headerSearchReducer } from './headerSearch/reducers';
-import orderReducer from './orders/reducers';
-import chartContentReducer from './chartContent/reducers';
-
 import BlackListReducer from './blacklist/reducers';
 import MemberReducer from './member/reducers';
 
@@ -19,13 +15,8 @@ import ProxyReducer from './proxy/reducers';
 import GmailManageReducer from './gmailManage/reducers';
 
 const rootReducers = combineReducers({
-  
-  orders: orderReducer,
-
   fb: firebaseReducer,
-  headerSearchData: headerSearchReducer,
   auth: authReducer,
-  chartContent: chartContentReducer,
   ChangeLayoutMode,
   reports: ReportsDailyReducer,
   servers: ServerReducer,

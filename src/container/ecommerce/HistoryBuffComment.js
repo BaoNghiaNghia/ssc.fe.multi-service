@@ -9,11 +9,6 @@ import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import { orderFilter } from '../../redux/orders/actionCreator';
-
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 
 function HistoryBuffComment() {
   const dispatch = useDispatch();
@@ -43,10 +38,6 @@ function HistoryBuffComment() {
   }, [orders, selectedRowKeys]);
 
   const handleSearch = searchText => {
-  };
-
-  const handleChangeForFilter = e => {
-    dispatch(orderFilter('status', e.target.value));
   };
 
   const dataSource = [];

@@ -57,10 +57,8 @@ const columns = [
 
 function ProxyManage() {
   const dispatch = useDispatch();
-  const { searchData, orders, isLoading, listDomain } = useSelector(state => {
+  const { isLoading, listDomain } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
-      orders: state.orders.data,
       isLoading: state?.proxy?.loading,
       listDomain: state?.proxy?.listDomain
     };
@@ -75,21 +73,17 @@ function ProxyManage() {
     isDelDomainModal: false,
     isListProxyModal: false,
     dataRow: {},
-    item: orders,
     selectedRowKeys: [],
   });
 
-  const { notData, item, selectedRowKeys } = state;
+  const { notData, selectedRowKeys } = state;
 
   useEffect(() => {
-    if (orders) {
-      setState({
-        ...state,
-        item: orders,
-        selectedRowKeys,
-      });
-    }
-  }, [orders, selectedRowKeys]);
+    setState({
+      ...state,
+      selectedRowKeys,
+    });
+  }, [selectedRowKeys]);
 
   useEffect(() => {
     dispatch(actions.listAllDomainBegin({

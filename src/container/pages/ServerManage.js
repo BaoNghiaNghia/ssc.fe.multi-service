@@ -21,7 +21,7 @@ function ServerManage() {
   const {listServer } = useSelector((state) => {
     return {
       listServer: state?.servers?.listServer,
-      preIsLoading: state.chartContent.perLoading,
+      preIsLoading: state.reports.loading,
     }
   });
 

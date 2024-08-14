@@ -4,17 +4,11 @@ import FeatherIcon from 'feather-icons-react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Popover } from '../../../popup/popup';
-import { readMessageList } from '../../../../redux/message/actionCreator';
 
 function MessageBox() {
   const dispatch = useDispatch();
   const message = useSelector(state => state.message.data);
 
-  useEffect(() => {
-    if (readMessageList) {
-      dispatch(readMessageList());
-    }
-  });
 
   const popoverContent = (
     <div>

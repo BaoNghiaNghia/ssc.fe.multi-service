@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import { Spin } from 'antd';
@@ -8,7 +8,6 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import moment from 'moment';
 import { RevenueWrapper } from '../../style';
-import { performanceGetData } from '../../../../redux/chartContent/actionCreator';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 
 const moreContent = (
@@ -36,25 +35,13 @@ const moreContent = (
   </>
 );
 function TaskSuccessEveryMinutes({ title }) {
-  const dispatch = useDispatch();
-  const { performanceState, preIsLoading, taskSuccessInMinutes, typeService } = useSelector(state => {
+  const { preIsLoading, taskSuccessInMinutes, typeService } = useSelector(state => {
     return {
-      performanceState: state.chartContent.performanceData,
-      preIsLoading: state.chartContent.perLoading,
+      preIsLoading: state.reports.loading,
       taskSuccessInMinutes: state?.reports?.taskSuccessInMinutes,
       typeService: state?.reports?.typeService,
     };
   });
-
-  const [state, setState] = useState({
-    revenue: 'year',
-  });
-
-  useEffect(() => {
-    if (performanceGetData) {
-      dispatch(performanceGetData());
-    }
-  }, [dispatch]);
 
   const durationReport = taskSuccessInMinutes?.map((rp) => rp?.time);
 
@@ -148,30 +135,28 @@ function TaskSuccessEveryMinutes({ title }) {
 
   return (
     <RevenueWrapper>
-      {performanceState !== null && (
-        <Cards
-          more={moreContent}
-          title={
-            <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p>
-              {durationReport?.length > 0 ? (
-                <span>Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong></span>
-              ) : null}
-            </div>
-          }
-          size="large"
-        >
-          {preIsLoading ? (
-            <div className="sd-spin">
-              <Spin />
-            </div>
-          ) : (
-            <div className="performance-lineChart">
-              <HighchartsReact highcharts={Highcharts} options={optionTaskSuccess} />
-            </div>
-          )}
-        </Cards>
-      )}
+      <Cards
+        more={moreContent}
+        title={
+          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <p style={{ fontWeight: 700, margin: 0, padding: 0 }}>{title}</p>
+            {durationReport?.length > 0 ? (
+              <span>Từ <strong>{moment(durationReport[0]).format("HH:mm DD-MM-YYYY")}</strong> đến <strong>{moment(durationReport?.at(-1)).format("HH:mm DD-MM-YYYY")}</strong></span>
+            ) : null}
+          </div>
+        }
+        size="large"
+      >
+        {preIsLoading ? (
+          <div className="sd-spin">
+            <Spin />
+          </div>
+        ) : (
+          <div className="performance-lineChart">
+            <HighchartsReact highcharts={Highcharts} options={optionTaskSuccess} />
+          </div>
+        )}
+      </Cards>
     </RevenueWrapper>
   );
 }

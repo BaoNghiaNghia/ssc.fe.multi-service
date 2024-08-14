@@ -10,16 +10,12 @@ import { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-import { GrNotification } from 'react-icons/gr';
-import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
-import { AiOutlineLike } from 'react-icons/ai';
+import { FaYoutube } from 'react-icons/fa';
 import MenueItems from './MenueItems';
 import TopMenu from './TopMenu';
-import { Div, SmallScreenAuthInfo, SmallScreenSearch, TopMenuSearch } from './style';
-import HeaderSearch from '../components/header-search/header-search';
+import { Div, TopMenuSearch } from './style';
 import AuthInfo from '../components/utilities/auth-info/info';
 import { changeRtlMode, changeLayoutMode, changeMenuMode } from '../redux/themeLayout/actionCreator';
-import { GalleryNav } from '../container/dashboard/style';
 
 const { darkTheme } = require('../config/theme/themeVariables');
 
@@ -318,7 +314,7 @@ const ThemeLayout = (WrappedComponent) => {
                 </Col>
               </Row>
             </Header>
-            <div className="header-more">
+            {/* <div className="header-more">
               <Row>
                 <Col md={0} sm={12} xs={12}>
                   <div className="small-screen-headerRight">
@@ -331,7 +327,7 @@ const ThemeLayout = (WrappedComponent) => {
                   </div>
                 </Col>
               </Row>
-            </div>
+            </div> */}
             <Layout>
               {!topMenu || window.innerWidth <= 991 ? (
                 <ThemeProvider theme={darkTheme}>

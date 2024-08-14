@@ -9,7 +9,6 @@ import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import { orderFilter } from '../../redux/orders/actionCreator';
 import actions from '../../redux/buffSubscribe/actions';
 import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 
@@ -33,7 +32,6 @@ function HistoryBuffSubscribe() {
 
   const { notData, item, selectedRowKeys } = state;
 
-  const filterKey = ['Shipped', 'Awaiting Shipment', 'Canceled'];
 
   useEffect(() => {
     if (orders) {
@@ -59,10 +57,6 @@ function HistoryBuffSubscribe() {
       ...state,
       notData: data,
     });
-  };
-
-  const handleChangeForFilter = e => {
-    dispatch(orderFilter('status', e.target.value));
   };
 
   const dataSource = [];
@@ -168,20 +162,7 @@ function HistoryBuffSubscribe() {
                     </div>
                   </Col>
                   <Col xxl={14} lg={16} xs={24}>
-                    <div className="table-toolbox-menu">
-                      <span className="toolbox-menu-title"> Status:</span>
-                      <Radio.Group onChange={handleChangeForFilter} defaultValue="">
-                        <Radio.Button value="">All</Radio.Button>
-                        {item.length &&
-                          [...new Set(filterKey)].map(value => {
-                            return (
-                              <Radio.Button key={value} value={value}>
-                                {value}
-                              </Radio.Button>
-                            );
-                          })}
-                      </Radio.Group>
-                    </div>
+                    <></>
                   </Col>
                   <Col xxl={4} xs={24}>
                     <div className="table-toolbox-actions">

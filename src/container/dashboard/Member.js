@@ -149,9 +149,8 @@ const badgeRedStyle = {
 function Member() {
   const dispatch = useDispatch();
 
-  const { orders, userList, isLoading, typeTable, topupList, listService, listMetaService } = useSelector(state => {
+  const { userList, isLoading, typeTable, topupList, listService, listMetaService } = useSelector(state => {
     return {
-      orders: state.orders.data,
       userList: state?.member?.userList,
       isLoading: state?.member?.loading,
       typeTable: state?.member?.typeTable,
@@ -173,7 +172,6 @@ function Member() {
     isModalCreditHistory: false,
     isModalRegisterNewAccount: false,
     notData: {},
-    item: orders,
     selectedRowID: null,
     selectedRowKeys: []
   });
@@ -181,14 +179,12 @@ function Member() {
   const { notData, item, selectedRowKeys } = state;
 
   useEffect(() => {
-    if (orders) {
-      setState({
-        ...state,
-        item: orders,
-        selectedRowKeys,
-      });
-    }
-  }, [orders, selectedRowKeys]);
+
+    setState({
+      ...state,
+      selectedRowKeys,
+    });
+  }, [selectedRowKeys]);
 
   useEffect(() => {
     dispatch(actions.fetchUserListBegin());

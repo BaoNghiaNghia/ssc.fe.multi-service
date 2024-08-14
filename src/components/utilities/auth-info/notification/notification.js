@@ -1,20 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Popover } from '../../../popup/popup';
-import { readNotificationList } from '../../../../redux/notification/actionCreator';
 
 function NotificationBox() {
   const dispatch = useDispatch();
   const notification = useSelector(state => state.notification.data);
-
-  useEffect(() => {
-    if (readNotificationList) {
-      dispatch(readNotificationList());
-    }
-  });
 
   const popoverContent = (
     <div>

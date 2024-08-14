@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React  from 'react';
 import { Col, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import { IoArrowUpCircle, IoArrowDownCircle } from "react-icons/io5";
 import FeatherIcon from 'feather-icons-react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import { CardBarChart } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import ChartSubscribePoint from '../business/ChartSubscribePoint';
-import { closeDealGetData } from '../../../../redux/chartContent/actionCreator';
 import Heading from '../../../../components/heading/heading';
 import { currentDate, numberWithCommas } from '../../../../utility/utility';
 import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../../../variables';
 
 function SubscribeCountAndIncome(props) {
   const { title } = props;
-  const dispatch = useDispatch();
 
   const { fromDate, toDate, typeService, isLoading, orderAmountComment, performance, orderAmountLike, orderByDays } = useSelector(state => {
     return {
@@ -30,11 +28,6 @@ function SubscribeCountAndIncome(props) {
     };
   });
 
-  useEffect(() => {
-    if (closeDealGetData) {
-      dispatch(closeDealGetData());
-    }
-  }, [dispatch]);
 
   const closeDealDatasets = orderAmountComment !== null && [
     {

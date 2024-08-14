@@ -81,7 +81,7 @@ function ComputerRunCommentOrder() {
     return {
       searchData: state?.headerSearchData,
       listServer: state?.buffComment?.listComputer,
-      preIsLoading: state.chartContent.perLoading,
+      preIsLoading: state.reports.loading,
     }
   });
 

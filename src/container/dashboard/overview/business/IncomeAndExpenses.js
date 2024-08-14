@@ -7,7 +7,6 @@ import { ExList, IncomeExpenseWrapper } from '../../style';
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import Heading from '../../../../components/heading/heading';
 import { ChartjsBarChartTransparent } from '../../../../components/charts/chartjs';
-import { incomeGetData, incomeFilterData } from '../../../../redux/chartContent/actionCreator';
 
 function IncomeAndExpenses() {
   const dispatch = useDispatch();
@@ -21,11 +20,6 @@ function IncomeAndExpenses() {
     incomeFlowActive: 'year',
   });
 
-  useEffect(() => {
-    if (incomeGetData) {
-      dispatch(incomeGetData());
-    }
-  }, [dispatch]);
 
   const moreContent = (
     <>
@@ -57,7 +51,6 @@ function IncomeAndExpenses() {
       ...state,
       incomeFlowActive: value,
     });
-    dispatch(incomeFilterData(value));
   };
 
   const incomeDataset = incomeState !== null && [

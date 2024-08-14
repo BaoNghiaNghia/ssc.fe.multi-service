@@ -81,7 +81,7 @@ function ComputerRunLikeOrder() {
     return {
       searchData: state?.headerSearchData,
       listServer: state?.buffLike?.listComputer,
-      preIsLoading: state.chartContent.perLoading,
+      preIsLoading: state.reports.loading,
     }
   });
 
