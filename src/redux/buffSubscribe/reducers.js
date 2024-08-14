@@ -8,7 +8,7 @@ const initialState = {
   userList: [],
   orderSubHistory: [],
   filterRange: {
-    from: previousDate(7),
+    from: previousDate(8),
     to: currentDate
   },
   typeHistory: 0,

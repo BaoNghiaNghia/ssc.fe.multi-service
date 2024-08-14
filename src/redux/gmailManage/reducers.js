@@ -4,7 +4,7 @@ import { SERVICE_TYPE } from '../../variables';
 
 const initialState = {
   filterRange: {
-    from: previousDate(7),
+    from: previousDate(8),
     to: currentDate
   },
   typeService: SERVICE_TYPE.COMMENT.title,

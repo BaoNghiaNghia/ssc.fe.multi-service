@@ -7,7 +7,7 @@ const initialState = {
   chartLoading: false,
   isOpenCreateOrder: false,
   filterRange: {
-    from: previousDate(7),
+    from: previousDate(8),
     to: currentDate
   },
   typeService: SERVICE_TYPE.COMMENT.title,

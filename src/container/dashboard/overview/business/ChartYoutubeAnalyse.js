@@ -1,15 +1,22 @@
 import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { numberWithCommas } from '../../../../utility/utility';
-import { FORMAT_DATESTRING, VIETNAMES_CURRENCY } from '../../../../variables/index';
+import { FORMAT_DATESTRING } from '../../../../variables/index';
 
 const ChartYoutubeAnalyse = ({
     chartData,
     loadingChart
 }) => {
     const [loadingF, setLoadingF] = useState(true);
+
+    const { typeService } = useSelector(state => {
+        return {
+            typeService: state?.reports?.typeService,
+        };
+    });
 
     // Fallback in case `rendered` event doesn't trigger
     useEffect(() => {
@@ -77,7 +84,7 @@ const ChartYoutubeAnalyse = ({
         },
         yaxis: {
             title: {
-                text: 'Tỉ lệ / Tổng Sub'
+                text: `% / ${typeService}`
             },
             labels: {
                 formatter (value) {

@@ -9,7 +9,7 @@ const initialState = {
   listWarrantyOrder: [],
   likeInOrder: {},
   filterRange: {
-    from: previousDate(7),
+    from: previousDate(8),
     to: currentDate
   },
   loading: false,

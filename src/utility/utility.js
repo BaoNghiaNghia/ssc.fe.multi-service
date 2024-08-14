@@ -46,7 +46,7 @@ const findSecondMinimum = (arr) => {
 const currentDate = moment(new Date()).format(FORMAT_DATESTRING);
 
 const previousDate = (day) => {
-  return moment().subtract(7,'d').format(FORMAT_DATESTRING);
+  return moment().subtract(day,'d').format(FORMAT_DATESTRING);
 };
 
 const convertSeconds = (seconds) => {

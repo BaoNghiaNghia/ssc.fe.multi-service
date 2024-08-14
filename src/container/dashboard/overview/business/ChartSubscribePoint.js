@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts";
+import { useSelector } from 'react-redux';
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { useEffect, useState } from 'react';
 import { numberWithCommas, numberWithCommasCurrency } from '../../../../utility/utility';
@@ -11,6 +12,12 @@ const ChartSubscribePoint = ({
 }) => {
 
     const [loadingF, setLoadingF] = useState(true);
+
+    const { typeService } = useSelector(state => {
+        return {
+            typeService: state?.reports?.typeService,
+        };
+    });
 
     // Fallback in case `rendered` event doesn't trigger
     useEffect(() => {
@@ -91,7 +98,7 @@ const ChartSubscribePoint = ({
           },
         yaxis: {
             title: {
-                text: 'Tỉ lệ / Tổng Sub'
+                text: `${typeService} / ${VIETNAMES_CURRENCY}`
             },
             labels: {
                 formatter (value) {
