@@ -113,6 +113,9 @@ export const STATUS_COMMENT_ENUM = [
 ];
 
 export const SERVICE_TYPE = {
+  'VIEW': {
+      title: 'view',
+  },
   'SUBSCRIBE': {
       title: 'subscribe',
   },

@@ -122,6 +122,41 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </>
           ) : <></>
         }
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>BUFF VIEW</NavTitle>}
+        <Menu.Item
+          disabled
+          icon={
+            !topMenu && (
+              <NavLink className="menuItem-icon" to={`${path}/subscribe/cho-duyet`}>
+                <FeatherIcon icon="archive" />
+              </NavLink>
+            )
+          }
+          key="buff-subscribe-cho-duyet"
+        >
+          <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/cho-duyet`}>
+            Danh sách đơn {pendingBadge}
+          </NavLink>
+        </Menu.Item>
+        {
+          checkMatchRole ? (
+            <Menu.Item
+              disabled
+              icon={
+                !topMenu && (
+                  <NavLink className="menuItem-icon" to={`${path}/subscribe/lich-su-don`}>
+                    <FeatherIcon icon="hard-drive" />
+                  </NavLink>
+                )
+              }
+              key="subscribe-lich-su-don"
+            >
+              <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/lich-su-don`}>
+                Danh sách máy {pendingBadge}
+              </NavLink>
+            </Menu.Item>
+          ) : <></>
+        }
         {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>BUFF SUBSCRIBE</NavTitle>}
         <Menu.Item
           disabled

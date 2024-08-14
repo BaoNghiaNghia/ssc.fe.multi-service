@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table, Switch, Tooltip } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
+import { IoEyeOutline } from "react-icons/io5";
 import { LuListFilter } from 'react-icons/lu';
 import { debounce } from 'lodash';
 import { FaRegCommentDots } from 'react-icons/fa';
@@ -322,6 +323,17 @@ function GmailManagement() {
           <div key="1" className="page-header-actions">
             <GalleryNav>
               <ul>
+                <li>
+                  <Link
+                    className={typeService === SERVICE_TYPE.VIEW.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.VIEW.title)}
+                    to="#"
+                    style={{ display: 'inline-flex', alignItems: 'center' }}
+                  >
+                    <IoEyeOutline fontSize={15} className='pr-3'/>
+                    <span>View</span>
+                  </Link>
+                </li>
                 <li>
                   <Link
                     className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}

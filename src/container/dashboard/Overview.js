@@ -9,6 +9,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { IoEyeOutline } from 'react-icons/io5';
 import { GoWorkflow, GoTasklist } from "react-icons/go";
 import { TbSquareRoundedPercentage, TbServer2, TbBrandStackoverflow } from "react-icons/tb";
 import { SiGmail } from "react-icons/si";
@@ -521,6 +522,17 @@ function Overview() {
           <div key="2" className="page-header-actions">
             <GalleryNav>
               <ul>
+                <li>
+                  <Link
+                    className={typeService === SERVICE_TYPE.VIEW.title ? 'active' : 'deactivate'}
+                    onClick={() => handleChange(SERVICE_TYPE.VIEW.title)}
+                    to="#"
+                    style={{ display: 'inline-flex', alignItems: 'center' }}
+                  >
+                    <IoEyeOutline fontSize={15} className='pr-3'/>
+                    <span>View</span>
+                  </Link>
+                </li>
                 <li>
                   <Link
                     className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
