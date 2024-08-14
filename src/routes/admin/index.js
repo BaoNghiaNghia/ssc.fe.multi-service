@@ -6,6 +6,7 @@ import OverviewRoute from './overview';
 import BuffCommentRoute from './buff-comment';
 import BuffSubscribeRoute from './buff-subscribe';
 import BuffLikeRoute from './buff-like';
+import BuffViewRoute from './buff-view';
 
 import withAdminLayout from '../../layout/withAdminLayout';
 
@@ -25,6 +26,7 @@ function Admin() {
         <Route path={`${path}`} component={BuffCommentRoute} />
         <Route path={`${path}`} component={BuffLikeRoute} />
         <Route path={`${path}`} component={BuffSubscribeRoute} />
+        <Route path={`${path}`} component={BuffViewRoute} />
       </Suspense>
     </Switch>
   );

@@ -6,7 +6,7 @@ const PendingBuffLike = lazy(() => import('../../container/pages/PendingBuffLike
 const ComputerRunLikeOrder = lazy(() => import('../../container/pages/ComputerRunLikeOrder'));
 const GuaranteeBuffLike = lazy(() => import('../../container/pages/GuaranteeBuffLike'));
 
-function FeaturesRoute() {
+function BuffLikeRoute() {
   const { path } = useRouteMatch();
   return (
     <Switch>
@@ -18,4 +18,4 @@ function FeaturesRoute() {
   );
 }
 
-export default FeaturesRoute;
+export default BuffLikeRoute;

@@ -5,7 +5,7 @@ const PendingBuffView = lazy(() => import('../../container/ecommerce/PendingBuff
 const ComputerRunViewOrder = lazy(() => import('../../container/ecommerce/ComputerRunCommentOrder'));
 const GuaranteeBuffView = lazy(() => import('../../container/ecommerce/GuaranteeBuffComment'));
 
-function EcommerceRoute() {
+function BuffViewRoute() {
   const { path } = useRouteMatch();
   return (
     <Switch>
@@ -16,4 +16,4 @@ function EcommerceRoute() {
   );
 }
 
-export default EcommerceRoute;
+export default BuffViewRoute;

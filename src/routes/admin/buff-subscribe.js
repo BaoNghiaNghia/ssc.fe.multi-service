@@ -6,7 +6,7 @@ const PendingBuffSubscribe = lazy(() => import('../../container/pages/PendingBuf
 const HistoryBuffSubscribe = lazy(() => import('../../container/pages/HistoryBuffSubscribe'));
 const GuaranteeBuffSubscribe = lazy(() => import('../../container/pages/GuaranteeBuffSubscribe'));
 
-function SubscribeRoute() {
+function BuffSubscribeRoute() {
   const { path } = useRouteMatch();
 
   return (
@@ -19,4 +19,4 @@ function SubscribeRoute() {
   );
 }
 
-export default SubscribeRoute;
+export default BuffSubscribeRoute;
