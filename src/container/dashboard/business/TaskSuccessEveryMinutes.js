@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import moment from 'moment';
-import { RevenueWrapper } from '../../style';
-import { Cards } from '../../../../components/cards/frame/cards-frame';
+import { RevenueWrapper } from '../style';
+import { Cards } from '../../../components/cards/frame/cards-frame';
 
 const moreContent = (
   <>

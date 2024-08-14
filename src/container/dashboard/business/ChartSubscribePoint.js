@@ -3,8 +3,8 @@ import ReactApexChart from "react-apexcharts";
 import { useSelector } from 'react-redux';
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { useEffect, useState } from 'react';
-import { numberWithCommas, numberWithCommasCurrency } from '../../../../utility/utility';
-import { FORMAT_DATESTRING, VIETNAMES_CURRENCY } from '../../../../variables/index';
+import { numberWithCommas, numberWithCommasCurrency } from '../../../utility/utility';
+import { FORMAT_DATESTRING, VIETNAMES_CURRENCY } from '../../../variables/index';
 
 const ChartSubscribePoint = ({
     chartData,

@@ -28,12 +28,12 @@ import actionsBuffComment from '../../redux/buffComment/actions';
 import { numberWithCommas, numberWithCommasCurrency } from '../../utility/utility';
 import { COLOR_GENERAL, DEFAULT_PERPAGE, SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
-const TaskSuccessEveryMinutes = lazy(() => import('./overview/business/TaskSuccessEveryMinutes'));
-const TaskDurationEveryMinutes = lazy(() => import('./overview/business/TaskDurationEveryMinutes'));
-const SubscribeCountAndIncome = lazy(() => import('./overview/business/SubscribeCountAndIncome'));
-const AnalyseYoutube = lazy(() => import('./overview/business/AnalyseYoutube'));
+const TaskSuccessEveryMinutes = lazy(() => import('./business/TaskSuccessEveryMinutes'));
+const TaskDurationEveryMinutes = lazy(() => import('./business/TaskDurationEveryMinutes'));
+const SubscribeCountAndIncome = lazy(() => import('./business/SubscribeCountAndIncome'));
+const AnalyseYoutube = lazy(() => import('./business/AnalyseYoutube'));
 
-const CardGroup = lazy(() => import('./overview/business/CardGroup'));
+const CardGroup = lazy(() => import('./business/CardGroup'));
 
 function Overview() {
   const dispatch = useDispatch();

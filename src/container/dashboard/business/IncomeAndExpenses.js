@@ -3,10 +3,10 @@ import { Row, Col, Spin } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExList, IncomeExpenseWrapper } from '../../style';
-import { Cards } from '../../../../components/cards/frame/cards-frame';
-import Heading from '../../../../components/heading/heading';
-import { ChartjsBarChartTransparent } from '../../../../components/charts/chartjs';
+import { ExList, IncomeExpenseWrapper } from '../style';
+import { Cards } from '../../../components/cards/frame/cards-frame';
+import Heading from '../../../components/heading/heading';
+import { ChartjsBarChartTransparent } from '../../../components/charts/chartjs';
 
 function IncomeAndExpenses() {
   const dispatch = useDispatch();

@@ -6,11 +6,11 @@ import FeatherIcon from 'feather-icons-react';
 import {  useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import ChartSubscribePoint from './ChartSubscribePoint';
-import { Cards } from '../../../../components/cards/frame/cards-frame';
-import Heading from '../../../../components/heading/heading';
-import { currentDate, numberWithCommas } from '../../../../utility/utility';
-import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../../../variables';
-import { CardBarChart } from '../../style';
+import { Cards } from '../../../components/cards/frame/cards-frame';
+import Heading from '../../../components/heading/heading';
+import { currentDate, numberWithCommas } from '../../../utility/utility';
+import { SERVICE_TYPE, VIETNAMES_CURRENCY } from '../../../variables';
+import { CardBarChart } from '../style';
 
 function SubscribeCountAndIncome(props) {
   const { title } = props;
@@ -27,7 +27,6 @@ function SubscribeCountAndIncome(props) {
       orderByDays: state?.reports?.orderByDays,
     };
   });
-
 
   const closeDealDatasets = orderAmountComment !== null && [
     {

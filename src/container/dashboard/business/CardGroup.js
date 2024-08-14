@@ -2,13 +2,13 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import { useSelector } from 'react-redux';
 import { IoFileTray } from "react-icons/io5";
-import Heading from '../../../../components/heading/heading';
-import { Focard, RatioCard } from '../../style';
-import { Cards } from '../../../../components/cards/frame/cards-frame';
-import { ChartjsAreaChart } from '../../../../components/charts/chartjs';
-import { chartLinearGradient } from '../../../../components/utilities/utilities';
-import { numberWithCommas } from '../../../../utility/utility';
-import { SERVICE_TYPE } from '../../../../variables';
+import Heading from '../../../components/heading/heading';
+import { Focard, RatioCard } from '../style';
+import { Cards } from '../../../components/cards/frame/cards-frame';
+import { ChartjsAreaChart } from '../../../components/charts/chartjs';
+import { chartLinearGradient } from '../../../components/utilities/utilities';
+import { numberWithCommas } from '../../../utility/utility';
+import { SERVICE_TYPE } from '../../../variables';
 
 function CardGroup() {
   const { reportData, typeService, statisticComment, isLoading, commentByDay, filterRange } = useSelector((state) => {

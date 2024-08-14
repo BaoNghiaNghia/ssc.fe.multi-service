@@ -6,12 +6,12 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import ChartYoutubeAnalyse from './ChartYoutubeAnalyse';
-import { CardBarChart } from '../../style';
-import { Cards } from '../../../../components/cards/frame/cards-frame';
-import Heading from '../../../../components/heading/heading';
+import { CardBarChart } from '../style';
+import { Cards } from '../../../components/cards/frame/cards-frame';
+import Heading from '../../../components/heading/heading';
 
-import { currentDate, numberWithCommas } from '../../../../utility/utility';
-import { SERVICE_TYPE } from '../../../../variables';
+import { currentDate, numberWithCommas } from '../../../utility/utility';
+import { SERVICE_TYPE } from '../../../variables';
 
 function AnalyseYoutube(props) {
   const { title } = props;

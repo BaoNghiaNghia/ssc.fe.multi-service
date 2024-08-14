@@ -3,8 +3,8 @@ import ReactApexChart from "react-apexcharts";
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { numberWithCommas } from '../../../../utility/utility';
-import { FORMAT_DATESTRING } from '../../../../variables/index';
+import { numberWithCommas } from '../../../utility/utility';
+import { FORMAT_DATESTRING } from '../../../variables/index';
 
 const ChartYoutubeAnalyse = ({
     chartData,
