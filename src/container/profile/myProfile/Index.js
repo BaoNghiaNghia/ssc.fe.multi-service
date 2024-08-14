@@ -11,7 +11,6 @@ import { ShareButtonPageHeader } from '../../../components/buttons/share-button/
 import { ExportButtonPageHeader } from '../../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../../components/buttons/calendar-button/calendar-button';
 
-const UserCards = lazy(() => import('../../pages/overview/UserCard'));
 const CoverSection = lazy(() => import('../overview/CoverSection'));
 const UserBio = lazy(() => import('./overview/UserBio'));
 const Overview = lazy(() => import('./overview/Overview'));
@@ -41,17 +40,6 @@ function MyProfile() {
       <Main>
         <Row gutter={25}>
           <Col xxl={6} lg={8} md={10} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton avatar active paragraph={{ rows: 3 }} />
-                </Cards>
-              }
-            >
-              <UserCards
-                user={{ name: 'Duran Clyton', designation: 'UI/UX Designer', img: 'static/img/users/1.png' }}
-              />
-            </Suspense>
             <Suspense
               fallback={
                 <Cards headless>

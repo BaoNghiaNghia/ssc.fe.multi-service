@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { BiLogoGmail } from 'react-icons/bi';
 import { TbServerBolt } from 'react-icons/tb';
-import TableServer from './overview/TableServer';
+import TableServer from './components/TableServer';
 import { Pstates } from './style';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main } from '../styled';
