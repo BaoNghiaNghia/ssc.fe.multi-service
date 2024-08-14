@@ -45,9 +45,8 @@ function GuaranteeBuffSubscribe() {
     setCurrent(e.key);
   };
 
-  const { searchData, orders, listOrderSubscribe } = useSelector(state => {
+  const { orders, listOrderSubscribe } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
       listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe
     };

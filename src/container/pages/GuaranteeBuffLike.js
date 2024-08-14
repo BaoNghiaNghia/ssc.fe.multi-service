@@ -16,9 +16,8 @@ import { CalendarButtonPageHeader } from '../../components/buttons/calendar-butt
 
 function GuaranteeBuffLike() {
   const dispatch = useDispatch();
-  const { searchData, orders } = useSelector(state => {
+  const { orders } = useSelector(state => {
     return {
-      searchData: state.headerSearchData,
       orders: state.orders.data,
     };
   });

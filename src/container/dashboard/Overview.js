@@ -9,7 +9,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IoEyeOutline } from 'react-icons/io5';
+import { MdRemoveRedEye } from "react-icons/md";
 import { GoWorkflow, GoTasklist } from "react-icons/go";
 import { TbSquareRoundedPercentage, TbServer2, TbBrandStackoverflow } from "react-icons/tb";
 import { SiGmail } from "react-icons/si";
@@ -527,9 +527,9 @@ function Overview() {
                     className={typeService === SERVICE_TYPE.VIEW.title ? 'active' : 'deactivate'}
                     onClick={() => handleChange(SERVICE_TYPE.VIEW.title)}
                     to="#"
-                    style={{ display: 'inline-flex', alignItems: 'center' }}
+                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
                   >
-                    <IoEyeOutline fontSize={15} className='pr-3'/>
+                    <MdRemoveRedEye fontSize={17} className='pr-3'/>
                     <span>View</span>
                   </Link>
                 </li>
@@ -538,7 +538,7 @@ function Overview() {
                     className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
                     onClick={() => handleChange(SERVICE_TYPE.SUBSCRIBE.title)}
                     to="#"
-                    style={{ display: 'inline-flex', alignItems: 'center' }}
+                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
                   >
                     <GrNotification fontSize={15} className='pr-3'/> <span>Subscribe</span>
                   </Link>
@@ -547,6 +547,7 @@ function Overview() {
                   <Link
                     className={typeService === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
                     onClick={() => handleChange(SERVICE_TYPE.COMMENT.title)}
+                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
                     to="#"
                   >
                     <FaRegCommentDots fontSize={15} className='mr-3'/> <span>Comment</span>
@@ -556,6 +557,7 @@ function Overview() {
                   <Link
                     className={typeService === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
                     onClick={() => handleChange(SERVICE_TYPE.LIKE.title)}
+                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
                     to="#"
                   >
                     <AiOutlineLike fontSize={17} className='mr-3'/> <span>Like</span>
