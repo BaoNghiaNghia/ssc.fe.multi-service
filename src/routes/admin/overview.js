@@ -9,7 +9,7 @@ const Member = lazy(() => import('../../container/dashboard/Member'));
 const SettingAndService = lazy(() => import('../../container/dashboard/SettingAndService'));
 const UserProfile = lazy(() => import('../../container/dashboard/UserProfile'));
 const Overview = lazy(() => import('../../container/dashboard/Overview'));
-const ServerManage = lazy(() => import('../../container/pages/ServerManage'));
+const ServerManage = lazy(() => import('../../container/subscribes/ServerManage'));
 
 function DashboardRoutes() {
   const { path } = useRouteMatch();

@@ -1,10 +1,10 @@
 import React, { lazy } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
-const RunningBuffSubscribe = lazy(() => import('../../container/pages/RunningBuffSubscribe'));
-const PendingBuffSubscribe = lazy(() => import('../../container/pages/PendingBuffSubscribe'));
-const HistoryBuffSubscribe = lazy(() => import('../../container/pages/HistoryBuffSubscribe'));
-const GuaranteeBuffSubscribe = lazy(() => import('../../container/pages/GuaranteeBuffSubscribe'));
+const RunningBuffSubscribe = lazy(() => import('../../container/subscribes/RunningBuffSubscribe'));
+const PendingBuffSubscribe = lazy(() => import('../../container/subscribes/PendingBuffSubscribe'));
+const HistoryBuffSubscribe = lazy(() => import('../../container/subscribes/HistoryBuffSubscribe'));
+const GuaranteeBuffSubscribe = lazy(() => import('../../container/subscribes/GuaranteeBuffSubscribe'));
 
 function BuffSubscribeRoute() {
   const { path } = useRouteMatch();

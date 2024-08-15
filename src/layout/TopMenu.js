@@ -52,7 +52,7 @@ function TopMenu() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={`${path}/business`} onClick={addParentActive}>
+                <NavLink to={`${path}/component`} onClick={addParentActive}>
                   Business
                 </NavLink>
               </li>
