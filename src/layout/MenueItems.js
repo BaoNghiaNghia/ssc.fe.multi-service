@@ -11,7 +11,7 @@ import { useSelector , useDispatch } from 'react-redux';
 import { NavTitle } from './style';
 import reportActions from '../redux/reports/actions';
 import { COLOR_GENERAL, ROLE_DETAIL, ROLE_GENERAL } from '../variables';
-import AddOrderGeneral from '../container/ecommerce/components/AddOrderGeneral';
+import AddOrderGeneral from '../container/comments/components/AddOrderGeneral';
 
 
 const { SubMenu } = Menu;

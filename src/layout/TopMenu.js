@@ -150,42 +150,42 @@ function TopMenu() {
                 </Link>
                 <ul className="subMenu">
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/products`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/products`}>
                       Products
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/productDetails/1`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/productDetails/1`}>
                       Products Details
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/add-product`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/add-product`}>
                       Product Add
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/edit-product`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/edit-product`}>
                       Product Edit
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/cart`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/cart`}>
                       Cart
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/orders`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/orders`}>
                       Orders
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/sellers`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/sellers`}>
                       Sellers
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink onClick={addParentActive} to={`${path}/ecommerce/Invoice`}>
+                    <NavLink onClick={addParentActive} to={`${path}/comments/Invoice`}>
                       Invoices
                     </NavLink>
                   </li>

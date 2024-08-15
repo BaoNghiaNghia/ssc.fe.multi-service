@@ -1,9 +1,9 @@
 import React, { lazy } from 'react';
 import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
-const PendingBuffComment = lazy(() => import('../../container/ecommerce/PendingBuffComment'));
-const ComputerRunCommentOrder = lazy(() => import('../../container/ecommerce/ComputerRunCommentOrder'));
-const GuaranteeBuffComment = lazy(() => import('../../container/ecommerce/GuaranteeBuffComment'));
+const PendingBuffComment = lazy(() => import('../../container/comments/PendingBuffComment'));
+const ComputerRunCommentOrder = lazy(() => import('../../container/comments/ComputerRunCommentOrder'));
+const GuaranteeBuffComment = lazy(() => import('../../container/comments/GuaranteeBuffComment'));
 
 function BuffCommentRoute() {
   const { path } = useRouteMatch();
