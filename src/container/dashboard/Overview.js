@@ -250,7 +250,10 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail chưa gọi</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}>
+                      <SiGmail style={{ marginRight: '7px', width: '23px', height: '23px', color: COLOR_GENERAL.primary, borderRadius: '5px', backgroundColor: '#00800015', padding: '2px 5px' }} />
+                      Mail chưa gọi
+                      </span>
                     <Tooltip title={accountStatus?.list_uncalled ? "Danh sách mail": "Không có mail"}>
                       <Button 
                         type='text'
@@ -284,7 +287,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail hoạt động</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', width: '23px', height: '23px', color: COLOR_GENERAL.primary, borderRadius: '5px', backgroundColor: '#00800015', padding: '2px 5px' }} />Mail hoạt động</span>
                     <Tooltip title="Chi tiết">
                       <Button 
                         type='text'
@@ -310,7 +313,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail chết</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', width: '23px', height: '23px', color: COLOR_GENERAL.primary, borderRadius: '5px', backgroundColor: '#00800015', padding: '2px 5px' }} />Mail chết</span>
                     <Tooltip title={accountStatus?.list_dead ? "Danh sách mail": "Không có mail"}>
                       <Button 
                         type='text'
@@ -344,7 +347,7 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', color: COLOR_GENERAL.primary }} />Mail sống</span>
+                    <span style={{ display: 'flex', alignItems: 'center' }}><SiGmail style={{ marginRight: '7px', width: '23px', height: '23px', color: COLOR_GENERAL.primary, borderRadius: '5px', backgroundColor: '#00800015', padding: '2px 5px' }} />Mail sống</span>
                     <Tooltip title="Chi tiết">
                       <Button
                         type='text'
