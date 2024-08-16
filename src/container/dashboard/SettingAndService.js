@@ -22,7 +22,7 @@ import AddGoogleKey from './component/AddGoogleKey';
 import DetailGoogleKey from './component/DetailGoogleKey';
 import EditGoogleKey from './component/EditGoogleKey';
 import { GalleryNav, TopToolBox } from './style';
-import ConfirmRequestModal from "../comments/components/ConfirmRequestModal";
+import ConfirmRequestModal from "../buff-comments/components/ConfirmRequestModal";
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { numberWithCommas } from '../../utility/utility';

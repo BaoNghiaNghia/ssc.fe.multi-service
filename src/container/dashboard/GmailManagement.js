@@ -24,7 +24,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import gmailActions from '../../redux/gmailManage/actions';
 import { getPathLocalFromString, numberWithCommas } from '../../utility/utility';
 import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE } from '../../variables';
-import ConfirmRequestModal from '../comments/components/ConfirmRequestModal';
+import ConfirmRequestModal from '../buff-comments/components/ConfirmRequestModal';
 
 
 const columns = [
