@@ -6,7 +6,7 @@ import {
   fetchListOrderSubscribeAPI,
   fetchOrderHistoryAPI,
   fetchServicePackageListAPI,
-} from '../../config/apiFactory/BuffSubscribe/index';
+} from '../../config/api/BuffSubscribe/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 function* fetchAdminSettingFunc(params) {

@@ -6,7 +6,7 @@ import {
   loginUserApi,
   fetchProfileDetail,
   registerUserApi
-} from '../../config/apiFactory/Auth/index';
+} from '../../config/api/Auth/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 function* registerReferralSagaFunc(params) {

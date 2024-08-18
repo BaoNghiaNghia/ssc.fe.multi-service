@@ -7,7 +7,7 @@ import {
     getListProxyInDomainAPI,
     listGeneralDomainAPI,
     patchProxyAPI
-} from '../../config/apiFactory/Proxy/index';
+} from '../../config/api/Proxy/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 

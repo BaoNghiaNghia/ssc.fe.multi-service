@@ -17,7 +17,7 @@ import {
     activeWarrantyOrderAPI,
     fetchListWarrantyOrderAPI,
     refundWarrantyOrderAPI,
-} from '../../config/apiFactory/BuffLike/index';
+} from '../../config/api/BuffLike/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE } from '../../variables';
 
 

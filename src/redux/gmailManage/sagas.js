@@ -13,7 +13,7 @@ import {
   detailAccountGmailLikeAPI,
   deleteAccountGmailLikeAPI,
   patchAccountGmailLikeAPI,
-} from '../../config/apiFactory/Gmail/index';
+} from '../../config/api/Gmail/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
 

@@ -5,13 +5,11 @@ import { IoFileTray } from "react-icons/io5";
 import Heading from '../../../components/heading/heading';
 import { Focard, RatioCard } from '../style';
 import { Cards } from '../../../components/cards/frame/cards-frame';
-import { ChartjsAreaChart } from '../../../components/charts/chartjs';
-import { chartLinearGradient } from '../../../components/utilities/utilities';
 import { numberWithCommas } from '../../../utility/utility';
 import { SERVICE_TYPE } from '../../../variables';
 
 function CardGroup() {
-  const { reportData, typeService, statisticComment, isLoading, commentByDay, filterRange } = useSelector((state) => {
+  const { typeService, statisticComment, commentByDay } = useSelector((state) => {
     return {
       isLoading: state?.reports?.chartLoading,
       reportData: state?.reports?.usuallyReportData?.report,
@@ -42,27 +40,6 @@ function CardGroup() {
                 <Heading as="h1" color="#136400"><strong>{ numberWithCommas(todayRun || 0) }</strong></Heading>
                 {/* <span style={{ fontSize: '0.7em', color: 'white', padding: 0, margin: 0 }}>{filterRange?.from} - {filterRange?.to}</span> */}
               </div>
-              <ChartjsAreaChart
-                id="netProfit"
-                labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'july', 'Aug', 'Sep', 'Oct']}
-                datasets={[
-                  {
-                    data: [30, 10, 20, 25, 20, 30, 15, 25, 15, 10],
-                    borderColor: '#5F63F2',
-                    borderWidth: 3,
-                    fill: true,
-                    pointHoverBackgroundColor: '#5F63F2',
-                    pointHoverBorderWidth: 0,
-                    pointHoverBorderColor: 'transparent',
-                    backgroundColor: () =>
-                      chartLinearGradient(document.getElementById('netProfit'), 80, {
-                        start: '#5F63F212',
-                        end: '#5F63F202',
-                      }),
-                  },
-                ]}
-                height={80}
-              />
             </Cards>
           </div>
         </Focard>
@@ -81,34 +58,7 @@ function CardGroup() {
             >
               <div className="focard-details growth-upward">
                 <Heading as="h1">{ getValueByKey(statisticComment, '1') || 0 }</Heading>
-                {/* <p className="focard-status">
-                  <span className="focard-status__percentage">
-                    <FeatherIcon icon="arrow-up" /> 25%
-                  </span>
-                  <span>Since last month</span>
-                </p> */}
               </div>
-              <ChartjsAreaChart
-                id="grossProfit"
-                labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'july', 'Aug', 'Sep', 'Oct']}
-                datasets={[
-                  {
-                    data: [30, 10, 20, 25, 20, 30, 15, 25, 15, 10],
-                    borderColor: '#20C997',
-                    borderWidth: 3,
-                    fill: true,
-                    pointHoverBackgroundColor: '#20c997',
-                    pointHoverBorderWidth: 0,
-                    pointHoverBorderColor: 'transparent',
-                    backgroundColor: () =>
-                      chartLinearGradient(document.getElementById('grossProfit'), 80, {
-                        start: '#20C99712',
-                        end: '#20C99702',
-                      }),
-                  },
-                ]}
-                height={80}
-              />
             </Cards>
           </div>
         </Focard>

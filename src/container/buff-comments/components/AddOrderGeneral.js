@@ -21,7 +21,7 @@ import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
-import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI } from '../../../config/apiFactory/Reports';
+import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI } from '../../../config/api/Reports';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',

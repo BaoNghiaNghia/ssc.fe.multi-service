@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
   fetchBlackListChannelAPI
-} from '../../config/apiFactory/BlackList/index';
+} from '../../config/api/BlackList/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 function* fetchBlackListChannelFunc() {

@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import actions from "./actions";
 import {
   fetchComputerDataListAPI,
-} from '../../config/apiFactory/Reports/index';
+} from '../../config/api/Reports/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
 function* fetchComputerDataListFunc() {

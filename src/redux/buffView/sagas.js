@@ -17,7 +17,7 @@ import {
     activeWarrantyCommentOrderAPI,
     fetchListWarrantyOrderAPI,
     refundWarrantyOrderAPI,
-} from '../../config/apiFactory/BuffComment/index';
+} from '../../config/api/BuffComment/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE } from '../../variables';
 
 

@@ -10,7 +10,7 @@ import {
   createTopupAdminMemberAPI,
   getListCreditHistoryMemberAPI,
   generateApiKeyMemberAPI
-} from '../../config/apiFactory/Member/index';
+} from '../../config/api/Member/index';
 
 import { MESSSAGE_STATUS_CODE, MEMBER_TABLE_TYPE } from '../../variables';
 

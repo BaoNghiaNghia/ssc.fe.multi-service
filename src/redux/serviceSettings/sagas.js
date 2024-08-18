@@ -16,7 +16,7 @@ import {
   detailGoogleKeyAPI,
   fetchListAllGoogleKeyAPI,
   updateGoogleKeyAPI
-} from '../../config/apiFactory/ServiceSetting/index';
+} from '../../config/api/ServiceSetting/index';
 
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE, SERVICE_SETTING_TYPE } from '../../variables';
 

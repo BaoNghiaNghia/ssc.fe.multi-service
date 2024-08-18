@@ -41,7 +41,7 @@ import {
   validateYoutubeLinkCommentVideoAPI,
   validateYoutubeLinkLikeVideoAPI,
   validateYoutubeLinkSubscribeVideoAPI,
-} from '../../config/apiFactory/Reports/index';
+} from '../../config/api/Reports/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE, SERVICE_TYPE } from '../../variables';
 
 // COMMENT
