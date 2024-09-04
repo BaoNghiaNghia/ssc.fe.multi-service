@@ -67,6 +67,8 @@ const columns = [
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
+  const dataSource = [];
+  
   const { listOrderComment, userList, isLoading, filterRange, listWarrantyOrder } = useSelector(state => {
     return {
       isLoading: state?.buffComment?.loading,
@@ -103,14 +105,16 @@ function PendingBuffComment() {
     }));
   }, [dispatch, currentPage, limitPage]);
 
-  // useEffect(() => {
-  //   dispatch(actions.fetchWarrantyOrderBegin({
-  //     page: currentPage,
-  //     limit: limitPage,
-  //     start_date: `${filterRange?.from} 00:00:00`,
-  //     end_date: `${filterRange?.to} 23:59:59`,
-  //   }));
-  // }, [dispatch, currentPage, limitPage]);
+  useEffect(() => {
+    if (dataSource?.length > 0) { 
+      dispatch(actions.fetchWarrantyCommentOrderBegin({
+        page: currentPage,
+        limit: limitPage,
+        start_date: `${filterRange?.from} 00:00:00`,
+        end_date: `${filterRange?.to} 23:59:59`,
+      }));
+    }
+  }, [dispatch, currentPage, limitPage]);
 
   useEffect(() => {
     dispatch(userActions.fetchUserListBegin());
@@ -138,7 +142,6 @@ function PendingBuffComment() {
     }
   };
 
-  const dataSource = [];
   if (listWarrantyOrder?.items?.length) {
     listWarrantyOrder?.items?.map((value, key) => {
       const {

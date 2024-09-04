@@ -22,8 +22,8 @@ function BatchUpdateComputerComment({ setState, computerState }) {
             isLoading: state?.buffComment?.loading,
             detailComputerComment: state?.buffComment?.detailComputerComment
         };
-    });
 
+    });
     const handleOk = () => {
         try {
             formDetailComputerCmt.validateFields()
