@@ -13,7 +13,7 @@ import { isEmptyObject } from '../../../utility/utility';
 
 const { Option } = Select;
 
-function BatchUpdateOrderComment({ setState, orderState }) {
+function BatchUpdateOrderView({ setState, orderState }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
@@ -160,9 +160,9 @@ function BatchUpdateOrderComment({ setState, orderState }) {
   );
 }
 
-BatchUpdateOrderComment.propTypes = {
+BatchUpdateOrderView.propTypes = {
   setState: PropTypes.func,
   orderState: PropTypes.object
 };
 
-export default BatchUpdateOrderComment;
+export default BatchUpdateOrderView;

@@ -149,6 +149,7 @@ import {
     patchAccountGmailCommentWatcherSaga,
     patchAccountGmailLikeWatcherSaga
 } from './gmailManage/sagas';
+import { activeWarrantyOrderViewWatcherSaga, createOrderViewWatcherSaga, deleteComputerViewWatcherSaga, detailComputerViewWatcherSaga, detailOrderViewWatcherSaga, fetchListOrderViewWatcherSaga, fetchWarrantyViewOrderWatcherSaga, listComputerRunViewWatcherSaga, updateManyComputerViewWatcherSaga, updateManyOrderViewWatcherSaga, updateOneComputerViewWatcherSaga, updateOrderViewWatcherSaga, viewInOrderViewWatcherSaga } from './buffView/sagas';
 
 export default function* rootSaga() {
     return yield all([
@@ -277,5 +278,21 @@ export default function* rootSaga() {
 
         fetchListSettingsLikeWatcherSaga(),
         updateSettingLikeWatcherSaga(),
+
+        updateManyComputerViewWatcherSaga(),
+        updateOneComputerViewWatcherSaga(),
+        updateManyOrderViewWatcherSaga(),
+        updateOrderViewWatcherSaga(),
+        listComputerRunViewWatcherSaga(),
+        createOrderViewWatcherSaga(),
+        fetchListOrderViewWatcherSaga(),
+        detailOrderViewWatcherSaga(),
+        detailComputerViewWatcherSaga(),
+        deleteComputerViewWatcherSaga(),
+        viewInOrderViewWatcherSaga(),
+        fetchWarrantyViewOrderWatcherSaga(),
+        activeWarrantyOrderViewWatcherSaga(),
+        refundhWarrantyOrderWatcherSaga(),
+        setRangeDateWarrantyFilterWatcherSaga()
     ]);
 }

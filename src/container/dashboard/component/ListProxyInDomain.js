@@ -220,7 +220,7 @@ function ListProxyInDomain({ currentState, setState }) {
                   responsive: true,
                   showTotal(total, range) {
                       return <>
-                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
+                          <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
                       </>
                   },
                   totalBoundaryShowSizeChanger: 100,

@@ -62,7 +62,7 @@ const badgeRedStyle = {
   marginRight: '5px'
 };
 
-function FilterOrderComment({ orderState, setState }) {
+function FilterOrderView({ orderState, setState }) {
   const dispatch = useDispatch();
   const [formCreateService] = Form.useForm();
 
@@ -313,9 +313,9 @@ function FilterOrderComment({ orderState, setState }) {
   );
 }
 
-FilterOrderComment.propTypes = {
+FilterOrderView.propTypes = {
   orderState: PropTypes.object,
   setState: PropTypes.func
 };
 
-export default FilterOrderComment;
+export default FilterOrderView;

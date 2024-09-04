@@ -287,7 +287,7 @@ function CreditHistoryMember({ historyState, setState }) {
             responsive: true,
             showTotal(total, range) {
                 return <>
-                    <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> giao dịch</p>
+                    <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> giao dịch</p>
                 </>
             },
             totalBoundaryShowSizeChanger: 100,

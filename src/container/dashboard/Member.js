@@ -746,7 +746,7 @@ function Member() {
                         position: ['bottomCenter'],
                         responsive: true,
                         showTotal(total, range) {
-                            return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> người dùng</p>
+                            return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> người dùng</p>
                         },
                         totalBoundaryShowSizeChanger: 100,
                         size: "small"
@@ -777,7 +777,7 @@ function Member() {
                         position: ['bottomCenter'],
                         responsive: true,
                         showTotal(total, range) {
-                            return <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> topup</p>
+                            return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> topup</p>
                         },
                         totalBoundaryShowSizeChanger: 100,
                         size: "small"

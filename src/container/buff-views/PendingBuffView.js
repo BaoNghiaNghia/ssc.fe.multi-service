@@ -19,18 +19,18 @@ import moment from 'moment';
 
 import { TopToolBox } from './Style';
 import DetailOrder from './components/DetailOrder';
-import ListCommentOfOrder from './components/ListCommentOfOrder';
-import CancelAndRefundOrderComment from './components/CancelAndRefundOrderComment';
-import UpdateOrderComment from './components/UpdateOrderComment';
-import InsuranceOrderComment from './components/InsuranceOrderComment';
-import FilterOrderComment from './components/FilterOrderComment';
-import BatchUpdateOrderComment from './components/BatchUpdateOrderComment';
+import ListViewOfOrder from './components/ListViewOfOrder';
+import CancelAndRefundOrderView from './components/CancelAndRefundOrderView';
+import UpdateOrderView from './components/UpdateOrderView';
+import InsuranceOrderView from './components/InsuranceOrderView';
+import FilterOrderView from './components/FilterOrderView';
+import BatchUpdateOrderView from './components/BatchUpdateOrderView';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import actions from '../../redux/buffComment/actions';
+import actions from '../../redux/buffView/actions';
 import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
@@ -38,7 +38,7 @@ import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURR
 import { convertSeconds, numberWithCommas, performanceColorBack, performanceStatementTags } from '../../utility/utility';
 
 
-const columnTableOrderComments = [
+const columnTableOrderViews = [
   {
     title: 'Người dùng',
     dataIndex: 'user_id',
@@ -116,10 +116,10 @@ const columnTableOrderComments = [
 
 function PendingBuffView() {
   const dispatch = useDispatch();
-  const { listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
+  const { listOrderView, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
     return {
-      isLoading: state?.buffComment?.loading,
-      listOrderComment: state?.buffComment?.listOrderComment,
+      isLoading: state?.buffView?.loading,
+      listOrderView: state?.buffView?.listOrderView,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
       userInfo: state?.auth?.userInfo,
@@ -129,24 +129,24 @@ function PendingBuffView() {
 
   const [state, setState] = useState({
     isDetailOrderModal: false,
-    isListCommentModal: false,
-    isCreateCommentOrderModal: false,
-    isUpdateCommentOrderModal: false,
-    isCancelRefundCommentOrderModal: false,
-    isInsuranceCommentOrderModal: false,
-    isFilterCommentOrderModal: false,
-    isBatchUpdateCommentOrderModal: false,
+    isListViewModal: false,
+    isCreateViewOrderModal: false,
+    isUpdateViewOrderModal: false,
+    isCancelRefundViewOrderModal: false,
+    isInsuranceViewOrderModal: false,
+    isFilterViewOrderModal: false,
+    isBatchUpdateViewOrderModal: false,
     statusNumber: 1, // OrderStatusProcessing
     notData: {},
     rowData: {},
-    item: listOrderComment,
+    item: listOrderView,
     selectedRowKeys: [],
   });
 
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { isListCommentModal, isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
+  const { isListViewModal, isCancelRefundViewOrderModal, selectedRowKeys, notData } = state;
 
   useEffect(() => {
     let initParams = {
@@ -158,7 +158,7 @@ function PendingBuffView() {
       initParams = { ...initParams, status: state.statusNumber };
     }
   
-    dispatch(actions.fetchListOrderCommentBegin(initParams));
+    dispatch(actions.fetchListOrderViewBegin(initParams));
   }, [dispatch, currentPage, limitPage]);
 
   useEffect(() => {
@@ -168,23 +168,21 @@ function PendingBuffView() {
 
   const handleSearch = (searchText) => {
     if (!searchText) {
-      dispatch(actions.fetchListOrderCommentBegin({}));
+      dispatch(actions.fetchListOrderViewBegin({}));
     }
 
     const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
 
     if (arraySearchValidate && arraySearchValidate.length > 0) {
-      // setTimeout(() => {
-      // }, 500);
       const pattern = /^\d+\.?\d*$/;
       if (pattern.test(arraySearchValidate.join(""))) {
-        dispatch(actions.fetchListOrderCommentBegin({
+        dispatch(actions.fetchListOrderViewBegin({
           order_ids: arraySearchValidate.join(","),
           page: currentPage,
           limit: limitPage,
         }));
       } else {
-        dispatch(actions.fetchListOrderCommentBegin({
+        dispatch(actions.fetchListOrderViewBegin({
           video_ids: arraySearchValidate.join(","),
           page: currentPage,
           limit: limitPage,
@@ -193,11 +191,9 @@ function PendingBuffView() {
     }
   };
 
-  
-
   const dataSource = [];
-  if (listOrderComment?.items?.length) {
-    listOrderComment?.items?.map((value, key) => {
+  if (listOrderView?.items?.length) {
+    listOrderView?.items?.map((value, key) => {
       const { status, 
         order_id, 
         amount,
@@ -217,7 +213,6 @@ function PendingBuffView() {
         video_duration,
         current_count,
         start_count,
-        geo,
         created_at,
         last_google_at,
         last_call_at
@@ -335,7 +330,6 @@ function PendingBuffView() {
             <p style={{ margin: 0, padding: 0, fontSize: '0.9em', display: 'flex', alignItems: 'center' }}>
               <span style={{ color: 'gray' }}>Hiện tại: &nbsp;</span> <strong>{numberWithCommas(current_count || 0)}</strong>
             </p>
-            {/* <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Còn thiếu: <strong>{numberWithCommas((quantity - (current_count - start_count)))}</strong></p> */}
           </>
         ),
         created_at: (
@@ -382,7 +376,7 @@ function PendingBuffView() {
               max_thread === 0 ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
-                <Tooltip title="Comment thiếu / Tổng comment đã đặt">
+                <Tooltip title="View thiếu / Tổng view đã đặt">
                   <span style={{ display: 'flex', alignItems: 'center' }}>
                     <span>{numberWithCommas(quantity - done_count || 0)}/</span><span style={{ fontWeight: 800 }}>{numberWithCommas(quantity || 0)}</span>
                   </span>
@@ -506,10 +500,10 @@ function PendingBuffView() {
                 <Tooltip title="Chỉnh sửa">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderCommentBegin({
+                      dispatch(actions.detailOrderViewBegin({
                         ...value,
                       }));
-                      setState({ ...state, isUpdateCommentOrderModal: true });
+                      setState({ ...state, isUpdateViewOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="edit" size={16} />
@@ -522,12 +516,12 @@ function PendingBuffView() {
                 <Tooltip title="Bảo hành">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderCommentBegin({
+                      dispatch(actions.detailOrderViewBegin({
                         ...value,
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isInsuranceCommentOrderModal: true });
+                      setState({ ...state, isInsuranceViewOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="shield" size={16} />
@@ -540,12 +534,12 @@ function PendingBuffView() {
                 <Tooltip title="Hủy & Hoàn tiền">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderCommentBegin({
+                      dispatch(actions.detailOrderViewBegin({
                         ...value,
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isCancelRefundCommentOrderModal: true });
+                      setState({ ...state, isCancelRefundViewOrderModal: true });
                     }}
                   >
                     <TbCreditCardRefund style={{ fontSize: '1em' }} />
@@ -556,7 +550,7 @@ function PendingBuffView() {
             <Tooltip title="Chi tiết">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
-                  dispatch(actions.detailOrderCommentBegin({
+                  dispatch(actions.detailOrderViewBegin({
                     ...value,
                   }));
                   setState({ 
@@ -568,9 +562,9 @@ function PendingBuffView() {
                 <FeatherIcon icon="eye" size={16} />
               </Button>
             </Tooltip>
-            <Tooltip title="Danh sách comment">
+            <Tooltip title="Danh sách view">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.commentOrderCommentBegin({
+                dispatch(actions.viewOrderViewBegin({
                   id,
                   page: 1,
                   limit: DEFAULT_PERPAGE
@@ -578,7 +572,7 @@ function PendingBuffView() {
                 setState({
                   ...state,
                   rowData: value,
-                  isListCommentModal: true
+                  isListViewModal: true
                 });
               }}>
                 <FaRegCommentDots fontSize={15}/>
@@ -599,19 +593,19 @@ function PendingBuffView() {
     setCurrentPage(1);
 
     if (e.target.value !== "all") {
-      dispatch(actions.fetchListOrderCommentBegin({
+      dispatch(actions.fetchListOrderViewBegin({
         status: e.target.value,
         page: currentPage,
         limit: limitPage,
       }));
     } else {
-      dispatch(actions.fetchListOrderCommentBegin());
+      dispatch(actions.fetchListOrderViewBegin());
     }
   };
 
   const onSelectChange = (selectedRowKey) => {
     if (selectedRowKey?.length > 0) {
-      const matchedOrder = listOrderComment?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
+      const matchedOrder = listOrderView?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
       if (matchedOrder?.length > 0) {
         const matchState = ORDER_YOUTUBE_STATUS?.find(item => item?.value === matchedOrder[0]?.status)?.name;
         const checkUpdateOrderStatus = [
@@ -647,34 +641,34 @@ function PendingBuffView() {
         state={state}
         setState={setState}
       />
-      <ListCommentOfOrder
+      <ListViewOfOrder
         orderState={state}
-        isOpen={isListCommentModal}
+        isOpen={isListViewModal}
         setState={setState}
       />
-      <BatchUpdateOrderComment
-        orderState={state}
-        setState={setState}
-      />
-      <UpdateOrderComment
+      <BatchUpdateOrderView
         orderState={state}
         setState={setState}
       />
-      <CancelAndRefundOrderComment
-        isOpen={isCancelRefundCommentOrderModal}
+      <UpdateOrderView
+        orderState={state}
         setState={setState}
       />
-      <InsuranceOrderComment
+      <CancelAndRefundOrderView
+        isOpen={isCancelRefundViewOrderModal}
+        setState={setState}
+      />
+      <InsuranceOrderView
         state={state}
         setState={setState}
       />
-      <FilterOrderComment
+      <FilterOrderView
         orderState={state}
         setState={setState}
       />
       <PageHeader
         ghost
-        title="Danh sách đơn Comment"
+        title="Danh sách đơn View"
         buttons={[
           <TopToolBox>
             <div className="table-toolbox-menu">
@@ -708,14 +702,14 @@ function PendingBuffView() {
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ marginLeft: '5px' }}>
-                      Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderComment?.meta?.total || 0)}</span> đơn {currentStatusLabel}
+                      Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderView?.meta?.total || 0)}</span> đơn {currentStatusLabel}
                     </span>
                     <div className="table-toolbox-actions">
                       <Button
                         size="small"
                         type="default"
                         onClick={() => {
-                          setState({...state, isFilterCommentOrderModal: true });
+                          setState({...state, isFilterViewOrderModal: true });
                         }}
                       >
                         <LuListFilter icon="plus" size={15} color='black' /> Bộ lọc
@@ -728,7 +722,7 @@ function PendingBuffView() {
                             onClick={() => {
                               setState({
                                 ...state,
-                                isBatchUpdateCommentOrderModal: true
+                                isBatchUpdateViewOrderModal: true
                               });
                             }}
                           >
@@ -739,7 +733,7 @@ function PendingBuffView() {
                             size="small"
                             type="primary"
                             onClick={() => {
-                              setState({...state, isCreateCommentOrderModal: true });
+                              setState({...state, isCreateViewOrderModal: true });
                               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                             }}
                           >
@@ -764,7 +758,7 @@ function PendingBuffView() {
                   rowSelection={rowSelection}
                   size='small'
                   dataSource={dataSource}
-                  columns={columnTableOrderComments}
+                  columns={columnTableOrderViews}
                   locale={{ emptyText: (
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
@@ -783,7 +777,7 @@ function PendingBuffView() {
                             type="dashed"
                             style={{ borderRadius: '20px', backgroundColor: '#dae0ec5c' }}
                             onClick={() => {
-                              setState({...state, isCreateCommentOrderModal: true });
+                              setState({...state, isCreateViewOrderModal: true });
                               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                             }}
                           >
@@ -795,10 +789,10 @@ function PendingBuffView() {
                     </div>
                   ) }}
                   pagination={{
-                    current: listOrderComment?.meta?.current_page,
-                    defaultPageSize: listOrderComment?.meta?.count,
-                    pageSize: listOrderComment?.meta?.per_page,
-                    total: listOrderComment?.meta?.total,
+                    current: listOrderView?.meta?.current_page,
+                    defaultPageSize: listOrderView?.meta?.count,
+                    pageSize: listOrderView?.meta?.per_page,
+                    total: listOrderView?.meta?.total,
                     showSizeChanger: true,
                     pageSizeOptions: DEFAULT_PAGESIZE,
                     onChange(page, pageSize) {
@@ -809,7 +803,7 @@ function PendingBuffView() {
                     responsive: true,
                     showTotal(total, range) {
                       return <>
-                        <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> đơn {currentStatusLabel}</p>
+                        <p className='mx-4 pt-2'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> đơn {currentStatusLabel}</p>
                       </>;
                     },
                     totalBoundaryShowSizeChanger: 100,

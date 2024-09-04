@@ -2,56 +2,53 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
-    commentOrderCommentAPI,
-    fetchListOrderCommentAPI,
-    createOrderCommentAPI,
-    getOneOrderCommentAPI,
-    updateOneOrderCommentAPI,
-    listComputerRunCommentAPI,
-    updateManyOrderCommentAPI,
-    updateManyComputerCommentAPI,
-    detailComputerRunCommentAPI,
-    deleteComputerRunCommentAPI,
-    updateOneComputerRunCommentAPI,
+    viewOrderViewAPI,
+    fetchListOrderViewAPI,
+    createOrderViewAPI,
+    getOneOrderViewAPI,
+    updateOneOrderViewAPI,
+    listComputerRunViewAPI,
+    updateManyOrderViewAPI,
+    updateManyComputerViewAPI,
+    detailComputerRunViewAPI,
+    deleteComputerRunViewAPI,
+    updateOneComputerRunViewAPI,
 
-    activeWarrantyCommentOrderAPI,
+    activeWarrantyViewOrderAPI,
     fetchListWarrantyOrderAPI,
     refundWarrantyOrderAPI,
-} from '../../config/api/BuffComment/index';
+    fetchListDevicesRunViewAPI
+} from '../../config/api/BuffView/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE } from '../../variables';
 
 
-function* listComputerRunCommentFunc(params) {
+function* listComputerRunViewFunc(params) {
   try {
-    const response = yield call(listComputerRunCommentAPI, params?.payload);
+    const response = yield call(listComputerRunViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.listComputerRunCommentSuccess(response?.data?.data)
-      );
+      yield put(actions.listComputerRunViewSuccess(response?.data?.data));
     }
   } catch (error) {
     const errorMessage = error;
 
-    yield put(
-      actions.listComputerRunCommentErr({ error: errorMessage || 'Update order comment failed' })
-    );
+    yield put(actions.listComputerRunViewErr({ error: errorMessage || 'Update order view failed' }));
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Cập nhật đơn comment thất bại');
+      toast.error('Cập nhật đơn view thất bại');
     }
   } finally { /* empty */ }
 }
 
-function* fetchWarrantyCommentOrderFunc(params) {
+function* fetchWarrantyViewOrderFunc(params) {
   try {
     const response = yield call(fetchListWarrantyOrderAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.fetchWarrantyCommentOrderSuccess(response?.data?.data)
+        actions.fetchWarrantyViewOrderSuccess(response?.data?.data)
       );
 
       if (response?.data?.data?.items === null) {
@@ -63,7 +60,7 @@ function* fetchWarrantyCommentOrderFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.fetchWarrantyCommentOrderErr({ error: errorMessage || 'Fetch Warranty Order failed' })
+      actions.fetchWarrantyViewOrderErr({ error: errorMessage || 'Fetch Warranty Order failed' })
     );
 
     if (errorMessage?.response?.data?.message) {
@@ -74,13 +71,13 @@ function* fetchWarrantyCommentOrderFunc(params) {
   } finally { /* empty */ }
 }
 
-function* activeWarrantyOrderCommentFunc(params) {
+function* activeWarrantyOrderViewFunc(params) {
   try {
-    const response = yield call(activeWarrantyCommentOrderAPI, params?.payload);
+    const response = yield call(activeWarrantyViewOrderAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.activeWarrantyOrderCommentSuccess(response?.data?.data)
+        actions.activeWarrantyOrderViewSuccess(response?.data?.data)
       );
     }
 
@@ -88,7 +85,7 @@ function* activeWarrantyOrderCommentFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.activeWarrantyOrderCommentErr({ error: errorMessage || 'Activate Warranty Order failed' })
+      actions.activeWarrantyOrderViewErr({ error: errorMessage || 'Activate Warranty Order failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -127,27 +124,27 @@ function* refundWarrantyOrderFunc(params) {
   } finally { /* empty */ }
 }
 
-function* updateOrderCommentFunc(params) {
+function* updateOrderViewFunc(params) {
   try {
-    const response = yield call(updateOneOrderCommentAPI, params?.payload);
+    const response = yield call(updateOneOrderViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.updateOrderCommentAdminSuccess(response?.data?.data)
+        actions.updateOrderViewAdminSuccess(response?.data?.data)
       );
       yield put(
-        actions.fetchListOrderCommentBegin({
+        actions.fetchListOrderViewBegin({
           page: 1,
           limit: DEFAULT_PERPAGE
         })
       );
 
-      toast.success('Cập nhật order comment thành công');
+      toast.success('Cập nhật order view thành công');
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.updateOrderCommentAdminErr({ error: errorMessage || 'Update order comment failed' })
+      actions.updateOrderViewAdminErr({ error: errorMessage || 'Update order view failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -160,28 +157,28 @@ function* updateOrderCommentFunc(params) {
   } finally { /* empty */ }
 }
 
-function* updateOneComputerCommentFunc(params) {
+function* updateOneComputerViewFunc(params) {
   try {
-    const response = yield call(updateOneComputerRunCommentAPI, params?.payload);
+    const response = yield call(updateOneComputerRunViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.updateOneComputerCommentAdminSuccess(response?.data?.data)
+        actions.updateOneComputerViewAdminSuccess(response?.data?.data)
       );
 
       yield put(
-        actions.listComputerRunCommentBegin({
+        actions.listComputerRunViewBegin({
           page: 1,
           limit: DEFAULT_PERPAGE
         })
       );
 
-      toast.success('Cập nhật server comment thành công');
+      toast.success('Cập nhật server view thành công');
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.updateOneComputerCommentAdminErr({ error: errorMessage || 'Update server comment failed' })
+      actions.updateOneComputerViewAdminErr({ error: errorMessage || 'Update server view failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -189,32 +186,32 @@ function* updateOneComputerCommentFunc(params) {
     } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Cập nhật máy chủ comment không thành công');
+      toast.error('Cập nhật máy chủ view không thành công');
     }
   } finally { /* empty */ }
 }
 
-function* updateManyComputerCommentFunc(params) {
+function* updateManyComputerViewFunc(params) {
   try {
-    const response = yield call(updateManyComputerCommentAPI, params?.payload);
+    const response = yield call(updateManyComputerViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.updateManyComputerCommentAdminSuccess(response?.data?.data)
+        actions.updateManyComputerViewAdminSuccess(response?.data?.data)
       );
 
       yield put(
-        actions.listComputerRunCommentBegin({
+        actions.listComputerRunViewBegin({
           page: 1,
           limit: DEFAULT_PERPAGE
         })
       );
-      toast.success('Cập nhật nhiều computer comment thành công');
+      toast.success('Cập nhật nhiều computer view thành công');
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.updateManyComputerCommentAdminErr({ error: errorMessage || 'Update many computer comment failed' })
+      actions.updateManyComputerViewAdminErr({ error: errorMessage || 'Update many computer view failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -227,60 +224,60 @@ function* updateManyComputerCommentFunc(params) {
   } finally { /* empty */ }
 }
 
-function* updateManyOrderCommentFunc(params) {
+function* updateManyOrderViewFunc(params) {
   try {
-    const response = yield call(updateManyOrderCommentAPI, params?.payload);
+    const response = yield call(updateManyOrderViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.updateManyOrderCommentAdminSuccess(response?.data?.data)
+        actions.updateManyOrderViewAdminSuccess(response?.data?.data)
       );
       yield put(
-        actions.fetchListOrderCommentBegin({
+        actions.fetchListOrderViewBegin({
           page: 1,
           limit: DEFAULT_PERPAGE
         })
       );
 
-      toast.success('Cập nhật nhiều order comment thành công');
+      toast.success('Cập nhật nhiều order view thành công');
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.updateManyOrderCommentAdminErr({ error: errorMessage || 'Update many order comment failed' })
+      actions.updateManyOrderViewAdminErr({ error: errorMessage || 'Update many order view failed' })
     );
     if (errorMessage?.response?.data?.data?.error) {
       toast.error(errorMessage?.response?.data?.data?.error);
     } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Cập nhật đơn hàng comment không thành công');
+      toast.error('Cập nhật đơn hàng view không thành công');
     }
   } finally { /* empty */ }
 }
 
-function* createOrderCommentFunc(params) {
+function* createOrderViewFunc(params) {
   try {
-    const response = yield call(createOrderCommentAPI, params?.payload);
+    const response = yield call(createOrderViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.createOrderCommentAdminSuccess(response?.data?.data)
+        actions.createOrderViewAdminSuccess(response?.data?.data)
       );
       yield put(
-        actions.fetchListOrderCommentBegin({
+        actions.fetchListOrderViewBegin({
           page: 1,
           limit: DEFAULT_PERPAGE
         })
       );
 
-      toast.success('Tạo order comment thành công');
+      toast.success('Tạo order view thành công');
     }
   } catch (error) {
     const errorMessage = error;
 
     yield put(
-      actions.createOrderCommentAdminErr({ error: errorMessage || 'Create order comment failed' })
+      actions.createOrderViewAdminErr({ error: errorMessage || 'Create order view failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -288,24 +285,25 @@ function* createOrderCommentFunc(params) {
     } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Tạo đơn hàng comment không thành công');
+      toast.error('Tạo đơn hàng view không thành công');
     }
   } finally { /* empty */ }
 }
 
-function* fetchListOrderCommentFunc(params) {
+function* fetchListOrderViewFunc(params) {
   try {
-    const response = yield call(fetchListOrderCommentAPI, params?.payload);
-    
+    const response = yield call(fetchListOrderViewAPI, params?.payload);
+    console.log('----- response ------', response);
+
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.fetchListOrderCommentSuccess(response?.data?.data)
+        actions.fetchListOrderViewSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.fetchListOrderCommentErr({ error: errorMessage || 'Fetch list order comment failed' })
+      actions.fetchListOrderViewErr({ error: errorMessage || 'Fetch list order view failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -313,83 +311,83 @@ function* fetchListOrderCommentFunc(params) {
     } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Tìm danh sách đơn comment không thành công');
+      toast.error('Tìm danh sách đơn view không thành công');
     }
   } finally { /* empty */ }
 }
 
-function* detailComputerCommentFunc(params) {
+function* detailComputerViewFunc(params) {
   try {
-    const response = yield call(detailComputerRunCommentAPI, params?.payload?.id);
+    const response = yield call(detailComputerRunViewAPI, params?.payload?.id);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.detailComputerRunCommentSuccess(response?.data?.data)
+        actions.detailComputerRunViewSuccess(response?.data?.data)
       );
     }
 
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.detailComputerRunCommentErr({ error: errorMessage || 'Detail server run comment failed' })
+      actions.detailComputerRunViewErr({ error: errorMessage || 'Detail server run view failed' })
     );
   } finally { /* empty */ }
 }
 
-function* deleteComputerCommentFunc(params) {
+function* deleteComputerViewFunc(params) {
   try {
-    const response = yield call(deleteComputerRunCommentAPI, params?.payload);
+    const response = yield call(deleteComputerRunViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.deleteComputerRunCommentSuccess(response?.data?.data)
+        actions.deleteComputerRunViewSuccess(response?.data?.data)
       );
 
-      toast.success("Xóa máy chạy comment thành công!");
+      toast.success("Xóa máy chạy view thành công!");
 
       yield put(
-        actions.listComputerRunCommentBegin(response?.data?.data)
+        actions.listComputerRunViewBegin(response?.data?.data)
       );
     }
 
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.deleteComputerRunCommentErr({ error: errorMessage || 'Delete server run comment failed' })
+      actions.deleteComputerRunViewErr({ error: errorMessage || 'Delete server run view failed' })
     );
   } finally { /* empty */ }
 }
 
-function* detailOrderCommentFunc(params) {
+function* detailOrderViewFunc(params) {
   try {
-    const response = yield call(getOneOrderCommentAPI, params?.payload?.id);
+    const response = yield call(getOneOrderViewAPI, params?.payload?.id);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.detailOrderCommentSuccess(response?.data?.data)
+        actions.detailOrderViewSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.detailOrderCommentErr({ error: errorMessage || 'Detail order comment failed' })
+      actions.detailOrderViewErr({ error: errorMessage || 'Detail order view failed' })
     );
   } finally { /* empty */ }
 }
 
-function* commentInOrderCommentFunc(params) {
+function* viewInOrderViewFunc(params) {
   try {
-    const response = yield call(commentOrderCommentAPI, params?.payload);
+    const response = yield call(viewOrderViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.commentOrderCommentSuccess(response?.data?.data)
+        actions.viewOrderViewSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.commentOrderCommentErr({ error: errorMessage || 'Detail order comment failed' })
+      actions.viewOrderViewErr({ error: errorMessage || 'Detail order view failed' })
     );
   } finally { /* empty */ }
 }
@@ -409,7 +407,7 @@ function* setRangeDateWarrantyFilterFunc(params) {
     }
 
     yield put(
-      actions.fetchWarrantyCommentOrderBegin(requestData)
+      actions.fetchWarrantyViewOrderBegin(requestData)
     );
 
   } catch (err) {
@@ -420,55 +418,55 @@ function* setRangeDateWarrantyFilterFunc(params) {
 }
 
 
-export function* updateManyComputerCommentWatcherSaga() {
-  yield takeLatest(actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN, updateManyComputerCommentFunc);
+export function* updateManyComputerViewWatcherSaga() {
+  yield takeLatest(actions.UPDATE_MANY_COMPUTER_VIEW_ADMIN_BEGIN, updateManyComputerViewFunc);
 }
 
-export function* updateOneComputerCommentWatcherSaga() {
-  yield takeLatest(actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN, updateOneComputerCommentFunc);
+export function* updateOneComputerViewWatcherSaga() {
+  yield takeLatest(actions.UPDATE_ONE_COMPUTER_VIEW_ADMIN_BEGIN, updateOneComputerViewFunc);
 }
 
-export function* updateManyOrderCommentWatcherSaga() {
-  yield takeLatest(actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN, updateManyOrderCommentFunc);
+export function* updateManyOrderViewWatcherSaga() {
+  yield takeLatest(actions.UPDATE_MANY_ORDER_VIEW_ADMIN_BEGIN, updateManyOrderViewFunc);
 }
 
-export function* updateOrderCommentWatcherSaga() {
-  yield takeLatest(actions.UPDATE_ORDER_COMMENT_ADMIN_BEGIN, updateOrderCommentFunc);
+export function* updateOrderViewWatcherSaga() {
+  yield takeLatest(actions.UPDATE_ORDER_VIEW_ADMIN_BEGIN, updateOrderViewFunc);
 }
-export function* listComputerRunCommentWatcherSaga() {
-  yield takeLatest(actions.LIST_COMPUTER_RUN_COMMENT_BEGIN, listComputerRunCommentFunc);
-}
-
-export function* createOrderCommentWatcherSaga() {
-  yield takeLatest(actions.CREATE_ORDER_COMMENT_ADMIN_BEGIN, createOrderCommentFunc);
+export function* listComputerRunViewWatcherSaga() {
+  yield takeLatest(actions.LIST_COMPUTER_RUN_VIEW_BEGIN, listComputerRunViewFunc);
 }
 
-export function* fetchListOrderCommentWatcherSaga() {
-  yield takeLatest(actions.FETCH_LIST_ORDER_COMMENT_BEGIN, fetchListOrderCommentFunc);
+export function* createOrderViewWatcherSaga() {
+  yield takeLatest(actions.CREATE_ORDER_VIEW_ADMIN_BEGIN, createOrderViewFunc);
 }
 
-export function* detailOrderCommentWatcherSaga() {
-  yield takeLatest(actions.DETAIL_ORDER_COMMENT_BEGIN, detailOrderCommentFunc);
+export function* fetchListOrderViewWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_ORDER_VIEW_BEGIN, fetchListOrderViewFunc);
 }
 
-export function* detailComputerCommentWatcherSaga() {
-  yield takeLatest(actions.DETAIL_COMPUTER_RUN_COMMENT_BEGIN, detailComputerCommentFunc);
+export function* detailOrderViewWatcherSaga() {
+  yield takeLatest(actions.DETAIL_ORDER_VIEW_BEGIN, detailOrderViewFunc);
 }
 
-export function* deleteComputerCommentWatcherSaga() {
-  yield takeLatest(actions.DELETE_COMPUTER_RUN_COMMENT_BEGIN, deleteComputerCommentFunc);
+export function* detailComputerViewWatcherSaga() {
+  yield takeLatest(actions.DETAIL_COMPUTER_RUN_VIEW_BEGIN, detailComputerViewFunc);
 }
 
-export function* commentInOrderCommentWatcherSaga() {
-  yield takeLatest(actions.COMMENT_IN_ORDER_COMMENT_BEGIN, commentInOrderCommentFunc);
+export function* deleteComputerViewWatcherSaga() {
+  yield takeLatest(actions.DELETE_COMPUTER_RUN_VIEW_BEGIN, deleteComputerViewFunc);
 }
 
-export function* fetchWarrantyCommentOrderWatcherSaga() {
-  yield takeLatest(actions.FETCH_WARRANTY_COMMENT_ORDER_BEGIN, fetchWarrantyCommentOrderFunc);
+export function* viewInOrderViewWatcherSaga() {
+  yield takeLatest(actions.VIEW_IN_ORDER_VIEW_BEGIN, viewInOrderViewFunc);
 }
 
-export function* activeWarrantyOrderCommentWatcherSaga() {
-  yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_COMMENT_BEGIN, activeWarrantyOrderCommentFunc);
+export function* fetchWarrantyViewOrderWatcherSaga() {
+  yield takeLatest(actions.FETCH_WARRANTY_VIEW_ORDER_BEGIN, fetchWarrantyViewOrderFunc);
+}
+
+export function* activeWarrantyOrderViewWatcherSaga() {
+  yield takeLatest(actions.ACTIVE_WARRANTY_ORDER_VIEW_BEGIN, activeWarrantyOrderViewFunc);
 }
 
 export function* refundhWarrantyOrderWatcherSaga() {

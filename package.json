@@ -87,10 +87,11 @@
   "scripts": {
     "start": "env-cmd -f .env.${VENDOR} craco start",
     "start:local": "VENDOR=local npm run start",
-    "start:pm2": "pm2 start npm --name 'YT Multiple Service V2' --node-args='--max-old-space-size=8192' -- run start:local",
-    "start:pm2_prod": "pm2 start npm --name 'YT Multiple Service V2'  --node-args='--max-old-space-size=8192' -- run start:production",
     "start:staging": "VENDOR=staging npm run start",
     "start:production": "VENDOR=production npm run start",
+    "start:pm2": "pm2 start npm --name 'YT Multiple Service V2' --node-args='--max-old-space-size=8192' -- run start:local",
+    "start:pm2_stage": "pm2 start npm --name 'YT Multiple Service V2' --node-args='--max-old-space-size=8192' -- run start:staging",
+    "start:pm2_prod": "pm2 start npm --name 'YT Multiple Service V2'  --node-args='--max-old-space-size=8192' -- run start:production",
     "build": "set \"GENERATE_SOURCEMAP=false\" && BUILD_PATH=${BUILD} env-cmd -f .env.${VENDOR} craco --max-old-space-size=8192 build",
     "build:local": "VENDOR=local BUILD='./build_yt_multiple_service_local' npm run build",
     "build:staging": "VENDOR=staging BUILD='./build_yt_multiple_service_staging' npm run build",

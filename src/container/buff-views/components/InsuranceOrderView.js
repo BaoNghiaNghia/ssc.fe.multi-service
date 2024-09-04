@@ -11,7 +11,7 @@ import commentActions from '../../../redux/buffComment/actions';
 
 const { Option } = Select;
 
-function InsuranceOrderComment({ setState, state }) {
+function InsuranceOrderView({ setState, state }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
@@ -42,7 +42,7 @@ function InsuranceOrderComment({ setState, state }) {
     try {
       formUpdateService.validateFields()
         .then((values) => {
-          dispatch(commentActions.InsuranceOrderCommentAdminBegin({
+          dispatch(commentActions.InsuranceOrderViewAdminBegin({
             id: detailOrderComment?.id,
             max_thread: values?.max_thread,
             note: values?.note,
@@ -110,9 +110,9 @@ function InsuranceOrderComment({ setState, state }) {
   );
 }
 
-InsuranceOrderComment.propTypes = {
+InsuranceOrderView.propTypes = {
   setState: PropTypes.func,
   state: PropTypes.object
 };
 
-export default InsuranceOrderComment;
+export default InsuranceOrderView;

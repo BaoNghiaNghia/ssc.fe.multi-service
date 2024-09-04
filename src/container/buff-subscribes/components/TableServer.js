@@ -220,7 +220,7 @@ function TableServer() {
                   responsive: true,
                   showTotal(total, range) {
                       return <>
-                          <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p>
+                          <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p>
                       </>
                   },
                   totalBoundaryShowSizeChanger: 100,

@@ -1,59 +1,59 @@
 const actions = {
-    FETCH_LIST_ORDER_COMMENT_BEGIN: 'FETCH_LIST_ORDER_COMMENT_BEGIN',
-    FETCH_LIST_ORDER_COMMENT_SUCCESS: 'FETCH_LIST_ORDER_COMMENT_SUCCESS',
-    FETCH_LIST_ORDER_COMMENT_ERR: 'FETCH_LIST_ORDER_COMMENT_ERR',
+    FETCH_LIST_ORDER_VIEW_BEGIN: 'FETCH_LIST_ORDER_VIEW_BEGIN',
+    FETCH_LIST_ORDER_VIEW_SUCCESS: 'FETCH_LIST_ORDER_VIEW_SUCCESS',
+    FETCH_LIST_ORDER_VIEW_ERR: 'FETCH_LIST_ORDER_VIEW_ERR',
 
-    DETAIL_ORDER_COMMENT_BEGIN: 'DETAIL_ORDER_COMMENT_BEGIN',
-    DETAIL_ORDER_COMMENT_SUCCESS: 'DETAIL_ORDER_COMMENT_SUCCESS',
-    DETAIL_ORDER_COMMENT_ERR: 'DETAIL_ORDER_COMMENT_ERR',
+    DETAIL_ORDER_VIEW_BEGIN: 'DETAIL_ORDER_VIEW_BEGIN',
+    DETAIL_ORDER_VIEW_SUCCESS: 'DETAIL_ORDER_VIEW_SUCCESS',
+    DETAIL_ORDER_VIEW_ERR: 'DETAIL_ORDER_VIEW_ERR',
 
-    COMMENT_IN_ORDER_COMMENT_BEGIN: 'COMMENT_IN_ORDER_COMMENT_BEGIN',
-    COMMENT_IN_ORDER_COMMENT_SUCCESS: 'COMMENT_IN_ORDER_COMMENT_SUCCESS',
-    COMMENT_IN_ORDER_COMMENT_ERR: 'COMMENT_IN_ORDER_COMMENT_ERR',
+    VIEW_IN_ORDER_VIEW_BEGIN: 'VIEW_IN_ORDER_VIEW_BEGIN',
+    VIEW_IN_ORDER_VIEW_SUCCESS: 'VIEW_IN_ORDER_VIEW_SUCCESS',
+    VIEW_IN_ORDER_VIEW_ERR: 'VIEW_IN_ORDER_VIEW_ERR',
 
-    CREATE_ORDER_COMMENT_ADMIN_BEGIN: 'CREATE_ORDER_COMMENT_ADMIN_BEGIN',
-    CREATE_ORDER_COMMENT_ADMIN_SUCCESS: 'CREATE_ORDER_COMMENT_ADMIN_SUCCESS',
-    CREATE_ORDER_COMMENT_ADMIN_ERR: 'CREATE_ORDER_COMMENT_ADMIN_ERR',
+    CREATE_ORDER_VIEW_ADMIN_BEGIN: 'CREATE_ORDER_VIEW_ADMIN_BEGIN',
+    CREATE_ORDER_VIEW_ADMIN_SUCCESS: 'CREATE_ORDER_VIEW_ADMIN_SUCCESS',
+    CREATE_ORDER_VIEW_ADMIN_ERR: 'CREATE_ORDER_VIEW_ADMIN_ERR',
 
-    DETAIL_ORDER_COMMENT_ADMIN_BEGIN: 'DETAIL_ORDER_COMMENT_ADMIN_BEGIN',
-    DETAIL_ORDER_COMMENT_ADMIN_SUCCESS: 'DETAIL_ORDER_COMMENT_ADMIN_SUCCESS',
-    DETAIL_ORDER_COMMENT_ADMIN_ERR: 'DETAIL_ORDER_COMMENT_ADMIN_ERR',
+    DETAIL_ORDER_VIEW_ADMIN_BEGIN: 'DETAIL_ORDER_VIEW_ADMIN_BEGIN',
+    DETAIL_ORDER_VIEW_ADMIN_SUCCESS: 'DETAIL_ORDER_VIEW_ADMIN_SUCCESS',
+    DETAIL_ORDER_VIEW_ADMIN_ERR: 'DETAIL_ORDER_VIEW_ADMIN_ERR',
 
-    UPDATE_ORDER_COMMENT_ADMIN_BEGIN: 'UPDATE_ORDER_COMMENT_ADMIN_BEGIN',
-    UPDATE_ORDER_COMMENT_ADMIN_SUCCESS: 'UPDATE_ORDER_COMMENT_ADMIN_SUCCESS',
-    UPDATE_ORDER_COMMENT_ADMIN_ERR: 'UPDATE_ORDER_COMMENT_ADMIN_ERR',
+    UPDATE_ORDER_VIEW_ADMIN_BEGIN: 'UPDATE_ORDER_VIEW_ADMIN_BEGIN',
+    UPDATE_ORDER_VIEW_ADMIN_SUCCESS: 'UPDATE_ORDER_VIEW_ADMIN_SUCCESS',
+    UPDATE_ORDER_VIEW_ADMIN_ERR: 'UPDATE_ORDER_VIEW_ADMIN_ERR',
 
-    UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN',
-    UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS',
-    UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR: 'UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR',
+    UPDATE_MANY_ORDER_VIEW_ADMIN_BEGIN: 'UPDATE_MANY_ORDER_VIEW_ADMIN_BEGIN',
+    UPDATE_MANY_ORDER_VIEW_ADMIN_SUCCESS: 'UPDATE_MANY_ORDER_VIEW_ADMIN_SUCCESS',
+    UPDATE_MANY_ORDER_VIEW_ADMIN_ERR: 'UPDATE_MANY_ORDER_VIEW_ADMIN_ERR',
 
-    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN: 'UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN',
-    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS: 'UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS',
-    UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR: 'UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR',
+    UPDATE_MANY_COMPUTER_VIEW_ADMIN_BEGIN: 'UPDATE_MANY_COMPUTER_VIEW_ADMIN_BEGIN',
+    UPDATE_MANY_COMPUTER_VIEW_ADMIN_SUCCESS: 'UPDATE_MANY_COMPUTER_VIEW_ADMIN_SUCCESS',
+    UPDATE_MANY_COMPUTER_VIEW_ADMIN_ERR: 'UPDATE_MANY_COMPUTER_VIEW_ADMIN_ERR',
 
-    UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN: 'UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN',
-    UPDATE_ONE_COMPUTER_COMMENT_ADMIN_SUCCESS: 'UPDATE_ONE_COMPUTER_COMMENT_ADMIN_SUCCESS',
-    UPDATE_ONE_COMPUTER_COMMENT_ADMIN_ERR: 'UPDATE_ONE_COMPUTER_COMMENT_ADMIN_ERR',
+    UPDATE_ONE_COMPUTER_VIEW_ADMIN_BEGIN: 'UPDATE_ONE_COMPUTER_VIEW_ADMIN_BEGIN',
+    UPDATE_ONE_COMPUTER_VIEW_ADMIN_SUCCESS: 'UPDATE_ONE_COMPUTER_VIEW_ADMIN_SUCCESS',
+    UPDATE_ONE_COMPUTER_VIEW_ADMIN_ERR: 'UPDATE_ONE_COMPUTER_VIEW_ADMIN_ERR',
 
-    LIST_COMPUTER_RUN_COMMENT_BEGIN: 'LIST_COMPUTER_RUN_COMMENT_BEGIN',
-    LIST_COMPUTER_RUN_COMMENT_SUCCESS: 'LIST_COMPUTER_RUN_COMMENT_SUCCESS',
-    LIST_COMPUTER_RUN_COMMENT_ERR: 'LIST_COMPUTER_RUN_COMMENT_ERR',
+    LIST_COMPUTER_RUN_VIEW_BEGIN: 'LIST_COMPUTER_RUN_VIEW_BEGIN',
+    LIST_COMPUTER_RUN_VIEW_SUCCESS: 'LIST_COMPUTER_RUN_VIEW_SUCCESS',
+    LIST_COMPUTER_RUN_VIEW_ERR: 'LIST_COMPUTER_RUN_VIEW_ERR',
 
-    DETAIL_COMPUTER_RUN_COMMENT_BEGIN: 'DETAIL_COMPUTER_RUN_COMMENT_BEGIN',
-    DETAIL_COMPUTER_RUN_COMMENT_SUCCESS: 'DETAIL_COMPUTER_RUN_COMMENT_SUCCESS',
-    DETAIL_COMPUTER_RUN_COMMENT_ERR: 'DETAIL_COMPUTER_RUN_COMMENT_ERR',
+    DETAIL_COMPUTER_RUN_VIEW_BEGIN: 'DETAIL_COMPUTER_RUN_VIEW_BEGIN',
+    DETAIL_COMPUTER_RUN_VIEW_SUCCESS: 'DETAIL_COMPUTER_RUN_VIEW_SUCCESS',
+    DETAIL_COMPUTER_RUN_VIEW_ERR: 'DETAIL_COMPUTER_RUN_VIEW_ERR',
 
-    DELETE_COMPUTER_RUN_COMMENT_BEGIN: 'DELETE_COMPUTER_RUN_COMMENT_BEGIN',
-    DELETE_COMPUTER_RUN_COMMENT_SUCCESS: 'DELETE_COMPUTER_RUN_COMMENT_SUCCESS',
-    DELETE_COMPUTER_RUN_COMMENT_ERR: 'DELETE_COMPUTER_RUN_COMMENT_ERR',
+    DELETE_COMPUTER_RUN_VIEW_BEGIN: 'DELETE_COMPUTER_RUN_VIEW_BEGIN',
+    DELETE_COMPUTER_RUN_VIEW_SUCCESS: 'DELETE_COMPUTER_RUN_VIEW_SUCCESS',
+    DELETE_COMPUTER_RUN_VIEW_ERR: 'DELETE_COMPUTER_RUN_VIEW_ERR',
 
-    FETCH_WARRANTY_COMMENT_ORDER_BEGIN: 'FETCH_WARRANTY_COMMENT_ORDER_BEGIN',
-    FETCH_WARRANTY_COMMENT_ORDER_SUCCESS: 'FETCH_WARRANTY_COMMENT_ORDER_SUCCESS',
-    FETCH_WARRANTY_COMMENT_ORDER_ERR: 'FETCH_WARRANTY_COMMENT_ORDER_ERR',
+    FETCH_WARRANTY_VIEW_ORDER_BEGIN: 'FETCH_WARRANTY_VIEW_ORDER_BEGIN',
+    FETCH_WARRANTY_VIEW_ORDER_SUCCESS: 'FETCH_WARRANTY_VIEW_ORDER_SUCCESS',
+    FETCH_WARRANTY_VIEW_ORDER_ERR: 'FETCH_WARRANTY_VIEW_ORDER_ERR',
 
-    ACTIVE_WARRANTY_ORDER_COMMENT_BEGIN: 'ACTIVE_WARRANTY_ORDER_COMMENT_BEGIN',
-    ACTIVE_WARRANTY_ORDER_COMMENT_SUCCESS: 'ACTIVE_WARRANTY_ORDER_COMMENT_SUCCESS',
-    ACTIVE_WARRANTY_ORDER_COMMENT_ERR: 'ACTIVE_WARRANTY_ORDER_COMMENT_ERR',
+    ACTIVE_WARRANTY_ORDER_VIEW_BEGIN: 'ACTIVE_WARRANTY_ORDER_VIEW_BEGIN',
+    ACTIVE_WARRANTY_ORDER_VIEW_SUCCESS: 'ACTIVE_WARRANTY_ORDER_VIEW_SUCCESS',
+    ACTIVE_WARRANTY_ORDER_VIEW_ERR: 'ACTIVE_WARRANTY_ORDER_VIEW_ERR',
 
     REFUND_WARRANTY_ORDER_BEGIN: 'REFUND_WARRANTY_ORDER_BEGIN',
     REFUND_WARRANTY_ORDER_SUCCESS: 'REFUND_WARRANTY_ORDER_SUCCESS',
@@ -62,6 +62,32 @@ const actions = {
     SET_RANGE_DATE_WARRANTY_FILTER_BEGIN: 'SET_RANGE_DATE_WARRANTY_FILTER_BEGIN',
     SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS: 'SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS',
     SET_RANGE_DATE_WARRANTY_FILTER_ERR: 'SET_RANGE_DATE_WARRANTY_FILTER_ERR',
+
+    FETCH_LIST_DEVICES_RUN_VIEW_BEGIN: 'FETCH_LIST_DEVICES_RUN_VIEW_BEGIN',
+    FETCH_LIST_DEVICES_RUN_VIEW_SUCCESS: 'FETCH_LIST_DEVICES_RUN_VIEW_SUCCESS',
+    FETCH_LIST_DEVICES_RUN_VIEW_ERR: 'FETCH_LIST_DEVICES_RUN_VIEW_ERR',
+
+    
+    fetchListDevicesRunViewBegin: (payload) => {
+        return {
+          type: actions.FETCH_LIST_DEVICES_RUN_VIEW_BEGIN,
+          payload
+        };
+    },
+
+    fetchListDevicesRunViewSuccess: (data) => {
+        return {
+            type: actions.FETCH_LIST_DEVICES_RUN_VIEW_SUCCESS,
+            data,
+        }
+    },
+
+    fetchListDevicesRunViewErr: (err) => {
+        return {
+            type: actions.FETCH_LIST_DEVICES_RUN_VIEW_ERR,
+            err,
+        }
+    },
 
     setRangeDateWarrantyFilterBegin: (payload) => {
         return {
@@ -105,296 +131,296 @@ const actions = {
         };
     },
 
-    activeWarrantyOrderCommentBegin: (payload) => {
+    activeWarrantyOrderViewBegin: (payload) => {
         return {
-            type: actions.ACTIVE_WARRANTY_ORDER_COMMENT_BEGIN,
+            type: actions.ACTIVE_WARRANTY_ORDER_VIEW_BEGIN,
             payload
         };
     },
 
-    activeWarrantyOrderCommentSuccess: (data) => {
+    activeWarrantyOrderViewSuccess: (data) => {
         return {
-            type: actions.ACTIVE_WARRANTY_ORDER_COMMENT_SUCCESS,
+            type: actions.ACTIVE_WARRANTY_ORDER_VIEW_SUCCESS,
             data,
         };
     },
 
-    activeWarrantyOrderCommentErr: (err) => {
+    activeWarrantyOrderViewErr: (err) => {
         return {
-            type: actions.ACTIVE_WARRANTY_ORDER_COMMENT_ERR,
+            type: actions.ACTIVE_WARRANTY_ORDER_VIEW_ERR,
             err,
         };
     },
 
-    fetchWarrantyCommentOrderBegin: (payload) => {
+    fetchWarrantyViewOrderBegin: (payload) => {
         return {
-            type: actions.FETCH_WARRANTY_COMMENT_ORDER_BEGIN,
+            type: actions.FETCH_WARRANTY_VIEW_ORDER_BEGIN,
             payload
         };
     },
 
-    fetchWarrantyCommentOrderSuccess: (data) => {
+    fetchWarrantyViewOrderSuccess: (data) => {
         return {
-            type: actions.FETCH_WARRANTY_COMMENT_ORDER_SUCCESS,
+            type: actions.FETCH_WARRANTY_VIEW_ORDER_SUCCESS,
             data,
         };
     },
 
-    fetchWarrantyCommentOrderErr: (err) => {
+    fetchWarrantyViewOrderErr: (err) => {
         return {
-            type: actions.FETCH_WARRANTY_COMMENT_ORDER_ERR,
+            type: actions.FETCH_WARRANTY_VIEW_ORDER_ERR,
             err,
         };
     },
 
-    listComputerRunCommentBegin: (payload) => {
+    listComputerRunViewBegin: (payload) => {
         return {
-            type: actions.LIST_COMPUTER_RUN_COMMENT_BEGIN,
+            type: actions.LIST_COMPUTER_RUN_VIEW_BEGIN,
             payload
         };
     },
 
-    listComputerRunCommentSuccess: (data) => {
+    listComputerRunViewSuccess: (data) => {
         return {
-            type: actions.LIST_COMPUTER_RUN_COMMENT_SUCCESS,
+            type: actions.LIST_COMPUTER_RUN_VIEW_SUCCESS,
             data,
         };
     },
 
-    listComputerRunCommentErr: (err) => {
+    listComputerRunViewErr: (err) => {
         return {
-            type: actions.LIST_COMPUTER_RUN_COMMENT_ERR,
+            type: actions.LIST_COMPUTER_RUN_VIEW_ERR,
             err,
         };
     },
 
-    detailComputerRunCommentBegin: (payload) => {
+    detailComputerRunViewBegin: (payload) => {
         return {
-            type: actions.DETAIL_COMPUTER_RUN_COMMENT_BEGIN,
+            type: actions.DETAIL_COMPUTER_RUN_VIEW_BEGIN,
             payload
         };
     },
 
-    detailComputerRunCommentSuccess: (data) => {
+    detailComputerRunViewSuccess: (data) => {
         return {
-            type: actions.DETAIL_COMPUTER_RUN_COMMENT_SUCCESS,
+            type: actions.DETAIL_COMPUTER_RUN_VIEW_SUCCESS,
             data,
         };
     },
 
-    detailComputerRunCommentErr: (err) => {
+    detailComputerRunViewErr: (err) => {
         return {
-            type: actions.DETAIL_COMPUTER_RUN_COMMENT_ERR,
+            type: actions.DETAIL_COMPUTER_RUN_VIEW_ERR,
             err,
         };
     },
 
-    deleteComputerRunCommentBegin: (payload) => {
+    deleteComputerRunViewBegin: (payload) => {
         return {
-            type: actions.DELETE_COMPUTER_RUN_COMMENT_BEGIN,
+            type: actions.DELETE_COMPUTER_RUN_VIEW_BEGIN,
             payload
         };
     },
 
-    deleteComputerRunCommentSuccess: (data) => {
+    deleteComputerRunViewSuccess: (data) => {
         return {
-            type: actions.DELETE_COMPUTER_RUN_COMMENT_SUCCESS,
+            type: actions.DELETE_COMPUTER_RUN_VIEW_SUCCESS,
             data,
         };
     },
 
-    deleteComputerRunCommentErr: (err) => {
+    deleteComputerRunViewErr: (err) => {
         return {
-            type: actions.DELETE_COMPUTER_RUN_COMMENT_ERR,
+            type: actions.DELETE_COMPUTER_RUN_VIEW_ERR,
             err,
         };
     },
 
-    detailOrderCommentAdminBegin: (payload) => {
+    detailOrderViewAdminBegin: (payload) => {
         return {
-            type: actions.DETAIL_ORDER_COMMENT_ADMIN_BEGIN,
+            type: actions.DETAIL_ORDER_VIEW_ADMIN_BEGIN,
             payload
         };
     },
 
-    detailOrderCommentAdminSuccess: (data) => {
+    detailOrderViewAdminSuccess: (data) => {
         return {
-            type: actions.DETAIL_ORDER_COMMENT_ADMIN_SUCCESS,
+            type: actions.DETAIL_ORDER_VIEW_ADMIN_SUCCESS,
             data,
         };
     },
 
-    detailOrderCommentAdminErr: (err) => {
+    detailOrderViewAdminErr: (err) => {
         return {
-            type: actions.DETAIL_ORDER_COMMENT_ADMIN_ERR,
+            type: actions.DETAIL_ORDER_VIEW_ADMIN_ERR,
             err,
         };
     },
 
-    updateOneComputerCommentAdminBegin: (payload) => {
+    updateOneComputerViewAdminBegin: (payload) => {
         return {
-            type: actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_BEGIN,
+            type: actions.UPDATE_ONE_COMPUTER_VIEW_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateOneComputerCommentAdminSuccess: (data) => {
+    updateOneComputerViewAdminSuccess: (data) => {
         return {
-            type: actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_SUCCESS,
+            type: actions.UPDATE_ONE_COMPUTER_VIEW_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateOneComputerCommentAdminErr: (err) => {
+    updateOneComputerViewAdminErr: (err) => {
         return {
-            type: actions.UPDATE_ONE_COMPUTER_COMMENT_ADMIN_ERR,
+            type: actions.UPDATE_ONE_COMPUTER_VIEW_ADMIN_ERR,
             err,
         };
     },
 
-    updateManyComputerCommentAdminBegin: (payload) => {
+    updateManyComputerViewAdminBegin: (payload) => {
         return {
-            type: actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN,
+            type: actions.UPDATE_MANY_COMPUTER_VIEW_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateManyComputerCommentAdminSuccess: (data) => {
+    updateManyComputerViewAdminSuccess: (data) => {
         return {
-            type: actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_SUCCESS,
+            type: actions.UPDATE_MANY_COMPUTER_VIEW_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateManyComputerCommentAdminErr: (err) => {
+    updateManyComputerViewAdminErr: (err) => {
         return {
-            type: actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_ERR,
+            type: actions.UPDATE_MANY_COMPUTER_VIEW_ADMIN_ERR,
             err,
         };
     },
 
-    updateManyOrderCommentAdminBegin: (payload) => {
+    updateManyOrderViewAdminBegin: (payload) => {
         return {
-            type: actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_BEGIN,
+            type: actions.UPDATE_MANY_ORDER_VIEW_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateManyOrderCommentAdminSuccess: (data) => {
+    updateManyOrderViewAdminSuccess: (data) => {
         return {
-            type: actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_SUCCESS,
+            type: actions.UPDATE_MANY_ORDER_VIEW_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateManyOrderCommentAdminErr: (err) => {
+    updateManyOrderViewAdminErr: (err) => {
         return {
-            type: actions.UPDATE_MANY_ORDER_COMMENT_ADMIN_ERR,
+            type: actions.UPDATE_MANY_ORDER_VIEW_ADMIN_ERR,
             err,
         };
     },
 
-    updateOrderCommentAdminBegin: (payload) => {
+    updateOrderViewAdminBegin: (payload) => {
         return {
-            type: actions.UPDATE_ORDER_COMMENT_ADMIN_BEGIN,
+            type: actions.UPDATE_ORDER_VIEW_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateOrderCommentAdminSuccess: (data) => {
+    updateOrderViewAdminSuccess: (data) => {
         return {
-            type: actions.UPDATE_ORDER_COMMENT_ADMIN_SUCCESS,
+            type: actions.UPDATE_ORDER_VIEW_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateOrderCommentAdminErr: (err) => {
+    updateOrderViewAdminErr: (err) => {
         return {
-            type: actions.UPDATE_ORDER_COMMENT_ADMIN_ERR,
+            type: actions.UPDATE_ORDER_VIEW_ADMIN_ERR,
             err,
         };
     },
 
-    createOrderCommentAdminBegin: (payload) => {
+    createOrderViewAdminBegin: (payload) => {
         return {
-            type: actions.CREATE_ORDER_COMMENT_ADMIN_BEGIN,
+            type: actions.CREATE_ORDER_VIEW_ADMIN_BEGIN,
             payload
         };
     },
 
-    createOrderCommentAdminSuccess: (data) => {
+    createOrderViewAdminSuccess: (data) => {
         return {
-            type: actions.CREATE_ORDER_COMMENT_ADMIN_SUCCESS,
+            type: actions.CREATE_ORDER_VIEW_ADMIN_SUCCESS,
             data,
         };
     },
 
-    createOrderCommentAdminErr: (err) => {
+    createOrderViewAdminErr: (err) => {
         return {
-            type: actions.CREATE_ORDER_COMMENT_ADMIN_ERR,
+            type: actions.CREATE_ORDER_VIEW_ADMIN_ERR,
             err,
         };
     },
 
-    fetchListOrderCommentBegin: (payload) => {
+    fetchListOrderViewBegin: (payload) => {
         return {
-            type: actions.FETCH_LIST_ORDER_COMMENT_BEGIN,
+            type: actions.FETCH_LIST_ORDER_VIEW_BEGIN,
             payload
         };
     },
 
-    fetchListOrderCommentSuccess: (data) => {
+    fetchListOrderViewSuccess: (data) => {
         return {
-            type: actions.FETCH_LIST_ORDER_COMMENT_SUCCESS,
+            type: actions.FETCH_LIST_ORDER_VIEW_SUCCESS,
             data,
         };
     },
 
-    fetchListOrderCommentErr: (err) => {
+    fetchListOrderViewErr: (err) => {
         return {
-            type: actions.FETCH_LIST_ORDER_COMMENT_ERR,
+            type: actions.FETCH_LIST_ORDER_VIEW_ERR,
             err,
         };
     },
 
-    detailOrderCommentBegin: (payload) => {
+    detailOrderViewBegin: (payload) => {
         return {
-            type: actions.DETAIL_ORDER_COMMENT_BEGIN,
+            type: actions.DETAIL_ORDER_VIEW_BEGIN,
             payload
         };
     },
 
-    detailOrderCommentSuccess: (data) => {
+    detailOrderViewSuccess: (data) => {
         return {
-            type: actions.DETAIL_ORDER_COMMENT_SUCCESS,
+            type: actions.DETAIL_ORDER_VIEW_SUCCESS,
             data,
         };
     },
 
-    detailOrderCommentErr: (err) => {
+    detailOrderViewErr: (err) => {
         return {
-            type: actions.DETAIL_ORDER_COMMENT_ERR,
+            type: actions.DETAIL_ORDER_VIEW_ERR,
             err,
         };
     },
 
-    commentOrderCommentBegin: (payload) => {
+    viewOrderViewBegin: (payload) => {
         return {
-            type: actions.COMMENT_IN_ORDER_COMMENT_BEGIN,
+            type: actions.VIEW_IN_ORDER_VIEW_BEGIN,
             payload
         };
     },
 
-    commentOrderCommentSuccess: (data) => {
+    viewOrderViewSuccess: (data) => {
         return {
-            type: actions.COMMENT_IN_ORDER_COMMENT_SUCCESS,
+            type: actions.VIEW_IN_ORDER_VIEW_SUCCESS,
             data,
         };
     },
 
-    commentOrderCommentErr: (err) => {
+    viewOrderViewErr: (err) => {
         return {
-            type: actions.COMMENT_IN_ORDER_COMMENT_ERR,
+            type: actions.VIEW_IN_ORDER_VIEW_ERR,
             err,
         };
     },

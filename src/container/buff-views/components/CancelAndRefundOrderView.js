@@ -61,7 +61,7 @@ const badgeRedStyle = {
 const { Option } = Select;
 
 
-function CancelAndRefundOrderComment({ isOpen, setState }) {
+function CancelAndRefundOrderView({ isOpen, setState }) {
   const dispatch = useDispatch();
   const [formCancelAndRefundOrder] = Form.useForm();
 
@@ -145,9 +145,9 @@ function CancelAndRefundOrderComment({ isOpen, setState }) {
   );
 }
 
-CancelAndRefundOrderComment.propTypes = {
+CancelAndRefundOrderView.propTypes = {
   isOpen: PropTypes.bool,
   setState: PropTypes.func
 };
 
-export default CancelAndRefundOrderComment;
+export default CancelAndRefundOrderView;

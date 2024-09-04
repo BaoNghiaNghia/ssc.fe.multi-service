@@ -10,6 +10,7 @@ import ServerReducer from './servers/reducers';
 import BuffSubscribeReducer from './buffSubscribe/reducers';
 import BuffCommentReducer from './buffComment/reducers';
 import BuffLikeReducer from './buffLike/reducers';
+import BuffViewReducer from './buffView/reducers';
 import SettingsServiceReducer from './serviceSettings/reducers';
 import ProxyReducer from './proxy/reducers';
 import GmailManageReducer from './gmailManage/reducers';
@@ -23,6 +24,7 @@ const rootReducers = combineReducers({
   buffSubscribe: BuffSubscribeReducer,
   buffComment: BuffCommentReducer,
   buffLike: BuffLikeReducer,
+  buffView: BuffViewReducer,
   blackList: BlackListReducer,
   member: MemberReducer,
   proxy: ProxyReducer,

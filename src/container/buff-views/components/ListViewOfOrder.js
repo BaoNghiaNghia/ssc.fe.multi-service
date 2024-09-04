@@ -24,7 +24,7 @@ const badgeGreenStyle = {
 }
 
 
-function ListCommentOfOrder({ isOpen, setState, orderState }) {
+function ListViewOfOrder({ isOpen, setState, orderState }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
@@ -198,7 +198,7 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
             responsive: true,
             showTotal(total, range) {
                 return <>
-                    <p className='mx-4'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> comment</p>
+                    <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> comment</p>
                 </>
             },
             totalBoundaryShowSizeChanger: 100,
@@ -210,10 +210,10 @@ function ListCommentOfOrder({ isOpen, setState, orderState }) {
   );
 }
 
-ListCommentOfOrder.propTypes = {
+ListViewOfOrder.propTypes = {
   isOpen: PropTypes.bool,
   setState: PropTypes.func,
   orderState: PropTypes.object
 };
 
-export default ListCommentOfOrder;
+export default ListViewOfOrder;
