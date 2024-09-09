@@ -2,17 +2,17 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Badge, Tooltip, Button, Image, Spin, Switch } from 'antd';
+import { Table, Badge, Tooltip, Button, Image, Spin } from 'antd';
 import { TbShoppingBagEdit } from 'react-icons/tb';
-import { LoadingOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
 import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
 import { AiTwotoneDelete } from "react-icons/ai";
 import { WiTime7 } from 'react-icons/wi';
 import { SiGmail } from "react-icons/si";
 import moment from 'moment';
-import DetailCommentComputer from './components/DetailCommentComputer';
-import EditCommentComputer from './components/EditCommentComputer';
+import DetailViewDevices from './components/DetailViewDevices';
+import EditViewDevices from './components/EditViewDevices';
 import BatchUpdateComputerComment from './components/BatchUpdateComputerComment';
 import ConfirmRequestModal from './components/ConfirmRequestModal';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -87,10 +87,10 @@ function ComputerRunViewOrder() {
   });
 
   const [state, setState] = useState({
-    isEditCommentServer: false,
-    isDetailCommentServer: false,
-    isDeleteCommentServer: false,
-    isBatchUpdateCommentServer: false,
+    isEditViewServer: false,
+    isDetailViewServer: false,
+    isDeleteViewServer: false,
+    isBatchUpdateViewServer: false,
     notData: {},
     activeClass: 'all',
     current: 0,
@@ -99,7 +99,7 @@ function ComputerRunViewOrder() {
     selectedItem: {}
   });
 
-  const [expandedRows, setExpandedRows] = useState([]); // Track expanded rows
+  const [expandedRows, setExpandedRows] = useState([]);
 
   const { notData, selectedRowKeys } = state;
 
@@ -162,7 +162,8 @@ function ComputerRunViewOrder() {
           <span>{profile_id}</span>
         ),
         status: (
-          <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} checked={status} />
+          <span>{status}</span>
+          // <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} checked={status} />
         ),
       });
     });
@@ -194,6 +195,17 @@ function ComputerRunViewOrder() {
                 totalBoundaryShowSizeChanger: 100,
                 size: "small"
               }}
+              locale={{ emptyText: (
+                <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                  <Image src={require(`../../static/img/empty_order_2.svg`).default} alt="" width="170px" preview={false} style={{margin: '60px 0px', opacity: '80%'}}/>
+                  <span style={{ marginLeft: '20px', textAlign: 'left' }}>
+                    <span style={{ color: 'gray', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
+                    <span style={{ color: '#8080808a', fontWeight: '200', fontSize: '0.95em' }}>
+                      Chưa có profile của thiết bị
+                    </span>
+                  </span>
+                </div>
+              ) }}
               size='small'
             /> 
           )
@@ -202,23 +214,17 @@ function ComputerRunViewOrder() {
     );
   };
 
-  // Handle row expansion and dispatch actions only when a row is expanded
   const handleExpandedRowsChange = (expandedKeys) => {
     if (expandedKeys.length > 0) {
-      // Get the most recently expanded row (we only want one row expanded at a time)
       const newlyExpandedRow = expandedKeys[expandedKeys.length - 1];
-      
       const expandedRecord = listDevices?.items?.find(item => item?.id === newlyExpandedRow);
       
       if (expandedRecord) {
-        // Dispatch action to get details of the device
         dispatch(actions.detailDeviceRunViewBegin(newlyExpandedRow));
       }
-  
-      // Set only the latest expanded row to the expandedRows state
+
       setExpandedRows([newlyExpandedRow]);
     } else {
-      // No rows expanded, reset expandedRows
       setExpandedRows([]);
     }
   };
@@ -297,12 +303,12 @@ function ComputerRunViewOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
-                  dispatch(actions.detailComputerRunCommentBegin({
+                  dispatch(actions.detailComputerRunViewBegin({
                     id: value?.id
                   }));
                   setState({
                     ...state,
-                    isEditCommentServer: true
+                    isEditViewServer: true
                   })
                 }}
               >
@@ -318,12 +324,12 @@ function ComputerRunViewOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
-                  dispatch(actions.detailComputerRunCommentBegin({
+                  dispatch(actions.detailComputerRunViewBegin({
                     id: value?.id
                   }));
                   setState({
                     ...state,
-                    isDetailCommentServer: true
+                    isDetailViewServer: true
                   })
                 }}
               >
@@ -342,7 +348,7 @@ function ComputerRunViewOrder() {
                 onClick={() => {
                   setState({
                     ...state,
-                    isDeleteCommentServer: true,
+                    isDeleteViewServer: true,
                     selectedItem: value
                   })
                 }}
@@ -369,7 +375,7 @@ function ComputerRunViewOrder() {
   return (
     <>
       <ConfirmRequestModal
-        isOpen={state?.isDeleteCommentServer}
+        isOpen={state?.isDeleteViewServer}
         setState={setState}
         descriptions={`Xác nhận xóa máy chạy comment ${state?.selectedItem?.name}`}
         title="Xác nhận"
@@ -386,11 +392,11 @@ function ComputerRunViewOrder() {
         computerState={state}
         setState={setState}
       />
-      <DetailCommentComputer
+      <DetailViewDevices
         computerState={state}
         setState={setState}
       />
-      <EditCommentComputer
+      <EditViewDevices
         computerState={state}
         setState={setState}
       />
@@ -407,7 +413,7 @@ function ComputerRunViewOrder() {
                   onClick={() => {
                     setState({
                       ...state,
-                      isBatchUpdateCommentServer: true,
+                      isBatchUpdateViewServer: true,
                     });
                   }}
                 >
@@ -438,7 +444,7 @@ function ComputerRunViewOrder() {
                 <div>
                   <Image src={require(`../../static/img/lost_connection.svg`).default} alt="" width="400px" preview={false} style={{margin: '60px 0px', opacity: '80%'}}/>
                   <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                  <span style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                  <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
                     Chưa có server
                   </span>
                 </div>

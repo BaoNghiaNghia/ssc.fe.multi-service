@@ -42,10 +42,10 @@ const viewOrderViewAPI = (id) => BuffViewAPI.createBasicCRUDEndpoints({ name: VI
 const createOrderViewAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: CREATE_ORDER_VIEW_ENDPOINT }).post(query);
 
 // Computer
-const listComputerRunViewAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_VIEW_ENDPOINT }).get(query);
-const detailComputerRunViewAPI = (id) => BuffViewAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_VIEW_ENDPOINT }).getOne(id);
-const deleteComputerRunViewAPI = (id) => BuffViewAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_VIEW_ENDPOINT }).delete(id);
-const updateOneComputerRunViewAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_VIEW_ENDPOINT }).patch(query);
+const listComputerRunViewAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: DEVICES_RUN_VIEW_ENDPOINT }).get(query);
+const detailComputerRunViewAPI = (id) => BuffViewAPI.createBasicCRUDEndpoints({ name: DEVICES_RUN_VIEW_ENDPOINT }).getOne(id);
+const deleteComputerRunViewAPI = (id) => BuffViewAPI.createBasicCRUDEndpoints({ name: DEVICES_RUN_VIEW_ENDPOINT }).delete(id);
+const updateOneComputerRunViewAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: DEVICES_RUN_VIEW_ENDPOINT }).patch(query);
 const updateManyComputerViewAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_COMPUTER_VIEW_ENDPOINT }).patchMultiple(query);
 
 // Warranty

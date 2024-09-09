@@ -103,54 +103,62 @@ function DetailAccountGmail({ gmailState, setState }) {
                             <Input size='small' prefix={<MdOutlineAlternateEmail/>} readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
                         </Form.Item>
                     </Col>
-                    <Col sm={11}>
-                        <Form.Item 
-                            name="channel_id"
-                            initialValue
-                            label="ID Channel"
-                            style={{ marginBottom: '7px', textAlign: 'center' }}
-                            rules={[{
-                                required: true,
-                                message: 'Trường không được trống'
-                            }]}
-                        >
-                            <Input size='small' prefix={<span style={{ fontWeight: 700, color: 'gray' }}>ID</span>} readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
-                        </Form.Item>
-                    </Col>
+                    {
+                        detailAccountGmail?.channel_id ? (
+                            <Col sm={11}>
+                                <Form.Item 
+                                    name="channel_id"
+                                    initialValue
+                                    label="ID Channel"
+                                    style={{ marginBottom: '7px', textAlign: 'center' }}
+                                    rules={[{
+                                        required: true,
+                                        message: 'Trường không được trống'
+                                    }]}
+                                >
+                                    <Input size='small' prefix={<span style={{ fontWeight: 700, color: 'gray' }}>ID</span>} readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                                </Form.Item>
+                            </Col>
+                        ) : null
+                    }
                 </Row>
                 <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '15px', margin: '0px' }}>Thông tin cơ bản</Divider>
                 <Row gutter="10">
-                    <Col sm={10}>
-                        <Form.Item 
-                            name="computer"
-                            initialValue
-                            label="Máy"
-                            style={{ marginBottom: '7px', textAlign: 'center' }}
-                            rules={[{
-                            required: true,
-                            message: 'Trường không được trống'
-                            }]}
-                        >
-                            <Input 
-                                size='small'
-                                prefix={<>{
-                                    detailAccountGmail !== null && getPathLocalFromString(detailAccountGmail?.computer) !== null
-                                        ? <img
-                                            src={require(`../../../${getPathLocalFromString(detailAccountGmail?.computer)}`)}
-                                            alt={getPathLocalFromString(detailAccountGmail?.computer)}
-                                            width="18px"
-                                            height="18px"
-                                            style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
-                                        />
-                                        : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
-                                    }</>
-                                } 
-                                readOnly
-                                style={{ fontWeight: '500' }}
-                                placeholder='Email người dùng'
-                            />
-                        </Form.Item>
-                    </Col>
+                    {
+                        detailAccountGmail?.computer ? (
+                            <Col sm={10}>
+                                <Form.Item 
+                                    name="computer"
+                                    initialValue
+                                    label="Máy"
+                                    style={{ marginBottom: '7px', textAlign: 'center' }}
+                                    rules={[{
+                                    required: true,
+                                    message: 'Trường không được trống'
+                                    }]}
+                                >
+                                    <Input 
+                                        size='small'
+                                        prefix={<>{
+                                            detailAccountGmail !== null && getPathLocalFromString(detailAccountGmail?.computer) !== null
+                                                ? <img
+                                                    src={require(`../../../${getPathLocalFromString(detailAccountGmail?.computer)}`)}
+                                                    alt={getPathLocalFromString(detailAccountGmail?.computer)}
+                                                    width="18px"
+                                                    height="18px"
+                                                    style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
+                                                />
+                                                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
+                                            }</>
+                                        } 
+                                        readOnly
+                                        style={{ fontWeight: '500' }}
+                                        placeholder='Email người dùng'
+                                    />
+                                </Form.Item>
+                            </Col>
+                        ) : null
+                    }
                     <Col sm={8}>
                         <Form.Item 
                             name="total_task"

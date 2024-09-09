@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
@@ -254,14 +255,32 @@ function GmailManagement() {
         action: (
           <div className="table-actions">
             <Tooltip title="Chi tiết">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+              <Button 
+                className="btn-icon" 
+                type="primary" 
+                to="#" 
+                shape="circle"
                 onClick={() => {
-                  if (typeService === SERVICE_TYPE.COMMENT.title) {
-                    dispatch(gmailActions.detailAccountGmailCommentBegin(_id));
-                  } else if (typeService === SERVICE_TYPE.LIKE.title) {
-                    dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
-                  } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
-                    console.log('--- subscribe ---');
+                  switch (typeService) {
+                    case SERVICE_TYPE.COMMENT.title:
+                      dispatch(gmailActions.detailAccountGmailCommentBegin(_id));
+                      break;
+
+                    case SERVICE_TYPE.LIKE.title:
+                      dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
+                      break;
+
+                    case SERVICE_TYPE.SUBSCRIBE.title:
+                      console.log('--- subscribe ---');
+                      dispatch(gmailActions.detailAccountGmailSubscribeBegin(_id));
+                      break;
+                    
+                    case SERVICE_TYPE.VIEW.title:
+                      dispatch(gmailActions.detailAccountGmailViewBegin(_id));
+                      break;
+
+                    default:
+                      console.log('Service type not recognized');
                   }
 
                   setState({ 
@@ -274,6 +293,7 @@ function GmailManagement() {
                 <FeatherIcon icon="eye" size={16} />
               </Button>
             </Tooltip>
+
 
             {/* <Tooltip title="Chỉnh sửa">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
@@ -346,6 +366,7 @@ function GmailManagement() {
         title="Xác nhận"
         subtitle="Xóa thông tin tài khoản"
         handleOk={() => {
+          console.log('---- type service ----', typeService);
           // eslint-disable-next-line no-underscore-dangle
           dispatch(gmailActions.deleteAccountGmailCommentBegin({id: state?.dataRow?._id}));
           setState({ 
@@ -354,6 +375,44 @@ function GmailManagement() {
           });
         }}
       />
+
+      <ConfirmRequestModal
+        isOpen={state?.isDeleteAccountGmailModal}
+        setState={setState}
+        descriptions={`Xác nhận xóa tài khoản ${state?.dataRow?.email}`}
+        title="Xác nhận"
+        subtitle="Xóa thông tin tài khoản"
+        handleOk={() => {
+          const deleteID = state?.dataRow?._id;
+          
+          switch (typeService) {
+            case SERVICE_TYPE.COMMENT.title:
+              dispatch(gmailActions.deleteAccountGmailCommentBegin({ id: deleteID }));
+              break;
+
+            case SERVICE_TYPE.LIKE.title:
+              dispatch(gmailActions.deleteAccountGmailLikeBegin({ id: deleteID }));
+              break;
+
+            case SERVICE_TYPE.SUBSCRIBE.title:
+              dispatch(gmailActions.deleteAccountGmailSubscribeBegin({ id: deleteID }));
+              break;
+
+            case SERVICE_TYPE.VIEW.title:
+              dispatch(gmailActions.deleteAccountGmailViewBegin({ id: deleteID }));
+              break;
+
+            default:
+              console.log('Service type not recognized');
+          }
+
+          setState({ 
+            ...state,
+            isDeleteAccountGmailModal: false
+          });
+        }}
+      />
+
       <PageHeader
         ghost
         title="Quản lý Gmail"

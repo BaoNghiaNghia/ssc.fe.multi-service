@@ -163,7 +163,7 @@ function* deleteAccountGmailCommentFunc(params) {
     const response = yield call(deleteAccountGmailCommentAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      toast.error('Xóa tài khoản gmail thành công');
+      toast.success('Xóa tài khoản gmail thành công');
       yield put(
         actions.deleteAccountGmailCommentSuccess(response?.data?.data)
       );
@@ -285,7 +285,7 @@ function* deleteAccountGmailLikeFunc(params) {
     const response = yield call(deleteAccountGmailLikeAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      toast.error('Xóa tài khoản gmail thành công');
+      toast.success('Xóa tài khoản gmail thành công');
 
       yield put(
         actions.deleteAccountGmailLikeSuccess(response?.data?.data)
@@ -410,7 +410,7 @@ function* deleteAccountGmailViewFunc(params) {
     const response = yield call(deleteAccountGmailViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      toast.error('Xóa tài khoản gmail thành công');
+      toast.success('Xóa tài khoản gmail thành công');
 
       yield put(
         actions.deleteAccountGmailViewSuccess(response?.data?.data)
@@ -537,7 +537,7 @@ function* deleteAccountGmailSubscribeFunc(params) {
     const response = yield call(deleteAccountGmailSubscribeAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      toast.error('Xóa tài khoản gmail thành công');
+      toast.success('Xóa tài khoản gmail thành công');
 
       yield put(
         actions.deleteAccountGmailSubscribeSuccess(response?.data?.data)

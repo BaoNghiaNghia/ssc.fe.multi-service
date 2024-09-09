@@ -530,7 +530,7 @@ function ComputerRunLikeOrder() {
                 <div>
                   <Image src={require(`../../static/img/lost_connection.svg`).default} alt="" width="400px" preview={false} style={{margin: '60px 0px', opacity: '80%'}}/>
                   <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                  <span style={{ color: 'gray', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                  <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
                     Chưa có server
                   </span>
                 </div>

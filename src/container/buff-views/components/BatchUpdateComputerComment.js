@@ -14,7 +14,7 @@ const { Option } = Select;
 function BatchUpdateComputerComment({ setState, computerState }) {
     const dispatch = useDispatch();
 
-    const { isBatchUpdateCommentServer, selectedRowKeys } = computerState;
+    const { isBatchUpdateViewServer, selectedRowKeys } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
     const { isLoading, detailComputerComment } = useSelector(state => {
@@ -54,7 +54,7 @@ function BatchUpdateComputerComment({ setState, computerState }) {
     };
 
     const handleCancel = () => {
-        setState({ ...computerState, isBatchUpdateCommentServer: false });
+        setState({ ...computerState, isBatchUpdateViewServer: false });
         formDetailComputerCmt.resetFields();
     }
 
@@ -62,7 +62,7 @@ function BatchUpdateComputerComment({ setState, computerState }) {
         <>
             <Modal
                 width='600px'
-                open={isBatchUpdateCommentServer}
+                open={isBatchUpdateViewServer}
                 centered
                 title={
                     <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
