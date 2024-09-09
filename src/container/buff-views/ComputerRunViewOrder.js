@@ -9,6 +9,7 @@ import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
 import { AiTwotoneDelete } from "react-icons/ai";
 import { WiTime7 } from 'react-icons/wi';
+import { SiGmail } from "react-icons/si";
 import moment from 'moment';
 import { MdAlternateEmail } from 'react-icons/md';
 import DetailCommentComputer from './components/DetailCommentComputer';
@@ -151,8 +152,8 @@ function ComputerRunViewOrder() {
             {email === "" ? (
               <span style={{ color: '#cecece' }}>Chưa có</span>
             ) : (
-              <span>
-                <MdAlternateEmail fontSize={17} style={{marginTop: '3px'}}/>
+              <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                <SiGmail fontSize={15} style={{margin: '0px 4px 0 0', padding: '0px'}} color='gray'/>
                 {email}
               </span>
             )}
@@ -444,10 +445,10 @@ function ComputerRunViewOrder() {
                 </div>
               )}}
               expandable={{
-                expandedRowRender: renderExpandedRow, // Only render content here
-                rowExpandable: (record) => true, // Enable expanding for all rows
-                expandedRowKeys: expandedRows, // Use expandedRowKeys here
-                onExpandedRowsChange: handleExpandedRowsChange, // Trigger dispatch and update expanded rows
+                expandedRowRender: renderExpandedRow,
+                rowExpandable: (record) => true,
+                expandedRowKeys: expandedRows,
+                onExpandedRowsChange: handleExpandedRowsChange,
               }}
               pagination={{
                 current: listServer?.meta?.current_page,
