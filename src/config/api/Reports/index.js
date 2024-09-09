@@ -1,6 +1,6 @@
 /* eslint-disable */
 import {
-    DAILY_REPORT_SUBSCRIBE_ENPOINT,
+    DAILY_REPORT_SUBSCRIBE_ENDPOINT,
     REPORT_COUNT_SUCCESS_ENDPOINT,
     COMPUTER_DATA_LIST_ENDPOINT,
     COUNT_ERROR_SUBSCRIBE_ENDPOINT,
@@ -54,7 +54,7 @@ import ApiFactory from '../ApiFactory';
 const GeneralReportAPI = new ApiFactory({ url: process.env.REACT_APP_API_ENDPOINT });
 
 GeneralReportAPI.createEntities([
-    { name: DAILY_REPORT_SUBSCRIBE_ENPOINT },
+    { name: DAILY_REPORT_SUBSCRIBE_ENDPOINT },
     { name: REPORT_COUNT_SUCCESS_ENDPOINT },
     { name: COMPUTER_DATA_LIST_ENDPOINT },
     { name: COUNT_ERROR_SUBSCRIBE_ENDPOINT },
@@ -102,7 +102,7 @@ GeneralReportAPI.createEntities([
 ]);
 
 // SUBSCRIBERS
-const getDailyReportSubscribeAPI = (data) => GeneralReportAPI.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENPOINT }).get(data);
+const getDailyReportSubscribeAPI = (data) => GeneralReportAPI.createBasicCRUDEndpoints({ name: DAILY_REPORT_SUBSCRIBE_ENDPOINT }).get(data);
 const countSuccessSubscribeAPI = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: REPORT_COUNT_SUCCESS_ENDPOINT }).get();
 
 const fetchComputerDataListAPI = () => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMPUTER_DATA_LIST_ENDPOINT }).get();

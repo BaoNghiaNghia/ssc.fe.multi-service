@@ -119,37 +119,76 @@ function GmailManagement() {
   }, [selectedRowKeys]);
 
   useEffect(() => {
-    if (typeService === SERVICE_TYPE.COMMENT.title) {
-      dispatch(gmailActions.listAccountGmailCommentBegin({
-        page: currentPage,
-        limit: limitPage,
-      }));
-    } else if (typeService === SERVICE_TYPE.LIKE.title) {
-      dispatch(gmailActions.listAccountGmailLikeBegin({
-        page: currentPage,
-        limit: limitPage,
-      }));
-    } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
-      console.log('--- subscribe ---');
-    }
-  }, [dispatch, currentPage, limitPage]);
-  
-  const handleSearch = searchText => {
-    if (searchText) {
-      if (typeService === SERVICE_TYPE.COMMENT.title) {
+    switch (typeService) {
+      case SERVICE_TYPE.COMMENT.title:
         dispatch(gmailActions.listAccountGmailCommentBegin({
           page: currentPage,
           limit: limitPage,
-          name: searchText
         }));
-      } else if (typeService === SERVICE_TYPE.LIKE.title) {
+
+        break;
+  
+      case SERVICE_TYPE.LIKE.title:
         dispatch(gmailActions.listAccountGmailLikeBegin({
           page: currentPage,
           limit: limitPage,
-          name: searchText
         }));
-      } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
+
+        break;
+  
+      case SERVICE_TYPE.SUBSCRIBE.title:
         console.log('--- subscribe ---');
+        break;
+
+      case SERVICE_TYPE.VIEW.title:
+        dispatch(gmailActions.listAccountGmailViewBegin({
+          page: currentPage,
+          limit: limitPage,
+        }));
+
+        break;
+  
+      default:
+        console.log('Service type not recognized');
+    }
+  }, [dispatch, currentPage, limitPage, typeService]);
+  
+  const handleSearch = searchText => {
+    if (searchText) {
+      switch (typeService) {
+        case SERVICE_TYPE.COMMENT.title:
+          dispatch(gmailActions.listAccountGmailCommentBegin({
+            page: currentPage,
+            limit: limitPage,
+            name: searchText
+          }));
+
+          break;
+  
+        case SERVICE_TYPE.LIKE.title:
+          dispatch(gmailActions.listAccountGmailLikeBegin({
+            page: currentPage,
+            limit: limitPage,
+            name: searchText
+          }));
+
+          break;
+  
+        case SERVICE_TYPE.SUBSCRIBE.title:
+          console.log('--- subscribe ---');
+          break;
+
+        case SERVICE_TYPE.VIEW.title:
+          dispatch(gmailActions.listAccountGmailViewBegin({
+            page: currentPage,
+            limit: limitPage,
+            name: searchText
+          }));
+
+          break;
+  
+        default:
+          console.log('Service type not recognized');
       }
     } else {
       dispatch(gmailActions.listAccountGmailCommentBegin({
@@ -158,9 +197,8 @@ function GmailManagement() {
       }));
     }
   };
-
+  
   const handleChange = (value) => {
-    console.log('---- class nè ---', value);
     dispatch(gmailActions.changeServiceTypeInGmailBegin({
       value,
     }));

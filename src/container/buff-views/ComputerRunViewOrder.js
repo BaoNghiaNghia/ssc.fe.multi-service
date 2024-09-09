@@ -11,7 +11,6 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { WiTime7 } from 'react-icons/wi';
 import { SiGmail } from "react-icons/si";
 import moment from 'moment';
-import { MdAlternateEmail } from 'react-icons/md';
 import DetailCommentComputer from './components/DetailCommentComputer';
 import EditCommentComputer from './components/EditCommentComputer';
 import BatchUpdateComputerComment from './components/BatchUpdateComputerComment';
@@ -230,12 +229,12 @@ function ComputerRunViewOrder() {
       return dataSource.push({
         key: value?.id,
         devices: (
-          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
-            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" viewBox="0 0 24 24">
+          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start', alignContent: 'center' }}>
+            <svg className="text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24">
               <path fillRule="evenodd" d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4Zm12 12V5H7v11h10Zm-5 1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z" clipRule="evenodd"/>
             </svg>
 
-            <div style={{ marginLeft: '7px', padding: 0 }}>
+            <div style={{ marginLeft: '3px', padding: 0 }}>
               <p style={{ fontWeight: 500, margin: 0, padding: 0 }}>{value?.device_id || '...'}</p>
             </div>
           </span>

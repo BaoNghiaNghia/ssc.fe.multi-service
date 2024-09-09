@@ -5,7 +5,7 @@ export const VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT = 'ytb-like/api/v1/admin/order
 export const VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT = 'ytb-subscribe/api/v1/admin/orders/validate-ytb-video';
 
 // SUBSCRIBE
-export const DAILY_REPORT_SUBSCRIBE_ENPOINT = 'api/v2/admin/report';
+export const DAILY_REPORT_SUBSCRIBE_ENDPOINT = 'api/v2/admin/report';
 export const REPORT_COUNT_SUCCESS_ENDPOINT = 'api/v2/admin/reportCountSuccess';
 export const COMPUTER_DATA_LIST_ENDPOINT = 'api/v2/computer/list';
 export const STATISTIC_SUBSCRIBE_REPORT_ENDPOINT = 'api/v2/report/statistic';

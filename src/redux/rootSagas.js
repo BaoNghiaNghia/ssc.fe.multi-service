@@ -140,14 +140,24 @@ import {
     changeServiceTypeInGmailWatcherSaga,
     createAccountGmailCommentWatcherSaga,
     createAccountGmailLikeWatcherSaga,
+    createAccountGmailSubscribeWatcherSaga,
+    createAccountGmailViewWatcherSaga,
     deleteAccountGmailCommentWatcherSaga,
     deleteAccountGmailLikeWatcherSaga,
+    deleteAccountGmailSubscribeWatcherSaga,
+    deleteAccountGmailViewWatcherSaga,
     detailAccountGmailCommentWatcherSaga,
     detailAccountGmailLikeWatcherSaga,
+    detailAccountGmailSubscribeWatcherSaga,
+    detailAccountGmailViewWatcherSaga,
     listAccountGmailCommentWatcherSaga,
     listAccountGmailLikeWatcherSaga,
+    listAccountGmailSubscribeWatcherSaga,
+    listAccountGmailViewWatcherSaga,
     patchAccountGmailCommentWatcherSaga,
-    patchAccountGmailLikeWatcherSaga
+    patchAccountGmailLikeWatcherSaga,
+    patchAccountGmailSubscribeWatcherSaga,
+    patchAccountGmailViewWatcherSaga
 } from './gmailManage/sagas';
 import { activeWarrantyOrderViewWatcherSaga, createOrderViewWatcherSaga, deleteComputerViewWatcherSaga, detailComputerViewWatcherSaga, detailDeviceRunViewWatcherSaga, detailOrderViewWatcherSaga, fetchListOrderViewWatcherSaga, fetchWarrantyViewOrderWatcherSaga, listDevicesRunViewWatcherSaga, updateManyComputerViewWatcherSaga, updateManyOrderViewWatcherSaga, updateOneComputerViewWatcherSaga, updateOrderViewWatcherSaga, viewInOrderViewWatcherSaga } from './buffView/sagas';
 
@@ -294,6 +304,18 @@ export default function* rootSaga() {
         fetchWarrantyViewOrderWatcherSaga(),
         activeWarrantyOrderViewWatcherSaga(),
         refundhWarrantyOrderWatcherSaga(),
-        setRangeDateWarrantyFilterWatcherSaga()
+        setRangeDateWarrantyFilterWatcherSaga(),
+
+        listAccountGmailViewWatcherSaga(),
+        detailAccountGmailViewWatcherSaga(),
+        createAccountGmailViewWatcherSaga(),
+        deleteAccountGmailViewWatcherSaga(),
+        patchAccountGmailViewWatcherSaga(),
+
+        listAccountGmailSubscribeWatcherSaga(),
+        detailAccountGmailSubscribeWatcherSaga(),
+        createAccountGmailSubscribeWatcherSaga(),
+        deleteAccountGmailSubscribeWatcherSaga(),
+        patchAccountGmailSubscribeWatcherSaga()
     ]);
 }

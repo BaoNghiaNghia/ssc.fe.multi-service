@@ -26,6 +26,14 @@ const {
   CREATE_ACCOUNT_GMAIL_LIKE_BEGIN,
   CREATE_ACCOUNT_GMAIL_LIKE_ERR,
   CREATE_ACCOUNT_GMAIL_LIKE_SUCCESS,
+  
+  CREATE_ACCOUNT_GMAIL_VIEW_BEGIN,
+  CREATE_ACCOUNT_GMAIL_VIEW_ERR,
+  CREATE_ACCOUNT_GMAIL_VIEW_SUCCESS,
+
+  CREATE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+  CREATE_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+  CREATE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
 
   DELETE_ACCOUNT_GMAIL_COMMENT_BEGIN,
   DELETE_ACCOUNT_GMAIL_COMMENT_ERR,
@@ -35,6 +43,14 @@ const {
   DELETE_ACCOUNT_GMAIL_LIKE_ERR,
   DELETE_ACCOUNT_GMAIL_LIKE_SUCCESS,
 
+  DELETE_ACCOUNT_GMAIL_VIEW_BEGIN,
+  DELETE_ACCOUNT_GMAIL_VIEW_ERR,
+  DELETE_ACCOUNT_GMAIL_VIEW_SUCCESS,
+
+  DELETE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+  DELETE_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+  DELETE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+
   DETAIL_ACCOUNT_GMAIL_COMMENT_BEGIN,
   DETAIL_ACCOUNT_GMAIL_COMMENT_ERR,
   DETAIL_ACCOUNT_GMAIL_COMMENT_SUCCESS,
@@ -42,6 +58,14 @@ const {
   DETAIL_ACCOUNT_GMAIL_LIKE_BEGIN,
   DETAIL_ACCOUNT_GMAIL_LIKE_ERR,
   DETAIL_ACCOUNT_GMAIL_LIKE_SUCCESS,
+
+  DETAIL_ACCOUNT_GMAIL_VIEW_BEGIN,
+  DETAIL_ACCOUNT_GMAIL_VIEW_ERR,
+  DETAIL_ACCOUNT_GMAIL_VIEW_SUCCESS,
+
+  DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+  DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+  DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
 
   LIST_ACCOUNT_GMAIL_COMMENT_BEGIN,
   LIST_ACCOUNT_GMAIL_COMMENT_ERR,
@@ -51,6 +75,14 @@ const {
   LIST_ACCOUNT_GMAIL_LIKE_ERR,
   LIST_ACCOUNT_GMAIL_LIKE_SUCCESS,
 
+  LIST_ACCOUNT_GMAIL_VIEW_BEGIN,
+  LIST_ACCOUNT_GMAIL_VIEW_ERR,
+  LIST_ACCOUNT_GMAIL_VIEW_SUCCESS,
+
+  LIST_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+  LIST_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+  LIST_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+
   PATCH_ACCOUNT_GMAIL_COMMENT_BEGIN,
   PATCH_ACCOUNT_GMAIL_COMMENT_ERR,
   PATCH_ACCOUNT_GMAIL_COMMENT_SUCCESS,
@@ -58,11 +90,62 @@ const {
   PATCH_ACCOUNT_GMAIL_LIKE_BEGIN,
   PATCH_ACCOUNT_GMAIL_LIKE_ERR,
   PATCH_ACCOUNT_GMAIL_LIKE_SUCCESS,
+
+  PATCH_ACCOUNT_GMAIL_VIEW_BEGIN,
+  PATCH_ACCOUNT_GMAIL_VIEW_ERR,
+  PATCH_ACCOUNT_GMAIL_VIEW_SUCCESS,
+
+  PATCH_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+  PATCH_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+  PATCH_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case LIST_ACCOUNT_GMAIL_VIEW_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LIST_ACCOUNT_GMAIL_VIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listAccountgGmail: data
+      };
+
+    case LIST_ACCOUNT_GMAIL_VIEW_ERR:
+      return {
+        ...state,
+        loading: false,
+        listAccountgGmail: [],
+        error: err
+      };
+
+    case LIST_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LIST_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listAccountgGmail: data
+      };
+
+    case LIST_ACCOUNT_GMAIL_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        listAccountgGmail: [],
+        error: err
+      };
+
     case LIST_ACCOUNT_GMAIL_COMMENT_BEGIN:
       return {
         ...state,
@@ -80,6 +163,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        listAccountgGmail: [],
         error: err
       };
     case DETAIL_ACCOUNT_GMAIL_COMMENT_BEGIN:
@@ -137,6 +221,25 @@ const ReportsReducer = (state = initialState, action) => {
         loading: false,
         error: err
       };
+
+    case DELETE_ACCOUNT_GMAIL_VIEW_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_ACCOUNT_GMAIL_VIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case DELETE_ACCOUNT_GMAIL_VIEW_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
     case PATCH_ACCOUNT_GMAIL_COMMENT_BEGIN:
       return {
         ...state,
@@ -174,6 +277,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        listAccountgGmail: [],
         error: err
       };
     case DETAIL_ACCOUNT_GMAIL_LIKE_BEGIN:
@@ -195,6 +299,25 @@ const ReportsReducer = (state = initialState, action) => {
         loading: false,
         error: err
       };
+    case DETAIL_ACCOUNT_GMAIL_VIEW_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_ACCOUNT_GMAIL_VIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailAccountGmail: data,
+      };
+
+    case DETAIL_ACCOUNT_GMAIL_VIEW_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
     case CREATE_ACCOUNT_GMAIL_LIKE_BEGIN:
       return {
         ...state,
@@ -208,6 +331,24 @@ const ReportsReducer = (state = initialState, action) => {
       };
 
     case CREATE_ACCOUNT_GMAIL_LIKE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+    case CREATE_ACCOUNT_GMAIL_VIEW_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CREATE_ACCOUNT_GMAIL_VIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case CREATE_ACCOUNT_GMAIL_VIEW_ERR:
       return {
         ...state,
         loading: false,
@@ -249,8 +390,24 @@ const ReportsReducer = (state = initialState, action) => {
         loading: false,
         error: err
       };
+    case PATCH_ACCOUNT_GMAIL_VIEW_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
 
+    case PATCH_ACCOUNT_GMAIL_VIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
 
+    case PATCH_ACCOUNT_GMAIL_VIEW_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
 
 
     case CHANGE_SERVICE_TYPE_IN_GMAIL_BEGIN:

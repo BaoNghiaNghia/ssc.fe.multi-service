@@ -5,6 +5,7 @@ const actions = {
     CHANGE_SERVICE_TYPE_IN_GMAIL_ERR: 'CHANGE_SERVICE_TYPE_IN_GMAIL_ERR',
 
 
+    // Comment
     LIST_ACCOUNT_GMAIL_COMMENT_BEGIN: 'LIST_ACCOUNT_GMAIL_COMMENT_BEGIN',
     LIST_ACCOUNT_GMAIL_COMMENT_SUCCESS: 'LIST_ACCOUNT_GMAIL_COMMENT_SUCCESS',
     LIST_ACCOUNT_GMAIL_COMMENT_ERR: 'LIST_ACCOUNT_GMAIL_COMMENT_ERR',
@@ -25,6 +26,7 @@ const actions = {
     PATCH_ACCOUNT_GMAIL_COMMENT_SUCCESS: 'PATCH_ACCOUNT_GMAIL_COMMENT_SUCCESS',
     PATCH_ACCOUNT_GMAIL_COMMENT_ERR: 'PATCH_ACCOUNT_GMAIL_COMMENT_ERR',
 
+    // Like
     LIST_ACCOUNT_GMAIL_LIKE_BEGIN: 'LIST_ACCOUNT_GMAIL_LIKE_BEGIN',
     LIST_ACCOUNT_GMAIL_LIKE_SUCCESS: 'LIST_ACCOUNT_GMAIL_LIKE_SUCCESS',
     LIST_ACCOUNT_GMAIL_LIKE_ERR: 'LIST_ACCOUNT_GMAIL_LIKE_ERR',
@@ -44,6 +46,49 @@ const actions = {
     PATCH_ACCOUNT_GMAIL_LIKE_BEGIN: 'PATCH_ACCOUNT_GMAIL_LIKE_BEGIN',
     PATCH_ACCOUNT_GMAIL_LIKE_SUCCESS: 'PATCH_ACCOUNT_GMAIL_LIKE_SUCCESS',
     PATCH_ACCOUNT_GMAIL_LIKE_ERR: 'PATCH_ACCOUNT_GMAIL_LIKE_ERR',
+
+    // View
+    LIST_ACCOUNT_GMAIL_VIEW_BEGIN: 'LIST_ACCOUNT_GMAIL_VIEW_BEGIN',
+    LIST_ACCOUNT_GMAIL_VIEW_SUCCESS: 'LIST_ACCOUNT_GMAIL_VIEW_SUCCESS',
+    LIST_ACCOUNT_GMAIL_VIEW_ERR: 'LIST_ACCOUNT_GMAIL_VIEW_ERR',
+
+    DETAIL_ACCOUNT_GMAIL_VIEW_BEGIN: 'DETAIL_ACCOUNT_GMAIL_VIEW_BEGIN',
+    DETAIL_ACCOUNT_GMAIL_VIEW_SUCCESS: 'DETAIL_ACCOUNT_GMAIL_VIEW_SUCCESS',
+    DETAIL_ACCOUNT_GMAIL_VIEW_ERR: 'DETAIL_ACCOUNT_GMAIL_VIEW_ERR',
+    
+    CREATE_ACCOUNT_GMAIL_VIEW_BEGIN: 'CREATE_ACCOUNT_GMAIL_VIEW_BEGIN',
+    CREATE_ACCOUNT_GMAIL_VIEW_SUCCESS: 'CREATE_ACCOUNT_GMAIL_VIEW_SUCCESS',
+    CREATE_ACCOUNT_GMAIL_VIEW_ERR: 'CREATE_ACCOUNT_GMAIL_VIEW_ERR',
+    
+    DELETE_ACCOUNT_GMAIL_VIEW_BEGIN: 'DELETE_ACCOUNT_GMAIL_VIEW_BEGIN',
+    DELETE_ACCOUNT_GMAIL_VIEW_SUCCESS: 'DELETE_ACCOUNT_GMAIL_VIEW_SUCCESS',
+    DELETE_ACCOUNT_GMAIL_VIEW_ERR: 'DELETE_ACCOUNT_GMAIL_VIEW_ERR',
+    
+    PATCH_ACCOUNT_GMAIL_VIEW_BEGIN: 'PATCH_ACCOUNT_GMAIL_VIEW_BEGIN',
+    PATCH_ACCOUNT_GMAIL_VIEW_SUCCESS: 'PATCH_ACCOUNT_GMAIL_VIEW_SUCCESS',
+    PATCH_ACCOUNT_GMAIL_VIEW_ERR: 'PATCH_ACCOUNT_GMAIL_VIEW_ERR',
+
+    // Subscribe
+    LIST_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN: 'LIST_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN',
+    LIST_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS: 'LIST_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS',
+    LIST_ACCOUNT_GMAIL_SUBSCRIBE_ERR: 'LIST_ACCOUNT_GMAIL_SUBSCRIBE_ERR',
+
+    DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN: 'DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN',
+    DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS: 'DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS',
+    DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_ERR: 'DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_ERR',
+    
+    CREATE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN: 'CREATE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN',
+    CREATE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS: 'CREATE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS',
+    CREATE_ACCOUNT_GMAIL_SUBSCRIBE_ERR: 'CREATE_ACCOUNT_GMAIL_SUBSCRIBE_ERR',
+    
+    DELETE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN: 'DELETE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN',
+    DELETE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS: 'DELETE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS',
+    DELETE_ACCOUNT_GMAIL_SUBSCRIBE_ERR: 'DELETE_ACCOUNT_GMAIL_SUBSCRIBE_ERR',
+    
+    PATCH_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN: 'PATCH_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN',
+    PATCH_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS: 'PATCH_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS',
+    PATCH_ACCOUNT_GMAIL_SUBSCRIBE_ERR: 'PATCH_ACCOUNT_GMAIL_SUBSCRIBE_ERR',
+
   
     // COMMENT
     listAccountGmailCommentBegin: (payload) => {
@@ -254,6 +299,130 @@ const actions = {
     },
 
 
+    // View
+    listAccountGmailViewBegin: (payload) => {
+      return {
+        type: actions.LIST_ACCOUNT_GMAIL_VIEW_BEGIN,
+        payload
+      };
+    },
+  
+    listAccountGmailViewSuccess: (data) => {
+      return {
+        type: actions.LIST_ACCOUNT_GMAIL_VIEW_SUCCESS,
+        data,
+      };
+    },
+  
+    listAccountGmailViewErr: (err) => {
+      return {
+        type: actions.LIST_ACCOUNT_GMAIL_VIEW_ERR,
+        err,
+      };
+    },
+    detailAccountGmailViewBegin: (payload) => {
+      return {
+        type: actions.DETAIL_ACCOUNT_GMAIL_VIEW_BEGIN,
+        payload
+      };
+    },
+  
+    detailAccountGmailViewSuccess: (data) => {
+      return {
+        type: actions.DETAIL_ACCOUNT_GMAIL_VIEW_SUCCESS,
+        data,
+      };
+    },
+  
+    detailAccountGmailViewErr: (err) => {
+      return {
+        type: actions.DETAIL_ACCOUNT_GMAIL_VIEW_ERR,
+        err,
+      };
+    },
+    createAccountGmailViewBegin: (payload) => {
+      return {
+        type: actions.CREATE_ACCOUNT_GMAIL_VIEW_BEGIN,
+        payload
+      };
+    },
+  
+    createAccountGmailViewSuccess: (data) => {
+      return {
+        type: actions.CREATE_ACCOUNT_GMAIL_VIEW_SUCCESS,
+        data,
+      };
+    },
+  
+    createAccountGmailViewErr: (err) => {
+      return {
+        type: actions.CREATE_ACCOUNT_GMAIL_VIEW_ERR,
+        err,
+      };
+    },
+    deleteAccountGmailViewBegin: (payload) => {
+      return {
+        type: actions.DELETE_ACCOUNT_GMAIL_VIEW_BEGIN,
+        payload
+      };
+    },
+  
+    deleteAccountGmailViewSuccess: (data) => {
+      return {
+        type: actions.DELETE_ACCOUNT_GMAIL_VIEW_SUCCESS,
+        data,
+      };
+    },
+  
+    deleteAccountGmailViewErr: (err) => {
+      return {
+        type: actions.DELETE_ACCOUNT_GMAIL_VIEW_ERR,
+        err,
+      };
+    },
+    patchAccountGmailViewBegin: (payload) => {
+      return {
+        type: actions.PATCH_ACCOUNT_GMAIL_VIEW_BEGIN,
+        payload
+      };
+    },
+  
+    patchAccountGmailViewSuccess: (data) => {
+      return {
+        type: actions.PATCH_ACCOUNT_GMAIL_VIEW_SUCCESS,
+        data,
+      };
+    },
+  
+    patchAccountGmailViewErr: (err) => {
+      return {
+        type: actions.PATCH_ACCOUNT_GMAIL_VIEW_ERR,
+        err,
+      };
+    },
+
+
+    // Subscribe
+    listAccountGmailSubscribeBegin: (payload) => {
+      return {
+        type: actions.LIST_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+        payload
+      };
+    },
+  
+    listAccountGmailSubscribeSuccess: (data) => {
+      return {
+        type: actions.LIST_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+        data,
+      };
+    },
+  
+    listAccountGmailSubscribeErr: (err) => {
+      return {
+        type: actions.LIST_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+        err,
+      };
+    },
 
 
     changeServiceTypeInGmailBegin: (payload) => {
