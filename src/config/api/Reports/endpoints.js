@@ -12,6 +12,7 @@ export const STATISTIC_SUBSCRIBE_REPORT_ENDPOINT = 'api/v2/report/statistic';
 export const COUNT_ERROR_SUBSCRIBE_ENDPOINT = 'api/v2/admin/getCountError';
 export const RATIO_SUBSCRIBE_AVG_ENDPOINT = 'api/v2/pfmAvg';
 
+
 // COMMENTS
 export const COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-status";
 export const COMMENT_STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-comment/api/v1/admin/stats/order-amount";
@@ -48,3 +49,13 @@ export const LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-like/api/v1/admin
 export const LIKE_STATISTIC_USER_POINT_ENDPOINT = "ytb-like/api/v1/admin/stats/user-point";
 export const LIKE_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-like/api/v1/admin/stats/total-order";
 export const LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-like/api/v1/admin/stats/order-likes-by-day";
+
+
+// View
+export const SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-like/api/v1/admin/stats/order-amount";
+export const SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-like/api/v1/admin/stats/order-likes-by-day";
+export const SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-status";
+export const SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT = "ytb-like/api/v1/admin/stats/perfomance";
+export const SUBSCRIBE_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-like/api/v1/admin/stats/total-order";
+export const SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/stats/user-order";
+export const SUBSCRIBE_STATISTIC_USER_POINT_ENDPOINT = "ytb-like/api/v1/admin/stats/user-point";

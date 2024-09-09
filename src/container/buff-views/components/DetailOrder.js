@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { FaRegEye } from "react-icons/fa6";
 import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
@@ -18,10 +19,10 @@ function DetailOrder({ setState, state }) {
 
   const [formUpdateService] = Form.useForm();
 
-  const { postLoading, detailOrderComment, userList, listService } = useSelector(state => {
+  const { postLoading, detailOrderView, userList, listService } = useSelector(state => {
     return {
-      postLoading: state?.buffComment?.loading,
-      detailOrderComment: state?.buffComment?.detailOrderComment,
+      postLoading: state?.buffView?.loading,
+      detailOrderView: state?.buffView?.detailOrderView,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
     };
@@ -31,13 +32,13 @@ function DetailOrder({ setState, state }) {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
-  const { performance } = detailOrderComment;
+  const { performance } = detailOrderView;
 
-  const findUser = userList?.filter((item) => item.id === detailOrderComment?.user_id);
-  const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
+  const findUser = userList?.filter((item) => item.id === detailOrderView?.user_id);
+  const findService = listService?.filter((item) => item.service_id === detailOrderView?.service_id);
 
   useEffect(() => {
-    formUpdateService.setFieldsValue(detailOrderComment);
+    formUpdateService.setFieldsValue(detailOrderView);
     if (findService?.length > 0) {
       formUpdateService.setFieldValue('category', findService[0]?.category);
     }
@@ -47,7 +48,7 @@ function DetailOrder({ setState, state }) {
       formUpdateService.setFieldValue('user_email', findUser[0]?.email);
     }
 
-    formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
+    formUpdateService.setFieldValue('priority', String(detailOrderView?.priority));
   });
 
   const handleCancel = () => {
@@ -65,6 +66,8 @@ function DetailOrder({ setState, state }) {
         return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
       case 'Subscribers':
         return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Views':
+        return <FaRegEye color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
       default:
         return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
     }
@@ -81,7 +84,7 @@ function DetailOrder({ setState, state }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin đơn Comment</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin đơn View</p>
                 <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin đơn</p>
               </div>
             </div>
@@ -211,13 +214,13 @@ function DetailOrder({ setState, state }) {
             <Col sm={8}>
               <Form.Item
                 name="quantity"
-                label="Lượng comment"
+                label="Lượng view"
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' addonAfter="view" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -229,7 +232,7 @@ function DetailOrder({ setState, state }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' addonAfter="view" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>

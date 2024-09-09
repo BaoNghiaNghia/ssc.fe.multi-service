@@ -144,7 +144,7 @@ function DetailViewDevices({ setState, computerState }) {
           <>
             <Row gutter="10">
               <Col sm={12}>
-                <Form.Item name="device_id" label="Device ID" rules={[{
+                <Form.Item name="device_id" label="Device ID" style={{  margin: 0, padding: 0 }} rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}>
@@ -152,20 +152,23 @@ function DetailViewDevices({ setState, computerState }) {
                 </Form.Item>
               </Col>
               <Col sm={12}>
-                <Form.Item name="id" label="ID" rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}>
+                <Form.Item 
+                    name="id"
+                    label="ID"
+                    style={{  margin: 0, padding: 0 }}
+                    rules={[{
+                        required: true,
+                        message: 'Trường không được trống'
+                    }]}
+                >
                   <Input size='small' readOnly style={{ width: '100%' }} placeholder='ID' />
                 </Form.Item>
               </Col>
             </Row>
 
-            <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Thông tin thời gian</Divider>
-
             <Row gutter="10">
               <Col sm={12}>
-                <Form.Item name="last_call_at" label="Lần cuối gọi" rules={[{
+                <Form.Item name="last_call_at" label="Lần cuối gọi" style={{  margin: 0, padding: 0 }} rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}>
@@ -173,7 +176,7 @@ function DetailViewDevices({ setState, computerState }) {
                 </Form.Item>
               </Col>
               <Col sm={12}>
-                <Form.Item name="created_at" label="Thời gian tạo" rules={[{
+                <Form.Item name="created_at" label="Thời gian tạo" style={{  margin: 0, padding: 0 }} rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}>
@@ -184,7 +187,7 @@ function DetailViewDevices({ setState, computerState }) {
 
             <Row gutter="10">
               <Col sm={24}> 
-                <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Profiles</Divider>
+                <Divider plain style={{ margin: '0 0 10px 0', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Profiles</Divider>
                 {renderExpandedRow(detailComputerView)}
               </Col>
             </Row>

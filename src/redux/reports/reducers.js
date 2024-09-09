@@ -215,6 +215,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         chartLoading: false,
+        orderByDays: [],
         error: err
       };
 
@@ -256,6 +257,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        userPoint: {},
         error: err
       };
 
@@ -276,6 +278,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        taskOfTool: {},
         error: err
       };
 
@@ -296,6 +299,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        runningUserOrder: {},
         error: err
       };
 
@@ -316,6 +320,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        runningComputer: {},
         error: err
       };
 
@@ -336,6 +341,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        statByStatusOrder: {},
         error: err
       };
 
@@ -356,9 +362,10 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        accountOnComputer: {},
         error: err
       };
-    
+
     case COMMENT_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN:
       return {
         ...state,
@@ -376,6 +383,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        accountStatus: {},
         error: err
       };
 
@@ -396,6 +404,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        performance: [],
         error: err
       };
 
@@ -416,6 +425,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         chartLoading: false,
+        // orderAmountComment: ,
         error: err
       };
 
@@ -436,6 +446,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // computerThread: ,
         error: err
       };
 
@@ -456,6 +467,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // commentByDay: ,
         error: err
       };
     case COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
@@ -475,6 +487,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // taskSuccessInMinutes: ,
         error: err
       };
     case COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN:
@@ -495,6 +508,7 @@ const ReportsReducer = (state = initialState, action) => {
         ...state,
         error: err,
         loading: false,
+        // taskDurationInMinutes: ,
       };
 
     case COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN:
@@ -514,6 +528,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // statisticComment: ,
         error: err
       };
 
@@ -535,6 +550,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // userPoint: ,
         error: err
       };
 
@@ -555,6 +571,8 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+
+        // taskOfTool: ,
         error: err
       };
 
@@ -575,6 +593,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // runningUserOrder: ,
         error: err
       };
 
@@ -595,6 +614,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // runningComputer: ,
         error: err
       };
 
@@ -615,6 +635,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // statByStatusOrder: ,
         error: err
       };
 
@@ -635,6 +656,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // accountOnComputer: ,
         error: err
       };
     
@@ -654,6 +676,7 @@ const ReportsReducer = (state = initialState, action) => {
     case LIKE_STATISTIC_ACCOUNT_STATUS_COMMENT_ERR:
       return {
         ...state,
+        // accountStatus: ,
         loading: false,
         error: err
       };
@@ -675,6 +698,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // performance: ,
         error: err
       };
 
@@ -695,6 +719,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // orderAmountLike: ,
         error: err
       };
 
@@ -715,6 +740,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // computerThread: ,
         error: err
       };
 
@@ -735,6 +761,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // commentByDay: ,
         error: err
       };
     case LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
@@ -754,6 +781,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // taskSuccessInMinutes: ,
         error: err
       };
     case LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN:
