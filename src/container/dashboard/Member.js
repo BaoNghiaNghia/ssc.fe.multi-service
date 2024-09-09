@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Tooltip, Badge, Typography } from 'antd';
+import { Row, Col, Table, Tooltip, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import moment from 'moment';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
@@ -12,7 +12,6 @@ import { MdVerifiedUser } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { BiSolidDiscount } from "react-icons/bi";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
-import { TbPencilDiscount } from "react-icons/tb";
 import { FiArrowUpLeft } from "react-icons/fi";
 import { IoPeopleOutline } from "react-icons/io5";
 import { AiOutlineTransaction } from "react-icons/ai";
@@ -597,7 +596,7 @@ function Member() {
             </>
           ),
         });
-      })
+      });
       
       return (
         <Table 

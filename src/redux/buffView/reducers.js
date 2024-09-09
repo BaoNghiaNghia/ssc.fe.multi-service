@@ -5,6 +5,8 @@ const initialState = {
   listOrderView: [],
   detailOrderView: {},
   listComputer: {},
+  listDevices: {},
+  detailSingleDevice: {},
   detailComputerView: {},
   listWarrantyOrder: [],
   viewInOrder: {},
@@ -13,6 +15,7 @@ const initialState = {
     to: currentDate
   },
   loading: false,
+  detailLoading: false,
   error: null
 };
 
@@ -83,12 +86,36 @@ const {
 
     FETCH_LIST_DEVICES_RUN_VIEW_ERR,
     FETCH_LIST_DEVICES_RUN_VIEW_SUCCESS,
-    FETCH_LIST_DEVICES_RUN_VIEW_BEGIN
+    FETCH_LIST_DEVICES_RUN_VIEW_BEGIN,
+
+    DETAIL_DEVICE_RUN_VIEW_BEGIN,
+    DETAIL_DEVICE_RUN_VIEW_ERR,
+    DETAIL_DEVICE_RUN_VIEW_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case DETAIL_DEVICE_RUN_VIEW_BEGIN:
+      return {
+        ...state,
+        detailLoading: true,
+      };
+
+    case DETAIL_DEVICE_RUN_VIEW_SUCCESS:
+      return {
+        ...state,
+        detailLoading: false,
+        detailSingleDevice: data
+      };
+
+    case DETAIL_DEVICE_RUN_VIEW_ERR:
+      return {
+        ...state,
+        detailLoading: false,
+        error: err
+      };
+
     case FETCH_WARRANTY_VIEW_ORDER_BEGIN:
       return {
         ...state,
@@ -234,7 +261,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        listComputer: data
+        listDevices: data
       };
 
     case FETCH_LIST_DEVICES_RUN_VIEW_ERR:

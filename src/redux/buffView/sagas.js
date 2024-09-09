@@ -17,27 +17,49 @@ import {
     activeWarrantyViewOrderAPI,
     fetchListWarrantyOrderAPI,
     refundWarrantyOrderAPI,
-    fetchListDevicesRunViewAPI
+    fetchListDevicesRunViewAPI,
+    detailDeviceRunViewAPI
 } from '../../config/api/BuffView/index';
 import { DEFAULT_PERPAGE, MESSSAGE_STATUS_CODE } from '../../variables';
 
 
-function* listComputerRunViewFunc(params) {
+function* detailDeviceRunViewFunc(params) {
   try {
-    const response = yield call(listComputerRunViewAPI, params?.payload);
+    console.log('------ response detail devices -------', params?.payload);
+    const response = yield call(detailDeviceRunViewAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(actions.listComputerRunViewSuccess(response?.data?.data));
+      yield put(actions.detailDeviceRunViewSuccess(response?.data?.data));
     }
   } catch (error) {
     const errorMessage = error;
 
-    yield put(actions.listComputerRunViewErr({ error: errorMessage || 'Update order view failed' }));
+    yield put(actions.detailDeviceRunViewErr({ error: errorMessage || 'Fetch detail devices view failed' }));
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Cập nhật đơn view thất bại');
+      toast.error('Fetch detail devices view failed');
+    }
+  }
+}
+
+function* listDevicesRunViewFunc(params) {
+  try {
+    const response = yield call(fetchListDevicesRunViewAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(actions.fetchListDevicesRunViewSuccess(response?.data?.data));
+    }
+  } catch (error) {
+    const errorMessage = error;
+
+    yield put(actions.fetchListDevicesRunViewErr({ error: errorMessage || 'Fetch list devices view failed' }));
+
+    if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Fetch list devices view failed');
     }
   } finally { /* empty */ }
 }
@@ -293,7 +315,6 @@ function* createOrderViewFunc(params) {
 function* fetchListOrderViewFunc(params) {
   try {
     const response = yield call(fetchListOrderViewAPI, params?.payload);
-    console.log('----- response ------', response);
 
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -433,8 +454,13 @@ export function* updateManyOrderViewWatcherSaga() {
 export function* updateOrderViewWatcherSaga() {
   yield takeLatest(actions.UPDATE_ORDER_VIEW_ADMIN_BEGIN, updateOrderViewFunc);
 }
-export function* listComputerRunViewWatcherSaga() {
-  yield takeLatest(actions.LIST_COMPUTER_RUN_VIEW_BEGIN, listComputerRunViewFunc);
+
+export function* listDevicesRunViewWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_DEVICES_RUN_VIEW_BEGIN, listDevicesRunViewFunc);
+}
+
+export function* detailDeviceRunViewWatcherSaga() {
+  yield takeLatest(actions.DETAIL_DEVICE_RUN_VIEW_BEGIN, detailDeviceRunViewFunc);
 }
 
 export function* createOrderViewWatcherSaga() {

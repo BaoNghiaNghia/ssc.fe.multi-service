@@ -143,14 +143,14 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             <Menu.Item
               icon={
                 !topMenu && (
-                  <NavLink className="menuItem-icon" to={`${path}/view/lich-su-don`}>
+                  <NavLink className="menuItem-icon" to={`${path}/view/danh-sach-may`}>
                     <FeatherIcon icon="hard-drive" />
                   </NavLink>
                 )
               }
               key="view-lich-su-don"
             >
-              <NavLink onClick={toggleCollapsed} to={`${path}/view/lich-su-don`}>
+              <NavLink onClick={toggleCollapsed} to={`${path}/view/danh-sach-may`}>
                 Danh sách máy
               </NavLink>
             </Menu.Item>

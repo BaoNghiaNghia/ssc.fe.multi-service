@@ -1,19 +1,16 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, Table, Badge, Tooltip, Button, Image } from 'antd';
-import { BiLogoGmail } from 'react-icons/bi';
-import { TbServerBolt, TbShoppingBagEdit } from 'react-icons/tb';
+import { Table, Badge, Tooltip, Button, Image, Spin, Switch } from 'antd';
+import { TbShoppingBagEdit } from 'react-icons/tb';
+import { LoadingOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
 import { AiTwotoneDelete } from "react-icons/ai";
-import { CgServer } from "react-icons/cg";
-import { LuLink2 } from "react-icons/lu";
-import { MdOutlineNumbers } from "react-icons/md";
-
 import { WiTime7 } from 'react-icons/wi';
 import moment from 'moment';
-import { Pstates, TopToolBox } from './Style';
+import { MdAlternateEmail } from 'react-icons/md';
 import DetailCommentComputer from './components/DetailCommentComputer';
 import EditCommentComputer from './components/EditCommentComputer';
 import BatchUpdateComputerComment from './components/BatchUpdateComputerComment';
@@ -22,46 +19,25 @@ import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
-import actions from '../../redux/buffComment/actions';
-import Heading from '../../components/heading/heading';
-import { getPathLocalFromString, numberWithCommas } from '../../utility/utility';
-import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
+import actions from '../../redux/buffView/actions';
+import { numberWithCommas } from '../../utility/utility';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 const columns = [
   {
-    title: 'Máy',
-    dataIndex: 'server',
-    key: 'server',
+    title: 'ID Devices',
+    dataIndex: 'devices',
+    key: 'devices',
   },
   {
-    title: 'Cấu hình',
-    dataIndex: 'configuration',
-    key: 'configuration',
-  },
-  {
-    title: 'Số luồng',
-    dataIndex: 'thread',
-    key: 'thread',
-  },
-  {
-    title: 'Limit',
-    dataIndex: 'limit',
-    key: 'limit',
-  },
-  {
-    title: 'Reset',
-    dataIndex: 'reset',
-    key: 'reset',
-  },
-  {
-    title: 'Mail',
-    dataIndex: 'mail',
-    key: 'mail',
-  },
-  {
-    title: 'Reset lần cuối',
+    title: 'Gọi lần cuối',
     dataIndex: 'lastReset',
     key: 'lastReset',
+  },
+  {
+    title: 'Ngày tạo',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
   },
 
   {
@@ -71,16 +47,42 @@ const columns = [
   },
 ];
 
+const expandColumns = [
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'Profile',
+    dataIndex: 'profile_id',
+    key: 'profile_id',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+  },
+];
+
 function ComputerRunViewOrder() {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { listServer } = useSelector((state) => {
+  const { listServer, listDevices, detailSingleDevice, detailLoading } = useSelector((state) => {
     return {
       listServer: state?.buffComment?.listComputer,
+      listDevices: state?.buffView?.listDevices,
       preIsLoading: state.reports.loading,
+      detailSingleDevice: state?.buffView?.detailSingleDevice,
+      detailLoading: state?.buffView?.detailLoading,
     }
   });
 
@@ -97,10 +99,12 @@ function ComputerRunViewOrder() {
     selectedItem: {}
   });
 
+  const [expandedRows, setExpandedRows] = useState([]); // Track expanded rows
+
   const { notData, selectedRowKeys } = state;
 
   useEffect(() => {
-    dispatch(actions.listComputerRunCommentBegin({
+    dispatch(actions.fetchListDevicesRunViewBegin({
       page: currentPage,
       limit: limitPage,
     }));
@@ -109,13 +113,13 @@ function ComputerRunViewOrder() {
 
   const handleSearch = (searchText) => {
     if (searchText) {
-      dispatch(actions.listComputerRunCommentBegin({
+      dispatch(actions.fetchListDevicesRunViewBegin({
         page: currentPage,
         limit: limitPage,
         name: searchText
       }));
     } else {
-      dispatch(actions.listComputerRunCommentBegin({
+      dispatch(actions.fetchListDevicesRunViewBegin({
         page: 1,
         limit: limitPage,
       }));
@@ -131,148 +135,136 @@ function ComputerRunViewOrder() {
     dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
   }
 
-  const fullThreadServer = listServer?.items?.filter(item => {
-    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
-    return percentThread >= 0.7;
-  })?.length;
+  // This function will only render the content
+  const renderExpandedRow = (record) => {
+    const inTableData = [];
 
-  const nonFullThreadServer = listServer?.items?.filter(item => {
-    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread / item?.thread : 0;
-    return percentThread > 0.3 && percentThread < 0.7;
-  })?.length;
-
-
-
-  const aBitThreadServer = listServer?.items?.filter(item => {
-    const percentThread = (item?.current_thread > 0 && item?.thread > 0) ? item?.current_thread/item?.thread : 0;
-    return percentThread <= 0.3;
-  })?.length;
-
-  const totalThread = listServer?.items?.reduce((total, comp) => total + comp.thread, 0) || 0;
-
-  const accountTotal = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.total_account)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountAlive = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_live)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountWork = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_run)?.reduce((accumulator, item) => accumulator + item) || 0);
-  const accountDie = (listServer?.items?.length > 0) && numberWithCommas(listServer?.items?.map(item => item?.account_dead)?.reduce((accumulator, item) => accumulator + item) || 0);
-
-  const dataSource = [];
-  if (listServer?.items?.length > 0) {
-    listServer?.items?.map((value, index) => {
-      const percentThread = (value?.current_thread > 0 && value?.thread > 0) ? value?.current_thread/value?.thread : 0;
-      const color = (value.thread !== 0) ? (percentThread >= 0.7 ? 'green' : ((percentThread < 0.7 && percentThread > 0.3) ? 'orange' : 'orangered')) : 'gray';
-
-      const fixedStyle = { display: 'inline-flex', alignItems: 'center', padding: '0px 8px', borderRadius: '13px', fontWeight: 'bold' }
-
-      const colorObj = (value.thread !== 0) ? (percentThread >= 0.7
-        ? { backgroundColor: '#0080001a', border: '1px solid green', color: 'green', ...fixedStyle }
-        : ((percentThread < 0.7 && percentThread > 0.3)
-          ? { backgroundColor: '#ffa5002e', border: '1px solid orange', color: '#d58200', ...fixedStyle }
-          : { backgroundColor: '#ff000026', border: '1px solid orangered', color: 'orangered', ...fixedStyle })) 
-          : { backgroundColor: '#efefef', border: '1px solid gray', color: 'gray', ...fixedStyle };
-
-      const styleMail = { marginRight: '12px', padding:' 0px 5px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', backgroundColor: '#e5e5e585', borderRadius: '5px'};
-
-      const threadString = `${value?.current_thread || 0} / ${value?.thread}`;
-
-      return dataSource.push({
-        key: value?.id,
-        server: (
-          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
-            {
-              getPathLocalFromString(value?.name) !== null
-                ? <img 
-                    src={require(`../../${getPathLocalFromString(value?.name)}`)}
-                    alt={getPathLocalFromString(value?.name)}
-                    width="18px"
-                    height="18px"
-                    style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
-                  />
-                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
-            }
-            <div style={{ margin: 0, padding: 0 }}>
-              <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || '...'}</p>
-              <a href={value?.link} target="_blank" rel="noopener noreferrer" style={{ margin: 0, padding: 0 }}>
-                <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'inline-flex', alignItems: 'center' }}>
-                  <LuLink2 style={{ fontWeight: 700, marginRight: '5px', color: 'gray' }}/>
-                  <span style={{ color: 'gray' }}>{`${value?.link?.substring(0, 25)  }...` || '...'}</span>
-                </div>
-              </a>
-              <div style={{ fontSize: '0.7em', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
-                <MdOutlineNumbers style={{ fontWeight: 700, marginRight: '5px', color: 'gray' }} />
-                {<strong>{value?.ip}</strong> || '...'}
-              </div>
-            </div>
-          </span>
+    detailSingleDevice?.profiles?.map((itemService, index) => {
+      const { id, email, profile_id, status } = itemService;
+      return inTableData.push({
+        key: index,
+        id: (
+          <span>{id}</span>
         ),
-        configuration: (
+        email: (
           <>
-            <div style={{ margin: 0, padding: 0 }}>
-              CPU: {value?.cpu ? <strong>{value?.cpu}</strong> : '...'}
-            </div>
-            <div style={{ margin: 0, padding: 0 }}>
-              Ram: {value?.ram ? <strong>{value?.ram}</strong> : '...'}
-            </div>
+            {email === "" ? (
+              <span style={{ color: '#cecece' }}>Chưa có</span>
+            ) : (
+              <span>
+                <MdAlternateEmail fontSize={17} style={{marginTop: '3px'}}/>
+                {email}
+              </span>
+            )}
           </>
         ),
-        thread: (
-          <span style={colorObj}>
-            <Badge dot color={color} style={{ paddingRight: '5px' }} />
-            {threadString}
+        profile_id: (
+          <span>{profile_id}</span>
+        ),
+        status: (
+          <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} checked={status} />
+        ),
+      });
+    });
+
+    return (
+      <>
+        {
+          detailLoading === true ? (
+            <Spin size='small' style={{ marginRight: '8px', color: '#ff6c00' }} indicator={<LoadingOutlined spin />} tip="Đang chạy" />
+          ) :  (
+            <Table 
+              columns={expandColumns}
+              showHeader
+              dataSource={inTableData}
+              footer={null}
+              pagination={{
+                // current: listMetaService.current_page,
+                // defaultPageSize: listMetaService.count,
+                // pageSize: listMetaService.per_page,
+                // total: listMetaService.total,
+                showSizeChanger: true,
+                pageSizeOptions: DEFAULT_PAGESIZE,
+                onChange(page, pageSize) {
+                    setCurrentPage(page);
+                    setLimitPage(pageSize);
+                },
+                position: ['bottomCenter'],
+                responsive: true,
+                totalBoundaryShowSizeChanger: 100,
+                size: "small"
+              }}
+              size='small'
+            /> 
+          )
+        }
+      </>
+    );
+  };
+
+  // Handle row expansion and dispatch actions only when a row is expanded
+  const handleExpandedRowsChange = (expandedKeys) => {
+    if (expandedKeys.length > 0) {
+      // Get the most recently expanded row (we only want one row expanded at a time)
+      const newlyExpandedRow = expandedKeys[expandedKeys.length - 1];
+      
+      const expandedRecord = listDevices?.items?.find(item => item?.id === newlyExpandedRow);
+      
+      if (expandedRecord) {
+        // Dispatch action to get details of the device
+        dispatch(actions.detailDeviceRunViewBegin(newlyExpandedRow));
+      }
+  
+      // Set only the latest expanded row to the expandedRows state
+      setExpandedRows([newlyExpandedRow]);
+    } else {
+      // No rows expanded, reset expandedRows
+      setExpandedRows([]);
+    }
+  };
+
+  const dataSource = [];
+  if (listDevices?.items?.length > 0) {
+    listDevices?.items?.map((value, index) => {
+      return dataSource.push({
+        key: value?.id,
+        devices: (
+          <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
+            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" viewBox="0 0 24 24">
+              <path fillRule="evenodd" d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4Zm12 12V5H7v11h10Zm-5 1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z" clipRule="evenodd"/>
+            </svg>
+
+            <div style={{ marginLeft: '7px', padding: 0 }}>
+              <p style={{ fontWeight: 500, margin: 0, padding: 0 }}>{value?.device_id || '...'}</p>
+            </div>
           </span>
-        ),
-        limit: (
-          <Tooltip title={(<div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>)}>
-            <span>
-              <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
-                <CgServer fontSize={17} style={{ marginRight: '5px' }}/> {value?.limit_per_day}
-              </span>
-            </span>
-          </Tooltip>
-        ),
-        reset: (
-          <span>{value?.reset_hour} h</span>
-        ),
-        mail: (
-          <Tooltip title={(
-            <>
-              <div>Mail sống: {value?.account_live || 'Chưa có' }</div>
-              <div>Mail hoạt động: {value?.account_run || 'Chưa có'}</div>
-              <div>Mail chết: {value?.account_dead || 'Chưa có'}</div>
-            </>
-          )}>
-            <Row gutter={15}>
-              <Col xs={7}>
-                <span style={styleMail}>
-                  <BiLogoGmail style={{ marginBottom: 0, marginRight: '4px' }} color={COLOR_GENERAL.primary} fontSize={19} />
-                  {value?.account_live ? numberWithCommas(value?.account_live || 0) : '0'}
-                </span>
-              </Col>
-              <Col xs={7}>
-                <span style={styleMail}>
-                  <BiLogoGmail fontSize={19} color='#27AE60' style={{ marginRight: '4px' }} />
-                  {value?.account_run ? numberWithCommas(value?.account_run || 0) : '0'}
-                </span>
-
-              </Col>
-              <Col xs={7}>
-                <span style={styleMail}>
-                  <BiLogoGmail fontSize={19} color='#EB5757' style={{ marginRight: '4px' }} />
-                  {value?.account_dead ? numberWithCommas(value?.account_dead || 0) : '0'}
-                </span>
-
-              </Col>
-            </Row>
-          </Tooltip>
         ),
         lastReset: (
           <div style={{ display: 'inline-flex', alignItems: 'center' }}>
             <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
             <span>
               {
-                value?.last_action_at ? (
-                  <span style={{ fontWeight: '500', color: '#8b8b8b' }}>{moment(value?.last_action_at).format('HH:mm DD/MM')}</span>
+                value?.last_call_at ? (
+                  <span style={{ fontWeight: '500', color: '#8b8b8b' }}>{moment(value?.last_call_at).format('HH:mm DD/MM')}</span>
                 ) : (
-                  <span style={{ color: '#cdcdcd' }}>Chưa reset</span>
+                  <span style={{ color: '#cdcdcd' }}>Chưa gọi</span>
+                )
+              }
+            </span>
+            <span style={{ marginLeft: '8px' }}>{value?.action ? (
+              <Badge count={value?.action?.toUpperCase()} color="green" style={{fontSize: '0.8em', fontWeight: 600}}/>
+            ) : null}</span>
+          </div>
+        ),
+        createdAt: (
+          <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <WiTime7 fontSize={15} color='#c3c3c3' style={{ marginRight: '4px' }}/>
+            <span>
+              {
+                value?.created_at ? (
+                  <span style={{ fontWeight: '500', color: '#8b8b8b' }}>{moment(value?.created_at).format('HH:mm DD/MM')}</span>
+                ) : (
+                  <span style={{ color: '#cdcdcd' }}>Chưa gọi</span>
                 )
               }
             </span>
@@ -364,13 +356,6 @@ function ComputerRunViewOrder() {
     });
   }
 
-  // const rowSelection = {
-  //   getCheckboxProps: (record) => ({
-  //     disabled: record.name === 'Disabled User',
-  //     name: record.name,
-  //   }),
-  // };
-
   const onSelectChange = (selectedRowKey) => {
     setState({ ...state, selectedRowKeys: selectedRowKey });
   };
@@ -410,7 +395,7 @@ function ComputerRunViewOrder() {
         setState={setState}
       />
       <PageHeader
-        title="Quản lý Server Comment"
+        title="Quản lý Devices"
         buttons={[
           <div className="table-toolbox-actions">
             {
@@ -443,89 +428,6 @@ function ComputerRunViewOrder() {
         ]}
       />
       <Main>
-        <Pstates>
-          <div
-            className="growth-upward"
-            role="button"
-          >
-            <p style={{ fontWeight: 700 }}>Servers</p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {listServer?.meta?.total || 0}
-            </Heading>
-          </div>
-          <div
-            className="growth-upward"
-            role="button"
-          >
-            <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='green' fontSize={17} style={{ marginRight: '5px' }} />Server luồng đủ</p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              <span style={{ color: 'green !important' }}>{fullThreadServer || 0}</span>
-            </Heading>
-          </div>
-          <div
-            className="growth-downward"
-            role="button"
-          >
-            <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color='orange' fontSize={17} style={{ marginRight: '5px' }} />Server luồng trung bình</p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {nonFullThreadServer || 0}
-            </Heading>
-          </div>
-          <div
-            className="growth-upward"
-            role="button"
-          >
-            <p style={{ display: 'inline-flex', alignItems: 'center' }}><TbServerBolt color="red" fontSize={17} style={{ marginRight: '5px' }} />Server luồng thiếu</p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {aBitThreadServer || 0}
-            </Heading>
-          </div>
-          <div
-            className="growth-upward active"
-            role="button"
-          >
-            <p style={{ fontWeight: 700 }}><span>Tổng Mail</span></p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {accountTotal || 0}
-            </Heading>
-          </div>
-          <div
-            className="growth-upward"
-            role="button"
-          >
-            <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color={COLOR_GENERAL.primary} /><span>Mail sống</span></p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {accountAlive || 0}
-            </Heading>
-          </div>
-          <div
-            className="growth-upward"
-            role="button"
-          >
-            <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#27AE60' /><span>Mail hoạt động</span></p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {accountWork || 0}
-            </Heading>
-          </div>
-          <div
-            className="growth-upward"
-            role="button"
-          >
-            <p style={{ display: 'inline-flex', alignItems: 'center' }}><BiLogoGmail style={{ marginRight: '5px' }} fontSize={19} color='#EB5757' /><span>Mail chết</span></p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {accountDie || 0}
-            </Heading>
-          </div>
-          <div
-            className="growth-upward"
-            role="button"
-          >
-            <p style={{ fontWeight: 700 }}>Tổng Luồng</p>
-            <Heading as="h1" style={{ margin: 0, padding: 0 }}>
-              {totalThread}
-            </Heading>
-          </div>
-        </Pstates>
         <Cards headless>
           <TableWrapper>
             <Table
@@ -540,7 +442,13 @@ function ComputerRunViewOrder() {
                     Chưa có server
                   </span>
                 </div>
-              ) }}
+              )}}
+              expandable={{
+                expandedRowRender: renderExpandedRow, // Only render content here
+                rowExpandable: (record) => true, // Enable expanding for all rows
+                expandedRowKeys: expandedRows, // Use expandedRowKeys here
+                onExpandedRowsChange: handleExpandedRowsChange, // Trigger dispatch and update expanded rows
+              }}
               pagination={{
                 current: listServer?.meta?.current_page,
                 defaultPageSize: listServer?.meta?.count,

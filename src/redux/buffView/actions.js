@@ -67,7 +67,31 @@ const actions = {
     FETCH_LIST_DEVICES_RUN_VIEW_SUCCESS: 'FETCH_LIST_DEVICES_RUN_VIEW_SUCCESS',
     FETCH_LIST_DEVICES_RUN_VIEW_ERR: 'FETCH_LIST_DEVICES_RUN_VIEW_ERR',
 
+    DETAIL_DEVICE_RUN_VIEW_BEGIN: 'DETAIL_DEVICE_RUN_VIEW_BEGIN',
+    DETAIL_DEVICE_RUN_VIEW_SUCCESS: 'DETAIL_DEVICE_RUN_VIEW_SUCCESS',
+    DETAIL_DEVICE_RUN_VIEW_ERR: 'DETAIL_DEVICE_RUN_VIEW_ERR',
+
     
+    detailDeviceRunViewBegin: (payload) => {
+        return {
+          type: actions.DETAIL_DEVICE_RUN_VIEW_BEGIN,
+          payload
+        };
+    },
+
+    detailDeviceRunViewSuccess: (data) => {
+        return {
+            type: actions.DETAIL_DEVICE_RUN_VIEW_SUCCESS,
+            data,
+        }
+    },
+
+    detailDeviceRunViewErr: (err) => {
+        return {
+            type: actions.DETAIL_DEVICE_RUN_VIEW_ERR,
+            err,
+        }
+    },
     fetchListDevicesRunViewBegin: (payload) => {
         return {
           type: actions.FETCH_LIST_DEVICES_RUN_VIEW_BEGIN,

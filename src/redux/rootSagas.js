@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
 
-import { 
+import {
     fetchUserProfileSaga,
     loginWatcherSaga,
     logoutWatcherSaga,
@@ -76,7 +76,7 @@ import {
     generateApiKeyMemberWatcherSaga
 } from './member/sagas';
 
-import { 
+import {
     changeTabTypeMemberWatcherSaga,
     createGoogleKeyWatcherSaga,
     createServicesWatcherSaga,
@@ -149,7 +149,7 @@ import {
     patchAccountGmailCommentWatcherSaga,
     patchAccountGmailLikeWatcherSaga
 } from './gmailManage/sagas';
-import { activeWarrantyOrderViewWatcherSaga, createOrderViewWatcherSaga, deleteComputerViewWatcherSaga, detailComputerViewWatcherSaga, detailOrderViewWatcherSaga, fetchListOrderViewWatcherSaga, fetchWarrantyViewOrderWatcherSaga, listComputerRunViewWatcherSaga, updateManyComputerViewWatcherSaga, updateManyOrderViewWatcherSaga, updateOneComputerViewWatcherSaga, updateOrderViewWatcherSaga, viewInOrderViewWatcherSaga } from './buffView/sagas';
+import { activeWarrantyOrderViewWatcherSaga, createOrderViewWatcherSaga, deleteComputerViewWatcherSaga, detailComputerViewWatcherSaga, detailDeviceRunViewWatcherSaga, detailOrderViewWatcherSaga, fetchListOrderViewWatcherSaga, fetchWarrantyViewOrderWatcherSaga, listDevicesRunViewWatcherSaga, updateManyComputerViewWatcherSaga, updateManyOrderViewWatcherSaga, updateOneComputerViewWatcherSaga, updateOrderViewWatcherSaga, viewInOrderViewWatcherSaga } from './buffView/sagas';
 
 export default function* rootSaga() {
     return yield all([
@@ -283,7 +283,8 @@ export default function* rootSaga() {
         updateOneComputerViewWatcherSaga(),
         updateManyOrderViewWatcherSaga(),
         updateOrderViewWatcherSaga(),
-        listComputerRunViewWatcherSaga(),
+        listDevicesRunViewWatcherSaga(),
+        detailDeviceRunViewWatcherSaga(),
         createOrderViewWatcherSaga(),
         fetchListOrderViewWatcherSaga(),
         detailOrderViewWatcherSaga(),

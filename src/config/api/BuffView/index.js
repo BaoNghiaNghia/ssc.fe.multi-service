@@ -54,7 +54,8 @@ const activeWarrantyViewOrderAPI = (query) => BuffViewAPI.createBasicCRUDEndpoin
 const refundWarrantyOrderAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: REFUND_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
 
 // Devices
-const fetchListDevicesRunViewAPI = () => BuffViewAPI.createBasicCRUDEndpoints({ name: DEVICES_RUN_VIEW_ENDPOINT }).get();
+const fetchListDevicesRunViewAPI = (query) => BuffViewAPI.createBasicCRUDEndpoints({ name: DEVICES_RUN_VIEW_ENDPOINT }).get(query);
+const detailDeviceRunViewAPI = (id) => BuffViewAPI.createBasicCRUDEndpoints({ name: DEVICES_RUN_VIEW_ENDPOINT }).getOne(id);
 
 export {
     fetchListOrderViewAPI,
@@ -71,5 +72,6 @@ export {
     fetchListWarrantyOrderAPI,
     activeWarrantyViewOrderAPI,
     refundWarrantyOrderAPI,
-    fetchListDevicesRunViewAPI
+    fetchListDevicesRunViewAPI,
+    detailDeviceRunViewAPI
 }
