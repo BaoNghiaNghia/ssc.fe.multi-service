@@ -1,14 +1,15 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BsFire } from "react-icons/bs";
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Tooltip, Switch } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
+import { FaEye, FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification, GrServicePlay  } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY, REGION_IDENTIFIER } from '../../../variables';
+import { LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE } from '../../../variables';
 
 const { Option } = Select;
 
@@ -29,7 +30,7 @@ function AddService({ serviceState, setState }) {
   const [state, setStateModal] = useState({
     values: null,
     rest_api: true,
-    category: 'Comments'
+    category: SERVICE_TYPE.COMMENT.description
   });
 
   const handleSubmit = (values) => {
@@ -53,25 +54,40 @@ function AddService({ serviceState, setState }) {
     try {
       formCreateService.validateFields()
         .then((values) => {
-          const requestData = {
-            category: formCreateService.getFieldValue('category'),
-            platform: formCreateService.getFieldValue('platform') || 'Youtube',
+          let requestData = {};
+
+          const generalRequestData = {
+            enabled: true,
+            priority: formCreateService.getFieldValue('priority') === 'true',
+            price_per_10: formCreateService.getFieldValue('price_per_10'),
+            name: formCreateService.getFieldValue('name'),
+            description: formCreateService.getFieldValue('description'),
             service_type: formCreateService.getFieldValue('service_type'),
             type: formCreateService.getFieldValue('type'),
-            description: formCreateService.getFieldValue('description'),
-            enabled: true,
+            category: formCreateService.getFieldValue('category'),
+            platform: formCreateService.getFieldValue('platform') || 'Youtube',
+
             min: formCreateService.getFieldValue('min'),
             max: formCreateService.getFieldValue('max'),
             geo: formCreateService.getFieldValue('geo'),
             max_threads: formCreateService.getFieldValue('max_threads'),
             max_threads_3000: formCreateService.getFieldValue('max_threads_3000'),
             max_threads_5000: formCreateService.getFieldValue('max_threads_5000'),
-            name: formCreateService.getFieldValue('name'),
-            price_per_10: formCreateService.getFieldValue('price_per_10'),
-            priority: formCreateService.getFieldValue('priority') === 'true',
             rest_api: state?.rest_api
           }
-
+          
+          if (SERVICE_TYPE.VIEW.description === values?.category) {
+            requestData = {
+              ...generalRequestData,
+              service_view_type: values?.service_view_type,
+              max_view_time: values?.max_view_time,
+              min_view_time: values?.min_view_time,
+            };
+          } else {
+            requestData = {
+              ...generalRequestData
+            };
+          }
           dispatch(actions.createServiceBegin(requestData));
 
           setState({
@@ -115,6 +131,8 @@ function AddService({ serviceState, setState }) {
         return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
       case 'Subscribers':
         return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      case 'Views':
+        return <FaEye color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
       default:
         return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
     }
@@ -132,7 +150,7 @@ function AddService({ serviceState, setState }) {
               <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                 <GrServicePlay fontSize={40} color='#a1a1a1' style={{ margin: '0 20px 0 0', padding: '5px', border: '1px solid #e3e3e3', borderRadius: '10px' }} />
                 <div>
-                  <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm dịch vụ</p>
+                  <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm dịch vụ mới</p>
                   <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho dịch vụ mới</p>
                 </div>
               </div>
@@ -204,7 +222,7 @@ function AddService({ serviceState, setState }) {
                         <Option key={service?.category} value={service?.category}>
                           <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                             { iconService(service) }
-                            <span style={{ fontWeight: '800' }}>{service?.category}</span>
+                            <span style={{ fontWeight: '600' }}>{service?.category}</span>
                           </div>
                         </Option>
                       )
@@ -231,18 +249,19 @@ function AddService({ serviceState, setState }) {
                 <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Tên dịch vụ' />
               </Form.Item>
             </Col>
+
             <Col sm={6}>
               <Form.Item 
                 name="geo" 
                 label="Geo"
-                initialValue="vn"
+                initialValue={REGION_IDENTIFIER[0]?.shortcode}
                 style={{ margin: '0px', padding: '0px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Select style={{ width: '100%' }} defaultValue="vn" size='small'>
+                <Select style={{ width: '100%' }} defaultValue={REGION_IDENTIFIER[0]?.shortcode} size='small'>
                   {
                     REGION_IDENTIFIER?.map(region => (
                       <Option value={region?.shortcode}>
@@ -302,14 +321,15 @@ function AddService({ serviceState, setState }) {
               }]}>
                 <Select style={{ width: '100%' }} size='small'>
                   <Option value="false">Không</Option>
-                  <Option value="true">Có</Option>
+                  <Option value="true">
+                    <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
+                    Có
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>
           </Row>
-
           <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình luồng</Divider>
-
           <Row gutter="10">
             <Col sm={8}>
               <Form.Item style={{ margin: '0px', padding: '0px' }} name="max_threads" label="Luồng < 3000" rules={[{
@@ -336,6 +356,58 @@ function AddService({ serviceState, setState }) {
               </Form.Item>
             </Col>
           </Row>
+          {
+            state?.category === SERVICE_TYPE.VIEW.description ? (
+              <>
+                <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình view</Divider>
+                <Row gutter="10">
+                  <Col sm={8}>
+                    <Form.Item 
+                      name="service_view_type" 
+                      label="Loại view"
+                      initialValue={SERVICE_VIEW_TYPE[0].type}
+                      style={{ margin: '0px', padding: '0px' }}
+                      rules={[{
+                        required: true,
+                        message: 'Trường không được trống'
+                      }]}
+                    >
+                      <Select style={{ width: '100%' }} defaultValue={SERVICE_VIEW_TYPE[0].type} size='small'>
+                        {SERVICE_VIEW_TYPE?.map((viewItem) => (
+                          <Option key={viewItem?.type} value={viewItem?.type}>
+                            <div style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '5px' }}>
+                              <div
+                                style={{ width: '22px', height: '22px' }}
+                                // eslint-disable-next-line react/no-danger
+                                dangerouslySetInnerHTML={{ __html: viewItem?.svg }}
+                              />
+                              <span style={{ marginLeft: '10px' }}>{viewItem?.description}</span>
+                            </div>
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col sm={8}>
+                    <Form.Item style={{ margin: '0px', padding: '0px' }} name="min_view_time" label="Thời gian xem (MIN)" rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}>
+                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                    </Form.Item>
+                  </Col>
+                  <Col sm={8}>
+                    <Form.Item style={{ margin: '0px', padding: '0px' }} name="max_view_time" label="Thời gian xem (MAX)" rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}>
+                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </>
+            ) : null
+          }
 
           <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Số lượng {state?.category} & Giá</Divider>
               

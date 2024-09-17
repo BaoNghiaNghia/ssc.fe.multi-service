@@ -322,9 +322,13 @@ function SettingAndService() {
         </>,
         threads: <>
           <Tooltip title={
-            <span className="customer-name">{numberWithCommas(max_threads)} / {numberWithCommas(max_threads_3000)} / {numberWithCommas(max_threads_5000)}</span>
+            <span className="customer-name">
+              {numberWithCommas(max_threads) || ' - '} / {numberWithCommas(max_threads_3000) || ' - '} / {numberWithCommas(max_threads_5000) || ' - '}
+            </span>
           }>
-            <span className="customer-name">{numberWithCommas(max_threads)} / {numberWithCommas(max_threads_3000)} / {numberWithCommas(max_threads_5000)}</span>
+            <span className="customer-name">
+              {numberWithCommas(max_threads) || ' - '} / {numberWithCommas(max_threads_3000) || ' - '} / {numberWithCommas(max_threads_5000) || ' - '}
+            </span>
           </Tooltip>
         </>,
         rest_api: (

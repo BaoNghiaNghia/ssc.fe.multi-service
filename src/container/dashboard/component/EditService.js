@@ -3,13 +3,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BsFire } from "react-icons/bs";
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY, REGION_IDENTIFIER } from '../../../variables/index';
+import { LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE } from '../../../variables/index';
 
 const { Option } = Select;
 
@@ -21,7 +22,7 @@ function EditService({ isOpen, setState, state }) {
     return {
       postLoading: item?.settingService?.postLoading,
       detailService: item?.settingService?.detailService,
-      typeService: state?.reports?.typeService
+      typeService: item?.reports?.typeService
     };
   });
 
@@ -40,7 +41,9 @@ function EditService({ isOpen, setState, state }) {
     try {
       formUpdateService.validateFields()
         .then((values) => {
-          const requestData = {
+          let requestData = {};
+
+          const generalRequestData = {
             id: detailService.id,
             category: values?.category,
             platform: values?.platform || 'Youtube',
@@ -58,6 +61,19 @@ function EditService({ isOpen, setState, state }) {
             price_per_10: values?.price_per_10,
             priority: values?.priority === 'true',
             rest_api: values?.rest_api
+          }
+
+          if (SERVICE_TYPE.VIEW.description === values?.category) {
+            requestData = {
+              ...generalRequestData,
+              service_view_type: values?.service_view_type,
+              max_view_time: values?.max_view_time,
+              min_view_time: values?.min_view_time,
+            };
+          } else {
+            requestData = {
+              ...generalRequestData
+            };
           }
 
           dispatch(actions.updateServiceBegin(requestData));
@@ -235,7 +251,9 @@ function EditService({ isOpen, setState, state }) {
               >
                 <Select style={{ width: '100%' }} size='small'>
                   <Option value={false}>Không</Option>
-                  <Option value={true}>Có</Option>
+                  <Option value={true}>
+                    Có
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -259,7 +277,7 @@ function EditService({ isOpen, setState, state }) {
 
           <Row gutter="10">
             <Col sm={9}>
-              <Form.Item name="service_type"  label="Loại dịch vụ" rules={[{
+              <Form.Item name="service_type" style={{ margin: '0px', padding: '0px' }} label="Loại dịch vụ" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -273,6 +291,7 @@ function EditService({ isOpen, setState, state }) {
             <Col sm={9}>
               <Form.Item
                 name="type"
+                style={{ margin: '0px', padding: '0px' }}
                 label="Loại"
                 rules={[{
                   required: true,
@@ -284,23 +303,26 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={6}>
-              <Form.Item name="priority"  label="Ưu tiên" rules={[{
+              <Form.Item name="priority" style={{ margin: '0px', padding: '0px' }} label="Ưu tiên" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
                 <Select style={{ width: '100%' }} size='small'>
                   <Option value="false">Không</Option>
-                  <Option value="true">Có</Option>
+                  <Option value="true">
+                    <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
+                    Có
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>
           </Row>
 
-          <Divider plain style={{ marginTop: 0, padding: 0, fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
+          <Divider plain style={{ marginTop: 0, padding: 0, fontSize: '0.9em', color: 'gray' }}>Cấu hình luồng</Divider>
 
           <Row gutter="10">
             <Col sm={8}>
-              <Form.Item name="max_threads" initialValue={ state?.max_threads } label="Luồng < 3000" rules={[{
+              <Form.Item name="max_threads" style={{ margin: '0px', padding: '0px' }} initialValue={ state?.max_threads } label="Luồng < 3000" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -308,7 +330,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max_threads_3000"  label="3000 < Luồng < 5000" rules={[{
+              <Form.Item name="max_threads_3000" style={{ margin: '0px', padding: '0px' }} label="3000 < Luồng < 5000" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -316,7 +338,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max_threads_5000"  label="5000 < Luồng" rules={[{
+              <Form.Item name="max_threads_5000" style={{ margin: '0px', padding: '0px' }} label="5000 < Luồng" rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -324,9 +346,62 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
           </Row>
+          {
+            (detailService && (detailService?.category === SERVICE_TYPE.VIEW.description)) ? (
+              <>
+                <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình view</Divider>
+                <Row gutter="10">
+                  <Col sm={8}>
+                    <Form.Item 
+                      name="service_view_type" 
+                      label={`Loại ${detailService?.category}`}
+                      initialValue={SERVICE_VIEW_TYPE[0].type}
+                      style={{ margin: '0px', padding: '0px' }}
+                      rules={[{
+                        required: true,
+                        message: 'Trường không được trống'
+                      }]}
+                    >
+                      <Select style={{ width: '100%' }} defaultValue={SERVICE_VIEW_TYPE[0].type} size='small'>
+                        {SERVICE_VIEW_TYPE?.map((viewItem) => (
+                          <Option key={viewItem?.type} value={viewItem?.type}>
+                            <div style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '5px' }}>
+                              <div
+                                style={{ width: '22px', height: '22px' }}
+                                // eslint-disable-next-line react/no-danger
+                                dangerouslySetInnerHTML={{ __html: viewItem?.svg }}
+                              />
+                              <span style={{ marginLeft: '10px' }}>{viewItem?.description}</span>
+                            </div>
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col sm={8}>
+                    <Form.Item style={{ margin: '0px', padding: '0px' }} name="min_view_time" label="Thời gian xem (MIN)" rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}>
+                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                    </Form.Item>
+                  </Col>
+                  <Col sm={8}>
+                    <Form.Item style={{ margin: '0px', padding: '0px' }} name="max_view_time" label="Thời gian xem (MAX)" rules={[{
+                      required: true,
+                      message: 'Trường không được trống'
+                    }]}>
+                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </>
+            ) : null
+          }
+          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Số lượng {state?.category} & Giá</Divider>
           <Row gutter="10" >
             <Col sm={8}>
-              <Form.Item name="min" style={{ margin: 0 }}  label={`Số ${formUpdateService.getFieldValue('service_type')} (MIN)`} rules={[{
+              <Form.Item name="min" style={{ margin: '0px', padding: '0px' }}  label={`Số ${detailService?.category} (MIN)`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -334,7 +409,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="max" style={{ margin: 0 }}  label={`Số ${formUpdateService.getFieldValue('service_type')} (MAX)`} rules={[{
+              <Form.Item name="max" style={{ margin: '0px', padding: '0px' }}  label={`Số ${detailService?.category} (MAX)`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>
@@ -342,7 +417,7 @@ function EditService({ isOpen, setState, state }) {
               </Form.Item>
             </Col>
             <Col sm={8}>
-              <Form.Item name="price_per_10" style={{ margin: 0 }}  label={`Prices / 10 ${formUpdateService.getFieldValue('service_type')}`} rules={[{
+              <Form.Item name="price_per_10" style={{ margin: '0px', padding: '0px' }}  label={`Prices / 10 ${detailService?.category}`} rules={[{
                 required: true,
                 message: 'Trường không được trống'
               }]}>

@@ -274,29 +274,31 @@ const ThemeLayout = (WrappedComponent) => {
                 </Col>
                 <Col lg={6} md={10} sm={0} xs={0}>
                   {topMenu && window.innerWidth > 991 ? (
-                    <TopMenuSearch>
-                      <div className="top-right-wrap d-flex">
-                        <Link
-                          className={`${activeSearch ? 'search-toggle active' : 'search-toggle'}`}
-                          onClick={() => {
-                            toggleSearch();
-                          }}
-                          to="#"
-                        >
-                          <FeatherIcon icon="search" />
-                          <FeatherIcon icon="x" />
-                        </Link>
-                        <div className={`${activeSearch ? 'topMenu-search-form show' : 'topMenu-search-form'}`}>
-                          <form action="">
-                            <span className="search-icon">
-                              <FeatherIcon icon="search" />
-                            </span>
-                            <input type="text" name="search" />
-                          </form>
+                    <>
+                      <TopMenuSearch>
+                        <div className="top-right-wrap d-flex">
+                          <Link
+                            className={`${activeSearch ? 'search-toggle active' : 'search-toggle'}`}
+                            onClick={() => {
+                              toggleSearch();
+                            }}
+                            to="#"
+                          >
+                            <FeatherIcon icon="search" />
+                            <FeatherIcon icon="x" />
+                          </Link>
+                          <div className={`${activeSearch ? 'topMenu-search-form show' : 'topMenu-search-form'}`}>
+                            <form action="">
+                              <span className="search-icon">
+                                <FeatherIcon icon="search" />
+                              </span>
+                              <input type="text" name="search" />
+                            </form>
+                          </div>
+                          <AuthInfo />
                         </div>
-                        <AuthInfo />
-                      </div>
-                    </TopMenuSearch>
+                      </TopMenuSearch>
+                    </>
                   ) : (
                     <AuthInfo />
                   )}
@@ -314,20 +316,6 @@ const ThemeLayout = (WrappedComponent) => {
                 </Col>
               </Row>
             </Header>
-            {/* <div className="header-more">
-              <Row>
-                <Col md={0} sm={12} xs={12}>
-                  <div className="small-screen-headerRight">
-                    <SmallScreenSearch hide={searchHide} darkMode={darkMode}>
-                      <HeaderSearch rtl={rtl} />
-                    </SmallScreenSearch>
-                    <SmallScreenAuthInfo hide={hide} darkMode={darkMode}>
-                      <AuthInfo rtl={rtl} />
-                    </SmallScreenAuthInfo>
-                  </div>
-                </Col>
-              </Row>
-            </div> */}
             <Layout>
               {!topMenu || window.innerWidth <= 991 ? (
                 <ThemeProvider theme={darkTheme}>
