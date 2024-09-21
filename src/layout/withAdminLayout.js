@@ -272,33 +272,31 @@ const ThemeLayout = (WrappedComponent) => {
                     </>
                   )}
                 </Col>
-                <Col lg={6} md={10} sm={0} xs={0}>
+                <Col lg={6} md={10} sm={4} xs={0}>
                   {topMenu && window.innerWidth > 991 ? (
-                    <>
-                      <TopMenuSearch>
-                        <div className="top-right-wrap d-flex">
-                          <Link
-                            className={`${activeSearch ? 'search-toggle active' : 'search-toggle'}`}
-                            onClick={() => {
-                              toggleSearch();
-                            }}
-                            to="#"
-                          >
-                            <FeatherIcon icon="search" />
-                            <FeatherIcon icon="x" />
-                          </Link>
-                          <div className={`${activeSearch ? 'topMenu-search-form show' : 'topMenu-search-form'}`}>
-                            <form action="">
-                              <span className="search-icon">
-                                <FeatherIcon icon="search" />
-                              </span>
-                              <input type="text" name="search" />
-                            </form>
-                          </div>
-                          <AuthInfo />
+                    <TopMenuSearch>
+                      <div className="top-right-wrap d-flex">
+                        <Link
+                          className={`${activeSearch ? 'search-toggle active' : 'search-toggle'}`}
+                          onClick={() => {
+                            toggleSearch();
+                          }}
+                          to="#"
+                        >
+                          <FeatherIcon icon="search" />
+                          <FeatherIcon icon="x" />
+                        </Link>
+                        <div className={`${activeSearch ? 'topMenu-search-form show' : 'topMenu-search-form'}`}>
+                          <form action="">
+                            <span className="search-icon">
+                              <FeatherIcon icon="search" />
+                            </span>
+                            <input type="text" name="search" />
+                          </form>
                         </div>
-                      </TopMenuSearch>
-                    </>
+                        <AuthInfo />
+                      </div>
+                    </TopMenuSearch>
                   ) : (
                     <AuthInfo />
                   )}

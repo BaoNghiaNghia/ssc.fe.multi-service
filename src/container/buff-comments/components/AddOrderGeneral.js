@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import actionsComment from '../../../redux/buffComment/actions';
 import actionsLike from '../../../redux/buffLike/actions';
 import actionsSubscribe from '../../../redux/buffSubscribe/actions';
+import actionsView from '../../../redux/buffView/actions';
 
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
@@ -242,6 +243,18 @@ function AddOrderGeneral() {
     });
   }
 
+  const handleSubmitView = () => {
+    formCreateOrder.validateFields()
+      .then((values) => {
+        dispatch(actionsView.createOrderViewAdminBegin(values));
+        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+        formCreateOrder.resetFields();
+      })
+      .catch((err) => {
+        console.error("handle Real Error: ", err);
+    });
+  }
+
   const handleOk = () => {
     try {
       switch (stateCurr?.selectedCategory) {
@@ -255,6 +268,10 @@ function AddOrderGeneral() {
   
         case 'Subscribers':
           handleSubmitSubscribe();
+          break;
+
+        case 'Views':
+          handleSubmitView();
           break;
   
         default:
@@ -441,28 +458,40 @@ function AddOrderGeneral() {
             </Form.Item>
           </Col>
           <Col sm={5}>
-            <Tooltip title={`Min: ${detailService?.min} & Max:${detailService?.max}`} placement='left'>
+            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement='left'>
               <Form.Item
                 name="quantity"
                 label="Số like"
                 hasFeedback
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Trường không được trống'
+                  },
+                  {
+                    type: 'number',
+                    min: detailService?.min,
+                    message: `Số like phải lớn hơn hoặc bằng ${detailService?.min}`
+                  },
+                  {
+                    type: 'number',
+                    max: detailService?.max,
+                    message: `Số like phải nhỏ hơn hoặc bằng ${detailService?.max}`
+                  }
+                ]}
               >
-                <InputNumber 
+                <InputNumber
                   size='small'
-                  style={{ width: '100% !important' }}
+                  style={{ width: '100%' }}
                   onChange={(value) => {
                     setStateCurr({
                       ...stateCurr,
                       amountChange: value
-                    })
+                    });
                   }}
                   min={detailService?.min}
                   max={detailService?.max}
-                  placeholder={`Min: ${detailService?.min} & Max:${detailService?.max}`}
+                  placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
                 />
               </Form.Item>
             </Tooltip>
@@ -474,8 +503,11 @@ function AddOrderGeneral() {
   const formCreateViewService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
+        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
+          Thông tin dịch vụ
+        </Divider>
         <Row gutter="10" style={{ marginBottom: '7px' }}>
+          {/* Link input field */}
           <Col sm={19}>
             <Form.Item
               name="link"
@@ -491,38 +523,74 @@ function AddOrderGeneral() {
                   validator: async (_, link) => {
                     if (link) {
                       const { status, help } = await handleValidateLink(link);
-                      if (!status) { return Promise.reject(help); }
+                      if (!status) {
+                        return Promise.reject(new Error(help));
+                      }
                     }
+                    return Promise.resolve();
                   },
                 },
               ]}
             >
-              <Input size='small' allowClear style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
+              <Input 
+                size="small" 
+                allowClear
+                
+                style={{ fontWeight: 'bold' }} 
+                placeholder="Thêm liên kết" 
+              />
             </Form.Item>
           </Col>
+  
+          {/* Quantity input field */}
           <Col sm={5}>
-            <Tooltip title={`Min: ${detailService?.min} & Max:${detailService?.max}`} placement='left'>
+            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
               <Form.Item
                 name="quantity"
-                label="Số view"
+                label="Số lượng"
                 hasFeedback
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Trường này không được trống',
+                  },
+                  {
+                    validator: (_, value) => {
+                      console.log ('--- input quantity ---', value);
+
+                      const minQuantity = detailService?.min;  // Default minimum value
+                      const maxQuantity = detailService?.max;  // Default maximum value
+
+                      // Ensure value is a valid number
+                      if (value === undefined || value === null || Number.isNaN(Number(value))) {
+                        return Promise.reject('Giá trị phải là số hợp lệ');
+                      }
+                      
+
+                      // Check if the value is within the allowed range
+                      if (value < minQuantity) {
+                        return Promise.reject(`Số lượng tối thiểu là ${minQuantity}`);
+                      }
+                      if (value > maxQuantity) {
+                        return Promise.reject(`Số lượng tối đa là ${maxQuantity}`);
+                      }
+
+                      // If everything is valid, resolve the promise
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
-                <InputNumber 
-                  size='small'
-                  style={{ width: '100% !important' }}
+                <InputNumber
+                  size="small"
                   onChange={(value) => {
                     setStateCurr({
                       ...stateCurr,
                       amountChange: value
-                    })
+                    });
                   }}
-                  min={detailService?.min}
-                  max={detailService?.max}
-                  placeholder={`Min: ${detailService?.min} & Max:${detailService?.max}`}
+                  style={{ width: '100%' }}
+                  placeholder="Nhập số lượng"
                 />
               </Form.Item>
             </Tooltip>
@@ -530,7 +598,8 @@ function AddOrderGeneral() {
         </Row>
       </>
     );
-  }
+  };
+  
 
   const switchServiceSelection = (type) => {
     switch (type) {

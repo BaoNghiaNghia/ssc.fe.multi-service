@@ -11,19 +11,31 @@ const ellipsis = (text, size) => {
   return `${text.split(' ').slice(0, size).join(' ')}...`;
 };
 
-const numberWithCommas = (x) => {
-  return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+function numberWithCommas(x) {
+  if (x == null) return ''; // Handle null or undefined
+  const rounded = Math.round(x * 1000) / 1000; // Round to 2 decimal places
+  const parts = rounded.toString().split('.'); // Split the number into integer and decimal parts
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Format the integer part
+  return parts.join('.'); // Rejoin the parts
 }
 
 const numberWithCommasCurrency = (x) => {
-  if (x >= 1000000) {
-    return `${(x / 1000000).toFixed(1).replace(/\.0$/, '')}M`;
+  if (x == null) return ''; // Handle null or undefined
+  
+  const rounded = Math.round(x * 1000) / 1000; // Round to 2 decimal places
+
+  if (rounded >= 1000000) {
+    return `${(rounded / 1000000).toFixed(2).replace(/\.0$/, '')}M`;
   }
-  if (x >= 1000) {
-    return `${(x / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  if (rounded >= 1000) {
+    return `${(rounded / 1000).toFixed(2).replace(/\.0$/, '')}K`;
   }
-  return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+
+  const parts = rounded.toString().split('.'); // Split the number into integer and decimal parts
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Format the integer part
+  return parts.join('.'); // Rejoin the parts
+};
+
 
 export const validateYouTubeUrl = (urlToParse) => {
   if (urlToParse) {

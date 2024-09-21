@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Dropdown } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { InfoWraper, NavAuth, UserDropDwon } from './auth-info-style';
@@ -8,6 +9,8 @@ import { Popover } from '../../popup/popup';
 import { logOut } from '../../../redux/authentication/actionCreator';
 import { fbAuthLogout } from '../../../redux/firebase/auth/actionCreator';
 import Heading from '../../heading/heading';
+import { numberWithCommas, numberWithCommasCurrency } from '../../../utility/utility';
+import { VIETNAMES_CURRENCY } from '../../../variables';
 
 function AuthInfo() {
   const dispatch = useDispatch();
@@ -87,20 +90,21 @@ function AuthInfo() {
 
   return (
     <InfoWraper>
-      {/* <Message />
-      <Notification />
+      <div className="notification">
+        <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', fontSize: '1.1em', color: 'green', fontWeight: 600, padding: '5px 8px', border: '1px dashed #8080805e', borderRadius: '7px' }}>
+          {numberWithCommasCurrency(userInfo?.credit)} (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
+        </span>
+        <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', fontSize: '1.1em', color: 'orange', fontWeight: 600, padding: '5px 8px', border: '1px dashed #8080805e', borderRadius: '7px'  }}>
+          {numberWithCommasCurrency(userInfo?.credit_used)} (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
+          </span>
+      </div>
 
-      <Settings /> */}
-      {/* <Support /> */}
-      {/* <div className="nav-author">
+      <div className="nav-author" style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
         <Dropdown placement="bottomRight" content={country} trigger="click">
           <Link to="#" className="head-example">
-            <img src={require(`../../../static/img/flag/${flag}.png`)} alt="" />
+            <img src={require(`../../../static/img/flag/${flag}.png`)} alt="" width="20px" />
           </Link>
         </Dropdown>
-      </div> */}
-
-      <div className="nav-author">
         <Popover placement="bottomRight" content={userContent} action="click">
           <Link to="#" className="head-example">
             <ReactNiceAvatar 

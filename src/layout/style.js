@@ -896,7 +896,6 @@ const TopMenuStyle = Styled.div`
                     top: 100%;
                     overflow: hidden;
                     z-index: -1;
-                    padding: 16px 0;
                     box-shadow: 0px 15px 40px 0px rgba(82, 63, 105, 0.15);
                     border-radius: 0 0 6px 6px;
                     opacity: 0;
