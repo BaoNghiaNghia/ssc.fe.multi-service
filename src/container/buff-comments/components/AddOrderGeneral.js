@@ -908,7 +908,7 @@ function AddOrderGeneral() {
                                   // eslint-disable-next-line react/no-danger
                                   dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).svg }}
                                 />
-                              <strong>{detailService?.service_view_type}</strong>
+                              <strong>{SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}</strong>
                             </span>
                           </p>
                           <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Thời gian xem (MIN): <strong>{numberWithCommas(detailService?.min_view_time)}</strong> phút</p>
