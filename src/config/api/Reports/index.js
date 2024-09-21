@@ -46,7 +46,10 @@ import {
     LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
     LIKE_STATISTIC_USER_POINT_ENDPOINT,
     LIKE_STATISTIC_TOTAL_ORDER_ENDPOINT,
-    LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT
+    LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT,
+
+    // VIEW
+    VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT
 
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
@@ -98,7 +101,8 @@ GeneralReportAPI.createEntities([
     { name: LIKE_STATISTIC_USER_POINT_ENDPOINT },
     { name: LIKE_STATISTIC_TOTAL_ORDER_ENDPOINT },
     { name: LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT },
-
+    
+    { name: VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT },
 ]);
 
 // SUBSCRIBERS
@@ -133,6 +137,7 @@ const commentStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCR
 const validateYoutubeLinkCommentVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT }).get(query);
 const validateYoutubeLinkLikeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT }).get(query);
 const validateYoutubeLinkSubscribeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT }).get(query);
+const validateYoutubeLinkViewVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT }).get(query);
 
 // const likeStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
 const likeStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
@@ -195,5 +200,7 @@ export {
     likeStatisticUserPointAPI,
     likeStatisticTaskDurationInMinutesAPI,
     likeStatisticTotalOrderAPI,
-    likeStatisticOrderByDaysAPI
+    likeStatisticOrderByDaysAPI,
+
+    validateYoutubeLinkViewVideoAPI
 }
