@@ -793,7 +793,7 @@ function PendingBuffComment() {
                         ) : null
                       }
                     </div>
-                  ) }}
+                  )}}
                   pagination={{
                     current: listOrderComment?.meta?.current_page,
                     defaultPageSize: listOrderComment?.meta?.count,

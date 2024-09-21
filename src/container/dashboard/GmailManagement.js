@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Switch, Tooltip } from 'antd';
+import { Row, Col, Table, Switch, Tooltip, Image } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { IoEyeOutline } from "react-icons/io5";
@@ -544,6 +544,15 @@ function GmailManagement() {
                     totalBoundaryShowSizeChanger: 100,
                     size: "small"
                   }}
+                  locale={{ emptyText: (
+                    <div>
+                      <Image src={require(`../../static/img/empty_order_4.svg`).default} alt="" width="250px" preview={false} style={{margin: '30px 0px'}}/>
+                      <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                        Chưa có danh sách gmail
+                      </span>
+                    </div>
+                  )}}
                 />
               </TableWrapper>
             </Col>

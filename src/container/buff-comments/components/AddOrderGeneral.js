@@ -653,7 +653,7 @@ function AddOrderGeneral() {
                     >
                       {
                         LIST_SERVICE_SUPPLY?.map((itemService, index) => {
-                          return <>
+                          return (
                               <Option key={index} value={itemService?.category}>
                                 <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
                                   <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
@@ -664,7 +664,7 @@ function AddOrderGeneral() {
                                   <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.type}</span>
                                 </div>
                               </Option>
-                          </>;
+                          );
                         })
                       }
                     </Select>
