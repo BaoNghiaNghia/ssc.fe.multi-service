@@ -20,7 +20,7 @@ import actionsView from '../../../redux/buffView/actions';
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY } from '../../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
 
@@ -893,10 +893,29 @@ function AddOrderGeneral() {
                 </Card>
                 <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
                   <div style={{ padding: '5px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '5px' }}>
-                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: {numberWithCommas(detailService?.min)} {stateCurr?.selectedCategory}</p>
-                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: {numberWithCommas(detailService?.max)} {stateCurr?.selectedCategory}</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px' }}>
+                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: <strong>{numberWithCommas(detailService?.min)}</strong> {stateCurr?.selectedCategory}</p>
+                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: <strong>{numberWithCommas(detailService?.max)}</strong> {stateCurr?.selectedCategory}</p>
                     </div>
+                    {
+                      stateCurr?.selectedCategory === 'Views' ? (
+                        <div style={{  borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px', paddingTop: '5px' }}>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', }}>
+                            Loại view (MIN):
+                            <span style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '5px' }}>
+                              <div
+                                  style={{ width: '22px', height: '22px' }}
+                                  // eslint-disable-next-line react/no-danger
+                                  dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).svg }}
+                                />
+                              <strong>{detailService?.service_view_type}</strong>
+                            </span>
+                          </p>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Thời gian xem (MIN): <strong>{numberWithCommas(detailService?.min_view_time)}</strong> phút</p>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Thời gian xem (MAX): <strong>{numberWithCommas(detailService?.max_view_time)}</strong> phút</p>
+                        </div>
+                      ) : null
+                    }
                     <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '4px 0px' }}>{detailService?.description}</p>
                     {
                       detailService?.enabled ? (
