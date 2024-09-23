@@ -162,7 +162,7 @@ function ComputerRunViewOrder() {
           <span>{profile_id}</span>
         ),
         status: (
-          <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center'}}>
+          <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'flex-start'}}>
             <Badge color={VIEW_STATUS_TYPE[status].color} dot style={{ marginRight: '5px' }} />
             <span>{VIEW_STATUS_TYPE[status].describe}</span>
             <Badge count={`${status.toString()}`} showZero color={VIEW_STATUS_TYPE[status].color} style={{ marginLeft: '5px' }} />
@@ -206,7 +206,7 @@ function ComputerRunViewOrder() {
                 </div>
               ) }}
               size='small'
-            /> 
+            />
           )
         }
       </>

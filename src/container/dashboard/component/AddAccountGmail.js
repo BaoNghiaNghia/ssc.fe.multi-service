@@ -25,10 +25,6 @@ function AddAccountGmail({ gmailState, setState }) {
         active: true
     });
 
-    const handleSubmit = (values) => {
-        setStateModal({ ...state, values: { ...values, tags: state.tags } });
-    };
-
     useEffect(() => {
         formNewAccountGmail.setFieldValue('category', 'Comments');
         const matchService = LIST_SERVICE_SUPPLY?.filter((item) => item?.category === 'Comments');
@@ -102,7 +98,7 @@ function AddAccountGmail({ gmailState, setState }) {
                 </Button>
             ]}
         >
-            <Form name="add_account" layout="vertical" form={formNewAccountGmail} onFinish={handleSubmit}>
+            <Form name="add_account" layout="vertical" form={formNewAccountGmail}>
                 <Row gutter="10">
                     <Col sm={16}>
                         <Form.Item

@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge, Button, Menu } from 'antd';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { FiHome } from "react-icons/fi";
+import { FaYoutube } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { TbScan } from "react-icons/tb";
@@ -10,7 +11,7 @@ import propTypes from 'prop-types';
 import { useSelector , useDispatch } from 'react-redux';
 import { NavTitle } from './style';
 import reportActions from '../redux/reports/actions';
-import { COLOR_GENERAL, ROLE_DETAIL, ROLE_GENERAL } from '../variables';
+import { COLOR_GENERAL, ROLE_GENERAL } from '../variables';
 import AddOrderGeneral from '../container/buff-comments/components/AddOrderGeneral';
 
 
@@ -37,7 +38,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
 
   const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
 
-  const pendingBadge = <Badge count="Coming" size='small' status='success' color={COLOR_GENERAL.primary}/>;
+  const pendingBadge = <Badge count="Coming" size='small' status='success' color={COLOR_GENERAL.primary} style={{ paddingLeft: '8px' }} />;
 
   const onOpenChange = (keys) => {
     setOpenKeys(keys[keys.length - 1] !== 'recharts' ? [keys.length && keys[keys.length - 1]] : keys);
@@ -123,7 +124,10 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>BUFF VIEW</NavTitle>}
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+          <FaYoutube color="red" fontSize={16} style={{  marginRight: '7px' }} />
+          BUFF VIEW
+        </NavTitle>}
         <Menu.Item
           icon={
             !topMenu && (
@@ -156,7 +160,10 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>BUFF SUBSCRIBE</NavTitle>}
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+          <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+          BUFF SUBSCRIBE
+        </NavTitle>}
         <Menu.Item
           disabled
           icon={
@@ -191,7 +198,8 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+          <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
           BUFF LIKE
         </NavTitle>}
         {/* <SubMenu key="buff-like" icon={!topMenu && <FeatherIcon icon="mail" />} title="Danh sách đơn">
@@ -244,7 +252,10 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>BUFF COMMENT</NavTitle>}
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+          <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+          BUFF COMMENT
+        </NavTitle>}
         <Menu.Item
           icon={
             !topMenu && (

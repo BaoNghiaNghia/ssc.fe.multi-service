@@ -204,7 +204,6 @@ function ListProxyInDomain({ currentState, setState }) {
                 loading={isLoading}
                 dataSource={dataSource}
                 columns={columns}
-                // pagination={{ pageSize: 10, showSizeChanger: true, total: listProxyInDomain?.items?.length }}
                 pagination={{
                   current: listProxyInDomain?.meta?.current_page,
                   defaultPageSize: listProxyInDomain?.meta?.count,
@@ -219,9 +218,7 @@ function ListProxyInDomain({ currentState, setState }) {
                   position: ['bottomCenter'],
                   responsive: true,
                   showTotal(total, range) {
-                      return <>
-                          <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
-                      </>
+                      return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> proxy</p>
                   },
                   totalBoundaryShowSizeChanger: 100,
                   size: "small"

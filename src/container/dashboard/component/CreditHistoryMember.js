@@ -136,9 +136,7 @@ function CreditHistoryMember({ historyState, setState }) {
                     <div style={{ margin: '0px', fontSize: '0.7em' }}><strong>Category: </strong>{findService[0]?.category}</div>
                   </Tooltip>
                 </>
-              ) : (
-                '...'
-              )
+              ) : '...'
             }
           </>
         ),
@@ -286,9 +284,7 @@ function CreditHistoryMember({ historyState, setState }) {
             position: ['bottomCenter'],
             responsive: true,
             showTotal(total, range) {
-                return <>
-                    <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> giao dịch</p>
-                </>
+                return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> giao dịch</p>
             },
             totalBoundaryShowSizeChanger: 100,
             size: "small"

@@ -962,9 +962,7 @@ function SettingAndService() {
                       position: ['bottomCenter'],
                       responsive: true,
                       showTotal(total, range) {
-                        return <>
-                          <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
-                        </>
+                        return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> dịch vụ</p>
                       },
                       totalBoundaryShowSizeChanger: 100,
                       size: "small"
@@ -1033,9 +1031,7 @@ function SettingAndService() {
                       position: ['bottomCenter'],
                       responsive: true,
                       showTotal(total, range) {
-                        return <>
-                          <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> Google Key</p>
-                        </>
+                        return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> Google Key</p>
                       },
                       totalBoundaryShowSizeChanger: 100,
                       size: "small"

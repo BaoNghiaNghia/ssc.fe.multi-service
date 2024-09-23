@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Radio, Table, Tooltip, Progress, Badge, Popover, Image } from 'antd';
 import FeatherIcon from 'feather-icons-react';
-import { FaRegCommentDots, FaYoutube } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { CgNotes } from "react-icons/cg";
 import { WiTime7 } from "react-icons/wi";
@@ -35,7 +35,7 @@ import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
-import { convertSeconds, numberWithCommas, performanceColorBack, performanceStatementTags } from '../../utility/utility';
+import { convertSeconds, numberWithCommas, performanceStatementTags } from '../../utility/utility';
 
 
 const columnTableOrderViews = [

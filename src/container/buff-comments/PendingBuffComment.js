@@ -808,9 +808,7 @@ function PendingBuffComment() {
                     position: ['bottomCenter'],
                     responsive: true,
                     showTotal(total, range) {
-                      return <>
-                        <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> đơn {currentStatusLabel}</p>
-                      </>;
+                      return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> đơn {currentStatusLabel}</p>;
                     },
                     totalBoundaryShowSizeChanger: 100,
                     size: "small"
