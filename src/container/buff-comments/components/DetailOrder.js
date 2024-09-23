@@ -7,6 +7,7 @@ import { MdAddchart } from "react-icons/md";
 import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
+import { BsFire } from 'react-icons/bs';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { LIST_SERVICE_SUPPLY, ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 import { performanceStatementTags } from '../../../utility/utility';
@@ -267,7 +268,10 @@ function DetailOrder({ setState, state }) {
               }]}>
                 <Select style={{ width: '100%' }} disabled size='small'>
                   <Option value="false">Không</Option>
-                  <Option value="true">Có</Option>
+                  <Option value="true">
+                    <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
+                    Có
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>

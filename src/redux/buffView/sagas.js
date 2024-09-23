@@ -157,7 +157,8 @@ function* updateOrderViewFunc(params) {
       yield put(
         actions.fetchListOrderViewBegin({
           page: 1,
-          limit: DEFAULT_PERPAGE
+          limit: DEFAULT_PERPAGE,
+          status: params?.payload?.status
         })
       );
 

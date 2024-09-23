@@ -6,6 +6,7 @@ import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge } from
 import { MdAddchart } from "react-icons/md";
 import { toast } from 'react-toastify';
 
+import { BsFire } from 'react-icons/bs';
 import commentActions from '../../../redux/buffComment/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
@@ -117,7 +118,10 @@ function BatchUpdateOrderView({ setState, orderState }) {
               <Form.Item name="priority" label="Ưu tiên">
                 <Select style={{ width: '100%' }} size='small' placeholder="Chọn mức độ ưu tiên">
                   <Option value="false">Không</Option>
-                  <Option value="true">Có</Option>
+                  <Option value="true">
+                    <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
+                    Có
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>

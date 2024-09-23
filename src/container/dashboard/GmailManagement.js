@@ -212,6 +212,24 @@ function GmailManagement() {
   if (listAccountgGmail?.length) {
     listAccountgGmail?.map((value, key) => {
       const { channel_id, computer, email, live, total_task, _id } = value;
+
+      const liveColumn = () => {
+        switch (typeService) {
+          case SERVICE_TYPE.COMMENT.title:
+          case SERVICE_TYPE.LIKE.title:
+          case SERVICE_TYPE.SUBSCRIBE.title:
+            return (
+              <Switch checkedChildren="Mail sống" unCheckedChildren="Mail chết" checked={live} />
+            );
+          
+          case SERVICE_TYPE.VIEW.title:
+            return <span>{live}</span>;
+          
+          default:
+            return <span>Service type not recognized</span>;
+        }
+      };
+        
       return dataSource.push({
         key: key + 1,
         channel_id: (
@@ -239,7 +257,7 @@ function GmailManagement() {
             <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', color: 'gray' }}>{computer}</div>
           </>
         ),
-        live: <Switch checkedChildren="Mail sống" unCheckedChildren="Mail chết" checked={live}/>,
+        live: liveColumn(),
         total_task: (
           <>
             {

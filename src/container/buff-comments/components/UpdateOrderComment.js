@@ -4,6 +4,7 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
+import { BsFire } from 'react-icons/bs';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import commentActions from '../../../redux/buffComment/actions';
 import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
@@ -123,7 +124,10 @@ function UpdateOrderComment({ setState, orderState }) {
               }]}>
                 <Select style={{ width: '100%' }} size='small'>
                   <Option value="false">Không</Option>
-                  <Option value="true">Có</Option>
+                  <Option value="true">
+                    <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
+                    Có
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>
