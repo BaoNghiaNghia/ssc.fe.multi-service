@@ -5,19 +5,18 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import serviceActions from '../../../redux/serviceSettings/actions';
-import commentActions from '../../../redux/buffComment/actions';
+import viewAction from '../../../redux/buffView/actions';
 import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 
 const { Option } = Select;
 
-function UpdateOrderComment({ setState, orderState }) {
+function UpdateOrderView({ setState, orderState }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
-  const { postLoading, detailOrderComment, userList, listService } = useSelector(state => {
+  const { postLoading, detailOrderView, listService } = useSelector(state => {
     return {
-      postLoading: state?.buffComment?.loading,
-      detailOrderComment: state?.buffComment?.detailOrderComment,
-      userList: state?.member?.userList,
+      postLoading: state?.buffView?.loading,
+      detailOrderView: state?.buffView?.detailOrderView,
       listService: state?.settingService?.listService?.items
     };
   });
@@ -26,20 +25,20 @@ function UpdateOrderComment({ setState, orderState }) {
     dispatch(serviceActions.fetchListServiceBegin());
   }, [dispatch]);
 
-  const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
+  const findService = listService?.filter((item) => item.service_id === detailOrderView?.service_id);
 
   useEffect(() => {
-    formUpdateService.setFieldsValue(detailOrderComment);
+    formUpdateService.setFieldsValue(detailOrderView);
     if (findService?.length > 0) {
       formUpdateService.setFieldValue('category', findService[0]?.category);
     }
-    formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
-    formUpdateService.setFieldValue('note', detailOrderComment?.note);
+    formUpdateService.setFieldValue('priority', String(detailOrderView?.priority));
+    formUpdateService.setFieldValue('note', detailOrderView?.note);
   });
 
   const handleCancel = () => {
     setState({
-      isUpdateCommentOrderModal: false,
+      isUpdateViewOrderModal: false,
     });
 
     formUpdateService.resetFields();
@@ -49,19 +48,17 @@ function UpdateOrderComment({ setState, orderState }) {
     try {
       formUpdateService.validateFields()
         .then((values) => {
-          dispatch(commentActions.updateOrderCommentAdminBegin({
-            id: detailOrderComment?.id,
+          dispatch(viewAction.updateOrderViewAdminBegin({
+            id: detailOrderView?.id,
             max_thread: values?.max_thread,
             note: values?.note,
             priority: values?.priority === "true",
             status: values?.status
           }));
 
-          console.log('----- order state ----', orderState)
-
           setState({ 
             ...orderState,
-            isUpdateCommentOrderModal: false,
+            isUpdateViewOrderModal: false,
             statusNumber: 'all'
           });
 
@@ -73,7 +70,7 @@ function UpdateOrderComment({ setState, orderState }) {
     } catch (err) {
       console.log(err);
       setState({
-        isUpdateCommentOrderModal: false });
+        isUpdateViewOrderModal: false });
       formUpdateService.resetFields();
     }
   };
@@ -82,7 +79,7 @@ function UpdateOrderComment({ setState, orderState }) {
     <>
       <Modal
         width='600px'
-        open={orderState?.isUpdateCommentOrderModal}
+        open={orderState?.isUpdateViewOrderModal}
         centered
         title={
           <>
@@ -167,9 +164,9 @@ function UpdateOrderComment({ setState, orderState }) {
   );
 }
 
-UpdateOrderComment.propTypes = {
+UpdateOrderView.propTypes = {
   setState: PropTypes.func,
   orderState: PropTypes.object
 };
 
-export default UpdateOrderComment;
+export default UpdateOrderView;

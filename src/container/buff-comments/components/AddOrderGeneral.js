@@ -556,8 +556,6 @@ function AddOrderGeneral() {
                   },
                   {
                     validator: (_, value) => {
-                      console.log ('--- input quantity ---', value);
-
                       const minQuantity = detailService?.min;  // Default minimum value
                       const maxQuantity = detailService?.max;  // Default maximum value
 

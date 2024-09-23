@@ -9,7 +9,7 @@ import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
 import { AiOutlineLike } from "react-icons/ai";
 import { GrNotification } from "react-icons/gr";
 import serviceActions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY, ORDER_YOUTUBE_STATUS } from '../../../variables/index';
+import { LIST_SERVICE_SUPPLY, ORDER_YOUTUBE_STATUS, SERVICE_VIEW_TYPE } from '../../../variables/index';
 import { performanceStatementTags } from '../../../utility/utility';
 
 const { Option } = Select;
@@ -248,6 +248,52 @@ function DetailOrder({ setState, state }) {
                 <div style={{ alignContent: 'center', width: '100%' }}>
                   {performanceStatementTags(performance)}
                 </div>
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Divider plain style={{ marginTop: '0px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình view</Divider>
+          <Row gutter="10">
+            <Col sm={8}>
+              <Form.Item 
+                name="service_view_type" 
+                label="Loại view"
+                style={{ margin: '0px', padding: '0px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Select style={{ width: '100%' }} defaultValue={SERVICE_VIEW_TYPE[0].type} size='small'>
+                  {SERVICE_VIEW_TYPE?.map((viewItem) => (
+                    <Option key={viewItem?.type} value={viewItem?.type}>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '5px' }}>
+                        <div
+                          style={{ width: '22px', height: '22px' }}
+                          // eslint-disable-next-line react/no-danger
+                          dangerouslySetInnerHTML={{ __html: viewItem?.svg }}
+                        />
+                        <span style={{ marginLeft: '10px' }}>{viewItem?.description}</span>
+                      </div>
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col sm={8}>
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="min_view_time" label="Thời gian xem (MIN)" rules={[{
+                required: true,
+                message: 'Trường không được trống'
+              }]}>
+                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+              </Form.Item>
+            </Col>
+            <Col sm={8}>
+              <Form.Item style={{ margin: '0px', padding: '0px' }} name="max_view_time" label="Thời gian xem (MAX)" rules={[{
+                required: true,
+                message: 'Trường không được trống'
+              }]}>
+                <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
           </Row>

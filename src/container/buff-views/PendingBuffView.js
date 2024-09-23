@@ -562,22 +562,6 @@ function PendingBuffView() {
                 <FeatherIcon icon="eye" size={16} />
               </Button>
             </Tooltip>
-            <Tooltip title="Danh sách view">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.viewOrderViewBegin({
-                  id,
-                  page: 1,
-                  limit: DEFAULT_PERPAGE
-                }));
-                setState({
-                  ...state,
-                  rowData: value,
-                  isListViewModal: true
-                });
-              }}>
-                <FaRegCommentDots fontSize={15}/>
-              </Button>
-            </Tooltip>
           </div>
         ),
       });
