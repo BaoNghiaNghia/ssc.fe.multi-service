@@ -425,7 +425,7 @@ function ComputerRunViewOrder() {
             <AutoComplete
               onSearch={debounce(handleSearch, 500)}
               dataSource={notData}
-              placeholder="Nhập và tìm server"
+              placeholder="Nhập và tìm thiết bị"
               width="100%"
               patterns
             />
@@ -444,7 +444,7 @@ function ComputerRunViewOrder() {
                   <Image src={require(`../../static/img/lost_connection.svg`).default} alt="" width="400px" preview={false} style={{margin: '60px 0px', opacity: '80%'}}/>
                   <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
                   <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
-                    Chưa có server
+                    Chưa có thiết bị
                   </span>
                 </div>
               )}}
@@ -467,7 +467,7 @@ function ComputerRunViewOrder() {
                 },
                 position: ['bottomCenter'],
                 responsive: true,
-                showTotal(total, range) { return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> server</p> },
+                showTotal(total, range) { return <p className='mx-4 mt-1'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> thiết bị</p> },
                 totalBoundaryShowSizeChanger: 100,
                 size: "small"
               }}

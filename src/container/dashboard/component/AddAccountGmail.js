@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Button, Modal, Switch, Divider } from 'antd';
+import { Row, Col, Form, Input, Button, Modal, Switch, Divider, Select } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import actions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY } from '../../../variables';
+import { generateIconService, LIST_SERVICE_SUPPLY } from '../../../variables';
+
+const { Option } = Select;
 
 function AddAccountGmail({ gmailState, setState }) {
     const dispatch = useDispatch();
@@ -79,13 +81,57 @@ function AddAccountGmail({ gmailState, setState }) {
             open={isAddAccountGmailModal}
             centered
             title={
-                <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-                    <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-                    <div>
-                        <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm tài khoản gmail</p>
-                        <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho tài khoản mới</p>
-                    </div>
-                </div>
+                <Row gutter="10" style={{ display: 'flex', alignItems: 'end' }}>
+                    <Col sm={15}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+                            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+                            <div>
+                                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm tài khoản gmail</p>
+                                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho tài khoản mới</p>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col sm={8}>
+                        <Form layout="horizontal" form={formNewAccountGmail}>
+                            <Form.Item
+                                name="category"
+                                style={{ margin: '6px 0px 0 0' }}
+                                initialValue="Comments"
+                                bordered
+                                rules={[{
+                                required: true,
+                                message: 'Trường không được trống'
+                                }]}
+                                onClick={(value) => {
+                                const selectedService = LIST_SERVICE_SUPPLY.filter(item => item?.category === value?.target?.innerText);
+                                if (selectedService?.length > 0) {
+                                    setStateModal({
+                                    ...state,
+                                    category: selectedService[0]?.category
+                                    });
+                                    formNewAccountGmail.setFieldValue('type', selectedService[0]?.type);
+                                    formNewAccountGmail.setFieldValue('service_type', selectedService[0]?.service_type);
+                                }
+                                }}
+                            >
+                                <Select style={{ width: '100%', margin: '0px', padding: '0px' }} initialValue="Comments" size='small'>
+                                {
+                                    LIST_SERVICE_SUPPLY?.map(service => {
+                                    return (
+                                        <Option key={service?.category} value={service?.category}>
+                                        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                            { generateIconService(service) }
+                                            <span style={{ fontWeight: '600' }}>{service?.category}</span>
+                                        </div>
+                                        </Option>
+                                    )
+                                    })
+                                }
+                                </Select>
+                            </Form.Item>
+                        </Form>
+                    </Col>
+                </Row>
             }
             onOk={handleOk}
             onCancel={handleCancel}

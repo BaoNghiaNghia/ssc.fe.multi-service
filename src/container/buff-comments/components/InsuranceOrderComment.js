@@ -4,9 +4,6 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form, Select, Button, Modal } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import { FaRegCommentDots } from 'react-icons/fa';
-import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
 import commentActions from '../../../redux/buffComment/actions';
 
 const { Option } = Select;
@@ -60,19 +57,6 @@ function InsuranceOrderComment({ setState, state }) {
       console.log(err);
     }
   };
-
-  const iconService = (service) => {
-    switch (service?.category) {
-      case 'Comments':
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Likes':
-        return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Subscribers':
-        return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      default:
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-    }
-  }
 
   return (
     <>

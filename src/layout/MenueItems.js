@@ -14,9 +14,6 @@ import reportActions from '../redux/reports/actions';
 import { COLOR_GENERAL, ROLE_GENERAL } from '../variables';
 import AddOrderGeneral from '../container/buff-comments/components/AddOrderGeneral';
 
-
-const { SubMenu } = Menu;
-
 function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
@@ -26,8 +23,17 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
   const mainPathSplit = mainPath.split('/');
 
   const [openKeys, setOpenKeys] = React.useState(
-    !topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : [],
+    !topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'admin'}`] : [],
   );
+
+  const [collapsedSections, setCollapsedSections] = React.useState({
+    TONG_QUAN: false,
+    BUFF_VIEW: false,
+    BUFF_SUBSCRIBE: false,
+    BUFF_LIKE: false,
+    BUFF_COMMENT: false,
+    ADD_ON: false
+  });
 
   const { userInfo, isOpenCreateOrder } = useSelector(state => {
     return {
@@ -46,6 +52,13 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
 
   const onClick = (item) => {
     if (item.keyPath.length === 1) setOpenKeys([]);
+  };
+
+  const toggleSection = (sectionKey) => {
+    setCollapsedSections((prevState) => ({
+      ...prevState,
+      [sectionKey]: !prevState[sectionKey],
+    }));
   };
 
   return (
@@ -91,7 +104,20 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
                   </Button>
                 )
               }
-              {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>TỔNG QUAN</NavTitle>}
+              {!topMenu && <NavTitle className="sidebar-nav-title" style={{
+                  color: COLOR_GENERAL.primary,
+                  cursor: 'pointer',
+                  justifyContent: 'space-between',
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontWeight: 700,
+                }}>
+                  TỔNG QUAN
+                  <FeatherIcon
+                    icon={collapsedSections.TONG_QUAN ? 'chevron-down' : 'chevron-right'}
+                    size={16}
+                  />
+                </NavTitle>}
               <Menu.Item
                 icon={
                   !topMenu && (
@@ -106,27 +132,18 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
                   Tổng quan
                 </NavLink>
               </Menu.Item>
-              {/* <Menu.Item
-                disabled
-                icon={
-                  !topMenu && (
-                    <NavLink className="menuItem-icon" to={`${path}/quan-ly-may`}>
-                      <LuServer fontSize={16} color="gray"/>
-                    </NavLink>
-                  )
-                }
-                key="quan-ly-may"
-              >
-                <NavLink onClick={toggleCollapsed} to={`${path}/quan-ly-may`}>
-                  Quản lý máy {pendingBadge}
-                </NavLink>
-              </Menu.Item> */}
             </>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
-          <FaYoutube color="red" fontSize={16} style={{  marginRight: '7px' }} />
-          BUFF VIEW
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between'}}>
+          <span style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+            <FaYoutube color="red" fontSize={16} style={{  marginRight: '7px' }} />
+            BUFF VIEW
+          </span>
+          <FeatherIcon
+            icon={collapsedSections.TONG_QUAN ? 'chevron-down' : 'chevron-right'}
+            size={16}
+          />
         </NavTitle>}
         <Menu.Item
           icon={
@@ -160,9 +177,15 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
-          <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
-          BUFF SUBSCRIBE
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+            <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+            BUFF SUBSCRIBE
+          </span>
+          <FeatherIcon
+            icon={collapsedSections.TONG_QUAN ? 'chevron-down' : 'chevron-right'}
+            size={16}
+          />
         </NavTitle>}
         <Menu.Item
           disabled
@@ -198,27 +221,16 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
-          <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
-          BUFF LIKE
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+            <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+            BUFF LIKE
+          </span>
+          <FeatherIcon
+            icon={collapsedSections.TONG_QUAN ? 'chevron-down' : 'chevron-right'}
+            size={16}
+          />
         </NavTitle>}
-        {/* <SubMenu key="buff-like" icon={!topMenu && <FeatherIcon icon="mail" />} title="Danh sách đơn">
-          <Menu.Item key="buff-like-cho-duyet">
-            <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-don`}>
-              Chờ duyệt
-            </NavLink>
-          </Menu.Item>
-          <Menu.Item key="buff-like-dang-chay">
-            <NavLink onClick={toggleCollapsed} to={`${path}/like/danh-sach-may`}>
-              Đang chạy
-            </NavLink>
-          </Menu.Item>
-          <Menu.Item key="buff-like-bao-hanh">
-            <NavLink onClick={toggleCollapsed} to={`${path}/like/bao-hanh`}>
-              Bảo hành
-            </NavLink>
-          </Menu.Item>
-        </SubMenu> */}
         <Menu.Item
           icon={
             !topMenu && (
@@ -252,9 +264,15 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             </Menu.Item>
           ) : <></>
         }
-        {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
-          <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
-          BUFF COMMENT
+        {!topMenu && <NavTitle className="sidebar-nav-title" style={{display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+            <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+            BUFF COMMENT
+          </span>
+          <FeatherIcon
+            icon={collapsedSections.TONG_QUAN ? 'chevron-down' : 'chevron-right'}
+            size={16}
+          />
         </NavTitle>}
         <Menu.Item
           icon={
@@ -307,7 +325,16 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
         {
           checkMatchRole ? (
             <>
-              {!topMenu && <NavTitle className="sidebar-nav-title" style={{ color: COLOR_GENERAL.primary, fontWeight: 700 }}>ADD-ON</NavTitle>}
+              {!topMenu && <NavTitle className="sidebar-nav-title" style={{display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                    ADD-ON
+                  </span>
+                  <FeatherIcon
+                    icon={collapsedSections.TONG_QUAN ? 'chevron-down' : 'chevron-right'}
+                    size={16}
+                  />
+                </NavTitle>
+              }
               <Menu.Item
                 icon={
                   !topMenu && (

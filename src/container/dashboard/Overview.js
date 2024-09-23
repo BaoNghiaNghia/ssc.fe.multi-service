@@ -505,67 +505,39 @@ function Overview() {
     )
   }
 
+  const services = [
+    { type: SERVICE_TYPE.VIEW.title, icon: MdRemoveRedEye, label: 'View' },
+    { type: SERVICE_TYPE.SUBSCRIBE.title, icon: GrNotification, label: 'Subscribe' },
+    { type: SERVICE_TYPE.COMMENT.title, icon: FaRegCommentDots, label: 'Comment' },
+    { type: SERVICE_TYPE.LIKE.title, icon: AiOutlineLike, label: 'Like' },
+  ];
+
   return (
     <>
-      <DetailMailList
-        mailState={state}
-        setState={setState}
-      />
+      <DetailMailList mailState={state} setState={setState} />
       <PageHeader
         ghost
-        title={(
-          <span style={{ marginRight: '20px' }}>
-            Tổng quan {typeService}
-          </span>
-        )}
-        buttons={[ 
+        title={<span style={{ marginRight: '20px' }}>Tổng quan {typeService}</span>}
+        buttons={[
           <div key="1" className="page-header-actions">
-            <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate}/>
+            <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate} />
           </div>,
           <div key="2" className="page-header-actions">
             <GalleryNav>
               <ul>
-                <li>
-                  <Link
-                    className={typeService === SERVICE_TYPE.VIEW.title ? 'active' : 'deactivate'}
-                    onClick={() => handleChange(SERVICE_TYPE.VIEW.title)}
-                    to="#"
-                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
-                  >
-                    <MdRemoveRedEye fontSize={17} className='pr-3'/>
-                    <span>View</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
-                    onClick={() => handleChange(SERVICE_TYPE.SUBSCRIBE.title)}
-                    to="#"
-                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
-                  >
-                    <GrNotification fontSize={15} className='pr-3'/> <span>Subscribe</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={typeService === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
-                    onClick={() => handleChange(SERVICE_TYPE.COMMENT.title)}
-                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
-                    to="#"
-                  >
-                    <FaRegCommentDots fontSize={15} className='mr-3'/> <span>Comment</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={typeService === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
-                    onClick={() => handleChange(SERVICE_TYPE.LIKE.title)}
-                    style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}
-                    to="#"
-                  >
-                    <AiOutlineLike fontSize={17} className='mr-3'/> <span>Like</span>
-                  </Link>
-                </li>
+                {services.map(({ type, icon: Icon, label }) => (
+                  <li key={type}>
+                    <Link
+                      className={typeService === type ? 'active' : 'deactivate'}
+                      onClick={() => handleChange(type)}
+                      to="#"
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <Icon fontSize={17} className='pr-3' />
+                      <span>{label}</span>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </GalleryNav>
           </div>,
@@ -575,58 +547,28 @@ function Overview() {
         {generalHeaderStatistic()}
         <Row gutter={25}>
           <Col xxl={6} md={6} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
+            <Suspense fallback={<Cards headless><Skeleton active /></Cards>}>
               <CardGroup />
             </Suspense>
             {statisticMultipleData()}
           </Col>
           <Col xxl={18} md={18} xs={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              }
-            >
+            <Suspense fallback={<Cards headless><Skeleton active /></Cards>}>
               <AnalyseYoutube title={`Thống kê ${typeService}`} />
             </Suspense>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active/>
-                </Cards>
-              }
-            >
+            <Suspense fallback={<Cards headless><Skeleton active /></Cards>}>
               <SubscribeCountAndIncome title={`Số ${typeService} & doanh thu`} />
             </Suspense>
           </Col>
         </Row>
         <Row gutter={15}>
           <Col xxl={12} xs={24} sm={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active/>
-                </Cards>
-              }
-            >
+            <Suspense fallback={<Cards headless><Skeleton active /></Cards>}>
               <TaskSuccessEveryMinutes title={`Số lượng ${typeService} mỗi phút`} />
             </Suspense>
           </Col>
           <Col xxl={12} xs={24} sm={24}>
-            <Suspense
-              fallback={
-                <Cards headless>
-                  <Skeleton active/>
-                </Cards>
-              }
-            >
+            <Suspense fallback={<Cards headless><Skeleton active /></Cards>}>
               <TaskDurationEveryMinutes title={`Thời gian ${typeService} trung bình`} />
             </Suspense>
           </Col>

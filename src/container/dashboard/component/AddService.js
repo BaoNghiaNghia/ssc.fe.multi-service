@@ -3,13 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsFire } from "react-icons/bs";
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Tooltip, Switch } from 'antd';
-import { MdAddchart } from "react-icons/md";
-import { FaEye, FaRegCommentDots, FaYoutube } from 'react-icons/fa';
-import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification, GrServicePlay  } from "react-icons/gr";
+import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Switch } from 'antd';
+import { FaYoutube } from 'react-icons/fa';
+import { GrServicePlay  } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE } from '../../../variables';
+import { generateIconService, LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE } from '../../../variables';
 
 const { Option } = Select;
 
@@ -123,21 +121,6 @@ function AddService({ serviceState, setState }) {
     });
   }
 
-  const iconService = (service) => {
-    switch (service?.category) {
-      case 'Comments':
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Likes':
-        return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Subscribers':
-        return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Views':
-        return <FaEye color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      default:
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-    }
-  }
-
   return (
     <>
       <Modal
@@ -221,7 +204,7 @@ function AddService({ serviceState, setState }) {
                       return (
                         <Option key={service?.category} value={service?.category}>
                           <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                            { iconService(service) }
+                            { generateIconService(service) }
                             <span style={{ fontWeight: '600' }}>{service?.category}</span>
                           </div>
                         </Option>

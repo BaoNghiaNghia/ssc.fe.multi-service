@@ -4,11 +4,9 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
-import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
+import { FaYoutube } from 'react-icons/fa';
 import serviceActions from '../../../redux/serviceSettings/actions';
-import { LIST_SERVICE_SUPPLY, ORDER_YOUTUBE_STATUS } from '../../../variables/index';
+import { generateIconService, LIST_SERVICE_SUPPLY, ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 import { performanceStatementTags } from '../../../utility/utility';
 
 const { Option } = Select;
@@ -54,19 +52,6 @@ function DetailOrderLike({ setState, orderState }) {
       isDetailOrderModal: false,
     });
     formUpdateService.resetFields();
-  }
-
-  const iconService = (service) => {
-    switch (service?.category) {
-      case 'Comments':
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Likes':
-        return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      case 'Subscribers':
-        return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-      default:
-        return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
-    }
   }
 
   return (
@@ -130,7 +115,7 @@ function DetailOrderLike({ setState, orderState }) {
                           return (
                             <Option key={service?.category} value={service?.category}>
                               <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                                { iconService(service) }
+                                { generateIconService(service) }
                                 <span style={{ fontWeight: '800' }}>{service?.category}</span>
                               </div>
                             </Option>
