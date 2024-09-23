@@ -285,7 +285,7 @@ const Div = Styled.div`
         .ant-layout-sider-children{
             padding-bottom: 15px;
             >.sidebar-nav-title{
-                margin-top: 8px;
+                margin-top: 0px;
             }
 
             .ant-menu{
@@ -476,8 +476,10 @@ const Div = Styled.div`
                     }
                 }
                 .sidebar-nav-title{
-                    margin-top: 20px;
-                    margin-bottom: 24px;
+                    padding-top: 10px;
+                    padding-bottom: 14px;
+                    background-image: linear-gradient(to bottom, white, #0000000a);
+                    border-radius: 8px;
                 }
                 &.ant-menu-inline-collapsed{
                     .ant-menu-submenu{
