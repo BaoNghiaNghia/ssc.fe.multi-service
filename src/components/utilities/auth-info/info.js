@@ -100,7 +100,7 @@ function AuthInfo() {
       </div>
 
       <div className="nav-author" style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
-        <Dropdown placement="bottomRight" content={country} trigger="click">
+        <Dropdown placement="bottomRight" content={country} trigger="click" disabled>
           <Link to="#" className="head-example">
             <img src={require(`../../../static/img/flag/${flag}.png`)} alt="" width="20px" />
           </Link>

@@ -437,4 +437,72 @@ export const REGION_IDENTIFIER = [
       path: "static/img/flag/jp.png",
       region: "Nhật Bản"
   },
-]
+];
+
+export const VIEW_STATUS_TYPE = {
+  0: {
+    title: 'logout',
+    describe: 'User logged out',
+    color: '#FF5733' // Example color for logout
+  },
+  1: {
+    title: 'live',
+    describe: 'Account is live',
+    color: '#28A745' // Example color for live (green)
+  },
+  2: {
+    title: 'die',
+    describe: 'Account is dead',
+    color: '#6C757D' // Example color for dead (gray)
+  },
+  3: {
+    title: 'captcha',
+    describe: 'CAPTCHA required',
+    color: '#FFC107' // Example color for CAPTCHA (yellow)
+  },
+  4: {
+    title: 'disable',
+    describe: 'Account disabled',
+    color: '#DC3545' // Example color for disabled (red)
+  },
+  5: {
+    title: 'two_fa',
+    describe: 'Two-factor authentication required',
+    color: '#007BFF' // Example color for 2FA (blue)
+  },
+  6: {
+    title: 'not_exist',
+    describe: 'Account does not exist',
+    color: '#343A40' // Example color for not exist (dark gray)
+  },
+  7: {
+    title: 'wrong_pass',
+    describe: 'Wrong password entered',
+    color: '#FD7E14' // Example color for wrong password (orange)
+  },
+  8: {
+    title: 'wrong_recover',
+    describe: 'Wrong recovery details',
+    color: '#17A2B8' // Example color for wrong recover (teal)
+  },
+  9: {
+    title: 'verify_phone',
+    describe: 'Phone verification required',
+    color: '#6610F2' // Example color for phone verification (purple)
+  },
+  10: {
+    title: 'code_recover',
+    describe: 'Code recovery required',
+    color: '#E83E8C' // Example color for code recovery (pink)
+  },
+  11: {
+    title: 'hidden_phone',
+    describe: 'Phone number is hidden',
+    color: '#20C997' // Example color for hidden phone (greenish)
+  },
+  15: {
+    title: 'unknown',
+    describe: 'Unknown status',
+    color: '#6F42C1' // Example color for unknown (violet)
+  }
+};

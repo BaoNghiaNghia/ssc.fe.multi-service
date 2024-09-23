@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Switch, Tooltip, Image } from 'antd';
+import { Row, Col, Table, Switch, Tooltip, Image, Badge } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { IoEyeOutline } from "react-icons/io5";
@@ -24,7 +24,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import gmailActions from '../../redux/gmailManage/actions';
 import { getPathLocalFromString, numberWithCommas } from '../../utility/utility';
-import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE } from '../../variables';
+import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_TYPE, VIEW_STATUS_TYPE } from '../../variables';
 import ConfirmRequestModal from '../buff-comments/components/ConfirmRequestModal';
 
 
@@ -223,8 +223,14 @@ function GmailManagement() {
             );
           
           case SERVICE_TYPE.VIEW.title:
-            return <span>{live}</span>;
-          
+            return (
+              <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                <Badge color={VIEW_STATUS_TYPE[live].color} dot style={{ marginRight: '5px' }} />
+                <span>{VIEW_STATUS_TYPE[live].describe}</span>
+                <Badge count={`${live.toString()}`} showZero color={VIEW_STATUS_TYPE[live].color} style={{ marginLeft: '5px' }} />
+              </div>
+            );
+
           default:
             return <span>Service type not recognized</span>;
         }

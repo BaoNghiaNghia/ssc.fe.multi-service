@@ -21,9 +21,9 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import actions from '../../redux/buffView/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, VIEW_STATUS_TYPE } from '../../variables';
 
-const columns = [
+const devicesColumns = [
   {
     title: 'ID Devices',
     dataIndex: 'devices',
@@ -48,11 +48,11 @@ const columns = [
 ];
 
 const expandColumns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-  },
+  // {
+  //   title: 'ID',
+  //   dataIndex: 'id',
+  //   key: 'id',
+  // },
   {
     title: 'Email',
     dataIndex: 'email',
@@ -143,9 +143,9 @@ function ComputerRunViewOrder() {
       const { id, email, profile_id, status } = itemService;
       return inTableData.push({
         key: index,
-        id: (
-          <span>{id}</span>
-        ),
+        // id: (
+        //   <span>{id}</span>
+        // ),
         email: (
           <>
             {email === "" ? (
@@ -162,8 +162,11 @@ function ComputerRunViewOrder() {
           <span>{profile_id}</span>
         ),
         status: (
-          <span>{status}</span>
-          // <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} checked={status} />
+          <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center'}}>
+            <Badge color={VIEW_STATUS_TYPE[status].color} dot style={{ marginRight: '5px' }} />
+            <span>{VIEW_STATUS_TYPE[status].describe}</span>
+            <Badge count={`${status.toString()}`} showZero color={VIEW_STATUS_TYPE[status].color} style={{ marginLeft: '5px' }} />
+          </div>
         ),
       });
     });
@@ -180,10 +183,6 @@ function ComputerRunViewOrder() {
               dataSource={inTableData}
               footer={null}
               pagination={{
-                // current: listMetaService.current_page,
-                // defaultPageSize: listMetaService.count,
-                // pageSize: listMetaService.per_page,
-                // total: listMetaService.total,
                 showSizeChanger: true,
                 pageSizeOptions: DEFAULT_PAGESIZE,
                 onChange(page, pageSize) {
@@ -439,7 +438,7 @@ function ComputerRunViewOrder() {
             <Table
               rowSelection={rowSelection}
               dataSource={dataSource}
-              columns={columns}
+              columns={devicesColumns}
               locale={{ emptyText: (
                 <div>
                   <Image src={require(`../../static/img/lost_connection.svg`).default} alt="" width="400px" preview={false} style={{margin: '60px 0px', opacity: '80%'}}/>
