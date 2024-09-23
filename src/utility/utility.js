@@ -12,28 +12,39 @@ const ellipsis = (text, size) => {
 };
 
 function numberWithCommas(x) {
-  if (x == null) return ''; // Handle null or undefined
-  const rounded = Math.round(x * 1000) / 1000; // Round to 2 decimal places
-  const parts = rounded.toString().split('.'); // Split the number into integer and decimal parts
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Format the integer part
+  if (x == null) return '';
+  const rounded = Math.round(x * 1000) / 1000;
+  const parts = rounded.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return parts.join('.'); // Rejoin the parts
 }
 
 const numberWithCommasCurrency = (x) => {
-  if (x == null) return ''; // Handle null or undefined
+  if (x == null) return '';
   
-  const rounded = Math.round(x * 1000) / 1000; // Round to 2 decimal places
+  const rounded = Math.round(x * 100) / 100;
 
-  if (rounded >= 1000000) {
-    return `${(rounded / 1000000).toFixed(2).replace(/\.0$/, '')}M`;
+  if (rounded >= 1_000_000_000_000) {
+    const trillionFormatted = (rounded / 1_000_000_000_000).toFixed(2).replace(/\.0$/, '');
+    return `${trillionFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} T`; 
   }
-  if (rounded >= 1000) {
-    return `${(rounded / 1000).toFixed(2).replace(/\.0$/, '')}K`;
+  if (rounded >= 1_000_000_000) { 
+    const billionFormatted = (rounded / 1_000_000_000).toFixed(2).replace(/\.0$/, '');
+    return `${billionFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} B`;
+  }
+  if (rounded >= 1_000_000) {
+    const millionFormatted = (rounded / 1_000_000).toFixed(2).replace(/\.0$/, '');
+    return `${millionFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} M`;
+  }
+  if (rounded >= 1_000) { 
+    const thousandFormatted = (rounded / 1_000).toFixed(2).replace(/\.0$/, '');
+    return `${thousandFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} K`;
   }
 
-  const parts = rounded.toString().split('.'); // Split the number into integer and decimal parts
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Format the integer part
-  return parts.join('.'); // Rejoin the parts
+  // Format the number with commas
+  const parts = rounded.toString().split('.'); 
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join('.');
 };
 
 

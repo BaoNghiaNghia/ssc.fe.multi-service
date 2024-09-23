@@ -477,7 +477,7 @@ const Div = Styled.div`
                 }
                 .sidebar-nav-title{
                     padding-top: 10px;
-                    padding-bottom: 14px;
+                    padding-bottom: 10px;
                     background-image: linear-gradient(to bottom, white, #0000000a);
                     border-radius: 8px;
                 }

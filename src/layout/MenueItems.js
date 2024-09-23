@@ -63,7 +63,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
 
   return (
     <>
-      <AddOrderGeneral />
+      <AddOrderGeneral style={{ padding: '5px' }} />
       <Menu
         onOpenChange={onOpenChange}
         onClick={onClick}

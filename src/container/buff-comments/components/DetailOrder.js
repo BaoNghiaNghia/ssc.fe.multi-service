@@ -1,12 +1,10 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Badge } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import { FaRegCommentDots, FaYoutube } from 'react-icons/fa';
-import { AiOutlineLike } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
+import { FaYoutube } from 'react-icons/fa';
 import { BsFire } from 'react-icons/bs';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { generateIconService, LIST_SERVICE_SUPPLY, ORDER_YOUTUBE_STATUS } from '../../../variables/index';

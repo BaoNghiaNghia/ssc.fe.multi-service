@@ -31,7 +31,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
-import { numberWithCommas } from '../../utility/utility';
+import { numberWithCommas, numberWithCommasCurrency } from '../../utility/utility';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 
@@ -230,9 +230,20 @@ function Member() {
           </span>
         ),
         point: (
-          <Tooltip title="Số tiền đã dùng / Số dư">
+          <Tooltip title={
+            <Row gutter={10}>
+              <Col sm={24} style={{ position: 'relative' }}>
+                <div>Số tiền đã dùng / Số dư</div>
+              </Col>
+              <Col sm={24}>
+                <div style={{ color: 'green', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>
+                  {numberWithCommas(Math.round(credit_used))} / {numberWithCommas(Math.round(credit))} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
+                </div>
+              </Col>
+            </Row>
+          }>
             <span style={{ color: 'green', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>
-              {numberWithCommas(Math.round(credit_used))} / {numberWithCommas(Math.round(credit))} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
+              {numberWithCommasCurrency(credit_used)} / {numberWithCommasCurrency(credit)} <span style={{ fontStyle: 'italic', fontSize: '0.8em', marginLeft: '5px' }}>{VIETNAMES_CURRENCY}</span>
             </span>
           </Tooltip>
         ),
@@ -313,22 +324,26 @@ function Member() {
                 <FeatherIcon icon="eye" size={16} />
               </Button>
             </Tooltip>
-            <Tooltip title="Credit Transaction">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.getCreditHistoryMemberBegin({
-                  page: 1,
-                  limit: DEFAULT_PERPAGE,
-                  user_id: id
-                }));
-                setState({ 
-                  ...state, 
-                  isModalCreditHistory: true,
-                  selectedRowID: id
-                });
-              }}>
-                <AiOutlineTransaction fontSize={18}/>
-              </Button>
-            </Tooltip>
+            {
+              !last_order ? null : (
+                <Tooltip title="Credit Transaction">
+                  <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
+                    dispatch(actions.getCreditHistoryMemberBegin({
+                      page: 1,
+                      limit: DEFAULT_PERPAGE,
+                      user_id: id
+                    }));
+                    setState({ 
+                      ...state, 
+                      isModalCreditHistory: true,
+                      selectedRowID: id
+                    });
+                  }}>
+                    <AiOutlineTransaction fontSize={18}/>
+                  </Button>
+                </Tooltip>
+              )
+            }
             <Tooltip title="Tạo Topup">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
                 dispatch(actions.detailUserAdminBegin({ id }));
