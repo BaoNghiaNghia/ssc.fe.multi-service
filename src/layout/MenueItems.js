@@ -172,7 +172,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
               key="view-lich-su-don"
             >
               <NavLink onClick={toggleCollapsed} to={`${path}/view/danh-sach-may`}>
-                Danh sách máy
+                Thiết bị
               </NavLink>
             </Menu.Item>
           ) : <></>
