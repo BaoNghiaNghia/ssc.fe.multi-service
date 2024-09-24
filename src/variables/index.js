@@ -516,14 +516,14 @@ export const VIEW_STATUS_TYPE = {
 export const generateIconService = (service) => {
   switch (service?.category) {
     case 'Comments':
-      return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      return <FaRegCommentDots color='#cc5353' fontSize={15} style={{ marginRight: '10px' }}/> 
     case 'Likes':
-      return <AiOutlineLike color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      return <AiOutlineLike color='#cc5353' fontSize={15} style={{ marginRight: '10px' }}/> 
     case 'Subscribers':
-      return <GrNotification color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      return <GrNotification color='#cc5353' fontSize={15} style={{ marginRight: '10px' }}/> 
     case 'Views':
-      return <FaRegEye color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      return <FaRegEye color='#cc5353' fontSize={15} style={{ marginRight: '10px' }}/> 
     default:
-      return <FaRegCommentDots color='red' fontSize={15} style={{ marginRight: '10px' }}/> 
+      return <FaRegCommentDots color='#cc5353' fontSize={15} style={{ marginRight: '10px' }}/> 
   }
 }

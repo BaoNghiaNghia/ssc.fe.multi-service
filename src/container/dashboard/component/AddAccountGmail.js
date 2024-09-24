@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { SiLastpass } from "react-icons/si";
 import { Row, Col, Form, Input, Button, Modal, Switch, Divider, Select } from 'antd';
-import { MdAddchart } from "react-icons/md";
-import actions from '../../../redux/serviceSettings/actions';
-import { generateIconService, LIST_SERVICE_SUPPLY } from '../../../variables';
+import { MdAddchart, MdAlternateEmail, MdPassword } from "react-icons/md";
+
+import actionsServiceSetting from '../../../redux/serviceSettings/actions';
+import actionGmail from '../../../redux/gmailManage/actions';
+
+import { generateIconService, LIST_SERVICE_SUPPLY, SERVICE_TYPE } from '../../../variables';
 
 const { Option } = Select;
 
@@ -24,7 +28,8 @@ function AddAccountGmail({ gmailState, setState }) {
 
     const [state, setStateModal] = useState({
         values: null,
-        active: true
+        active: true,
+        category: 'Comments', // Ensure that category is set initially
     });
 
     useEffect(() => {
@@ -37,7 +42,7 @@ function AddAccountGmail({ gmailState, setState }) {
     }, []);
 
     useEffect(() => {
-        dispatch(actions.fetchListServiceBegin({}));
+        dispatch(actionsServiceSetting.fetchListServiceBegin({}));
     }, [dispatch]);
 
     const handleOk = () => {
@@ -45,12 +50,33 @@ function AddAccountGmail({ gmailState, setState }) {
             formNewAccountGmail.validateFields()
                 .then((values) => {
                     const requestData = {
+                        live: 0,
                         email: values?.email,
-                        key: values?.key,
-                        status: values?.status
-                    }
+                        password: values?.password,
+                        recover_mail: values?.recover_mail,
+                        auth_2fa: values?.auth_2fa,
+                    };
 
-                    dispatch(actions.createGoogleKeyBegin(requestData));
+                    switch (state?.category) {
+                        case SERVICE_TYPE.COMMENT.description:
+                            dispatch(actionGmail.createAccountGmailCommentBegin(requestData));
+                            break;
+
+                        case SERVICE_TYPE.LIKE.description:
+                            dispatch(actionGmail.createAccountGmailLikeBegin(requestData));
+                            break;
+                  
+                        case SERVICE_TYPE.SUBSCRIBE.description:
+                            console.log('Subscribes currently not apply');
+                            break;
+                
+                        case SERVICE_TYPE.VIEW.description:
+                             dispatch(actionGmail.createAccountGmailViewBegin(requestData));
+                            break;
+            
+                        default:
+                          console.log('Service type not recognized');
+                    }
 
                     setState({
                         ...gmailState,
@@ -75,11 +101,11 @@ function AddAccountGmail({ gmailState, setState }) {
         });
     }
 
-    const bodyModalCreatNewGmail = () => {
+    const bodyModalCreatNewGmailView = () => {
         return (
             <>
-                <Row gutter="10">
-                    <Col sm={16}>
+                <Row gutter={10}>
+                    <Col sm={12}>
                         <Form.Item
                             name="email"
                             label="Email"
@@ -87,73 +113,205 @@ function AddAccountGmail({ gmailState, setState }) {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Trường không được trống'
+                                    message: 'Trường không được trống',
                                 },
-                                { message: 'Nhập định dạng email', type: 'email' }
+                                {
+                                    type: 'email',
+                                    message: 'Nhập định dạng email',
+                                },
                             ]}
                         >
-                            <Input size='small' style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                            <Input
+                                size='small'
+                                addonBefore={<MdAlternateEmail fontSize={17} style={{ marginTop: '4px' }} />}
+                                style={{ fontWeight: '500' }}
+                                placeholder='Email người dùng'
+                            />
                         </Form.Item>
                     </Col>
-                    <Col sm={6}>
-                        <Form.Item 
-                            name="status"
-                            label="Hoạt động"
-                            style={{ marginBottom: '7px' }}
-                            rules={[{
-                            required: true,
-                            message: 'Trường không được trống'
-                            }]}
+                    <Col sm={12}>
+                        <Form.Item
+                            name="password"
+                            label="Mật khẩu"
+                            style={{ margin: 0, padding: 0 }}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    min: 8,
+                                    message: 'Mật khẩu phải có ít nhất 8 ký tự',
+                                },
+                            ]}
                         >
-                            <Switch checkedChildren="Mail sống" unCheckedChildren="Mail chết" checked={state?.active}  onChange={(check) => {
-                                setStateModal({
-                                    ...state,
-                                    active: check
-                                })
-                            }}/>
+                            <Input.Password
+                                size='small'
+                                addonBefore={<MdPassword fontSize={17} style={{ marginTop: '3px' }} />}
+                                placeholder="Nhập mật khẩu"
+                            />
                         </Form.Item>
                     </Col>
                 </Row>
-                <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '15px', margin: '0px' }}>Thông tin cơ bản</Divider>
-                <Row gutter="10">
-                    <Col sm={10}>
-                        <Form.Item 
-                            name="channel_id"
-                            label="ID Channel"
+                <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '15px', margin: '0px' }}>
+                    Security
+                </Divider>
+                <Row gutter={10}>
+                    <Col sm={12}>
+                        <Form.Item
+                            name="auth_2fa"
+                            label="2FA"
                             style={{ marginBottom: '7px', textAlign: 'center' }}
                             rules={[
                                 {
                                     required: true,
                                     message: 'Trường không được trống',
-                                    whitespace: false
+                                    whitespace: false,
                                 },
-                                {
-                                    required: true,
-                                    pattern: /^UC/,
-                                    message: "Sai định dạng Channel ID"
-                                }
                             ]}
                         >
-                            <Input size='small' prefix='ID' style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                            <Input
+                                addonBefore={<SiLastpass fontSize={17} style={{ marginTop: '4px' }} />}
+                                size='small'
+                                prefix='ID'
+                                style={{ fontWeight: '500' }}
+                                placeholder='ID 2FA'
+                            />
                         </Form.Item>
                     </Col>
-                    <Col sm={8}>
-                        <Form.Item 
-                            name="computer"
-                            label="Máy"
-                            style={{ marginBottom: '7px', textAlign: 'center' }}
-                            rules={[{
-                            required: true,
-                            message: 'Trường không được trống'
-                            }]}
+                    <Col sm={12}>
+                        <Form.Item
+                            name="recover_mail"
+                            label="Recover Email"
+                            style={{ marginBottom: '7px' }}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Nhập định dạng email',
+                                },
+                            ]}
                         >
-                            <Input size='small' style={{ fontWeight: '600' }} placeholder='Email người dùng' />
+                            <Input
+                                addonBefore={<MdAlternateEmail fontSize={17} style={{ marginTop: '4px' }} />}
+                                size='small'
+                                style={{ fontWeight: '500' }}
+                                placeholder='Email phục hồi'
+                            />
                         </Form.Item>
                     </Col>
-                    
                 </Row>
             </>
-        )
+        );
+    };
+
+    const bodyModalCreatNewGmailByType = ( serviceType ) => {
+       return (
+        <>
+                <Row gutter={10}>
+                    <Col sm={12}>
+                        <Form.Item
+                            name="email"
+                            label={`Email (${serviceType})`}
+                            style={{ marginBottom: '7px' }}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Nhập định dạng email',
+                                },
+                            ]}
+                        >
+                            <Input
+                                size='small'
+                                addonBefore={<MdAlternateEmail fontSize={17} style={{ marginTop: '4px' }} />}
+                                style={{ fontWeight: '500' }}
+                                placeholder='Email người dùng'
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col sm={12}>
+                        <Form.Item
+                            name="password"
+                            label={`Mật khẩu (${serviceType})`}
+                            style={{ margin: 0, padding: 0 }}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    min: 8,
+                                    message: 'Mật khẩu phải có ít nhất 8 ký tự',
+                                },
+                            ]}
+                        >
+                            <Input.Password
+                                size='small'
+                                addonBefore={<MdPassword fontSize={17} style={{ marginTop: '3px' }} />}
+                                placeholder="Nhập mật khẩu"
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '15px', margin: '0px' }}>
+                    Security
+                </Divider>
+                <Row gutter={10}>
+                    <Col sm={12}>
+                        <Form.Item
+                            name="auth_2fa"
+                            label={`2FA (${serviceType})`}
+                            style={{ marginBottom: '7px', textAlign: 'center' }}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                    whitespace: false,
+                                },
+                            ]}
+                        >
+                            <Input
+                                addonBefore={<SiLastpass fontSize={17} style={{ marginTop: '4px' }} />}
+                                size='small'
+                                style={{ fontWeight: '500' }}
+                                placeholder='Nhập mã 2FA'
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col sm={12}>
+                        <Form.Item
+                            name="recover_mail"
+                            label={`Recover Email (${serviceType})`}
+                            style={{ marginBottom: '7px' }}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Nhập định dạng email',
+                                },
+                            ]}
+                        >
+                            <Input
+                                addonBefore={<MdAlternateEmail fontSize={17} style={{ marginTop: '4px' }} />}
+                                size='small'
+                                style={{ fontWeight: '500' }}
+                                placeholder='Email phục hồi'
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </>
+       )
     }
 
     return (
@@ -167,14 +325,14 @@ function AddAccountGmail({ gmailState, setState }) {
                         <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                             <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                             <div>
-                                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm tài khoản gmail</p>
+                                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: 700 }}>Thêm tài khoản gmail</p>
                                 <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho tài khoản mới</p>
                             </div>
                         </div>
                     </Col>
                     <Col sm={10} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', justifyItems: 'self-start' }}>
                         <Form layout="vertical" form={formNewAccountGmail} style={{ margin: 0, padding: 0, marginBottom: 0, width: '100%' }}>
-                            <span style={{ fontSize: '12px', padding: 0, margin: 0 }}>Loại dịch vụ</span>
+                            <span style={{ fontSize: '12px', padding: 0, margin: 0, fontWeight: 400 }}>Loại dịch vụ</span>
                             <Form.Item
                                 name="category"
                                 style={{ margin: 0, padding: 0, marginBottom: 0 }}
@@ -228,7 +386,7 @@ function AddAccountGmail({ gmailState, setState }) {
             ]}
         >
             <Form name="add_account" layout="vertical" form={formNewAccountGmail}>
-                { bodyModalCreatNewGmail() }    
+                { bodyModalCreatNewGmailByType(state?.category) }    
             </Form>
         </Modal>
     );

@@ -143,6 +143,8 @@ function* createAccountGmailCommentFunc(params) {
       yield put(
         actions.createAccountGmailCommentSuccess(response?.data?.data)
       );
+
+      toast.success('Tạo mới gmail comment thành công');
     }
   } catch (error) {
     const errorMessage = error;
@@ -265,6 +267,8 @@ function* createAccountGmailLikeFunc(params) {
       yield put(
         actions.createAccountGmailLikeSuccess(response?.data?.data)
       );
+
+      toast.success('Tạo mới gmail like thành công');
     }
   } catch (error) {
     const errorMessage = error;
@@ -390,6 +394,8 @@ function* createAccountGmailViewFunc(params) {
       yield put(
         actions.createAccountGmailViewSuccess(response?.data?.data)
       );
+
+      toast.success('Tạo mới gmail view thành công');
     }
   } catch (error) {
     const errorMessage = error;
@@ -517,6 +523,8 @@ function* createAccountGmailSubscribeFunc(params) {
       yield put(
         actions.createAccountGmailSubscribeSuccess(response?.data?.data)
       );
+
+      toast.success('Tạo mới gmail subscribe thành công');
     }
   } catch (error) {
     const errorMessage = error;
