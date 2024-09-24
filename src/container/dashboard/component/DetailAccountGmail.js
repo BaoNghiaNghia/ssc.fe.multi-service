@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { TbServerBolt } from 'react-icons/tb';
-import { Row, Col, Form, Input, Modal, Switch, Divider } from 'antd';
-import { MdAddchart, MdAccessTime, MdOutlineAlternateEmail } from "react-icons/md";
+import { Row, Col, Form, Input, Modal, Divider } from 'antd';
+import { MdAddchart, MdAlternateEmail, MdPassword } from "react-icons/md";
+import { SiLastpass } from 'react-icons/si';
 import actions from '../../../redux/serviceSettings/actions';
-import { getPathLocalFromString } from '../../../utility/utility';
 
 function DetailAccountGmail({ gmailState, setState }) {
     const dispatch = useDispatch();
@@ -89,144 +88,104 @@ function DetailAccountGmail({ gmailState, setState }) {
             footer={[ ]}
         >
             <Form name="add_service" layout="vertical" form={formDetailAccountGmail} onFinish={handleSubmit}>
-                <Row gutter="10">
-                    <Col sm={13}>
+            <Row gutter={10}>
+                    <Col sm={12}>
                         <Form.Item
                             name="email"
-                            label="Email"
+                            label={`Email (${gmailState?.activeClass})`}
                             style={{ marginBottom: '7px' }}
                             rules={[
-                                { required: true, message: 'Trường không được trống' },
-                                { message: 'Nhập định dạng email', type: 'email' }
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Nhập định dạng email',
+                                },
                             ]}
                         >
-                            <Input size='small' prefix={<MdOutlineAlternateEmail/>} readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
+                            <Input
+                                size='small'
+                                addonBefore={<MdAlternateEmail fontSize={17} style={{ marginTop: '4px' }} />}
+                                style={{ fontWeight: '500' }}
+                                placeholder='Email người dùng'
+                            />
                         </Form.Item>
                     </Col>
-                    {
-                        detailAccountGmail?.channel_id ? (
-                            <Col sm={11}>
-                                <Form.Item 
-                                    name="channel_id"
-                                    initialValue
-                                    label="ID Channel"
-                                    style={{ marginBottom: '7px', textAlign: 'center' }}
-                                    rules={[{
-                                        required: true,
-                                        message: 'Trường không được trống'
-                                    }]}
-                                >
-                                    <Input size='small' prefix={<span style={{ fontWeight: 700, color: 'gray' }}>ID</span>} readOnly style={{ fontWeight: '500' }} placeholder='Email người dùng' />
-                                </Form.Item>
-                            </Col>
-                        ) : null
-                    }
-                </Row>
-                <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '15px', margin: '0px' }}>Thông tin cơ bản</Divider>
-                <Row gutter="10">
-                    {
-                        detailAccountGmail?.computer ? (
-                            <Col sm={10}>
-                                <Form.Item 
-                                    name="computer"
-                                    initialValue
-                                    label="Máy"
-                                    style={{ marginBottom: '7px', textAlign: 'center' }}
-                                    rules={[{
+                    <Col sm={12}>
+                        <Form.Item
+                            name="password"
+                            label={`Mật khẩu (${gmailState?.activeClass})`}
+                            style={{ margin: 0, padding: 0 }}
+                            rules={[
+                                {
                                     required: true,
-                                    message: 'Trường không được trống'
-                                    }]}
-                                >
-                                    <Input 
-                                        size='small'
-                                        prefix={<>{
-                                            detailAccountGmail !== null && getPathLocalFromString(detailAccountGmail?.computer) !== null
-                                                ? <img
-                                                    src={require(`../../../${getPathLocalFromString(detailAccountGmail?.computer)}`)}
-                                                    alt={getPathLocalFromString(detailAccountGmail?.computer)}
-                                                    width="18px"
-                                                    height="18px"
-                                                    style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
-                                                />
-                                                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
-                                            }</>
-                                        } 
-                                        readOnly
-                                        style={{ fontWeight: '500' }}
-                                        placeholder='Email người dùng'
-                                    />
-                                </Form.Item>
-                            </Col>
-                        ) : null
-                    }
-                    <Col sm={8}>
-                        <Form.Item 
-                            name="total_task"
-                            initialValue
-                            label="Tổng nhiệm vụ"
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    min: 8,
+                                    message: 'Mật khẩu phải có ít nhất 8 ký tự',
+                                },
+                            ]}
+                        >
+                            <Input.Password
+                                size='small'
+                                addonBefore={<MdPassword fontSize={17} style={{ marginTop: '3px' }} />}
+                                placeholder="Nhập mật khẩu"
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Divider style={{ fontSize: '0.9em', color: 'gray', paddingBottom: '15px', margin: '0px' }}>
+                    Security
+                </Divider>
+                <Row gutter={10}>
+                    <Col sm={12}>
+                        <Form.Item
+                            name="auth_2fa"
+                            label={`2FA (${gmailState?.activeClass})`}
                             style={{ marginBottom: '7px', textAlign: 'center' }}
-                            rules={[{
-                            required: true,
-                            message: 'Trường không được trống'
-                            }]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                    whitespace: false,
+                                },
+                            ]}
                         >
-                            <Input size='small' readOnly style={{ fontWeight: '600' }} placeholder='Email người dùng' />
+                            <Input
+                                addonBefore={<SiLastpass fontSize={17} style={{ marginTop: '4px' }} />}
+                                size='small'
+                                style={{ fontWeight: '500' }}
+                                placeholder='Nhập mã 2FA'
+                            />
                         </Form.Item>
                     </Col>
-                    <Col sm={6}>
-                        <Form.Item 
-                            name="status"
-                            initialValue
-                            label="Hoạt động"
+                    <Col sm={12}>
+                        <Form.Item
+                            name="recover_mail"
+                            label={`Recover Email (${gmailState?.activeClass})`}
                             style={{ marginBottom: '7px' }}
-                            rules={[{
-                            required: true,
-                            message: 'Trường không được trống'
-                            }]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Trường không được trống',
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Nhập định dạng email',
+                                },
+                            ]}
                         >
-                            <Switch checkedChildren="Mail sống" unCheckedChildren="Mail chết" checked={detailAccountGmail?.live} onChange={(value) => {
-                                formDetailAccountGmail.setFieldValue('status', value)
-                            }} />
+                            <Input
+                                addonBefore={<MdAlternateEmail fontSize={17} style={{ marginTop: '4px' }} />}
+                                size='small'
+                                style={{ fontWeight: '500' }}
+                                placeholder='Email phục hồi'
+                            />
                         </Form.Item>
                     </Col>
-                </Row>
-                <Row gutter="10">
-                    {
-                        detailAccountGmail?.last_call_at ? (
-                            <Col sm={12}>
-                                <Form.Item 
-                                    name="last_call_at"
-                                    initialValue
-                                    label="Lần gọi cuối"
-                                    style={{ marginBottom: '0px' }}
-                                    rules={[{
-                                    required: true,
-                                    message: 'Trường không được trống'
-                                    }]}
-                                >
-                                    <Input size='small' prefix={<MdAccessTime/>} readOnly style={{ fontWeight: '600' }} placeholder='Email người dùng' />
-                                </Form.Item>
-                            </Col>
-                        ) : null
-                    }
-                    {
-                        detailAccountGmail?.last_success_at ? (
-                            <Col sm={12}>
-                                <Form.Item 
-                                    name="last_success_at"
-                                    initialValue
-                                    label="Lần hoàn thành cuối"
-                                    style={{ marginBottom: '0px' }}
-                                    rules={[{
-                                    required: true,
-                                    message: 'Trường không được trống'
-                                    }]}
-                                >
-                                    <Input size='small' prefix={<MdAccessTime/>} readOnly style={{ fontWeight: '600' }} placeholder='Email người dùng' />
-                                </Form.Item>
-                            </Col>
-                        ) : null
-                    }
                 </Row>
             </Form>
         </Modal>

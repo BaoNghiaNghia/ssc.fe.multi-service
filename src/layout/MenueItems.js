@@ -188,7 +188,6 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           />
         </NavTitle>}
         <Menu.Item
-          disabled
           icon={
             !topMenu && (
               <NavLink className="menuItem-icon" to={`${path}/subscribe/danh-sach-don`}>
@@ -199,13 +198,12 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
           key="buff-subscribe-cho-duyet"
         >
           <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/danh-sach-don`}>
-            Danh sách đơn {pendingBadge}
+            Danh sách đơn
           </NavLink>
         </Menu.Item>
         {
           checkMatchRole ? (
             <Menu.Item
-              disabled
               icon={
                 !topMenu && (
                   <NavLink className="menuItem-icon" to={`${path}/subscribe/lich-su-don`}>
@@ -216,7 +214,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
               key="subscribe-lich-su-don"
             >
               <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/lich-su-don`}>
-                Danh sách máy {pendingBadge}
+                Danh sách máy
               </NavLink>
             </Menu.Item>
           ) : <></>
