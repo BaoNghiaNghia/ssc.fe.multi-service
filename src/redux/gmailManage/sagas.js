@@ -144,6 +144,10 @@ function* createAccountGmailCommentFunc(params) {
         actions.createAccountGmailCommentSuccess(response?.data?.data)
       );
 
+      yield put(
+        actions.listAccountGmailCommentBegin()
+      );
+
       toast.success('Tạo mới gmail comment thành công');
     }
   } catch (error) {
@@ -266,6 +270,10 @@ function* createAccountGmailLikeFunc(params) {
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
         actions.createAccountGmailLikeSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.listAccountGmailLikeBegin()
       );
 
       toast.success('Tạo mới gmail like thành công');
@@ -395,6 +403,10 @@ function* createAccountGmailViewFunc(params) {
         actions.createAccountGmailViewSuccess(response?.data?.data)
       );
 
+      yield put(
+        actions.listAccountGmailViewBegin()
+      );
+
       toast.success('Tạo mới gmail view thành công');
     }
   } catch (error) {
@@ -522,6 +534,10 @@ function* createAccountGmailSubscribeFunc(params) {
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
         actions.createAccountGmailSubscribeSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.listAccountGmailSubscribeBegin()
       );
 
       toast.success('Tạo mới gmail subscribe thành công');

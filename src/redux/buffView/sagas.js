@@ -333,7 +333,7 @@ function* fetchListOrderViewFunc(params) {
     } else if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Tìm danh sách đơn view không thành công');
+      toast.error('Lấy danh sách đơn view không thành công');
     }
   } finally { /* empty */ }
 }
