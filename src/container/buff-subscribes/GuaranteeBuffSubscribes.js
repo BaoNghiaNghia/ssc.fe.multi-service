@@ -99,7 +99,7 @@ function GuaranteeBuffSubscribes() {
   const { isSendRequestModal, isRefundModal, selectedRowKeys, notData, selectedItem } = state;
 
   useEffect(() => {
-    dispatch(actions.fetchListOrderCommentBegin({
+    dispatch(actions.fetchListOrderSubscribeBegin({
       page: currentPage,
       limit: limitPage,
     }));
@@ -123,7 +123,7 @@ function GuaranteeBuffSubscribes() {
 
   const handleSearch = (searchText) => {
     if (!searchText) {
-      dispatch(actions.fetchListOrderCommentBegin({}));
+      dispatch(actions.fetchListOrderSubscribeBegin({}));
     }
 
     const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
@@ -131,11 +131,11 @@ function GuaranteeBuffSubscribes() {
     if (arraySearchValidate && arraySearchValidate.length > 0) {
       const pattern = /^\d+\.?\d*$/;
       if (pattern.test(arraySearchValidate.join(""))) {
-        dispatch(actions.fetchListOrderCommentBegin({
+        dispatch(actions.fetchListOrderSubscribeBegin({
           order_ids: arraySearchValidate.join(",")
         }));
       } else {
-        dispatch(actions.fetchListOrderCommentBegin({
+        dispatch(actions.fetchListOrderSubscribeBegin({
           video_ids: arraySearchValidate.join(",")
         }));
       }

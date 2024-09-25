@@ -138,7 +138,10 @@ function GmailManagement() {
         break;
   
       case SERVICE_TYPE.SUBSCRIBE.title:
-        console.log('--- subscribe ---');
+        dispatch(gmailActions.listAccountGmailSubscribeBegin({
+          page: currentPage,
+          limit: limitPage,
+        }));
         break;
 
       case SERVICE_TYPE.VIEW.title:
@@ -176,7 +179,11 @@ function GmailManagement() {
           break;
   
         case SERVICE_TYPE.SUBSCRIBE.title:
-          console.log('--- subscribe ---');
+          dispatch(gmailActions.listAccountGmailSubscribeBegin({
+            page: currentPage,
+            limit: limitPage,
+            name: searchText
+          }));
           break;
 
         case SERVICE_TYPE.VIEW.title:
@@ -295,7 +302,6 @@ function GmailManagement() {
                       break;
 
                     case SERVICE_TYPE.SUBSCRIBE.title:
-                      console.log('--- subscribe ---');
                       dispatch(gmailActions.detailAccountGmailSubscribeBegin(_id));
                       break;
                     

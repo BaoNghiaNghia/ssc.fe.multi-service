@@ -423,6 +423,88 @@ const actions = {
         err,
       };
     },
+    detailAccountGmailSubscribeBegin: (payload) => {
+      return {
+        type: actions.DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+        payload
+      };
+    },
+  
+    detailAccountGmailSubscribeSuccess: (data) => {
+      return {
+        type: actions.DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+        data,
+      };
+    },
+  
+    detailAccountGmailSubscribeErr: (err) => {
+      return {
+        type: actions.DETAIL_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+        err,
+      };
+    },
+    createAccountGmailSubscribeBegin: (payload) => {
+      return {
+        type: actions.CREATE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+        payload
+      };
+    },
+  
+    createAccountGmailSubscribeSuccess: (data) => {
+      return {
+        type: actions.CREATE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+        data,
+      };
+    },
+  
+    createAccountGmailSubscribeErr: (err) => {
+      return {
+        type: actions.CREATE_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+        err,
+      };
+    },
+    deleteAccountGmailSubscribeBegin: (payload) => {
+      return {
+        type: actions.DELETE_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+        payload
+      };
+    },
+  
+    deleteAccountGmailSubscribeSuccess: (data) => {
+      return {
+        type: actions.DELETE_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+        data,
+      };
+    },
+  
+    deleteAccountGmailSubscribeErr: (err) => {
+      return {
+        type: actions.DELETE_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+        err,
+      };
+    },
+    patchAccountGmailSubscribeBegin: (payload) => {
+      return {
+        type: actions.PATCH_ACCOUNT_GMAIL_SUBSCRIBE_BEGIN,
+        payload
+      };
+    },
+  
+    patchAccountGmailSubscribeSuccess: (data) => {
+      return {
+        type: actions.PATCH_ACCOUNT_GMAIL_SUBSCRIBE_SUCCESS,
+        data,
+      };
+    },
+  
+    patchAccountGmailSubscribeErr: (err) => {
+      return {
+        type: actions.PATCH_ACCOUNT_GMAIL_SUBSCRIBE_ERR,
+        err,
+      };
+    },
+
+
 
 
     changeServiceTypeInGmailBegin: (payload) => {

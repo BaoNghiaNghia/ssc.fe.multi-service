@@ -37,7 +37,7 @@ import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURR
 import { convertSeconds, numberWithCommas, performanceStatementTags } from '../../utility/utility';
 
 
-const columns = [
+const columnsTable = [
   {
     title: 'Người dùng',
     dataIndex: 'user_id',
@@ -733,7 +733,7 @@ function PendingBuffSubscribes() {
                   rowSelection={rowSelection}
                   size='small'
                   dataSource={dataSource}
-                  columns={columns}
+                  columns={columnsTable}
                   locale={{ emptyText: (
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>

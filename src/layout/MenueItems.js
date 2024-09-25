@@ -165,7 +165,7 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
               icon={
                 !topMenu && (
                   <NavLink className="menuItem-icon" to={`${path}/view/danh-sach-may`}>
-                    <FeatherIcon icon="hard-drive" />
+                    <FeatherIcon icon="smartphone" />
                   </NavLink>
                 )
               }

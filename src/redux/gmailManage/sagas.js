@@ -478,30 +478,26 @@ function* patchAccountGmailViewFunc(params) {
 
 // SUBSCRIBE
 function* listAccountGmailSubscribeFunc(params) {
-  yield put(
-    actions.listAccountGmailSubscribeErr({ error: 'Subscribe - Fetch list account gmail failed' })
-  );
-
-  // try {
-  //   const response = yield call(listAccountGmailSubscribeAPI, params?.payload);
+  try {
+    const response = yield call(listAccountGmailSubscribeAPI, params?.payload);
     
-  //   if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-  //     yield put(
-  //       actions.listAccountGmailSubscribeSuccess(response?.data?.data)
-  //     );
-  //   }
-  // } catch (error) {
-  //   const errorMessage = error;
-  //   yield put(
-  //     actions.listAccountGmailSubscribeErr({ error: errorMessage || 'Subscribe - Fetch list account gmail failed' })
-  //   );
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.listAccountGmailSubscribeSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.listAccountGmailSubscribeErr({ error: errorMessage || 'Subscribe - Fetch list account gmail failed' })
+    );
 
-  //   if (errorMessage?.response?.data?.data?.error) {
-  //     toast.error(errorMessage?.response?.data?.data?.error);
-  //   } else {
-  //     toast.error('Subscribe - Fetch list account gmail failed');
-  //   }
-  // } finally { /* empty */ }
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch list account gmail failed');
+    }
+  } finally { /* empty */ }
 }
 
 function* detailAccountGmailSubscribeFunc(params) {

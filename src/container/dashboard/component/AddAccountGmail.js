@@ -67,7 +67,7 @@ function AddAccountGmail({ gmailState, setState }) {
                             break;
                   
                         case SERVICE_TYPE.SUBSCRIBE.description:
-                            console.log('Subscribes currently not apply');
+                            dispatch(actionGmail.createAccountGmailSubscribeBegin(requestData));
                             break;
                 
                         case SERVICE_TYPE.VIEW.description:

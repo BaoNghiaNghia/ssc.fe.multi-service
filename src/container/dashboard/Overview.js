@@ -54,6 +54,8 @@ function Overview() {
     totalOrder,
     listComputerComment,
     listComputerLike,
+    listComputerView,
+    listComputerSubscribe,
     orderByDays
   } = useSelector((state) => {
     return {
@@ -72,6 +74,8 @@ function Overview() {
       totalOrder: state?.reports?.totalOrder,
       listComputerComment: state?.buffComment?.listComputer,
       listComputerLike: state?.buffLike?.listComputer,
+      listComputerView: state?.buffView?.listComputer,
+      listComputerSubscribe: state?.buffSubscribe?.listComputer,
       orderByDays: state?.reports?.orderByDays
     };
   });
@@ -145,10 +149,16 @@ function Overview() {
     switch(typeService) {
       case SERVICE_TYPE.COMMENT.title:
         return listComputerComment?.meta?.total;
+
       case SERVICE_TYPE.LIKE.title:
         return listComputerLike?.meta?.total;
+
       case SERVICE_TYPE.SUBSCRIBE.title:
-        return 0;
+        return listComputerSubscribe?.meta?.total;
+
+      case SERVICE_TYPE.VIEW.title:
+        return listComputerView?.meta?.total;
+
       default:
         return 0;
     }

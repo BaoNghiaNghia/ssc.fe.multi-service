@@ -10,7 +10,7 @@ import { IoMdRefresh } from "react-icons/io";
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
-import actions from '../../../redux/buffComment/actions';
+import actions from '../../../redux/buffView/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../../utility/utility';
 import { FILTER_ORDER_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
@@ -105,7 +105,7 @@ function FilterOrderView({ orderState, setState }) {
             rest.priority = priority === "true";
           }
 
-          dispatch(actions.fetchListOrderCommentBegin(rest));
+          dispatch(actions.fetchListOrderViewBegin(rest));
 
           setState({ ...orderState, isFilterCommentOrderModal: false });
         })
@@ -128,7 +128,7 @@ function FilterOrderView({ orderState, setState }) {
 
   const handleResetForm = () => {
     formCreateService.resetFields();
-    dispatch(actions.fetchListOrderCommentBegin({}));
+    dispatch(actions.fetchListOrderViewBegin({}));
 
     setState({
       ...orderState,

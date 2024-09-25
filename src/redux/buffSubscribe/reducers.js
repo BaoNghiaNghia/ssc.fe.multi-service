@@ -5,7 +5,6 @@ import { ORDER_YOUTUBE_STATUS } from '../../variables';
 const initialState = {
   statusBarNumber: ORDER_YOUTUBE_STATUS.find(item => item?.name === 'OrderStatusProcessing')?.value,
   adminSetting: {},
-  listOrderSubscribe: [],
   servicePackage: [],
   userList: [],
   orderSubHistory: [],
@@ -14,6 +13,16 @@ const initialState = {
     to: currentDate
   },
   typeHistory: 0,
+
+
+
+
+  listOrderSubscribe: [],
+  detailOrderSubscribe: {},
+  listComputer: {},
+  detailComputerSubscribe: {},
+  listWarrantyOrder: [],
+  commentInOrder: {},
   loading: false,
   error: null
 };
@@ -45,7 +54,72 @@ const {
 
     SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN,
     SET_STATUS_BAR_NUMBER_SUBSCRIBE_ERR,
-    SET_STATUS_BAR_NUMBER_SUBSCRIBE_SUCCESS
+    SET_STATUS_BAR_NUMBER_SUBSCRIBE_SUCCESS,
+
+
+
+
+
+
+    DETAIL_ORDER_SUBSCRIBE_BEGIN,
+    DETAIL_ORDER_SUBSCRIBE_ERR,
+    DETAIL_ORDER_SUBSCRIBE_SUCCESS,
+
+    SUBSCRIBE_IN_ORDER_SUBSCRIBE_BEGIN,
+    SUBSCRIBE_IN_ORDER_SUBSCRIBE_ERR,
+    SUBSCRIBE_IN_ORDER_SUBSCRIBE_SUCCESS,
+
+    CREATE_ORDER_SUBSCRIBE_ADMIN_BEGIN,
+    CREATE_ORDER_SUBSCRIBE_ADMIN_ERR,
+    CREATE_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
+
+    DETAIL_ORDER_SUBSCRIBE_ADMIN_BEGIN,
+    DETAIL_ORDER_SUBSCRIBE_ADMIN_ERR,
+    DETAIL_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
+
+    UPDATE_ORDER_SUBSCRIBE_ADMIN_BEGIN,
+    UPDATE_ORDER_SUBSCRIBE_ADMIN_ERR,
+    UPDATE_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
+
+    LIST_COMPUTER_RUN_SUBSCRIBE_BEGIN,
+    LIST_COMPUTER_RUN_SUBSCRIBE_ERR,
+    LIST_COMPUTER_RUN_SUBSCRIBE_SUCCESS,
+
+    DETAIL_COMPUTER_RUN_SUBSCRIBE_BEGIN,
+    DETAIL_COMPUTER_RUN_SUBSCRIBE_ERR,
+    DETAIL_COMPUTER_RUN_SUBSCRIBE_SUCCESS,
+
+    DELETE_COMPUTER_RUN_SUBSCRIBE_BEGIN,
+    DELETE_COMPUTER_RUN_SUBSCRIBE_ERR,
+    DELETE_COMPUTER_RUN_SUBSCRIBE_SUCCESS,
+    
+    UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_BEGIN,
+    UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_ERR,
+    UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
+    
+    UPDATE_ONE_COMPUTER_RUN_SUBSCRIBE_BEGIN,
+    UPDATE_ONE_COMPUTER_RUN_SUBSCRIBE_ERR,
+    UPDATE_ONE_COMPUTER_RUN_SUBSCRIBE_SUCCESS,
+
+    UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_BEGIN,
+    UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_ERR,
+    UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_SUCCESS,
+
+    ACTIVE_WARRANTY_ORDER_SUBSCRIBE_BEGIN,
+    ACTIVE_WARRANTY_ORDER_SUBSCRIBE_ERR,
+    ACTIVE_WARRANTY_ORDER_SUBSCRIBE_SUCCESS,
+
+    FETCH_WARRANTY_SUBSCRIBE_ORDER_BEGIN,
+    FETCH_WARRANTY_SUBSCRIBE_ORDER_ERR,
+    FETCH_WARRANTY_SUBSCRIBE_ORDER_SUCCESS,
+
+    REFUND_WARRANTY_ORDER_BEGIN,
+    REFUND_WARRANTY_ORDER_ERR,
+    REFUND_WARRANTY_ORDER_SUCCESS,
+
+    SET_RANGE_DATE_WARRANTY_FILTER_BEGIN,
+    SET_RANGE_DATE_WARRANTY_FILTER_ERR,
+    SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
@@ -184,6 +258,299 @@ const ReportsReducer = (state = initialState, action) => {
         ...state,
         error: err,
         loading: false,
+      };
+
+
+
+    case FETCH_WARRANTY_SUBSCRIBE_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case FETCH_WARRANTY_SUBSCRIBE_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listWarrantyOrder: data
+      };
+
+    case FETCH_WARRANTY_SUBSCRIBE_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case SET_RANGE_DATE_WARRANTY_FILTER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        filterRange: data
+      };
+
+    case SET_RANGE_DATE_WARRANTY_FILTER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case REFUND_WARRANTY_ORDER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case REFUND_WARRANTY_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case REFUND_WARRANTY_ORDER_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case ACTIVE_WARRANTY_ORDER_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ACTIVE_WARRANTY_ORDER_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case ACTIVE_WARRANTY_ORDER_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case UPDATE_ONE_COMPUTER_RUN_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_ONE_COMPUTER_RUN_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_ONE_COMPUTER_RUN_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case LIST_COMPUTER_RUN_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LIST_COMPUTER_RUN_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listComputer: data
+      };
+
+    case LIST_COMPUTER_RUN_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case DETAIL_ORDER_SUBSCRIBE_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_ORDER_SUBSCRIBE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailOrderSubscribe: data
+      };
+
+    case DETAIL_ORDER_SUBSCRIBE_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case DELETE_COMPUTER_RUN_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_COMPUTER_RUN_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case DELETE_COMPUTER_RUN_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+    case DETAIL_COMPUTER_RUN_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_COMPUTER_RUN_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailComputerSubscribe: data
+      };
+
+    case DETAIL_COMPUTER_RUN_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case UPDATE_ORDER_SUBSCRIBE_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_ORDER_SUBSCRIBE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_ORDER_SUBSCRIBE_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case CREATE_ORDER_SUBSCRIBE_ADMIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CREATE_ORDER_SUBSCRIBE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case CREATE_ORDER_SUBSCRIBE_ADMIN_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case DETAIL_ORDER_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DETAIL_ORDER_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        detailOrderSubscribe: data,
+      };
+
+    case DETAIL_ORDER_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
+    case SUBSCRIBE_IN_ORDER_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case SUBSCRIBE_IN_ORDER_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        commentInOrder: data,
+      };
+
+    case SUBSCRIBE_IN_ORDER_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
       };
 
     default:
