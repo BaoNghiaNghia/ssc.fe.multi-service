@@ -206,19 +206,33 @@ function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
             <Menu.Item
               icon={
                 !topMenu && (
-                  <NavLink className="menuItem-icon" to={`${path}/subscribe/lich-su-don`}>
+                  <NavLink className="menuItem-icon" to={`${path}/subscribe/danh-sach-may`}>
                     <FeatherIcon icon="hard-drive" />
                   </NavLink>
                 )
               }
-              key="subscribe-lich-su-don"
+              key="subscribe-danh-sach-may"
             >
-              <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/lich-su-don`}>
+              <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/danh-sach-may`}>
                 Danh sách máy
               </NavLink>
             </Menu.Item>
           ) : <></>
         }
+        <Menu.Item
+          icon={
+            !topMenu && (
+              <NavLink className="menuItem-icon" to={`${path}/subscribe/quet-bao-hanh`}>
+                <TbScan size={18}/>
+              </NavLink>
+            )
+          }
+          key="buff-subscribe-quet-bao-hanh"
+        >
+          <NavLink onClick={toggleCollapsed} to={`${path}/subscribe/quet-bao-hanh`}>
+            Quét bảo hành
+          </NavLink>
+        </Menu.Item>
         {!topMenu && <NavTitle className="sidebar-nav-title" style={{display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
           <span style={{ color: COLOR_GENERAL.primary, fontWeight: 700, display: 'flex', alignContent: 'center', alignItems: 'center' }}>
             <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />

@@ -12,9 +12,9 @@ import { debounce } from 'lodash';
 import { MdOutlineSendTimeExtension } from "react-icons/md";
 import moment from 'moment';
 import { WiTime7 } from 'react-icons/wi';
-import { TopToolBox } from './Style';
+import { TopToolBox } from './style';
 import ConfirmRequestModal from './components/ConfirmRequestModal';
-import FilterOrderComment from './components/FilterOrderComment';
+import FilterOrderSubscribes from './components/FilterOrderSubscribes';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
@@ -65,7 +65,7 @@ const columns = [
   },
 ];
 
-function GuaranteeBuffComment() {
+function GuaranteeBuffSubscribes() {
   const dispatch = useDispatch();
   const dataSource = [];
   
@@ -389,13 +389,13 @@ function GuaranteeBuffComment() {
           });
         }}
       />
-      <FilterOrderComment
+      <FilterOrderSubscribes
         orderState={state}
         setState={setState}
       />
       <PageHeader
         ghost
-        title="Comment - Quét bảo hành"
+        title="Subscribes - Quét bảo hành"
         buttons={[
           <FilterCalendar actionPicker={actions.setRangeDateWarrantyFilterBegin} fromDate={filterRange?.from} toDate={filterRange?.to}/>
         ]}
@@ -496,4 +496,4 @@ function GuaranteeBuffComment() {
   );
 }
 
-export default GuaranteeBuffComment;
+export default GuaranteeBuffSubscribes;

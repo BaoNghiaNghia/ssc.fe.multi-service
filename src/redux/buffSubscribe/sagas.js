@@ -4,7 +4,6 @@ import actions from "./actions";
 import {
   fetchAdminSettingAPI,
   fetchListOrderSubscribeAPI,
-  fetchOrderHistoryAPI,
   fetchServicePackageListAPI,
 } from '../../config/api/BuffSubscribe/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
@@ -74,7 +73,7 @@ function* fetchServicePackageListFunc() {
 
 function* fetchListOrderHistoryFunc(params) { 
   try {
-    const response = yield call(fetchOrderHistoryAPI,  params?.payload);
+    const response = yield call(fetchListOrderSubscribeAPI,  params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
