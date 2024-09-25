@@ -222,7 +222,14 @@ const UserProfile = () => {
                                         setSelectedKey("profile");
                                         onCloseDrawer(value)
                                     }}
-                                >
+                                    style={{
+                                        backgroundColor: selectedKey === "profile" ? '#26695c' : 'transparent',
+                                        color: selectedKey === "profile" ? 'white' : 'inherit',
+                                        borderTopLeftRadius: selectedKey === "profile" ? '10px' : 'inherit',
+                                        borderBottomLeftRadius: selectedKey === "profile" ? '10px' : 'inherit',
+                                        fontWeight: selectedKey === "profile" ? '700' : 'inherit',
+                                    }}
+                                    >
                                     Thông tin cá nhân
                                 </Menu.Item>
                                 <Menu.Item
@@ -231,6 +238,13 @@ const UserProfile = () => {
                                     onClick={(value) => {
                                         setSelectedKey("password");
                                         onCloseDrawer(value)
+                                    }}
+                                    style={{
+                                        backgroundColor: selectedKey === "password" ? '#26695c' : 'transparent',
+                                        color: selectedKey === "password" ? 'white' : 'inherit',
+                                        borderTopLeftRadius: selectedKey === "password" ? '10px' : 'inherit',
+                                        borderBottomLeftRadius: selectedKey === "password" ? '10px' : 'inherit',
+                                        fontWeight: selectedKey === "password" ? '700' : 'inherit',
                                     }}
                                 >
                                     Cập nhật mật khẩu
