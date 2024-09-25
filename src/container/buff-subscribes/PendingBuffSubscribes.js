@@ -29,7 +29,7 @@ import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import actions from '../../redux/buffSubscribe/actions';
+import actionsSubscribe from '../../redux/buffSubscribe/actions';
 import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
@@ -126,8 +126,8 @@ function PendingBuffSubscribes() {
   });
 
   const [state, setState] = useState({
-    isDetailOrderLikeModal: false,
-    isUpdateLikeOrderModal: false,
+    isDetailOrderSubscribeModal: false,
+    isUpdateSubscribeOrderModal: false,
     isCancelRefundCommentOrderModal: false,
     isInsuranceCommentOrderModal: false,
     isFilterLikeOrderModal: false,
@@ -153,7 +153,7 @@ function PendingBuffSubscribes() {
       initParams = { ...initParams, status: statusBarNumber };
     }
   
-    dispatch(actions.fetchListOrderSubscribeBegin(initParams));
+    dispatch(actionsSubscribe.fetchListOrderSubscribeBegin(initParams));
   }, [dispatch, currentPage, limitPage]);
 
   useEffect(() => {
@@ -163,7 +163,7 @@ function PendingBuffSubscribes() {
 
   const handleSearch = (searchText) => {
     if (!searchText) {
-      dispatch(actions.fetchListOrderSubscribeBegin({}));
+      dispatch(actionsSubscribe.fetchListOrderSubscribeBegin({}));
     }
 
     const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
@@ -173,13 +173,13 @@ function PendingBuffSubscribes() {
       // }, 500);
       const pattern = /^\d+\.?\d*$/;
       if (pattern.test(arraySearchValidate.join(""))) {
-        dispatch(actions.fetchListOrderSubscribeBegin({
+        dispatch(actionsSubscribe.fetchListOrderSubscribeBegin({
           order_ids: arraySearchValidate.join(","),
           page: currentPage,
           limit: limitPage,
         }));
       } else {
-        dispatch(actions.fetchListOrderSubscribeBegin({
+        dispatch(actionsSubscribe.fetchListOrderSubscribeBegin({
           video_ids: arraySearchValidate.join(","),
           page: currentPage,
           limit: limitPage,
@@ -502,10 +502,10 @@ function PendingBuffSubscribes() {
                 <Tooltip title="Chỉnh sửa">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderLikeBegin({
+                      dispatch(actionsSubscribe.detailOrderSubscribeAdminBegin({
                         ...value,
                       }));
-                      setState({ ...state, isUpdateLikeOrderModal: true });
+                      setState({ ...state, isUpdateSubscribeOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="edit" size={16} />
@@ -518,7 +518,7 @@ function PendingBuffSubscribes() {
                 <Tooltip title="Bảo hành">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderLikeBegin({
+                      dispatch(actionsSubscribe.detailOrderSubscribeAdminBegin({
                         ...value,
                         userDetail: findUser,
                         serviceDetail: findService
@@ -536,7 +536,7 @@ function PendingBuffSubscribes() {
                 <Tooltip title="Hủy & Hoàn tiền">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderLikeBegin({
+                      dispatch(actionsSubscribe.detailOrderSubscribeAdminBegin({
                         ...value,
                         userDetail: findUser,
                         serviceDetail: findService
@@ -552,12 +552,12 @@ function PendingBuffSubscribes() {
             <Tooltip title="Chi tiết">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
-                  dispatch(actions.detailOrderLikeBegin({
+                  dispatch(actionsSubscribe.detailOrderSubscribeAdminBegin({
                     ...value,
                   }));
                   setState({ 
                     ...state, 
-                    isDetailOrderLikeModal: true
+                    isDetailOrderSubscribeModal: true
                   });
                 }}
               >
@@ -571,7 +571,7 @@ function PendingBuffSubscribes() {
   }
 
   const handleChangeForFilter = (e) => {
-    dispatch(actions.setStatusBarSubscribeBegin(e.target.value));
+    dispatch(actionsSubscribe.setStatusBarSubscribeBegin(e.target.value));
 
     setCurrentPage(1);
 
@@ -581,12 +581,12 @@ function PendingBuffSubscribes() {
     }
 
     if (e.target.value !== "all") {
-      dispatch(actions.fetchListOrderSubscribeBegin({
+      dispatch(actionsSubscribe.fetchListOrderSubscribeBegin({
         ...pagination,
         status: e.target.value,
       }));
     } else {
-      dispatch(actions.fetchListOrderSubscribeBegin(pagination));
+      dispatch(actionsSubscribe.fetchListOrderSubscribeBegin(pagination));
     }
   };
 

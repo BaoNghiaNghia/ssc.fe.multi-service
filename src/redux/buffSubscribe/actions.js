@@ -282,294 +282,273 @@ const actions = {
         };
     },
 
-    activeWarrantyOrderCommentBegin: (payload) => {
+    activeWarrantyOrderSubscribeBegin: (payload) => {
         return {
             type: actions.ACTIVE_WARRANTY_ORDER_SUBSCRIBE_BEGIN,
             payload
         };
     },
 
-    activeWarrantyOrderCommentSuccess: (data) => {
+    activeWarrantyOrderSubscribeSuccess: (data) => {
         return {
             type: actions.ACTIVE_WARRANTY_ORDER_SUBSCRIBE_SUCCESS,
             data,
         };
     },
 
-    activeWarrantyOrderCommentErr: (err) => {
+    activeWarrantyOrderSubscribeErr: (err) => {
         return {
             type: actions.ACTIVE_WARRANTY_ORDER_SUBSCRIBE_ERR,
             err,
         };
     },
 
-    fetchWarrantyCommentOrderBegin: (payload) => {
+    fetchWarrantySubscribeOrderBegin: (payload) => {
         return {
             type: actions.FETCH_WARRANTY_SUBSCRIBE_ORDER_BEGIN,
             payload
         };
     },
 
-    fetchWarrantyCommentOrderSuccess: (data) => {
+    fetchWarrantySubscribeOrderSuccess: (data) => {
         return {
             type: actions.FETCH_WARRANTY_SUBSCRIBE_ORDER_SUCCESS,
             data,
         };
     },
 
-    fetchWarrantyCommentOrderErr: (err) => {
+    fetchWarrantySubscribeOrderErr: (err) => {
         return {
             type: actions.FETCH_WARRANTY_SUBSCRIBE_ORDER_ERR,
             err,
         };
     },
 
-    listComputerRunCommentBegin: (payload) => {
+    listComputerRunSubscribeBegin: (payload) => {
         return {
             type: actions.LIST_COMPUTER_RUN_SUBSCRIBE_BEGIN,
             payload
         };
     },
 
-    listComputerRunCommentSuccess: (data) => {
+    listComputerRunSubscribeSuccess: (data) => {
         return {
             type: actions.LIST_COMPUTER_RUN_SUBSCRIBE_SUCCESS,
             data,
         };
     },
 
-    listComputerRunCommentErr: (err) => {
+    listComputerRunSubscribeErr: (err) => {
         return {
             type: actions.LIST_COMPUTER_RUN_SUBSCRIBE_ERR,
             err,
         };
     },
 
-    detailComputerRunCommentBegin: (payload) => {
+    detailComputerRunSubscribeBegin: (payload) => {
         return {
             type: actions.DETAIL_COMPUTER_RUN_SUBSCRIBE_BEGIN,
             payload
         };
     },
 
-    detailComputerRunCommentSuccess: (data) => {
+    detailComputerRunSubscribeSuccess: (data) => {
         return {
             type: actions.DETAIL_COMPUTER_RUN_SUBSCRIBE_SUCCESS,
             data,
         };
     },
 
-    detailComputerRunCommentErr: (err) => {
+    detailComputerRunSubscribeErr: (err) => {
         return {
             type: actions.DETAIL_COMPUTER_RUN_SUBSCRIBE_ERR,
             err,
         };
     },
 
-    deleteComputerRunCommentBegin: (payload) => {
+    deleteComputerRunSubscribeBegin: (payload) => {
         return {
             type: actions.DELETE_COMPUTER_RUN_SUBSCRIBE_BEGIN,
             payload
         };
     },
 
-    deleteComputerRunCommentSuccess: (data) => {
+    deleteComputerRunSubscribeSuccess: (data) => {
         return {
             type: actions.DELETE_COMPUTER_RUN_SUBSCRIBE_SUCCESS,
             data,
         };
     },
 
-    deleteComputerRunCommentErr: (err) => {
+    deleteComputerRunSubscribeErr: (err) => {
         return {
             type: actions.DELETE_COMPUTER_RUN_SUBSCRIBE_ERR,
             err,
         };
     },
 
-    detailOrderCommentAdminBegin: (payload) => {
+    detailOrderSubscribeAdminBegin: (payload) => {
         return {
             type: actions.DETAIL_ORDER_SUBSCRIBE_ADMIN_BEGIN,
             payload
         };
     },
 
-    detailOrderCommentAdminSuccess: (data) => {
+    detailOrderSubscribeAdminSuccess: (data) => {
         return {
             type: actions.DETAIL_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
             data,
         };
     },
 
-    detailOrderCommentAdminErr: (err) => {
+    detailOrderSubscribeAdminErr: (err) => {
         return {
             type: actions.DETAIL_ORDER_SUBSCRIBE_ADMIN_ERR,
             err,
         };
     },
 
-    updateOneComputerCommentAdminBegin: (payload) => {
+    updateOneComputerSubscribeAdminBegin: (payload) => {
         return {
             type: actions.UPDATE_ONE_COMPUTER_SUBSCRIBE_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateOneComputerCommentAdminSuccess: (data) => {
+    updateOneComputerSubscribeAdminSuccess: (data) => {
         return {
             type: actions.UPDATE_ONE_COMPUTER_SUBSCRIBE_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateOneComputerCommentAdminErr: (err) => {
+    updateOneComputerSubscribeAdminErr: (err) => {
         return {
             type: actions.UPDATE_ONE_COMPUTER_SUBSCRIBE_ADMIN_ERR,
             err,
         };
     },
 
-    updateManyComputerCommentAdminBegin: (payload) => {
+    updateManyComputerSubscribeAdminBegin: (payload) => {
         return {
             type: actions.UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateManyComputerCommentAdminSuccess: (data) => {
+    updateManyComputerSubscribeAdminSuccess: (data) => {
         return {
             type: actions.UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateManyComputerCommentAdminErr: (err) => {
+    updateManyComputerSubscribeAdminErr: (err) => {
         return {
             type: actions.UPDATE_MANY_COMPUTER_SUBSCRIBE_ADMIN_ERR,
             err,
         };
     },
 
-    updateManyOrderCommentAdminBegin: (payload) => {
+    updateManyOrderSubscribeAdminBegin: (payload) => {
         return {
             type: actions.UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateManyOrderCommentAdminSuccess: (data) => {
+    updateManyOrderSubscribeAdminSuccess: (data) => {
         return {
             type: actions.UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateManyOrderCommentAdminErr: (err) => {
+    updateManyOrderSubscribeAdminErr: (err) => {
         return {
             type: actions.UPDATE_MANY_ORDER_SUBSCRIBE_ADMIN_ERR,
             err,
         };
     },
 
-    updateOrderCommentAdminBegin: (payload) => {
+    updateOrderSubscribeAdminBegin: (payload) => {
         return {
             type: actions.UPDATE_ORDER_SUBSCRIBE_ADMIN_BEGIN,
             payload
         };
     },
 
-    updateOrderCommentAdminSuccess: (data) => {
+    updateOrderSubscribeAdminSuccess: (data) => {
         return {
             type: actions.UPDATE_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
             data,
         };
     },
 
-    updateOrderCommentAdminErr: (err) => {
+    updateOrderSubscribeAdminErr: (err) => {
         return {
             type: actions.UPDATE_ORDER_SUBSCRIBE_ADMIN_ERR,
             err,
         };
     },
 
-    createOrderCommentAdminBegin: (payload) => {
+    createOrderSubscribeAdminBegin: (payload) => {
         return {
             type: actions.CREATE_ORDER_SUBSCRIBE_ADMIN_BEGIN,
             payload
         };
     },
 
-    createOrderCommentAdminSuccess: (data) => {
+    createOrderSubscribeAdminSuccess: (data) => {
         return {
             type: actions.CREATE_ORDER_SUBSCRIBE_ADMIN_SUCCESS,
             data,
         };
     },
 
-    createOrderCommentAdminErr: (err) => {
+    createOrderSubscribeAdminErr: (err) => {
         return {
             type: actions.CREATE_ORDER_SUBSCRIBE_ADMIN_ERR,
             err,
         };
     },
 
-    fetchListOrderCommentBegin: (payload) => {
-        return {
-            type: actions.FETCH_LIST_ORDER_SUBSCRIBE_BEGIN,
-            payload
-        };
-    },
-
-    fetchListOrderCommentSuccess: (data) => {
-        return {
-            type: actions.FETCH_LIST_ORDER_SUBSCRIBE_SUCCESS,
-            data,
-        };
-    },
-
-    fetchListOrderCommentErr: (err) => {
-        return {
-            type: actions.FETCH_LIST_ORDER_SUBSCRIBE_ERR,
-            err,
-        };
-    },
-
-    detailOrderCommentBegin: (payload) => {
+    detailOrderSubscribeBegin: (payload) => {
         return {
             type: actions.DETAIL_ORDER_SUBSCRIBE_BEGIN,
             payload
         };
     },
 
-    detailOrderCommentSuccess: (data) => {
+    detailOrderSubscribeSuccess: (data) => {
         return {
             type: actions.DETAIL_ORDER_SUBSCRIBE_SUCCESS,
             data,
         };
     },
 
-    detailOrderCommentErr: (err) => {
+    detailOrderSubscribeErr: (err) => {
         return {
             type: actions.DETAIL_ORDER_SUBSCRIBE_ERR,
             err,
         };
     },
 
-    commentOrderCommentBegin: (payload) => {
+    commentOrderSubscribeBegin: (payload) => {
         return {
             type: actions.SUBSCRIBE_IN_ORDER_SUBSCRIBE_BEGIN,
             payload
         };
     },
 
-    commentOrderCommentSuccess: (data) => {
+    commentOrderSubscribeSuccess: (data) => {
         return {
             type: actions.SUBSCRIBE_IN_ORDER_SUBSCRIBE_SUCCESS,
             data,
         };
     },
 
-    commentOrderCommentErr: (err) => {
+    commentOrderSubscribeErr: (err) => {
         return {
             type: actions.SUBSCRIBE_IN_ORDER_SUBSCRIBE_ERR,
             err,

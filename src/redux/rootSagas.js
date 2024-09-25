@@ -51,13 +51,23 @@ import {
 } from './servers/sagas';
 
 import {
+    activeWarrantyOrderSubscribeWatcherSaga,
     changeOrderHistoryTypeWatcherSaga,
+    createOrderSubscribeWatcherSaga,
+    deleteComputerSubscribeWatcherSaga,
+    detailOrderSubscribeWatcherSaga,
     fetchAdminSettingWatcherSaga,
     fetchListOrderSubscribeWatcherSaga,
     fetchOrderHistoryWatcherSaga,
     fetchServicePackageListWatcherSaga,
+    fetchWarrantySubscribeOrderWatcherSaga,
+    listComputerRunSubscribeWatcherSaga,
     setNumberStatusBarSubscribeWatcherSaga,
-    setRangeDateOrderHistoryWatcherSaga
+    setRangeDateOrderHistoryWatcherSaga,
+    updateManyComputerSubscribeWatcherSaga,
+    updateManyOrderSubscribeWatcherSaga,
+    updateOneComputerSubscribeWatcherSaga,
+    updateOrderSubscribeWatcherSaga
 } from './buffSubscribe/sagas';
 
 import {
@@ -325,5 +335,20 @@ export default function* rootSaga() {
         setNumberStatusBarLikeWatcherSaga(),
         setNumberStatusBarViewWatcherSaga(),
         setNumberStatusBarSubscribeWatcherSaga(),
+
+        setRangeDateWarrantyFilterWatcherSaga(),
+        refundhWarrantyOrderWatcherSaga(),
+        activeWarrantyOrderSubscribeWatcherSaga(),
+        fetchWarrantySubscribeOrderWatcherSaga(),
+        deleteComputerSubscribeWatcherSaga(),
+        detailOrderSubscribeWatcherSaga(),
+        fetchListOrderSubscribeWatcherSaga(),
+        createOrderSubscribeWatcherSaga(),
+        listComputerRunSubscribeWatcherSaga(),
+        updateOrderSubscribeWatcherSaga(),
+        updateManyOrderSubscribeWatcherSaga(),
+        updateOneComputerSubscribeWatcherSaga(),
+
+        updateManyComputerSubscribeWatcherSaga(),
     ]);
 }

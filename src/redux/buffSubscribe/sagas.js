@@ -553,12 +553,9 @@ export function* fetchListOrderSubscribeWatcherSaga() {
 }
 
 export function* detailOrderSubscribeWatcherSaga() {
-  yield takeLatest(actions.DETAIL_ORDER_SUBSCRIBE_BEGIN, detailOrderSubscribeFunc);
+  yield takeLatest(actions.DETAIL_ORDER_SUBSCRIBE_ADMIN_BEGIN, detailOrderSubscribeFunc);
 }
 
-export function* detailComputerSubscribeWatcherSaga() {
-  yield takeLatest(actions.DETAIL_COMPUTER_RUN_SUBSCRIBE_BEGIN, detailComputerSubscribeFunc);
-}
 
 export function* deleteComputerSubscribeWatcherSaga() {
   yield takeLatest(actions.DELETE_COMPUTER_RUN_SUBSCRIBE_BEGIN, deleteComputerSubscribeFunc);

@@ -2,7 +2,7 @@
 
 export const VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT = 'ytb-comment/api/v1/admin/orders/validate-ytb-video';
 export const VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT = 'ytb-like/api/v1/admin/orders/validate-ytb-video';
-export const VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT = 'ytb-subscribe/api/v1/admin/orders/validate-ytb-video';
+export const VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/orders/validate-ytb-video';
 export const VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT = 'ytb-view/api/v1/admin/orders/validate-ytb-video';
 
 // SUBSCRIBE

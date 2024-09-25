@@ -11,14 +11,14 @@ import { performanceStatementTags } from '../../../utility/utility';
 
 const { Option } = Select;
 
-function DetailOrderLike({ setState, orderState }) {
+function DetailOrderSubscribe({ setState, orderState }) {
   const dispatch = useDispatch();
 
   const [formUpdateService] = Form.useForm();
 
-  const { detailOrderLike, userList, listService } = useSelector(state => {
+  const { detailOrderSubscribe, userList, listService } = useSelector(state => {
     return {
-      detailOrderLike: state?.buffLike?.detailOrderLike,
+      detailOrderSubscribe: state?.buffSubscribe?.detailOrderSubscribe,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
     };
@@ -28,13 +28,13 @@ function DetailOrderLike({ setState, orderState }) {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
-  const { performance } = detailOrderLike;
+  const { performance } = detailOrderSubscribe;
 
-  const findUser = userList?.filter((item) => item.id === detailOrderLike?.user_id);
-  const findService = listService?.filter((item) => item.service_id === detailOrderLike?.service_id);
+  const findUser = userList?.filter((item) => item.id === detailOrderSubscribe?.user_id);
+  const findService = listService?.filter((item) => item.service_id === detailOrderSubscribe?.service_id);
 
   useEffect(() => {
-    formUpdateService.setFieldsValue(detailOrderLike);
+    formUpdateService.setFieldsValue(detailOrderSubscribe);
     if (findService?.length > 0) {
       formUpdateService.setFieldValue('category', findService[0]?.category);
     }
@@ -44,7 +44,7 @@ function DetailOrderLike({ setState, orderState }) {
       formUpdateService.setFieldValue('user_email', findUser[0]?.email);
     }
 
-    formUpdateService.setFieldValue('priority', String(detailOrderLike?.priority));
+    formUpdateService.setFieldValue('priority', String(detailOrderSubscribe?.priority));
   });
 
   const handleCancel = () => {
@@ -58,14 +58,14 @@ function DetailOrderLike({ setState, orderState }) {
     <>
       <Modal
         width='600px'
-        open={orderState?.isDetailOrderLikeModal}
+        open={orderState?.isDetailOrderSubscribeModal}
         centered
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin đơn Like</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thông tin đơn Subscribe</p>
                 <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin đơn</p>
               </div>
             </div>
@@ -98,7 +98,6 @@ function DetailOrderLike({ setState, orderState }) {
                     <Select
                       style={{ width: '100%', margin: '5px 0px 0 0', padding: '0px' }}
                       bordered={false}
-                      initialValue="Comments"
                       disabled
                       size='small'
                       onClick={(value) => {
@@ -195,13 +194,13 @@ function DetailOrderLike({ setState, orderState }) {
             <Col sm={8}>
               <Form.Item
                 name="quantity"
-                label="Lượng comment"
+                label="Lượng subscribe"
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' addonAfter="subscribe" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -213,7 +212,7 @@ function DetailOrderLike({ setState, orderState }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' addonAfter="subscribe" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -285,9 +284,9 @@ function DetailOrderLike({ setState, orderState }) {
   );
 }
 
-DetailOrderLike.propTypes = {
+DetailOrderSubscribe.propTypes = {
   setState: PropTypes.func,
   orderState: PropTypes.object
 };
 
-export default DetailOrderLike;
+export default DetailOrderSubscribe;

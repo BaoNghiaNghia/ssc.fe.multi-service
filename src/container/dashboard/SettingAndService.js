@@ -154,16 +154,21 @@ function SettingAndService() {
 
   const [formUpdateSettingsComment] = Form.useForm();
   const [formUpdateSettingsLike] = Form.useForm();
+  const [formUpdateSettingsView] = Form.useForm();
+  const [formUpdateSettingsSubscribe] = Form.useForm();
 
-  const { listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta, listSettingsLike } = useSelector(state => {
+  const { listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta, listSettingsLike, listSettingsSubscribes, listSettingsView } = useSelector(state => {
     return {
       listService: state?.settingService?.listService?.items,
       listMetaService: state?.settingService?.listService?.meta,
       typeTab: state?.settingService?.typeTab,
-      listSettingsComment: state?.settingService?.listSettingsComment,
-      listSettingsLike: state?.settingService?.listSettingsLike,
       listGoogleKey: state?.settingService?.listGoogleKey?.google_keys,
       listGoogleKeyMeta: state?.settingService?.listGoogleKey?.meta,
+
+      listSettingsComment: state?.settingService?.listSettingsComment,
+      listSettingsLike: state?.settingService?.listSettingsLike,
+      listSettingsSubscribes: state?.settingService?.listSettingsSubscribes,
+      listSettingsView: state?.settingService?.listSettingsView,
     };
   });
 
@@ -897,11 +902,279 @@ function SettingAndService() {
             </Col>
           </Row>
         </TopToolBox>
-        <Row gutter={50}>
-          <Col xs={12}>
-            <span>Đang cập nhật</span>
-          </Col>
-        </Row>
+        <Form name='form-update-settings' layout="vertical" form={formUpdateSettingsSubscribe}>
+          <Row gutter={20}>
+            <Col sm={4}>
+              <Form.Item
+                name="account_delay_time"
+                label="Thời gian bốc lại account"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="phút" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={3}>
+              <Form.Item
+                name="block_video"
+                label="Màn hình đen"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Switch
+                  checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
+                  checked={listSettingsLike?.block_video}
+                  onChange={(value) => handleSwitchBlockVideoLike(value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col sm={5}>
+              <Form.Item
+                name="computer_reset_time"
+                label="Thời gian reset luồng sau khi OFF"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="max_order"
+                label="Số luồng tối đa hệ thống"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="max_random_time"
+                label="Thời gian xem tối đa"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="min_random_time"
+                label="Thời gian xem tối thiểu"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="min_video_time"
+                label="Số giây tối đa lấy video"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="bonus_lager_500"
+                label="Bonus lớn hơn 500"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="bonus_smaller_500"
+                label="Bonus nhỏ hơn 500"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Cards>
+    )
+  }
+  const ViewSettingComponent = () => {
+    return (
+      <Cards headless>
+        <TopToolBox>
+          <Row gutter={15} className="justify-content-center">
+            <Col lg={6} xs={24}>
+              <div style={{ display: 'inline-flex' }}>
+                <span style={{ fontSize: '16px', fontWeight: '700' }}>Cài đặt View</span>
+              </div>
+            </Col>
+            <Col xxl={18} xs={24}>
+              <div className="table-toolbox-actions">
+                <Button size="small" key="4" type="primary" disabled onClick={() => console.log('-- update setting subscribe --')}>
+                  <FeatherIcon icon="save" size={14} />
+                  Cập nhật
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </TopToolBox>
+        <Form name='form-update-settings' layout="vertical" form={formUpdateSettingsView}>
+          <Row gutter={20}>
+            <Col sm={4}>
+              <Form.Item
+                name="account_delay_time"
+                label="Thời gian bốc lại account"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="phút" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={3}>
+              <Form.Item
+                name="block_video"
+                label="Màn hình đen"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Switch
+                  checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
+                  checked={listSettingsLike?.block_video}
+                  onChange={(value) => handleSwitchBlockVideoLike(value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col sm={5}>
+              <Form.Item
+                name="computer_reset_time"
+                label="Thời gian reset luồng sau khi OFF"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="max_order"
+                label="Số luồng tối đa hệ thống"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="max_random_time"
+                label="Thời gian xem tối đa"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="min_random_time"
+                label="Thời gian xem tối thiểu"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="min_video_time"
+                label="Số giây tối đa lấy video"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="bonus_lager_500"
+                label="Bonus lớn hơn 500"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+            <Col sm={4}>
+              <Form.Item
+                name="bonus_smaller_500"
+                label="Bonus nhỏ hơn 500"
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
       </Cards>
     )
   }
@@ -979,6 +1252,7 @@ function SettingAndService() {
             {CommentSettingComponent()}
             {LikeSettingComponent()}
             {SubscribeSettingComponent()}
+            {ViewSettingComponent()}
           </div>
         )
       case SERVICE_SETTING_TYPE.GOOGLE_KEY.title: 

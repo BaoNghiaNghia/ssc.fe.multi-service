@@ -153,8 +153,9 @@ function EditService({ isOpen, setState, state }) {
                 }]}
               >
                 <Select
-                  style={{ width: '100%', margin: 0, padding: 0 }}
+                  style={{ width: '100%', marginTop: '10px', padding: 0 }}
                   bordered={false}
+                  disabled
                   initialValue="Comments"
                   size='small'
                   onClick={(value) => {
