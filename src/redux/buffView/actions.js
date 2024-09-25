@@ -71,6 +71,30 @@ const actions = {
     DETAIL_DEVICE_RUN_VIEW_SUCCESS: 'DETAIL_DEVICE_RUN_VIEW_SUCCESS',
     DETAIL_DEVICE_RUN_VIEW_ERR: 'DETAIL_DEVICE_RUN_VIEW_ERR',
 
+    SET_STATUS_BAR_NUMBER_VIEW_BEGIN: 'SET_STATUS_BAR_NUMBER_VIEW_BEGIN',
+    SET_STATUS_BAR_NUMBER_VIEW_SUCCESS: 'SET_STATUS_BAR_NUMBER_VIEW_SUCCESS',
+    SET_STATUS_BAR_NUMBER_VIEW_ERR: 'SET_STATUS_BAR_NUMBER_VIEW_ERR',
+
+    setStatusBarViewBegin: (payload) => {
+        return {
+          type: actions.SET_STATUS_BAR_NUMBER_VIEW_BEGIN,
+          payload
+        };
+    },
+
+    setStatusBarViewSuccess: (data) => {
+        return {
+            type: actions.SET_STATUS_BAR_NUMBER_VIEW_SUCCESS,
+            data,
+        }
+    },
+
+    setStatusBarViewErr: (err) => {
+        return {
+            type: actions.SET_STATUS_BAR_NUMBER_VIEW_ERR,
+            err,
+        }
+    },
     
     detailDeviceRunViewBegin: (payload) => {
         return {

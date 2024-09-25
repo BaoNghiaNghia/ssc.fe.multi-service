@@ -18,8 +18,8 @@ function EditLikeComputer({ setState, computerState }) {
 
     const { isLoading, detailComputerComment } = useSelector(state => {
         return {
-            isLoading: state?.buffComment?.loading,
-            detailComputerComment: state?.buffComment?.detailComputerComment
+            isLoading: state?.buffSubscribe?.loading,
+            detailComputerComment: state?.buffSubscribe?.detailComputerComment
         };
     });
 

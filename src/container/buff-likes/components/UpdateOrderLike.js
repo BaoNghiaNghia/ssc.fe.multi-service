@@ -17,7 +17,7 @@ function UpdateOrderLike({ setState, orderState }) {
 
   const { postLoading, detailOrderLike, listService } = useSelector(state => {
     return {
-      postLoading: state?.buffComment?.loading,
+      postLoading: state?.buffLike?.loading,
       detailOrderLike: state?.buffLike?.detailOrderLike,
       listService: state?.settingService?.listService?.items
     };

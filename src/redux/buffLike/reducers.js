@@ -1,7 +1,9 @@
 import actions from './actions';
 import { currentDate, previousDate } from '../../utility/utility';
+import { ORDER_YOUTUBE_STATUS } from '../../variables';
 
 const initialState = {
+  statusBarNumber: ORDER_YOUTUBE_STATUS.find(item => item?.name === 'OrderStatusProcessing')?.value,
   listOrderLike: [],
   detailOrderLike: {},
   listComputer: {},
@@ -79,12 +81,33 @@ const {
 
     SET_RANGE_DATE_WARRANTY_FILTER_BEGIN,
     SET_RANGE_DATE_WARRANTY_FILTER_ERR,
-    SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS
+    SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS,
+
+    SET_STATUS_BAR_NUMBER_LIKE_BEGIN,
+    SET_STATUS_BAR_NUMBER_LIKE_ERR,
+    SET_STATUS_BAR_NUMBER_LIKE_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case SET_STATUS_BAR_NUMBER_LIKE_BEGIN:
+      return {
+        ...state,
+      };
+
+    case SET_STATUS_BAR_NUMBER_LIKE_SUCCESS:
+      return {
+        ...state,
+        statusBarNumber: data
+      };
+
+    case SET_STATUS_BAR_NUMBER_LIKE_ERR:
+      return {
+        ...state,
+        error: err
+      };
+
     case FETCH_WARRANTY_ORDER_BEGIN:
       return {
         ...state,

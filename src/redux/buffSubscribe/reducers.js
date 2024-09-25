@@ -1,7 +1,9 @@
 import actions from './actions';
 import { currentDate, previousDate } from '../../utility/utility';
+import { ORDER_YOUTUBE_STATUS } from '../../variables';
 
 const initialState = {
+  statusBarNumber: ORDER_YOUTUBE_STATUS.find(item => item?.name === 'OrderStatusProcessing')?.value,
   adminSetting: {},
   listOrderSubscribe: [],
   servicePackage: [],
@@ -39,12 +41,33 @@ const {
 
     SET_RANGE_DATE_ORDER_HISTORY_BEGIN,
     SET_RANGE_DATE_ORDER_HISTORY_SUCCESS,
-    SET_RANGE_DATE_ORDER_HISTORY_ERR
+    SET_RANGE_DATE_ORDER_HISTORY_ERR,
+
+    SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN,
+    SET_STATUS_BAR_NUMBER_SUBSCRIBE_ERR,
+    SET_STATUS_BAR_NUMBER_SUBSCRIBE_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+      };
+
+    case SET_STATUS_BAR_NUMBER_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        statusBarNumber: data
+      };
+
+    case SET_STATUS_BAR_NUMBER_SUBSCRIBE_ERR:
+      return {
+        ...state,
+        error: err
+      };
+
     case SET_RANGE_DATE_ORDER_HISTORY_BEGIN:
       return {
         ...state,

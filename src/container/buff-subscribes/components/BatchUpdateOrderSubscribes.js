@@ -22,7 +22,7 @@ function BatchUpdateOrderLike({ setState, orderState }) {
 
   const { postLoading } = useSelector(state => {
     return {
-      postLoading: state?.buffComment?.loading,
+      postLoading: state?.buffSubscribe?.loading,
     };
   });
 

@@ -897,23 +897,32 @@ function AddOrderGeneral() {
                     </div>
                     {
                       stateCurr?.selectedCategory === 'Views' ? (
-                        <div style={{  borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px', paddingTop: '5px' }}>
-                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', }}>
-                            Loại view (MIN):
+                        <div style={{ borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px', paddingTop: '5px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                              Loại view (MIN):
+                            </div>
                             <span style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '5px' }}>
                               <div
-                                  style={{ width: '22px', height: '22px' }}
-                                  // eslint-disable-next-line react/no-danger
-                                  dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).svg }}
-                                />
-                              <strong>{SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}</strong>
+                                style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                                // eslint-disable-next-line react/no-danger
+                                dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
+                              />
+                              <span style={{ fontWeight: 600 }}>{SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}</span>
                             </span>
-                          </p>
-                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Thời gian xem (MIN): <strong>{numberWithCommas(detailService?.min_view_time)}</strong> phút</p>
-                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Thời gian xem (MAX): <strong>{numberWithCommas(detailService?.max_view_time)}</strong> phút</p>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
+                            <div>Thời gian xem (MIN):</div>
+                            <div><strong>{numberWithCommas(detailService?.min_view_time)}</strong> phút</div>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
+                            <div>Thời gian xem (MAX):</div>
+                            <div><strong>{numberWithCommas(detailService?.max_view_time)}</strong> phút</div>
+                          </div>
                         </div>
                       ) : null
                     }
+
                     <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '4px 0px' }}>{detailService?.description}</p>
                     {
                       detailService?.enabled ? (

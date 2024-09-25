@@ -116,9 +116,10 @@ const columnTableOrderViews = [
 
 function PendingBuffView() {
   const dispatch = useDispatch();
-  const { listOrderView, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
+  const { listOrderView, userList, listService, isLoading, userInfo, isOpenCreateOrder, statusBarNumber } = useSelector(state => {
     return {
       isLoading: state?.buffView?.loading,
+      statusBarNumber: state?.buffView?.statusBarNumber,
       listOrderView: state?.buffView?.listOrderView,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
@@ -136,7 +137,6 @@ function PendingBuffView() {
     isInsuranceViewOrderModal: false,
     isFilterViewOrderModal: false,
     isBatchUpdateViewOrderModal: false,
-    statusNumber: 1, // OrderStatusProcessing
     notData: {},
     rowData: {},
     item: listOrderView,
@@ -154,8 +154,8 @@ function PendingBuffView() {
       limit: limitPage,
     };
 
-    if (state?.statusNumber !== 'all') {
-      initParams = { ...initParams, status: state.statusNumber };
+    if (statusBarNumber !== 'all') {
+      initParams = { ...initParams, status: statusBarNumber };
     }
   
     dispatch(actions.fetchListOrderViewBegin(initParams));
@@ -569,11 +569,7 @@ function PendingBuffView() {
   }
 
   const handleChangeForFilter = (e) => {
-    setState({
-      ...state,
-      statusNumber: e.target.value
-    });
-
+    dispatch(actions.setStatusBarViewBegin(e.target.value));
     setCurrentPage(1);
     
     const pagination = {
@@ -621,7 +617,7 @@ function PendingBuffView() {
     },
   };
 
-  const currentStatusLabel = ORDER_YOUTUBE_STATUS.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase();
+  const currentStatusLabel = ORDER_YOUTUBE_STATUS.find(item => item?.value === statusBarNumber)?.label?.toLowerCase();
 
   return (
     <>
@@ -751,7 +747,7 @@ function PendingBuffView() {
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '400', fontSize: '0.95em' }}>
                         Chưa có thông tin đơn {currentStatusLabel}
                       </span>
                       {
@@ -759,7 +755,7 @@ function PendingBuffView() {
                           .filter(status => ["OrderStatusPending", "OrderStatusProcessing", "OrderStatusDone"]
                           .includes(status.name))
                           .map(status => status.value)
-                          .includes(state?.statusNumber) ? (
+                          .includes(statusBarNumber) ? (
                           <Button
                             size="small"
                             type="dashed"

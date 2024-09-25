@@ -138,7 +138,8 @@ function* updateOrderCommentFunc(params) {
       yield put(
         actions.fetchListOrderCommentBegin({
           page: 1,
-          limit: DEFAULT_PERPAGE
+          limit: DEFAULT_PERPAGE,
+          status: params?.payload
         })
       );
 
@@ -419,6 +420,18 @@ function* setRangeDateWarrantyFilterFunc(params) {
   }
 }
 
+function* setNumberStatusBarFunc(params) {
+  try {
+    yield put(
+      actions.setStatusBarCommentSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.actions.setStatusBarCommentErr({ error: err || 'Set range filter failed' })
+    );
+  }
+}
+
 
 export function* updateManyComputerCommentWatcherSaga() {
   yield takeLatest(actions.UPDATE_MANY_COMPUTER_COMMENT_ADMIN_BEGIN, updateManyComputerCommentFunc);
@@ -477,4 +490,8 @@ export function* refundhWarrantyOrderWatcherSaga() {
 
 export function* setRangeDateWarrantyFilterWatcherSaga() {
   yield takeLatest(actions.SET_RANGE_DATE_WARRANTY_FILTER_BEGIN, setRangeDateWarrantyFilterFunc);
+}
+
+export function* setNumberStatusBarCommentWatcherSaga() {
+  yield takeLatest(actions.SET_STATUS_BAR_NUMBER_COMMENT_BEGIN, setNumberStatusBarFunc);
 }

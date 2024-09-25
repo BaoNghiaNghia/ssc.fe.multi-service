@@ -56,6 +56,7 @@ import {
     fetchListOrderSubscribeWatcherSaga,
     fetchOrderHistoryWatcherSaga,
     fetchServicePackageListWatcherSaga,
+    setNumberStatusBarSubscribeWatcherSaga,
     setRangeDateOrderHistoryWatcherSaga
 } from './buffSubscribe/sagas';
 
@@ -108,7 +109,8 @@ import {
     activeWarrantyOrderCommentWatcherSaga,
     refundhWarrantyOrderWatcherSaga,
     setRangeDateWarrantyFilterWatcherSaga,
-    deleteComputerCommentWatcherSaga
+    deleteComputerCommentWatcherSaga,
+    setNumberStatusBarCommentWatcherSaga
 } from './buffComment/sagas';
 
 import {
@@ -124,7 +126,8 @@ import {
     fetchWarrantyLikeOrderWatcherSaga,
     activeWarrantyLikeOrderWatcherSaga,
     refundhWarrantyLikeOrderWatcherSaga,
-    deleteComputerLikeWatcherSaga
+    deleteComputerLikeWatcherSaga,
+    setNumberStatusBarLikeWatcherSaga
 } from './buffLike/sagas';
 
 import {
@@ -159,7 +162,7 @@ import {
     patchAccountGmailSubscribeWatcherSaga,
     patchAccountGmailViewWatcherSaga
 } from './gmailManage/sagas';
-import { activeWarrantyOrderViewWatcherSaga, createOrderViewWatcherSaga, deleteComputerViewWatcherSaga, detailComputerViewWatcherSaga, detailDeviceRunViewWatcherSaga, detailOrderViewWatcherSaga, fetchListOrderViewWatcherSaga, fetchWarrantyViewOrderWatcherSaga, listDevicesRunViewWatcherSaga, updateManyComputerViewWatcherSaga, updateManyOrderViewWatcherSaga, updateOneComputerViewWatcherSaga, updateOrderViewWatcherSaga, viewInOrderViewWatcherSaga } from './buffView/sagas';
+import { activeWarrantyOrderViewWatcherSaga, createOrderViewWatcherSaga, deleteComputerViewWatcherSaga, detailComputerViewWatcherSaga, detailDeviceRunViewWatcherSaga, detailOrderViewWatcherSaga, fetchListOrderViewWatcherSaga, fetchWarrantyViewOrderWatcherSaga, listDevicesRunViewWatcherSaga, setNumberStatusBarViewWatcherSaga, updateManyComputerViewWatcherSaga, updateManyOrderViewWatcherSaga, updateOneComputerViewWatcherSaga, updateOrderViewWatcherSaga, viewInOrderViewWatcherSaga } from './buffView/sagas';
 
 export default function* rootSaga() {
     return yield all([
@@ -316,6 +319,11 @@ export default function* rootSaga() {
         detailAccountGmailSubscribeWatcherSaga(),
         createAccountGmailSubscribeWatcherSaga(),
         deleteAccountGmailSubscribeWatcherSaga(),
-        patchAccountGmailSubscribeWatcherSaga()
+        patchAccountGmailSubscribeWatcherSaga(),
+
+        setNumberStatusBarCommentWatcherSaga(),
+        setNumberStatusBarLikeWatcherSaga(),
+        setNumberStatusBarViewWatcherSaga(),
+        setNumberStatusBarSubscribeWatcherSaga(),
     ]);
 }

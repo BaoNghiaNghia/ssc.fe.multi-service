@@ -7,7 +7,7 @@ import { MdAddchart } from "react-icons/md";
 import { toast } from 'react-toastify';
 
 import { BsFire } from 'react-icons/bs';
-import commentActions from '../../../redux/buffComment/actions';
+import commentActions from '../../../redux/buffView/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
@@ -22,7 +22,7 @@ function BatchUpdateOrderView({ setState, orderState }) {
 
   const { postLoading } = useSelector(state => {
     return {
-      postLoading: state?.buffComment?.loading,
+      postLoading: state?.buffView?.loading,
     };
   });
 

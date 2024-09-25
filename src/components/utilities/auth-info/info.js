@@ -92,10 +92,10 @@ function AuthInfo() {
     <InfoWraper>
       <div className="notification">
         <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', fontSize: '1.1em', color: 'green', fontWeight: 600, padding: '5px 8px', border: '1px dashed #8080805e', borderRadius: '7px' }}>
-          {numberWithCommasCurrency(userInfo?.credit)} (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
+          {numberWithCommasCurrency(userInfo?.credit)} <span style={{ fontStyle: 'italic', fontSize: '0.7em' }}>({VIETNAMES_CURRENCY})</span>
         </span>
         <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', fontSize: '1.1em', color: 'orange', fontWeight: 600, padding: '5px 8px', border: '1px dashed #8080805e', borderRadius: '7px'  }}>
-          {numberWithCommasCurrency(userInfo?.credit_used)} (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
+          {numberWithCommasCurrency(userInfo?.credit_used)} <span style={{ fontStyle: 'italic', fontSize: '0.7em' }}>({VIETNAMES_CURRENCY})</span>
           </span>
       </div>
 

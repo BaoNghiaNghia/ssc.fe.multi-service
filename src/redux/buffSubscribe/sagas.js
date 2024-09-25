@@ -113,6 +113,18 @@ function* setRangeDateOrderHistoryFunc(params) {
   }
 }
 
+function* setNumberStatusBarFunc(params) {
+  try {
+    yield put(
+      actions.setStatusBarSubscribeSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.actions.setStatusBarSubscribeErr({ error: err || 'Set range filter failed' })
+    );
+  }
+}
+
 export function* fetchAdminSettingWatcherSaga() {
   yield takeLatest(actions.FETCH_ADMIN_SETTING_BEGIN, fetchAdminSettingFunc);
 }
@@ -135,4 +147,8 @@ export function* setRangeDateOrderHistoryWatcherSaga() {
 
 export function* changeOrderHistoryTypeWatcherSaga() {
   yield takeLatest(actions.CHANGE_ORDER_HISTORY_TYPE_BEGIN, changeOrderHistoryTypeFunc);
+}
+
+export function* setNumberStatusBarSubscribeWatcherSaga() {
+  yield takeLatest(actions.SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN, setNumberStatusBarFunc);
 }

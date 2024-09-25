@@ -20,7 +20,7 @@ import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import actions from '../../redux/buffComment/actions';
+import actions from '../../redux/buffSubscribe/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS } from '../../variables';
@@ -71,14 +71,14 @@ function GuaranteeBuffSubscribes() {
   
   const { listOrderComment, userList, isLoading, filterRange, listWarrantyOrder } = useSelector(state => {
     return {
-      isLoading: state?.buffComment?.loading,
-      listOrderComment: state?.buffComment?.listOrderComment,
+      isLoading: state?.buffSubscribe?.loading,
+      listOrderComment: state?.buffSubscribe?.listOrderComment,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
       userInfo: state?.auth?.userInfo,
       isOpenCreateOrder: state?.reports?.isOpenCreateOrder,
-      filterRange: state?.buffComment?.filterRange,
-      listWarrantyOrder: state?.buffComment?.listWarrantyOrder
+      filterRange: state?.buffSubscribe?.filterRange,
+      listWarrantyOrder: state?.buffSubscribe?.listWarrantyOrder
     };
   });
 
@@ -446,7 +446,7 @@ function GuaranteeBuffSubscribes() {
                     <div>
                       <Image src={require(`../../static/img/scan_order_1.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '400', fontSize: '0.95em' }}>
                         Hiện tại chưa có danh sách đơn bảo hành
                       </span>
                       <Button

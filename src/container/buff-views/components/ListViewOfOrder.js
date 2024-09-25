@@ -35,7 +35,7 @@ function ListViewOfOrder({ isOpen, setState, orderState }) {
 
   const { commentInOrder } = useSelector(item => {
     return {
-      commentInOrder: item?.buffComment?.commentInOrder
+      commentInOrder: item?.buffView?.commentInOrder
     };
   });
 

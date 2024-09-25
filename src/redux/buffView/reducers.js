@@ -1,7 +1,9 @@
 import actions from './actions';
 import { currentDate, previousDate } from '../../utility/utility';
+import { ORDER_YOUTUBE_STATUS } from '../../variables';
 
 const initialState = {
+  statusBarNumber: ORDER_YOUTUBE_STATUS.find(item => item?.name === 'OrderStatusProcessing')?.value,
   listOrderView: [],
   detailOrderView: {},
   listComputer: {},
@@ -90,12 +92,33 @@ const {
 
     DETAIL_DEVICE_RUN_VIEW_BEGIN,
     DETAIL_DEVICE_RUN_VIEW_ERR,
-    DETAIL_DEVICE_RUN_VIEW_SUCCESS
+    DETAIL_DEVICE_RUN_VIEW_SUCCESS,
+
+    SET_STATUS_BAR_NUMBER_VIEW_BEGIN,
+    SET_STATUS_BAR_NUMBER_VIEW_ERR,
+    SET_STATUS_BAR_NUMBER_VIEW_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case SET_STATUS_BAR_NUMBER_VIEW_BEGIN:
+      return {
+        ...state,
+      };
+
+    case SET_STATUS_BAR_NUMBER_VIEW_SUCCESS:
+      return {
+        ...state,
+        statusBarNumber: data
+      };
+
+    case SET_STATUS_BAR_NUMBER_VIEW_ERR:
+      return {
+        ...state,
+        error: err
+      };
+
     case DETAIL_DEVICE_RUN_VIEW_BEGIN:
       return {
         ...state,

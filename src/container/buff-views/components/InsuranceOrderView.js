@@ -4,7 +4,7 @@ import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form, Select, Button, Modal } from 'antd';
 import { MdAddchart } from "react-icons/md";
-import commentActions from '../../../redux/buffComment/actions';
+import commentActions from '../../../redux/buffView/actions';
 
 const { Option } = Select;
 
@@ -14,8 +14,8 @@ function InsuranceOrderView({ setState, state }) {
 
   const { postLoading, detailOrderComment, listService } = useSelector((state) => {
     return {
-      postLoading: state?.buffComment?.loading,
-      detailOrderComment: state?.buffComment?.detailOrderComment,
+      postLoading: state?.buffView?.loading,
+      detailOrderComment: state?.buffView?.detailOrderComment,
       listService: state?.settingService?.listService?.items
     };
   });

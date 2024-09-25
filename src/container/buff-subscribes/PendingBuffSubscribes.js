@@ -113,10 +113,11 @@ const columns = [
 
 function PendingBuffSubscribes() {
   const dispatch = useDispatch();
-  const { listOrderSubscribe, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
+  const { listOrderSubscribe, userList, listService, isLoading, userInfo, isOpenCreateOrder, statusBarNumber } = useSelector(state => {
     return {
-      isLoading: state?.buffComment?.loading,
+      isLoading: state?.buffSubscribe?.loading,
       listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe,
+      statusBarNumber: state?.buffSubscribe?.statusBarNumber,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
       userInfo: state?.auth?.userInfo,
@@ -131,7 +132,6 @@ function PendingBuffSubscribes() {
     isInsuranceCommentOrderModal: false,
     isFilterLikeOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
-    statusNumber: 1,  // OrderStatusProcessing
     notData: {},
     rowData: {},
     item: listOrderSubscribe,
@@ -149,8 +149,8 @@ function PendingBuffSubscribes() {
       limit: limitPage,
     };
 
-    if (state?.statusNumber !== 'all') {
-      initParams = { ...initParams, status: state.statusNumber };
+    if (statusBarNumber !== 'all') {
+      initParams = { ...initParams, status: statusBarNumber };
     }
   
     dispatch(actions.fetchListOrderSubscribeBegin(initParams));
@@ -571,10 +571,7 @@ function PendingBuffSubscribes() {
   }
 
   const handleChangeForFilter = (e) => {
-    setState({
-      ...state,
-      statusNumber: e.target.value
-    });
+    dispatch(actions.setStatusBarSubscribeBegin(e.target.value));
 
     setCurrentPage(1);
 
@@ -741,11 +738,11 @@ function PendingBuffSubscribes() {
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
-                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS?.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase()}
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '400', fontSize: '0.95em' }}>
+                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS?.find(item => item?.value === statusBarNumber)?.label?.toLowerCase()}
                       </span>
                       {
-                        state?.statusNumber === 0 ? (
+                        statusBarNumber === 0 ? (
                           <Button
                             size="small"
                             type="dashed"

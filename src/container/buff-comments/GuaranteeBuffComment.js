@@ -446,7 +446,7 @@ function GuaranteeBuffComment() {
                     <div>
                       <Image src={require(`../../static/img/scan_order_1.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '400', fontSize: '0.95em' }}>
                         Hiện tại chưa có danh sách đơn bảo hành
                       </span>
                       <Button

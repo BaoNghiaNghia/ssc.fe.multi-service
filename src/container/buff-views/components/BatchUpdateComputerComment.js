@@ -7,7 +7,7 @@ import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
 import { toast } from 'react-toastify';
 import { isEmptyObject } from '../../../utility/utility';
-import actions from '../../../redux/buffComment/actions';
+import actions from '../../../redux/buffView/actions';
 
 const { Option } = Select;
 
@@ -19,8 +19,8 @@ function BatchUpdateComputerComment({ setState, computerState }) {
 
     const { isLoading, detailComputerComment } = useSelector(state => {
         return {
-            isLoading: state?.buffComment?.loading,
-            detailComputerComment: state?.buffComment?.detailComputerComment
+            isLoading: state?.buffView?.loading,
+            detailComputerComment: state?.buffView?.detailComputerComment
         };
     });
 

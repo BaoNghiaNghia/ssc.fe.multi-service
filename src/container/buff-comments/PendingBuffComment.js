@@ -30,7 +30,7 @@ import { Main, TableWrapper } from '../styled';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
-import actions from '../../redux/buffComment/actions';
+import actionsComment from '../../redux/buffComment/actions';
 import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
@@ -116,14 +116,15 @@ const columnTableOrderComments = [
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
-  const { listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
+  const { listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder, statusBarNumber } = useSelector(allState => {
     return {
-      isLoading: state?.buffComment?.loading,
-      listOrderComment: state?.buffComment?.listOrderComment,
-      userList: state?.member?.userList,
-      listService: state?.settingService?.listService?.items,
-      userInfo: state?.auth?.userInfo,
-      isOpenCreateOrder: state?.reports?.isOpenCreateOrder
+      isLoading: allState?.buffComment?.loading,
+      statusBarNumber: allState?.buffComment?.statusBarNumber,
+      listOrderComment: allState?.buffComment?.listOrderComment,
+      userList: allState?.member?.userList,
+      listService: allState?.settingService?.listService?.items,
+      userInfo: allState?.auth?.userInfo,
+      isOpenCreateOrder: allState?.reports?.isOpenCreateOrder
     };
   });
 
@@ -131,13 +132,12 @@ function PendingBuffComment() {
     isDetailOrderModal: false,
     isListCommentModal: false,
     isCreateCommentOrderModal: false,
+
     isUpdateCommentOrderModal: false,
     isCancelRefundCommentOrderModal: false,
     isInsuranceCommentOrderModal: false,
     isFilterCommentOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
-    statusNumber: 1, // OrderStatusProcessing
-    notData: {},
     rowData: {},
     item: listOrderComment,
     selectedRowKeys: [],
@@ -154,11 +154,11 @@ function PendingBuffComment() {
       limit: limitPage,
     };
 
-    if (state?.statusNumber !== 'all') {
-      initParams = { ...initParams, status: state.statusNumber };
+    if (statusBarNumber !== 'all') {
+      initParams = { ...initParams, status: statusBarNumber };
     }
   
-    dispatch(actions.fetchListOrderCommentBegin(initParams));
+    dispatch(actionsComment.fetchListOrderCommentBegin(initParams));
   }, [dispatch, currentPage, limitPage]);
 
   useEffect(() => {
@@ -168,7 +168,7 @@ function PendingBuffComment() {
 
   const handleSearch = (searchText) => {
     if (!searchText) {
-      dispatch(actions.fetchListOrderCommentBegin({}));
+      dispatch(actionsComment.fetchListOrderCommentBegin({}));
     }
 
     const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
@@ -176,13 +176,13 @@ function PendingBuffComment() {
     if (arraySearchValidate && arraySearchValidate.length > 0) {
       const pattern = /^\d+\.?\d*$/;
       if (pattern.test(arraySearchValidate.join(""))) {
-        dispatch(actions.fetchListOrderCommentBegin({
+        dispatch(actionsComment.fetchListOrderCommentBegin({
           order_ids: arraySearchValidate.join(","),
           page: currentPage,
           limit: limitPage,
         }));
       } else {
-        dispatch(actions.fetchListOrderCommentBegin({
+        dispatch(actionsComment.fetchListOrderCommentBegin({
           video_ids: arraySearchValidate.join(","),
           page: currentPage,
           limit: limitPage,
@@ -504,7 +504,7 @@ function PendingBuffComment() {
                 <Tooltip title="Chỉnh sửa">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderCommentBegin({
+                      dispatch(actionsComment.detailOrderCommentBegin({
                         ...value,
                       }));
                       setState({ ...state, isUpdateCommentOrderModal: true });
@@ -520,7 +520,7 @@ function PendingBuffComment() {
                 <Tooltip title="Bảo hành">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderCommentBegin({
+                      dispatch(actionsComment.detailOrderCommentBegin({
                         ...value,
                         userDetail: findUser,
                         serviceDetail: findService
@@ -538,7 +538,7 @@ function PendingBuffComment() {
                 <Tooltip title="Hủy & Hoàn tiền">
                   <Button className="btn-icon" type="primary" to="#" shape="circle" 
                     onClick={() => {
-                      dispatch(actions.detailOrderCommentBegin({
+                      dispatch(actionsComment.detailOrderCommentBegin({
                         ...value,
                         userDetail: findUser,
                         serviceDetail: findService
@@ -554,7 +554,7 @@ function PendingBuffComment() {
             <Tooltip title="Chi tiết">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
-                  dispatch(actions.detailOrderCommentBegin({
+                  dispatch(actionsComment.detailOrderCommentBegin({
                     ...value,
                   }));
                   setState({ 
@@ -568,7 +568,7 @@ function PendingBuffComment() {
             </Tooltip>
             <Tooltip title="Danh sách comment">
               <Button className="btn-icon" type="primary" to="#" shape="circle" onClick={() => {
-                dispatch(actions.commentOrderCommentBegin({
+                dispatch(actionsComment.commentOrderCommentBegin({
                   id,
                   page: 1,
                   limit: DEFAULT_PERPAGE
@@ -589,11 +589,7 @@ function PendingBuffComment() {
   }
 
   const handleChangeForFilter = (e) => {
-    setState({
-      ...state,
-      statusNumber: e.target.value
-    });
-
+    dispatch(actionsComment.setStatusBarCommentBegin(e.target.value))
     setCurrentPage(1);
 
     const pagination = {
@@ -602,12 +598,12 @@ function PendingBuffComment() {
     }
 
     if (e.target.value !== "all") {
-      dispatch(actions.fetchListOrderCommentBegin({
+      dispatch(actionsComment.fetchListOrderCommentBegin({
         ...pagination,
         status: e.target.value,
       }));
     } else {
-      dispatch(actions.fetchListOrderCommentBegin(pagination));
+      dispatch(actionsComment.fetchListOrderCommentBegin(pagination));
     }
   };
 
@@ -641,7 +637,7 @@ function PendingBuffComment() {
     },
   };
 
-  const currentStatusLabel = ORDER_YOUTUBE_STATUS.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase();
+  const currentStatusLabel = ORDER_YOUTUBE_STATUS.find(item => item?.value === statusBarNumber)?.label?.toLowerCase();
 
   return (
     <>
@@ -771,7 +767,7 @@ function PendingBuffComment() {
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '400', fontSize: '0.95em' }}>
                         Chưa có thông tin đơn {currentStatusLabel}
                       </span>
                       {
@@ -779,20 +775,20 @@ function PendingBuffComment() {
                           .filter(status => ["OrderStatusPending", "OrderStatusProcessing", "OrderStatusDone"]
                           .includes(status.name))
                           .map(status => status.value)
-                          .includes(state?.statusNumber) ? (
-                          <Button
-                            size="small"
-                            type="dashed"
-                            style={{ borderRadius: '20px', backgroundColor: '#dae0ec5c' }}
-                            onClick={() => {
-                              setState({...state, isCreateCommentOrderModal: true });
-                              dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                            }}
-                          >
-                            <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                            <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Đặt hàng</span>
-                          </Button>
-                        ) : null
+                          .includes(statusBarNumber) ? (
+                            <Button
+                              size="small"
+                              type="dashed"
+                              style={{ borderRadius: '20px', backgroundColor: '#dae0ec5c' }}
+                              onClick={() => {
+                                setState({...state, isCreateCommentOrderModal: true });
+                                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                              }}
+                            >
+                              <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
+                              <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Đặt hàng</span>
+                            </Button>
+                          ) : null
                       }
                     </div>
                   )}}

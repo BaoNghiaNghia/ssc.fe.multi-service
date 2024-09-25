@@ -23,6 +23,31 @@ const actions = {
     SET_RANGE_DATE_ORDER_HISTORY_SUCCESS: 'SET_RANGE_DATE_ORDER_HISTORY_SUCCESS',
     SET_RANGE_DATE_ORDER_HISTORY_ERR: 'SET_RANGE_DATE_ORDER_HISTORY_ERR',
 
+    SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN: 'SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN',
+    SET_STATUS_BAR_NUMBER_SUBSCRIBE_SUCCESS: 'SET_STATUS_BAR_NUMBER_SUBSCRIBE_SUCCESS',
+    SET_STATUS_BAR_NUMBER_SUBSCRIBE_ERR: 'SET_STATUS_BAR_NUMBER_SUBSCRIBE_ERR',
+
+    setStatusBarSubscribeBegin: (payload) => {
+        return {
+          type: actions.SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN,
+          payload
+        };
+    },
+
+    setStatusBarSubscribeSuccess: (data) => {
+        return {
+            type: actions.SET_STATUS_BAR_NUMBER_SUBSCRIBE_SUCCESS,
+            data,
+        }
+    },
+
+    setStatusBarSubscribeErr: (err) => {
+        return {
+            type: actions.SET_STATUS_BAR_NUMBER_SUBSCRIBE_ERR,
+            err,
+        }
+    },
+
     setRangeDateOrderHistoryBegin: (payload) => {
       return {
         type: actions.SET_RANGE_DATE_ORDER_HISTORY_BEGIN,

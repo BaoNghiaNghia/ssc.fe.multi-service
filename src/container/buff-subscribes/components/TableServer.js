@@ -18,7 +18,7 @@ import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../../variables';
 function TableServer() {
   const { listServer } = useSelector((state) => {
     return {
-      listServer: state?.buffComment?.listComputer?.items,
+      listServer: state?.buffSubscribe?.listComputer?.items,
     }
   });
 

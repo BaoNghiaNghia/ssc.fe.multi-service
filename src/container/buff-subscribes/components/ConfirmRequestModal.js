@@ -10,7 +10,7 @@ function ConfirmRequestModal({ setState, isOpen, descriptions, title, subtitle, 
 
   const { postLoading } = useSelector((state) => {
     return {
-      postLoading: state?.buffComment?.loading,
+      postLoading: state?.buffSubscribe?.loading,
     };
   });
 

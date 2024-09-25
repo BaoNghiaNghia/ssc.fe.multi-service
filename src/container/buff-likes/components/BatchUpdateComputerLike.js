@@ -19,8 +19,8 @@ function BatchUpdateComputerLike({ setState, computerState }) {
 
     const { isLoading, detailComputerComment } = useSelector(state => {
         return {
-            isLoading: state?.buffComment?.loading,
-            detailComputerComment: state?.buffComment?.detailComputerComment
+            isLoading: state?.buffLike?.loading,
+            detailComputerComment: state?.buffLike?.detailComputerComment
         };
     });
 

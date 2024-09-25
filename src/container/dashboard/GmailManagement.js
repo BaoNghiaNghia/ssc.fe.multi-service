@@ -569,7 +569,7 @@ function GmailManagement() {
                     <div>
                       <Image src={require(`../../static/img/empty_order_4.svg`).default} alt="" width="200px" preview={false} style={{margin: '45px 0px', opacity: '30%'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '400', fontSize: '0.95em' }}>
                         Chưa có danh sách gmail
                       </span>
                     </div>

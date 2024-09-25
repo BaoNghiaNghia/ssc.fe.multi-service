@@ -439,6 +439,18 @@ function* setRangeDateWarrantyFilterFunc(params) {
   }
 }
 
+function* setNumberStatusBarFunc(params) {
+  try {
+    yield put(
+      actions.setStatusBarViewSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.actions.setStatusBarViewErr({ error: err || 'Set range filter failed' })
+    );
+  }
+}
+
 
 export function* updateManyComputerViewWatcherSaga() {
   yield takeLatest(actions.UPDATE_MANY_COMPUTER_VIEW_ADMIN_BEGIN, updateManyComputerViewFunc);
@@ -502,4 +514,8 @@ export function* refundhWarrantyOrderWatcherSaga() {
 
 export function* setRangeDateWarrantyFilterWatcherSaga() {
   yield takeLatest(actions.SET_RANGE_DATE_WARRANTY_FILTER_BEGIN, setRangeDateWarrantyFilterFunc);
+}
+
+export function* setNumberStatusBarViewWatcherSaga() {
+  yield takeLatest(actions.SET_STATUS_BAR_NUMBER_VIEW_BEGIN, setNumberStatusBarFunc);
 }

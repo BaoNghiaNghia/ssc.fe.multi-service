@@ -113,9 +113,10 @@ const columns = [
 
 function PendingBuffLike() {
   const dispatch = useDispatch();
-  const { listOrderLike, userList, listService, isLoading, userInfo, isOpenCreateOrder } = useSelector(state => {
+  const { listOrderLike, userList, listService, isLoading, userInfo, isOpenCreateOrder, statusBarNumber } = useSelector(state => {
     return {
-      isLoading: state?.buffComment?.loading,
+      isLoading: state?.buffLike?.loading,
+      statusBarNumber: state?.buffLike?.statusBarNumber,
       listOrderLike: state?.buffLike?.listOrderLike,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
@@ -131,7 +132,6 @@ function PendingBuffLike() {
     isInsuranceCommentOrderModal: false,
     isFilterLikeOrderModal: false,
     isBatchUpdateCommentOrderModal: false,
-    statusNumber: 1,  // OrderStatusProcessing
     notData: {},
     rowData: {},
     item: listOrderLike,
@@ -149,8 +149,8 @@ function PendingBuffLike() {
       limit: limitPage,
     };
 
-    if (state?.statusNumber !== 'all') {
-      initParams = { ...initParams, status: state.statusNumber };
+    if (statusBarNumber !== 'all') {
+      initParams = { ...initParams, status: statusBarNumber };
     }
   
     dispatch(actions.fetchListOrderLikeBegin(initParams));
@@ -571,11 +571,7 @@ function PendingBuffLike() {
   }
 
   const handleChangeForFilter = (e) => {
-    setState({
-      ...state,
-      statusNumber: e.target.value
-    });
-
+    dispatch(actions.setStatusBarLikeBegin(e.target.value));
     setCurrentPage(1);
 
     const pagination = {
@@ -741,11 +737,11 @@ function PendingBuffLike() {
                     <div>
                       <Image src={require(`../../static/img/empty_order_3.svg`).default} alt="" width="250px" preview={false} style={{margin: '0px'}}/>
                       <span style={{ color: 'black', marginBottom: '0px', padding: '0px', fontSize: '1.3em', fontWeight: '600' }}>Trống</span>
-                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '200', fontSize: '0.95em' }}>
-                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS?.find(item => item?.value === state?.statusNumber)?.label?.toLowerCase()}
+                      <span style={{ color: '#8080808a', marginBottom: '20px', fontWeight: '400', fontSize: '0.95em' }}>
+                        Chưa có thông tin đơn {ORDER_YOUTUBE_STATUS?.find(item => item?.value === statusBarNumber)?.label?.toLowerCase()}
                       </span>
                       {
-                        state?.statusNumber === 0 ? (
+                        statusBarNumber === 0 ? (
                           <Button
                             size="small"
                             type="dashed"
