@@ -9,108 +9,75 @@ import {
 } from '../../config/api/Auth/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
-function* registerReferralSagaFunc(params) {
-  try {
-    const response = yield call(registerUserApi, params?.payload);
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      toast.success('Đăng ký thành công');
-
-      yield put(
-        actions.registerReferralSuccess()
-      );
-
-      // Delay for 500ms
-      yield delay(500);
-
-      // Using window.location for redirection
-      window.location.href = '/login';
-    }
-  } catch (error) {
-    const errorMessage = error;
-    yield put(
-      actions.registerReferralErr({ error: errorMessage || 'Register failed' })
-    );
-
-    if (errorMessage?.response?.data?.data?.error) {
-      toast.error(errorMessage?.response?.data?.data?.error);
-    } else if (errorMessage?.response?.data?.message) {
-      toast.error(errorMessage?.response?.data?.message);
-    } else {
-      toast.error('Đăng ký thất bại');
-    }
-  } finally { /* empty */ }
+// Utility function for handling error messages
+function* handleError(error, defaultMessage, action, toastMessage = 'An error occurred') {
+  const errorMessage = error?.response?.data?.data?.error || error?.response?.data?.message || defaultMessage;
+  yield put(action({ error: errorMessage }));
+  toast.error(errorMessage || toastMessage);
 }
 
-
-function* loginSagaFunc(params) {
+function* registerReferralSagaFunc({ payload }) {
   try {
-    const response = yield call(loginUserApi, params?.payload?.request);
-    
+    const response = yield call(registerUserApi, payload);
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      toast.success('Đăng ký thành công');
+      yield put(actions.registerReferralSuccess());
+      yield delay(500);
+      window.location.href = '/login'; // Redirect after successful registration
+    }
+  } catch (error) {
+    yield handleError(error, 'Register failed', actions.registerReferralErr, 'Đăng ký thất bại');
+  }
+}
+
+function* loginSagaFunc({ payload }) {
+  try {
+    const response = yield call(loginUserApi, payload?.request);
+
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       toast.success('Đăng nhập thành công');
 
-      const respLoggged = response?.data?.data;
+      const respLogged = response?.data?.data;
 
-      localStorage.setItem('logedIn', respLoggged?.token);
-      localStorage.setItem('userInfo', JSON.stringify(respLoggged?.user));
+      if (respLogged) {
+        const { token, user } = respLogged;
+        localStorage.setItem('logedIn', token);
+        localStorage.setItem('userInfo', JSON.stringify(user));
 
-      yield put(
-        actions.loginSuccess(respLoggged)
-      );
-
-      window.location.href = '/admin/tong-quan'; // Directly set window location for redirections
+        yield put(actions.loginSuccess({ token, user }));
+        window.location.href = '/admin/tong-quan'; // Redirect after successful login
+      } else {
+        throw new Error('Invalid login response');
+      }
     }
-
   } catch (error) {
-    const errorMessage = error;
-    yield put(
-      actions.loginErr({ error: errorMessage || 'Login failed' })
-    );
-
-    if (errorMessage?.response?.data?.data?.error) {
-      toast.error(errorMessage?.response?.data?.data?.error);
-    } else if (errorMessage?.response?.data?.message) {
-      toast.error(errorMessage?.response?.data?.message);
-    } else {
-      toast.error('Đăng nhập thất bại');
-    }
-  } finally { /* empty */ }
+    yield handleError(error, 'Login failed', actions.loginErr, 'Đăng nhập thất bại');
+  }
 }
 
 function* logoutSagaFunc() {
   try {
     localStorage.removeItem('logedIn');
     localStorage.removeItem('userInfo');
-
-    yield put(
-      actions.logoutSuccess(null)
-    )
+    yield put(actions.logoutSuccess(null));
   } catch (error) {
-    console.log(error);
+    console.error(error); // Optional logging
   } finally {
     yield put(actions.logoutErr());
   }
 }
 
-function* fetchUserProfilSagaFunc() {
+function* fetchUserProfileSagaFunc() {
   try {
     const response = yield call(fetchProfileDetail, {});
-    
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       const userInfo = response?.data?.data;
-
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
-
-      yield put(
-        actions.fetchUserProfileSuccess(null)
-      );
+      yield put(actions.fetchUserProfileSuccess(userInfo));
     }
   } catch (error) {
-    const errorMessage = error;
-    yield put(
-      actions.fetchUserProfileErr({ error: errorMessage || 'Fetch profile user failed' })
-    );
-  } finally { /* empty */ }
+    yield handleError(error, 'Fetch profile user failed', actions.fetchUserProfileErr);
+  }
 }
 
 export function* logoutWatcherSaga() {
@@ -125,6 +92,6 @@ export function* registerReferralWatcherSaga() {
   yield takeLatest(actions.REGISTER_REFERRAL_BEGIN, registerReferralSagaFunc);
 }
 
-export function* fetchUserProfileSaga() {
-  yield takeLatest(actions.FETCH_USER_PROFILE_BEGIN, fetchUserProfilSagaFunc);
+export function* fetchUserProfileWatcherSaga() {
+  yield takeLatest(actions.FETCH_USER_PROFILE_BEGIN, fetchUserProfileSagaFunc);
 }

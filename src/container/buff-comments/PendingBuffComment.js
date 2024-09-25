@@ -174,8 +174,6 @@ function PendingBuffComment() {
     const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
 
     if (arraySearchValidate && arraySearchValidate.length > 0) {
-      // setTimeout(() => {
-      // }, 500);
       const pattern = /^\d+\.?\d*$/;
       if (pattern.test(arraySearchValidate.join(""))) {
         dispatch(actions.fetchListOrderCommentBegin({
@@ -598,14 +596,18 @@ function PendingBuffComment() {
 
     setCurrentPage(1);
 
+    const pagination = {
+      page: currentPage,
+      limit: limitPage,
+    }
+
     if (e.target.value !== "all") {
       dispatch(actions.fetchListOrderCommentBegin({
+        ...pagination,
         status: e.target.value,
-        page: currentPage,
-        limit: limitPage,
       }));
     } else {
-      dispatch(actions.fetchListOrderCommentBegin());
+      dispatch(actions.fetchListOrderCommentBegin(pagination));
     }
   };
 

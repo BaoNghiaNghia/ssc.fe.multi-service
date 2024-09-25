@@ -303,7 +303,7 @@ const TopToolBox = Styled.div`
         align-items: center;
     }
     .table-toolbox-menu{
-        margin: -10px;
+        margin: -10px 0;
         color: ${({ theme }) => theme['gray-color']};
         @media only screen and (max-width: 1599px){
             text-align: ${({ theme }) => (theme.rtl ? 'left' : 'right')};
@@ -314,7 +314,7 @@ const TopToolBox = Styled.div`
         .ant-radio-button-wrapper{
             height: 40px;
             line-height: 40px;
-            padding: 0 8px;
+            padding: 0 9px;
             &.active{
                 span{
                     color: ${({ theme }) => theme['primary-color']};
@@ -377,7 +377,7 @@ const TopToolBox = Styled.div`
     }
 
     .ant-radio-group-outline{
-        padding: 0 10px;
+        padding: 0;
         border-radius: 5px;
         background: #fff;
         border: 1px solid ${({ theme }) => theme['border-color-normal']};

@@ -1886,7 +1886,7 @@ const TopToolBox = Styled.div`
         align-items: center;
     }
     .table-toolbox-menu{
-        margin: -10px;
+        margin: -10px 0;
         color: ${({ theme }) => theme['gray-color']};
         @media only screen and (max-width: 1599px){
             text-align: ${({ theme }) => (theme.rtl ? 'left' : 'right')};

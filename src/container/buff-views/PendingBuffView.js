@@ -575,15 +575,19 @@ function PendingBuffView() {
     });
 
     setCurrentPage(1);
+    
+    const pagination = {
+      page: currentPage,
+      limit: limitPage,
+    }
 
     if (e.target.value !== "all") {
       dispatch(actions.fetchListOrderViewBegin({
+        ...pagination,
         status: e.target.value,
-        page: currentPage,
-        limit: limitPage,
       }));
     } else {
-      dispatch(actions.fetchListOrderViewBegin());
+      dispatch(actions.fetchListOrderViewBegin(pagination));
     }
   };
 

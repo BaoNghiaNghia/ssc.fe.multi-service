@@ -63,6 +63,30 @@ const actions = {
     SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS: 'SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS',
     SET_RANGE_DATE_WARRANTY_FILTER_ERR: 'SET_RANGE_DATE_WARRANTY_FILTER_ERR',
 
+    SET_STATUS_BAR_NUMBER_COMMENT_BEGIN: 'SET_STATUS_BAR_NUMBER_COMMENT_BEGIN',
+    SET_STATUS_BAR_NUMBER_COMMENT_SUCCESS: 'SET_STATUS_BAR_NUMBER_COMMENT_SUCCESS',
+    SET_STATUS_BAR_NUMBER_COMMENT_ERR: 'SET_STATUS_BAR_NUMBER_COMMENT_ERR',
+
+    setStatusBarCommentBegin: (payload) => {
+        return {
+          type: actions.SET_STATUS_BAR_NUMBER_COMMENT_BEGIN,
+          payload
+        };
+    },
+
+    setStatusBarCommentSuccess: (data) => {
+        return {
+            type: actions.SET_STATUS_BAR_NUMBER_COMMENT_SUCCESS,
+            data,
+        }
+    },
+
+    setStatusBarCommentErr: (err) => {
+        return {
+            type: actions.SET_STATUS_BAR_NUMBER_COMMENT_ERR,
+            err,
+        }
+    },
     setRangeDateWarrantyFilterBegin: (payload) => {
         return {
           type: actions.SET_RANGE_DATE_WARRANTY_FILTER_BEGIN,

@@ -578,14 +578,18 @@ function PendingBuffSubscribes() {
 
     setCurrentPage(1);
 
+    const pagination = {
+      page: currentPage,
+      limit: limitPage,
+    }
+
     if (e.target.value !== "all") {
       dispatch(actions.fetchListOrderSubscribeBegin({
+        ...pagination,
         status: e.target.value,
-        page: currentPage,
-        limit: limitPage,
       }));
     } else {
-      dispatch(actions.fetchListOrderSubscribeBegin());
+      dispatch(actions.fetchListOrderSubscribeBegin(pagination));
     }
   };
 

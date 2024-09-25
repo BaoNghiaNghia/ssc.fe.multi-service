@@ -51,7 +51,6 @@ const getOneOrderSubscribeAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpo
 const updateOneOrderSubscribeAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: GENERAL_ORDER_SUBSCRIBE_ENDPOINT }).patch(query);
 const updateManyOrderSubscribeAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: UPDATE_MANY_ORDER_SUBSCRIBE_ENDPOINT }).patchMultiple(query);
 
-const commentOrderSubscribeAPI = (id) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_IN_ORDER_SUBSCRIBE_ENDPOINT }).submitGet(id);
 const createOrderSubscribeAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: CREATE_ORDER_SUBSCRIBE_ENDPOINT }).post(query);
 
 const listComputerRunSubscribeAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: GENERAL_COMPUTER_SUBSCRIBE_ENDPOINT }).get(query);
@@ -69,11 +68,11 @@ export {
     fetchListOrderSubscribeAPI,
     fetchServicePackageListAPI,
     fetchOrderHistoryAPI,
+    
 
     getOneOrderSubscribeAPI,
     updateOneOrderSubscribeAPI,
     updateManyOrderSubscribeAPI,
-    commentOrderSubscribeAPI,
     createOrderSubscribeAPI,
     listComputerRunSubscribeAPI,
     detailComputerRunSubscribeAPI,
