@@ -40,11 +40,11 @@ function ListViewOfOrder({ isOpen, setState, orderState }) {
   });
 
   useEffect(() => {
-    dispatch(viewActions.commentOrderViewBegin({
-      page: currentPage,
-      limit: limitPage,
-      id: rowData?.id,
-    }));
+    // dispatch(viewActions.commentOrderViewBegin({
+    //   page: currentPage,
+    //   limit: limitPage,
+    //   id: rowData?.id,
+    // }));
   }, [dispatch, currentPage, limitPage]);
 
   const handleCancel = () => {

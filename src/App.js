@@ -46,7 +46,20 @@ const ProviderConfig = () => {
   }, [setPath]);
 
   return (
-    <ConfigProvider direction={rtl ? 'rtl' : 'ltr'} locale={locale}>
+    <ConfigProvider 
+      direction={rtl ? 'rtl' : 'ltr'}
+      locale={locale}
+      theme={{
+        token: {
+          // Seed Token
+          colorPrimary: '#00b96b',
+          borderRadius: 2,
+  
+          // Alias Token
+          colorBgContainer: '#f6ffed',
+        },
+      }}
+    >
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

@@ -188,8 +188,6 @@ function PendingBuffLike() {
     }
   };
 
-  // const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
-
   const dataSource = [];
   if (listOrderLike?.items?.length) {
     listOrderLike?.items?.map((value, key) => {
