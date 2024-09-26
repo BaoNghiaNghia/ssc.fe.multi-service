@@ -128,10 +128,10 @@ function PendingBuffSubscribes() {
   const [state, setState] = useState({
     isDetailOrderSubscribeModal: false,
     isUpdateSubscribeOrderModal: false,
-    isCancelRefundCommentOrderModal: false,
-    isInsuranceCommentOrderModal: false,
+    isCancelRefundSubscribeOrderModal: false,
+    isInsuranceSubscribeOrderModal: false,
     isFilterLikeOrderModal: false,
-    isBatchUpdateCommentOrderModal: false,
+    isBatchUpdateSubscribeOrderModal: false,
     notData: {},
     rowData: {},
     item: listOrderSubscribe,
@@ -141,7 +141,7 @@ function PendingBuffSubscribes() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
+  const { isCancelRefundSubscribeOrderModal, selectedRowKeys, notData } = state;
 
   useEffect(() => {
     let initParams = {
@@ -523,7 +523,7 @@ function PendingBuffSubscribes() {
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isInsuranceCommentOrderModal: true });
+                      setState({ ...state, isInsuranceSubscribeOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="shield" size={16} />
@@ -541,7 +541,7 @@ function PendingBuffSubscribes() {
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isCancelRefundCommentOrderModal: true });
+                      setState({ ...state, isCancelRefundSubscribeOrderModal: true });
                     }}
                   >
                     <TbCreditCardRefund style={{ fontSize: '1em' }} />
@@ -635,7 +635,7 @@ function PendingBuffSubscribes() {
         setState={setState}
       />
       <CancelAndRefundOrderComment
-        isOpen={isCancelRefundCommentOrderModal}
+        isOpen={isCancelRefundSubscribeOrderModal}
         setState={setState}
       />
       <InsuranceOrderComment
@@ -700,7 +700,7 @@ function PendingBuffSubscribes() {
                             onClick={() => {
                               setState({
                                 ...state,
-                                isBatchUpdateCommentOrderModal: true
+                                isBatchUpdateSubscribeOrderModal: true
                               });
                             }}
                           >

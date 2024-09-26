@@ -13,16 +13,16 @@ import { MdOutlineNumbers } from "react-icons/md";
 
 import { WiTime7 } from 'react-icons/wi';
 import moment from 'moment';
-import { Pstates, TopToolBox } from './style';
-import DetailLikeComputer from './components/DetailSubscribesComputer';
-import EditLikeComputer from './components/EditLikeComputer';
-import BatchUpdateComputerLike from './components/BatchUpdateComputerSubscribes';
+import { Pstates } from './style';
+import DetailSubscribesComputer from './components/DetailSubscribesComputer';
+import EditSubscribeComputer from './components/EditSubscribeComputer';
+import BatchUpdateComputerSubscribes from './components/BatchUpdateComputerSubscribes';
 import ConfirmRequestModal from './components/ConfirmRequestModal';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
-import actions from '../../redux/buffLike/actions';
+import actions from '../../redux/buffSubscribe/actions';
 import Heading from '../../components/heading/heading';
 import { getPathLocalFromString, numberWithCommas } from '../../utility/utility';
 import { COLOR_GENERAL, DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
@@ -71,7 +71,7 @@ const columns = [
   },
 ];
 
-function ComputerRunLikeOrder() {
+function ComputerRunSubscribesOrder() {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -79,16 +79,16 @@ function ComputerRunLikeOrder() {
 
   const { listServer } = useSelector((state) => {
     return {
-      listServer: state?.buffLike?.listComputer,
+      listServer: state?.buffSubscribe?.listComputer,
       preIsLoading: state.reports.loading,
     }
   });
 
   const [state, setState] = useState({
-    isEditCommentServer: false,
-    isDetailCommentServer: false,
-    isDeleteCommentServer: false,
-    isBatchUpdateCommentServer: false,
+    isEditSubscribeServer: false,
+    isDetailSubscribeServer: false,
+    isDeleteSubscribeServer: false,
+    isBatchUpdateSubscribeServer: false,
     notData: {},
     activeClass: 'all',
     current: 0,
@@ -100,7 +100,7 @@ function ComputerRunLikeOrder() {
   const { notData, selectedRowKeys } = state;
 
   useEffect(() => {
-    dispatch(actions.listComputerRunLikeBegin({
+    dispatch(actions.listComputerRunSubscribeBegin({
       page: currentPage,
       limit: limitPage,
     }));
@@ -108,7 +108,7 @@ function ComputerRunLikeOrder() {
 
   const handleSearch = (searchText) => {
     if (searchText) {
-      dispatch(actions.listComputerRunLikeBegin({
+      dispatch(actions.listComputerRunSubscribeBegin({
         page: currentPage,
         limit: limitPage,
         name: searchText
@@ -122,7 +122,7 @@ function ComputerRunLikeOrder() {
       action: "reset",
     };
 
-    dispatch(actions.updateOneComputerLikeAdminBegin(requestData));
+    dispatch(actions.updateOneComputerSubscribeAdminBegin(requestData));
   }
 
   const fullThreadServer = listServer?.items?.filter(item => {
@@ -213,7 +213,7 @@ function ComputerRunLikeOrder() {
           </span>
         ),
         limit: (
-          <Tooltip title={(<div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>)}>
+          <Tooltip title={(<div style={{ marginRight: '12px' }}>Subscribe: {value?.limit_per_day}</div>)}>
             <span>
               <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
                 <CgServer fontSize={17} style={{ marginRight: '5px' }}/> {value?.limit_per_day}
@@ -297,13 +297,13 @@ function ComputerRunLikeOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
-                  dispatch(actions.detailComputerRunLikeBegin({
+                  dispatch(actions.detailComputerRunSubscribeBegin({
                     id: value?.id
                   }));
                   setState({
                     ...state,
                     selectedItem: value,
-                    isEditCommentServer: true
+                    isEditSubscribeServer: true
                   })
                 }}
               >
@@ -319,13 +319,13 @@ function ComputerRunLikeOrder() {
                 style={{ marginRight: '5px' }}
                 className="btn-icon"
                 onClick={() => {
-                  dispatch(actions.detailComputerRunLikeBegin({
+                  dispatch(actions.detailComputerRunSubscribeBegin({
                     id: value?.id
                   }));
                   setState({
                     ...state,
                     selectedItem: value,
-                    isDetailCommentServer: true
+                    isDetailSubscribeServer: true
                   })
                 }}
               >
@@ -344,7 +344,7 @@ function ComputerRunLikeOrder() {
                 onClick={() => {
                   setState({
                     ...state,
-                    isDeleteCommentServer: true,
+                    isDeleteSubscribeServer: true,
                     selectedItem: value
                   })
                 }}
@@ -378,28 +378,28 @@ function ComputerRunLikeOrder() {
   return (
     <>
       <ConfirmRequestModal
-        isOpen={state?.isDeleteCommentServer}
+        isOpen={state?.isDeleteSubscribeServer}
         setState={setState}
         descriptions={`Xác nhận xóa máy chạy like ${state?.selectedItem?.name}`}
         title="Xác nhận"
         subtitle="Xóa thông tin máy chạy like"
         handleOk={() => {
-          dispatch(actions.deleteComputerRunLikeBegin({id: state?.selectedItem?.id}));
+          dispatch(actions.deleteComputerRunSubscribeBegin({id: state?.selectedItem?.id}));
           setState({ 
             ...state,
             isSendRequestModal: false
           });
         }}
       />
-      <BatchUpdateComputerLike
+      <BatchUpdateComputerSubscribes
         computerState={state}
         setState={setState}
       />
-      <DetailLikeComputer
+      <DetailSubscribesComputer
         computerState={state}
         setState={setState}
       />
-      <EditLikeComputer
+      <EditSubscribeComputer
         computerState={state}
         setState={setState}
       />
@@ -416,7 +416,7 @@ function ComputerRunLikeOrder() {
                   onClick={() => {
                     setState({
                       ...state,
-                      isBatchUpdateCommentServer: true,
+                      isBatchUpdateSubscribeServer: true,
                     });
                   }}
                 >
@@ -561,4 +561,4 @@ function ComputerRunLikeOrder() {
   );
 }
 
-export default ComputerRunLikeOrder;
+export default ComputerRunSubscribesOrder;

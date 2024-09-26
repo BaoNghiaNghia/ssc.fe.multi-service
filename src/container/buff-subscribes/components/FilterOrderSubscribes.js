@@ -10,7 +10,7 @@ import { IoMdRefresh } from "react-icons/io";
 import { MdAddchart } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
-import actions from '../../../redux/buffLike/actions';
+import actions from '../../../redux/buffSubscribe/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../../utility/utility';
 import { FILTER_ORDER_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
@@ -62,11 +62,11 @@ const badgeRedStyle = {
   marginRight: '5px'
 };
 
-function FilterOrderLike({ orderState, setState }) {
+function FilterOrderSubscribes({ orderState, setState }) {
   const dispatch = useDispatch();
   const [formCreateService] = Form.useForm();
 
-  const { isFilterLikeOrderModal } = orderState;
+  const { isFilterSubscribeOrderModal } = orderState;
 
   const { postLoading, listService, userList } = useSelector((state) => {
     return {
@@ -95,16 +95,16 @@ function FilterOrderLike({ orderState, setState }) {
             rest.priority = priority === "true";
           }
 
-          dispatch(actions.fetchListOrderLikeBegin(rest));
+          dispatch(actions.fetchListOrderSubscribeBegin(rest));
 
-          setState({ ...orderState, isFilterLikeOrderModal: false });
+          setState({ ...orderState, isFilterSubscribeOrderModal: false });
         })
         .catch((err) => {
           console.error("handle Real Error: ", err);
         });
     } catch (err) {
       console.log(err);
-      setState({ ...orderState, isFilterLikeOrderModal: false });
+      setState({ ...orderState, isFilterSubscribeOrderModal: false });
       formCreateService.resetFields();
     }
   };
@@ -112,17 +112,17 @@ function FilterOrderLike({ orderState, setState }) {
   const handleCancel = () => {
     setState({
       ...orderState,
-      isFilterLikeOrderModal: false,
+      isFilterSubscribeOrderModal: false,
     });
   }
 
   const handleResetForm = () => {
     formCreateService.resetFields();
-    dispatch(actions.fetchListOrderLikeBegin({}));
+    dispatch(actions.fetchListOrderSubscribeBegin({}));
 
     setState({
       ...orderState,
-      isFilterLikeOrderModal: false,
+      isFilterSubscribeOrderModal: false,
     });
   }
 
@@ -130,7 +130,7 @@ function FilterOrderLike({ orderState, setState }) {
     <>
       <Modal
         width='400px'
-        open={isFilterLikeOrderModal}
+        open={isFilterSubscribeOrderModal}
         centered
         title={
           <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
@@ -240,7 +240,7 @@ function FilterOrderLike({ orderState, setState }) {
                       return (
                         <>
                           {
-                            itemService?.enabled && itemService?.category === "Likes" ? (
+                            itemService?.enabled && itemService?.category === "Subscribes" ? (
                               <Option key={index} value={itemService.service_id}>
                                 <>
                                   <Row style={{ margin: 0, padding: 0 }}>
@@ -301,9 +301,9 @@ function FilterOrderLike({ orderState, setState }) {
   );
 }
 
-FilterOrderLike.propTypes = {
+FilterOrderSubscribes.propTypes = {
   orderState: PropTypes.object,
   setState: PropTypes.func
 };
 
-export default FilterOrderLike;
+export default FilterOrderSubscribes;

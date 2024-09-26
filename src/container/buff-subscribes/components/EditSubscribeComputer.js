@@ -6,20 +6,20 @@ import { Row, Col, Form, Input, Select, Modal, InputNumber, Divider, Button } fr
 import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
 import { isEmptyObject } from '../../../utility/utility';
-import actions from '../../../redux/buffLike/actions';
+import actions from '../../../redux/buffSubscribe/actions';
 
 const { Option } = Select;
 
-function EditLikeComputer({ setState, computerState }) {
+function EditSubscribeComputer({ setState, computerState }) {
     const dispatch = useDispatch();
 
-    const { isEditCommentServer, selectedItem } = computerState;
+    const { isEditSubscribeServer, selectedItem } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailComputerComment } = useSelector(state => {
+    const { isLoading, detailOrderSubscribe } = useSelector(state => {
         return {
             isLoading: state?.buffSubscribe?.loading,
-            detailComputerComment: state?.buffSubscribe?.detailComputerComment
+            detailOrderSubscribe: state?.buffSubscribe?.detailOrderSubscribe
         };
     });
 
@@ -43,7 +43,7 @@ function EditLikeComputer({ setState, computerState }) {
                         thread: values?.thread
                     }
 
-                    dispatch(actions.updateOneComputerLikeAdminBegin(requestData));
+                    dispatch(actions.updateOneComputerSubscribeAdminBegin(requestData));
 
                     setState({
                         isModalEditMem: false,
@@ -60,21 +60,21 @@ function EditLikeComputer({ setState, computerState }) {
     };
 
     const handleCancel = () => {
-        setState({ ...computerState, isEditCommentServer: false });
+        setState({ ...computerState, isEditSubscribeServer: false });
         formDetailComputerCmt.resetFields();
     }
 
     return (
         <Modal
             width='600px'
-            open={isEditCommentServer}
+            open={isEditSubscribeServer}
             centered
             title={
                 <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                     <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                     <div>
-                        <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật Like Server</p>
-                        <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy chạy like</p>
+                        <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật Subscribe Server</p>
+                        <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy chạy subscribe</p>
                     </div>
                 </div>
             }
@@ -161,9 +161,9 @@ function EditLikeComputer({ setState, computerState }) {
     );
 }
 
-EditLikeComputer.propTypes = {
+EditSubscribeComputer.propTypes = {
     setState: PropTypes.func,
     computerState: PropTypes.object
 };
 
-export default EditLikeComputer;
+export default EditSubscribeComputer;

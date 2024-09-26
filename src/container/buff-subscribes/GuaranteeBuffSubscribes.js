@@ -69,10 +69,10 @@ function GuaranteeBuffSubscribes() {
   const dispatch = useDispatch();
   const dataSource = [];
   
-  const { listOrderComment, userList, isLoading, filterRange, listWarrantyOrder } = useSelector(state => {
+  const { listOrderSubscribe, userList, isLoading, filterRange, listWarrantyOrder } = useSelector(state => {
     return {
       isLoading: state?.buffSubscribe?.loading,
-      listOrderComment: state?.buffSubscribe?.listOrderComment,
+      listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe,
       userList: state?.member?.userList,
       listService: state?.settingService?.listService?.items,
       userInfo: state?.auth?.userInfo,
@@ -88,7 +88,7 @@ function GuaranteeBuffSubscribes() {
     statusNumber: 'all',
     notData: {},
     rowData: {},
-    item: listOrderComment,
+    item: listOrderSubscribe,
     selectedRowKeys: [],
     selectedItem: {}
   });
@@ -107,7 +107,7 @@ function GuaranteeBuffSubscribes() {
 
   useEffect(() => {
     if (dataSource?.length > 0) { 
-      dispatch(actions.fetchWarrantyCommentOrderBegin({
+      dispatch(actions.fetchWarrantySubscribeOrderBegin({
         page: currentPage,
         limit: limitPage,
         start_date: `${filterRange?.from} 00:00:00`,
@@ -274,7 +274,7 @@ function GuaranteeBuffSubscribes() {
               max_thread === 0 ? (
                 <span style={{ color: '#bdbdbd' }}>0</span>
               ) : (
-                <Tooltip title="Comment thiếu / Tổng comment đã đặt">
+                <Tooltip title="Subscribe thiếu / Tổng subscribe đã đặt">
                   <span><strong>{numberWithCommas(lost_count || 0)}</strong></span>
                 </Tooltip>
               )
@@ -331,7 +331,7 @@ function GuaranteeBuffSubscribes() {
 
   const onSelectChange = (selectedRowKey) => {
     if (selectedRowKey.length > 0) {
-      const matchedOrder = listOrderComment?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
+      const matchedOrder = listOrderSubscribe?.items?.filter(r => r.id === selectedRowKey?.slice(-1)?.pop());
       if (matchedOrder?.length > 0) {
         const matchState = ORDER_YOUTUBE_STATUS.find(item => item?.value === matchedOrder[0]?.status)?.name;
         const checkUpdateOrderStatus = [
@@ -368,7 +368,7 @@ function GuaranteeBuffSubscribes() {
         title="Xác nhận"
         subtitle="Gửi yêu cầu bảo hành"
         handleOk={() => {
-          dispatch(actions.activeWarrantyOrderCommentBegin({id: selectedItem?.order_id}));
+          dispatch(actions.activeWarrantyOrderSubscribeBegin({id: selectedItem?.order_id}));
           setState({ 
             ...state,
             isSendRequestModal: false
@@ -417,7 +417,7 @@ function GuaranteeBuffSubscribes() {
                       size="small"
                       type="primary"
                       onClick={() => {
-                        dispatch(actions.fetchWarrantyCommentOrderBegin({
+                        dispatch(actions.fetchWarrantySubscribeOrderBegin({
                           page: currentPage,
                           limit: limitPage,
                           start_date: `${filterRange?.from} 00:00:00`,
@@ -454,7 +454,7 @@ function GuaranteeBuffSubscribes() {
                         type="dashed"
                         style={{ borderRadius: '20px', backgroundColor: '#dae0ec5c' }}
                         onClick={() => {
-                          dispatch(actions.fetchWarrantyCommentOrderBegin({
+                          dispatch(actions.fetchWarrantySubscribeOrderBegin({
                             page: currentPage,
                             limit: limitPage,
                             start_date: `${filterRange?.from} 00:00:00`,

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Table, Pagination, Badge, Tooltip, Button } from 'antd';
 import moment from 'moment';
-import { LuLink2, LuTrash2 } from "react-icons/lu";
 import { TbServerBolt } from "react-icons/tb";
 import FeatherIcon from 'feather-icons-react';
-import { FiEdit2 } from "react-icons/fi";
-import { GrPowerReset } from "react-icons/gr";
 import { useSelector } from 'react-redux';
 import { CgServer } from "react-icons/cg";
 import { BiLogoGmail } from "react-icons/bi";
@@ -112,7 +109,7 @@ function TableServer() {
         limit: (
           <Tooltip title={(
             <>
-              <div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>
+              <div style={{ marginRight: '12px' }}>Subscribe: {value?.limit_per_day}</div>
             </>
           )}>
             <span>

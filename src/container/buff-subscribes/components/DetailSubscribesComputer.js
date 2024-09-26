@@ -7,15 +7,15 @@ import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
 import { isEmptyObject } from '../../../utility/utility';
 
-function DetailLikeComputer({ setState, computerState }) {
-    const { isDetailCommentServer, selectedItem } = computerState;
+function DetailSubscribesComputer({ setState, computerState }) {
+    const { isDetailSubscribeServer, selectedItem } = computerState;
 
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailComputerComment } = useSelector(state => {
+    const { isLoading, detailOrderSubscribe } = useSelector(state => {
         return {
             isLoading: state?.buffSubscribe?.loading,
-            detailComputerComment: state?.buffSubscribe?.detailComputerComment
+            detailOrderSubscribe: state?.buffSubscribe?.detailOrderSubscribe
         };
     });
 
@@ -28,7 +28,7 @@ function DetailLikeComputer({ setState, computerState }) {
     const handleCancel = () => {
         setState({
             ...computerState,
-            isDetailCommentServer: false,
+            isDetailSubscribeServer: false,
         });
         formDetailComputerCmt.resetFields();
     }
@@ -37,14 +37,14 @@ function DetailLikeComputer({ setState, computerState }) {
         <>
             <Modal
                 width='600px'
-                open={isDetailCommentServer}
+                open={isDetailSubscribeServer}
                 centered
                 title={
                     <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                         <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                         <div>
-                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Chi tiết Like Server</p>
-                            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin máy chạy like</p>
+                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Chi tiết Subscribe Server</p>
+                            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Chi tiết thông tin máy chạy subscribe</p>
                         </div>
                     </div>
                 }
@@ -73,9 +73,7 @@ function DetailLikeComputer({ setState, computerState }) {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-
                                 <Divider plain style={{ marginTop: '5px', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Cấu hình</Divider>
-
                                 <Row gutter="10">
                                     <Col sm={8}>
                                         <Form.Item name="name" label="Tên máy" rules={[{
@@ -158,9 +156,9 @@ function DetailLikeComputer({ setState, computerState }) {
     );
 }
 
-DetailLikeComputer.propTypes = {
+DetailSubscribesComputer.propTypes = {
     setState: PropTypes.func,
     computerState: PropTypes.object
 };
 
-export default DetailLikeComputer;
+export default DetailSubscribesComputer;

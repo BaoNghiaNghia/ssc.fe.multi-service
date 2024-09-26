@@ -7,20 +7,20 @@ import { MdAddchart, MdOutlineNumbers } from "react-icons/md";
 import { LuLink2 } from 'react-icons/lu';
 import { toast } from 'react-toastify';
 import { isEmptyObject } from '../../../utility/utility';
-import actions from '../../../redux/buffLike/actions';
+import actions from '../../../redux/buffSubscribe/actions';
 
 const { Option } = Select;
 
-function BatchUpdateComputerLike({ setState, computerState }) {
+function BatchUpdateComputerSubscribe({ setState, computerState }) {
     const dispatch = useDispatch();
 
-    const { isBatchUpdateCommentServer, selectedRowKeys } = computerState;
+    const { isBatchUpdateSubscribeServer, selectedRowKeys } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailComputerComment } = useSelector(state => {
+    const { isLoading, detailOrderSubscribe } = useSelector(state => {
         return {
             isLoading: state?.buffSubscribe?.loading,
-            detailComputerComment: state?.buffSubscribe?.detailComputerComment
+            detailOrderSubscribe: state?.buffSubscribe?.detailOrderSubscribe
         };
     });
 
@@ -37,7 +37,7 @@ function BatchUpdateComputerLike({ setState, computerState }) {
                     if (selectedRowKeys?.length > 0) {
                         values.ids = selectedRowKeys;
                     }
-                    dispatch(actions.updateManyComputerLikeAdminBegin(values));
+                    dispatch(actions.updateManyComputerSubscribeAdminBegin(values));
 
                     setState({
                         isModalEditMem: false,
@@ -54,7 +54,7 @@ function BatchUpdateComputerLike({ setState, computerState }) {
     };
 
     const handleCancel = () => {
-        setState({ ...computerState, isBatchUpdateCommentServer: false });
+        setState({ ...computerState, isBatchUpdateSubscribeServer: false });
         formDetailComputerCmt.resetFields();
     }
 
@@ -62,13 +62,13 @@ function BatchUpdateComputerLike({ setState, computerState }) {
         <>
             <Modal
                 width='600px'
-                open={isBatchUpdateCommentServer}
+                open={isBatchUpdateSubscribeServer}
                 centered
                 title={
                     <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                         <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                         <div>
-                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} Comment Server</p>
+                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} Subscribe Server</p>
                             <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy chạy comment</p>
                         </div>
                     </div>
@@ -144,9 +144,9 @@ function BatchUpdateComputerLike({ setState, computerState }) {
     );
 }
 
-BatchUpdateComputerLike.propTypes = {
+BatchUpdateComputerSubscribe.propTypes = {
     setState: PropTypes.func,
     computerState: PropTypes.object
 };
 
-export default BatchUpdateComputerLike;
+export default BatchUpdateComputerSubscribe;
