@@ -265,7 +265,7 @@ function GmailManagement() {
                     height="18px"
                     style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
                   />
-                : <img src={require('../../static/img/icon/server.png')} alt="" width={30}/>
+                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
             }
             <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', color: 'gray' }}>{computer}</div>
           </>
