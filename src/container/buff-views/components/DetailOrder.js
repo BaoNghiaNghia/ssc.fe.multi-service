@@ -100,7 +100,7 @@ function DetailOrder({ setState, state }) {
                     <Select
                       style={{ width: '100%', margin: '0px', padding: '0px' }}
                       bordered={false}
-                      initialValue="Comments"
+                      initialValue="Views"
                       disabled
                       size='small'
                       onClick={(value) => {

@@ -12,25 +12,25 @@ function InsuranceOrderView({ setState, state }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
-  const { postLoading, detailOrderComment, listService } = useSelector((state) => {
+  const { postLoading, detailOrderView, listService } = useSelector((state) => {
     return {
       postLoading: state?.buffView?.loading,
-      detailOrderComment: state?.buffView?.detailOrderComment,
+      detailOrderView: state?.buffView?.detailOrderView,
       listService: state?.settingService?.listService?.items
     };
   });
 
-  const findService = listService?.filter((item) => item.service_id === detailOrderComment?.service_id);
+  const findService = listService?.filter((item) => item.service_id === detailOrderView?.service_id);
 
   useEffect(() => {
-    formUpdateService.setFieldsValue(detailOrderComment);
+    formUpdateService.setFieldsValue(detailOrderView);
     formUpdateService.setFieldValue('category', findService && findService[0]?.category);
-    formUpdateService.setFieldValue('priority', String(detailOrderComment?.priority));
+    formUpdateService.setFieldValue('priority', String(detailOrderView?.priority));
   });
 
   const handleCancel = () => {
     setState({
-      isInsuranceCommentOrderModal: false,
+      isInsuranceViewOrderModal: false,
     });
     formUpdateService.resetFields();
   }
@@ -40,14 +40,14 @@ function InsuranceOrderView({ setState, state }) {
       formUpdateService.validateFields()
         .then((values) => {
           dispatch(commentActions.InsuranceOrderViewAdminBegin({
-            id: detailOrderComment?.id,
+            id: detailOrderView?.id,
             max_thread: values?.max_thread,
             note: values?.note,
             priority: values?.priority === "true",
             status: values?.status
           }));
 
-          setState({ isInsuranceCommentOrderModal: false });
+          setState({ isInsuranceViewOrderModal: false });
           formUpdateService.resetFields();
         })
         .catch((err) => {
@@ -62,7 +62,7 @@ function InsuranceOrderView({ setState, state }) {
     <>
       <Modal
         width='600px'
-        open={state?.isInsuranceCommentOrderModal}
+        open={state?.isInsuranceViewOrderModal}
         centered
         title={
           <>

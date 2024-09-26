@@ -13,7 +13,7 @@ import { SiGmail } from "react-icons/si";
 import moment from 'moment';
 import DetailViewDevices from './components/DetailViewDevices';
 import EditViewDevices from './components/EditViewDevices';
-import BatchUpdateComputerComment from './components/BatchUpdateComputerComment';
+import BatchUpdateComputerView from './components/BatchUpdateComputerView';
 import ConfirmRequestModal from './components/ConfirmRequestModal';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main, TableWrapper } from '../styled';
@@ -132,7 +132,7 @@ function ComputerRunViewOrder() {
       action: "reset",
     };
 
-    dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
+    dispatch(actions.updateOneComputerViewAdminBegin(requestData));
   }
 
   // This function will only render the content
@@ -380,14 +380,14 @@ function ComputerRunViewOrder() {
         title="Xác nhận"
         subtitle="Xóa thông tin máy chạy comment"
         handleOk={() => {
-          dispatch(actions.deleteComputerRunCommentBegin({id: state?.selectedItem?.id}));
+          dispatch(actions.deleteComputerRunViewBegin({id: state?.selectedItem?.id}));
           setState({ 
             ...state,
             isSendRequestModal: false
           });
         }}
       />
-      <BatchUpdateComputerComment
+      <BatchUpdateComputerView
         computerState={state}
         setState={setState}
       />

@@ -11,16 +11,16 @@ import actions from '../../../redux/buffView/actions';
 
 const { Option } = Select;
 
-function BatchUpdateComputerComment({ setState, computerState }) {
+function BatchUpdateComputerView({ setState, computerState }) {
     const dispatch = useDispatch();
 
     const { isBatchUpdateViewServer, selectedRowKeys } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailComputerComment } = useSelector(state => {
+    const { isLoading, detailComputerView } = useSelector(state => {
         return {
             isLoading: state?.buffView?.loading,
-            detailComputerComment: state?.buffView?.detailComputerComment
+            detailComputerView: state?.buffView?.detailComputerView
         };
     });
 
@@ -37,7 +37,7 @@ function BatchUpdateComputerComment({ setState, computerState }) {
                     if (selectedRowKeys?.length > 0) {
                         values.ids = selectedRowKeys;
                     }
-                    dispatch(actions.updateManyComputerCommentAdminBegin(values));
+                    dispatch(actions.updateManyComputerViewAdminBegin(values));
 
                     setState({
                         isModalEditMem: false,
@@ -68,7 +68,7 @@ function BatchUpdateComputerComment({ setState, computerState }) {
                     <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                         <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                         <div>
-                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} Comment Server</p>
+                            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} View Server</p>
                             <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy chạy comment</p>
                         </div>
                     </div>
@@ -144,9 +144,9 @@ function BatchUpdateComputerComment({ setState, computerState }) {
     );
 }
 
-BatchUpdateComputerComment.propTypes = {
+BatchUpdateComputerView.propTypes = {
     setState: PropTypes.func,
     computerState: PropTypes.object
 };
 
-export default BatchUpdateComputerComment;
+export default BatchUpdateComputerView;

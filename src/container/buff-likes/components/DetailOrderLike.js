@@ -98,7 +98,7 @@ function DetailOrderLike({ setState, orderState }) {
                     <Select
                       style={{ width: '100%', margin: '5px 0px 0 0', padding: '0px' }}
                       bordered={false}
-                      initialValue="Comments"
+                      initialValue="Likes"
                       disabled
                       size='small'
                       onClick={(value) => {
@@ -195,13 +195,13 @@ function DetailOrderLike({ setState, orderState }) {
             <Col sm={8}>
               <Form.Item
                 name="quantity"
-                label="Lượng comment"
+                label="Lượng like"
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' addonAfter="like" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>
@@ -213,7 +213,7 @@ function DetailOrderLike({ setState, orderState }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Input size='small' addonAfter="comment" readOnly placeholder="Thêm loại"/>
+                <Input size='small' addonAfter="like" readOnly placeholder="Thêm loại"/>
               </Form.Item>
             </Col>
             <Col sm={8}>

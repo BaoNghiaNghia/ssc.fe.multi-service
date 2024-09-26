@@ -42,7 +42,7 @@ function EditViewDevices({ setState, computerState }) {
           thread: values?.thread
         };
 
-        dispatch(actions.updateOneComputerCommentAdminBegin(requestData));
+        dispatch(actions.updateOneComputerViewAdminBegin(requestData));
 
         setState({
           isEditViewServer: false,

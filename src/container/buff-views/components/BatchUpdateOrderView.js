@@ -18,7 +18,7 @@ function BatchUpdateOrderView({ setState, orderState }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
-  const { isBatchUpdateCommentOrderModal, selectedRowKeys } = orderState;
+  const { isBatchUpdateViewOrderModal, selectedRowKeys } = orderState;
 
   const { postLoading } = useSelector(state => {
     return {
@@ -33,7 +33,7 @@ function BatchUpdateOrderView({ setState, orderState }) {
   const handleCancel = () => {
     setState({
       ...orderState,
-      isBatchUpdateCommentOrderModal: false,
+      isBatchUpdateViewOrderModal: false,
     });
 
     formUpdateService.resetFields();
@@ -57,11 +57,11 @@ function BatchUpdateOrderView({ setState, orderState }) {
             values.priority = (values.priority === 'true');
           }
 
-          dispatch(commentActions.updateManyOrderCommentAdminBegin(values));
+          dispatch(commentActions.updateManyOrderViewAdminBegin(values));
 
           setState({
             ...orderState,
-            isBatchUpdateCommentOrderModal: false,
+            isBatchUpdateViewOrderModal: false,
           });
 
           formUpdateService.resetFields();
@@ -73,7 +73,7 @@ function BatchUpdateOrderView({ setState, orderState }) {
       console.log(err);
       setState({
         ...orderState,
-        isBatchUpdateCommentOrderModal: false
+        isBatchUpdateViewOrderModal: false
       });
       formUpdateService.resetFields();
     }
@@ -83,14 +83,14 @@ function BatchUpdateOrderView({ setState, orderState }) {
     <>
       <Modal
         width='600px'
-        open={isBatchUpdateCommentOrderModal}
+        open={isBatchUpdateViewOrderModal}
         centered
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} đơn Comment</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} đơn View</p>
                 <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin đơn</p>
               </div>
             </div>

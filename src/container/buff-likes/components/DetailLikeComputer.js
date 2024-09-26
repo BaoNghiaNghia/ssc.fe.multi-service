@@ -8,14 +8,14 @@ import { LuLink2 } from 'react-icons/lu';
 import { isEmptyObject } from '../../../utility/utility';
 
 function DetailLikeComputer({ setState, computerState }) {
-    const { isDetailCommentServer, selectedItem } = computerState;
+    const { isDetailLikeServer, selectedItem } = computerState;
 
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailComputerComment } = useSelector(state => {
+    const { isLoading, detailComputerLike } = useSelector(state => {
         return {
             isLoading: state?.buffLike?.loading,
-            detailComputerComment: state?.buffLike?.detailComputerComment
+            detailComputerLike: state?.buffLike?.detailComputerLike
         };
     });
 
@@ -28,7 +28,7 @@ function DetailLikeComputer({ setState, computerState }) {
     const handleCancel = () => {
         setState({
             ...computerState,
-            isDetailCommentServer: false,
+            isDetailLikeServer: false,
         });
         formDetailComputerCmt.resetFields();
     }
@@ -37,7 +37,7 @@ function DetailLikeComputer({ setState, computerState }) {
         <>
             <Modal
                 width='600px'
-                open={isDetailCommentServer}
+                open={isDetailLikeServer}
                 centered
                 title={
                     <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
@@ -61,7 +61,7 @@ function DetailLikeComputer({ setState, computerState }) {
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <Input size='small' disabled addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server comment' />
+                                            <Input size='small' disabled addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server like' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={12}>
@@ -82,7 +82,7 @@ function DetailLikeComputer({ setState, computerState }) {
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <Input size='small' disabled style={{ width: '100%' }} placeholder='Tên máy comment' />
+                                            <Input size='small' disabled style={{ width: '100%' }} placeholder='Tên máy like' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>
@@ -124,7 +124,7 @@ function DetailLikeComputer({ setState, computerState }) {
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <InputNumber type='number' disabled addonAfter="comment" size='small' style={{ width: '100%' }} placeholder='Giới hạn comment mỗi ngày ' />
+                                            <InputNumber type='number' disabled addonAfter="like" size='small' style={{ width: '100%' }} placeholder='Giới hạn like mỗi ngày ' />
                                         </Form.Item>
                                     </Col>
                                 </Row>

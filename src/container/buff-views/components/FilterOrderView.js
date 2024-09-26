@@ -66,7 +66,7 @@ function FilterOrderView({ orderState, setState }) {
   const dispatch = useDispatch();
   const [formCreateService] = Form.useForm();
 
-  const { isFilterCommentOrderModal } = orderState;
+  const { isFilterViewOrderModal } = orderState;
 
   const { postLoading, listService, userList } = useSelector((state) => {
     return {
@@ -82,12 +82,12 @@ function FilterOrderView({ orderState, setState }) {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
 
-  // const validatedServiceComment = listService?.filter(itemService => {
-  //   return itemService?.enabled && itemService?.category === "Comments"
+  // const validatedServiceView = listService?.filter(itemService => {
+  //   return itemService?.enabled && itemService?.category === "Views"
   // });
 
-  // if (validatedServiceComment?.length > 0) {
-  //   formCreateService.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
+  // if (validatedServiceView?.length > 0) {
+  //   formCreateService.setFieldValue('service_id', validatedServiceView[0]?.service_id);
   // }
 
   const handleOk = () => {
@@ -107,14 +107,14 @@ function FilterOrderView({ orderState, setState }) {
 
           dispatch(actions.fetchListOrderViewBegin(rest));
 
-          setState({ ...orderState, isFilterCommentOrderModal: false });
+          setState({ ...orderState, isFilterViewOrderModal: false });
         })
         .catch((err) => {
           console.error("handle Real Error: ", err);
         });
     } catch (err) {
       console.log(err);
-      setState({ ...orderState, isFilterCommentOrderModal: false });
+      setState({ ...orderState, isFilterViewOrderModal: false });
       formCreateService.resetFields();
     }
   };
@@ -122,7 +122,7 @@ function FilterOrderView({ orderState, setState }) {
   const handleCancel = () => {
     setState({
       ...orderState,
-      isFilterCommentOrderModal: false,
+      isFilterViewOrderModal: false,
     });
   }
 
@@ -132,7 +132,7 @@ function FilterOrderView({ orderState, setState }) {
 
     setState({
       ...orderState,
-      isFilterCommentOrderModal: false,
+      isFilterViewOrderModal: false,
     });
   }
 
@@ -140,7 +140,7 @@ function FilterOrderView({ orderState, setState }) {
     <>
       <Modal
         width='400px'
-        open={isFilterCommentOrderModal}
+        open={isFilterViewOrderModal}
         centered
         title={
           <>
@@ -252,7 +252,7 @@ function FilterOrderView({ orderState, setState }) {
                       return (
                         <>
                           {
-                            itemService?.enabled && itemService?.category === "Comments" ? (
+                            itemService?.enabled && itemService?.category === "Views" ? (
                               <Option key={index} value={itemService.service_id}>
                                 <>
                                   <Row style={{ margin: 0, padding: 0 }}>

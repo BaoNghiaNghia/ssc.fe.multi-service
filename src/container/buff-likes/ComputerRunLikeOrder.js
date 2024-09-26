@@ -85,10 +85,10 @@ function ComputerRunLikeOrder() {
   });
 
   const [state, setState] = useState({
-    isEditCommentServer: false,
-    isDetailCommentServer: false,
-    isDeleteCommentServer: false,
-    isBatchUpdateCommentServer: false,
+    isEditLikeServer: false,
+    isDetailLikeServer: false,
+    isDeleteLikeServer: false,
+    isBatchUpdateLikeServer: false,
     notData: {},
     activeClass: 'all',
     current: 0,
@@ -213,7 +213,7 @@ function ComputerRunLikeOrder() {
           </span>
         ),
         limit: (
-          <Tooltip title={(<div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>)}>
+          <Tooltip title={(<div style={{ marginRight: '12px' }}>Like: {value?.limit_per_day}</div>)}>
             <span>
               <span style={{ marginRight: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
                 <CgServer fontSize={17} style={{ marginRight: '5px' }}/> {value?.limit_per_day}
@@ -303,7 +303,7 @@ function ComputerRunLikeOrder() {
                   setState({
                     ...state,
                     selectedItem: value,
-                    isEditCommentServer: true
+                    isEditLikeServer: true
                   })
                 }}
               >
@@ -325,7 +325,7 @@ function ComputerRunLikeOrder() {
                   setState({
                     ...state,
                     selectedItem: value,
-                    isDetailCommentServer: true
+                    isDetailLikeServer: true
                   })
                 }}
               >
@@ -344,7 +344,7 @@ function ComputerRunLikeOrder() {
                 onClick={() => {
                   setState({
                     ...state,
-                    isDeleteCommentServer: true,
+                    isDeleteLikeServer: true,
                     selectedItem: value
                   })
                 }}
@@ -378,7 +378,7 @@ function ComputerRunLikeOrder() {
   return (
     <>
       <ConfirmRequestModal
-        isOpen={state?.isDeleteCommentServer}
+        isOpen={state?.isDeleteLikeServer}
         setState={setState}
         descriptions={`Xác nhận xóa máy chạy like ${state?.selectedItem?.name}`}
         title="Xác nhận"
@@ -416,7 +416,7 @@ function ComputerRunLikeOrder() {
                   onClick={() => {
                     setState({
                       ...state,
-                      isBatchUpdateCommentServer: true,
+                      isBatchUpdateLikeServer: true,
                     });
                   }}
                 >

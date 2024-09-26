@@ -13,13 +13,13 @@ const { Option } = Select;
 function EditLikeComputer({ setState, computerState }) {
     const dispatch = useDispatch();
 
-    const { isEditCommentServer, selectedItem } = computerState;
+    const { isEditLikeServer, selectedItem } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailComputerComment } = useSelector(state => {
+    const { isLoading, detailComputerLike } = useSelector(state => {
         return {
             isLoading: state?.buffLike?.loading,
-            detailComputerComment: state?.buffLike?.detailComputerComment
+            detailComputerLike: state?.buffLike?.detailComputerLike
         };
     });
 
@@ -60,14 +60,14 @@ function EditLikeComputer({ setState, computerState }) {
     };
 
     const handleCancel = () => {
-        setState({ ...computerState, isEditCommentServer: false });
+        setState({ ...computerState, isEditLikeServer: false });
         formDetailComputerCmt.resetFields();
     }
 
     return (
         <Modal
             width='600px'
-            open={isEditCommentServer}
+            open={isEditLikeServer}
             centered
             title={
                 <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
@@ -95,7 +95,7 @@ function EditLikeComputer({ setState, computerState }) {
                             <Row gutter="10">
                                 <Col sm={12}>
                                     <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn">
-                                        <Input size='small' addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server comment' />
+                                        <Input size='small' addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server like' />
                                     </Form.Item>
                                 </Col>
                                 <Col sm={12}>
@@ -141,7 +141,7 @@ function EditLikeComputer({ setState, computerState }) {
                                         required: true,
                                         message: 'Trường không được trống'
                                     }]}>
-                                        <InputNumber type='number' addonAfter="comment" size='small' style={{ width: '100%' }} placeholder='Giới hạn comment mỗi ngày ' />
+                                        <InputNumber type='number' addonAfter="like" size='small' style={{ width: '100%' }} placeholder='Giới hạn like mỗi ngày ' />
                                     </Form.Item>
                                 </Col>
                                 <Col sm={8}>

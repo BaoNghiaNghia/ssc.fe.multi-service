@@ -7,7 +7,7 @@ import { MdAddchart } from "react-icons/md";
 import { toast } from 'react-toastify';
 
 import { BsFire } from 'react-icons/bs';
-import commentActions from '../../../redux/buffComment/actions';
+import likeActions from '../../../redux/buffLike/actions';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import { ORDER_YOUTUBE_STATUS } from '../../../variables/index';
 import { isEmptyObject } from '../../../utility/utility';
@@ -18,7 +18,7 @@ function BatchUpdateOrderLike({ setState, orderState }) {
   const dispatch = useDispatch();
   const [formUpdateService] = Form.useForm();
 
-  const { isBatchUpdateCommentOrderModal, selectedRowKeys } = orderState;
+  const { isBatchUpdateLikeOrderModal, selectedRowKeys } = orderState;
 
   const { postLoading } = useSelector(state => {
     return {
@@ -33,7 +33,7 @@ function BatchUpdateOrderLike({ setState, orderState }) {
   const handleCancel = () => {
     setState({
       ...orderState,
-      isBatchUpdateCommentOrderModal: false,
+      isBatchUpdateLikeOrderModal: false,
     });
 
     formUpdateService.resetFields();
@@ -57,11 +57,11 @@ function BatchUpdateOrderLike({ setState, orderState }) {
             values.priority = (values.priority === 'true');
           }
 
-          dispatch(commentActions.updateManyOrderCommentAdminBegin(values));
+          dispatch(likeActions.updateManyOrderLikeAdminBegin(values));
 
           setState({
             ...orderState,
-            isBatchUpdateCommentOrderModal: false,
+            isBatchUpdateLikeOrderModal: false,
           });
 
           formUpdateService.resetFields();
@@ -73,7 +73,7 @@ function BatchUpdateOrderLike({ setState, orderState }) {
       console.log(err);
       setState({
         ...orderState,
-        isBatchUpdateCommentOrderModal: false
+        isBatchUpdateLikeOrderModal: false
       });
       formUpdateService.resetFields();
     }
@@ -83,14 +83,14 @@ function BatchUpdateOrderLike({ setState, orderState }) {
     <>
       <Modal
         width='600px'
-        open={isBatchUpdateCommentOrderModal}
+        open={isBatchUpdateLikeOrderModal}
         centered
         title={
           <>
             <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} đơn Comment</p>
+                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} đơn Like</p>
                 <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin đơn</p>
               </div>
             </div>

@@ -16,7 +16,7 @@ function ConfirmRequestModal({ setState, isOpen, descriptions, title, subtitle, 
 
   const handleCancel = () => {
     setState({
-      isInsuranceCommentOrderModal: false,
+      isInsuranceViewOrderModal: false,
     });
     formUpdateService.resetFields();
   }

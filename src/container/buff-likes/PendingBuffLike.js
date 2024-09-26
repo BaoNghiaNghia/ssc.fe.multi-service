@@ -128,10 +128,10 @@ function PendingBuffLike() {
   const [state, setState] = useState({
     isDetailOrderLikeModal: false,
     isUpdateLikeOrderModal: false,
-    isCancelRefundCommentOrderModal: false,
-    isInsuranceCommentOrderModal: false,
+    isCancelRefundLikeOrderModal: false,
+    isInsuranceLikeOrderModal: false,
     isFilterLikeOrderModal: false,
-    isBatchUpdateCommentOrderModal: false,
+    isBatchUpdateLikeOrderModal: false,
     notData: {},
     rowData: {},
     item: listOrderLike,
@@ -141,7 +141,7 @@ function PendingBuffLike() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
-  const { isCancelRefundCommentOrderModal, selectedRowKeys, notData } = state;
+  const { isCancelRefundLikeOrderModal, selectedRowKeys, notData } = state;
 
   useEffect(() => {
     let initParams = {
@@ -523,7 +523,7 @@ function PendingBuffLike() {
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isInsuranceCommentOrderModal: true });
+                      setState({ ...state, isInsuranceLikeOrderModal: true });
                     }}
                   >
                     <FeatherIcon icon="shield" size={16} />
@@ -541,7 +541,7 @@ function PendingBuffLike() {
                         userDetail: findUser,
                         serviceDetail: findService
                       }));
-                      setState({ ...state, isCancelRefundCommentOrderModal: true });
+                      setState({ ...state, isCancelRefundLikeOrderModal: true });
                     }}
                   >
                     <TbCreditCardRefund style={{ fontSize: '1em' }} />
@@ -634,7 +634,7 @@ function PendingBuffLike() {
         setState={setState}
       />
       <CancelAndRefundOrderComment
-        isOpen={isCancelRefundCommentOrderModal}
+        isOpen={isCancelRefundLikeOrderModal}
         setState={setState}
       />
       <InsuranceOrderComment
@@ -699,7 +699,7 @@ function PendingBuffLike() {
                             onClick={() => {
                               setState({
                                 ...state,
-                                isBatchUpdateCommentOrderModal: true
+                                isBatchUpdateLikeOrderModal: true
                               });
                             }}
                           >

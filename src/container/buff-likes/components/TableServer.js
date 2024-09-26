@@ -112,7 +112,7 @@ function TableServer() {
         limit: (
           <Tooltip title={(
             <>
-              <div style={{ marginRight: '12px' }}>Comment: {value?.limit_per_day}</div>
+              <div style={{ marginRight: '12px' }}>Like: {value?.limit_per_day}</div>
             </>
           )}>
             <span>

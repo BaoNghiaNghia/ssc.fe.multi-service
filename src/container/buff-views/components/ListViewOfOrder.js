@@ -8,7 +8,7 @@ import { Form, Modal, Table, Badge, Tooltip, Spin } from 'antd';
 import { MdAddchart } from "react-icons/md";
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../../variables';
 import { numberWithCommas } from '../../../utility/utility';
-import commentActions from '../../../redux/buffComment/actions';
+import viewActions from '../../../redux/buffView/actions';
 
 const badgeGreenStyle = {
   fontFamily: 'Poppins, sans-serif',
@@ -40,7 +40,7 @@ function ListViewOfOrder({ isOpen, setState, orderState }) {
   });
 
   useEffect(() => {
-    dispatch(commentActions.commentOrderCommentBegin({
+    dispatch(viewActions.commentOrderViewBegin({
       page: currentPage,
       limit: limitPage,
       id: rowData?.id,
@@ -49,7 +49,7 @@ function ListViewOfOrder({ isOpen, setState, orderState }) {
 
   const handleCancel = () => {
     setState({
-      isListCommentModal: false,
+      isListViewModal: false,
     });
     formUpdateService.resetFields();
   }
@@ -140,7 +140,7 @@ function ListViewOfOrder({ isOpen, setState, orderState }) {
 
   const columns = [
     {
-      title: 'Comment',
+      title: 'View',
       dataIndex: 'message',
       key: 'message',
     },

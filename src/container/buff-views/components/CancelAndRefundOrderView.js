@@ -8,7 +8,7 @@ import { AiOutlineFieldNumber } from "react-icons/ai";
 import { Row, Col, Form, Input, InputNumber, Button, Modal, Divider, Switch, Select, Badge } from 'antd';
 import { MdAddchart, MdOutlineImportExport } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
-import actions from '../../../redux/buffComment/actions';
+import actions from '../../../redux/buffView/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
@@ -78,21 +78,21 @@ function CancelAndRefundOrderView({ isOpen, setState }) {
     dispatch(actionsService.fetchListServiceBegin());
   }, [dispatch]);
 
-  const validatedServiceComment = listService?.filter(itemService => {
-    return itemService?.enabled && itemService?.category === "Comments"
+  const validatedServiceView = listService?.filter(itemService => {
+    return itemService?.enabled && itemService?.category === "Views"
   });
 
-  if (validatedServiceComment?.length > 0) {
-    formCancelAndRefundOrder.setFieldValue('service_id', validatedServiceComment[0]?.service_id);
+  if (validatedServiceView?.length > 0) {
+    formCancelAndRefundOrder.setFieldValue('service_id', validatedServiceView[0]?.service_id);
   }
 
   const handleOk = () => {
     try {
       formCancelAndRefundOrder.validateFields()
         .then((values) => {
-          dispatch(actions.createOrderCommentAdminBegin(values));
+          dispatch(actions.createOrderViewAdminBegin(values));
 
-          setState({ isCancelRefundCommentOrderModal: false });
+          setState({ isCancelRefundViewOrderModal: false });
           formCancelAndRefundOrder.resetFields();
         })
         .catch((err) => {
@@ -105,7 +105,7 @@ function CancelAndRefundOrderView({ isOpen, setState }) {
 
   const handleCancel = () => {
     setState({
-      isCancelRefundCommentOrderModal: false,
+      isCancelRefundViewOrderModal: false,
     });
   }
 
