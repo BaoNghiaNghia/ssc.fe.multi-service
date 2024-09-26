@@ -49,16 +49,6 @@ const ProviderConfig = () => {
     <ConfigProvider 
       direction={rtl ? 'rtl' : 'ltr'}
       locale={locale}
-      theme={{
-        token: {
-          // Seed Token
-          colorPrimary: '#00b96b',
-          borderRadius: 2,
-  
-          // Alias Token
-          colorBgContainer: '#f6ffed',
-        },
-      }}
     >
       <ToastContainer
         position="bottom-center"

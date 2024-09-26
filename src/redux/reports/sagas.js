@@ -3,7 +3,10 @@ import { toast } from 'react-toastify';
 import actions from "./actions";
 import actionBuffComment from '../buffComment/actions';
 import actionBuffLike from '../buffLike/actions';
+import actionBuffView from '../buffView/actions';
+import actionBuffSubscribe from '../buffSubscribe/actions';
 import {
+  // COMMENT
   commentStatisticCommentByOrderReportAPI,
   commentStatisticAccountStatusAPI,
   commentStatisticCommentByDayAPI,
@@ -21,6 +24,7 @@ import {
   commentStatisticTotalOrderAPI,
   commentStatisticOrderByDaysAPI,
 
+  // LIKE
   // likeStatisticCommentByOrderReportAPI,
   likeStatisticTaskSuccessInMinutesAPI,
   likeStatisticAccountOnComputerAPI,
@@ -38,6 +42,41 @@ import {
   likeStatisticTotalOrderAPI,
   likeStatisticOrderByDaysAPI,
 
+  // SUBSCRIBE
+  subscribeStatisticTaskSuccessInMinutesAPI,
+  subscribeStatisticTaskDurationInMinutesAPI,
+  subscribeStatisticAccountOnComputerAPI,
+  subscribeStatisticAccountStatusAPI,
+  subscribeStatisticByStatusOrderAPI,
+  subscribeStatisticCommentByDayAPI,
+  subscribeStatisticComputerThreadAPI,
+  subscribeStatisticRunningComputerAPI,
+  subscribeStatisticTaskOfToolAPI,
+  subscribeStatisticOrderAmountAPI,
+  subscribeStatisticPerformanceAPI,
+  subscribeStatisticRunningUserOrderAPI,
+  subscribeStatisticUserPointAPI,
+  subscribeStatisticTotalOrderAPI,
+  subscribeStatisticOrderByDaysAPI,
+
+  // VIEW
+  viewStatisticTaskSuccessInMinutesAPI,
+  viewStatisticTaskDurationInMinutesAPI,
+  viewStatisticAccountOnComputerAPI,
+  viewStatisticAccountStatusAPI,
+  viewStatisticByStatusOrderAPI,
+  viewStatisticCommentByDayAPI,
+  viewStatisticComputerThreadAPI,
+  viewStatisticRunningComputerAPI,
+  viewStatisticTaskOfToolAPI,
+  viewStatisticOrderAmountAPI,
+  viewStatisticPerformanceAPI,
+  viewStatisticRunningUserOrderAPI,
+  viewStatisticUserPointAPI,
+  viewStatisticTotalOrderAPI,
+  viewStatisticOrderByDaysAPI,
+
+  // Validate youtube link
   validateYoutubeLinkCommentVideoAPI,
   validateYoutubeLinkLikeVideoAPI,
   validateYoutubeLinkSubscribeVideoAPI,
@@ -786,12 +825,12 @@ function* changeServiceTypeFunc(params) {
 
     if (isType === SERVICE_TYPE.LIKE.title) {
       yield put(actions.likeStatisticTaskDurationInMinuteBegin());
-      // yield put(actions.likeStatisticCommentByOrderReportBegin());
+      // yield put(actions.likeStatisticLikeByOrderReportBegin());
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
       // yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
-      yield put(actions.likeStatisticAccountStatusCommentBegin(initialFilter));
-      yield put(actions.likeStatisticPerformanceCommentBegin(initialFilter));
-      yield put(actions.likeStatisticCommentByDayBegin(initialFilter));
+      yield put(actions.likeStatisticAccountStatusLikeBegin(initialFilter));
+      yield put(actions.likeStatisticPerformanceLikeBegin(initialFilter));
+      yield put(actions.likeStatisticLikeByDayBegin(initialFilter));
       yield put(actions.likeStatisticComputerThreadBegin(initialFilter));
 
       yield put(actions.likeStatisticAccountOnComputerBegin(initialFilter));
@@ -807,7 +846,31 @@ function* changeServiceTypeFunc(params) {
       yield put(actionBuffLike.listComputerRunLikeBegin(initServerPagination));
     }
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
-      console.log('--- THAY ĐỔI STATISTIC SUBSCRIBE ---')
+      console.log('--- THAY ĐỔI STATISTIC SUBSCRIBE ---');
+      yield put(actions.subscribeStatisticTaskDurationInMinuteBegin());
+      // yield put(actions.subscribeStatisticSubscribeByOrderReportBegin());
+      yield put(actions.subscribeStatisticTaskSuccessInMinuteBegin());
+      // yield put(actions.subscribeStatisticOrderAmountBegin(initialFilter));
+      yield put(actions.subscribeStatisticAccountStatusSubscribeBegin(initialFilter));
+      yield put(actions.subscribeStatisticPerformanceSubscribeBegin(initialFilter));
+      yield put(actions.subscribeStatisticSubscribeByDayBegin(initialFilter));
+      yield put(actions.subscribeStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actions.subscribeStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actions.subscribeStatisticByStatusOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticRunningOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticTaskOfToolBegin(initialFilter));
+      yield put(actions.subscribeStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticUserPointBegin(initialFilter));
+      yield put(actions.subscribeStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      yield put(actionBuffSubscribe.listComputerRunSubscribeBegin(initServerPagination));
+    }
+    
+    if (isType === SERVICE_TYPE.VIEW.title) {
+      console.log('--- THAY ĐỔI STATISTIC VIEW ---');
     }
   } catch (err) {
     yield put(
@@ -848,7 +911,53 @@ function* setRangeDateFilterFunc(params) {
     };
 
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
-      console.log('----- range filter with comment ------');
+      console.log('----- range filter with subscribe ------');
+
+      // yield put(actions.subscribeStatisticCommentByOrderReportBegin());
+      yield put(actions.subscribeStatisticTaskSuccessInMinuteBegin());
+      yield put(actions.subscribeStatisticTaskDurationInMinuteBegin());
+      yield put(actions.subscribeStatisticOrderAmountBegin(initialFilter));
+      yield put(actions.subscribeStatisticAccountStatusSubscribeBegin(initialFilter));
+      yield put(actions.subscribeStatisticPerformanceSubscribeBegin(initialFilter));
+      yield put(actions.subscribeStatisticSubscribeByDayBegin(initialFilter));
+      yield put(actions.subscribeStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actions.subscribeStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actions.subscribeStatisticByStatusOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticRunningOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticTaskOfToolBegin(initialFilter));
+      yield put(actions.subscribeStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticUserPointBegin(initialFilter));
+      yield put(actions.subscribeStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.subscribeStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      yield put(actionBuffSubscribe.listComputerRunSubscribeBegin(initServerPagination));
+    }
+
+    if (isType === SERVICE_TYPE.VIEW.title) {
+      console.log('----- range filter with view ------');
+
+      // yield put(actions.viewStatisticCommentByOrderReportBegin());
+      yield put(actions.viewStatisticTaskSuccessInMinuteBegin());
+      yield put(actions.viewStatisticTaskDurationInMinuteBegin());
+      yield put(actions.viewStatisticOrderAmountBegin(initialFilter));
+      yield put(actions.viewStatisticAccountStatusViewBegin(initialFilter));
+      yield put(actions.viewStatisticPerformanceViewBegin(initialFilter));
+      yield put(actions.viewStatisticViewByDayBegin(initialFilter));
+      yield put(actions.viewStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actions.viewStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actions.viewStatisticByStatusOrderBegin(initialFilter));
+      yield put(actions.viewStatisticRunningOrderBegin(initialFilter));
+      yield put(actions.viewStatisticTaskOfToolBegin(initialFilter));
+      yield put(actions.viewStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actions.viewStatisticUserPointBegin(initialFilter));
+      yield put(actions.viewStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.viewStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      yield put(actionBuffView.listComputerRunViewBegin(initServerPagination));
     }
     
     if (isType === SERVICE_TYPE.COMMENT.title) {

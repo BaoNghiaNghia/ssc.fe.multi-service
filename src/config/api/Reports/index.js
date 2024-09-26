@@ -25,11 +25,6 @@ import {
     COMMENT_STATISTIC_TOTAL_ORDER_ENDPOINT,
     COMMENT_STATISTIC_ORDER_BY_DAYS_ENDPOINT,
 
-    // Validate youtube link 
-    VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT,
-    VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT,
-    VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT,
-
     // LIKE
     LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT,
     LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT,
@@ -48,8 +43,48 @@ import {
     LIKE_STATISTIC_TOTAL_ORDER_ENDPOINT,
     LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT,
 
+    // SUBSCRIBE
+    SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT,
+    SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT,
+    SUBSCRIBE_STATISTIC_COMPUTER_THREAD_ENDPOINT,
+    SUBSCRIBE_STATISTIC_RUNNING_COMPUTER_ENDPOINT,
+    SUBSCRIBE_STATISTIC_TASK_OF_TOOL_ENDPOINT,
+    SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT,
+    SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
+    SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT,
+    SUBSCRIBE_STATISTIC_BY_STATUS_ORDER_ENDPOINT,
+    SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
+    SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT,
+    SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT,
+    SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
+    SUBSCRIBE_STATISTIC_USER_POINT_ENDPOINT,
+    SUBSCRIBE_STATISTIC_TOTAL_ORDER_ENDPOINT,
+    SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT,
+
     // VIEW
-    VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT
+    VIEW_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT,
+    VIEW_STATISTIC_VIEW_BY_DAY_ENDPOINT,
+    VIEW_STATISTIC_COMPUTER_THREAD_ENDPOINT,
+    VIEW_STATISTIC_RUNNING_COMPUTER_ENDPOINT,
+    VIEW_STATISTIC_TASK_OF_TOOL_ENDPOINT,
+    VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT,
+    VIEW_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
+    VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT,
+    VIEW_STATISTIC_BY_STATUS_ORDER_ENDPOINT,
+    VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
+    VIEW_STATISTIC_ORDER_AMOUNT_ENDPOINT,
+    VIEW_STATISTIC_PERFORMANCE_ENDPOINT,
+    VIEW_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
+    VIEW_STATISTIC_USER_POINT_ENDPOINT,
+    VIEW_STATISTIC_TOTAL_ORDER_ENDPOINT,
+    VIEW_STATISTIC_ORDER_BY_DAYS_ENDPOINT,
+
+
+    // Validate youtube link 
+    VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT,
+    VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT,
+    VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT,
+    VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT,
 
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
@@ -64,6 +99,7 @@ GeneralReportAPI.createEntities([
     { name: STATISTIC_SUBSCRIBE_REPORT_ENDPOINT },
     { name: RATIO_SUBSCRIBE_AVG_ENDPOINT },
 
+    // Comment
     { name: COMMENT_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
     { name: COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT },
     { name: COMMENT_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
@@ -81,10 +117,7 @@ GeneralReportAPI.createEntities([
     { name: COMMENT_STATISTIC_TOTAL_ORDER_ENDPOINT },
     { name: COMMENT_STATISTIC_ORDER_BY_DAYS_ENDPOINT },
 
-    { name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT },
-    { name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT },
-    { name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT },
-
+    // Like
     { name: LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
     { name: LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT },
     { name: LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT },
@@ -101,7 +134,48 @@ GeneralReportAPI.createEntities([
     { name: LIKE_STATISTIC_USER_POINT_ENDPOINT },
     { name: LIKE_STATISTIC_TOTAL_ORDER_ENDPOINT },
     { name: LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT },
+
+    // Subscribe
+    { name: SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_COMPUTER_THREAD_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_RUNNING_COMPUTER_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_TASK_OF_TOOL_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_BY_STATUS_ORDER_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_USER_POINT_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_TOTAL_ORDER_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT },
+
+    // View
+    { name: VIEW_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT },
+    { name: VIEW_STATISTIC_VIEW_BY_DAY_ENDPOINT },
+    { name: VIEW_STATISTIC_COMPUTER_THREAD_ENDPOINT },
+    { name: VIEW_STATISTIC_RUNNING_COMPUTER_ENDPOINT },
+    { name: VIEW_STATISTIC_TASK_OF_TOOL_ENDPOINT },
+    { name: VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT },
+    { name: VIEW_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
+    { name: VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT },
+    { name: VIEW_STATISTIC_BY_STATUS_ORDER_ENDPOINT },
+    { name: VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
+    { name: VIEW_STATISTIC_ORDER_AMOUNT_ENDPOINT },
+    { name: VIEW_STATISTIC_PERFORMANCE_ENDPOINT },
+    { name: VIEW_STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
+    { name: VIEW_STATISTIC_USER_POINT_ENDPOINT },
+    { name: VIEW_STATISTIC_TOTAL_ORDER_ENDPOINT },
+    { name: VIEW_STATISTIC_ORDER_BY_DAYS_ENDPOINT },
     
+
+    // Validate youtube video link
+    { name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT },
+    { name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT },
+    { name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT },
     { name: VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT },
 ]);
 
@@ -134,11 +208,7 @@ const commentStatisticTotalOrderAPI = (query) => GeneralReportAPI.createBasicCRU
 const commentStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: COMMENT_STATISTIC_ORDER_BY_DAYS_ENDPOINT }).get(query);
 
 
-const validateYoutubeLinkCommentVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT }).get(query);
-const validateYoutubeLinkLikeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT }).get(query);
-const validateYoutubeLinkSubscribeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT }).get(query);
-const validateYoutubeLinkViewVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT }).get(query);
-
+// Like
 // const likeStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
 const likeStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
 const likeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
@@ -155,6 +225,51 @@ const likeStatisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasic
 const likeStatisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_USER_POINT_ENDPOINT }).get(query);
 const likeStatisticTotalOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TOTAL_ORDER_ENDPOINT }).get(query);
 const likeStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT }).get(query);
+
+
+// Subscribe
+// const subscribeStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+const subscribeStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
+const subscribeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
+const subscribeStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
+const subscribeStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const subscribeStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const subscribeStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT }).get(query);
+const subscribeStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
+const subscribeStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
+const subscribeStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
+const subscribeStatisticOrderAmountAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT }).get(query);
+const subscribeStatisticPerformanceAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT }).get(query);
+const subscribeStatisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT }).get(query);
+const subscribeStatisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_USER_POINT_ENDPOINT }).get(query);
+const subscribeStatisticTotalOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_TOTAL_ORDER_ENDPOINT }).get(query);
+const subscribeStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT }).get(query);
+
+// View
+// const viewStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+const viewStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
+const viewStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
+const viewStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
+const viewStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const viewStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
+const viewStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_VIEW_BY_DAY_ENDPOINT }).get(query);
+const viewStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
+const viewStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
+const viewStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
+const viewStatisticOrderAmountAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ORDER_AMOUNT_ENDPOINT }).get(query);
+const viewStatisticPerformanceAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_PERFORMANCE_ENDPOINT }).get(query);
+const viewStatisticRunningUserOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_RUNNING_USER_ORDER_ENDPOINT }).get(query);
+const viewStatisticUserPointAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_USER_POINT_ENDPOINT }).get(query);
+const viewStatisticTotalOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_TOTAL_ORDER_ENDPOINT }).get(query);
+const viewStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ORDER_BY_DAYS_ENDPOINT }).get(query);
+
+
+// Validate Youtube link
+const validateYoutubeLinkCommentVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT }).get(query);
+const validateYoutubeLinkLikeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT }).get(query);
+const validateYoutubeLinkSubscribeVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT }).get(query);
+const validateYoutubeLinkViewVideoAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT }).get(query);
+
 
 export {
     getDailyReportSubscribeAPI,
@@ -201,6 +316,39 @@ export {
     likeStatisticTaskDurationInMinutesAPI,
     likeStatisticTotalOrderAPI,
     likeStatisticOrderByDaysAPI,
+
+    subscribeStatisticTaskSuccessInMinutesAPI,
+    subscribeStatisticTaskDurationInMinutesAPI,
+    subscribeStatisticAccountOnComputerAPI,
+    subscribeStatisticAccountStatusAPI,
+    subscribeStatisticByStatusOrderAPI,
+    subscribeStatisticCommentByDayAPI,
+    subscribeStatisticComputerThreadAPI,
+    subscribeStatisticRunningComputerAPI,
+    subscribeStatisticTaskOfToolAPI,
+    subscribeStatisticOrderAmountAPI,
+    subscribeStatisticPerformanceAPI,
+    subscribeStatisticRunningUserOrderAPI,
+    subscribeStatisticUserPointAPI,
+    subscribeStatisticTotalOrderAPI,
+    subscribeStatisticOrderByDaysAPI,
+
+    viewStatisticTaskSuccessInMinutesAPI,
+    viewStatisticTaskDurationInMinutesAPI,
+    viewStatisticAccountOnComputerAPI,
+    viewStatisticAccountStatusAPI,
+    viewStatisticByStatusOrderAPI,
+    viewStatisticCommentByDayAPI,
+    viewStatisticComputerThreadAPI,
+    viewStatisticRunningComputerAPI,
+    viewStatisticTaskOfToolAPI,
+    viewStatisticOrderAmountAPI,
+    viewStatisticPerformanceAPI,
+    viewStatisticRunningUserOrderAPI,
+    viewStatisticUserPointAPI,
+    viewStatisticTotalOrderAPI,
+    viewStatisticOrderByDaysAPI,
+
 
     validateYoutubeLinkViewVideoAPI
 }

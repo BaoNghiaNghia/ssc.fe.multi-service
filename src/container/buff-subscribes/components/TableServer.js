@@ -86,7 +86,7 @@ function TableServer() {
         key: index,
         server: (
           <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start' }}>
-            <TbServerBolt fontSize={17} style={{ marginRight: '5px', marginTop: '5px' }} />
+            <img src={require('../../../static/img/icon/server.png')} alt="" width={30}/>
             <div style={{ margin: 0, padding: 0 }}>
               <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name}</p>
               <p style={{ fontSize: '0.7em', margin: 0, padding: 0 }}><span style={{ fontWeight: "700" }}>Link: </span> {value?.link}</p>

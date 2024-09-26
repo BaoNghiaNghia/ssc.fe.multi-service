@@ -73,28 +73,28 @@ export const FILTER_ORDER_GENERAL = [
     value: 'sort[order_id] desc'
   },
   {
-      label: 'Số luồng, giảm dần',
-      value: 'sort[current_count] desc'
+    label: 'Số luồng, giảm dần',
+    value: 'sort[current_count] desc'
   },
   {
     label: 'Số luồng, tăng dần',
     value: 'sort[current_count] asc'
   },
   {
-      label: 'Hiệu suất, giảm dần',
-      value: 'sort[performance] desc'
+    label: 'Hiệu suất, giảm dần',
+    value: 'sort[performance] desc'
   },
   {
     label: 'Hiệu suất, tăng dần',
     value: 'sort[performance] asc'
   },
   {
-      label: 'Sub còn thiếu, giảm dần',
-      value: 'sort[remain_count] desc'
+    label: 'Sub còn thiếu, giảm dần',
+    value: 'sort[remain_count] desc'
   },
   {
-      label: 'Sub còn thiếu, tăng dần',
-      value: 'sort[remain_count] asc'
+    label: 'Sub còn thiếu, tăng dần',
+    value: 'sort[remain_count] asc'
   }
 ];
 
@@ -119,44 +119,44 @@ export const STATUS_COMMENT_ENUM = [
 
 export const SERVICE_TYPE = {
   'VIEW': {
-      title: 'view',
-      description: 'Views'
+    title: 'view',
+    description: 'Views'
   },
   'SUBSCRIBE': {
-      title: 'subscribe',
-      description: 'Subscribes'
+    title: 'subscribe',
+    description: 'Subscribes'
   },
   'COMMENT': {
-      title: 'comment',
-      description: 'Comments'
+    title: 'comment',
+    description: 'Comments'
   },
   'LIKE': {
-      title: 'like',
-      description: 'Likes'
+    title: 'like',
+    description: 'Likes'
   },
 }
 
 export const MEMBER_TABLE_TYPE = {
   'MEMBER': {
-      title: 'member',
+    title: 'member',
   },
   'TOPUP': {
-      title: 'topup',
+    title: 'topup',
   },
 }
 
 export const SERVICE_SETTING_TYPE = {
   'SERVICE': {
-      title: 'service',
-      describe: 'Dịch vụ'
+    title: 'service',
+    describe: 'Dịch vụ'
   },
   'SETTING': {
-      title: 'setting',
-      describe: 'Cài đặt'
+    title: 'setting',
+    describe: 'Cài đặt'
   },
   'GOOGLE_KEY': {
-      title: 'google_key',
-      describe: 'Quản lý Google Key'
+    title: 'google_key',
+    describe: 'Quản lý Google Key'
   },
 }
 

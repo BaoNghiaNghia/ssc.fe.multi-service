@@ -179,7 +179,7 @@ function ComputerRunSubscribesOrder() {
                     height="18px"
                     style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
                   />
-                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
+                : <img src={require('../../static/img/icon/server.png')} alt="" width={30}/>
             }
             <div style={{ margin: 0, padding: 0 }}>
               <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>{value?.name || '...'}</p>
