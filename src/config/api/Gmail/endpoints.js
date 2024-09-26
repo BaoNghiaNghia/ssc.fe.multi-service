@@ -10,4 +10,4 @@ export const ACCOUNT_GMAIL_LIKE_ENDPOINT = 'ytb-like/api/v1/admin/accounts';
 export const ACCOUNT_GMAIL_VIEW_ENDPOINT = 'ytb-view/api/v1/admin/accounts';
 
 // Subscribe
-export const ACCOUNT_GMAIL_SUBSCRIBE_ENDPOINT = 'ytb-subribe/api/v1/admin/accounts';
+export const ACCOUNT_GMAIL_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/accounts';

@@ -2,7 +2,7 @@
 
 export const VALIDATE_YOUTUBE_VIDEO_COMMENT_ENDPOINT = 'ytb-comment/api/v1/admin/orders/validate-ytb-video';
 export const VALIDATE_YOUTUBE_VIDEO_LIKE_ENDPOINT = 'ytb-like/api/v1/admin/orders/validate-ytb-video';
-export const VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT = 'ytb-subscribe/api/v1/admin/orders/validate-ytb-video';
+export const VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/orders/validate-ytb-video';
 export const VALIDATE_YOUTUBE_VIDEO_VIEW_ENDPOINT = 'ytb-view/api/v1/admin/orders/validate-ytb-video';
 
 // SUBSCRIBE
@@ -71,19 +71,19 @@ export const VIEW_STATISTIC_VIEW_BY_DAY_ENDPOINT = "ytb-view/api/v1/admin/stats/
 export const VIEW_STATISTIC_BY_STATUS_ORDER_ENDPOINT = "ytb-view/api/v1/admin/stats/order-status";
 
 // SUBSCRIBE
-export const SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-subscribe/api/v1/admin/stats/order-amount";
-export const SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/order-subscribes-by-day";
-export const SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/order-status";
-export const SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/perfomance";
-export const SUBSCRIBE_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/total-order";
-export const SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/user-order";
-export const SUBSCRIBE_STATISTIC_USER_POINT_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/user-point";
-export const SUBSCRIBE_STATISTIC_RUNNING_COMPUTER_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/running-computers";
-export const SUBSCRIBE_STATISTIC_COMPUTER_THREAD_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/running-thread";
-export const SUBSCRIBE_STATISTIC_TASK_OF_TOOL_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/tasks";
-export const SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/tasks-success";
-export const SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/tasks-duration";
-export const SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/account-status";
-export const SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/account-status";
-export const SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/subscribe-by-day";
-export const SUBSCRIBE_STATISTIC_BY_STATUS_ORDER_ENDPOINT = "ytb-subscribe/api/v1/admin/stats/order-status";
+export const SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-sub/api/v1/admin/stats/order-amount";
+export const SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-sub/api/v1/admin/stats/order-subscribes-by-day";
+export const SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-sub/api/v1/admin/stats/order-status";
+export const SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT = "ytb-sub/api/v1/admin/stats/perfomance";
+export const SUBSCRIBE_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-sub/api/v1/admin/stats/total-order";
+export const SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-sub/api/v1/admin/stats/user-order";
+export const SUBSCRIBE_STATISTIC_USER_POINT_ENDPOINT = "ytb-sub/api/v1/admin/stats/user-point";
+export const SUBSCRIBE_STATISTIC_RUNNING_COMPUTER_ENDPOINT = "ytb-sub/api/v1/admin/stats/running-computers";
+export const SUBSCRIBE_STATISTIC_COMPUTER_THREAD_ENDPOINT = "ytb-sub/api/v1/admin/stats/running-thread";
+export const SUBSCRIBE_STATISTIC_TASK_OF_TOOL_ENDPOINT = "ytb-sub/api/v1/admin/stats/tasks";
+export const SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT = "ytb-sub/api/v1/admin/stats/tasks-success";
+export const SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT = "ytb-sub/api/v1/admin/stats/tasks-duration";
+export const SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT = "ytb-sub/api/v1/admin/stats/account-status";
+export const SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT = "ytb-sub/api/v1/admin/stats/account-status";
+export const SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT = "ytb-sub/api/v1/admin/stats/subscribe-by-day";
+export const SUBSCRIBE_STATISTIC_BY_STATUS_ORDER_ENDPOINT = "ytb-sub/api/v1/admin/stats/order-status";

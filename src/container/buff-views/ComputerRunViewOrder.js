@@ -76,6 +76,9 @@ function ComputerRunViewOrder() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
 
+  const [currentPageExpand, setCurrentPageExpand] = useState(1);
+  const [limitPageExpand, setLimitPageExpand] = useState(DEFAULT_PERPAGE);
+
   const { listServer, listDevices, detailSingleDevice, detailLoading } = useSelector((state) => {
     return {
       listServer: state?.buffView?.listComputer,
@@ -165,7 +168,7 @@ function ComputerRunViewOrder() {
           <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'flex-start'}}>
             <Badge color={VIEW_STATUS_TYPE[status].color} dot style={{ marginRight: '5px' }} />
             <span>{VIEW_STATUS_TYPE[status].describe}</span>
-            <Badge count={`${status.toString()}`} showZero color={VIEW_STATUS_TYPE[status].color} style={{ marginLeft: '5px' }} />
+            <Badge count={`${status.toString()}`} showZero color={VIEW_STATUS_TYPE[status]?.color} style={{ marginLeft: '5px' }} />
           </div>
         ),
       });
@@ -186,8 +189,8 @@ function ComputerRunViewOrder() {
                 showSizeChanger: true,
                 pageSizeOptions: DEFAULT_PAGESIZE,
                 onChange(page, pageSize) {
-                    setCurrentPage(page);
-                    setLimitPage(pageSize);
+                    setCurrentPageExpand(page);
+                    setLimitPageExpand(pageSize);
                 },
                 position: ['bottomCenter'],
                 responsive: true,
