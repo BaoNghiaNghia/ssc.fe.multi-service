@@ -99,13 +99,6 @@ function GuaranteeBuffComment() {
   const { isSendRequestModal, isRefundModal, selectedRowKeys, notData, selectedItem } = state;
 
   useEffect(() => {
-    dispatch(actions.fetchListOrderCommentBegin({
-      page: currentPage,
-      limit: limitPage,
-    }));
-  }, [dispatch, currentPage, limitPage]);
-
-  useEffect(() => {
     if (dataSource?.length > 0) { 
       dispatch(actions.fetchWarrantyCommentOrderBegin({
         page: currentPage,
@@ -121,9 +114,27 @@ function GuaranteeBuffComment() {
     dispatch(serviceActions.fetchListServiceBegin({}));
   }, [dispatch]);
 
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setLimitPage(pageSize);
+    dispatch(
+      actions.fetchWarrantyCommentOrderBegin({
+        page,
+        limit: pageSize,
+        start_date: `${filterRange?.from} 00:00:00`,
+        end_date: `${filterRange?.to} 23:59:59`,
+      })
+    );
+  };
+
   const handleSearch = (searchText) => {
     if (!searchText) {
-      dispatch(actions.fetchListOrderCommentBegin({}));
+      dispatch(actions.fetchWarrantyCommentOrderBegin({
+        page: currentPage,
+        limit: limitPage,
+        start_date: `${filterRange?.from} 00:00:00`,
+        end_date: `${filterRange?.to} 23:59:59`,
+      }));
     }
 
     const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
@@ -131,12 +142,20 @@ function GuaranteeBuffComment() {
     if (arraySearchValidate && arraySearchValidate.length > 0) {
       const pattern = /^\d+\.?\d*$/;
       if (pattern.test(arraySearchValidate.join(""))) {
-        dispatch(actions.fetchListOrderCommentBegin({
-          order_ids: arraySearchValidate.join(",")
+        dispatch(actions.fetchWarrantyCommentOrderBegin({
+          order_ids: arraySearchValidate.join(","),
+          page: currentPage,
+          limit: limitPage,
+          start_date: `${filterRange?.from} 00:00:00`,
+          end_date: `${filterRange?.to} 23:59:59`,
         }));
       } else {
-        dispatch(actions.fetchListOrderCommentBegin({
-          video_ids: arraySearchValidate.join(",")
+        dispatch(actions.fetchWarrantyCommentOrderBegin({
+          video_ids: arraySearchValidate.join(","),
+          page: currentPage,
+          limit: limitPage,
+          start_date: `${filterRange?.from} 00:00:00`,
+          end_date: `${filterRange?.to} 23:59:59`,
         }));
       }
     }
@@ -474,10 +493,11 @@ function GuaranteeBuffComment() {
                     total: listWarrantyOrder?.meta?.total,
                     showSizeChanger: true,
                     pageSizeOptions: DEFAULT_PAGESIZE,
-                    onChange(page, pageSize) {
-                        setCurrentPage(page);
-                        setLimitPage(pageSize)
-                    },
+                    // onChange(page, pageSize) {
+                    //     setCurrentPage(page);
+                    //     setLimitPage(pageSize)
+                    // },
+                    onChange: handlePageChange,
                     position: ['bottomCenter'],
                     responsive: true,
                     showTotal(total, range) {

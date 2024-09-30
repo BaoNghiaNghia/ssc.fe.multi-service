@@ -380,11 +380,13 @@ function* changeTabTypeFunc(params) {
         yield put(
           actions.fetchListSettingsCommentBegin()
         );
+
         break;
       case SERVICE_SETTING_TYPE.SERVICE.title:
         yield put(
           actions.fetchListServiceBegin()
         );
+
         break;
       case SERVICE_SETTING_TYPE.GOOGLE_KEY.title:
         yield put(
@@ -393,6 +395,7 @@ function* changeTabTypeFunc(params) {
             limit: DEFAULT_PERPAGE
           })
         );
+
         break;
       default:
         break;

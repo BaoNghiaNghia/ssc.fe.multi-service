@@ -1205,7 +1205,7 @@ function SettingAndService() {
                         </Button>
                       </div>
                     </Col>
-                  </Row>
+                  </Row> 
                 </TopToolBox>
               </Col>
             </Row>
