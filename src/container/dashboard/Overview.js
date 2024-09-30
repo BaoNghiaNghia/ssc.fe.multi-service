@@ -148,16 +148,16 @@ function Overview() {
   const listServer = () => {
     switch(typeService) {
       case SERVICE_TYPE.COMMENT.title:
-        return listComputerComment?.meta?.total;
+        return listComputerComment?.meta?.total || 'N/A';
 
       case SERVICE_TYPE.LIKE.title:
-        return listComputerLike?.meta?.total;
+        return listComputerLike?.meta?.total || 'N/A';
 
       case SERVICE_TYPE.SUBSCRIBE.title:
-        return listComputerSubscribe?.meta?.total;
+        return listComputerSubscribe?.meta?.total || 'N/A';
 
       case SERVICE_TYPE.VIEW.title:
-        return listComputerView?.meta?.total;
+        return listComputerView?.meta?.total || 'N/A';
 
       default:
         return 0;

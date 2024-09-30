@@ -43,7 +43,22 @@ import {
     commentStatisticTotalOrderWatcherSaga,
     likeStatisticTotalOrderWatcherSaga,
     likeStatisticOrderByDaysWatcherSaga,
-    commentStatisticOrderByDaysWatcherSaga
+    commentStatisticOrderByDaysWatcherSaga,
+    subscribeStatisticSubscribeByDayWatcherSaga,
+    subscribeStatisticComputerThreadWatcherSaga,
+    subscribeStatisticTaskDurationInMinuteWatcherSaga,
+    subscribeStatisticTaskSuccessInMinuteWatcherSaga,
+    subscribeStatisticOrderAmountWatcherSaga,
+    subscribeStatisticPerformanceSubscribeWatcherSaga,
+    subscribeStatisticAccountStatusSubscribeWatcherSaga,
+    subscribeStatisticAccountOnComputerWatcherSaga,
+    subscribeStatisticByStatusOrderWatcherSaga,
+    subscribeStatisticRunningComputerWatcherSaga,
+    subscribeStatisticTaskOfToolWatcherSaga,
+    subscribeStatisticRunningUserOrderWatcherSaga,
+    subscribeStatisticUserPointWatcherSaga,
+    subscribeStatisticTotalOrderWatcherSaga,
+    subscribeStatisticOrderByDaysWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -350,5 +365,21 @@ export default function* rootSaga() {
         updateOneComputerSubscribeWatcherSaga(),
 
         updateManyComputerSubscribeWatcherSaga(),
+
+        subscribeStatisticSubscribeByDayWatcherSaga(),
+        subscribeStatisticComputerThreadWatcherSaga(),
+        subscribeStatisticTaskDurationInMinuteWatcherSaga(),
+        subscribeStatisticTaskSuccessInMinuteWatcherSaga(),
+        subscribeStatisticOrderAmountWatcherSaga(),
+        subscribeStatisticPerformanceSubscribeWatcherSaga(),
+        subscribeStatisticAccountStatusSubscribeWatcherSaga(),
+        subscribeStatisticAccountOnComputerWatcherSaga(),
+        subscribeStatisticByStatusOrderWatcherSaga(),
+        subscribeStatisticRunningComputerWatcherSaga(),
+        subscribeStatisticTaskOfToolWatcherSaga(),
+        subscribeStatisticRunningUserOrderWatcherSaga(),
+        subscribeStatisticUserPointWatcherSaga(),
+        subscribeStatisticTotalOrderWatcherSaga(),
+        subscribeStatisticOrderByDaysWatcherSaga(),
     ]);
 }

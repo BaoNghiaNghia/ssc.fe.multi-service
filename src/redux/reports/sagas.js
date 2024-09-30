@@ -448,13 +448,13 @@ function* likeStatisticPerformanceCommentFunc(params) {
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       const reverseTempData = response?.data?.data?.reverse()
       yield put(
-        actions.likeStatisticPerformanceCommentSuccess(reverseTempData)
+        actions.likeStatisticPerformanceLikeSuccess(reverseTempData)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.likeStatisticPerformanceCommentErr({ error: errorMessage || 'Like - Fetch performance comment in minute failed' })
+      actions.likeStatisticPerformanceLikeErr({ error: errorMessage || 'Like - Fetch performance comment in minute failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -471,13 +471,13 @@ function* likeStatisticAccountStatusCommentFunc(params) {
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
-        actions.likeStatisticAccountStatusCommentSuccess(response?.data?.data)
+        actions.likeStatisticAccountStatusLikeSuccess(response?.data?.data)
       );
     }
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.likeStatisticAccountStatusCommentErr({ error: errorMessage || 'Like - Fetch account status in minute failed' })
+      actions.likeStatisticAccountStatusLikeErr({ error: errorMessage || 'Like - Fetch account status in minute failed' })
     );
 
     if (errorMessage?.response?.data?.data?.error) {
@@ -757,6 +757,368 @@ function* likeStatisticOrderByDaysFunc(params) {
 }
 
 
+// SUBSCRIBE
+function* subscribeStatisticComputerThreadFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticComputerThreadAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticComputerThreadSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.subscribeStatisticComputerThreadErr({ error: errorMessage || 'Subscribe - Fetch computer thread failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch computer thread failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* subscribeStatisticSubscribeByDayFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticCommentByDayAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticSubscribeByDaySuccess(response?.data?.data?.reverse())
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.subscribeStatisticSubscribeByDayErr({ error: errorMessage || 'Subscribe - Fetch comment by day failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch comment by day failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* subscribeStatisticPerformanceSubscribeFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticPerformanceAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      const reverseTempData = response?.data?.data?.reverse()
+      yield put(
+        actions.subscribeStatisticPerformanceSubscribeSuccess(reverseTempData)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.subscribeStatisticPerformanceSubscribeErr({ error: errorMessage || 'Subscribe - Fetch performance comment in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch performance comment in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* subscribeStatisticAccountStatusSubscribeFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticAccountStatusAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticAccountStatusSubscribeSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.subscribeStatisticAccountStatusSubscribeErr({ error: errorMessage || 'Subscribe - Fetch account status in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch account status in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* subscribeStatisticOrderAmountFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticOrderAmountAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      const reverseTempData = response?.data?.data?.reverse();
+      yield put(
+        actions.subscribeStatisticOrderAmountSuccess(reverseTempData)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.subscribeStatisticOrderAmountErr({ error: errorMessage || 'Subscribe - Fetch order amount in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch order amount in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* subscribeStatisticTaskSuccessInMinuteFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticTaskSuccessInMinutesAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticTaskSuccessInMinuteSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.subscribeStatisticTaskSuccessInMinuteErr({ error: errorMessage || 'Subscribe - Fetch task success in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch task success in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* subscribeStatisticTaskDurationInMinuteFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticTaskDurationInMinutesAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticTaskDurationInMinuteSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.subscribeStatisticTaskDurationInMinuteErr({ error: errorMessage || 'Subscribe - Fetch task duration in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch task duration in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+
+// function* subscribeStatisticCommentByOrderReportFunc(params) {
+//   try {
+//     const response = yield call(subscribeStatisticCommentByOrderReportAPI, params?.payload);
+
+//     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+//       yield put(
+//         actions.subscribeStatisticCommentByOrderReportSuccess(response?.data?.data)
+//       );
+//     }
+//   } catch (err) {
+//     yield put(
+//       actions.subscribeStatisticCommentByOrderReportErr({ error: err || 'Subscribe - Count comment by order failed' })
+//     );
+
+//     if (err?.response?.data?.data?.error) {
+//       toast.error(err?.response?.data?.data?.error);
+//     } else {
+//       toast.error('Subscribe - Count comment by order failed');
+//     }
+//   }
+// }
+
+function* subscribeStatisticAccountOnComputerFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticAccountOnComputerAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticAccountOnComputerSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticAccountOnComputerErr({ error: err || 'Subscribe - Statistic account on computer failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Statistic account on computer failed');
+    }
+  }
+}
+
+function* subscribeStatisticByStatusOrderFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticByStatusOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticByStatusOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticByStatusOrderErr({ error: err || 'Subscribe - Statistic by status order failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Statistic by status order failed');
+    }
+  }
+}
+
+function* subscribeStatisticRunningComputerFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticRunningComputerAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticRunningOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticRunningOrderErr({ error: err || 'Subscribe - Statistic running computer failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Statistic running computer failed');
+    }
+  }
+}
+
+function* subscribeStatisticTaskOfToolFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticTaskOfToolAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticTaskOfToolSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticTaskOfToolErr({ error: err || 'Subscribe - Statistic task of tool failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Statistic task of tool failed');
+    }
+  }
+}
+
+function* subscribeStatisticRunningUserOrderFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticRunningUserOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticRunningUserOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticRunningUserOrderErr({ error: err || 'Subscribe - Statistic running user failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Statistic running user failed');
+    }
+  }
+}
+
+function* subscribeStatisticUserPointFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticUserPointAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticUserPointSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticUserPointErr({ error: err || 'Subscribe - Statistic user point failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Statistic user point failed');
+    }
+  }
+}
+
+function* subscribeStatisticTotalOrderFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticTotalOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticTotalOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticTotalOrderErr({ error: err || 'Subscribe - Statistic total order failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Statistic total order failed');
+    }
+  }
+}
+
+function* subscribeStatisticOrderByDaysFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticOrderByDaysAPI, params?.payload);
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticOrderByDaysSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticOrderByDaysErr({ error: err || 'Subscribe - Order by days failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Order by days failed');
+    }
+  }
+}
+
 
 
  
@@ -988,8 +1350,8 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.likeStatisticTaskDurationInMinuteBegin());
       yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
-      yield put(actions.likeStatisticAccountStatusCommentBegin(initialFilter));
-      yield put(actions.likeStatisticPerformanceCommentBegin(initialFilter));
+      yield put(actions.likeStatisticAccountStatusLikeBegin(initialFilter));
+      yield put(actions.likeStatisticPerformanceLikeBegin(initialFilter));
       yield put(actions.likeStatisticCommentByDayBegin(initialFilter));
       yield put(actions.likeStatisticComputerThreadBegin(initialFilter));
 
@@ -1115,11 +1477,11 @@ export function* likeStatisticOrderAmountWatcherSaga() {
 }
 
 export function* likeStatisticPerformanceCommentWatcherSaga() {
-  yield takeLatest(actions.LIKE_STATISTIC_PERFORMANCE_COMMENT_BEGIN, likeStatisticPerformanceCommentFunc);
+  yield takeLatest(actions.LIKE_STATISTIC_PERFORMANCE_LIKE_BEGIN, likeStatisticPerformanceCommentFunc);
 }
 
 export function* likeStatisticAccountStatusCommentWatcherSaga() {
-  yield takeLatest(actions.LIKE_STATISTIC_ACCOUNT_STATUS_COMMENT_BEGIN, likeStatisticAccountStatusCommentFunc);
+  yield takeLatest(actions.LIKE_STATISTIC_ACCOUNT_STATUS_LIKE_BEGIN, likeStatisticAccountStatusCommentFunc);
 }
 
 // export function* likeStatisticsByOrderStatusReportWatcherSaga() {
@@ -1157,6 +1519,74 @@ export function* likeStatisticTotalOrderWatcherSaga() {
 export function* likeStatisticOrderByDaysWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN, likeStatisticOrderByDaysFunc);
 }
+
+
+
+
+
+// Subscribe
+export function* subscribeStatisticSubscribeByDayWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_BEGIN, subscribeStatisticSubscribeByDayFunc);
+}
+
+export function* subscribeStatisticComputerThreadWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_COMPUTER_THREAD_BEGIN, subscribeStatisticComputerThreadFunc);
+}
+
+export function* subscribeStatisticTaskDurationInMinuteWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN, subscribeStatisticTaskDurationInMinuteFunc);
+}
+
+export function* subscribeStatisticTaskSuccessInMinuteWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN, subscribeStatisticTaskSuccessInMinuteFunc);
+}
+
+export function* subscribeStatisticOrderAmountWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_ORDER_AMOUNT_BEGIN, subscribeStatisticOrderAmountFunc);
+}
+
+export function* subscribeStatisticPerformanceSubscribeWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_PERFORMANCE_SUBSCRIBE_BEGIN, subscribeStatisticPerformanceSubscribeFunc);
+}
+
+export function* subscribeStatisticAccountStatusSubscribeWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_SUBSCRIBE_BEGIN, subscribeStatisticAccountStatusSubscribeFunc);
+}
+
+export function* subscribeStatisticAccountOnComputerWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN, subscribeStatisticAccountOnComputerFunc);
+}
+
+export function* subscribeStatisticByStatusOrderWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_BY_STATUS_ORDER_BEGIN, subscribeStatisticByStatusOrderFunc);
+}
+
+export function* subscribeStatisticRunningComputerWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_RUNNING_COMPUTER_BEGIN, subscribeStatisticRunningComputerFunc);
+}
+
+export function* subscribeStatisticTaskOfToolWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_TASK_OF_TOOL_BEGIN, subscribeStatisticTaskOfToolFunc);
+}
+
+export function* subscribeStatisticRunningUserOrderWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_BEGIN, subscribeStatisticRunningUserOrderFunc);
+}
+
+export function* subscribeStatisticUserPointWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_USER_POINT_BEGIN, subscribeStatisticUserPointFunc);
+}
+
+export function* subscribeStatisticTotalOrderWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_TOTAL_ORDER_BEGIN, subscribeStatisticTotalOrderFunc);
+}
+
+export function* subscribeStatisticOrderByDaysWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_BEGIN, subscribeStatisticOrderByDaysFunc);
+}
+
+
+
 
 // Validation youtube link
 export function* validateYoutubeVideoLinkWatcherSaga() {
