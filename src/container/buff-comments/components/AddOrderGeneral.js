@@ -106,7 +106,7 @@ function AddOrderGeneral() {
       let responseValidVideo = {};
       const category = stateCurr?.selectedCategory;
       const serviceId = detailService?.service_id;
-      const quantity = formCreateOrder.getFieldValue('quantity');
+      const quantity = Number(formCreateOrder.getFieldValue('quantity'));
   
       if (category === 'Subscribers' && (!quantity || quantity === 0)) {
         toast.error('Must be input your quantity');
@@ -184,8 +184,6 @@ function AddOrderGeneral() {
     return { status: status === 'success', help };
   };
   
-
-
 
   useEffect(() => {
     dispatch(actionsService.fetchListServiceBegin());
@@ -425,19 +423,19 @@ function AddOrderGeneral() {
               ]}
             >
               <Input
-                size='small'
+                size="small"
                 allowClear
                 style={{ fontWeight: 'bold' }}
-                placeholder='Thêm liên kết'
+                placeholder="Thêm liên kết"
                 onChange={(e) => {
-                  const {value} = e.target;
+                  const { value } = e.target;
                   handleValidateLink(value);
                 }}
               />
             </Form.Item>
           </Col>
           <Col sm={5}>
-            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement='left'>
+            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
               <Form.Item
                 name="quantity"
                 label="Số subscribe"
@@ -445,28 +443,29 @@ function AddOrderGeneral() {
                 rules={[
                   {
                     required: true,
-                    message: 'Trường không được trống'
+                    message: 'Trường không được trống',
                   },
                   {
                     type: 'number',
                     min: detailService?.min,
-                    message: `Số like phải lớn hơn hoặc bằng ${detailService?.min}`
+                    message: `Số like phải lớn hơn hoặc bằng ${detailService?.min}`,
                   },
                   {
                     type: 'number',
                     max: detailService?.max,
-                    message: `Số like phải nhỏ hơn hoặc bằng ${detailService?.max}`
-                  }
+                    message: `Số like phải nhỏ hơn hoặc bằng ${detailService?.max}`,
+                  },
                 ]}
               >
                 <InputNumber
-                  size='small'
+                  size="small"
                   style={{ width: '100%' }}
                   onChange={async (value) => {
                     setStateCurr({
                       ...stateCurr,
-                      amountChange: value
+                      amountChange: value,
                     });
+  
                     const link = formCreateOrder.getFieldValue('link');
                     if (link) {
                       const { status, help } = await handleValidateLink(link);
@@ -487,7 +486,7 @@ function AddOrderGeneral() {
         </Row>
       </>
     );
-  }
+  };  
   
   const formCreateLikeService = () => {
     return (

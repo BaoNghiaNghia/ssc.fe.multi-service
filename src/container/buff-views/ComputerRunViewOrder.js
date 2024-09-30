@@ -238,9 +238,6 @@ function ComputerRunViewOrder() {
         key: value?.id,
         devices: (
           <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start', alignContent: 'center' }}>
-            {/* <svg className="text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24">
-              <path fillRule="evenodd" d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4Zm12 12V5H7v11h10Zm-5 1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z" clipRule="evenodd"/>
-            </svg> */}
             <img src={require('../../static/img/icon/phone.png')} alt="" width={20}/>
 
             <div style={{ marginLeft: '3px', padding: 0 }}>
