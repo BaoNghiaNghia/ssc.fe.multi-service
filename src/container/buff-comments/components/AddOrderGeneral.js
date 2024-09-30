@@ -416,7 +416,7 @@ function AddOrderGeneral() {
               rules={[
                 {
                   required: true,
-                  message: 'Trường không được trống'
+                  message: 'Trường không được trống',
                 },
                 {
                   validator: async (_, link) => {
@@ -437,7 +437,7 @@ function AddOrderGeneral() {
                 placeholder="Thêm liên kết"
                 onChange={(e) => {
                   const { value } = e.target;
-                  handleValidateLink(value);
+                  handleValidateLink(value); // Call validation on link change
                 }}
               />
             </Form.Item>
@@ -473,15 +473,19 @@ function AddOrderGeneral() {
                       ...stateCurr,
                       amountChange: value,
                     });
-  
+
+                    // Get the current link value
                     const link = formCreateOrder.getFieldValue('link');
                     if (link) {
                       const { status, help } = await handleValidateLink(link);
-                      if (!status) {
-                        setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
-                      }
+                      // Update the help message for the link input based on validation result
+                      setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
+                      
+                      // Re-validate the link field to update its status in the form
+                      formCreateOrder.validateFields(['link']).catch(() => {});
                     } else {
-                      toast.error('Must input a valid link');
+                      // Show error if link is invalid or empty
+                      setHelpMessage((prevHelp) => ({ ...prevHelp, link: 'Must input a valid link' }));
                     }
                   }}
                   min={detailService?.min}
@@ -494,7 +498,7 @@ function AddOrderGeneral() {
         </Row>
       </>
     );
-  };  
+  };
   
   const formCreateLikeService = () => {
     return (

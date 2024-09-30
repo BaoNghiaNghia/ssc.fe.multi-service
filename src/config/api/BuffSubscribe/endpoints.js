@@ -12,7 +12,7 @@ export const FETCH_LIST_ORDER_HISTORY_ENDPOINT = 'api/v2/order/history/list';
 
 
 export const GENERAL_ORDER_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/orders';
-export const CREATE_ORDER_SUBSCRIBE_ENDPOINT = 'smm/api/v1/admin/orders/subscribe';
+export const CREATE_ORDER_SUBSCRIBE_ENDPOINT = 'smm/api/v1/admin/orders/sub';
 export const GENERAL_COMPUTER_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/computers';
 export const UPDATE_MANY_ORDER_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/orders/many';
 export const UPDATE_MANY_COMPUTER_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/computers/many';
