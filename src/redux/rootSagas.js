@@ -58,7 +58,22 @@ import {
     subscribeStatisticRunningUserOrderWatcherSaga,
     subscribeStatisticUserPointWatcherSaga,
     subscribeStatisticTotalOrderWatcherSaga,
-    subscribeStatisticOrderByDaysWatcherSaga
+    subscribeStatisticOrderByDaysWatcherSaga,
+    viewStatisticViewByDayWatcherSaga,
+    viewStatisticComputerThreadWatcherSaga,
+    viewStatisticTaskDurationInMinuteWatcherSaga,
+    viewStatisticTaskSuccessInMinuteWatcherSaga,
+    viewStatisticOrderAmountWatcherSaga,
+    viewStatisticPerformanceViewWatcherSaga,
+    viewStatisticAccountStatusViewWatcherSaga,
+    viewStatisticAccountOnComputerWatcherSaga,
+    viewStatisticByStatusOrderWatcherSaga,
+    viewStatisticRunningComputerWatcherSaga,
+    viewStatisticTaskOfToolWatcherSaga,
+    viewStatisticRunningUserOrderWatcherSaga,
+    viewStatisticUserPointWatcherSaga,
+    viewStatisticTotalOrderWatcherSaga,
+    viewStatisticOrderByDaysWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -381,5 +396,21 @@ export default function* rootSaga() {
         subscribeStatisticUserPointWatcherSaga(),
         subscribeStatisticTotalOrderWatcherSaga(),
         subscribeStatisticOrderByDaysWatcherSaga(),
+
+        viewStatisticViewByDayWatcherSaga(),
+        viewStatisticComputerThreadWatcherSaga(),
+        viewStatisticTaskDurationInMinuteWatcherSaga(),
+        viewStatisticTaskSuccessInMinuteWatcherSaga(),
+        viewStatisticOrderAmountWatcherSaga(),
+        viewStatisticPerformanceViewWatcherSaga(),
+        viewStatisticAccountStatusViewWatcherSaga(),
+        viewStatisticAccountOnComputerWatcherSaga(),
+        viewStatisticByStatusOrderWatcherSaga(),
+        viewStatisticRunningComputerWatcherSaga(),
+        viewStatisticTaskOfToolWatcherSaga(),
+        viewStatisticRunningUserOrderWatcherSaga(),
+        viewStatisticUserPointWatcherSaga(),
+        viewStatisticTotalOrderWatcherSaga(),
+        viewStatisticOrderByDaysWatcherSaga(),
     ]);
 }

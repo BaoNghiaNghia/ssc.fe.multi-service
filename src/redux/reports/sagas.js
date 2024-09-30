@@ -1121,6 +1121,369 @@ function* subscribeStatisticOrderByDaysFunc(params) {
 
 
 
+// VIEW
+function* viewStatisticComputerThreadFunc(params) {
+  try {
+    const response = yield call(viewStatisticComputerThreadAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticComputerThreadSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.viewStatisticComputerThreadErr({ error: errorMessage || 'View - Fetch computer thread failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch computer thread failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* viewStatisticViewByDayFunc(params) {
+  try {
+    const response = yield call(viewStatisticCommentByDayAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticViewByDaySuccess(response?.data?.data?.reverse())
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.viewStatisticViewByDayErr({ error: errorMessage || 'View - Fetch comment by day failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch comment by day failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* viewStatisticPerformanceViewFunc(params) {
+  try {
+    const response = yield call(viewStatisticPerformanceAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      const reverseTempData = response?.data?.data?.reverse()
+      yield put(
+        actions.viewStatisticPerformanceViewSuccess(reverseTempData)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.viewStatisticPerformanceViewErr({ error: errorMessage || 'View - Fetch performance comment in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch performance comment in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* viewStatisticAccountStatusViewFunc(params) {
+  try {
+    const response = yield call(viewStatisticAccountStatusAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticAccountStatusViewSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.viewStatisticAccountStatusViewErr({ error: errorMessage || 'View - Fetch account status in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch account status in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* viewStatisticOrderAmountFunc(params) {
+  try {
+    const response = yield call(viewStatisticOrderAmountAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      const reverseTempData = response?.data?.data?.reverse();
+      yield put(
+        actions.viewStatisticOrderAmountSuccess(reverseTempData)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.viewStatisticOrderAmountErr({ error: errorMessage || 'View - Fetch order amount in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch order amount in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* viewStatisticTaskSuccessInMinuteFunc(params) {
+  try {
+    const response = yield call(viewStatisticTaskSuccessInMinutesAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticTaskSuccessInMinuteSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.viewStatisticTaskSuccessInMinuteErr({ error: errorMessage || 'View - Fetch task success in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch task success in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* viewStatisticTaskDurationInMinuteFunc(params) {
+  try {
+    const response = yield call(viewStatisticTaskDurationInMinutesAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticTaskDurationInMinuteSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.viewStatisticTaskDurationInMinuteErr({ error: errorMessage || 'View - Fetch task duration in minute failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch task duration in minute failed');
+    }
+  } finally { /* empty */ }
+}
+
+
+// function* viewStatisticCommentByOrderReportFunc(params) {
+//   try {
+//     const response = yield call(viewStatisticCommentByOrderReportAPI, params?.payload);
+
+//     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+//       yield put(
+//         actions.viewStatisticCommentByOrderReportSuccess(response?.data?.data)
+//       );
+//     }
+//   } catch (err) {
+//     yield put(
+//       actions.viewStatisticCommentByOrderReportErr({ error: err || 'View - Count comment by order failed' })
+//     );
+
+//     if (err?.response?.data?.data?.error) {
+//       toast.error(err?.response?.data?.data?.error);
+//     } else {
+//       toast.error('View - Count comment by order failed');
+//     }
+//   }
+// }
+
+function* viewStatisticAccountOnComputerFunc(params) {
+  try {
+    const response = yield call(viewStatisticAccountOnComputerAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticAccountOnComputerSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticAccountOnComputerErr({ error: err || 'View - Statistic account on computer failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Statistic account on computer failed');
+    }
+  }
+}
+
+function* viewStatisticByStatusOrderFunc(params) {
+  try {
+    const response = yield call(viewStatisticByStatusOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticByStatusOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticByStatusOrderErr({ error: err || 'View - Statistic by status order failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Statistic by status order failed');
+    }
+  }
+}
+
+function* viewStatisticRunningComputerFunc(params) {
+  try {
+    const response = yield call(viewStatisticRunningComputerAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticRunningOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticRunningOrderErr({ error: err || 'View - Statistic running computer failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Statistic running computer failed');
+    }
+  }
+}
+
+function* viewStatisticTaskOfToolFunc(params) {
+  try {
+    const response = yield call(viewStatisticTaskOfToolAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticTaskOfToolSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticTaskOfToolErr({ error: err || 'View - Statistic task of tool failed' })
+    );
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Statistic task of tool failed');
+    }
+  }
+}
+
+function* viewStatisticRunningUserOrderFunc(params) {
+  try {
+    const response = yield call(viewStatisticRunningUserOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticRunningUserOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticRunningUserOrderErr({ error: err || 'View - Statistic running user failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Statistic running user failed');
+    }
+  }
+}
+
+function* viewStatisticUserPointFunc(params) {
+  try {
+    const response = yield call(viewStatisticUserPointAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticUserPointSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticUserPointErr({ error: err || 'View - Statistic user point failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Statistic user point failed');
+    }
+  }
+}
+
+function* viewStatisticTotalOrderFunc(params) {
+  try {
+    const response = yield call(viewStatisticTotalOrderAPI, params?.payload);
+
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticTotalOrderSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticTotalOrderErr({ error: err || 'View - Statistic total order failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Statistic total order failed');
+    }
+  }
+}
+
+function* viewStatisticOrderByDaysFunc(params) {
+  try {
+    const response = yield call(viewStatisticOrderByDaysAPI, params?.payload);
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticOrderByDaysSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticOrderByDaysErr({ error: err || 'View - Order by days failed' })
+    )
+
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Order by days failed');
+    }
+  }
+}
+
+
  
 function* validateYoutubeVideoLinkFunc(params) {
   try {
@@ -1229,6 +1592,29 @@ function* changeServiceTypeFunc(params) {
 
       // Fetch list computer
       yield put(actionBuffSubscribe.listComputerRunSubscribeBegin(initServerPagination));
+    }
+    if (isType === SERVICE_TYPE.VIEW.title) {
+      console.log('--- THAY ĐỔI STATISTIC VIEW ---');
+      yield put(actions.viewStatisticTaskDurationInMinuteBegin());
+      // yield put(actions.viewStatisticViewByOrderReportBegin());
+      yield put(actions.viewStatisticTaskSuccessInMinuteBegin());
+      // yield put(actions.viewStatisticOrderAmountBegin(initialFilter));
+      yield put(actions.viewStatisticAccountStatusViewBegin(initialFilter));
+      yield put(actions.viewStatisticPerformanceViewBegin(initialFilter));
+      yield put(actions.viewStatisticViewByDayBegin(initialFilter));
+      yield put(actions.viewStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actions.viewStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actions.viewStatisticByStatusOrderBegin(initialFilter));
+      yield put(actions.viewStatisticRunningOrderBegin(initialFilter));
+      yield put(actions.viewStatisticTaskOfToolBegin(initialFilter));
+      yield put(actions.viewStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actions.viewStatisticUserPointBegin(initialFilter));
+      yield put(actions.viewStatisticTotalOrderBegin(initialFilter));
+      yield put(actions.viewStatisticOrderByDaysBegin(initialFilter));
+
+      // Fetch list computer
+      yield put(actionBuffView.listComputerRunViewBegin(initServerPagination));
     }
     
     if (isType === SERVICE_TYPE.VIEW.title) {
@@ -1583,6 +1969,68 @@ export function* subscribeStatisticTotalOrderWatcherSaga() {
 
 export function* subscribeStatisticOrderByDaysWatcherSaga() {
   yield takeLatest(actions.SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_BEGIN, subscribeStatisticOrderByDaysFunc);
+}
+
+
+// View
+export function* viewStatisticViewByDayWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_VIEW_BY_DAY_BEGIN, viewStatisticViewByDayFunc);
+}
+
+export function* viewStatisticComputerThreadWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_COMPUTER_THREAD_BEGIN, viewStatisticComputerThreadFunc);
+}
+
+export function* viewStatisticTaskDurationInMinuteWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_TASK_DURATION_IN_MINUTE_BEGIN, viewStatisticTaskDurationInMinuteFunc);
+}
+
+export function* viewStatisticTaskSuccessInMinuteWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN, viewStatisticTaskSuccessInMinuteFunc);
+}
+
+export function* viewStatisticOrderAmountWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_ORDER_AMOUNT_BEGIN, viewStatisticOrderAmountFunc);
+}
+
+export function* viewStatisticPerformanceViewWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_PERFORMANCE_VIEW_BEGIN, viewStatisticPerformanceViewFunc);
+}
+
+export function* viewStatisticAccountStatusViewWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_ACCOUNT_STATUS_VIEW_BEGIN, viewStatisticAccountStatusViewFunc);
+}
+
+export function* viewStatisticAccountOnComputerWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN, viewStatisticAccountOnComputerFunc);
+}
+
+export function* viewStatisticByStatusOrderWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_BY_STATUS_ORDER_BEGIN, viewStatisticByStatusOrderFunc);
+}
+
+export function* viewStatisticRunningComputerWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_RUNNING_COMPUTER_BEGIN, viewStatisticRunningComputerFunc);
+}
+
+export function* viewStatisticTaskOfToolWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_TASK_OF_TOOL_BEGIN, viewStatisticTaskOfToolFunc);
+}
+
+export function* viewStatisticRunningUserOrderWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_RUNNING_USER_ORDER_BEGIN, viewStatisticRunningUserOrderFunc);
+}
+
+export function* viewStatisticUserPointWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_USER_POINT_BEGIN, viewStatisticUserPointFunc);
+}
+
+export function* viewStatisticTotalOrderWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_TOTAL_ORDER_BEGIN, viewStatisticTotalOrderFunc);
+}
+
+export function* viewStatisticOrderByDaysWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_ORDER_BY_DAYS_BEGIN, viewStatisticOrderByDaysFunc);
 }
 
 
