@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import moment from "moment";
-import { FORMAT_DATESTRING, REGEX_VALIDATE_YOUTUBE_VIDEO_LINK, REGION_IDENTIFIER } from "../variables/index";
+import { FORMAT_DATESTRING, REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK, REGEX_VALIDATE_YOUTUBE_VIDEO_LINK, REGION_IDENTIFIER } from "../variables/index";
 
 /**
  * Return ellipsis of a given string
@@ -56,6 +56,21 @@ export const validateYouTubeUrl = (urlToParse) => {
   }
   return false;
 }
+
+export const validateYouTubeChannelUrl = (urlToParse) => {
+  return REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK.test(urlToParse);
+};
+
+export const isYouTubeValidUrl = (urlToParse) => {
+  if (!urlToParse) {
+      return false; // Invalid input
+  }
+
+  const isVideoUrl = REGEX_VALIDATE_YOUTUBE_VIDEO_LINK.test(urlToParse);
+  const isChannelUrl = REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK.test(urlToParse);
+
+  return isVideoUrl || isChannelUrl; // Returns true if either condition is met
+};
 
 const findSecondMinimum = (arr) => {
   if (!Array.isArray(arr) || arr.length < 2) {

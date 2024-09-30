@@ -19,7 +19,7 @@ import actionsView from '../../../redux/buffView/actions';
 
 import reportActions from '../../../redux/reports/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
-import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
+import { isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
@@ -97,92 +97,100 @@ function AddOrderGeneral() {
   const handleValidateLink = async (value) => {
     let status = 'success';
     let help = '';
-  
-    try {
-      if (!validateYouTubeUrl(value)) {
-        return { status: false, help: 'Đường dẫn video Youtube không hợp lệ' };
-      }
-  
-      let responseValidVideo = {};
-      const category = stateCurr?.selectedCategory;
-      const serviceId = detailService?.service_id;
-      const quantity = Number(formCreateOrder.getFieldValue('quantity'));
-  
-      if (category === 'Subscribers' && (!quantity || quantity === 0)) {
-        toast.error('Must be input your quantity');
-        return { status: false, help: '' }; // Early return if quantity is invalid
-      }
-  
-      const categoryApiMap = {
-        'Comments': () => validateYoutubeLinkCommentVideoAPI({ link: value }),
-        'Likes': () => validateYoutubeLinkLikeVideoAPI({ link: value }),
-        'Views': () => validateYoutubeLinkViewVideoAPI({ link: value, service_id: serviceId }),
-        'Subscribers': () => validateYoutubeLinkSubscribeVideoAPI({ link: value, service_id: serviceId, quantity })
-      };
-  
-      if (category in categoryApiMap) {
-        responseValidVideo = await categoryApiMap[category]();
-      } else {
-        console.log('Chưa chọn dịch vụ');
-        return { status: false, help: 'Chưa chọn dịch vụ' };
-      }
-  
-      const mapping = {
-        'Comment': 'is_allow_cmt',
-        'Like': 'is_allow_like',
-        'View': 'is_allow_view',
-        'Livestream': 'is_live',
-        'Thời gian': 'is_valid_video_duration',
-        'Đường dẫn': 'is_valid_link',
-        'Video tồn tại': 'is_exist_video',
-        'Video subscribe': 'exist_video',
-        'Kênh': 'valid_channel',
-        'Dường dẫn video': 'valid_link',
-        'Số lượng': 'valid_quantity',
-      };
-  
-      if (responseValidVideo?.data?.error_code === 0) {
-        const validData = responseValidVideo?.data?.data;
-        const mappedObj = Object.keys(mapping).reduce((acc, title) => {
-          const mappedKey = mapping[title];
-          if (validData[mappedKey] !== undefined) {
-            acc[title] = validData[mappedKey];
-          }
-          return acc;
-        }, {});
-  
-        const isValid = category === 'Subscribers'
-          ? mappedObj['Video subscribe'] && mappedObj['Kênh'] && mappedObj['Dường dẫn video'] && mappedObj['Số lượng']
-          : mappedObj['Thời gian'] && mappedObj['Đường dẫn'] && mappedObj['Video tồn tại'];
-  
-        const customHelp = (
-          <div style={{ textAlign: 'end', marginBottom: '8px', backgroundColor: '#f1fffa' }}>
+
+    const category = stateCurr?.selectedCategory;
+    const serviceId = detailService?.service_id;
+    const quantity = Number(formCreateOrder.getFieldValue('quantity'));
+
+    // Function to create a custom help message
+    const createCustomHelp = (mappedObj) => (
+        <div style={{ textAlign: 'end', marginBottom: '8px', backgroundColor: '#f1fffa' }}>
             {Object.entries(mappedObj).map(([key, value]) => (
-              <span key={key} style={{ display: 'inline-flex', alignItems: 'center', marginRight: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '1px' }}>{key}</span>
-                {value ? <IoMdCheckmarkCircle color='green' /> : <MdCancel color='orangered' />}
-              </span>
+                <span key={key} style={{ display: 'inline-flex', alignItems: 'center', marginRight: '10px' }}>
+                    <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '1px' }}>{key}</span>
+                    {value ? <IoMdCheckmarkCircle color='green' /> : <MdCancel color='orangered' />}
+                </span>
             ))}
-          </div>
-        );
-  
-        status = isValid ? 'success' : 'error';
-        help = customHelp;
-      } else {
-        status = 'error';
-        help = 'Đường dẫn video Youtube không hợp lệ';
-      }
+        </div>
+    );
+
+    const validateVideoLink = async (link) => {
+        const categoryApiMap = {
+            'Subscribers': () => validateYoutubeLinkSubscribeVideoAPI({ link, service_id: serviceId, quantity }),
+            'Comments': () => validateYoutubeLinkCommentVideoAPI({ link }),
+            'Likes': () => validateYoutubeLinkLikeVideoAPI({ link }),
+            'Views': () => validateYoutubeLinkViewVideoAPI({ link, service_id: serviceId }),
+        };
+
+        if (!(category in categoryApiMap)) {
+            console.log('Chưa chọn dịch vụ');
+            return { status: false, help: 'Chưa chọn dịch vụ' };
+        }
+
+        return categoryApiMap[category]();
+    };
+
+    try {
+        if (category === 'Subscribers') {
+          if (!isYouTubeValidUrl(value)) {
+              return { status: false, help: 'Đường dẫn Youtube không hợp lệ' };
+          }
+
+          if (!quantity || quantity === 0) {
+              toast.error('Must be input your quantity');
+              return { status: false, help: '' };
+          }
+        } else if (!validateYouTubeUrl(value)) {
+          return { status: false, help: 'Đường dẫn video Youtube không hợp lệ' };
+        }
+
+        const responseValidVideo = await validateVideoLink(value);
+        if (responseValidVideo?.data?.error_code !== 0) {
+            status = 'error';
+            help = 'Đường dẫn video Youtube không hợp lệ';
+        } else {
+            const validData = responseValidVideo.data.data;
+            const mapping = category === 'Subscribers'
+                ? {
+                    'Video subscribe': 'exist_video',
+                    'Kênh': 'valid_channel',
+                    'Dường dẫn video': 'valid_link',
+                    'Số lượng': 'valid_quantity',
+                  }
+                : {
+                    'Comment': 'is_allow_cmt',
+                    'Like': 'is_allow_like',
+                    'View': 'is_allow_view',
+                    'Livestream': 'is_live',
+                    'Thời gian': 'is_valid_video_duration',
+                    'Đường dẫn': 'is_valid_link',
+                    'Video tồn tại': 'is_exist_video',
+                };
+
+            const mappedObj = Object.keys(mapping).reduce((acc, title) => {
+                const mappedKey = mapping[title];
+                if (validData[mappedKey] !== undefined) {
+                    acc[title] = validData[mappedKey];
+                }
+                return acc;
+            }, {});
+
+            const isValid = Object.values(mappedObj).every(value => value); // Check all mapped values for validity
+            help = createCustomHelp(mappedObj);
+            status = isValid ? 'success' : 'error';
+            console.log('--- error check link youtube -----', status);
+        }
     } catch (error) {
-      console.log('--- error check link youtube -----', error?.response?.data?.message);
-      toast.error(error?.response?.data?.message || 'Lỗi xác thực liên kết YouTube');
-      status = 'error';
-      help = 'Lỗi xác thực liên kết YouTube';
+        toast.error(error?.response?.data?.message || 'Lỗi xác thực liên kết YouTube');
+        status = 'error';
+        help = 'Lỗi xác thực liên kết YouTube';
     }
-  
+
     setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
-  
+
     return { status: status === 'success', help };
-  };
+};
+
   
 
   useEffect(() => {
