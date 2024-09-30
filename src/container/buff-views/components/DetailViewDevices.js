@@ -2,12 +2,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Modal, Divider, Table, Spin, Switch } from 'antd';
+import { Row, Col, Form, Input, Modal, Divider, Table, Spin, Switch, Badge } from 'antd';
 import { SiGmail } from 'react-icons/si';
 import { LuLink2 } from 'react-icons/lu';
 import { MdAddchart } from 'react-icons/md';
 import { CheckOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons';
 import { isEmptyObject } from '../../../utility/utility';
+import { VIEW_STATUS_TYPE } from '../../../variables';
 
 const DEFAULT_PAGESIZE = ['10', '20', '50'];
 
@@ -44,7 +45,7 @@ function DetailViewDevices({ setState, computerState }) {
       return inTableData.push({
         key: index,
         id: (
-          <span>{id}</span>
+          <span style={{ fontSize: '12px' }}>{id}</span>
         ),
         email: (
           <>
@@ -62,12 +63,11 @@ function DetailViewDevices({ setState, computerState }) {
           <span>{profile_id}</span>
         ),
         status: (
-          <span>{status}</span>
-          // <Switch
-          //   checkedChildren={<CheckOutlined />}
-          //   unCheckedChildren={<CloseOutlined />}
-          //   checked={!!status}
-          // />
+          <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'flex-start'}}>
+            <Badge color={VIEW_STATUS_TYPE[status].color} dot style={{ marginRight: '5px' }} />
+            <span>{VIEW_STATUS_TYPE[status].describe}</span>
+            <Badge count={`${status.toString()}`} showZero color={VIEW_STATUS_TYPE[status]?.color} style={{ marginLeft: '5px' }} />
+          </div>
         ),
       });
     });

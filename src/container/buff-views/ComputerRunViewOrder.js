@@ -284,7 +284,7 @@ function ComputerRunViewOrder() {
         ),
         action: (
           <div className="table-actions">
-            <Tooltip title="Reset Computer">
+            <Tooltip title="Reset Devices">
               <Button
                 size="default"
                 shape="circle"

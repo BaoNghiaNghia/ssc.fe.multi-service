@@ -447,7 +447,7 @@ export const REGION_IDENTIFIER = [
 export const VIEW_STATUS_TYPE = {
   0: {
     title: 'logout',
-    describe: 'User logged out',
+    describe: 'Logged out',
     color: '#FF5733'
   },
   1: {
@@ -472,12 +472,12 @@ export const VIEW_STATUS_TYPE = {
   },
   5: {
     title: 'two_fa',
-    describe: 'Two-factor authentication required',
+    describe: 'Two-factor required',
     color: '#007BFF'
   },
   6: {
     title: 'not_exist',
-    describe: 'Account does not exist',
+    describe: 'Does not exist',
     color: '#343A40'
   },
   7: {

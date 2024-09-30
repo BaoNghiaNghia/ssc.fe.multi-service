@@ -22,7 +22,7 @@ import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE } from '../../../variables';
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
-import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
+import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -97,35 +97,36 @@ function AddOrderGeneral() {
   const handleValidateLink = async (value) => {
     let status = 'success';
     let help = '';
-
+  
     try {
       if (!validateYouTubeUrl(value)) {
-        status = 'error';
-        help = 'Đường dẫn video Youtube không hợp lệ';
+        return { status: false, help: 'Đường dẫn video Youtube không hợp lệ' };
       }
+  
       let responseValidVideo = {};
-
-      switch (stateCurr?.selectedCategory) {
-        case 'Comments':
-          responseValidVideo = await validateYoutubeLinkCommentVideoAPI({ link: value });
-          break;
-
-        case 'Likes':
-          responseValidVideo = await validateYoutubeLinkLikeVideoAPI({ link: value });
-          break;
-
-        case 'Views':
-          responseValidVideo = await validateYoutubeLinkViewVideoAPI({ link: value, service_id: detailService?.service_id });
-
-          break;
+      const category = stateCurr?.selectedCategory;
+      const serviceId = detailService?.service_id;
+      const quantity = formCreateOrder.getFieldValue('quantity');
   
-        case 'Subscribers':
-          break;
-  
-        default:
-          console.log('Chưa chọn dịch vụ');
+      if (category === 'Subscribers' && (!quantity || quantity === 0)) {
+        toast.error('Must be input your quantity');
+        return { status: false, help: '' }; // Early return if quantity is invalid
       }
-
+  
+      const categoryApiMap = {
+        'Comments': () => validateYoutubeLinkCommentVideoAPI({ link: value }),
+        'Likes': () => validateYoutubeLinkLikeVideoAPI({ link: value }),
+        'Views': () => validateYoutubeLinkViewVideoAPI({ link: value, service_id: serviceId }),
+        'Subscribers': () => validateYoutubeLinkSubscribeVideoAPI({ link: value, service_id: serviceId, quantity })
+      };
+  
+      if (category in categoryApiMap) {
+        responseValidVideo = await categoryApiMap[category]();
+      } else {
+        console.log('Chưa chọn dịch vụ');
+        return { status: false, help: 'Chưa chọn dịch vụ' };
+      }
+  
       const mapping = {
         'Comment': 'is_allow_cmt',
         'Like': 'is_allow_like',
@@ -134,62 +135,57 @@ function AddOrderGeneral() {
         'Thời gian': 'is_valid_video_duration',
         'Đường dẫn': 'is_valid_link',
         'Video tồn tại': 'is_exist_video',
+        'Video subscribe': 'exist_video',
+        'Kênh': 'valid_channel',
+        'Dường dẫn video': 'valid_link',
+        'Số lượng': 'valid_quantity',
       };
-
+  
       if (responseValidVideo?.data?.error_code === 0) {
         const validData = responseValidVideo?.data?.data;
-        
-        console.log('--- validData ---', validData);
-
         const mappedObj = Object.keys(mapping).reduce((acc, title) => {
-          if (Object.keys(validData).includes(mapping[title])) {
-            acc[title] = validData[mapping[title]];
+          const mappedKey = mapping[title];
+          if (validData[mappedKey] !== undefined) {
+            acc[title] = validData[mappedKey];
           }
           return acc;
         }, {});
-
-
-        // Check if any of the required fields are false
-        const isValid = mappedObj['Thời gian'] &&
-                        mappedObj['Đường dẫn'] &&
-                        mappedObj['Video tồn tại'];
-
+  
+        const isValid = category === 'Subscribers'
+          ? mappedObj['Video subscribe'] && mappedObj['Kênh'] && mappedObj['Dường dẫn video'] && mappedObj['Số lượng']
+          : mappedObj['Thời gian'] && mappedObj['Đường dẫn'] && mappedObj['Video tồn tại'];
+  
         const customHelp = (
           <div style={{ textAlign: 'end', marginBottom: '8px', backgroundColor: '#f1fffa' }}>
-            {
-              Object.entries(mappedObj).map(([key, value]) => (
-                <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '10px' }}>
-                  <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '1px' }}>{key}</span>
-                  {value === true ? <IoMdCheckmarkCircle color='green'/> : <MdCancel color='orangered'/> }
-                </span>
-              ))
-            }
+            {Object.entries(mappedObj).map(([key, value]) => (
+              <span key={key} style={{ display: 'inline-flex', alignItems: 'center', marginRight: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '1px' }}>{key}</span>
+                {value ? <IoMdCheckmarkCircle color='green' /> : <MdCancel color='orangered' />}
+              </span>
+            ))}
           </div>
         );
-
-        if (isValid) {
-          status = 'success';
-          help = customHelp;
-        } else {
-          status = 'error';
-          help = customHelp;
-        }
+  
+        status = isValid ? 'success' : 'error';
+        help = customHelp;
       } else {
         status = 'error';
         help = 'Đường dẫn video Youtube không hợp lệ';
       }
     } catch (error) {
+      console.log('--- error check link youtube -----', error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || 'Lỗi xác thực liên kết YouTube');
       status = 'error';
       help = 'Lỗi xác thực liên kết YouTube';
     }
-
-    setHelpMessage((prevHelp) => ({ ...prevHelp, 'link': help }));
-
-    return {
-      status: status === 'success',
-      help
-    };
+  
+    setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
+  
+    return { status: status === 'success', help };
   };
+  
+
+
 
   useEffect(() => {
     dispatch(actionsService.fetchListServiceBegin());
@@ -234,7 +230,7 @@ function AddOrderGeneral() {
   const handleSubmitSubscribe = () => {
     formCreateOrder.validateFields()
       .then((values) => {
-        dispatch(actionsSubscribe.createOrderCommentAdminBegin(values));
+        dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(values));
         dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
         formCreateOrder.resetFields();
       })
@@ -300,17 +296,11 @@ function AddOrderGeneral() {
 
   const handleCountValidateCommentString = (input) => {
     const commentString = input?.target?.value;
-
-    // Split the input into rows
     const rows = commentString.split('\n');
-
-    // Filter out empty rows
     const nonEmptyRows = rows.filter(row => row.trim().length > 0);
 
-    if (commentString === '') { return 0; } 
+    if (commentString === '') { return 0; }
 
-    
-    // Count the non-empty rows
     const rowCount = nonEmptyRows.length;
 
     return rowCount;
@@ -407,27 +397,98 @@ function AddOrderGeneral() {
   const formCreateSubscribeService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
-        <Row gutter="10">
-          <Col sm={24}>
+        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
+          Thông tin dịch vụ
+        </Divider>
+        <Row gutter="10" style={{ marginBottom: '7px' }}>
+          <Col sm={19}>
             <Form.Item
-              name="note"
-              label="Mô tả"
+              name="link"
+              label="Liên kết"
               hasFeedback
-              style={{ marginBottom: '7px' }}
-              rules={[{
-                required: true,
-                message: 'Trường không được trống'
-              }]}
+              help={helpMessage.link}
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+                {
+                  validator: async (_, link) => {
+                    if (link) {
+                      const { status, help } = await handleValidateLink(link);
+                      if (!status) {
+                        return Promise.reject(help);
+                      }
+                    }
+                  },
+                },
+              ]}
             >
-              <Input.TextArea placeholder='Thêm mô tả dịch vụ' rows={2} />
+              <Input
+                size='small'
+                allowClear
+                style={{ fontWeight: 'bold' }}
+                placeholder='Thêm liên kết'
+                onChange={(e) => {
+                  const {value} = e.target;
+                  handleValidateLink(value);
+                }}
+              />
             </Form.Item>
+          </Col>
+          <Col sm={5}>
+            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement='left'>
+              <Form.Item
+                name="quantity"
+                label="Số subscribe"
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: 'Trường không được trống'
+                  },
+                  {
+                    type: 'number',
+                    min: detailService?.min,
+                    message: `Số like phải lớn hơn hoặc bằng ${detailService?.min}`
+                  },
+                  {
+                    type: 'number',
+                    max: detailService?.max,
+                    message: `Số like phải nhỏ hơn hoặc bằng ${detailService?.max}`
+                  }
+                ]}
+              >
+                <InputNumber
+                  size='small'
+                  style={{ width: '100%' }}
+                  onChange={async (value) => {
+                    setStateCurr({
+                      ...stateCurr,
+                      amountChange: value
+                    });
+                    const link = formCreateOrder.getFieldValue('link');
+                    if (link) {
+                      const { status, help } = await handleValidateLink(link);
+                      if (!status) {
+                        setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
+                      }
+                    } else {
+                      toast.error('Must input a valid link');
+                    }
+                  }}
+                  min={detailService?.min}
+                  max={detailService?.max}
+                  placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
+                />
+              </Form.Item>
+            </Tooltip>
           </Col>
         </Row>
       </>
     );
   }
-
+  
   const formCreateLikeService = () => {
     return (
       <>
@@ -556,16 +617,13 @@ function AddOrderGeneral() {
                   },
                   {
                     validator: (_, value) => {
-                      const minQuantity = detailService?.min;  // Default minimum value
-                      const maxQuantity = detailService?.max;  // Default maximum value
+                      const minQuantity = detailService?.min;
+                      const maxQuantity = detailService?.max;
 
-                      // Ensure value is a valid number
                       if (value === undefined || value === null || Number.isNaN(Number(value))) {
                         return Promise.reject('Giá trị phải là số hợp lệ');
                       }
                       
-
-                      // Check if the value is within the allowed range
                       if (value < minQuantity) {
                         return Promise.reject(`Số lượng tối thiểu là ${minQuantity}`);
                       }
@@ -573,7 +631,6 @@ function AddOrderGeneral() {
                         return Promise.reject(`Số lượng tối đa là ${maxQuantity}`);
                       }
 
-                      // If everything is valid, resolve the promise
                       return Promise.resolve();
                     },
                   },

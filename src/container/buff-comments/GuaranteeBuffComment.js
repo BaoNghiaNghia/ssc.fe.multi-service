@@ -135,30 +135,16 @@ function GuaranteeBuffComment() {
         start_date: `${filterRange?.from} 00:00:00`,
         end_date: `${filterRange?.to} 23:59:59`,
       }));
+    } else {
+      dispatch(actions.fetchWarrantyCommentOrderBegin({
+        search_id: searchText,
+        page: currentPage,
+        limit: limitPage,
+        start_date: `${filterRange?.from} 00:00:00`,
+        end_date: `${filterRange?.to} 23:59:59`,
+      }));
     }
 
-    const arraySearchValidate = searchText.split(',').map(s => s.trim()).filter(elm => elm != null && elm !== false && elm !== "" && elm !== '');
-
-    if (arraySearchValidate && arraySearchValidate.length > 0) {
-      const pattern = /^\d+\.?\d*$/;
-      if (pattern.test(arraySearchValidate.join(""))) {
-        dispatch(actions.fetchWarrantyCommentOrderBegin({
-          order_ids: arraySearchValidate.join(","),
-          page: currentPage,
-          limit: limitPage,
-          start_date: `${filterRange?.from} 00:00:00`,
-          end_date: `${filterRange?.to} 23:59:59`,
-        }));
-      } else {
-        dispatch(actions.fetchWarrantyCommentOrderBegin({
-          video_ids: arraySearchValidate.join(","),
-          page: currentPage,
-          limit: limitPage,
-          start_date: `${filterRange?.from} 00:00:00`,
-          end_date: `${filterRange?.to} 23:59:59`,
-        }));
-      }
-    }
   };
 
   if (listWarrantyOrder?.items?.length) {
@@ -482,7 +468,7 @@ function GuaranteeBuffComment() {
                         }}
                       >
                         <RiScan2Fill size={18} style={{ marginRight: '7px', padding: 0 }} />
-                        <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét đơn</span>
+                        <span style={{ fontWeight: 600, fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét đơn</span>
                       </Button>
                     </div>
                   ) }}
