@@ -1,0 +1,193 @@
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from 'react';
+import { useDispatch , useSelector } from 'react-redux';
+import { LoadingOutlined } from '@ant-design/icons';
+import PropTypes from 'prop-types';
+import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge, Spin, Table } from 'antd';
+import { MdAddchart } from "react-icons/md";
+import { BsFire } from 'react-icons/bs';
+import serviceActions from '../../../redux/serviceSettings/actions';
+import subscribeActions from '../../../redux/buffSubscribe/actions';
+import { DEFAULT_PAGESIZE, ORDER_YOUTUBE_STATUS } from '../../../variables/index';
+
+const { Option } = Select;
+
+function StatisticVideoSubscribe({ setState, orderState }) {
+  const dispatch = useDispatch();
+  const [formUpdateSubscribeOrder] = Form.useForm();
+
+
+  const { postLoading, detailOrderSubscribe, listService } = useSelector(state => {
+    return {
+      postLoading: state?.buffSubscribe.loading,
+      detailOrderSubscribe: state?.buffSubscribe?.detailOrderSubscribe,
+      listService: state?.settingService?.listService?.items
+    };
+  });
+
+  useEffect(() => {
+    dispatch(serviceActions.fetchListServiceBegin());
+  }, [dispatch]);
+
+  const findService = listService?.filter((item) => item.service_id === detailOrderSubscribe?.service_id);
+
+  useEffect(() => {
+    formUpdateSubscribeOrder.setFieldsValue(detailOrderSubscribe);
+    if (findService?.length > 0) {
+      formUpdateSubscribeOrder.setFieldValue('category', findService[0]?.category);
+    }
+    formUpdateSubscribeOrder.setFieldValue('priority', String(detailOrderSubscribe?.priority));
+    formUpdateSubscribeOrder.setFieldValue('note', detailOrderSubscribe?.note);
+  });
+
+  const handleCancel = () => {
+    setState({
+      isListVideoInChannel: false,
+    });
+
+    formUpdateSubscribeOrder.resetFields();
+  }
+
+  const handleOk = () => {
+    try {
+      formUpdateSubscribeOrder.validateFields()
+        .then((values) => {
+          dispatch(subscribeActions.updateOrderSubscribeAdminBegin({
+            id: detailOrderSubscribe?.id,
+            max_thread: values?.max_thread,
+            note: values?.note,
+            priority: values?.priority === "true",
+            status: values?.status
+          }));
+
+
+          setState({ 
+            ...orderState,
+            isListVideoInChannel: false,
+            statusNumber: 'all'
+          });
+
+          formUpdateSubscribeOrder.resetFields();
+        })
+        .catch((err) => {
+          console.error("Handle Real Error: ", err);
+        });
+    } catch (err) {
+      console.log(err);
+      setState({
+        isListVideoInChannel: false });
+      formUpdateSubscribeOrder.resetFields();
+    }
+  };
+
+  const renderProfileTable = (detailComputerView) => {
+    const inTableData = [];
+
+    detailComputerView?.profiles?.map((profile, index) => {
+      const { id, email, profile_id, status } = profile;
+      return inTableData.push({
+        key: index,
+        id: (
+          <span style={{ fontSize: '12px' }}>{id}</span>
+        ),
+        email: (
+          <div>....</div>
+        ),
+        profile_id: (
+          <div>....</div>
+        ),
+        status: (
+          <div>....</div>
+        ),
+      });
+    });
+
+    const expandColumns = [
+      {
+        title: 'Video title',
+        dataIndex: 'id',
+        key: 'id',
+      },
+      {
+        title: 'Video ID',
+        dataIndex: 'email',
+        key: 'email',
+      },
+      {
+        title: 'Click',
+        dataIndex: 'profile_id',
+        key: 'profile_id',
+      },
+      {
+        title: 'Load',
+        dataIndex: 'status',
+        key: 'status',
+      }
+    ];
+
+    return (
+      <>
+        {postLoading === true ? (
+          <Spin
+            size='small'
+            style={{ marginRight: '8px', color: '#ff6c00' }}
+            indicator={<LoadingOutlined spin />}
+            tip="Đang chạy"
+          />
+        ) : (
+          <Table
+            columns={expandColumns}
+            dataSource={inTableData}
+            pagination={{
+              showSizeChanger: true,
+              pageSizeOptions: DEFAULT_PAGESIZE,
+              position: ['bottomLeft'],
+              responsive: true,
+              size: 'small'
+            }}
+            size="small"
+          />
+        )}
+      </>
+    );
+  };
+
+  return (
+    <Modal
+      width='600px'
+      open={orderState?.isListVideoInChannel}
+      centered
+      title={
+        <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+          <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+          <div>
+            <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thống kê số lượng video</p>
+            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin đơn</p>
+          </div>
+        </div>
+      }
+      onOk={handleOk}
+      onCancel={handleCancel}
+      footer={[
+        <Button key="back" onClick={handleCancel}>
+          Hủy
+        </Button>,
+        <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
+
+          Cập nhật
+        </Button>
+      ]}
+    >
+      <Form name="add_service" layout="vertical" form={formUpdateSubscribeOrder}>
+        {renderProfileTable([])}
+      </Form>
+    </Modal>
+  );
+}
+
+StatisticVideoSubscribe.propTypes = {
+  setState: PropTypes.func,
+  orderState: PropTypes.object
+};
+
+export default StatisticVideoSubscribe;

@@ -60,7 +60,7 @@ function EditViewDevices({ setState, computerState }) {
     formDetailComputerCmt.resetFields();
   };
 
-  const renderExpandedRow = (detailComputerView) => {
+  const renderProfileTable = (detailComputerView) => {
     const inTableData = [];
 
     detailComputerView?.profiles?.map((profile, index) => {
@@ -218,7 +218,7 @@ function EditViewDevices({ setState, computerState }) {
             <Row gutter="10">
               <Col sm={24}> 
                 <Divider plain style={{ margin: '0 0 10px 0', padding: '0px', fontSize: '0.9em', color: 'gray' }}>Profiles</Divider>
-                {renderExpandedRow(detailComputerView)}
+                {renderProfileTable(detailComputerView)}
               </Col>
             </Row>
           </>

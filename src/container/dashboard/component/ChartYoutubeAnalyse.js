@@ -18,11 +18,10 @@ const ChartYoutubeAnalyse = ({
         };
     });
 
-    // Fallback in case `rendered` event doesn't trigger
     useEffect(() => {
         const timeout = setTimeout(() => {
             setLoadingF(false);
-        }, 500); // Set a fallback timeout of 3 seconds
+        }, 500);
 
         return () => clearTimeout(timeout);
     }, []);

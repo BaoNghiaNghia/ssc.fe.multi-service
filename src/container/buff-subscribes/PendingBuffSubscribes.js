@@ -9,7 +9,7 @@ import { RiShoppingBag3Fill } from "react-icons/ri";
 import { WiTime7 } from "react-icons/wi";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
-import { MdBlock, MdOutlineVideoLibrary } from "react-icons/md";
+import { MdBlock, MdOutlineVideoLibrary, MdOutlineNotificationsActive } from "react-icons/md";
 import { BsFire } from "react-icons/bs";
 import { LuListFilter } from "react-icons/lu";
 import { toast } from 'react-toastify';
@@ -21,6 +21,8 @@ import UpdateOrderSubscribes from './components/UpdateOrderSubscribes';
 import DetailOrderSubscribes from './components/DetailOrderSubscribes';
 import BatchUpdateOrderSubscribes from './components/BatchUpdateOrderSubscribes';
 import FilterOrderSubscribes from './components/FilterOrderSubscribes';
+import StatisticSubscribeQuantity from './components/StatisticSubscribeQuantity';
+import StatisticVideoSubscribe from './components/StatisticVideoSubscribe';
 import CancelAndRefundOrderComment from '../buff-comments/components/CancelAndRefundOrderComment';
 import InsuranceOrderComment from '../buff-comments/components/InsuranceOrderComment';
 import { TopToolBox } from '../buff-comments/Style';
@@ -128,6 +130,7 @@ function PendingBuffSubscribes() {
   const [state, setState] = useState({
     isDetailOrderSubscribeModal: false,
     isListVideoInChannel: false,
+    isStatisticSubscribe: false,
     isUpdateSubscribeOrderModal: false,
     isCancelRefundSubscribeOrderModal: false,
     isInsuranceSubscribeOrderModal: false,
@@ -599,6 +602,21 @@ function PendingBuffSubscribes() {
                 </Tooltip>
               ) : <></>
             }
+            <Tooltip title="Lượng subscribe">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                onClick={() => {
+                  dispatch(actionsSubscribe.detailOrderSubscribeAdminBegin({
+                    ...value,
+                  }));
+                  setState({ 
+                    ...state, 
+                    isStatisticSubscribe: true
+                  });
+                }}
+              >
+                <MdOutlineNotificationsActive size={20}/>
+              </Button>
+            </Tooltip>
             <Tooltip title="Videos">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
@@ -708,6 +726,14 @@ function PendingBuffSubscribes() {
         setState={setState}
       />
       <FilterOrderSubscribes
+        orderState={state}
+        setState={setState}
+      />
+      <StatisticSubscribeQuantity
+        orderState={state}
+        setState={setState}
+      />
+      <StatisticVideoSubscribe
         orderState={state}
         setState={setState}
       />

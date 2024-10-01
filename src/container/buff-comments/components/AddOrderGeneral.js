@@ -94,6 +94,38 @@ function AddOrderGeneral() {
 
   const [helpMessage, setHelpMessage] = useState({});
 
+  // Function to create a custom help message
+  const createCustomHelp = (mappedObj) => (
+    <div style={{ textAlign: 'end', marginBottom: '8px', backgroundColor: '#f1fffa' }}>
+      {Object.entries(mappedObj).map(([key, value]) => (
+        <span key={key} style={{ display: 'inline-flex', alignItems: 'center', marginRight: '10px' }}>
+          <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '1px' }}>{key}</span>
+          {value ? <IoMdCheckmarkCircle color='green' /> : <MdCancel color='orangered' />}
+        </span>
+      ))}
+    </div>
+  );
+
+  const validateVideoLink = async (link) => {
+    const category = stateCurr?.selectedCategory;
+    const serviceId = detailService?.service_id;
+    const quantity = Number(formCreateOrder.getFieldValue('quantity'));
+
+    const categoryApiMap = {
+      'Subscribers': () => validateYoutubeLinkSubscribeVideoAPI({ link, service_id: serviceId, quantity }),
+      'Comments': () => validateYoutubeLinkCommentVideoAPI({ link }),
+      'Likes': () => validateYoutubeLinkLikeVideoAPI({ link }),
+      'Views': () => validateYoutubeLinkViewVideoAPI({ link, service_id: serviceId }),
+    };
+
+    if (!(category in categoryApiMap)) {
+      console.log('Chưa chọn dịch vụ');
+      return { status: false, help: 'Chưa chọn dịch vụ' };
+    }
+
+    return categoryApiMap[category]();
+  };
+
   const handleValidateLink = async (value) => {
     let status = 'success';
     let help = '';
@@ -102,96 +134,91 @@ function AddOrderGeneral() {
     const serviceId = detailService?.service_id;
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
 
-    // Function to create a custom help message
-    const createCustomHelp = (mappedObj) => (
-        <div style={{ textAlign: 'end', marginBottom: '8px', backgroundColor: '#f1fffa' }}>
-            {Object.entries(mappedObj).map(([key, value]) => (
-                <span key={key} style={{ display: 'inline-flex', alignItems: 'center', marginRight: '10px' }}>
-                    <span style={{ color: 'gray', fontSize: '0.9em', marginRight: '1px' }}>{key}</span>
-                    {value ? <IoMdCheckmarkCircle color='green' /> : <MdCancel color='orangered' />}
-                </span>
-            ))}
-        </div>
-    );
-
-    const validateVideoLink = async (link) => {
-        const categoryApiMap = {
-            'Subscribers': () => validateYoutubeLinkSubscribeVideoAPI({ link, service_id: serviceId, quantity }),
-            'Comments': () => validateYoutubeLinkCommentVideoAPI({ link }),
-            'Likes': () => validateYoutubeLinkLikeVideoAPI({ link }),
-            'Views': () => validateYoutubeLinkViewVideoAPI({ link, service_id: serviceId }),
-        };
-
-        if (!(category in categoryApiMap)) {
-            console.log('Chưa chọn dịch vụ');
-            return { status: false, help: 'Chưa chọn dịch vụ' };
-        }
-
-        return categoryApiMap[category]();
-    };
-
     try {
-        if (category === 'Subscribers') {
-          if (!isYouTubeValidUrl(value)) {
-              return { status: false, help: 'Đường dẫn Youtube không hợp lệ' };
-          }
-
-          if (!quantity || quantity === 0) {
-              toast.error('Must be input your quantity');
-              return { status: false, help: '' };
-          }
-        } else if (!validateYouTubeUrl(value)) {
-          return { status: false, help: 'Đường dẫn video Youtube không hợp lệ' };
+      if (category === 'Subscribers') {
+        if (!isYouTubeValidUrl(value)) {
+          return { status: false, help: 'Đường dẫn Youtube không hợp lệ' };
         }
 
-        const responseValidVideo = await validateVideoLink(value);
-        if (responseValidVideo?.data?.error_code !== 0) {
-            status = 'error';
-            help = 'Đường dẫn video Youtube không hợp lệ';
-        } else {
-            const validData = responseValidVideo.data.data;
-            const mapping = category === 'Subscribers'
-                ? {
-                    'Video subscribe': 'exist_video',
-                    'Kênh': 'valid_channel',
-                    'Dường dẫn video': 'valid_link',
-                    'Số lượng': 'valid_quantity',
-                  }
-                : {
-                    'Comment': 'is_allow_cmt',
-                    'Like': 'is_allow_like',
-                    'View': 'is_allow_view',
-                    'Livestream': 'is_live',
-                    'Thời gian': 'is_valid_video_duration',
-                    'Đường dẫn': 'is_valid_link',
-                    'Video tồn tại': 'is_exist_video',
-                };
-
-            const mappedObj = Object.keys(mapping).reduce((acc, title) => {
-                const mappedKey = mapping[title];
-                if (validData[mappedKey] !== undefined) {
-                    acc[title] = validData[mappedKey];
-                }
-                return acc;
-            }, {});
-
-            const isValid = Object.values(mappedObj).every(value => value); // Check all mapped values for validity
-            help = createCustomHelp(mappedObj);
-            status = isValid ? 'success' : 'error';
-            console.log('--- error check link youtube -----', status);
+        if (!quantity || quantity === 0) {
+          toast.error('Must be input your quantity');
+          return { status: false, help: '' };
         }
-    } catch (error) {
-        toast.error(error?.response?.data?.message || 'Lỗi xác thực liên kết YouTube');
+      } else if (!validateYouTubeUrl(value)) {
+        return { status: false, help: 'Đường dẫn video Youtube không hợp lệ' };
+      }
+
+      const responseValidVideo = await validateVideoLink(value);
+      if (responseValidVideo?.data?.error_code !== 0) {
         status = 'error';
-        help = 'Lỗi xác thực liên kết YouTube';
+        help = 'Đường dẫn video Youtube không hợp lệ';
+      } else {
+        const validData = responseValidVideo.data.data;
+
+        if (category === 'Subscribers') {
+          const jumpStep = validData?.jump_step_response?.jump_step;
+          // Retrieve existing errors, if any
+          const existingErrorsQuantity = formCreateOrder.getFieldError('quantity') || [];
+
+          // Check if jumpStep is a valid number and quantity is a number
+          if (typeof jumpStep === 'number' && typeof quantity === 'number' && existingErrorsQuantity?.length === 0) {
+            const validJumpStep = jumpStep % quantity;
+      
+            const errors = validJumpStep !== 0
+              ? [ `Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`]
+              : [...existingErrorsQuantity]; // Clear errors if valid
+        
+            formCreateOrder.setFields([{ name: 'quantity', errors }]);
+            console.log('---- validJumpStep -----', validJumpStep);
+          } else {
+            console.log('validData or jump_step_response is not defined or jump_step is not a valid number.');
+          }
+        }
+        
+
+        const mapping = category === 'Subscribers'
+          ? {
+            'Video subscribe': 'exist_video',
+            'Kênh': 'valid_channel',
+            'Dường dẫn video': 'valid_link',
+            'Số lượng': 'valid_quantity',
+          }
+          : {
+            'Comment': 'is_allow_cmt',
+            'Like': 'is_allow_like',
+            'View': 'is_allow_view',
+            'Livestream': 'is_live',
+            'Thời gian': 'is_valid_video_duration',
+            'Đường dẫn': 'is_valid_link',
+            'Video tồn tại': 'is_exist_video',
+          };
+
+        const mappedObj = Object.keys(mapping).reduce((acc, title) => {
+          const mappedKey = mapping[title];
+          if (validData[mappedKey] !== undefined) {
+            acc[title] = validData[mappedKey];
+          }
+          return acc;
+        }, {}); 
+
+        const isValid = Object.values(mappedObj).every(value => value); // Check all mapped values for validity
+        help = createCustomHelp(mappedObj);
+        status = isValid ? 'success' : 'error';
+        console.log('--- error check link youtube -----', status);
+      }
+    } catch (error) {
+      console.log('---- show error -----', error);
+      toast.error(error?.response?.data?.message || 'Lỗi xác thực liên kết YouTube');
+      status = 'error';
+      help = 'Lỗi xác thực liên kết YouTube';
     }
 
     setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
 
     return { status: status === 'success', help };
-};
+  };
 
-  
+
 
   useEffect(() => {
     dispatch(actionsService.fetchListServiceBegin());
@@ -217,7 +244,7 @@ function AddOrderGeneral() {
       })
       .catch((err) => {
         console.error("handle Real Error: ", err);
-    });
+      });
   }
 
   const handleSubmitLike = () => {
@@ -242,7 +269,7 @@ function AddOrderGeneral() {
       })
       .catch((err) => {
         console.error("handle Real Error: ", err);
-    });
+      });
   }
 
   const handleSubmitView = () => {
@@ -254,7 +281,7 @@ function AddOrderGeneral() {
       })
       .catch((err) => {
         console.error("handle Real Error: ", err);
-    });
+      });
   }
 
   const handleOk = () => {
@@ -267,7 +294,7 @@ function AddOrderGeneral() {
         case 'Likes':
           handleSubmitLike();
           break;
-  
+
         case 'Subscribers':
           handleSubmitSubscribe();
           break;
@@ -275,7 +302,7 @@ function AddOrderGeneral() {
         case 'Views':
           handleSubmitView();
           break;
-  
+
         default:
           console.log('Chưa chọn dịch vụ');
       }
@@ -341,7 +368,7 @@ function AddOrderGeneral() {
                 },
               ]}
             >
-              <Input 
+              <Input
                 allowClear
                 size='small'
                 style={{ fontWeight: 'bold' }}
@@ -369,9 +396,9 @@ function AddOrderGeneral() {
 
                     if (minComment != null && maxComment != null) {
                       if (count < minComment) {
-                        return Promise.reject( `Cần ít nhất ${  minComment} comments`);
+                        return Promise.reject(`Cần ít nhất ${minComment} comments`);
                       } if (count > maxComment) {
-                        return Promise.reject( `Vượt quá  ${  maxComment} comments`);
+                        return Promise.reject(`Vượt quá  ${maxComment} comments`);
                       }
                     }
                   },
@@ -388,8 +415,8 @@ function AddOrderGeneral() {
               <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
               <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary, display: 'flex', justifyContent: 'space-between', marginTop: '3px' }}>
                 <span style={{ color: (validateCommentCount) ? 'green' : 'red', display: 'inline-flex', alignItems: 'center' }}>
-                  <span>{stateCurr?.amountChange} comments</span> 
-                  { validateCommentCount ? <TiTick fontSize={17} style={{ marginLeft: '3px' }} /> : null }
+                  <span>{stateCurr?.amountChange} comments</span>
+                  {validateCommentCount ? <TiTick fontSize={17} style={{ marginLeft: '3px' }} /> : null}
                 </span>
                 <span>Ít nhất: {numberWithCommas(detailService?.min || 0)} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)}</span>
               </span>
@@ -456,12 +483,12 @@ function AddOrderGeneral() {
                   {
                     type: 'number',
                     min: detailService?.min,
-                    message: `Số like phải lớn hơn hoặc bằng ${detailService?.min}`,
+                    message: `Số subscribe phải lớn hơn hoặc bằng ${detailService?.min}`,
                   },
                   {
                     type: 'number',
                     max: detailService?.max,
-                    message: `Số like phải nhỏ hơn hoặc bằng ${detailService?.max}`,
+                    message: `Số subscribe phải nhỏ hơn hoặc bằng ${detailService?.max}`,
                   },
                 ]}
               >
@@ -480,16 +507,16 @@ function AddOrderGeneral() {
                       const { status, help } = await handleValidateLink(link);
                       // Update the help message for the link input based on validation result
                       setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
-                      
+
                       // Re-validate the link field to update its status in the form
-                      formCreateOrder.validateFields(['link']).catch(() => {});
+                      formCreateOrder.validateFields(['link']).catch(() => { });
                     } else {
                       // Show error if link is invalid or empty
                       setHelpMessage((prevHelp) => ({ ...prevHelp, link: 'Must input a valid link' }));
                     }
                   }}
-                  min={detailService?.min}
-                  max={detailService?.max}
+                  // min={detailService?.min}
+                  // max={detailService?.max}
                   placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
                 />
               </Form.Item>
@@ -499,7 +526,7 @@ function AddOrderGeneral() {
       </>
     );
   };
-  
+
   const formCreateLikeService = () => {
     return (
       <>
@@ -604,16 +631,16 @@ function AddOrderGeneral() {
                 },
               ]}
             >
-              <Input 
-                size="small" 
+              <Input
+                size="small"
                 allowClear
-                
-                style={{ fontWeight: 'bold' }} 
-                placeholder="Thêm liên kết" 
+
+                style={{ fontWeight: 'bold' }}
+                placeholder="Thêm liên kết"
               />
             </Form.Item>
           </Col>
-  
+
           {/* Quantity input field */}
           <Col sm={5}>
             <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
@@ -634,7 +661,7 @@ function AddOrderGeneral() {
                       if (value === undefined || value === null || Number.isNaN(Number(value))) {
                         return Promise.reject('Giá trị phải là số hợp lệ');
                       }
-                      
+
                       if (value < minQuantity) {
                         return Promise.reject(`Số lượng tối thiểu là ${minQuantity}`);
                       }
@@ -665,7 +692,7 @@ function AddOrderGeneral() {
       </>
     );
   };
-  
+
 
   const switchServiceSelection = (type) => {
     switch (type) {
@@ -789,16 +816,16 @@ function AddOrderGeneral() {
                       {
                         LIST_SERVICE_SUPPLY?.map((itemService, index) => {
                           return (
-                              <Option key={index} value={itemService?.category}>
-                                <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                                  <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
-                                  <span style={{ fontSize: '12px', fontWeight: '500', marginRight: '7px' }}>{itemService?.platform}</span>
-                                  <span style={{ padding: '0 5px' }}>-</span>
-                                  <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.category}</span>
-                                  <span style={{ padding: '0 5px' }}>|</span>
-                                  <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.type}</span>
-                                </div>
-                              </Option>
+                            <Option key={index} value={itemService?.category}>
+                              <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                                <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+                                <span style={{ fontSize: '12px', fontWeight: '500', marginRight: '7px' }}>{itemService?.platform}</span>
+                                <span style={{ padding: '0 5px' }}>-</span>
+                                <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.category}</span>
+                                <span style={{ padding: '0 5px' }}>|</span>
+                                <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.type}</span>
+                              </div>
+                            </Option>
                           );
                         })
                       }
@@ -817,7 +844,7 @@ function AddOrderGeneral() {
                       message: 'Chưa chọn dịch vụ'
                     }]}
                   >
-                    <Select 
+                    <Select
                       allowClear
                       showSearch
                       size='middle'
@@ -869,14 +896,14 @@ function AddOrderGeneral() {
                                       itemService?.geo ? (
                                         <Tooltip title={itemService?.geo?.toUpperCase()}>
                                           <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                            <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="14px" height="14px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                                            <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="14px" height="14px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
                                           </span>
                                         </Tooltip>
                                       ) : null
                                     }
                                     <span style={{ fontWeight: 'bold', marginRight: '3px' }}>{itemService?.service_id}</span>
                                     <span style={{ padding: '0 5px' }}>-</span>
-                                    <span style={{ fontWeight: 500 }}>{ `${itemService?.name?.substring(0, 37)  }...` }</span>
+                                    <span style={{ fontWeight: 500 }}>{`${itemService?.name?.substring(0, 37)}...`}</span>
                                     <span style={{ padding: '0 5px' }}>-</span>
                                     <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
                                   </div>
@@ -939,7 +966,7 @@ function AddOrderGeneral() {
                               detailService?.geo ? (
                                 <Tooltip title={detailService?.geo?.toUpperCase()}>
                                   <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                    <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                                    <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
                                     <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
                                   </span>
                                 </Tooltip>
@@ -1010,7 +1037,7 @@ function AddOrderGeneral() {
                     {
                       detailService?.priority ? (
                         <span className="label" style={badgeOrangeStyle}>
-                          <FaLocationArrow color='orange' fontSize={8} style={{  margin: '0 5px 0 0', padding: 0 }}/>
+                          <FaLocationArrow color='orange' fontSize={8} style={{ margin: '0 5px 0 0', padding: 0 }} />
                           Ưu tiên
                         </span>
                       ) : <></>
@@ -1018,19 +1045,19 @@ function AddOrderGeneral() {
                   </div>
                 </Card>
                 {
-                  (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0)  ? (
+                  (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0 && stateCurr?.amountChange <= detailService?.max) ? (
                     <Card
                       size="small"
-                      style={{ 
+                      style={{
                         border: '3px solid #dddddd7a',
                         backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
                         color: 'black'
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center'}}>
-                        <FaMoneyBillWave color="green" style={{ fontSize: '19px', marginLeft: '6px', }}/>
-                        <span style={{ fontWeight: '800', color: '#00a10e', padding: '0px 10px', fontSize: '15px'  }}>
-                          {numberWithCommas((stateCurr?.amountChange ?? 1)*(detailService?.price_per_10 ?? 1)/10 || 0)} {VIETNAMES_CURRENCY}
+                      <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}>
+                        <FaMoneyBillWave color="green" style={{ fontSize: '19px', marginLeft: '6px', }} />
+                        <span style={{ fontWeight: '800', color: '#00a10e', padding: '0px 10px', fontSize: '15px' }}>
+                          {numberWithCommas((stateCurr?.amountChange ?? 1) * (detailService?.price_per_10 ?? 1) / 10 || 0)} {VIETNAMES_CURRENCY}
                         </span>
                       </div>
                     </Card>
@@ -1041,7 +1068,7 @@ function AddOrderGeneral() {
               <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
                 <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px', height: '-webkit-fill-available' }}>
                   <div className="text-center">
-                    <Image src={EmptyBackground}  preview={false} width="86%"/>
+                    <Image src={EmptyBackground} preview={false} width="86%" />
                   </div>
                 </Card>
               </Col>
