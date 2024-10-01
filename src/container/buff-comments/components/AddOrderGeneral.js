@@ -717,6 +717,62 @@ function AddOrderGeneral() {
     }
   }
 
+  const handleChangeService = (serviceSelected) => {
+    const findCategory = listService?.filter(itemService => itemService?.service_id === serviceSelected);
+
+    if (findCategory?.length > 0) {
+      if (findCategory[0]?.category !== stateCurr?.selectedCategory) {
+        setStateCurr({
+          ...stateCurr,
+          selectedCategory: findCategory[0]?.category,
+          amountChange: 0
+        });
+
+        setHelpMessage({});
+
+        switch (findCategory[0]?.category) {
+          case 'Comments':
+            formCreateOrder.resetFields(['link']);
+            break;
+    
+          case 'Subscribers':
+            formCreateOrder.resetFields(['link', 'quantity']);
+            break;
+
+          case 'Likes':
+            formCreateOrder.resetFields(['link', 'quantity']);
+            break;
+
+          case 'Views':
+            formCreateOrder.resetFields(['link', 'quantity']);
+            break;
+
+          default:
+            console.log('----- reset all fields -----')
+        }
+
+        dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
+      }
+      dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
+    }
+  }
+
+  const handleSearchService = (searchServiceText) => {
+    setStateCurr({
+      ...stateCurr,
+      selectedCategory: ''
+    });
+    dispatch(actionsService.modalDetailServiceBegin({}));
+  }
+
+  const handleClearServiceSelected = () => {
+    setStateCurr({
+      ...stateCurr,
+      selectedCategory: null
+    });
+    dispatch(actionsService.modalDetailServiceBegin({}));
+  }
+
   return (
     <Modal
       width='900px'
@@ -850,39 +906,9 @@ function AddOrderGeneral() {
                       size='middle'
                       className='full-height-dropdown'
                       placeholder="Tìm theo ID của dịch vụ"
-                      onSearch={(values) => {
-                        setStateCurr({
-                          ...stateCurr,
-                          selectedCategory: ''
-                        });
-                        dispatch(actionsService.modalDetailServiceBegin({}));
-                      }}
-                      onChange={(values) => {
-                        const findCategory = listService?.filter(itemService => itemService?.service_id === values);
-
-                        if (findCategory?.length > 0) {
-                          if (findCategory[0]?.category !== stateCurr?.selectedCategory) {
-                            setStateCurr({
-                              ...stateCurr,
-                              selectedCategory: findCategory[0]?.category,
-                              amountChange: 0
-                            });
-
-                            setHelpMessage({});
-                            formCreateOrder.resetFields(['link']);
-
-                            dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
-                          }
-                          dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
-                        }
-                      }}
-                      onClear={() => {
-                        setStateCurr({
-                          ...stateCurr,
-                          selectedCategory: null
-                        });
-                        dispatch(actionsService.modalDetailServiceBegin({}));
-                      }}
+                      onSearch={(text) => handleSearchService(text)}
+                      onChange={(serviceSelected) => handleChangeService(serviceSelected)}
+                      onClear={() => handleClearServiceSelected()}
                     >
                       {
                         (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === DEFAULT_CATEGORY))?.map((itemService, index) => {
