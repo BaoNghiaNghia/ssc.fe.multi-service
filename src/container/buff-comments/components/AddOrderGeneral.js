@@ -162,15 +162,15 @@ function AddOrderGeneral() {
 
           // Check if jumpStep is a valid number and quantity is a number
           if (typeof jumpStep === 'number' && typeof quantity === 'number' && existingErrorsQuantity?.length === 0) {
-            const validJumpStep = jumpStep % quantity;
+            const validJumpStep = quantity % jumpStep;
+
+            const messageErrorNotFullfil = [ `Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`]; 
       
-            const errors = validJumpStep !== 0
-              ? [ `Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`]
-              : [...existingErrorsQuantity]; // Clear errors if valid
+            const errors = validJumpStep !== 0 ? messageErrorNotFullfil : existingErrorsQuantity; // Clear errors if valid
         
             formCreateOrder.setFields([{ name: 'quantity', errors }]);
-            console.log('---- validJumpStep -----', validJumpStep);
           } else {
+            formCreateOrder.setFields([{ name: 'quantity', existingErrorsQuantity }]);
             console.log('validData or jump_step_response is not defined or jump_step is not a valid number.');
           }
         }
