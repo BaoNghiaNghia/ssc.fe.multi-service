@@ -9,7 +9,7 @@ import { RiShoppingBag3Fill } from "react-icons/ri";
 import { WiTime7 } from "react-icons/wi";
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import { TbCreditCardRefund, TbShoppingBagEdit } from "react-icons/tb";
-import { MdBlock } from "react-icons/md";
+import { MdBlock, MdOutlineVideoLibrary } from "react-icons/md";
 import { BsFire } from "react-icons/bs";
 import { LuListFilter } from "react-icons/lu";
 import { toast } from 'react-toastify';
@@ -127,6 +127,7 @@ function PendingBuffSubscribes() {
 
   const [state, setState] = useState({
     isDetailOrderSubscribeModal: false,
+    isListVideoInChannel: false,
     isUpdateSubscribeOrderModal: false,
     isCancelRefundSubscribeOrderModal: false,
     isInsuranceSubscribeOrderModal: false,
@@ -187,6 +188,15 @@ function PendingBuffSubscribes() {
       }
     }
   };
+
+  function getChannelId(url) {
+    // Regular expression to match the channel ID specifically for the channel URL format
+    const regex = /https?:\/\/(?:www\.)?youtube\.com\/channel\/([a-zA-Z0-9_-]{24})/;
+    const match = url.match(regex);
+    
+    // Return the channel ID if a match is found
+    return match ? match[1] : null;
+}
 
   // const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
 
@@ -256,70 +266,110 @@ function PendingBuffSubscribes() {
         ),
         video_id: (
           <>
-            <div style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
-              {
-                priority ? (
-                  <Tooltip title="Ưu tiên">
-                    <BsFire fontSize={15} color='#238f00' style={{ marginRight: '6px', marginTop: '3px', textShadow: '1px 1px 2px yellowgreen' }}/>
-                     {/* 🔥 */}
-                  </Tooltip>
-                ) : <></>
-              }
-
-              <Tooltip 
+            <div style={{ display: 'inline-flex', alignItems: 'flex-start', position: 'relative' }}> {/* Added position: relative */}
+              <Tooltip
                 title={
                   <Row gutter={10}>
                     <Col sm={24} style={{ position: 'relative' }}>
-                      <Image
-                        src={`https://img.youtube.com/vi/${video_id}/mqdefault.jpg`}
-                        alt={`Thumbnail for ${video_title}`}
-                        preview={false}
-                        style={{ borderRadius: '5px', marginBottom: '10px', width: '100%' }}
-                      />
-                      <PlayCircleOutlined
-                        style={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '50%',
-                          fontSize: '30px', // Size of the play button
-                          color: 'white', // Color of the play button
-                          transform: 'translate(-50%, -50%)', // Center the button
-                          cursor: 'pointer', // Change cursor on hover
-                          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' // Black shadow for better visibility
-                        }}
-                      />
+                      <div style={{ position: 'relative' }}>
+                        <Image
+                          src={`https://img.youtube.com/vi/${getChannelId(link)}/default.jpg`}
+                          alt={`Thumbnail for ${video_title}`}
+                          preview={false}
+                          style={{ borderRadius: '5px', marginBottom: '10px', width: '100%' }}
+                        />
+                
+                        <PlayCircleOutlined
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            fontSize: '30px',
+                            color: 'white',
+                            transform: 'translate(-50%, -50%)',
+                            cursor: 'pointer',
+                            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+                          }}
+                        />
+                      </div>
                     </Col>
                     <Col sm={24}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center',  }}>
-                        <strong>{video_title}</strong>
+                      <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                        <strong>{video_title || '...'}</strong>
                       </span>
                     </Col>
                   </Row>
-                } 
-                placement='topLeft'
+                }
+                placement="topLeft"
               >
-                <a href={link} color='black' target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
-                  <span
-                    style={{ 
-                      margin: 0,
-                      padding: 0,
-                      color: priority ? 'green' : 'darkslategray',
-                      fontFamily: 'Poppins, sans-serif',
-                      fontWeight:600,
-                      textShadow: priority ? `1px 1px 3px yellowgreen ` : 'none'
-                    }}
-                  >{ `${video_title?.substring(0, 30)  }...` }</span>
+                <a
+                  href={link}
+                  color="black"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: 'black !important',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    position: 'relative' // Added this line
+                  }}
+                >
+                  <span style={{ position: 'relative', marginRight: '10px' }}> 
+                    {priority && (
+                      <Tooltip title="Ưu tiên">
+                        <BsFire
+                          fontSize={15}
+                          color="#238f00"
+                          style={{
+                            backgroundColor: 'white',
+                            borderRadius: '6px',
+                            position: 'absolute', // Position it absolutely
+                            top: '-7px', // Adjust top position
+                            right: '-7px', // Adjust right position
+                            textShadow: '1px 1px 2px yellowgreen',
+                            zIndex: 1 // Ensure it's on top of the image
+                          }}
+                        />
+                      </Tooltip>
+                    )}
+
+                    <Image
+                      id="channel-image-cover"
+                      src={`https://img.youtube.com/vi/${getChannelId(link)}/default.jpg`}
+                      alt={`Thumbnail for ${video_title}`}
+                      preview={false}
+                      style={{
+                        borderRadius: '10px',
+                        padding: '2px',
+                        marginBottom: '0',
+                        outline: priority ? '2px dashed yellowgreen' : 'none',
+                        width: '35px', // Ensure this is large enough
+                        height: '35px' // Ensure this is large enough
+                      }}
+                    />
+                  </span>
+                  <span>
+                    <span
+                      style={{
+                        margin: 0,
+                        padding: 0,
+                        color: priority ? 'green' : 'darkslategray',
+                        fontFamily: 'Poppins, sans-serif',
+                        fontWeight: 600,
+                        textShadow: priority ? `1px 1px 3px yellowgreen` : 'none'
+                      }}
+                    >
+                      {`${video_title?.substring(0, 30)}...`}
+                    </span>
+
+                    <span style={{ fontSize: '0.8em', color: 'gray' }}>
+                      <strong>Channel ID: </strong> {getChannelId(link)}
+                    </span>
+                  </span>
                 </a>
               </Tooltip>
             </div>
 
-            <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-              <strong style={{ color: 'gray' }}>Video ID: </strong> {video_id}
-            </span>
-
-            <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-              <strong style={{ color: 'gray' }}>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
-            </span>
           </>
         ),
         start_count: (
@@ -549,6 +599,21 @@ function PendingBuffSubscribes() {
                 </Tooltip>
               ) : <></>
             }
+            <Tooltip title="Videos">
+              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+                onClick={() => {
+                  dispatch(actionsSubscribe.detailOrderSubscribeAdminBegin({
+                    ...value,
+                  }));
+                  setState({ 
+                    ...state, 
+                    isListVideoInChannel: true
+                  });
+                }}
+              >
+                <MdOutlineVideoLibrary />
+              </Button>
+            </Tooltip>
             <Tooltip title="Chi tiết">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {
