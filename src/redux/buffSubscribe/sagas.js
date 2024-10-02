@@ -576,3 +576,7 @@ export function* refundhWarrantyOrderWatcherSaga() {
 export function* setRangeDateWarrantyFilterWatcherSaga() {
   yield takeLatest(actions.SET_RANGE_DATE_WARRANTY_FILTER_BEGIN, setRangeDateWarrantyFilterFunc);
 }
+
+export function* detailComputerSubscribeWatcherSaga() {
+  yield takeLatest(actions.DETAIL_COMPUTER_RUN_SUBSCRIBE_BEGIN, detailComputerSubscribeFunc);
+}

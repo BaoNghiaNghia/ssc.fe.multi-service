@@ -85,6 +85,7 @@ import {
     changeOrderHistoryTypeWatcherSaga,
     createOrderSubscribeWatcherSaga,
     deleteComputerSubscribeWatcherSaga,
+    detailComputerSubscribeWatcherSaga,
     detailOrderSubscribeWatcherSaga,
     fetchAdminSettingWatcherSaga,
     fetchListOrderSubscribeWatcherSaga,
@@ -395,6 +396,7 @@ export default function* rootSaga() {
         subscribeStatisticRunningUserOrderWatcherSaga(),
         subscribeStatisticUserPointWatcherSaga(),
         subscribeStatisticTotalOrderWatcherSaga(),
+        detailComputerSubscribeWatcherSaga(),
         subscribeStatisticOrderByDaysWatcherSaga(),
 
         viewStatisticViewByDayWatcherSaga(),

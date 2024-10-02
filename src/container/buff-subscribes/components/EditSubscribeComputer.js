@@ -16,10 +16,9 @@ function EditSubscribeComputer({ setState, computerState }) {
     const { isEditSubscribeServer, selectedItem } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailOrderSubscribe } = useSelector(state => {
+    const { loading } = useSelector(state => {
         return {
-            isLoading: state?.buffSubscribe?.loading,
-            detailOrderSubscribe: state?.buffSubscribe?.detailOrderSubscribe
+            loading: state?.buffSubscribe?.loading
         };
     });
 
@@ -90,7 +89,7 @@ function EditSubscribeComputer({ setState, computerState }) {
         >
             <Form layout="vertical" form={formDetailComputerCmt}>
                 {
-                    !isLoading ? (
+                    !loading ? (
                         <>
                             <Row gutter="10">
                                 <Col sm={12}>

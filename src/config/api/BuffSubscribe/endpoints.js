@@ -4,13 +4,6 @@ export const FETCH_ADMIN_SETTING_ENDPOINT = 'api/v2/admin/setting';
 export const FETCH_SERVICE_PACKAGE_LIST_ENDPOINT = 'api/v2/service/list';
 export const FETCH_LIST_ORDER_HISTORY_ENDPOINT = 'api/v2/order/history/list';
 
-
-
-
-
-
-
-
 export const GENERAL_ORDER_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/orders';
 export const CREATE_ORDER_SUBSCRIBE_ENDPOINT = 'smm/api/v1/admin/orders/sub';
 export const GENERAL_COMPUTER_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/computers';

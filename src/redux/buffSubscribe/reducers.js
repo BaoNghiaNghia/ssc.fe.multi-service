@@ -13,10 +13,6 @@ const initialState = {
     to: currentDate
   },
   typeHistory: 0,
-
-
-
-
   listOrderSubscribe: [],
   detailOrderSubscribe: {},
   listComputer: {},

@@ -380,9 +380,9 @@ function ComputerRunSubscribesOrder() {
       <ConfirmRequestModal
         isOpen={state?.isDeleteSubscribeServer}
         setState={setState}
-        descriptions={`Xác nhận xóa máy chạy like ${state?.selectedItem?.name}`}
+        descriptions={`Xác nhận xóa máy chạy subscribe ${state?.selectedItem?.name}`}
         title="Xác nhận"
-        subtitle="Xóa thông tin máy chạy like"
+        subtitle="Xóa thông tin máy chạy subscribe"
         handleOk={() => {
           dispatch(actions.deleteComputerRunSubscribeBegin({id: state?.selectedItem?.id}));
           setState({ 
