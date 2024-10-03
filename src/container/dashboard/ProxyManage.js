@@ -15,7 +15,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/proxy/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIST_SERVICE_SUPPLY } from '../../variables';
 
 const columns = [
   {
@@ -37,6 +37,11 @@ const columns = [
     title: 'Số lượng',
     dataIndex: 'total',
     key: 'total',
+  },
+  {
+    title: 'Dịch vụ',
+    dataIndex: 'service',
+    key: 'service',
   },
   {
     title: 'Đã sử dụng',
@@ -99,7 +104,7 @@ function ProxyManage() {
   
   if (listDomain?.items?.length) {
     listDomain?.items?.map((value, key) => {
-      const { id, port_start, geo, domain, used_count, total, enable } = value;
+      const { id, port_start, geo, domain, used_count, total, enable, service } = value;
       return dataSource.push({
         key: key + 1,
         id: <span className="customer-name">{id}</span>,
@@ -126,6 +131,15 @@ function ProxyManage() {
             </>
           }
         </>,
+        service: (
+          <>
+            <Row>
+              <Col>
+                <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{ LIST_SERVICE_SUPPLY.find(item => item.service_type === service).category}</span>
+              </Col>
+            </Row>
+          </>
+        ),
         enable: (
           <Tooltip title={enable ? 'Đang hoạt động' : 'Không hoạt động'}>
             <Switch checkedChildren="Hoạt động" unCheckedChildren="Dừng hoạt động"  checked={enable} onChange={(state) => {
