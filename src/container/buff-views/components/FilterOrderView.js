@@ -148,7 +148,7 @@ function FilterOrderView({ orderState, setState }) {
               <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
               <div>
                 <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Bộ lọc</p>
-                <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Tìm order comment phù hợp</p>
+                <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Tìm order view phù hợp</p>
               </div>
             </div>
           </>

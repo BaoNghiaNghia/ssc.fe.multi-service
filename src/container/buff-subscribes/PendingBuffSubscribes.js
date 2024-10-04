@@ -134,7 +134,7 @@ function PendingBuffSubscribes() {
     isUpdateSubscribeOrderModal: false,
     isCancelRefundSubscribeOrderModal: false,
     isInsuranceSubscribeOrderModal: false,
-    isFilterLikeOrderModal: false,
+    isFilterSubscribeOrderModal: false,
     isBatchUpdateSubscribeOrderModal: false,
     notData: {},
     rowData: {},
@@ -778,7 +778,7 @@ function PendingBuffSubscribes() {
                         size="small"
                         type="default"
                         onClick={() => {
-                          setState({...state, isFilterLikeOrderModal: true });
+                          setState({...state, isFilterSubscribeOrderModal: true });
                         }}
                       >
                         <LuListFilter icon="plus" size={15} color='black' /> Bộ lọc

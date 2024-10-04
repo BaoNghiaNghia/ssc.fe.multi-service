@@ -137,7 +137,7 @@ function FilterOrderSubscribes({ orderState, setState }) {
             <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
             <div>
               <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Bộ lọc</p>
-              <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Tìm order like phù hợp</p>
+              <p style={{ fontSize: '0.8em', marginBottom: 0 }}>Tìm order subscribe phù hợp</p>
             </div>
           </div>
         }
@@ -240,7 +240,7 @@ function FilterOrderSubscribes({ orderState, setState }) {
                       return (
                         <>
                           {
-                            itemService?.enabled && itemService?.category === "Subscribes" ? (
+                            itemService?.enabled && itemService?.category === "Subscribers" ? (
                               <Option key={index} value={itemService.service_id}>
                                 <>
                                   <Row style={{ margin: 0, padding: 0 }}>
