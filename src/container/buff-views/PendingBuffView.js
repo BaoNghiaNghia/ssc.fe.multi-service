@@ -313,13 +313,23 @@ function PendingBuffView() {
               </Tooltip>
             </div>
 
-            <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-              <strong style={{ color: 'gray' }}>Video ID: </strong> {video_id}
-            </span>
+            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+              <Image
+                src={`https://img.youtube.com/vi/${video_id}/mqdefault.jpg`}
+                alt={`Thumbnail for ${video_title}`}
+                preview={false}
+                style={{ borderRadius: '2px', width: '52px', opacity: '50%' }}
+              />
+              <div>
+                <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
+                  <strong style={{ color: 'gray' }}>Video ID: </strong> {video_id}
+                </span>
 
-            <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-              <strong style={{ color: 'gray' }}>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
-            </span>
+                <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
+                  <strong style={{ color: 'gray' }}>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
+                </span>
+              </div>
+            </div>
           </>
         ),
         start_count: (
