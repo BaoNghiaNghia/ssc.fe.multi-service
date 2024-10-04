@@ -7,7 +7,7 @@ import { AiOutlineFieldNumber } from "react-icons/ai";
 import { Row, Col, Form, Input, InputNumber, Button, Modal, Divider, Switch, Select } from 'antd';
 import { MdAddchart, MdOutlineImportExport } from "react-icons/md";
 import actions from '../../../redux/proxy/actions';
-import { generateIconService, REGION_IDENTIFIER } from '../../../variables';
+import { REGION_IDENTIFIER } from '../../../variables';
 
 const { Option } = Select;
 
@@ -51,7 +51,6 @@ function AddDomain({ isOpen, setState }) {
     } catch (err) {
       console.log(err);
     }
-
   };
 
   const handleCancel = () => {
@@ -109,7 +108,6 @@ function AddDomain({ isOpen, setState }) {
               <Form.Item 
                 name="service"
                 label="Loại dịch vụ"
-                // initialValue={domainService[0]?.id}
                 style={{ marginBottom: '7px' }}
                 rules={[{
                   required: true,

@@ -56,6 +56,9 @@ const ProviderConfig = () => {
         hideProgressBar="true"
         limit={2}
         theme='light'
+        toastStyle={{
+          fontFamily: "'Be Vietnam Pro', sans-serif"
+        }}
       />
       <ThemeProvider theme={{ ...theme, rtl, topMenu, darkMode }}>
         <ReactReduxFirebaseProvider {...rrfProps}>
