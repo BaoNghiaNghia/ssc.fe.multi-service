@@ -131,13 +131,13 @@ function* listComputerRunSubscribeFunc(params) {
     const errorMessage = error;
 
     yield put(
-      actions.listComputerRunSubscribeErr({ error: errorMessage || 'Update order subscribe failed' })
+      actions.listComputerRunSubscribeErr({ error: errorMessage || 'Subscribe - List computer run subscribe failed' })
     );
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Cập nhật đơn subscribe thất bại');
+      toast.error('Subscribe - List computer run subscribe failed');
     }
   } finally { /* empty */ }
 }

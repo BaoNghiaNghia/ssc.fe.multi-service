@@ -272,7 +272,7 @@ function Overview() {
                           ...state,
                           isMailListPopup: true,
                           selectedItem: {
-                            title: 'Mail chưa gọi',
+                            title: `Mail chưa gọi - ${typeService}`,
                             data: accountStatus?.list_uncalled
                           }
                         })}
@@ -331,7 +331,7 @@ function Overview() {
                           ...state,
                           isMailListPopup: true,
                           selectedItem: {
-                            title: 'Mail chết',
+                            title: `Mail chết - ${typeService}`,
                             data: accountStatus?.list_dead
                           }
                         })}

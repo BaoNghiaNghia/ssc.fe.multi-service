@@ -54,7 +54,7 @@ const ProviderConfig = () => {
         position="bottom-center"
         autoClose={3000}
         hideProgressBar="true"
-        limit={2}
+        limit={5}
         theme='light'
         toastStyle={{
           fontFamily: "'Be Vietnam Pro', sans-serif"

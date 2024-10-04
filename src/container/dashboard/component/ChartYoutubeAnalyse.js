@@ -11,6 +11,7 @@ const ChartYoutubeAnalyse = ({
     loadingChart
 }) => {
     const [loadingF, setLoadingF] = useState(true);
+    const [error, setError] = useState(null); // State for error handling
 
     const { typeService } = useSelector(state => {
         return {
@@ -25,6 +26,16 @@ const ChartYoutubeAnalyse = ({
 
         return () => clearTimeout(timeout);
     }, []);
+
+    // Validate chartData and handle errors
+    useEffect(() => {
+        if (!chartData || !Array.isArray(chartData.wave_timeline) || !Array.isArray(chartData.wave_date)) {
+            setError("Invalid chart data. Please check your input.");
+        } else {
+            setError(null); // Clear error if data is valid
+        }
+    }, [chartData]);
+
     const chartDataGeneral = {
         chart: {
             height: 250,
@@ -79,25 +90,25 @@ const ChartYoutubeAnalyse = ({
             size: [4, 7]
         },
         xaxis: {
-            categories: chartData?.wave_date || [],
+            categories: Array.isArray(chartData?.wave_date) ? chartData.wave_date : [], // Ensure wave_date is an array
         },
         yaxis: {
             title: {
                 text: `% / ${typeService}`
             },
             labels: {
-                formatter (value) {
+                formatter(value) {
                     return numberWithCommas(value || 0);
                 }
             },
         },
         fill: {
             gradient: {
-              enabled: true,
-              opacityFrom: 0.65,
-              opacityTo: 0
+                enabled: true,
+                opacityFrom: 0.65,
+                opacityTo: 0
             }
-          },
+        },
         legend: {
             position: 'top',
             horizontalAlign: 'right',
@@ -111,7 +122,7 @@ const ChartYoutubeAnalyse = ({
                 format: FORMAT_DATESTRING
             },
             y: {
-                formatter (value) {
+                formatter(value) {
                     return numberWithCommas(value || 0);
                 }
             }
@@ -122,14 +133,14 @@ const ChartYoutubeAnalyse = ({
             verticalAlign: "middle",
             style: {
                 color: 'black',
-                fontSize: '17px',
-                fontFamily: 'Poppins, sans-serif',
+                fontSize: '16px',
+                fontFamily: 'Be Vietnam Pro, sans-serif',
             },
             offsetY: 4
         },
         dataLabels: {
             enabled: true,
-            formatter (val, { seriesIndex }) {
+            formatter(val, { seriesIndex }) {
                 const valueFormatted = numberWithCommas(val || 0);
                 if (seriesIndex === 1) {
                     return `${valueFormatted}`;
@@ -138,7 +149,7 @@ const ChartYoutubeAnalyse = ({
             },
             position: "top"
         },
-        series: chartData?.wave_timeline || [],
+        series: Array.isArray(chartData?.wave_timeline) ? chartData.wave_timeline : [], // Ensure wave_timeline is an array
     }
 
     const loadingOverlayStyles = {
@@ -157,7 +168,13 @@ const ChartYoutubeAnalyse = ({
             text='Đang cập nhật...'
             styles={loadingOverlayStyles}
         >
-            <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="area" height={180}/>
+            {error ? (
+                <div style={{ textAlign: 'center', color: 'red' }}>
+                    {error}
+                </div>
+            ) : (
+                <ReactApexChart options={chartDataGeneral} series={chartDataGeneral?.series} type="area" height={180} />
+            )}
         </LoadingOverlay>
     )
 }

@@ -1040,7 +1040,6 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-
         taskOfTool: {},
         error: err
       };
