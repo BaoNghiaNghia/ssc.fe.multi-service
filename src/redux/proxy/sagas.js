@@ -6,7 +6,8 @@ import {
     deleteDomainAPI,
     getListProxyInDomainAPI,
     listGeneralDomainAPI,
-    patchProxyAPI
+    patchProxyAPI,
+    listDomainByServiceAPI
 } from '../../config/api/Proxy/index';
 import { MESSSAGE_STATUS_CODE } from '../../variables';
 
@@ -147,6 +148,29 @@ function* listGeneralDomainFunc(params) {
   } finally { /* empty */ }
 }
 
+function* listDomainInServiceFunc(params) {
+  try {
+    const response = yield call(listDomainByServiceAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.listDomainByServiceSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.listDomainByServiceErr({ error: errorMessage || 'List service of domain failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('List service of domain failed');
+    }
+  } finally { /* empty */ }
+}
+
 
 export function* patchProxyWatcherSaga() {
   yield takeLatest(actions.PATCH_PROXY_BEGIN, patchProxyFunc);
@@ -165,4 +189,8 @@ export function* getListProxyInDomainWatcherSaga() {
 }
 export function* listGeneralDomainWatcherSaga() {
   yield takeLatest(actions.LIST_ALL_DOMAIN_BEGIN, listGeneralDomainFunc);
+}
+
+export function* listDomainInServiceWatcherSaga() {
+  yield takeLatest(actions.LIST_DOMAIN_BY_SERVICE_BEGIN, listDomainInServiceFunc);
 }

@@ -22,7 +22,31 @@ const actions = {
     PATCH_PROXY_BEGIN: 'PATCH_PROXY_BEGIN',
     PATCH_PROXY_SUCCESS: 'PATCH_PROXY_SUCCESS',
     PATCH_PROXY_ERR: 'PATCH_PROXY_ERR',
-    
+
+    LIST_DOMAIN_BY_SERVICE_BEGIN: 'LIST_DOMAIN_BY_SERVICE_BEGIN',
+    LIST_DOMAIN_BY_SERVICE_SUCCESS: 'LIST_DOMAIN_BY_SERVICE_SUCCESS',
+    LIST_DOMAIN_BY_SERVICE_ERR: 'LIST_DOMAIN_BY_SERVICE_ERR',
+
+    listDomainByServiceBegin: (payload) => {
+        return {
+            type: actions.LIST_DOMAIN_BY_SERVICE_BEGIN,
+            payload
+        };
+    },
+
+    listDomainByServiceSuccess: (data) => {
+        return {
+            type: actions.LIST_DOMAIN_BY_SERVICE_SUCCESS,
+            data,
+        };
+    },
+
+    listDomainByServiceErr: (err) => {
+        return {
+            type: actions.LIST_DOMAIN_BY_SERVICE_ERR,
+            err,
+        };
+    },
 
     patchProxyBegin: (payload) => {
         return {

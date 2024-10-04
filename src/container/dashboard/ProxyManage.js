@@ -62,10 +62,11 @@ const columns = [
 
 function ProxyManage() {
   const dispatch = useDispatch();
-  const { isLoading, listDomain } = useSelector(state => {
+  const { isLoading, listDomain, domainService } = useSelector(state => {
     return {
       isLoading: state?.proxy?.loading,
-      listDomain: state?.proxy?.listDomain
+      listDomain: state?.proxy?.listDomain,
+      domainService: state?.proxy?.domainService
     };
   });
 
@@ -96,8 +97,14 @@ function ProxyManage() {
       limit: limitPage,
     }));
   }, [dispatch, currentPage, limitPage]);
+  
+  
+  useEffect(() => {
+    dispatch(actions.listDomainByServiceBegin());
+  }, [dispatch]);
 
-  const handleSearch = searchText => {
+  const handleSearch = (searchText) => {
+
   };
 
   const dataSource = [];
@@ -135,7 +142,7 @@ function ProxyManage() {
           <>
             <Row>
               <Col>
-                <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{ LIST_SERVICE_SUPPLY.find(item => item.service_type === service).category}</span>
+                <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{ domainService?.find(item => item?.id === service)?.name}</span>
               </Col>
             </Row>
           </>

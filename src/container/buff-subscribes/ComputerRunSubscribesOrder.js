@@ -332,7 +332,6 @@ function ComputerRunSubscribesOrder() {
                 <FeatherIcon icon="eye" size={16} style={{ marginTop: '4px' }} />
               </Button>
             </Tooltip>
-            {/* TODO: */}
             <Tooltip title="Xóa">
               <Button
                 size="default"
@@ -357,13 +356,6 @@ function ComputerRunSubscribesOrder() {
       });
     });
   }
-
-  // const rowSelection = {
-  //   getCheckboxProps: (record) => ({
-  //     disabled: record.name === 'Disabled User',
-  //     name: record.name,
-  //   }),
-  // };
 
   const onSelectChange = (selectedRowKey) => {
     setState({ ...state, selectedRowKeys: selectedRowKey });

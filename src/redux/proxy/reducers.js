@@ -4,6 +4,7 @@ const initialState = {
   listDomain: [],
   listProxyInDomain: [],
   detailDomain:{},
+  domainService: [],
   loading: false,
   error: null
 };
@@ -32,11 +33,35 @@ const {
     PATCH_PROXY_BEGIN,
     PATCH_PROXY_ERR,
     PATCH_PROXY_SUCCESS,
+
+    LIST_DOMAIN_BY_SERVICE_BEGIN,
+    LIST_DOMAIN_BY_SERVICE_ERR,
+    LIST_DOMAIN_BY_SERVICE_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case LIST_DOMAIN_BY_SERVICE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LIST_DOMAIN_BY_SERVICE_SUCCESS:
+      return {
+        ...state,
+        domainService: data,
+        loading: false,
+      };
+
+    case LIST_DOMAIN_BY_SERVICE_ERR:
+      return {
+        ...state,
+        loading: false,
+        error: err
+      };
+
     case PATCH_PROXY_BEGIN:
       return {
         ...state,

@@ -7,16 +7,17 @@ import { AiOutlineFieldNumber } from "react-icons/ai";
 import { Row, Col, Form, Input, InputNumber, Button, Modal, Divider, Switch, Select } from 'antd';
 import { MdAddchart, MdOutlineImportExport } from "react-icons/md";
 import actions from '../../../redux/proxy/actions';
-import { REGION_IDENTIFIER } from '../../../variables';
+import { generateIconService, REGION_IDENTIFIER } from '../../../variables';
 
 const { Option } = Select;
 
 function AddDomain({ isOpen, setState }) {
   const dispatch = useDispatch();
 
-  const { postLoading } = useSelector(state => {
+  const { postLoading, domainService } = useSelector(state => {
     return {
-        postLoading: state.settingService.postLoading,
+        postLoading: state?.settingService?.postLoading,
+        domainService: state?.proxy?.domainService,
     };
   });
 
@@ -33,7 +34,8 @@ function AddDomain({ isOpen, setState }) {
                 password: values?.password,
                 port_start: values?.port_start,
                 total: values?.total,
-                username: values?.username
+                username: values?.username,
+                service: values?.service,
             }
             dispatch(actions.createDomainBegin(requestData));
     
@@ -90,7 +92,7 @@ function AddDomain({ isOpen, setState }) {
           <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin Domain</Divider>
 
           <Row gutter="10">
-            <Col sm={18}>
+            <Col sm={24}>
               <Form.Item 
                 name="domain" 
                 label="Domain" 
@@ -103,7 +105,29 @@ function AddDomain({ isOpen, setState }) {
                 <Input size='small' style={{ fontWeight: 'bold' }} placeholder='Nhập vào domain'/>
               </Form.Item>
             </Col>
-            <Col sm={6}>
+            <Col sm={12}>
+              <Form.Item 
+                name="service"
+                label="Loại dịch vụ"
+                // initialValue={domainService[0]?.id}
+                style={{ marginBottom: '7px' }}
+                rules={[{
+                  required: true,
+                  message: 'Trường không được trống'
+                }]}
+              >
+                <Select style={{ width: '100%' }} id="select-service-type" size='small'>
+                  {
+                    domainService?.map(serviceType => (
+                      <Option value={serviceType?.id}>
+                        <span style={{ fontSize: '13px' }}>{serviceType?.name}</span>
+                      </Option>
+                    ))
+                  }
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
               <Form.Item 
                 name="geo" 
                 label="Geo"
