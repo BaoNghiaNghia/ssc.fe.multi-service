@@ -10,6 +10,10 @@ import {
   updateSettingCommentAPI,
   fetchListSettingLikeAPI,
   updateSettingLikeAPI,
+  fetchListSettingSubscribeAPI,
+  updateSettingSubscribeAPI,
+  fetchListSettingViewAPI,
+  updateSettingViewAPI,
 
   createGoogleKeyAPI,
   deleteGoogleKeyAPI,
@@ -158,6 +162,8 @@ function* fetchListAllGoogleKeyFunc(params) {
   } finally { /* empty */ }
 }
 
+
+// COMMENT
 function* fetchListSettingsCommentFunc(params) {
   try {
     const response = yield call(fetchListSettingCommentAPI, params?.payload);
@@ -212,6 +218,8 @@ function* updateSettingCommentFunc(params) {
   } finally { /* empty */ }
 }
 
+
+// LIKE
 function* fetchListSettingsLikeFunc(params) {
   try {
     const response = yield call(fetchListSettingLikeAPI, params?.payload);
@@ -265,6 +273,119 @@ function* updateSettingLikeFunc(params) {
       }
   } finally { /* empty */ }
 }
+
+// VIEW
+function* fetchListSettingsViewFunc(params) {
+  try {
+    const response = yield call(fetchListSettingViewAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchListSettingsViewSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.fetchListSettingsViewErr({ error: errorMessage || 'View - Fetch services list failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Fetch list settings failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* updateSettingViewFunc(params) {
+  try {
+    const response = yield call(updateSettingViewAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateListSettingsViewSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListSettingsViewBegin()
+      );
+
+      toast.success(response?.data?.message);
+    }
+  } catch (error) {
+      const errorMessage = error;
+      yield put(
+        actions.updateListSettingsViewErr({ error: errorMessage || 'View - Update settings list failed' })
+      );
+  
+      if (errorMessage?.response?.data?.data?.error) {
+        toast.error(errorMessage?.response?.data?.data?.error);
+      } else if (errorMessage?.response?.data?.message) {
+        toast.error(errorMessage?.response?.data?.message);
+      } else {
+        toast.error('View - Update settings list failed');
+      }
+  } finally { /* empty */ }
+}
+
+// SUBSCRIBE
+function* fetchListSettingsSubscribeFunc(params) {
+  try {
+    const response = yield call(fetchListSettingSubscribeAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchListSettingsSubscribeSuccess(response?.data?.data)
+      );
+    }
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.fetchListSettingsSubscribeErr({ error: errorMessage || 'Subscribe - Fetch services list failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else {
+      toast.error('Subscribe - Fetch list settings failed');
+    }
+  } finally { /* empty */ }
+}
+
+function* updateSettingSubscribeFunc(params) {
+  try {
+    const response = yield call(updateSettingSubscribeAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.updateListSettingsSubscribeSuccess(response?.data?.data)
+      );
+
+      yield put(
+        actions.fetchListSettingsSubscribeBegin()
+      );
+
+      toast.success(response?.data?.message);
+    }
+  } catch (error) {
+      const errorMessage = error;
+      yield put(
+        actions.updateListSettingsSubscribeErr({ error: errorMessage || 'Subscribe - Update settings list failed' })
+      );
+  
+      if (errorMessage?.response?.data?.data?.error) {
+        toast.error(errorMessage?.response?.data?.data?.error);
+      } else if (errorMessage?.response?.data?.message) {
+        toast.error(errorMessage?.response?.data?.message);
+      } else {
+        toast.error('Subscribe - Update settings list failed');
+      }
+  } finally { /* empty */ }
+}
+
+
+
 
 function* fetchListServicesFunc(params) {
   try {
@@ -411,11 +532,7 @@ function* changeTabTypeFunc(params) {
   }
 }
 
-
-export function* fetchListServicesWatcherSaga() {
-  yield takeLatest(actions.FETCH_LIST_SERVICES_BEGIN, fetchListServicesFunc);
-}
-
+// Comment
 export function* fetchListSettingsCommentWatcherSaga() {
   yield takeLatest(actions.FETCH_LIST_SETTINGS_COMMENT_BEGIN, fetchListSettingsCommentFunc);
 }
@@ -424,6 +541,7 @@ export function* updateSettingCommentWatcherSaga() {
   yield takeLatest(actions.UPDATE_SETTING_COMMENT_BEGIN, updateSettingCommentFunc);
 }
 
+// Like
 export function* fetchListSettingsLikeWatcherSaga() {
   yield takeLatest(actions.FETCH_LIST_SETTINGS_LIKE_BEGIN, fetchListSettingsLikeFunc);
 }
@@ -432,11 +550,36 @@ export function* updateSettingLikeWatcherSaga() {
   yield takeLatest(actions.UPDATE_SETTING_LIKE_BEGIN, updateSettingLikeFunc);
 }
 
+// View
+export function* fetchListSettingsViewWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_SETTINGS_VIEW_BEGIN, fetchListSettingsViewFunc);
+}
+
+export function* updateSettingViewWatcherSaga() {
+  yield takeLatest(actions.UPDATE_SETTING_VIEW_BEGIN, updateSettingViewFunc);
+}
+
+// Subscribe
+export function* fetchListSettingsSubscribeWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_SETTINGS_SUBSCRIBE_BEGIN, fetchListSettingsSubscribeFunc);
+}
+
+export function* updateSettingSubscribeWatcherSaga() {
+  yield takeLatest(actions.UPDATE_SETTING_SUBSCRIBE_BEGIN, updateSettingSubscribeFunc);
+}
+
+
+// Service
+export function* fetchListServicesWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_SERVICES_BEGIN, fetchListServicesFunc);
+}
+
 export function* createServicesWatcherSaga() {
   yield takeLatest(actions.CREATE_SERVICES_BEGIN, createServicesFunc);
 }
 
 
+// Something
 export function* updateServicesWatcherSaga() {
   yield takeLatest(actions.UPDATE_SERVICES_BEGIN, updateServicesFunc);
 }
@@ -450,6 +593,7 @@ export function* changeTabTypeMemberWatcherSaga() {
 }
 
 
+// Google
 export function* deleteGoogleKeyWatcherSaga() {
   yield takeLatest(actions.DELETE_GOOGLE_KEY_BEGIN, deleteGoogleKeyFunc);
 }

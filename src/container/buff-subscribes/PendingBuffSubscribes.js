@@ -36,7 +36,7 @@ import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
-import { convertSeconds, numberWithCommas, performanceStatementTags } from '../../utility/utility';
+import { convertSeconds, numberWithCommas, numberWithCommasCurrency, performanceStatementTags } from '../../utility/utility';
 
 
 const columnsTable = [
@@ -328,8 +328,8 @@ function PendingBuffSubscribes() {
                             backgroundColor: 'white',
                             borderRadius: '6px',
                             position: 'absolute',
-                            top: '-7px',
-                            right: '-7px',
+                            top: '-2px',
+                            right: '-2px',
                             textShadow: '1px 1px 2px yellowgreen',
                             zIndex: 1
                           }}
@@ -343,12 +343,12 @@ function PendingBuffSubscribes() {
                       alt={`Thumbnail for ${channel_title}`}
                       preview={false}
                       style={{
-                        borderRadius: '10px',
+                        borderRadius: '25px',
                         padding: '2px',
                         marginBottom: '0',
                         outline: priority ? '2px dashed yellowgreen' : 'none',
-                        width: '35px', // Ensure this is large enough
-                        height: '35px' // Ensure this is large enough
+                        width: '45px', // Ensure this is large enough
+                        height: '45px' // Ensure this is large enough
                       }}
                     />
                   </span>
@@ -367,6 +367,9 @@ function PendingBuffSubscribes() {
                     </span>
 
                     <span style={{ fontSize: '0.8em', color: 'gray' }}>
+                      <strong>{numberWithCommasCurrency(current_count)} người đăng ký</strong>
+                    </span>
+                    <span style={{ fontSize: '0.6em', color: 'gray' }}>
                       <strong>Channel ID: </strong> {channel_id}
                     </span>
                   </span>

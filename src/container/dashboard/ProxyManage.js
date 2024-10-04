@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { FaYoutube } from 'react-icons/fa';
 import { Row, Col, Table, Switch, Tooltip } from 'antd';
 import { debounce } from 'lodash';
 import FeatherIcon from 'feather-icons-react';
@@ -15,7 +16,7 @@ import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/proxy/actions';
 import { numberWithCommas } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, LIST_SERVICE_SUPPLY } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE } from '../../variables';
 
 const columns = [
   {
@@ -139,13 +140,10 @@ function ProxyManage() {
           }
         </>,
         service: (
-          <>
-            <Row>
-              <Col>
-                <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{ domainService?.find(item => item?.id === service)?.name}</span>
-              </Col>
-            </Row>
-          </>
+          <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }} />
+            <span className="customer-name" style={{ color: 'green', fontWeight: '600' }}>{ domainService?.find(item => item?.id === service)?.name}</span>
+          </div>
         ),
         enable: (
           <Tooltip title={enable ? 'Đang hoạt động' : 'Không hoạt động'}>

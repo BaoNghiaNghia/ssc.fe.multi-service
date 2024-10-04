@@ -9,6 +9,8 @@ const initialState = {
   typeTab: SERVICE_SETTING_TYPE.SERVICE.title,
   listSettingsComment: {},
   listSettingsLike: {},
+  listSettingsView: {},
+  listSettingsSubscribe: {},
   detailService: {},
   listGoogleKey: {},
   detailGoogleKey: {},
@@ -37,6 +39,8 @@ const {
     CHANGE_TYPE_TAB_ERR,
     CHANGE_TYPE_TAB_SUCCESS,
 
+
+    // Comment
     FETCH_LIST_SETTINGS_COMMENT_BEGIN,
     FETCH_LIST_SETTINGS_COMMENT_ERR,
     FETCH_LIST_SETTINGS_COMMENT_SUCCESS,
@@ -45,6 +49,8 @@ const {
     UPDATE_SETTING_COMMENT_ERR,
     UPDATE_SETTING_COMMENT_SUCCESS,
 
+
+    // Like
     FETCH_LIST_SETTINGS_LIKE_BEGIN,
     FETCH_LIST_SETTINGS_LIKE_ERR,
     FETCH_LIST_SETTINGS_LIKE_SUCCESS,
@@ -52,6 +58,25 @@ const {
     UPDATE_SETTING_LIKE_BEGIN,
     UPDATE_SETTING_LIKE_ERR,
     UPDATE_SETTING_LIKE_SUCCESS,
+
+    // View
+    FETCH_LIST_SETTINGS_VIEW_BEGIN,
+    FETCH_LIST_SETTINGS_VIEW_ERR,
+    FETCH_LIST_SETTINGS_VIEW_SUCCESS,
+
+    UPDATE_SETTING_VIEW_BEGIN,
+    UPDATE_SETTING_VIEW_ERR,
+    UPDATE_SETTING_VIEW_SUCCESS,
+
+    // Subscribe
+    FETCH_LIST_SETTINGS_SUBSCRIBE_BEGIN,
+    FETCH_LIST_SETTINGS_SUBSCRIBE_ERR,
+    FETCH_LIST_SETTINGS_SUBSCRIBE_SUCCESS,
+
+    UPDATE_SETTING_SUBSCRIBE_BEGIN,
+    UPDATE_SETTING_SUBSCRIBE_ERR,
+    UPDATE_SETTING_SUBSCRIBE_SUCCESS,
+
 
     FETCH_LIST_ALL_GOOGLE_KEY_BEGIN,
     FETCH_LIST_ALL_GOOGLE_KEY_ERR,
@@ -193,6 +218,25 @@ const reducers = (state = initialState, action) => {
         loading: false,
       };
 
+    case UPDATE_SETTING_LIKE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_SETTING_LIKE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_SETTING_LIKE_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
     case FETCH_LIST_SETTINGS_COMMENT_BEGIN:
       return {
         ...state,
@@ -227,6 +271,46 @@ const reducers = (state = initialState, action) => {
       };
 
     case FETCH_LIST_SETTINGS_LIKE_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case FETCH_LIST_SETTINGS_VIEW_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case FETCH_LIST_SETTINGS_VIEW_SUCCESS:
+      return {
+        ...state,
+        listSettingsView: data,
+        loading: false,
+      };
+
+    case FETCH_LIST_SETTINGS_VIEW_ERR:
+      return {
+        ...state,
+        error: err,
+        loading: false,
+      };
+
+    case FETCH_LIST_SETTINGS_SUBSCRIBE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case FETCH_LIST_SETTINGS_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        listSettingsSubscribe: data,
+        loading: false,
+      };
+
+    case FETCH_LIST_SETTINGS_SUBSCRIBE_ERR:
       return {
         ...state,
         error: err,

@@ -30,15 +30,15 @@ const numberWithCommasCurrency = (x) => {
   }
   if (rounded >= 1_000_000_000) { 
     const billionFormatted = (rounded / 1_000_000_000).toFixed(2).replace(/\.0$/, '');
-    return `${billionFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} B`;
+    return `${billionFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Tỉ`;
   }
   if (rounded >= 1_000_000) {
     const millionFormatted = (rounded / 1_000_000).toFixed(2).replace(/\.0$/, '');
-    return `${millionFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} M`;
+    return `${millionFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Tr`;
   }
   if (rounded >= 1_000) { 
     const thousandFormatted = (rounded / 1_000).toFixed(2).replace(/\.0$/, '');
-    return `${thousandFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} K`;
+    return `${thousandFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} N`;
   }
 
   // Format the number with commas

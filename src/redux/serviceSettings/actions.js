@@ -3,6 +3,7 @@ const actions = {
     FETCH_LIST_SERVICES_SUCCESS: 'FETCH_LIST_SERVICES_SUCCESS',
     FETCH_LIST_SERVICES_ERR: 'FETCH_LIST_SERVICES_ERR',
 
+    // COMMENT
     FETCH_LIST_SETTINGS_COMMENT_BEGIN: 'FETCH_LIST_SETTINGS_COMMENT_BEGIN',
     FETCH_LIST_SETTINGS_COMMENT_SUCCESS: 'FETCH_LIST_SETTINGS_COMMENT_SUCCESS',
     FETCH_LIST_SETTINGS_COMMENT_ERR: 'FETCH_LIST_SETTINGS_COMMENT_ERR',
@@ -11,6 +12,7 @@ const actions = {
     UPDATE_SETTING_COMMENT_SUCCESS: 'UPDATE_SETTING_COMMENT_SUCCESS',
     UPDATE_SETTING_COMMENT_ERR: 'UPDATE_SETTING_COMMENT_ERR',
 
+    // LIKE
     FETCH_LIST_SETTINGS_LIKE_BEGIN: 'FETCH_LIST_SETTINGS_LIKE_BEGIN',
     FETCH_LIST_SETTINGS_LIKE_SUCCESS: 'FETCH_LIST_SETTINGS_LIKE_SUCCESS',
     FETCH_LIST_SETTINGS_LIKE_ERR: 'FETCH_LIST_SETTINGS_LIKE_ERR',
@@ -18,6 +20,26 @@ const actions = {
     UPDATE_SETTING_LIKE_BEGIN: 'UPDATE_SETTING_LIKE_BEGIN',
     UPDATE_SETTING_LIKE_SUCCESS: 'UPDATE_SETTING_LIKE_SUCCESS',
     UPDATE_SETTING_LIKE_ERR: 'UPDATE_SETTING_LIKE_ERR',
+
+    // VIEW
+    FETCH_LIST_SETTINGS_VIEW_BEGIN: 'FETCH_LIST_SETTINGS_VIEW_BEGIN',
+    FETCH_LIST_SETTINGS_VIEW_SUCCESS: 'FETCH_LIST_SETTINGS_VIEW_SUCCESS',
+    FETCH_LIST_SETTINGS_VIEW_ERR: 'FETCH_LIST_SETTINGS_VIEW_ERR',
+
+    UPDATE_SETTING_VIEW_BEGIN: 'UPDATE_SETTING_VIEW_BEGIN',
+    UPDATE_SETTING_VIEW_SUCCESS: 'UPDATE_SETTING_VIEW_SUCCESS',
+    UPDATE_SETTING_VIEW_ERR: 'UPDATE_SETTING_VIEW_ERR',
+
+    // SUBSCRIBE
+    FETCH_LIST_SETTINGS_SUBSCRIBE_BEGIN: 'FETCH_LIST_SETTINGS_SUBSCRIBE_BEGIN',
+    FETCH_LIST_SETTINGS_SUBSCRIBE_SUCCESS: 'FETCH_LIST_SETTINGS_SUBSCRIBE_SUCCESS',
+    FETCH_LIST_SETTINGS_SUBSCRIBE_ERR: 'FETCH_LIST_SETTINGS_SUBSCRIBE_ERR',
+
+    UPDATE_SETTING_SUBSCRIBE_BEGIN: 'UPDATE_SETTING_SUBSCRIBE_BEGIN',
+    UPDATE_SETTING_SUBSCRIBE_SUCCESS: 'UPDATE_SETTING_SUBSCRIBE_SUCCESS',
+    UPDATE_SETTING_SUBSCRIBE_ERR: 'UPDATE_SETTING_SUBSCRIBE_ERR',
+
+
 
     CREATE_SERVICES_BEGIN: 'CREATE_SERVICES_BEGIN',
     CREATE_SERVICES_SUCCESS: 'CREATE_SERVICES_SUCCESS',
@@ -161,6 +183,7 @@ const actions = {
         };
     },
 
+
     updateListSettingsCommentBegin: (payload) => {
         return {
             type: actions.UPDATE_SETTING_COMMENT_BEGIN,
@@ -203,6 +226,50 @@ const actions = {
         };
     },
 
+    updateListSettingsViewBegin: (payload) => {
+        return {
+            type: actions.UPDATE_SETTING_VIEW_BEGIN,
+            payload
+        };
+    },
+
+    updateListSettingsViewSuccess: (data) => {
+        return {
+            type: actions.UPDATE_SETTING_VIEW_SUCCESS,
+            data,
+        };
+    },
+
+    updateListSettingsViewErr: (err) => {
+        return {
+            type: actions.UPDATE_SETTING_VIEW_ERR,
+            err,
+        };
+    },
+
+
+    updateListSettingsSubscribeBegin: (payload) => {
+        return {
+            type: actions.UPDATE_SETTING_SUBSCRIBE_BEGIN,
+            payload
+        };
+    },
+
+    updateListSettingsSubscribeSuccess: (data) => {
+        return {
+            type: actions.UPDATE_SETTING_SUBSCRIBE_SUCCESS,
+            data,
+        };
+    },
+
+    updateListSettingsSubscribeErr: (err) => {
+        return {
+            type: actions.UPDATE_SETTING_SUBSCRIBE_ERR,
+            err,
+        };
+    },
+
+    // COMMENT
     fetchListSettingsCommentBegin: (payload) => {
         return {
             type: actions.FETCH_LIST_SETTINGS_COMMENT_BEGIN,
@@ -244,6 +311,52 @@ const actions = {
             err,
         };
     },
+    
+    fetchListSettingsViewBegin: (payload) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_VIEW_BEGIN,
+            payload
+        };
+    },
+
+    fetchListSettingsViewSuccess: (data) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_VIEW_SUCCESS,
+            data,
+        };
+    },
+
+    fetchListSettingsViewErr: (err) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_VIEW_ERR,
+            err,
+        };
+    },
+    
+    fetchListSettingsSubscribeBegin: (payload) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_SUBSCRIBE_BEGIN,
+            payload
+        };
+    },
+
+    fetchListSettingsSubscribeSuccess: (data) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_SUBSCRIBE_SUCCESS,
+            data,
+        };
+    },
+
+    fetchListSettingsSubscribeErr: (err) => {
+        return {
+            type: actions.FETCH_LIST_SETTINGS_SUBSCRIBE_ERR,
+            err,
+        };
+    },
+
+
+
+
 
     changeTypeTabBegin: (payload) => {
         return {
