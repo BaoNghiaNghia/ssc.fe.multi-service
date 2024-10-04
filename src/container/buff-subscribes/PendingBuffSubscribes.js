@@ -221,7 +221,7 @@ function PendingBuffSubscribes() {
         processing_count,
         done_count,
         note,
-        video_title,
+        channel_title,
         video_duration,
         current_count,
         start_count,
@@ -277,7 +277,7 @@ function PendingBuffSubscribes() {
                       <div style={{ position: 'relative' }}>
                         <Image
                           src={`https://img.youtube.com/vi/${getChannelId(link)}/default.jpg`}
-                          alt={`Thumbnail for ${video_title}`}
+                          alt={`Thumbnail for ${channel_title}`}
                           preview={false}
                           style={{ borderRadius: '5px', marginBottom: '10px', width: '100%' }}
                         />
@@ -298,7 +298,7 @@ function PendingBuffSubscribes() {
                     </Col>
                     <Col sm={24}>
                       <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-                        <strong>{video_title || '...'}</strong>
+                        <strong>{channel_title || '...'}</strong>
                       </span>
                     </Col>
                   </Row>
@@ -326,11 +326,11 @@ function PendingBuffSubscribes() {
                           style={{
                             backgroundColor: 'white',
                             borderRadius: '6px',
-                            position: 'absolute', // Position it absolutely
-                            top: '-7px', // Adjust top position
-                            right: '-7px', // Adjust right position
+                            position: 'absolute',
+                            top: '-7px',
+                            right: '-7px',
                             textShadow: '1px 1px 2px yellowgreen',
-                            zIndex: 1 // Ensure it's on top of the image
+                            zIndex: 1
                           }}
                         />
                       </Tooltip>
@@ -339,7 +339,7 @@ function PendingBuffSubscribes() {
                     <Image
                       id="channel-image-cover"
                       src={`https://img.youtube.com/vi/${getChannelId(link)}/default.jpg`}
-                      alt={`Thumbnail for ${video_title}`}
+                      alt={`Thumbnail for ${channel_title}`}
                       preview={false}
                       style={{
                         borderRadius: '10px',
@@ -362,7 +362,7 @@ function PendingBuffSubscribes() {
                         textShadow: priority ? `1px 1px 3px yellowgreen` : 'none'
                       }}
                     >
-                      {`${video_title?.substring(0, 30)}...`}
+                      {`${channel_title?.substring(0, 30)}...`}
                     </span>
 
                     <span style={{ fontSize: '0.8em', color: 'gray' }}>
@@ -383,7 +383,6 @@ function PendingBuffSubscribes() {
             <p style={{ margin: 0, padding: 0, fontSize: '0.9em', display: 'flex', alignItems: 'center' }}>
               <span style={{ color: 'gray' }}>Hiện tại: &nbsp;</span> <strong>{numberWithCommas(current_count || 0)}</strong>
             </p>
-            {/* <p style={{ margin: 0, padding: 0, fontSize: '0.9em' }}>Còn thiếu: <strong>{numberWithCommas((quantity - (current_count - start_count)))}</strong></p> */}
           </>
         ),
         created_at: (
