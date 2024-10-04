@@ -46,9 +46,9 @@ const columnsTable = [
     key: 'user_id',
   },
   {
-    title: 'Video',
-    dataIndex: 'video_id',
-    key: 'video_id',
+    title: 'Kênh',
+    dataIndex: 'channel_id',
+    key: 'channel_id',
     fixed: 'left',
   },
   {
@@ -192,17 +192,6 @@ function PendingBuffSubscribes() {
     }
   };
 
-  function getChannelId(url) {
-    // Regular expression to match the channel ID specifically for the channel URL format
-    const regex = /https?:\/\/(?:www\.)?youtube\.com\/channel\/([a-zA-Z0-9_-]{24})/;
-    const match = url.match(regex);
-    
-    // Return the channel ID if a match is found
-    return match ? match[1] : null;
-}
-
-  // const checkMatchRole = [ROLE_GENERAL.ADMIN, ROLE_GENERAL.SUPER_ADMIN].includes(userInfo?.group?.role);
-
   const dataSource = [];
   if (listOrderSubscribe?.items?.length) {
     listOrderSubscribe?.items?.map((value, key) => {
@@ -268,19 +257,19 @@ function PendingBuffSubscribes() {
             </span>
           </span>
         ),
-        video_id: (
+        channel_id: (
           <>
             <div style={{ display: 'inline-flex', alignItems: 'flex-start', position: 'relative' }}> {/* Added position: relative */}
               <Tooltip
                 title={
                   <Row gutter={10}>
-                    <Col sm={24} style={{ position: 'relative' }}>
+                    {/* <Col sm={24} style={{ position: 'relative' }}>
                       <div style={{ position: 'relative' }}>
                         <Image
                           src={`https://img.youtube.com/vi/${channel_id}/default.jpg`}
                           alt={`Thumbnail for ${channel_title}`}
                           preview={false}
-                          style={{ borderRadius: '5px', marginBottom: '10px', width: '100%' }}
+                          style={{ borderRadius: '5px', marginBottom: '10px', width: '' }}
                         />
                 
                         <PlayCircleOutlined
@@ -298,6 +287,12 @@ function PendingBuffSubscribes() {
                       </div>
                     </Col>
                     <Col sm={24}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                        <strong>{channel_title || '...'}</strong>
+                      </span>
+                    </Col> */}
+                    <Col sm={24}>
+                      <span style={{ marginRight: '5px' }}>Đến kênh</span>
                       <span style={{ display: 'inline-flex', alignItems: 'center' }}>
                         <strong>{channel_title || '...'}</strong>
                       </span>

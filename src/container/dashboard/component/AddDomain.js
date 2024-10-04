@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { FaYoutube } from 'react-icons/fa';
 import { AiOutlineFieldNumber } from "react-icons/ai";
 import { Row, Col, Form, Input, InputNumber, Button, Modal, Divider, Switch, Select } from 'antd';
 import { MdAddchart, MdOutlineImportExport } from "react-icons/md";
@@ -66,15 +67,13 @@ function AddDomain({ isOpen, setState }) {
         open={isOpen}
         centered
         title={
-          <>
-            <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
-              <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
-              <div>
-                <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm Domain</p>
-                <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho domain proxy mới</p>
-              </div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
+            <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
+            <div>
+              <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Thêm Domain</p>
+              <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Điền thông tin cho domain proxy mới</p>
             </div>
-          </>
+          </div>
         }
         onOk={handleOk}
         onCancel={handleCancel}
@@ -92,7 +91,7 @@ function AddDomain({ isOpen, setState }) {
 
           <Row gutter="10">
             <Col sm={24}>
-              <Form.Item 
+              <Form.Item  
                 name="domain" 
                 label="Domain" 
                 style={{ marginBottom: '7px' }} 
@@ -114,11 +113,14 @@ function AddDomain({ isOpen, setState }) {
                   message: 'Trường không được trống'
                 }]}
               >
-                <Select style={{ width: '100%' }} id="select-service-type" size='small'>
+                <Select style={{ width: '100%' }} placeholder="Chọn dịch vụ" id="select-service-type" size='small'>
                   {
                     domainService?.map(serviceType => (
                       <Option value={serviceType?.id}>
-                        <span style={{ fontSize: '13px' }}>{serviceType?.name}</span>
+                        <span style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}>
+                          <FaYoutube color="red" fontSize={19} style={{ marginRight: '7px', padding: 0 }} />
+                          <span style={{ fontSize: '13px', padding: 0, margin: 0 }}>{serviceType?.name}</span>
+                        </span>
                       </Option>
                     ))
                   }
@@ -140,8 +142,8 @@ function AddDomain({ isOpen, setState }) {
                   {
                     REGION_IDENTIFIER?.map(region => (
                       <Option value={region?.shortcode}>
-                        <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
-                          <img src={require(`../../../${region?.path}`)} alt={region?.alt} width="18px" height="18px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
+                        <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
+                          <img src={require(`../../../${region?.path}`)} alt={region?.alt} width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }}/>
                           <span style={{ marginLeft: '10px' }}>{region?.region}</span>
                         </div>
                       </Option>

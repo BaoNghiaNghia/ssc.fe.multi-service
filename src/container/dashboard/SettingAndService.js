@@ -25,12 +25,12 @@ import { GalleryNav, TopToolBox } from './style';
 import ConfirmRequestModal from "../buff-comments/components/ConfirmRequestModal";
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { numberWithCommas } from '../../utility/utility';
+import { numberWithCommas, numberWithCommasCurrency } from '../../utility/utility';
 import { Main, TableWrapper } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_SETTING_TYPE } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_SETTING_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -157,7 +157,7 @@ function SettingAndService() {
   const [formUpdateSettingsView] = Form.useForm();
   const [formUpdateSettingsSubscribe] = Form.useForm();
 
-  const { listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta, listSettingsLike, listSettingsSubscribes, listSettingsView } = useSelector(state => {
+  const { listService, typeTab, listSettingsComment, listMetaService, listGoogleKey, listGoogleKeyMeta, listSettingsLike, listSettingsSubscribe, listSettingsView } = useSelector(state => {
     return {
       listService: state?.settingService?.listService?.items,
       listMetaService: state?.settingService?.listService?.meta,
@@ -167,10 +167,11 @@ function SettingAndService() {
 
       listSettingsComment: state?.settingService?.listSettingsComment,
       listSettingsLike: state?.settingService?.listSettingsLike,
-      listSettingsSubscribes: state?.settingService?.listSettingsSubscribes,
+      listSettingsSubscribe: state?.settingService?.listSettingsSubscribe,
       listSettingsView: state?.settingService?.listSettingsView,
     };
   });
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPage, setLimitPage] = useState(DEFAULT_PERPAGE);
@@ -178,6 +179,8 @@ function SettingAndService() {
   useEffect(() => {
     dispatch(actions.fetchListSettingsCommentBegin());
     dispatch(actions.fetchListSettingsLikeBegin());
+    dispatch(actions.fetchListSettingsViewBegin());
+    dispatch(actions.fetchListSettingsSubscribeBegin());
   }, [dispatch]);
 
   useEffect(() => {
@@ -189,6 +192,8 @@ function SettingAndService() {
 
   formUpdateSettingsComment.setFieldsValue(listSettingsComment);
   formUpdateSettingsLike.setFieldsValue(listSettingsLike);
+  formUpdateSettingsView.setFieldValue(listSettingsView);
+  formUpdateSettingsSubscribe.setFieldValue(listSettingsSubscribe);
 
   const [state, setState] = useState({
     isOpenAdd: false,
@@ -201,13 +206,10 @@ function SettingAndService() {
     selectedService: '',
     selectedRowData: {},
     notData: {},
-    checkBlockVideo: listSettingsComment?.block_video,
     selectedRowKeys: [],
   });
 
   const handleSearchService = (searchText) => {
-    console.log('--- search service ---', searchText);
-
     if (searchText) {
       dispatch(actions.fetchListServiceBegin({
         page: currentPage,
@@ -237,11 +239,11 @@ function SettingAndService() {
     }
   };
 
-  const dataSource = [];
+  const dataSourceService = [];
   if (listService?.length) {
     listService?.map((value, key) => {
       const { name, min, max, service_id, max_threads_3000, max_threads, max_threads_5000, priority, enabled, description, price_per_10, category, type, geo, rest_api } = value;
-      return dataSource?.push({
+      return dataSourceService?.push({
         key: key + 1,
         name: <>
           <Row>
@@ -322,9 +324,10 @@ function SettingAndService() {
             <span className='index-above-left'>{numberWithCommas(min || 0)}</span> &nbsp; - &nbsp; <span className='index-above-right'>{numberWithCommas(max || 0)}</span>
           </span>
         </>,
-        price: <>
-          <span className="currency" style={{ display: 'inline-flex', fontWeight: '800', color: 'green' }}>{numberWithCommas(price_per_10 || 0)}</span>
-        </>,
+        price: <span style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}>
+          <span style={{ display: 'inline-flex', fontWeight: '800', color: 'green' }}>{numberWithCommasCurrency(price_per_10 || 0)} </span>
+          <span style={{ marginLeft: '6px', color: 'gray' }}>{VIETNAMES_CURRENCY}</span>
+        </span>,
         threads: <>
           <Tooltip title={
             <span className="customer-name">
@@ -532,6 +535,53 @@ function SettingAndService() {
       console.log(err);
     }
   }
+  const handleUpdateSettingView = () => {
+    try {
+      formUpdateSettingsView.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettingsView?.id,
+            block_video: values?.block_video,
+            max_order: values?.max_order,
+            max_view_per_day: values?.max_view_per_day,
+            price_per_10: values?.price_per_10,
+        }
+
+        dispatch(actions.updateListSettingsViewBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleUpdateSettingSubscribe = () => {
+    try {
+      formUpdateSettingsSubscribe.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettingsSubscribe?.id,
+            block_video: values?.block_video,
+            account_delay_time: values?.account_delay_time,
+            computer_reset_time: values?.computer_reset_time,
+            max_order: values?.max_order,
+            max_random_time: values?.max_random_time,
+            min_random_time: values?.min_random_time,
+            min_video_time: values?.min_video_time,
+            bonus_smaller_500: values?.bonus_smaller_500,
+            bonus_lager_500: values?.bonus_lager_500,
+        }
+
+        dispatch(actions.updateListSettingsSubscribeBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const handleSwitchBlockVideoComment = (valueBlockVideo) => {
     try {
@@ -576,6 +626,55 @@ function SettingAndService() {
         }
 
         dispatch(actions.updateListSettingsLikeBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleSwitchBlockVideoView = (valueBlockVideo) => {
+    try {
+      formUpdateSettingsView.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettingsLike?.id,
+            block_video: valueBlockVideo,
+            max_order: values?.max_order,
+            max_view_per_day: values?.max_view_per_day,
+            price_per_10: values?.price_per_10,
+        }
+
+        dispatch(actions.updateListSettingsViewBegin(requestData));
+      })
+      .catch((err) => {
+          console.error("handle Real Error: ", err);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleSwitchBlockVideoSubscribe = (valueBlockVideo) => {
+    try {
+      formUpdateSettingsSubscribe.validateFields()
+        .then((values) => {
+          const requestData = {
+            id: listSettingsLike?.id,
+            block_video: valueBlockVideo,
+            account_delay_time: values?.account_delay_time,
+            computer_reset_time: values?.computer_reset_time,
+            max_order: values?.max_order,
+            max_random_time: values?.max_random_time,
+            min_random_time: values?.min_random_time,
+            min_video_time: values?.min_video_time,
+            bonus_smaller_500: values?.bonus_smaller_500,
+            bonus_lager_500: values?.bonus_lager_500,
+        }
+
+        dispatch(actions.updateListSettingsSubscribeBegin(requestData));
       })
       .catch((err) => {
           console.error("handle Real Error: ", err);
@@ -894,9 +993,9 @@ function SettingAndService() {
             </Col>
             <Col xxl={18} xs={24}>
               <div className="table-toolbox-actions">
-                <Button size="small" key="4" type="primary" disabled onClick={() => console.log('-- update setting subscribe --')}>
+                <Button size="small" key="4" type="primary" onClick={handleUpdateSettingSubscribe}>
                   <FeatherIcon icon="save" size={14} />
-                  Cập nhật
+                  Cập nhật Subscribe
                 </Button>
               </div>
             </Col>
@@ -929,8 +1028,8 @@ function SettingAndService() {
               >
                 <Switch
                   checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
-                  checked={listSettingsLike?.block_video}
-                  onChange={(value) => handleSwitchBlockVideoLike(value)}
+                  checked={listSettingsSubscribe?.block_video}
+                  onChange={(value) => handleSwitchBlockVideoSubscribe(value)}
                 />
               </Form.Item>
             </Col>
@@ -1042,7 +1141,7 @@ function SettingAndService() {
             </Col>
             <Col xxl={18} xs={24}>
               <div className="table-toolbox-actions">
-                <Button size="small" key="4" type="primary" disabled onClick={() => console.log('-- update setting subscribe --')}>
+                <Button size="small" key="4" type="primary" onClick={handleUpdateSettingView}>
                   <FeatherIcon icon="save" size={14} />
                   Cập nhật
                 </Button>
@@ -1052,17 +1151,18 @@ function SettingAndService() {
         </TopToolBox>
         <Form name='form-update-settings' layout="vertical" form={formUpdateSettingsView}>
           <Row gutter={20}>
-            <Col sm={4}>
+            
+            <Col sm={5}>
               <Form.Item
-                name="account_delay_time"
-                label="Thời gian bốc lại account"
+                name="max_order"
+                label="Số lượng đơn tối đa"
                 style={{ marginBottom: '7px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <InputNumber size='small' addonAfter="phút" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                <InputNumber size='small' addonAfter="đơn" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
               </Form.Item>
             </Col>
             <Col sm={3}>
@@ -1077,100 +1177,35 @@ function SettingAndService() {
               >
                 <Switch
                   checkedChildren="Đang bật" unCheckedChildren="Đang tắt"
-                  checked={listSettingsLike?.block_video}
-                  onChange={(value) => handleSwitchBlockVideoLike(value)}
+                  checked={listSettingsView?.block_video}
+                  onChange={(value) => handleSwitchBlockVideoView(value)}
                 />
               </Form.Item>
             </Col>
-            <Col sm={5}>
+            <Col sm={4}>
               <Form.Item
-                name="computer_reset_time"
-                label="Thời gian reset luồng sau khi OFF"
+                name="max_view_per_day"
+                label="View tối đa mỗi ngày"
                 style={{ marginBottom: '7px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <InputNumber size='small' addonAfter="phút" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
+                <InputNumber addonAfter="view" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
               </Form.Item>
             </Col>
             <Col sm={4}>
               <Form.Item
-                name="max_order"
-                label="Số luồng tối đa hệ thống"
+                name="price_per_10"
+                label="Giá mỗi 10 view"
                 style={{ marginBottom: '7px' }}
                 rules={[{
                   required: true,
                   message: 'Trường không được trống'
                 }]}
               >
-                <InputNumber addonAfter="luồng" size='small' style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
-              </Form.Item>
-            </Col>
-            <Col sm={4}>
-              <Form.Item
-                name="max_random_time"
-                label="Thời gian xem tối đa"
-                style={{ marginBottom: '7px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
-              </Form.Item>
-            </Col>
-            <Col sm={4}>
-              <Form.Item
-                name="min_random_time"
-                label="Thời gian xem tối thiểu"
-                style={{ marginBottom: '7px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <InputNumber size='small' addonAfter="giây" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
-              </Form.Item>
-            </Col>
-            <Col sm={4}>
-              <Form.Item
-                name="min_video_time"
-                label="Số giây tối đa lấy video"
-                style={{ marginBottom: '7px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <InputNumber size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Nhập vào thông tin' />
-              </Form.Item>
-            </Col>
-            <Col sm={4}>
-              <Form.Item
-                name="bonus_lager_500"
-                label="Bonus lớn hơn 500"
-                style={{ marginBottom: '7px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
-              </Form.Item>
-            </Col>
-            <Col sm={4}>
-              <Form.Item
-                name="bonus_smaller_500"
-                label="Bonus nhỏ hơn 500"
-                style={{ marginBottom: '7px' }}
-                rules={[{
-                  required: true,
-                  message: 'Trường không được trống'
-                }]}
-              >
-                <InputNumber size='small' addonAfter="%" style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
+                <InputNumber size='small' addonAfter={VIETNAMES_CURRENCY} style={{ fontWeight: 'bold', width: '100%' }} placeholder='Nhập vào thông tin' />
               </Form.Item>
             </Col>
           </Row>
@@ -1219,7 +1254,7 @@ function SettingAndService() {
                   <Table
                     size='small'
                     showHeader={false}
-                    dataSource={dataSource}
+                    dataSource={dataSourceService}
                     columns={columnsService}
                     pagination={{
                       current: listMetaService?.current_page,
@@ -1387,6 +1422,9 @@ function SettingAndService() {
                   onClick={() => {
                     handleChangeTabType(SERVICE_SETTING_TYPE.SETTING.title);
                     if (Object.keys(listSettingsComment).length !== 0) formUpdateSettingsComment.setFieldsValue(listSettingsComment);
+                    if (Object.keys(listSettingsLike).length !== 0) formUpdateSettingsLike.setFieldsValue(listSettingsLike);
+                    if (Object.keys(listSettingsView).length !== 0) formUpdateSettingsView.setFieldsValue(listSettingsView);
+                    if (Object.keys(listSettingsSubscribe).length !== 0) formUpdateSettingsSubscribe.setFieldsValue(listSettingsSubscribe);
                   }}
                   style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}
                   to="#"

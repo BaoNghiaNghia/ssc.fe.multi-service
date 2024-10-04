@@ -16,7 +16,7 @@ function numberWithCommas(x) {
   const rounded = Math.round(x * 1000) / 1000;
   const parts = rounded.toString().split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return parts.join('.'); // Rejoin the parts
+  return parts.join('.');
 }
 
 const numberWithCommasCurrency = (x) => {
@@ -63,13 +63,13 @@ export const validateYouTubeChannelUrl = (urlToParse) => {
 
 export const isYouTubeValidUrl = (urlToParse) => {
   if (!urlToParse) {
-      return false; // Invalid input
+      return false;
   }
 
   const isVideoUrl = REGEX_VALIDATE_YOUTUBE_VIDEO_LINK.test(urlToParse);
   const isChannelUrl = REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK.test(urlToParse);
 
-  return isVideoUrl || isChannelUrl; // Returns true if either condition is met
+  return isVideoUrl || isChannelUrl;
 };
 
 const findSecondMinimum = (arr) => {

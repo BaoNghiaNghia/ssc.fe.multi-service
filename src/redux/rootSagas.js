@@ -132,7 +132,11 @@ import {
     updateServicesWatcherSaga,
     updateSettingCommentWatcherSaga,
     fetchListSettingsLikeWatcherSaga,
-    updateSettingLikeWatcherSaga
+    updateSettingLikeWatcherSaga,
+    fetchListSettingsSubscribeWatcherSaga,
+    updateSettingSubscribeWatcherSaga,
+    fetchListSettingsViewWatcherSaga,
+    updateSettingViewWatcherSaga
 } from './serviceSettings/sagas';
 
 import {
@@ -416,6 +420,11 @@ export default function* rootSaga() {
         viewStatisticTotalOrderWatcherSaga(),
         viewStatisticOrderByDaysWatcherSaga(),
 
-        listDomainInServiceWatcherSaga()
+        listDomainInServiceWatcherSaga(),
+
+        fetchListSettingsSubscribeWatcherSaga(),
+        updateSettingSubscribeWatcherSaga(),
+        fetchListSettingsViewWatcherSaga(),
+        updateSettingViewWatcherSaga(),
     ]);
 }
