@@ -222,6 +222,7 @@ function PendingBuffSubscribes() {
         done_count,
         note,
         channel_title,
+        channel_id,
         video_duration,
         current_count,
         start_count,
@@ -276,7 +277,7 @@ function PendingBuffSubscribes() {
                     <Col sm={24} style={{ position: 'relative' }}>
                       <div style={{ position: 'relative' }}>
                         <Image
-                          src={`https://img.youtube.com/vi/${getChannelId(link)}/default.jpg`}
+                          src={`https://img.youtube.com/vi/${channel_id}/default.jpg`}
                           alt={`Thumbnail for ${channel_title}`}
                           preview={false}
                           style={{ borderRadius: '5px', marginBottom: '10px', width: '100%' }}
@@ -338,7 +339,7 @@ function PendingBuffSubscribes() {
 
                     <Image
                       id="channel-image-cover"
-                      src={`https://img.youtube.com/vi/${getChannelId(link)}/default.jpg`}
+                      src={`https://img.youtube.com/vi/${channel_id}/default.jpg`}
                       alt={`Thumbnail for ${channel_title}`}
                       preview={false}
                       style={{
@@ -366,7 +367,7 @@ function PendingBuffSubscribes() {
                     </span>
 
                     <span style={{ fontSize: '0.8em', color: 'gray' }}>
-                      <strong>Channel ID: </strong> {getChannelId(link)}
+                      <strong>Channel ID: </strong> {channel_id}
                     </span>
                   </span>
                 </a>

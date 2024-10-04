@@ -4,7 +4,7 @@ import { useDispatch , useSelector } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Badge, Spin, Table } from 'antd';
-import { MdAddchart } from "react-icons/md";
+import { MdAddchart, MdOndemandVideo } from "react-icons/md";
 import { BsFire } from 'react-icons/bs';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import subscribeActions from '../../../redux/buffSubscribe/actions';
@@ -14,7 +14,7 @@ const { Option } = Select;
 
 function StatisticVideoSubscribe({ setState, orderState }) {
   const dispatch = useDispatch();
-  const [formUpdateSubscribeOrder] = Form.useForm();
+  const [formListVideoInChannels] = Form.useForm();
 
 
   const { postLoading, detailOrderSubscribe, listService } = useSelector(state => {
@@ -32,12 +32,12 @@ function StatisticVideoSubscribe({ setState, orderState }) {
   const findService = listService?.filter((item) => item.service_id === detailOrderSubscribe?.service_id);
 
   useEffect(() => {
-    formUpdateSubscribeOrder.setFieldsValue(detailOrderSubscribe);
+    formListVideoInChannels.setFieldsValue(detailOrderSubscribe);
     if (findService?.length > 0) {
-      formUpdateSubscribeOrder.setFieldValue('category', findService[0]?.category);
+      formListVideoInChannels.setFieldValue('category', findService[0]?.category);
     }
-    formUpdateSubscribeOrder.setFieldValue('priority', String(detailOrderSubscribe?.priority));
-    formUpdateSubscribeOrder.setFieldValue('note', detailOrderSubscribe?.note);
+    formListVideoInChannels.setFieldValue('priority', String(detailOrderSubscribe?.priority));
+    formListVideoInChannels.setFieldValue('note', detailOrderSubscribe?.note);
   });
 
   const handleCancel = () => {
@@ -45,12 +45,12 @@ function StatisticVideoSubscribe({ setState, orderState }) {
       isListVideoInChannel: false,
     });
 
-    formUpdateSubscribeOrder.resetFields();
+    formListVideoInChannels.resetFields();
   }
 
   const handleOk = () => {
     try {
-      formUpdateSubscribeOrder.validateFields()
+      formListVideoInChannels.validateFields()
         .then((values) => {
           dispatch(subscribeActions.updateOrderSubscribeAdminBegin({
             id: detailOrderSubscribe?.id,
@@ -67,7 +67,7 @@ function StatisticVideoSubscribe({ setState, orderState }) {
             statusNumber: 'all'
           });
 
-          formUpdateSubscribeOrder.resetFields();
+          formListVideoInChannels.resetFields();
         })
         .catch((err) => {
           console.error("Handle Real Error: ", err);
@@ -76,22 +76,32 @@ function StatisticVideoSubscribe({ setState, orderState }) {
       console.log(err);
       setState({
         isListVideoInChannel: false });
-      formUpdateSubscribeOrder.resetFields();
+      formListVideoInChannels.resetFields();
     }
   };
 
-  const renderProfileTable = (detailComputerView) => {
+  const renderProfileTable = (listVideo) => {
     const inTableData = [];
 
-    detailComputerView?.profiles?.map((profile, index) => {
-      const { id, email, profile_id, status } = profile;
+    listVideo?.map((video, index) => {
+      const { video_id, video_duration, video_title } = video;
       return inTableData.push({
         key: index,
-        id: (
-          <span style={{ fontSize: '12px' }}>{id}</span>
+        video_id: (
+          <span style={{ fontSize: '12px' }}>{video_id}</span>
         ),
-        email: (
-          <div>....</div>
+        video_title: (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+              <div style={{ fontWeight: '600', display: 'flex', alignItems: 'self-start' }}>
+                <code>{video_title || '...'}</code>
+              </div>
+              <div style={{ fontSize: '11px', alignSelf: 'flex-end' }}>
+                Thời lượng: {video_duration || '...'}
+              </div>
+            </div>
+          </>
+
         ),
         profile_id: (
           <div>....</div>
@@ -104,14 +114,14 @@ function StatisticVideoSubscribe({ setState, orderState }) {
 
     const expandColumns = [
       {
-        title: 'Video title',
-        dataIndex: 'id',
-        key: 'id',
+        title: 'Tiêu đề video',
+        dataIndex: 'video_title',
+        key: 'video_title',
       },
       {
         title: 'Video ID',
-        dataIndex: 'email',
-        key: 'email',
+        dataIndex: 'video_id',
+        key: 'video_id',
       },
       {
         title: 'Click',
@@ -178,8 +188,8 @@ function StatisticVideoSubscribe({ setState, orderState }) {
         </Button>
       ]}
     >
-      <Form name="add_service" layout="vertical" form={formUpdateSubscribeOrder}>
-        {renderProfileTable([])}
+      <Form name="add_service" layout="vertical" form={formListVideoInChannels}>
+        {renderProfileTable(detailOrderSubscribe?.videos)}
       </Form>
     </Modal>
   );
