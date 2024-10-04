@@ -9,6 +9,7 @@ import { BsFire } from 'react-icons/bs';
 import serviceActions from '../../../redux/serviceSettings/actions';
 import subscribeActions from '../../../redux/buffSubscribe/actions';
 import { DEFAULT_PAGESIZE, ORDER_YOUTUBE_STATUS } from '../../../variables/index';
+import { numberWithCommas } from '../../../utility/utility';
 
 const { Option } = Select;
 
@@ -151,9 +152,13 @@ function StatisticVideoSubscribe({ setState, orderState }) {
             pagination={{
               showSizeChanger: true,
               pageSizeOptions: DEFAULT_PAGESIZE,
-              position: ['bottomLeft'],
+              position: ['bottomRight'],
               responsive: true,
-              size: 'small'
+              size: 'small',
+              showTotal(total, range) {
+                  return <p className='mx-5 mt-2'>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(total || 0)}</span> videos</p>
+              },
+              totalBoundaryShowSizeChanger: 100,
             }}
             size="small"
           />
