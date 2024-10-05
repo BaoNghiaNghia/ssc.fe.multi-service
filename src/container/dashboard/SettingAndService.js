@@ -30,7 +30,7 @@ import { Main, TableWrapper } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_SETTING_TYPE, VIETNAMES_CURRENCY } from '../../variables';
+import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_SETTING_TYPE, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -47,6 +47,20 @@ const badgeGreenStyle = {
   marginRight: '5px'
 }
 
+const badgeGrayStyle = {
+  border: '1.3px solid gray',
+  fontFamily: 'Poppins, sans-serif',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'gray',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
 const badgeOrangeStyle = {
   border: '1.3px solid orange',
   fontFamily: 'Poppins, sans-serif',
@@ -242,7 +256,7 @@ function SettingAndService() {
   const dataSourceService = [];
   if (listService?.length) {
     listService?.map((value, key) => {
-      const { name, min, max, service_id, max_threads_3000, max_threads, max_threads_5000, priority, enabled, description, price_per_10, category, type, geo, rest_api } = value;
+      const { name, min, max, service_id, max_threads_3000, max_threads, max_threads_5000, priority, enabled, description, price_per_10, category, type, geo, rest_api, service_view_type } = value;
       return dataSourceService?.push({
         key: key + 1,
         name: <>
@@ -278,7 +292,7 @@ function SettingAndService() {
             </Tooltip>
           </Row>
           <Row>
-            <Col>
+            <Col style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
               {
                 enabled ? (
                   <span className="label" style={badgeGreenStyle}>
@@ -299,6 +313,18 @@ function SettingAndService() {
                   <span className="label" style={badgeOrangeStyle}>
                     <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
                     Ưu tiên
+                  </span>
+                ) : null
+              }
+              {
+                service_view_type ? (
+                  <span className="label" style={badgeGrayStyle}>
+                    <div
+                      style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                      // eslint-disable-next-line react/no-danger
+                      dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === service_view_type)?.svg }}
+                    />
+                    View {SERVICE_VIEW_TYPE.find(item => item.type === service_view_type).description}
                   </span>
                 ) : null
               }
