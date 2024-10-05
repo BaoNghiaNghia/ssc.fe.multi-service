@@ -13,7 +13,7 @@ import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import actions from '../../../redux/buffComment/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../../utility/utility';
-import { FILTER_ORDER_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
+import { badgeGrayStyle, FILTER_ORDER_GENERAL, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../../variables';
 
 const { Option } = Select;
 
@@ -292,6 +292,18 @@ function FilterOrderComment({ orderState, setState }) {
                                             Ưu tiên
                                           </span>
                                         ) : <></>
+                                      }
+                                      {
+                                        itemService?.service_view_type ? (
+                                          <span className="label" style={badgeGrayStyle}>
+                                            <div
+                                              style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                                              // eslint-disable-next-line react/no-danger
+                                              dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type)?.svg }}
+                                            />
+                                            View {SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type).description}
+                                          </span>
+                                        ) : null
                                       }
                                     </Col>
                                   </Row>

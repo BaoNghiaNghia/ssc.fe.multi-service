@@ -32,7 +32,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { numberWithCommas, numberWithCommasCurrency } from '../../utility/utility';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, VIETNAMES_CURRENCY } from '../../variables';
+import { badgeGrayStyle, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 
 const columnsMember = [
@@ -507,7 +507,7 @@ function Member() {
       ];
 
       listService?.map((itemService, index) => {
-        const { name, service_id, priority, enabled, description, geo } = itemService;
+        const { name, service_id, priority, enabled, description, geo, service_view_type } = itemService;
         const matchingServiceDiscount = arrayDiscount?.filter((match) => service_id === match?.service_id);
         return inTableData.push({
           key: index,
@@ -562,6 +562,17 @@ function Member() {
                       </span>
                     ) : <></>
                   }
+                  { service_view_type ? (
+                  <span className="label" style={badgeGrayStyle}>
+                    <div
+                      style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                      // eslint-disable-next-line react/no-danger
+                      dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === service_view_type)?.svg }}
+                    />
+                    View {SERVICE_VIEW_TYPE.find(item => item.type === service_view_type).description}
+                  </span>
+                ) : null
+              }
                 </Col>
               </Row>
             </>

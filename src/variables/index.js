@@ -531,3 +531,63 @@ export const generateIconService = (service) => {
       return <FaRegCommentDots color='#cc5353' fontSize={15} style={{ marginRight: '10px' }}/> 
   }
 }
+
+
+export const badgeGreenStyle = {
+  border: '1.3px solid #00ab00',
+  fontFamily: 'Poppins, sans-serif',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: '#00ab00',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+export const badgeGrayStyle = {
+  border: '1.3px solid gray',
+  fontFamily: 'Poppins, sans-serif',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'gray',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+export const badgeOrangeStyle = {
+  border: '1.3px solid orange',
+  fontFamily: 'Poppins, sans-serif',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'orange',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}
+
+export const badgeRedStyle = {
+  border: '1.3px solid red',
+  fontFamily: 'Poppins, sans-serif',
+  borderRadius: '7px ',
+  padding: '2px 7px',
+  fontSize: '0.7em',
+  color: 'red',
+  fontWeight: 'bold',
+  display: 'inline-flex',
+  alignItems: 'center',
+  alignContemt: 'center',
+  justifyContent: 'center',
+  marginRight: '5px'
+}

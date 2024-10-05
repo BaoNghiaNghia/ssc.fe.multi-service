@@ -20,7 +20,7 @@ import actionsView from '../../../redux/buffView/actions';
 import reportActions from '../../../redux/reports/actions';
 import serviceSettingsAction from '../../../redux/serviceSettings/actions';
 import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, INITIALIZE_SERVICE_SELECTED } from '../../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, INITIALIZE_SERVICE_SELECTED, badgeGrayStyle } from '../../../variables';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
 
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
@@ -1024,7 +1024,7 @@ function AddOrderGeneral() {
                                     <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
                                   </div>
                                   <div style={{ color: 'gray', fontSize: '0.8em' }}>{itemService?.description}</div>
-                                  <div>
+                                  <div style={{ display: 'flex', alignContent: 'center', alignItems:'center' }}>
                                     {
                                       itemService?.enabled ? (
                                         <span className="label" style={badgeGreenStyle}>
@@ -1047,6 +1047,18 @@ function AddOrderGeneral() {
                                           Ưu tiên
                                         </span>
                                       ) : <></>
+                                    }
+                                     {
+                                      itemService?.service_view_type ? (
+                                        <span className="label" style={badgeGrayStyle}>
+                                          <div
+                                            style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                                            // eslint-disable-next-line react/no-danger
+                                            dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type)?.svg }}
+                                          />
+                                          View {SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type).description}
+                                        </span>
+                                      ) : null
                                     }
                                   </div>
                                 </Option>
@@ -1157,6 +1169,18 @@ function AddOrderGeneral() {
                           Ưu tiên
                         </span>
                       ) : <></>
+                    }
+                    {
+                      detailService?.service_view_type ? (
+                        <span className="label" style={badgeGrayStyle}>
+                          <div
+                            style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                            // eslint-disable-next-line react/no-danger
+                            dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
+                          />
+                          View {SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}
+                        </span>
+                      ) : null
                     }
                   </div>
                 </Card>

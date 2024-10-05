@@ -30,66 +30,7 @@ import { Main, TableWrapper } from '../styled';
 import { Button } from '../../components/buttons/buttons';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/serviceSettings/actions';
-import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_SETTING_TYPE, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../variables';
-
-const badgeGreenStyle = {
-  border: '1.3px solid #00ab00',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: '#00ab00',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-
-const badgeGrayStyle = {
-  border: '1.3px solid gray',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: 'gray',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-const badgeOrangeStyle = {
-  border: '1.3px solid orange',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: 'orange',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-
-const badgeRedStyle = {
-  border: '1.3px solid red',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: 'red',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
+import { badgeGrayStyle, badgeGreenStyle, badgeOrangeStyle, badgeRedStyle, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, SERVICE_SETTING_TYPE, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 const columnsService = [
   {
