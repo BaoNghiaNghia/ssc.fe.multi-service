@@ -1,11 +1,12 @@
 import actions from './actions';
 import { currentDate, previousDate } from '../../utility/utility';
-import { SERVICE_TYPE } from '../../variables';
+import { INITIALIZE_SERVICE_SELECTED, SERVICE_TYPE } from '../../variables';
 
 const initialState = {
   usuallyReportData: {},
   chartLoading: false,
   isOpenCreateOrder: false,
+  categoryNewOrder: INITIALIZE_SERVICE_SELECTED,
   filterRange: {
     from: previousDate(8),
     to: currentDate
@@ -44,6 +45,10 @@ const {
   SET_RANGE_DATE_FILTER_BEGIN,
   SET_RANGE_DATE_FILTER_SUCCESS,
   SET_RANGE_DATE_FILTER_ERR,
+
+  SET_CATEGORY_IN_NEW_ORDER_BEGIN,
+  SET_CATEGORY_IN_NEW_ORDER_SUCCESS,
+  SET_CATEGORY_IN_NEW_ORDER_ERR,
 
   GET_STATISTICS_SUBSCRIBE_REPORT_BEGIN,
   GET_STATISTICS_SUBSCRIBE_REPORT_SUCCESS,
@@ -348,6 +353,27 @@ const ReportsReducer = (state = initialState, action) => {
         ...state,
         chartLoading: false,
         orderByDays: [],
+        error: err
+      };
+
+    case SET_CATEGORY_IN_NEW_ORDER_BEGIN:
+      return {
+        ...state,
+        chartLoading: true,
+      };
+
+    case SET_CATEGORY_IN_NEW_ORDER_SUCCESS:
+      return {
+        ...state,
+        categoryNewOrder: data,
+        orderByDays: data,
+      };
+
+    case SET_CATEGORY_IN_NEW_ORDER_ERR:
+      return {
+        ...state,
+        chartLoading: false,
+        categoryNewOrder: INITIALIZE_SERVICE_SELECTED,
         error: err
       };
 

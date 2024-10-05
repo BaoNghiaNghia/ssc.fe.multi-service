@@ -160,6 +160,8 @@ export const SERVICE_SETTING_TYPE = {
   },
 }
 
+export const INITIALIZE_SERVICE_SELECTED = 'Comments';
+
 export const LIST_SERVICE_SUPPLY = [
   {
     'platform': 'Youtube',

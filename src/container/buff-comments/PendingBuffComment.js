@@ -116,14 +116,13 @@ const columnTableOrderComments = [
 
 function PendingBuffComment() {
   const dispatch = useDispatch();
-  const { listOrderComment, userList, listService, isLoading, userInfo, isOpenCreateOrder, statusBarNumber } = useSelector(allState => {
+  const { listOrderComment, userList, listService, isLoading, isOpenCreateOrder, statusBarNumber } = useSelector(allState => {
     return {
       isLoading: allState?.buffComment?.loading,
       statusBarNumber: allState?.buffComment?.statusBarNumber,
       listOrderComment: allState?.buffComment?.listOrderComment,
       userList: allState?.member?.userList,
       listService: allState?.settingService?.listService?.items,
-      userInfo: allState?.auth?.userInfo,
       isOpenCreateOrder: allState?.reports?.isOpenCreateOrder
     };
   });

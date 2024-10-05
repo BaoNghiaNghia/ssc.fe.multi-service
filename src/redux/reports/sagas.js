@@ -1485,6 +1485,18 @@ function* viewStatisticOrderByDaysFunc(params) {
 
 
  
+function* setCategoryInNewOrderFunc(params) {
+  try {
+    yield put(
+      actions.validateYoutubeVideoLinkSuccess(params?.payload)
+    );
+  } catch (err) {
+    yield put(
+      actions.validateYoutubeVideoLinkErr({ error: err || 'Can not change category' })
+    );
+  }
+}
+
 function* validateYoutubeVideoLinkFunc(params) {
   try {
     const response = yield call(validateYoutubeLinkCommentVideoAPI, params?.payload);
@@ -2039,4 +2051,10 @@ export function* viewStatisticOrderByDaysWatcherSaga() {
 // Validation youtube link
 export function* validateYoutubeVideoLinkWatcherSaga() {
   yield takeLatest(actions.VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN, validateYoutubeVideoLinkFunc);
+}
+
+
+// New Order
+export function* setCategoryInNewOrderWatcherSaga() {
+  yield takeLatest(actions.SET_CATEGORY_IN_NEW_ORDER_BEGIN, setCategoryInNewOrderFunc);
 }

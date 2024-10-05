@@ -20,11 +20,43 @@ import actionsView from '../../../redux/buffView/actions';
 import reportActions from '../../../redux/reports/actions';
 import serviceSettingsAction from '../../../redux/serviceSettings/actions';
 import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE } from '../../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, INITIALIZE_SERVICE_SELECTED } from '../../../variables';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
 
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
 
+// Define your icon constants
+const multiplOrderIcon = (
+  <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clipPath="url(#clip0_1545_11381)">
+      <path d="M13 0.5H2C1.44772 0.5 1 0.947715 1 1.5V7.5C1 8.05228 1.44772 8.5 2 8.5H13C13.5523 8.5 14 8.05228 14 7.5V1.5C14 0.947715 13.5523 0.5 13 0.5Z" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7.5 6C8.32843 6 9 5.32843 9 4.5C9 3.67157 8.32843 3 7.5 3C6.67157 3 6 3.67157 6 4.5C6 5.32843 6.67157 6 7.5 6Z" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2 11H13" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 13.5H12" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+    <defs>
+      <clipPath id="clip0_1545_11381">
+        <rect width="14" height="14" fill="white" transform="translate(0.5)" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+const singleOrderIcon = (
+  <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clipPath="url(#clip0_1545_11387)">
+      <path d="M13 2.5H2C1.44772 2.5 1 2.94772 1 3.5V10.5C1 11.0523 1.44772 11.5 2 11.5H13C13.5523 11.5 14 11.0523 14 10.5V3.5C14 2.94772 13.5523 2.5 13 2.5Z" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7.5 8.5C8.32843 8.5 9 7.82843 9 7C9 6.17157 8.32843 5.5 7.5 5.5C6.67157 5.5 6 6.17157 6 7C6 7.82843 6.67157 8.5 7.5 8.5Z" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3.5 5H4" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11 9H11.5" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+    <defs>
+      <clipPath id="clip0_1545_11387">
+        <rect width="14" height="14" fill="white" transform="translate(0.5)" />
+      </clipPath>
+    </defs>
+  </svg>
+);
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -71,7 +103,6 @@ const badgeRedStyle = {
   marginRight: '5px'
 };
 
-const DEFAULT_CATEGORY = 'Comments'
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -90,17 +121,16 @@ function AddOrderGeneral() {
   });
 
   const [stateCurr, setStateCurr] = useState({
-    selectedCategory: DEFAULT_CATEGORY,
-    listServiceCollection: listService?.filter(service => service?.category === DEFAULT_CATEGORY),
+    selectedCategory: INITIALIZE_SERVICE_SELECTED,
+    listServiceCollection: listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED),
     amountChange: 0,
     orderType: 'single',
     duplicateCounts: {},
   });
-  
+
 
   const [helpMessage, setHelpMessage] = useState({});
 
-  // Function to create a custom help message
   const createCustomHelp = (mappedObj) => (
     <div style={{ textAlign: 'end', marginBottom: '8px', backgroundColor: '#f1fffa' }}>
       {Object.entries(mappedObj).map(([key, value]) => (
@@ -137,7 +167,6 @@ function AddOrderGeneral() {
     let help = '';
 
     const category = stateCurr?.selectedCategory;
-    const serviceId = detailService?.service_id;
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
 
     try {
@@ -163,24 +192,21 @@ function AddOrderGeneral() {
 
         if (category === 'Subscribers') {
           const jumpStep = validData?.jump_step_response?.jump_step;
-          // Retrieve existing errors, if any
           const existingErrorsQuantity = formCreateOrder.getFieldError('quantity') || [];
 
-          // Check if jumpStep is a valid number and quantity is a number
           if (typeof jumpStep === 'number' && typeof quantity === 'number' && existingErrorsQuantity?.length === 0) {
             const validJumpStep = quantity % jumpStep;
 
-            const messageErrorNotFullfil = [ `Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`]; 
-      
-            const errors = validJumpStep !== 0 ? messageErrorNotFullfil : existingErrorsQuantity; // Clear errors if valid
-        
+            const messageErrorNotFullfil = [`Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`];
+
+            const errors = validJumpStep !== 0 ? messageErrorNotFullfil : existingErrorsQuantity;
+
             formCreateOrder.setFields([{ name: 'quantity', errors }]);
           } else {
             formCreateOrder.setFields([{ name: 'quantity', existingErrorsQuantity }]);
             console.log('validData or jump_step_response is not defined or jump_step is not a valid number.');
           }
         }
-        
 
         const mapping = category === 'Subscribers'
           ? {
@@ -205,12 +231,11 @@ function AddOrderGeneral() {
             acc[title] = validData[mappedKey];
           }
           return acc;
-        }, {}); 
+        }, {});
 
         const isValid = Object.values(mappedObj).every(value => value); // Check all mapped values for validity
         help = createCustomHelp(mappedObj);
         status = isValid ? 'success' : 'error';
-        console.log('--- error check link youtube -----', status);
       }
     } catch (error) {
       console.log('---- show error -----', error);
@@ -321,8 +346,8 @@ function AddOrderGeneral() {
   const handleCancel = () => {
     setStateCurr({
       ...stateCurr,
-      selectedCategory: DEFAULT_CATEGORY,
-      listServiceCollection: listService?.filter(service => service?.category === DEFAULT_CATEGORY)
+      selectedCategory: INITIALIZE_SERVICE_SELECTED,
+      listServiceCollection: listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED)
     });
 
     setHelpMessage({});
@@ -435,14 +460,13 @@ function AddOrderGeneral() {
   const formCreateSubscribeService = () => {
     return (
       <>
-         <Row gutter="10" style={{ marginBottom: '7px', alignItems: 'center', alignContent: 'center' }}>
-          <Col sm={17}>
+        <Row gutter="10" style={{ marginBottom: '7px', alignItems: 'center', alignContent: 'center' }}>
+          <Col sm={15}>
             <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
               Chi tiết đơn hàng
             </Divider>
           </Col>
-          <Col sm={7}>
-            {/* Inline Toggle between 1 đơn and nhiều đơn */}
+          <Col sm={9}>
             <Radio.Group
               value={stateCurr.orderType}
               size='small'
@@ -452,17 +476,32 @@ function AddOrderGeneral() {
               buttonStyle="solid"
               style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
             >
-              <Radio.Button value="single" style={{ marginRight: '5px', fontWeight: 600, fontSize: '12px', padding: '0 8px' }}>
-                1 đơn
+              <Radio.Button value="single" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {singleOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>1 đơn</span>
+                </span>
               </Radio.Button>
-              <Radio.Button value="multiple" style={{ fontWeight: 600, fontSize: '12px', padding: '0 8px' }}>
-                Nhiều đơn
+              <Radio.Button value="multiple" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {multiplOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>Nhiều đơn</span>
+                </span>
               </Radio.Button>
             </Radio.Group>
           </Col>
         </Row>
-  
-        {/* Render form based on selected order type */}
+
         {stateCurr.orderType === 'single' && (
           <Row gutter="10" style={{ marginBottom: '7px', marginTop: '15px' }}>
             <Col sm={19}>
@@ -531,12 +570,12 @@ function AddOrderGeneral() {
                         ...prevState,
                         amountChange: value,
                       }));
-  
+
                       const link = formCreateOrder.getFieldValue('link');
                       if (link) {
                         const { status, help } = await handleValidateLink(link);
                         setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
-                        formCreateOrder.validateFields(['link']).catch(() => {});
+                        formCreateOrder.validateFields(['link']).catch(() => { });
                       } else {
                         setHelpMessage((prevHelp) => ({
                           ...prevHelp,
@@ -551,7 +590,7 @@ function AddOrderGeneral() {
             </Col>
           </Row>
         )}
-  
+
         {stateCurr.orderType === 'multiple' && (
           <Form.Item
             name="list_order"
@@ -785,7 +824,7 @@ function AddOrderGeneral() {
           case 'Comments':
             formCreateOrder.resetFields(['link']);
             break;
-    
+
           case 'Subscribers':
             formCreateOrder.resetFields(['link', 'quantity']);
             break;
@@ -962,7 +1001,7 @@ function AddOrderGeneral() {
                       onClear={() => handleClearServiceSelected()}
                     >
                       {
-                        (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === DEFAULT_CATEGORY))?.map((itemService, index) => {
+                        (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED))?.map((itemService, index) => {
                           return <>
                             {
                               itemService?.enabled ? (

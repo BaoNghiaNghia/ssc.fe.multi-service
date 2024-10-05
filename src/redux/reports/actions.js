@@ -270,7 +270,34 @@ const actions = {
   VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN: 'VALIDATE_YOUTUBE_VIDEO_LINK_BEGIN',
   VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS: 'VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS',
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR: 'VALIDATE_YOUTUBE_VIDEO_LINK_ERR',
+
+
+  SET_CATEGORY_IN_NEW_ORDER_BEGIN: 'SET_CATEGORY_IN_NEW_ORDER_BEGIN',
+  SET_CATEGORY_IN_NEW_ORDER_SUCCESS: 'SET_CATEGORY_IN_NEW_ORDER_SUCCESS',
+  SET_CATEGORY_IN_NEW_ORDER_ERR: 'SET_CATEGORY_IN_NEW_ORDER_ERR',
   
+
+  setCategoryInNewOrderBegin: (payload) => {
+    return {
+      type: actions.SET_CATEGORY_IN_NEW_ORDER_BEGIN,
+      payload
+    };
+  },
+
+  setCategoryInNewOrderSuccess: (data) => {
+    return {
+      type: actions.SET_CATEGORY_IN_NEW_ORDER_SUCCESS,
+      data,
+    };
+  },
+
+  setCategoryInNewOrderErr: (err) => {
+    return {
+      type: actions.SET_CATEGORY_IN_NEW_ORDER_ERR,
+      err,
+    };
+  },
+
 
   // Comment
   commentStatisticOrderByDaysBegin: (payload) => {
