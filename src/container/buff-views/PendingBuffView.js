@@ -314,7 +314,7 @@ function PendingBuffView() {
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start' }}>
               <Image
-                src={`https://img.youtube.com/vi/${video_id}/mqdefault.jpg`}
+                src={`https://img.youtube.com/vi/${video_id}/default.jpg`}
                 alt={`Thumbnail for ${video_title}`}
                 preview={false}
                 style={{ borderRadius: '2px', width: '52px', opacity: '70%' }}
