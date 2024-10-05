@@ -41,7 +41,6 @@ const numberWithCommasCurrency = (x) => {
     return `${thousandFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} N`;
   }
 
-  // Format the number with commas
   const parts = rounded.toString().split('.'); 
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return parts.join('.');

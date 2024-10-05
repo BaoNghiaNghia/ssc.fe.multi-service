@@ -141,7 +141,7 @@ function AddOrderGeneral() {
         }
 
         if (!quantity || quantity === 0) {
-          toast.error('Must be input your quantity');
+          toast.warning('Cần nhập thêm số lượng subscribe');
           return { status: false, help: '' };
         }
       } else if (!validateYouTubeUrl(value)) {

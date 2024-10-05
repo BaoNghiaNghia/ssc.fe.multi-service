@@ -281,11 +281,11 @@ function PendingBuffView() {
                           position: 'absolute',
                           top: '50%',
                           left: '50%',
-                          fontSize: '30px', // Size of the play button
-                          color: 'white', // Color of the play button
-                          transform: 'translate(-50%, -50%)', // Center the button
-                          cursor: 'pointer', // Change cursor on hover
-                          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' // Black shadow for better visibility
+                          fontSize: '30px',
+                          color: 'white',
+                          transform: 'translate(-50%, -50%)',
+                          cursor: 'pointer', 
+                          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
                         }}
                       />
                     </Col>
@@ -312,7 +312,6 @@ function PendingBuffView() {
                 </a>
               </Tooltip>
             </div>
-
             <div style={{ display: 'flex', alignItems: 'flex-start' }}>
               <Image
                 src={`https://img.youtube.com/vi/${video_id}/mqdefault.jpg`}

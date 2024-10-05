@@ -415,7 +415,7 @@ export const ROLE_GENERAL = {
 }
 
 export const REGEX_VALIDATE_YOUTUBE_VIDEO_LINK =  /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-export const REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK = /^(https?:\/\/)?(www\.)?(youtube\.com)\/(channel\/[a-zA-Z0-9_-]+|c\/[a-zA-Z0-9_-]+|@([a-zA-Z0-9_]+))$/; // Updated regex for channels
+export const REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK = /^(https?:\/\/)?(www\.)?(youtube\.com)\/(channel\/[a-zA-Z0-9_-]+|c\/[a-zA-Z0-9%_-]+|@([a-zA-Z0-9_]+))$/;
 
 export const REGEX_VALIDATE_YOUTUBE_ALL_LINK = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
 
