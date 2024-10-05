@@ -1052,7 +1052,7 @@ function AddOrderGeneral() {
                                       itemService?.service_view_type ? (
                                         <span className="label" style={badgeGrayStyle}>
                                           <div
-                                            style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                                            style={{ width: '15px', height: '15px', marginRight: '5px' }}
                                             // eslint-disable-next-line react/no-danger
                                             dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type)?.svg }}
                                           />
@@ -1174,7 +1174,7 @@ function AddOrderGeneral() {
                       detailService?.service_view_type ? (
                         <span className="label" style={badgeGrayStyle}>
                           <div
-                            style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                            style={{ width: '15px', height: '15px', marginRight: '5px' }}
                             // eslint-disable-next-line react/no-danger
                             dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
                           />

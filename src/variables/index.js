@@ -552,7 +552,7 @@ export const badgeGrayStyle = {
   border: '1.3px solid gray',
   fontFamily: 'Poppins, sans-serif',
   borderRadius: '7px ',
-  padding: '2px 7px',
+  padding: '1px 7px',
   fontSize: '0.7em',
   color: 'gray',
   fontWeight: 'bold',
