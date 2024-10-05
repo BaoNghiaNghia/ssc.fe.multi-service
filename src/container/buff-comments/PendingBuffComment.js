@@ -320,7 +320,7 @@ function PendingBuffComment() {
                 src={`https://img.youtube.com/vi/${video_id}/mqdefault.jpg`}
                 alt={`Thumbnail for ${video_title}`}
                 preview={false}
-                style={{ borderRadius: '2px', width: '52px', opacity: '50%' }}
+                style={{ borderRadius: '2px', width: '52px', opacity: '70%' }}
               />
               <div>
                 <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>

@@ -216,6 +216,37 @@ function getYouTubeVideoID(url) {
   return urlParams?.get('v');
 }
 
+function countDuplicateLines(lines) {
+  const lineCount = {};
+
+  // Count occurrences of each line
+  lines.forEach(line => {
+    line = line.trim(); // Remove leading and trailing whitespace
+    if (line) { // Check if the line is not empty
+      lineCount[line] = (lineCount[line] || 0) + 1;
+    }
+  });
+
+  // Filter out lines that are not duplicates
+  const duplicates = Object.entries(lineCount)
+    .filter(([_, count]) => count > 1)
+    .reduce((acc, [line, count]) => {
+      acc[line] = count;
+      return acc;
+    }, {});
+
+  return duplicates;
+}
+
+const handleCountValidateCommentString = (input) => {
+  const commentString = typeof input === 'string' ? input : '';
+  const rows = commentString.split('\n');
+  const nonEmptyRows = rows.filter(row => row.trim().length > 0);
+  
+  if (commentString === '') { return 0; }
+  return nonEmptyRows.length;
+};
+
 
 export {
   ellipsis,
@@ -230,5 +261,7 @@ export {
   getPathLocalFromString,
   numberWithCommasCurrency,
   performanceStatementTags,
-  getYouTubeVideoID
+  getYouTubeVideoID,
+  countDuplicateLines,
+  handleCountValidateCommentString
 };

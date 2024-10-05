@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image, InputNumber } from 'antd';
+import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image, InputNumber, Radio } from 'antd';
 import { MdAddchart, MdCancel } from "react-icons/md";
 import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import { FaMoneyBillWave } from "react-icons/fa6";
@@ -18,11 +18,13 @@ import actionsSubscribe from '../../../redux/buffSubscribe/actions';
 import actionsView from '../../../redux/buffView/actions';
 
 import reportActions from '../../../redux/reports/actions';
-import actionsService from '../../../redux/serviceSettings/actions';
-import { isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../../utility/utility';
+import serviceSettingsAction from '../../../redux/serviceSettings/actions';
+import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../../utility/utility';
 import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE } from '../../../variables';
-import EmptyBackground from '../../../static/img/empty_bg_2.png';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
+
+import EmptyBackground from '../../../static/img/empty_bg_2.png';
+
 
 const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
@@ -72,6 +74,7 @@ const badgeRedStyle = {
 const DEFAULT_CATEGORY = 'Comments'
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 function AddOrderGeneral() {
   const dispatch = useDispatch();
@@ -89,8 +92,11 @@ function AddOrderGeneral() {
   const [stateCurr, setStateCurr] = useState({
     selectedCategory: DEFAULT_CATEGORY,
     listServiceCollection: listService?.filter(service => service?.category === DEFAULT_CATEGORY),
-    amountChange: 0
+    amountChange: 0,
+    orderType: 'single',
+    duplicateCounts: {},
   });
+  
 
   const [helpMessage, setHelpMessage] = useState({});
 
@@ -221,7 +227,7 @@ function AddOrderGeneral() {
 
 
   useEffect(() => {
-    dispatch(actionsService.fetchListServiceBegin());
+    dispatch(serviceSettingsAction.fetchListServiceBegin());
   }, [dispatch]);
 
   const handleSubmitComment = () => {
@@ -324,19 +330,7 @@ function AddOrderGeneral() {
     formCreateOrder.resetFields();
     dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
 
-    dispatch(actionsService.modalDetailServiceBegin({}));
-  }
-
-  const handleCountValidateCommentString = (input) => {
-    const commentString = input?.target?.value;
-    const rows = commentString.split('\n');
-    const nonEmptyRows = rows.filter(row => row.trim().length > 0);
-
-    if (commentString === '') { return 0; }
-
-    const rowCount = nonEmptyRows.length;
-
-    return rowCount;
+    dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
   }
 
   const validateCommentCount = stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange <= detailService?.max;
@@ -344,7 +338,7 @@ function AddOrderGeneral() {
   const formCreateCommentService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
+        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Chi tiết đơn hàng</Divider>
         <Row gutter="10">
           <Col sm={24}>
             <Form.Item
@@ -404,12 +398,15 @@ function AddOrderGeneral() {
                   },
                 }
               ]}
-              onChange={(value) => {
-                setStateCurr({
-                  ...stateCurr,
-                  amountChange: handleCountValidateCommentString(value)
-                })
-                formCreateOrder.setFieldsValue({ comments: value?.target?.value });
+              onChange={({ target: { value } }) => {
+                const amountChange = handleCountValidateCommentString(value);
+                const duplicates = countDuplicateLines(value.split('\n')); // Count duplicates
+                setStateCurr(prev => ({
+                  ...prev,
+                  amountChange,
+                  duplicateCounts: duplicates // Store duplicates in state
+                }));
+                formCreateOrder.setFieldsValue({ comments: value });
               }}
             >
               <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
@@ -420,6 +417,14 @@ function AddOrderGeneral() {
                 </span>
                 <span>Ít nhất: {numberWithCommas(detailService?.min || 0)} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)}</span>
               </span>
+
+              {stateCurr?.duplicateCounts && Object.entries(stateCurr.duplicateCounts).map(([comment, count]) => (
+                <>
+                  <div key={comment} style={{ fontSize: '0.8em', color: 'gray' }}>
+                    <span style={{ fontStyle: 'italic' }}>&ldquo;{comment}&ldquo;</span>: Trùng {count - 1} lần
+                  </div>
+                </>
+              ))}
             </Form.Item>
           </Col>
         </Row>
@@ -430,99 +435,145 @@ function AddOrderGeneral() {
   const formCreateSubscribeService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
-          Thông tin dịch vụ
-        </Divider>
-        <Row gutter="10" style={{ marginBottom: '7px' }}>
-          <Col sm={19}>
-            <Form.Item
-              name="link"
-              label="Liên kết"
-              hasFeedback
-              help={helpMessage.link}
-              rules={[
-                {
-                  required: true,
-                  message: 'Trường không được trống',
-                },
-                {
-                  validator: async (_, link) => {
-                    if (link) {
-                      const { status, help } = await handleValidateLink(link);
-                      if (!status) {
-                        return Promise.reject(help);
-                      }
-                    }
-                  },
-                },
-              ]}
-            >
-              <Input
-                size="small"
-                allowClear
-                style={{ fontWeight: 'bold' }}
-                placeholder="Thêm liên kết"
-                onChange={(e) => {
-                  const { value } = e.target;
-                  handleValidateLink(value); // Call validation on link change
-                }}
-              />
-            </Form.Item>
+         <Row gutter="10" style={{ marginBottom: '7px', alignItems: 'center', alignContent: 'center' }}>
+          <Col sm={17}>
+            <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
+              Chi tiết đơn hàng
+            </Divider>
           </Col>
-          <Col sm={5}>
-            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
+          <Col sm={7}>
+            {/* Inline Toggle between 1 đơn and nhiều đơn */}
+            <Radio.Group
+              value={stateCurr.orderType}
+              size='small'
+              onChange={(e) =>
+                setStateCurr((prevState) => ({ ...prevState, orderType: e.target.value }))
+              }
+              buttonStyle="solid"
+              style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
+            >
+              <Radio.Button value="single" style={{ marginRight: '5px', fontWeight: 600, fontSize: '12px', padding: '0 8px' }}>
+                1 đơn
+              </Radio.Button>
+              <Radio.Button value="multiple" style={{ fontWeight: 600, fontSize: '12px', padding: '0 8px' }}>
+                Nhiều đơn
+              </Radio.Button>
+            </Radio.Group>
+          </Col>
+        </Row>
+  
+        {/* Render form based on selected order type */}
+        {stateCurr.orderType === 'single' && (
+          <Row gutter="10" style={{ marginBottom: '7px', marginTop: '15px' }}>
+            <Col sm={19}>
               <Form.Item
-                name="quantity"
-                label="Số subscribe"
+                name="link"
+                label="Liên kết"
                 hasFeedback
+                help={helpMessage.link}
                 rules={[
                   {
                     required: true,
                     message: 'Trường không được trống',
                   },
-                  {
-                    type: 'number',
-                    min: detailService?.min,
-                    message: `Số subscribe phải lớn hơn hoặc bằng ${detailService?.min}`,
-                  },
-                  {
-                    type: 'number',
-                    max: detailService?.max,
-                    message: `Số subscribe phải nhỏ hơn hoặc bằng ${detailService?.max}`,
-                  },
+                  // {
+                  //   validator: async (_, link) => {
+                  //     if (link) {
+                  //       const { status, help } = await handleValidateLink(link);
+                  //       if (!status) {
+                  //         return Promise.reject(help);
+                  //       }
+                  //     }
+                  //   },
+                  // },
                 ]}
               >
-                <InputNumber
+                <Input
                   size="small"
-                  style={{ width: '100%' }}
-                  onChange={async (value) => {
-                    setStateCurr({
-                      ...stateCurr,
-                      amountChange: value,
-                    });
-
-                    // Get the current link value
-                    const link = formCreateOrder.getFieldValue('link');
-                    if (link) {
-                      const { status, help } = await handleValidateLink(link);
-                      // Update the help message for the link input based on validation result
-                      setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
-
-                      // Re-validate the link field to update its status in the form
-                      formCreateOrder.validateFields(['link']).catch(() => { });
-                    } else {
-                      // Show error if link is invalid or empty
-                      setHelpMessage((prevHelp) => ({ ...prevHelp, link: 'Must input a valid link' }));
-                    }
+                  allowClear
+                  style={{ fontWeight: 'bold' }}
+                  placeholder="Thêm liên kết"
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    handleValidateLink(value);
                   }}
-                  // min={detailService?.min}
-                  // max={detailService?.max}
-                  placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
                 />
               </Form.Item>
-            </Tooltip>
-          </Col>
-        </Row>
+            </Col>
+            <Col sm={5}>
+              <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
+                <Form.Item
+                  name="quantity"
+                  label="Số subscribe"
+                  hasFeedback
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Trường không được trống',
+                    },
+                    {
+                      type: 'number',
+                      min: detailService?.min,
+                      message: `Số subscribe phải lớn hơn hoặc bằng ${detailService?.min}`,
+                    },
+                    {
+                      type: 'number',
+                      max: detailService?.max,
+                      message: `Số subscribe phải nhỏ hơn hoặc bằng ${detailService?.max}`,
+                    },
+                  ]}
+                >
+                  <InputNumber
+                    size="small"
+                    style={{ width: '100%' }}
+                    onChange={async (value) => {
+                      setStateCurr((prevState) => ({
+                        ...prevState,
+                        amountChange: value,
+                      }));
+  
+                      const link = formCreateOrder.getFieldValue('link');
+                      if (link) {
+                        const { status, help } = await handleValidateLink(link);
+                        setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
+                        formCreateOrder.validateFields(['link']).catch(() => {});
+                      } else {
+                        setHelpMessage((prevHelp) => ({
+                          ...prevHelp,
+                          link: 'Must input a valid link',
+                        }));
+                      }
+                    }}
+                    placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
+                  />
+                </Form.Item>
+              </Tooltip>
+            </Col>
+          </Row>
+        )}
+  
+        {stateCurr.orderType === 'multiple' && (
+          <Form.Item
+            name="list_order"
+            label="Danh sách đơn"
+            hasFeedback
+            help={helpMessage.link}
+            rules={[
+              {
+                required: true,
+                message: 'Trường không được trống',
+              },
+            ]}
+          >
+            <TextArea
+              size="small"
+              allowClear
+              rows={7}
+              style={{ fontWeight: '500' }}
+              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+            />
+          </Form.Item>
+        )}
       </>
     );
   };
@@ -530,7 +581,7 @@ function AddOrderGeneral() {
   const formCreateLikeService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Thông tin dịch vụ</Divider>
+        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Chi tiết đơn hàng</Divider>
         <Row gutter="10" style={{ marginBottom: '7px' }}>
           <Col sm={19}>
             <Form.Item
@@ -603,7 +654,7 @@ function AddOrderGeneral() {
     return (
       <>
         <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
-          Thông tin dịch vụ
+          Chi tiết đơn hàng
         </Divider>
         <Row gutter="10" style={{ marginBottom: '7px' }}>
           {/* Link input field */}
@@ -751,9 +802,9 @@ function AddOrderGeneral() {
             console.log('----- reset all fields -----')
         }
 
-        dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
+        dispatch(serviceSettingsAction.modalDetailServiceBegin(findCategory[0]));
       }
-      dispatch(actionsService.modalDetailServiceBegin(findCategory[0]));
+      dispatch(serviceSettingsAction.modalDetailServiceBegin(findCategory[0]));
     }
   }
 
@@ -762,7 +813,7 @@ function AddOrderGeneral() {
       ...stateCurr,
       selectedCategory: ''
     });
-    dispatch(actionsService.modalDetailServiceBegin({}));
+    dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
   }
 
   const handleClearServiceSelected = () => {
@@ -770,7 +821,7 @@ function AddOrderGeneral() {
       ...stateCurr,
       selectedCategory: null
     });
-    dispatch(actionsService.modalDetailServiceBegin({}));
+    dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
   }
 
   return (
@@ -859,7 +910,7 @@ function AddOrderGeneral() {
                         });
 
                         if (stateCurr?.selectedCategory !== values) {
-                          dispatch(actionsService.modalDetailServiceBegin({}));
+                          dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
                           setHelpMessage({});
                           formCreateOrder.resetFields(['link', 'service_id']);
 
