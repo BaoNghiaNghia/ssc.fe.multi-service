@@ -335,7 +335,7 @@ function PendingBuffSubscribes() {
 
                     <Image
                       id="channel-image-cover"
-                      src={channel_thumbnail}
+                      src={channel_thumbnail || `https://img.youtube.com/vi/${channel_id}/default.jpg`}
                       alt={`Thumbnail for ${channel_title}`}
                       preview={false}
                       style={{
