@@ -211,6 +211,7 @@ function PendingBuffSubscribes() {
         done_count,
         note,
         channel_title,
+        channel_thumbnail,
         channel_id,
         video_duration,
         current_count,
@@ -334,7 +335,7 @@ function PendingBuffSubscribes() {
 
                     <Image
                       id="channel-image-cover"
-                      src={`https://img.youtube.com/vi/${channel_id}/default.jpg`}
+                      src={channel_thumbnail}
                       alt={`Thumbnail for ${channel_title}`}
                       preview={false}
                       style={{
