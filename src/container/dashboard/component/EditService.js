@@ -8,7 +8,7 @@ import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider } fr
 import { MdAddchart } from "react-icons/md";
 import { FaYoutube } from 'react-icons/fa';
 import actions from '../../../redux/serviceSettings/actions';
-import { generateIconService, LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE } from '../../../variables/index';
+import { generateIconService, LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../../variables/index';
 
 const { Option } = Select;
 
@@ -369,7 +369,7 @@ function EditService({ isOpen, setState, state }) {
                       required: true,
                       message: 'Trường không được trống'
                     }]}>
-                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                      <InputNumber type='number' size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
                     </Form.Item>
                   </Col>
                   <Col sm={8}>
@@ -377,7 +377,7 @@ function EditService({ isOpen, setState, state }) {
                       required: true,
                       message: 'Trường không được trống'
                     }]}>
-                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                      <InputNumber type='number' size='small' style={{ width: '100%' }} addonAfter="giây" placeholder='Ví dụ : 1000' />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -407,7 +407,7 @@ function EditService({ isOpen, setState, state }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%', margin: 0, padding: 0 }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' addonAfter={VIETNAMES_CURRENCY} size='small' style={{ width: '100%', margin: 0, padding: 0 }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
           </Row>
