@@ -35,7 +35,7 @@ import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
-import { convertSeconds, numberWithCommas, performanceStatementTags } from '../../utility/utility';
+import { convertDurationShorten, convertSeconds, numberWithCommas, numberWithCommasCurrency, performanceStatementTags } from '../../utility/utility';
 
 
 const columnTableOrderViews = [
@@ -320,12 +320,12 @@ function PendingBuffView() {
                 style={{ borderRadius: '2px', width: '52px', opacity: '70%' }}
               />
               <div>
-                <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-                  <strong style={{ color: 'gray' }}>Video ID: </strong> {video_id}
+                <span style={{ fontSize: '0.8em', paddingLeft: '8px', display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+                  <span><strong style={{ color: 'gray' }}>{numberWithCommasCurrency(current_count)}</strong> lượt xem</span><span style={{ marginLeft: '15px', fontStyle: 'italic' }}>{ video_duration ? convertDurationShorten(video_duration || 0) : '...'}</span>
                 </span>
 
                 <span style={{ fontSize: '0.8em', paddingLeft: '8px' }}>
-                  <strong style={{ color: 'gray' }}>Thời lượng: </strong> { video_duration ? convertSeconds(video_duration || 0) : '...'}
+                  <span style={{ marginRight: '5px' }}><strong style={{ color: 'gray' }}>Video ID: </strong> {video_id}</span>
                 </span>
               </div>
             </div>

@@ -103,6 +103,18 @@ const convertSeconds = (seconds) => {
 
   return secondString;
 }
+const convertDurationShorten = (seconds) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  const hourString = String(hours).padStart(1, '0');
+  const minuteString = String(minutes).padStart(2, '0');
+  const secondString = String(remainingSeconds).padStart(2, '0');
+
+  return `${hourString}:${minuteString}:${secondString}`;
+}
+
 
 const isEmptyObject = (obj) => {
   for (const prop in obj) {
@@ -262,6 +274,7 @@ export {
   numberWithCommasCurrency,
   performanceStatementTags,
   getYouTubeVideoID,
+  convertDurationShorten,
   countDuplicateLines,
   handleCountValidateCommentString
 };
