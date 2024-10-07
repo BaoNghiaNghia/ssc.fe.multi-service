@@ -322,7 +322,7 @@ function PendingBuffSubscribes() {
                           color="#238f00"
                           style={{
                             backgroundColor: 'white',
-                            borderRadius: '6px',
+                            borderRadius: '8px',
                             position: 'absolute',
                             top: '-2px',
                             right: '-2px',

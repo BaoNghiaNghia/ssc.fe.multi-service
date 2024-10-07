@@ -205,6 +205,64 @@ function GmailManagement() {
       }));
     }
   };
+
+  const handleShowComputerDevices = (value) => {
+    if (!value) return <span>No data available</span>; // Fallback if value is undefined or null
+  
+    const renderComputerIcon = () => {
+      const computerPath = getPathLocalFromString(value?.computer);
+      if (computerPath !== null) {
+        return (
+          <img 
+            src={require(`../../${computerPath}`)}
+            alt={computerPath}
+            width="18px"
+            height="18px"
+            style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
+          />
+        );
+      }
+      return <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />;
+    };
+  
+    switch (typeService) {
+      case SERVICE_TYPE.COMMENT.title:
+      case SERVICE_TYPE.LIKE.title:
+      case SERVICE_TYPE.SUBSCRIBE.title:
+        return (
+          <>
+            {
+              value?.computer ? (
+                <>
+                  {renderComputerIcon()}
+                  <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', color: 'gray' }}>
+                    {value?.computer}
+                  </div>
+                </>
+              ) : <span style={{ opacity: '30%' }}>No computer</span>
+            }
+          </>
+        );
+  
+      case SERVICE_TYPE.VIEW.title:
+        return <>{
+          value?.device_profile ? (
+            <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start', alignContent: 'center' }}>
+              <img src={require('../../static/img/icon/phone.png')} alt="" width={20}/>
+
+              <div style={{ marginLeft: '5px', padding: 0 }}>
+                <p style={{ fontWeight: 500, margin: 0, padding: 0 }}>{value?.device_profile}</p>
+              </div>
+            </span>
+          ) : <span style={{ opacity: '30%' }}>No device</span>
+        }</>;
+  
+      default:
+        return <span>Service type not recognized</span>;
+    }
+  };
+  
+  
   
   const handleChange = (value) => {
     dispatch(gmailActions.changeServiceTypeInGmailBegin({
@@ -218,7 +276,7 @@ function GmailManagement() {
 
   if (listAccountgGmail?.length) {
     listAccountgGmail?.map((value, key) => {
-      const { channel_id, computer, email, live, total_task, _id } = value;
+      const { channel_id, computer, email, live, total_task, _id, device_profile } = value;
 
       const liveColumn = () => {
         switch (typeService) {
@@ -254,22 +312,7 @@ function GmailManagement() {
             </span>
           </span>
         ),
-        computer: (
-          <>
-            {
-              getPathLocalFromString(computer) !== null
-                ? <img 
-                    src={require(`../../${getPathLocalFromString(computer)}`)}
-                    alt={getPathLocalFromString(computer)}
-                    width="18px"
-                    height="18px"
-                    style={{ outline: '2px solid #d3d3d3', borderRadius: '10px', margin: '3px 8px 0 0' }}
-                  />
-                : <TbServerBolt fontSize={17} style={{ marginRight: '8px', marginTop: '5px' }} />
-            }
-            <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', color: 'gray' }}>{computer}</div>
-          </>
-        ),
+        computer: handleShowComputerDevices(value),  // Pass the correct value here
         live: liveColumn(),
         total_task: (
           <>
