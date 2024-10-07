@@ -7,7 +7,7 @@ import { Row, Col, Form, Input, Select, Button, Modal, InputNumber, Divider, Swi
 import { FaYoutube } from 'react-icons/fa';
 import { GrServicePlay  } from "react-icons/gr";
 import actions from '../../../redux/serviceSettings/actions';
-import { generateIconService, LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE } from '../../../variables';
+import { generateIconService, LIST_SERVICE_SUPPLY, REGION_IDENTIFIER, SERVICE_TYPE, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../../variables';
 
 const { Option } = Select;
 
@@ -376,7 +376,7 @@ function AddService({ serviceState, setState }) {
                       required: true,
                       message: 'Trường không được trống'
                     }]}>
-                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                      <InputNumber type='number' addonAfter="giây" size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
                     </Form.Item>
                   </Col>
                   <Col sm={8}>
@@ -384,7 +384,7 @@ function AddService({ serviceState, setState }) {
                       required: true,
                       message: 'Trường không được trống'
                     }]}>
-                      <InputNumber type='number' size='small' style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
+                      <InputNumber type='number' size='small' addonAfter="giây" style={{ width: '100%' }} placeholder='Ví dụ : 1000' />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -452,7 +452,7 @@ function AddService({ serviceState, setState }) {
                 required: true,
                 message: 'Trường không được trống'
               }]}>
-                <InputNumber type='number' size='small' style={{ width: '100%', margin: '0px', padding: '0px' }} placeholder='Ví dụ : 1000' />
+                <InputNumber type='number' size='small' addonAfter={VIETNAMES_CURRENCY} style={{ width: '100%', margin: '0px', padding: '0px' }} placeholder='Ví dụ : 1000' />
               </Form.Item>
             </Col>
           </Row>
