@@ -247,7 +247,7 @@ function GmailManagement() {
       case SERVICE_TYPE.VIEW.title:
         return <>{
           value?.device_profile ? (
-            <span style={{ fontSize: '1.1em', display: 'inline-flex', alignItems: 'flex-start', alignContent: 'center' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'flex-start', alignContent: 'center' }}>
               <img src={require('../../static/img/icon/phone.png')} alt="" width={20}/>
 
               <div style={{ marginLeft: '5px', padding: 0 }}>

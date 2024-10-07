@@ -79,9 +79,8 @@ function ComputerRunViewOrder() {
   const [currentPageExpand, setCurrentPageExpand] = useState(1);
   const [limitPageExpand, setLimitPageExpand] = useState(DEFAULT_PERPAGE);
 
-  const { listServer, listDevices, detailSingleDevice, detailLoading } = useSelector((state) => {
+  const { listDevices, detailSingleDevice, detailLoading } = useSelector((state) => {
     return {
-      listServer: state?.buffView?.listComputer,
       listDevices: state?.buffView?.listDevices,
       preIsLoading: state.reports.loading,
       detailSingleDevice: state?.buffView?.detailSingleDevice,
@@ -456,10 +455,10 @@ function ComputerRunViewOrder() {
                 onExpandedRowsChange: handleExpandedRowsChange,
               }}
               pagination={{
-                current: listServer?.meta?.current_page,
-                defaultPageSize: listServer?.meta?.count,
-                pageSize: listServer?.meta?.per_page,
-                total: listServer?.meta?.total,
+                current: listDevices?.meta?.current_page,
+                defaultPageSize: listDevices?.meta?.count,
+                pageSize: listDevices?.meta?.per_page,
+                total: listDevices?.meta?.total,
                 showSizeChanger: true,
                 pageSizeOptions: DEFAULT_PAGESIZE,
                 onChange(page, pageSize) {
