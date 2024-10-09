@@ -21,12 +21,18 @@ function CardGroup() {
   });
   const getValueByKey = (object, row) => object[row];
 
+  const serviceMap = {
+    [SERVICE_TYPE.COMMENT.title]: 'comments',
+    [SERVICE_TYPE.SUBSCRIBE.title]: 'sub',
+    [SERVICE_TYPE.VIEW.title]: 'comments',
+    [SERVICE_TYPE.LIKE.title]: 'comments'
+  };
+  
   const arrTotalSubRun = commentByDay?.map(item => {
-    if (typeService === SERVICE_TYPE.COMMENT.title) {
-      return item?.comments;
-    }
-    return item?.likes;
+    const key = serviceMap[typeService] || 'likes'; // default to 'likes' if no match
+    return item?.[key];
   }) || [];
+  
 
   const todayRun = arrTotalSubRun.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 

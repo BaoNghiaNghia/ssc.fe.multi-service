@@ -143,6 +143,7 @@ function Overview() {
   const todaySubscribePoint = findObjectByValue(orderAmountSubscribe, 'is_current', true)?.total || 0;
   const todayCommentPoint = findObjectByValue(orderAmountComment, 'is_current', true)?.total || 0;
   const todayLikePoint = findObjectByValue(orderAmountLike, 'is_current', true)?.total || 0;
+
   const todayOrderCount = findObjectByValue(orderByDays, 'is_current', true)?.comments || 0;
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;

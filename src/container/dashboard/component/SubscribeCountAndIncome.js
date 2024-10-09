@@ -15,7 +15,7 @@ import { CardBarChart } from '../style';
 function SubscribeCountAndIncome(props) {
   const { title } = props;
 
-  const { fromDate, toDate, typeService, isLoading, orderAmountComment, performance, orderAmountLike, orderByDays } = useSelector(state => {
+  const { fromDate, toDate, typeService, isLoading, orderAmountComment, performance, orderAmountLike, orderByDays, orderAmountSubscribe, orderAmountView } = useSelector(state => {
     return {
       isLoading: state?.reports?.chartLoading,
       fromDate: state?.reports.filterRange?.from,
@@ -23,6 +23,8 @@ function SubscribeCountAndIncome(props) {
       typeService: state?.reports?.typeService,
       orderAmountComment: state?.reports?.orderAmountComment,
       orderAmountLike: state?.reports?.orderAmountLike,
+      orderAmountView: state?.reports?.orderAmountView,
+      orderAmountSubscribe: state?.reports?.orderAmountSubscribe,
       performance: state?.reports?.performance,
       orderByDays: state?.reports?.orderByDays,
     };
@@ -53,11 +55,15 @@ function SubscribeCountAndIncome(props) {
 
   totalAmountByDays = orderByDays?.sort((a, b) => new Date(a.date) - new Date(b.date)).map(item => Math.round(item?.comments)) || [];
 
-  if (typeService === SERVICE_TYPE.COMMENT.title) {
-    totalPoint = orderAmountComment?.map(item => Math.round(item?.total)) || [];
-  } else if (typeService === SERVICE_TYPE.LIKE.title) {
-    totalPoint = orderAmountLike?.map(item => Math.round(item?.total)) || [];
-  }
+  const orderAmountMap = {
+    [SERVICE_TYPE.COMMENT.title]: orderAmountComment,
+    [SERVICE_TYPE.LIKE.title]: orderAmountLike,
+    [SERVICE_TYPE.VIEW.title]: orderAmountView,
+    [SERVICE_TYPE.SUBSCRIBE.title]: orderAmountSubscribe
+  };
+  
+  totalPoint = orderAmountMap[typeService]?.map(item => Math.round(item?.total)) || [];
+  
 
   const arrWaveDate = performance?.map(item => item?.date) || [];
 

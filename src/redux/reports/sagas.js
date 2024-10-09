@@ -1750,7 +1750,7 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
       yield put(actions.likeStatisticAccountStatusLikeBegin(initialFilter));
       yield put(actions.likeStatisticPerformanceLikeBegin(initialFilter));
-      yield put(actions.likeStatisticCommentByDayBegin(initialFilter));
+      yield put(actions.likeStatisticLikeByDayBegin(initialFilter));
       yield put(actions.likeStatisticComputerThreadBegin(initialFilter));
 
       yield put(actions.likeStatisticAccountOnComputerBegin(initialFilter));

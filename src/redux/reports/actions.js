@@ -848,7 +848,7 @@ const actions = {
     };
   },
 
-  likeStatisticCommentByDayBegin: (payload) => {
+  likeStatisticLikeByDayBegin: (payload) => {
     return {
       type: actions.LIKE_STATISTIC_LIKE_BY_DAY_BEGIN,
       payload

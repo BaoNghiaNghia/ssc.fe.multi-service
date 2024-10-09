@@ -72,12 +72,18 @@ function AnalyseYoutube(props) {
     },
   ];
 
+  const serviceMap = {
+    [SERVICE_TYPE.COMMENT.title]: 'comments',
+    [SERVICE_TYPE.SUBSCRIBE.title]: 'sub',
+    [SERVICE_TYPE.VIEW.title]: 'view',
+    [SERVICE_TYPE.LIKE.title]: 'like'
+  };
+  
   const arrTotalSubRun = commentByDay?.map(item => {
-    if (typeService === SERVICE_TYPE.COMMENT.title) {
-      return item?.comments;
-    }
-    return item?.likes;
+    const key = serviceMap[typeService] || 'likes'; // default to 'likes' if no match
+    return item?.[key];
   }) || [];
+  
   const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
   const arrWaveDate = commentByDay?.map(item => item?.date);
 
