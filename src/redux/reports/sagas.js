@@ -30,7 +30,7 @@ import {
   likeStatisticAccountOnComputerAPI,
   likeStatisticAccountStatusAPI,
   likeStatisticByStatusOrderAPI,
-  likeStatisticCommentByDayAPI,
+  likeStatisticLikeByDayAPI,
   likeStatisticComputerThreadAPI,
   likeStatisticRunningComputerAPI,
   likeStatisticTaskOfToolAPI,
@@ -48,7 +48,7 @@ import {
   subscribeStatisticAccountOnComputerAPI,
   subscribeStatisticAccountStatusAPI,
   subscribeStatisticByStatusOrderAPI,
-  subscribeStatisticCommentByDayAPI,
+  subscribeStatisticSubscribeByDayAPI,
   subscribeStatisticComputerThreadAPI,
   subscribeStatisticRunningComputerAPI,
   subscribeStatisticTaskOfToolAPI,
@@ -65,7 +65,7 @@ import {
   viewStatisticAccountOnComputerAPI,
   viewStatisticAccountStatusAPI,
   viewStatisticByStatusOrderAPI,
-  viewStatisticCommentByDayAPI,
+  viewStatisticViewByDayAPI,
   viewStatisticComputerThreadAPI,
   viewStatisticRunningComputerAPI,
   viewStatisticTaskOfToolAPI,
@@ -420,7 +420,7 @@ function* likeStatisticComputerThreadFunc(params) {
 
 function* likeStatisticCommentByDayFunc(params) {
   try {
-    const response = yield call(likeStatisticCommentByDayAPI, params?.payload);
+    const response = yield call(likeStatisticLikeByDayAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -783,7 +783,7 @@ function* subscribeStatisticComputerThreadFunc(params) {
 
 function* subscribeStatisticSubscribeByDayFunc(params) {
   try {
-    const response = yield call(subscribeStatisticCommentByDayAPI, params?.payload);
+    const response = yield call(subscribeStatisticSubscribeByDayAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -1147,7 +1147,7 @@ function* viewStatisticComputerThreadFunc(params) {
 
 function* viewStatisticViewByDayFunc(params) {
   try {
-    const response = yield call(viewStatisticCommentByDayAPI, params?.payload);
+    const response = yield call(viewStatisticViewByDayAPI, params?.payload);
     
     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
       yield put(
@@ -1566,7 +1566,6 @@ function* changeServiceTypeFunc(params) {
       yield put(actions.likeStatisticTaskDurationInMinuteBegin());
       // yield put(actions.likeStatisticLikeByOrderReportBegin());
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
-      // yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
       yield put(actions.likeStatisticAccountStatusLikeBegin(initialFilter));
       yield put(actions.likeStatisticPerformanceLikeBegin(initialFilter));
       yield put(actions.likeStatisticLikeByDayBegin(initialFilter));

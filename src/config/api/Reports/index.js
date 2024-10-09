@@ -215,7 +215,7 @@ const likeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.create
 const likeStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
 const likeStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
 const likeStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
-const likeStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT }).get(query);
+const likeStatisticLikeByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT }).get(query);
 const likeStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
 const likeStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
 const likeStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
@@ -234,7 +234,7 @@ const subscribeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.c
 const subscribeStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
 const subscribeStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
 const subscribeStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
-const subscribeStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT }).get(query);
+const subscribeStatisticSubscribeByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT }).get(query);
 const subscribeStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
 const subscribeStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
 const subscribeStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
@@ -252,7 +252,7 @@ const viewStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.create
 const viewStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
 const viewStatisticAccountStatusAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
 const viewStatisticByStatusOrderAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT }).get(query);
-const viewStatisticCommentByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_VIEW_BY_DAY_ENDPOINT }).get(query);
+const viewStatisticViewByDayAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_VIEW_BY_DAY_ENDPOINT }).get(query);
 const viewStatisticComputerThreadAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_COMPUTER_THREAD_ENDPOINT }).get(query);
 const viewStatisticRunningComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_RUNNING_COMPUTER_ENDPOINT }).get(query);
 const viewStatisticTaskOfToolAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_TASK_OF_TOOL_ENDPOINT }).get(query);
@@ -305,7 +305,7 @@ export {
     likeStatisticAccountOnComputerAPI,
     likeStatisticAccountStatusAPI,
     likeStatisticByStatusOrderAPI,
-    likeStatisticCommentByDayAPI,
+    likeStatisticLikeByDayAPI,
     likeStatisticComputerThreadAPI,
     likeStatisticRunningComputerAPI,
     likeStatisticTaskOfToolAPI,
@@ -322,7 +322,7 @@ export {
     subscribeStatisticAccountOnComputerAPI,
     subscribeStatisticAccountStatusAPI,
     subscribeStatisticByStatusOrderAPI,
-    subscribeStatisticCommentByDayAPI,
+    subscribeStatisticSubscribeByDayAPI,
     subscribeStatisticComputerThreadAPI,
     subscribeStatisticRunningComputerAPI,
     subscribeStatisticTaskOfToolAPI,
@@ -338,7 +338,7 @@ export {
     viewStatisticAccountOnComputerAPI,
     viewStatisticAccountStatusAPI,
     viewStatisticByStatusOrderAPI,
-    viewStatisticCommentByDayAPI,
+    viewStatisticViewByDayAPI,
     viewStatisticComputerThreadAPI,
     viewStatisticRunningComputerAPI,
     viewStatisticTaskOfToolAPI,

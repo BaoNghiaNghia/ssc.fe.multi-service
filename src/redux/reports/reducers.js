@@ -366,7 +366,7 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         categoryNewOrder: data,
-        orderByDays: data,
+        // orderByDays: data,
       };
 
     case SET_CATEGORY_IN_NEW_ORDER_ERR:
