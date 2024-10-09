@@ -19,6 +19,7 @@ const initialState = {
   detailComputerSubscribe: {},
   listWarrantyOrder: [],
   commentInOrder: {},
+  listSubscribeInChannel: [],
   loading: false,
   error: null
 };
@@ -116,11 +117,34 @@ const {
     SET_RANGE_DATE_WARRANTY_FILTER_BEGIN,
     SET_RANGE_DATE_WARRANTY_FILTER_ERR,
     SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS,
+
+
+    FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_BEGIN,
+    FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_ERR,
+    FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_SUCCESS
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_BEGIN:
+      return {
+        ...state,
+      };
+
+    case FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_SUCCESS:
+      return {
+        ...state,
+        listSubscribeInChannel: data
+      };
+
+    case FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_ERR:
+      return {
+        ...state,
+        listSubscribeInChannel: [],
+        error: err
+      };
+
     case SET_STATUS_BAR_NUMBER_SUBSCRIBE_BEGIN:
       return {
         ...state,

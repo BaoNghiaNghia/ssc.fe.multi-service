@@ -36,7 +36,7 @@ import reportActions from '../../redux/reports/actions';
 import userActions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { DEFAULT_PAGESIZE, DEFAULT_PERPAGE, ORDER_YOUTUBE_STATUS, VIETNAMES_CURRENCY } from '../../variables';
-import { convertSeconds, numberWithCommas, numberWithCommasCurrency, performanceStatementTags } from '../../utility/utility';
+import { convertSeconds, getCurrentTime, numberWithCommas, numberWithCommasCurrency, performanceStatementTags } from '../../utility/utility';
 
 
 const columnsTable = [
@@ -115,12 +115,13 @@ const columnsTable = [
 
 function PendingBuffSubscribes() {
   const dispatch = useDispatch();
-  const { listOrderSubscribe, userList, listService, isLoading, userInfo, isOpenCreateOrder, statusBarNumber } = useSelector(state => {
+  const { listOrderSubscribe, userList, listService, isLoading, userInfo, isOpenCreateOrder, statusBarNumber, filterRange } = useSelector(state => {
     return {
       isLoading: state?.buffSubscribe?.loading,
       listOrderSubscribe: state?.buffSubscribe?.listOrderSubscribe,
       statusBarNumber: state?.buffSubscribe?.statusBarNumber,
       userList: state?.member?.userList,
+      filterRange: state?.buffSubscribe?.filterRange,
       listService: state?.settingService?.listService?.items,
       userInfo: state?.auth?.userInfo,
       isOpenCreateOrder: state?.reports?.isOpenCreateOrder
@@ -372,7 +373,6 @@ function PendingBuffSubscribes() {
                 </a>
               </Tooltip>
             </div>
-
           </>
         ),
         start_count: (
@@ -602,10 +602,16 @@ function PendingBuffSubscribes() {
               ) : <></>
             }
             <Tooltip title="Lượng subscribe">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" 
+              <Button className="btn-icon" type="primary" to="#" shape="circle"
                 onClick={() => {
                   dispatch(actionsSubscribe.detailOrderSubscribeAdminBegin({
                     ...value,
+                  }));
+                  console.log('----- channel data ------', value)
+                  dispatch(actionsSubscribe.fetchListSubscribeInChannelByDayBegin({
+                    start_date: value?.created_at,
+                    end_date: getCurrentTime(),
+                    channel_id: value?.channel_id
                   }));
                   setState({ 
                     ...state, 

@@ -15,3 +15,5 @@ export const ACTIVE_WARRANTY_ORDER_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/wa
 export const REFUND_WARRANTY_ORDER_ENDPOINT = 'ytb-sub/api/v1/admin/warranty-orders/refund/id';
 
 export const VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT = 'ytb-sub/api/v1/admin/orders/validate-ytb-video';
+
+export const CHANNEL_SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT = "ytb-sub/api/v1/admin/stats/subscribe-by-day";

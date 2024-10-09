@@ -15,7 +15,8 @@ import {
    REFUND_WARRANTY_ORDER_ENDPOINT,
    UPDATE_MANY_COMPUTER_SUBSCRIBE_ENDPOINT,
    UPDATE_MANY_ORDER_SUBSCRIBE_ENDPOINT,
-   VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT
+   VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT,
+   CHANNEL_SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT
 } from './endpoints';
 import ApiFactory from '../ApiFactory';
 
@@ -37,6 +38,7 @@ BuffSubscribeAPI.createEntities([
     { name: UPDATE_MANY_COMPUTER_SUBSCRIBE_ENDPOINT},
     { name: UPDATE_MANY_ORDER_SUBSCRIBE_ENDPOINT},
     { name: VALIDATE_YOUTUBE_VIDEO_SUBSCRIBE_ENDPOINT},
+    { name: CHANNEL_SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT},
 ]);
 
 const fetchAdminSettingAPI = () => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: FETCH_ADMIN_SETTING_ENDPOINT }).get();
@@ -63,6 +65,8 @@ const fetchListWarrantyOrderAPI = (query) => BuffSubscribeAPI.createBasicCRUDEnd
 const activeWarrantySubscribeOrderAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: ACTIVE_WARRANTY_ORDER_SUBSCRIBE_ENDPOINT }).submitPost(query);
 const refundWarrantyOrderAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: REFUND_WARRANTY_ORDER_ENDPOINT }).submitPost(query);
 
+const fetchListSubscribeInChannelByDayAPI = (query) => BuffSubscribeAPI.createBasicCRUDEndpoints({ name: CHANNEL_SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ENDPOINT }).get(query);
+
 export {
     fetchAdminSettingAPI,
     fetchListOrderSubscribeAPI,
@@ -82,4 +86,6 @@ export {
     fetchListWarrantyOrderAPI,
     activeWarrantySubscribeOrderAPI,
     refundWarrantyOrderAPI,
+
+    fetchListSubscribeInChannelByDayAPI
 }

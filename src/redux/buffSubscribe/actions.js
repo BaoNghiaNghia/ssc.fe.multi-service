@@ -93,6 +93,32 @@ const actions = {
     SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS: 'SET_RANGE_DATE_WARRANTY_FILTER_SUCCESS',
     SET_RANGE_DATE_WARRANTY_FILTER_ERR: 'SET_RANGE_DATE_WARRANTY_FILTER_ERR',
 
+    FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_BEGIN: 'FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_BEGIN',
+    FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_SUCCESS: 'FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_SUCCESS',
+    FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_ERR: 'FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_ERR',
+
+
+
+    fetchListSubscribeInChannelByDayBegin: (payload) => {
+        return {
+          type: actions.FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_BEGIN,
+          payload
+        };
+    },
+
+    fetchListSubscribeInChannelByDaySuccess: (data) => {
+        return {
+            type: actions.FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_SUCCESS,
+            data,
+        }
+    },
+
+    fetchListSubscribeInChannelByDayErr: (err) => {
+        return {
+            type: actions.FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_ERR,
+            err,
+        }
+    },
 
     setStatusBarSubscribeBegin: (payload) => {
         return {

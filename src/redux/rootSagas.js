@@ -90,6 +90,7 @@ import {
     detailOrderSubscribeWatcherSaga,
     fetchAdminSettingWatcherSaga,
     fetchListOrderSubscribeWatcherSaga,
+    fetchListSubscribeInChannelByDayWatcherSaga,
     fetchOrderHistoryWatcherSaga,
     fetchServicePackageListWatcherSaga,
     fetchWarrantySubscribeOrderWatcherSaga,
@@ -427,6 +428,7 @@ export default function* rootSaga() {
         updateSettingSubscribeWatcherSaga(),
         fetchListSettingsViewWatcherSaga(),
         updateSettingViewWatcherSaga(),
-        setCategoryInNewOrderWatcherSaga()
+        setCategoryInNewOrderWatcherSaga(),
+        fetchListSubscribeInChannelByDayWatcherSaga(),
     ]);
 }

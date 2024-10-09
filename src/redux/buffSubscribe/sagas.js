@@ -18,6 +18,8 @@ import {
   fetchListWarrantyOrderAPI,
   activeWarrantySubscribeOrderAPI,
   refundWarrantyOrderAPI,
+
+  fetchListSubscribeInChannelByDayAPI
 } from '../../config/api/BuffSubscribe/index';
 import { MESSSAGE_STATUS_CODE, DEFAULT_PERPAGE } from '../../variables';
 
@@ -429,8 +431,34 @@ function* detailComputerSubscribeFunc(params) {
   } catch (error) {
     const errorMessage = error;
     yield put(
-      actions.detailComputerRunSubscribeErr({ error: errorMessage || 'Detail server run subscribe failed' })
+      actions.detailComputerRunSubscribeErr({ error: errorMessage || 'Subscribe - Detail device run subscribe failed' })
     );
+  } finally { /* empty */ }
+}
+
+function* fetchListSubscribeInChannelByDayFunc(params) {
+  try {
+    const response = yield call(fetchListSubscribeInChannelByDayAPI, params?.payload);
+    
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.fetchListSubscribeInChannelByDaySuccess(response?.data?.data)
+      );
+    }
+
+  } catch (error) {
+    const errorMessage = error;
+    yield put(
+      actions.fetchListSubscribeInChannelByDayErr({ error: errorMessage || 'Subscribe - List subscribe in channel failed' })
+    );
+
+    if (errorMessage?.response?.data?.data?.error) {
+      toast.error(errorMessage?.response?.data?.data?.error);
+    } else if (errorMessage?.response?.data?.message) {
+      toast.error(errorMessage?.response?.data?.message);
+    } else {
+      toast.error('Subscribe - List subscribe in channel failed');
+    }
   } finally { /* empty */ }
 }
 
@@ -579,4 +607,8 @@ export function* setRangeDateWarrantyFilterWatcherSaga() {
 
 export function* detailComputerSubscribeWatcherSaga() {
   yield takeLatest(actions.DETAIL_COMPUTER_RUN_SUBSCRIBE_BEGIN, detailComputerSubscribeFunc);
+}
+
+export function* fetchListSubscribeInChannelByDayWatcherSaga() {
+  yield takeLatest(actions.FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_BEGIN, fetchListSubscribeInChannelByDayFunc);
 }

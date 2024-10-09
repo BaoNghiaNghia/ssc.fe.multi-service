@@ -46,6 +46,7 @@ function Overview() {
     computerThread, 
     accountStatus,
     orderAmountComment,
+    orderAmountSubscribe,
     orderAmountLike,
     taskOfTool,
     accountOnComputer,
@@ -68,6 +69,7 @@ function Overview() {
       accountStatus: state?.reports?.accountStatus,
       performance: state?.reports?.performance,
       orderAmountComment: state?.reports?.orderAmountComment,
+      orderAmountSubscribe: state?.reports?.orderAmountSubscribe,
       orderAmountLike: state?.reports?.orderAmountLike,
       accountOnComputer: state?.reports?.accountOnComputer,
       commentByDay: state?.reports?.commentByDay,
@@ -93,12 +95,12 @@ function Overview() {
 
     dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
     dispatch(actions.likeStatisticOrderAmountBegin(initialFilter));
+    dispatch(actions.subscribeStatisticOrderAmountBegin(initialFilter));
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.commentStatisticTaskDurationInMinuteBegin());
       dispatch(actions.commentStatisticCommentByOrderReportBegin(initialFilter));
       dispatch(actions.commentStatisticTaskSuccessInMinuteBegin());
-      // dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
       dispatch(actions.commentStatisticAccountStatusCommentBegin(initialFilter));
       dispatch(actions.commentStatisticPerformanceCommentBegin(initialFilter));
       dispatch(actions.commentStatisticCommentByDayBegin(initialFilter));
@@ -138,7 +140,7 @@ function Overview() {
     return array.find(obj => obj[key] === value);
   };
 
-  const todaySubscribePoint = (Number(profitToday?.total_point_today))*(-1) || 0;
+  const todaySubscribePoint = findObjectByValue(orderAmountSubscribe, 'is_current', true)?.total || 0;
   const todayCommentPoint = findObjectByValue(orderAmountComment, 'is_current', true)?.total || 0;
   const todayLikePoint = findObjectByValue(orderAmountLike, 'is_current', true)?.total || 0;
   const todayOrderCount = findObjectByValue(orderByDays, 'is_current', true)?.comments || 0;

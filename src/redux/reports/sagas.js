@@ -1587,7 +1587,7 @@ function* changeServiceTypeFunc(params) {
       yield put(actions.subscribeStatisticTaskDurationInMinuteBegin());
       // yield put(actions.subscribeStatisticSubscribeByOrderReportBegin());
       yield put(actions.subscribeStatisticTaskSuccessInMinuteBegin());
-      // yield put(actions.subscribeStatisticOrderAmountBegin(initialFilter));
+      yield put(actions.subscribeStatisticOrderAmountBegin(initialFilter));
       yield put(actions.subscribeStatisticAccountStatusSubscribeBegin(initialFilter));
       yield put(actions.subscribeStatisticPerformanceSubscribeBegin(initialFilter));
       yield put(actions.subscribeStatisticSubscribeByDayBegin(initialFilter));

@@ -234,7 +234,7 @@ function AddOrderGeneral() {
         }, {});
 
         const isValid = Object.keys(mappedObj).every((key) => {
-          if (key === 'Livestream') return true; // Skip 'Livestream' check
+          if (key === 'Livestream') return true;
           return mappedObj[key];
         });
         

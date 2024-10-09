@@ -1541,14 +1541,14 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        orderAmountLike: data,
+        orderAmountSubscribe: data,
       };
 
     case SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
         loading: false,
-        orderAmountLike: [],
+        orderAmountSubscribe: [],
         error: err
       };
 
