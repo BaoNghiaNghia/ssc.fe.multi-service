@@ -233,7 +233,11 @@ function AddOrderGeneral() {
           return acc;
         }, {});
 
-        const isValid = Object.values(mappedObj).every(value => value); // Check all mapped values for validity
+        const isValid = Object.keys(mappedObj).every((key) => {
+          if (key === 'Livestream') return true; // Skip 'Livestream' check
+          return mappedObj[key];
+        });
+        
         help = createCustomHelp(mappedObj);
         status = isValid ? 'success' : 'error';
       }
