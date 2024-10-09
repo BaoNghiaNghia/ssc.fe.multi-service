@@ -1535,6 +1535,8 @@ function* changeServiceTypeFunc(params) {
     //  Default initial values
     yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
     yield put(actions.commentStatisticOrderAmountBegin(initialFilter));
+    yield put(actions.subscribeStatisticOrderAmountBegin(initialFilter));
+    yield put(actions.viewStatisticOrderAmountBegin(initialFilter));
 
 
     if (isType === SERVICE_TYPE.COMMENT.title) {
@@ -1627,10 +1629,6 @@ function* changeServiceTypeFunc(params) {
 
       // Fetch list computer
       yield put(actionBuffView.listComputerRunViewBegin(initServerPagination));
-    }
-    
-    if (isType === SERVICE_TYPE.VIEW.title) {
-      console.log('--- THAY ĐỔI STATISTIC VIEW ---');
     }
   } catch (err) {
     yield put(
