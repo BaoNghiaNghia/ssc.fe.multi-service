@@ -848,7 +848,6 @@ function AddOrderGeneral() {
                 <Col sm={16}>
                   <Form.Item
                     name="category"
-                    initialValue={categoryNewOrder}
                     label="Phân loại "
                     style={{ marginBottom: '0px' }}
                   >
