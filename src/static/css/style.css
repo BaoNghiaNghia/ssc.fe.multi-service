@@ -2727,18 +2727,46 @@ li.active > .display {
   padding: 10px !important;
 }
 
-/* Handle */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: #3d8f7f13;
+}
+
 ::-webkit-scrollbar-thumb {
   background-color: #6e6e6e2d;
   border-radius: 50px;
 }
 
 
-::-webkit-scrollbar {
+/* Default scrollbar styles for Ant Design table */
+.table-responsive .ant-table-content::-webkit-scrollbar {
   width: 4px;
   height: 4px;
   background-color: #3d8f7f13;
+  transition: width 0.4s ease, height 0.4s ease, background-color 0.4s ease;
 }
+
+.table-responsive .ant-table-content::-webkit-scrollbar-thumb {
+  background-color: #6e6e6e2d;
+  border-radius: 50px;
+  transition: background-color 0.4s ease, border-radius 0.4s ease;
+}
+
+/* On hover, increase the size and smooth the color change */
+.table-responsive .ant-table-content:hover::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.table-responsive .ant-table-content:hover::-webkit-scrollbar-thumb {
+  background-color: #37404a49; /* Darken the thumb on hover */
+  border-radius: 10px; /* Optional: Change the border-radius on hover */
+  transition: background-color 0.4s ease, width 0.4s ease, height 0.4s ease;
+}
+
+
 
 .full-height-dropdown .ant-select-single .ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
   height: 109px !important;
