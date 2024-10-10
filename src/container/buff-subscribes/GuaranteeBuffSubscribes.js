@@ -248,8 +248,8 @@ function GuaranteeBuffSubscribes() {
                         padding: '2px',
                         marginBottom: '0',
                         outline: priority ? '2px dashed yellowgreen' : 'none',
-                        width: '45px', // Ensure this is large enough
-                        height: '45px' // Ensure this is large enough
+                        width: '45px',
+                        height: '45px'
                       }}
                     />
                   </span>
@@ -318,7 +318,6 @@ function GuaranteeBuffSubscribes() {
         amount: <span className="ordered-amount">{amount}</span>,
         action: (
           <div className="table-actions">
-            
             <Tooltip title="Gửi yêu cầu">
               <Button className="btn-icon" type="primary" to="#" shape="circle" 
                 onClick={() => {

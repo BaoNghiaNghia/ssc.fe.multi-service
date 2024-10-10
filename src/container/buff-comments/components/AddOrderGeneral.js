@@ -846,6 +846,7 @@ function AddOrderGeneral() {
                 <Col sm={16}>
                   <Form.Item
                     name="category"
+                    initialValue={categoryNewOrder}
                     label="Phân loại"
                     style={{ marginBottom: '0px' }}
                   >
@@ -854,7 +855,7 @@ function AddOrderGeneral() {
                       size='small'
                       className='full-height-dropdown'
                       style={{ width: '100%' }}
-                      placeholder="Tìm theo ID của dịch vụ"
+                      placeholder="Chọn loại dịch vụ"
                       onChange={(values) => {
                         const childService = listService?.filter(service => service?.category === values);
 
@@ -923,7 +924,7 @@ function AddOrderGeneral() {
                           return <>
                             {
                               itemService?.enabled ? (
-                                <Option key={index} value={itemService?.service_id} style={{ padding: '12px 0px', borderBottom: '1px dashed #cbcbcb' }}>
+                                <Option key={index} value={itemService?.service_id} style={{ padding: '15px 0px', borderBottom: '1px dashed #cbcbcb' }}>
                                   <div style={{ display: 'flex', alignItems: 'center', height: '20px', paddingTop: '5px' }}>
                                     <FaYoutube color="red" fontSize={20} style={{ margin: '0px 7px 0 0' }} />
                                     {
@@ -942,7 +943,7 @@ function AddOrderGeneral() {
                                     <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
                                   </div>
                                   <div style={{ color: 'gray', fontSize: '0.8em' }}>{itemService?.description}</div>
-                                  <div style={{ display: 'flex', alignContent: 'center', alignItems:'center' }}>
+                                  <div style={{ display: 'flex', alignContent: 'center', alignItems:'center', paddingBottom: '8px'  }}>
                                     {
                                       itemService?.enabled ? (
                                         <span className="label" style={badgeGreenStyle}>
