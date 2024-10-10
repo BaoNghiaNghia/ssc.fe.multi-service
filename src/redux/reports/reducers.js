@@ -359,20 +359,17 @@ const ReportsReducer = (state = initialState, action) => {
     case SET_CATEGORY_IN_NEW_ORDER_BEGIN:
       return {
         ...state,
-        chartLoading: true,
       };
 
     case SET_CATEGORY_IN_NEW_ORDER_SUCCESS:
       return {
         ...state,
         categoryNewOrder: data,
-        // orderByDays: data,
       };
 
     case SET_CATEGORY_IN_NEW_ORDER_ERR:
       return {
         ...state,
-        chartLoading: false,
         categoryNewOrder: INITIALIZE_SERVICE_SELECTED,
         error: err
       };

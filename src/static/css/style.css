@@ -2760,7 +2760,7 @@ li.active > .display {
 }
 
 .table-responsive .ant-table-content:hover::-webkit-scrollbar-thumb {
-  background-color: #37404a49; /* Darken the thumb on hover */
+  background-color: #37404a1b; /* Darken the thumb on hover */
   border-radius: 10px; /* Optional: Change the border-radius on hover */
   transition: background-color 0.4s ease, width 0.4s ease, height 0.4s ease;
 }
