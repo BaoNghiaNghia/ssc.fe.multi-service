@@ -9,13 +9,13 @@ import { numberWithCommas } from '../../../utility/utility';
 import { SERVICE_TYPE } from '../../../variables';
 
 function CardGroup() {
-  const { typeService, statisticComment, commentByDay } = useSelector((state) => {
+  const { typeService, statisticComment, quantityRunByDay } = useSelector((state) => {
     return {
       isLoading: state?.reports?.chartLoading,
       reportData: state?.reports?.usuallyReportData?.report,
       typeService: state?.reports?.typeService,
       statisticComment: state?.reports?.statisticComment,
-      commentByDay: state?.reports?.commentByDay,
+      quantityRunByDay: state?.reports?.quantityRunByDay,
       filterRange: state?.reports?.filterRange,
     }
   });
@@ -24,12 +24,12 @@ function CardGroup() {
   const serviceMap = {
     [SERVICE_TYPE.COMMENT.title]: 'comments',
     [SERVICE_TYPE.SUBSCRIBE.title]: 'sub',
-    [SERVICE_TYPE.VIEW.title]: 'comments',
-    [SERVICE_TYPE.LIKE.title]: 'comments'
+    [SERVICE_TYPE.VIEW.title]: 'views',
+    [SERVICE_TYPE.LIKE.title]: 'likes'
   };
   
-  const arrTotalSubRun = commentByDay?.map(item => {
-    const key = serviceMap[typeService] || 'likes'; // default to 'likes' if no match
+  const arrTotalSubRun = quantityRunByDay?.map(item => {
+    const key = serviceMap[typeService] || 'likes';
     return item?.[key];
   }) || [];
   
@@ -100,7 +100,6 @@ function CardGroup() {
           >
             <div className="ratio-content">
               <Heading as="h1">{getValueByKey(statisticComment, '0') || 0 }</Heading>
-              {/* <Progress percent={72} status="warning" /> */}
             </div>
           </Cards>
         </RatioCard>

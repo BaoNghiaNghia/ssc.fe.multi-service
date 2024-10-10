@@ -18,7 +18,7 @@ const initialState = {
   listServer: [],
   statisticSubscribe: {},
   statisticComment: {},
-  commentByDay: [],
+  quantityRunByDay: [],
   taskSuccessInMinutes: [],
   taskDurationInMinutes: [],
   orderAmountComment: [],
@@ -623,14 +623,14 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        commentByDay: data,
+        quantityRunByDay: data,
       };
 
     case COMMENT_STATISTIC_COMMENT_BY_DAY_ERR:
       return {
         ...state,
         loading: false,
-        commentByDay: [],
+        quantityRunByDay: [],
         error: err
       };
     case COMMENT_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
@@ -918,14 +918,14 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        commentByDay: data,
+        quantityRunByDay: data,
       };
 
     case LIKE_STATISTIC_LIKE_BY_DAY_ERR:
       return {
         ...state,
         loading: false,
-        commentByDay: [],
+        quantityRunByDay: [],
         error: err
       };
     case LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
@@ -1291,14 +1291,14 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        commentByDay: data,
+        quantityRunByDay: data,
       };
 
     case VIEW_STATISTIC_VIEW_BY_DAY_ERR:
       return {
         ...state,
         loading: false,
-        commentByDay: [],
+        quantityRunByDay: [],
         error: err
       };
     case VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:
@@ -1626,14 +1626,14 @@ const ReportsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        commentByDay: data,
+        quantityRunByDay: data,
       };
 
     case SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_DAY_ERR:
       return {
         ...state,
         loading: false,
-        commentByDay: [],
+        quantityRunByDay: [],
         error: err
       };
     case SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN:

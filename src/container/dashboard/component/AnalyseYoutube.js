@@ -16,14 +16,14 @@ import { SERVICE_TYPE } from '../../../variables';
 function AnalyseYoutube(props) {
   const { title } = props;
 
-  const { avgPerformance, reportChart, isLoading, filterRange, typeService, commentByDay, performance } = useSelector(state => {
+  const { avgPerformance, reportChart, isLoading, filterRange, typeService, quantityRunByDay, performance } = useSelector(state => {
     return {
       isLoading: state?.reports?.chartLoading,
       avgPerformance: state?.reports?.usuallyReportData?.avg_performance,
       reportChart: state?.reports?.usuallyReportData?.report,
       filterRange: state?.reports?.filterRange,
       typeService: state?.reports?.typeService,
-      commentByDay: state?.reports?.commentByDay,
+      quantityRunByDay: state?.reports?.quantityRunByDay,
       performance: state?.reports?.performance
     };
   });
@@ -79,13 +79,13 @@ function AnalyseYoutube(props) {
     [SERVICE_TYPE.LIKE.title]: 'like'
   };
   
-  const arrTotalSubRun = commentByDay?.map(item => {
+  const arrTotalSubRun = quantityRunByDay?.map(item => {
     const key = serviceMap[typeService] || 'likes'; // default to 'likes' if no match
     return item?.[key];
   }) || [];
   
   const orderRequest = performance?.map(item => Math.round(item?.avg_performance)) || [];
-  const arrWaveDate = commentByDay?.map(item => item?.date);
+  const arrWaveDate = quantityRunByDay?.map(item => item?.date);
 
 
   const dataChartYoutube = {
