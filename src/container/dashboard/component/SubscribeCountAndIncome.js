@@ -53,7 +53,7 @@ function SubscribeCountAndIncome(props) {
   let totalPoint = [];
   let totalAmountByDays = [];
 
-  totalAmountByDays = orderByDays?.sort((a, b) => new Date(a.date) - new Date(b.date)).map(item => Math.round(item?.comments)) || [];
+  totalAmountByDays = orderByDays?.sort((a, b) => new Date(a?.date) - new Date(b?.date)).map(item => Math.round(item?.total)) || [];
 
   const orderAmountMap = {
     [SERVICE_TYPE.COMMENT.title]: orderAmountComment,
