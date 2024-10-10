@@ -2752,7 +2752,6 @@ li.active > .display {
   border-radius: 50px;
   transition: background-color 0.4s ease, border-radius 0.4s ease;
 }
-
 /* On hover, increase the size and smooth the color change */
 .table-responsive .ant-table-content:hover::-webkit-scrollbar {
   width: 7px;

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Select, Button, Modal, Tooltip, Image } from 'antd';
 import { MdAddchart } from "react-icons/md";
@@ -62,7 +62,7 @@ function StatisticSubscribeQuantity({ setState, orderState }) {
           }));
 
 
-          setState({ 
+          setState({
             ...orderState,
             isStatisticSubscribe: false,
             statusNumber: 'all'
@@ -76,7 +76,8 @@ function StatisticSubscribeQuantity({ setState, orderState }) {
     } catch (err) {
       console.log(err);
       setState({
-        isStatisticSubscribe: false });
+        isStatisticSubscribe: false
+      });
       formUpdateSubscribeOrder.resetFields();
     }
   };
@@ -97,11 +98,14 @@ function StatisticSubscribeQuantity({ setState, orderState }) {
 
   return (
     <Modal
-      width='90%'
+      width='80%'
+      bodyStyle={{ 
+        padding: '0 10px'
+       }}
       open={orderState?.isStatisticSubscribe}
       centered
       title={
-        <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', justifyContent: 'space-around' }}>
+        <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', gap: 70}}>
           <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
             <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
             <div>
@@ -109,92 +113,71 @@ function StatisticSubscribeQuantity({ setState, orderState }) {
               <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Thống kế lượng subscribe theo ngày</p>
             </div>
           </div>
-          <div>
-            <div style={{ display: 'inline-flex', alignItems: 'flex-start', position: 'relative' }}> {/* Added position: relative */}
-              <Tooltip
-                title={
-                  <Row gutter={10}>
-                    <Col sm={24}>
-                      <span style={{ marginRight: '5px' }}>Đến kênh</span>
-                      <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-                        <strong>{detailOrderSubscribe?.channel_title || '...'}</strong>
-                      </span>
-                    </Col>
-                  </Row>
-                }
-                placement="topLeft"
+          <a
+            href={detailOrderSubscribe?.link}
+            color="black"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: 'black !important',
+              display: 'inline-flex',
+              alignItems: 'center',
+              paddingRight: '20px'
+            }}
+          >
+            <span style={{ position: 'relative', marginRight: '10px' }}>
+              {detailOrderSubscribe?.priority && (
+                <Tooltip title="Ưu tiên">
+                  <BsFire
+                    fontSize={15}
+                    color="#238f00"
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '8px',
+                      position: 'absolute',
+                      top: '-2px',
+                      right: '-2px',
+                      textShadow: '1px 1px 2px yellowgreen',
+                      zIndex: 1
+                    }}
+                  />
+                </Tooltip>
+              )}
+
+              <Image
+                id="channel-image-cover"
+                src={detailOrderSubscribe?.channel_thumbnail || `https://img.youtube.com/vi/${detailOrderSubscribe?.channel_id}/default.jpg`}
+                alt={`Thumbnail for ${detailOrderSubscribe?.channel_title}`}
+                preview={false}
+                style={{
+                  borderRadius: '25px',
+                  padding: '2px',
+                  marginBottom: '0',
+                  outline: detailOrderSubscribe?.priority ? '2px dashed yellowgreen' : 'none',
+                  width: '45px', // Ensure this is large enough
+                  height: '45px' // Ensure this is large enough
+                }}
+              />
+            </span>
+            <span>
+              <p
+                style={{
+                  margin: 0,
+                  padding: 0,
+                  color: detailOrderSubscribe?.priority ? 'green' : 'darkslategray',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: 600,
+                  textShadow: detailOrderSubscribe?.priority ? `1px 1px 3px yellowgreen` : 'none'
+                }}
               >
-                <a
-                  href={detailOrderSubscribe?.link}
-                  color="black"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: 'black !important',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    position: 'relative' // Added this line
-                  }}
-                >
-                  <span style={{ position: 'relative', marginRight: '10px' }}> 
-                    {detailOrderSubscribe?.priority && (
-                      <Tooltip title="Ưu tiên">
-                        <BsFire
-                          fontSize={15}
-                          color="#238f00"
-                          style={{
-                            backgroundColor: 'white',
-                            borderRadius: '8px',
-                            position: 'absolute',
-                            top: '-2px',
-                            right: '-2px',
-                            textShadow: '1px 1px 2px yellowgreen',
-                            zIndex: 1
-                          }}
-                        />
-                      </Tooltip>
-                    )}
+                {detailOrderSubscribe?.channel_title}
+              </p>
 
-                    <Image
-                      id="channel-image-cover"
-                      src={detailOrderSubscribe?.channel_thumbnail || `https://img.youtube.com/vi/${detailOrderSubscribe?.channel_id}/default.jpg`}
-                      alt={`Thumbnail for ${detailOrderSubscribe?.channel_title}`}
-                      preview={false}
-                      style={{
-                        borderRadius: '25px',
-                        padding: '2px',
-                        marginBottom: '0',
-                        outline: detailOrderSubscribe?.priority ? '2px dashed yellowgreen' : 'none',
-                        width: '45px', // Ensure this is large enough
-                        height: '45px' // Ensure this is large enough
-                      }}
-                    />
-                  </span>
-                  <span>
-                    <p
-                      style={{
-                        margin: 0,
-                        padding: 0,
-                        color: detailOrderSubscribe?.priority ? 'green' : 'darkslategray',
-                        fontFamily: 'Poppins, sans-serif',
-                        fontWeight: 600,
-                        textShadow: detailOrderSubscribe?.priority ? `1px 1px 3px yellowgreen` : 'none'
-                      }}
-                    >
-                      {`${detailOrderSubscribe?.channel_title?.substring(0, 30)}...`}
-                    </p>
-
-                    <p style={{ fontSize: '0.8em', color: 'gray' }}>
-                      <strong>{numberWithCommasCurrency(detailOrderSubscribe?.current_count)} người đăng ký</strong>
-                    </p>
-                    <p style={{ fontSize: '0.6em', color: 'gray' }}>
-                      <strong>Channel ID: </strong> {detailOrderSubscribe?.channel_id}
-                    </p>
-                  </span>
-                </a>
-              </Tooltip>
-            </div>
-          </div>
+              <p style={{ fontSize: '0.8em', color: 'gray', margin: 0, padding: 0 }}>
+                <strong>{numberWithCommasCurrency(detailOrderSubscribe?.current_count)} người đăng ký</strong>
+              </p>
+            </span>
+          </a>
         </div>
       }
       onOk={handleOk}
@@ -209,7 +192,7 @@ function StatisticSubscribeQuantity({ setState, orderState }) {
       ]}
     >
       <Form name="add_service" layout="vertical" form={formUpdateSubscribeOrder}>
-          <ChartSubscribeInChannelByDay loadingChart={postLoading} chartData={chartSubscribePoint || {}} />
+        <ChartSubscribeInChannelByDay loadingChart={postLoading} chartData={chartSubscribePoint || {}} />
       </Form>
     </Modal>
   );
