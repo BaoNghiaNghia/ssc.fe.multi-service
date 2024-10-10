@@ -96,6 +96,11 @@ const ChartSubscribePoint = ({
         },
         xaxis: {
             categories: Array.isArray(chartData?.wave_date) ? chartData.wave_date : [], // Ensure wave_date is an array
+            labels: {
+                style: {
+                    fontFamily: 'Be Vietnam Pro, sans-serif'
+                }
+            }
         },
         fill: {
             gradient: {
@@ -106,11 +111,17 @@ const ChartSubscribePoint = ({
         },
         yaxis: {
             title: {
-                text: `${typeService} / ${VIETNAMES_CURRENCY}`
+                text: `${typeService} / ${VIETNAMES_CURRENCY}`,
+                style: {
+                    fontFamily: 'Be Vietnam Pro, sans-serif'
+                }
             },
             labels: {
                 formatter (value) {
                     return numberWithCommas(value || 0);
+                },
+                style: {
+                    fontFamily: 'Be Vietnam Pro, sans-serif'
                 }
             },
         },
@@ -119,16 +130,23 @@ const ChartSubscribePoint = ({
             horizontalAlign: 'right',
             floating: true,
             offsetY: -25,
-            offsetX: -5
+            offsetX: -5,
+            fontFamily: 'Be Vietnam Pro, sans-serif'
         },
         tooltip: {
             x: {
                 show: true,
-                format: FORMAT_DATESTRING
+                format: FORMAT_DATESTRING,
+                style: {
+                    fontFamily: 'Be Vietnam Pro, sans-serif'
+                }
             },
             y: {
                 formatter (value) {
                     return numberWithCommas(value || 0);
+                },
+                style: {
+                    fontFamily: 'Be Vietnam Pro, sans-serif'
                 }
             }
         },
@@ -153,7 +171,10 @@ const ChartSubscribePoint = ({
                 const valueFormatted = numberWithCommas(val || 0);
                 return `${valueFormatted}`;
             },
-            position: "top"
+            position: "top",
+            style: {
+                fontFamily: 'Be Vietnam Pro, sans-serif'
+            }
         },
         series: Array.isArray(chartData?.wave_timeline) ? chartData.wave_timeline : [], // Ensure wave_timeline is an array
     }
