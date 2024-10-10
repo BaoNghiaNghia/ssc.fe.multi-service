@@ -32,7 +32,7 @@ import { Cards } from '../../components/cards/frame/cards-frame';
 import actions from '../../redux/member/actions';
 import serviceActions from '../../redux/serviceSettings/actions';
 import { numberWithCommas, numberWithCommasCurrency } from '../../utility/utility';
-import { badgeGrayStyle, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../variables';
+import { badgeGrayStyle, badgeGreenStyle, badgeOrangeStyle, badgeRedStyle, DEFAULT_PAGESIZE, DEFAULT_PERPAGE, MEMBER_TABLE_TYPE, regexpDebounce, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../variables';
 
 
 const columnsMember = [
@@ -98,52 +98,6 @@ const columnsToup = [
   },
 ];
 
-const regexpDebounce  = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
-
-const badgeGreenStyle = {
-  border: '1.3px solid #00ab00',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: '#00ab00',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-
-const badgeOrangeStyle = {
-  border: '1.3px solid orange',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: 'orange',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-
-const badgeRedStyle = {
-  border: '1.3px solid red',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '7px ',
-  padding: '2px 7px',
-  fontSize: '0.7em',
-  color: 'red',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
 
 function Member() {
   const dispatch = useDispatch();
@@ -458,7 +412,7 @@ function Member() {
       alert('Vui lòng nhập giá trị');
       return;
     }
-    if(!regexpDebounce .test(Number(value))){
+    if(!regexpDebounce.test(Number(value))){
       alert('Vui lòng nhập dạng số. Lớn hơn 0 và nhỏ hơn 100');
       return;
     }

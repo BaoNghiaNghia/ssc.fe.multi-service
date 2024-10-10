@@ -13,54 +13,10 @@ import ReactNiceAvatar, { genConfig } from 'react-nice-avatar';
 import actions from '../../../redux/buffComment/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
 import { numberWithCommas } from '../../../utility/utility';
-import { badgeGrayStyle, FILTER_ORDER_GENERAL, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../../variables';
+import { badgeGrayStyle, badgeGreenStyle, badgeOrangeStyle, badgeRedStyle, FILTER_ORDER_GENERAL, SERVICE_VIEW_TYPE, VIETNAMES_CURRENCY } from '../../../variables';
 
 const { Option } = Select;
 
-const badgeGreenStyle = {
-  border: '1.3px solid #00ab00',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '10px',
-  padding: '0px 7px',
-  fontSize: '0.7em',
-  color: '#00ab00',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-};
-
-const badgeOrangeStyle = {
-  border: '1.3px solid orange',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '10px',
-  padding: '0px 7px',
-  fontSize: '0.7em',
-  color: 'orange',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-};
-
-const badgeRedStyle = {
-  border: '1.3px solid red',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '10px',
-  padding: '0px 7px',
-  fontSize: '0.7em',
-  color: 'red',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-};
 
 function FilterOrderComment({ orderState, setState }) {
   const dispatch = useDispatch();

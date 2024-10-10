@@ -7,58 +7,8 @@ import PropTypes from 'prop-types';
 import { AiOutlineFieldNumber } from "react-icons/ai";
 import { Row, Col, Form, Input, InputNumber, Button, Modal, Divider, Switch, Select, Badge } from 'antd';
 import { MdAddchart, MdOutlineImportExport } from "react-icons/md";
-import { FaLocationArrow, FaYoutube } from 'react-icons/fa';
 import actions from '../../../redux/buffView/actions';
 import actionsService from '../../../redux/serviceSettings/actions';
-import { numberWithCommas, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY } from '../../../variables';
-
-const badgeGreenStyle = {
-  border: '1.3px solid #00ab00',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '10px',
-  padding: '0px 7px',
-  fontSize: '0.7em',
-  color: '#00ab00',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-
-const badgeOrangeStyle = {
-  border: '1.3px solid orange',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '10px',
-  padding: '0px 7px',
-  fontSize: '0.7em',
-  color: 'orange',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-
-const badgeRedStyle = {
-  border: '1.3px solid red',
-  fontFamily: 'Poppins, sans-serif',
-  borderRadius: '10px',
-  padding: '0px 7px',
-  fontSize: '0.7em',
-  color: 'red',
-  fontWeight: 'bold',
-  display: 'inline-flex',
-  alignItems: 'center',
-  alignContemt: 'center',
-  justifyContent: 'center',
-  marginRight: '5px'
-}
-
-const { Option } = Select;
 
 
 function CancelAndRefundOrderView({ isOpen, setState }) {
