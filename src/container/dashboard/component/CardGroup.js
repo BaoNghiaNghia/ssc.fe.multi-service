@@ -75,7 +75,7 @@ function CardGroup() {
             headless
             title={
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn tạm tắt</span>
+                <span style={{ fontSize: '14px', fontWeight: 400 }}>Đơn tạm dừng</span>
                 <IoFileTray fontSize={18} fontWeight={800} color="orange" />
               </div>
             }
