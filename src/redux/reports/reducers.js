@@ -193,6 +193,10 @@ const {
   LIKE_STATISTIC_ORDER_BY_DAYS_ERR,
   LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS,
 
+  LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_BEGIN,
+  LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ERR,
+  LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_SUCCESS,
+
 
 
   VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
@@ -258,11 +262,15 @@ const {
   VIEW_STATISTIC_ORDER_BY_DAYS_BEGIN,
   VIEW_STATISTIC_ORDER_BY_DAYS_ERR,
   VIEW_STATISTIC_ORDER_BY_DAYS_SUCCESS,
+  
+  VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_BEGIN,
+  VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ERR,
+  VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_SUCCESS,
 
 
-  SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
-  SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
-  SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
+  SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_BEGIN,
+  SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ERR,
+  SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_SUCCESS,
 
   SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN,
   SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
@@ -1002,6 +1010,25 @@ const ReportsReducer = (state = initialState, action) => {
         error: err
       };
 
+    case LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_BEGIN:
+      return {
+        ...state,
+        chartLoading: true,
+      };
+
+    case LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_SUCCESS:
+      return {
+        ...state,
+        statisticComment: data,
+      };
+
+    case LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ERR:
+      return {
+        ...state,
+        statisticComment: [],
+        error: err
+      };
+
     case LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN:
       return {
         ...state,
@@ -1127,6 +1154,25 @@ const ReportsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         statByStatusOrder: {},
+        error: err
+      };
+
+    case VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_BEGIN:
+      return {
+        ...state,
+        chartLoading: true,
+      };
+
+    case VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_SUCCESS:
+      return {
+        ...state,
+        statisticComment: data,
+      };
+
+    case VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ERR:
+      return {
+        ...state,
+        statisticComment: [],
         error: err
       };
 
@@ -1631,20 +1677,20 @@ const ReportsReducer = (state = initialState, action) => {
         loading: false,
       };
 
-    case SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN:
+    case SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_BEGIN:
       return {
         ...state,
         loading: true,
       };
 
-    case SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS:
+    case SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_SUCCESS:
       return {
         ...state,
         loading: false,
         statisticComment: data,
       };
 
-    case SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR:
+    case SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ERR:
       return {
         ...state,
         loading: false,

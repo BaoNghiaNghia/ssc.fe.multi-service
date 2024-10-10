@@ -35,7 +35,7 @@ import {
     LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
     LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT,
     LIKE_STATISTIC_BY_STATUS_ORDER_ENDPOINT,
-    LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
+    LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ENDPOINT,
     LIKE_STATISTIC_ORDER_AMOUNT_ENDPOINT,
     LIKE_STATISTIC_PERFORMANCE_ENDPOINT,
     LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
@@ -53,7 +53,7 @@ import {
     SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
     SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT,
     SUBSCRIBE_STATISTIC_BY_STATUS_ORDER_ENDPOINT,
-    SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
+    SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ENDPOINT,
     SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT,
     SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT,
     SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
@@ -71,7 +71,7 @@ import {
     VIEW_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT,
     VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT,
     VIEW_STATISTIC_BY_STATUS_ORDER_ENDPOINT,
-    VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT,
+    VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ENDPOINT,
     VIEW_STATISTIC_ORDER_AMOUNT_ENDPOINT,
     VIEW_STATISTIC_PERFORMANCE_ENDPOINT,
     VIEW_STATISTIC_RUNNING_USER_ORDER_ENDPOINT,
@@ -127,7 +127,7 @@ GeneralReportAPI.createEntities([
     { name: LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
     { name: LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT },
     { name: LIKE_STATISTIC_BY_STATUS_ORDER_ENDPOINT },
-    { name: LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
+    { name: LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ENDPOINT },
     { name: LIKE_STATISTIC_ORDER_AMOUNT_ENDPOINT },
     { name: LIKE_STATISTIC_PERFORMANCE_ENDPOINT },
     { name: LIKE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
@@ -145,7 +145,7 @@ GeneralReportAPI.createEntities([
     { name: SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
     { name: SUBSCRIBE_STATISTIC_ACCOUNT_STATUS_ENDPOINT },
     { name: SUBSCRIBE_STATISTIC_BY_STATUS_ORDER_ENDPOINT },
-    { name: SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
+    { name: SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ENDPOINT },
     { name: SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT },
     { name: SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT },
     { name: SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
@@ -163,7 +163,7 @@ GeneralReportAPI.createEntities([
     { name: VIEW_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT },
     { name: VIEW_STATISTIC_ACCOUNT_STATUS_ENDPOINT },
     { name: VIEW_STATISTIC_BY_STATUS_ORDER_ENDPOINT },
-    { name: VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT },
+    { name: VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ENDPOINT },
     { name: VIEW_STATISTIC_ORDER_AMOUNT_ENDPOINT },
     { name: VIEW_STATISTIC_PERFORMANCE_ENDPOINT },
     { name: VIEW_STATISTIC_RUNNING_USER_ORDER_ENDPOINT },
@@ -209,7 +209,7 @@ const commentStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCR
 
 
 // Like
-// const likeStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+const likeStatisticLikeByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ENDPOINT }).get(query);
 const likeStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
 const likeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
 const likeStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
@@ -228,7 +228,7 @@ const likeStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCRUDE
 
 
 // Subscribe
-// const subscribeStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+const subscribeStatisticSubscribeByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ENDPOINT }).get(query);
 const subscribeStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
 const subscribeStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
 const subscribeStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
@@ -246,7 +246,7 @@ const subscribeStatisticTotalOrderAPI = (query) => GeneralReportAPI.createBasicC
 const subscribeStatisticOrderByDaysAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT }).get(query);
 
 // View
-// const viewStatisticCommentByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT }).get(query);
+const viewStatisticViewByOrderReportAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ENDPOINT }).get(query);
 const viewStatisticTaskSuccessInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_ENDPOINT }).get(query);
 const viewStatisticTaskDurationInMinutesAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_TASK_DURATION_IN_MINUTE_ENDPOINT }).get(query);
 const viewStatisticAccountOnComputerAPI = (query) => GeneralReportAPI.createBasicCRUDEndpoints({ name: VIEW_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT }).get(query);
@@ -300,7 +300,7 @@ export {
     validateYoutubeLinkLikeVideoAPI,
     validateYoutubeLinkSubscribeVideoAPI,
 
-    // likeStatisticCommentByOrderReportAPI,
+    likeStatisticLikeByOrderReportAPI,
     likeStatisticTaskSuccessInMinutesAPI,
     likeStatisticAccountOnComputerAPI,
     likeStatisticAccountStatusAPI,
@@ -317,6 +317,7 @@ export {
     likeStatisticTotalOrderAPI,
     likeStatisticOrderByDaysAPI,
 
+    subscribeStatisticSubscribeByOrderReportAPI,
     subscribeStatisticTaskSuccessInMinutesAPI,
     subscribeStatisticTaskDurationInMinutesAPI,
     subscribeStatisticAccountOnComputerAPI,
@@ -348,6 +349,7 @@ export {
     viewStatisticUserPointAPI,
     viewStatisticTotalOrderAPI,
     viewStatisticOrderByDaysAPI,
+    viewStatisticViewByOrderReportAPI,
 
 
     validateYoutubeLinkViewVideoAPI

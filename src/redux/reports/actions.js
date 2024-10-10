@@ -141,6 +141,10 @@ const actions = {
   LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS: 'LIKE_STATISTIC_ORDER_BY_DAYS_SUCCESS',
   LIKE_STATISTIC_ORDER_BY_DAYS_ERR: 'LIKE_STATISTIC_ORDER_BY_DAYS_ERR',
 
+  LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_BEGIN: 'LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_BEGIN',
+  LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_SUCCESS: 'LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_SUCCESS',
+  LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ERR: 'LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ERR',
+
 
   // VIEW
   VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN: 'VIEW_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN',
@@ -203,8 +207,16 @@ const actions = {
   VIEW_STATISTIC_ORDER_BY_DAYS_SUCCESS: 'VIEW_STATISTIC_ORDER_BY_DAYS_SUCCESS',
   VIEW_STATISTIC_ORDER_BY_DAYS_ERR: 'VIEW_STATISTIC_ORDER_BY_DAYS_ERR',
 
+  VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_BEGIN: 'VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_BEGIN',
+  VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_SUCCESS: 'VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_SUCCESS',
+  VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ERR: 'VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ERR',
 
+  
   // SUBSCRIBE
+  SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_BEGIN: 'SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_BEGIN',
+  SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_SUCCESS: 'SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_SUCCESS',
+  SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ERR: 'SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ERR',
+
   SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN: 'SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_BEGIN',
   SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS: 'SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_SUCCESS',
   SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR: 'SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR',
@@ -932,26 +944,27 @@ const actions = {
     };
   },
 
-  // likeStatisticCommentByOrderReportBegin: (payload) => {
-  //   return {
-  //     type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN,
-  //     payload
-  //   };
-  // },
+  likeStatisticLikeByOrderReportBegin: (payload) => {
+    return {
+      type: actions.LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_BEGIN,
+      payload
+    };
+  },
 
-  // likeStatisticCommentByOrderReportSuccess: (data) => {
-  //   return {
-  //     type: actions.likeSTATISTIC_COMMENT_BY_ORDER_REPORT_SUCCESS,
-  //     data,
-  //   };
-  // },
+  likeStatisticLikeByOrderReportSuccess: (data) => {
+    return {
+      type: actions.LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_SUCCESS,
+      data,
+    };
+  },
 
-  // likeStatisticCommentByOrderReportErr: (err) => {
-  //   return {
-  //     type: actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ERR,
-  //     err,
-  //   };
-  // },
+  likeStatisticLikeByOrderReportErr: (err) => {
+    return {
+      type: actions.LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ERR,
+      err,
+    };
+  },
+  
 
   likeStatisticTotalOrderBegin: (payload) => {
     return {
@@ -1292,6 +1305,28 @@ const actions = {
     };
   },
 
+  viewStatisticViewByOrderReportBegin: (payload) => {
+    return {
+      type: actions.VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_BEGIN,
+      payload
+    };
+  },
+
+  viewStatisticViewByOrderReportSuccess: (data) => {
+    return {
+      type: actions.VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_SUCCESS,
+      data,
+    };
+  },
+
+  viewStatisticViewByOrderReportErr: (err) => {
+    return {
+      type: actions.VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ERR,
+      err,
+    };
+  },
+  
+
 
 
   // Subscribe
@@ -1543,6 +1578,27 @@ const actions = {
   subscribeStatisticTaskSuccessInMinuteErr: (err) => {
     return {
       type: actions.SUBSCRIBE_STATISTIC_TASK_SUCCESS_IN_MINUTE_ERR,
+      err,
+    };
+  },
+
+  subscribeStatisticSubscribeByOrderReportBegin: (payload) => {
+    return {
+      type: actions.SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_BEGIN,
+      payload
+    };
+  },
+
+  subscribeStatisticSubscribeByOrderReportSuccess: (data) => {
+    return {
+      type: actions.SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_SUCCESS,
+      data,
+    };
+  },
+
+  subscribeStatisticSubscribeByOrderReportErr: (err) => {
+    return {
+      type: actions.SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ERR,
       err,
     };
   },

@@ -34,7 +34,7 @@ export const COMMENT_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-comment/api/v1/admin/
 export const COMMENT_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-comment/api/v1/admin/stats/order-comments-by-day";
 
 // LIKE
-export const LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-like/api/v1/admin/stats/order-status"; //
+export const LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_ENDPOINT = "ytb-like/api/v1/admin/stats/order-status"; //
 export const LIKE_STATISTIC_ACCOUNT_STATUS_ENDPOINT = "ytb-like/api/v1/admin/stats/account-status";
 export const LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_ENDPOINT = "ytb-like/api/v1/admin/stats/account-status";
 export const LIKE_STATISTIC_LIKE_BY_DAY_ENDPOINT = "ytb-like/api/v1/admin/stats/like-by-day";
@@ -55,7 +55,7 @@ export const LIKE_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-like/api/v1/admin/stat
 // View
 export const VIEW_STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-view/api/v1/admin/stats/order-amount";
 export const VIEW_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-view/api/v1/admin/stats/order-views-by-day";
-export const VIEW_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-view/api/v1/admin/stats/order-status";
+export const VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_ENDPOINT = "ytb-view/api/v1/admin/stats/order-status";
 export const VIEW_STATISTIC_PERFORMANCE_ENDPOINT = "ytb-view/api/v1/admin/stats/perfomance";
 export const VIEW_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-view/api/v1/admin/stats/total-order";
 export const VIEW_STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-view/api/v1/admin/stats/user-order";
@@ -73,7 +73,7 @@ export const VIEW_STATISTIC_BY_STATUS_ORDER_ENDPOINT = "ytb-view/api/v1/admin/st
 // SUBSCRIBE
 export const SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ENDPOINT= "ytb-sub/api/v1/admin/stats/order-amount";
 export const SUBSCRIBE_STATISTIC_ORDER_BY_DAYS_ENDPOINT = "ytb-sub/api/v1/admin/stats/order-subscribes-by-day";
-export const SUBSCRIBE_STATISTIC_COMMENT_BY_ORDER_REPORT_ENDPOINT = "ytb-sub/api/v1/admin/stats/order-status";
+export const SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_ENDPOINT = "ytb-sub/api/v1/admin/stats/order-status";
 export const SUBSCRIBE_STATISTIC_PERFORMANCE_ENDPOINT = "ytb-sub/api/v1/admin/stats/perfomance";
 export const SUBSCRIBE_STATISTIC_TOTAL_ORDER_ENDPOINT = "ytb-sub/api/v1/admin/stats/total-order";
 export const SUBSCRIBE_STATISTIC_RUNNING_USER_ORDER_ENDPOINT = "ytb-sub/api/v1/admin/stats/user-order";

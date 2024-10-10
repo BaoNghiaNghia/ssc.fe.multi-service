@@ -25,7 +25,7 @@ import {
   commentStatisticOrderByDaysAPI,
 
   // LIKE
-  // likeStatisticCommentByOrderReportAPI,
+  likeStatisticLikeByOrderReportAPI,
   likeStatisticTaskSuccessInMinutesAPI,
   likeStatisticAccountOnComputerAPI,
   likeStatisticAccountStatusAPI,
@@ -58,6 +58,7 @@ import {
   subscribeStatisticUserPointAPI,
   subscribeStatisticTotalOrderAPI,
   subscribeStatisticOrderByDaysAPI,
+  subscribeStatisticSubscribeByOrderReportAPI,
 
   // VIEW
   viewStatisticTaskSuccessInMinutesAPI,
@@ -75,6 +76,7 @@ import {
   viewStatisticUserPointAPI,
   viewStatisticTotalOrderAPI,
   viewStatisticOrderByDaysAPI,
+  viewStatisticViewByOrderReportAPI,
 
   // Validate youtube link
   validateYoutubeLinkCommentVideoAPI,
@@ -263,6 +265,8 @@ function* commentStatisticCommentByOrderReportFunc(params) {
     )
   }
 }
+
+
 
 function* commentStatisticAccountOnComputerFunc(params) {
   try {
@@ -559,27 +563,27 @@ function* likeStatisticTaskDurationInMinuteFunc(params) {
 }
 
 
-// function* likeStatisticCommentByOrderReportFunc(params) {
-//   try {
-//     const response = yield call(likeStatisticCommentByOrderReportAPI, params?.payload);
+function* likeStatisticLikeByOrderReportFunc(params) {
+  try {
+    const response = yield call(likeStatisticLikeByOrderReportAPI, params?.payload);
 
-//     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-//       yield put(
-//         actions.likeStatisticCommentByOrderReportSuccess(response?.data?.data)
-//       );
-//     }
-//   } catch (err) {
-//     yield put(
-//       actions.likeStatisticCommentByOrderReportErr({ error: err || 'Like - Count comment by order failed' })
-//     );
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.likeStatisticLikeByOrderReportSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.likeStatisticLikeByOrderReportErr({ error: err || 'Like - Count comment by order failed' })
+    );
 
-//     if (err?.response?.data?.data?.error) {
-//       toast.error(err?.response?.data?.data?.error);
-//     } else {
-//       toast.error('Like - Count comment by order failed');
-//     }
-//   }
-// }
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('Like - Count comment by order failed');
+    }
+  }
+}
 
 function* likeStatisticAccountOnComputerFunc(params) {
   try {
@@ -922,27 +926,22 @@ function* subscribeStatisticTaskDurationInMinuteFunc(params) {
 }
 
 
-// function* subscribeStatisticCommentByOrderReportFunc(params) {
-//   try {
-//     const response = yield call(subscribeStatisticCommentByOrderReportAPI, params?.payload);
 
-//     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-//       yield put(
-//         actions.subscribeStatisticCommentByOrderReportSuccess(response?.data?.data)
-//       );
-//     }
-//   } catch (err) {
-//     yield put(
-//       actions.subscribeStatisticCommentByOrderReportErr({ error: err || 'Subscribe - Count comment by order failed' })
-//     );
+function* subscribeStatisticSubscribeByOrderReportFunc(params) {
+  try {
+    const response = yield call(subscribeStatisticSubscribeByOrderReportAPI, params?.payload);
 
-//     if (err?.response?.data?.data?.error) {
-//       toast.error(err?.response?.data?.data?.error);
-//     } else {
-//       toast.error('Subscribe - Count comment by order failed');
-//     }
-//   }
-// }
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.subscribeStatisticSubscribeByOrderReportSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.subscribeStatisticSubscribeByOrderReportErr({ error: err || 'Subscribe - Count error subscribe failed' })
+    )
+  }
+}
 
 function* subscribeStatisticAccountOnComputerFunc(params) {
   try {
@@ -1286,27 +1285,27 @@ function* viewStatisticTaskDurationInMinuteFunc(params) {
 }
 
 
-// function* viewStatisticCommentByOrderReportFunc(params) {
-//   try {
-//     const response = yield call(viewStatisticCommentByOrderReportAPI, params?.payload);
+function* viewStatisticViewByOrderReportFunc(params) {
+  try {
+    const response = yield call(viewStatisticViewByOrderReportAPI, params?.payload);
 
-//     if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-//       yield put(
-//         actions.viewStatisticCommentByOrderReportSuccess(response?.data?.data)
-//       );
-//     }
-//   } catch (err) {
-//     yield put(
-//       actions.viewStatisticCommentByOrderReportErr({ error: err || 'View - Count comment by order failed' })
-//     );
+    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+      yield put(
+        actions.viewStatisticViewByOrderReportSuccess(response?.data?.data)
+      );
+    }
+  } catch (err) {
+    yield put(
+      actions.viewStatisticViewByOrderReportErr({ error: err || 'View - Count comment by order failed' })
+    );
 
-//     if (err?.response?.data?.data?.error) {
-//       toast.error(err?.response?.data?.data?.error);
-//     } else {
-//       toast.error('View - Count comment by order failed');
-//     }
-//   }
-// }
+    if (err?.response?.data?.data?.error) {
+      toast.error(err?.response?.data?.data?.error);
+    } else {
+      toast.error('View - Count comment by order failed');
+    }
+  }
+}
 
 function* viewStatisticAccountOnComputerFunc(params) {
   try {
@@ -1564,7 +1563,7 @@ function* changeServiceTypeFunc(params) {
 
     if (isType === SERVICE_TYPE.LIKE.title) {
       yield put(actions.likeStatisticTaskDurationInMinuteBegin());
-      // yield put(actions.likeStatisticLikeByOrderReportBegin());
+      yield put(actions.likeStatisticLikeByOrderReportBegin());
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.likeStatisticAccountStatusLikeBegin(initialFilter));
       yield put(actions.likeStatisticPerformanceLikeBegin(initialFilter));
@@ -1586,7 +1585,7 @@ function* changeServiceTypeFunc(params) {
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
       console.log('--- THAY ĐỔI STATISTIC SUBSCRIBE ---');
       yield put(actions.subscribeStatisticTaskDurationInMinuteBegin());
-      // yield put(actions.subscribeStatisticSubscribeByOrderReportBegin());
+      yield put(actions.subscribeStatisticSubscribeByOrderReportBegin());
       yield put(actions.subscribeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.subscribeStatisticOrderAmountBegin(initialFilter));
       yield put(actions.subscribeStatisticAccountStatusSubscribeBegin(initialFilter));
@@ -1609,7 +1608,7 @@ function* changeServiceTypeFunc(params) {
     if (isType === SERVICE_TYPE.VIEW.title) {
       console.log('--- THAY ĐỔI STATISTIC VIEW ---');
       yield put(actions.viewStatisticTaskDurationInMinuteBegin());
-      // yield put(actions.viewStatisticViewByOrderReportBegin());
+      yield put(actions.viewStatisticViewByOrderReportBegin());
       yield put(actions.viewStatisticTaskSuccessInMinuteBegin());
       // yield put(actions.viewStatisticOrderAmountBegin(initialFilter));
       yield put(actions.viewStatisticAccountStatusViewBegin(initialFilter));
@@ -1670,7 +1669,7 @@ function* setRangeDateFilterFunc(params) {
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
       console.log('----- range filter with subscribe ------');
 
-      // yield put(actions.subscribeStatisticCommentByOrderReportBegin());
+      yield put(actions.subscribeStatisticSubscribeByOrderReportBegin());
       yield put(actions.subscribeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.subscribeStatisticTaskDurationInMinuteBegin());
       yield put(actions.subscribeStatisticOrderAmountBegin(initialFilter));
@@ -1695,7 +1694,7 @@ function* setRangeDateFilterFunc(params) {
     if (isType === SERVICE_TYPE.VIEW.title) {
       console.log('----- range filter with view ------');
 
-      // yield put(actions.viewStatisticCommentByOrderReportBegin());
+      yield put(actions.viewStatisticViewByOrderReportBegin());
       yield put(actions.viewStatisticTaskSuccessInMinuteBegin());
       yield put(actions.viewStatisticTaskDurationInMinuteBegin());
       yield put(actions.viewStatisticOrderAmountBegin(initialFilter));
@@ -1741,7 +1740,7 @@ function* setRangeDateFilterFunc(params) {
     }
 
     if (isType === SERVICE_TYPE.LIKE.title) {
-      // yield put(actions.likeStatisticCommentByOrderReportBegin());
+      yield put(actions.likeStatisticLikeByOrderReportBegin());
       yield put(actions.likeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.likeStatisticTaskDurationInMinuteBegin());
       yield put(actions.likeStatisticOrderAmountBegin(initialFilter));
@@ -1879,10 +1878,6 @@ export function* likeStatisticAccountStatusCommentWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_ACCOUNT_STATUS_LIKE_BEGIN, likeStatisticAccountStatusCommentFunc);
 }
 
-// export function* likeStatisticsByOrderStatusReportWatcherSaga() {
-//   yield takeLatest(actions.LIKE_STATISTIC_COMMENT_BY_ORDER_REPORT_BEGIN, likeStatisticCommentByOrderReportFunc);
-// }
-
 export function* likeStatisticAccountOnComputerWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_ACCOUNT_ON_COMPUTER_BEGIN, likeStatisticAccountOnComputerFunc);
 }
@@ -1915,6 +1910,9 @@ export function* likeStatisticOrderByDaysWatcherSaga() {
   yield takeLatest(actions.LIKE_STATISTIC_ORDER_BY_DAYS_BEGIN, likeStatisticOrderByDaysFunc);
 }
 
+export function* likeStatisticsByOrderStatusReportWatcherSaga() {
+  yield takeLatest(actions.LIKE_STATISTIC_LIKE_BY_ORDER_REPORT_BEGIN, likeStatisticLikeByOrderReportFunc);
+}
 
 
 
@@ -1981,6 +1979,11 @@ export function* subscribeStatisticOrderByDaysWatcherSaga() {
 }
 
 
+export function* subscribeStatisticsByOrderStatusReportWatcherSaga() {
+  yield takeLatest(actions.SUBSCRIBE_STATISTIC_SUBSCRIBE_BY_ORDER_REPORT_BEGIN, subscribeStatisticSubscribeByOrderReportFunc);
+}
+
+
 // View
 export function* viewStatisticViewByDayWatcherSaga() {
   yield takeLatest(actions.VIEW_STATISTIC_VIEW_BY_DAY_BEGIN, viewStatisticViewByDayFunc);
@@ -2041,6 +2044,12 @@ export function* viewStatisticTotalOrderWatcherSaga() {
 export function* viewStatisticOrderByDaysWatcherSaga() {
   yield takeLatest(actions.VIEW_STATISTIC_ORDER_BY_DAYS_BEGIN, viewStatisticOrderByDaysFunc);
 }
+
+export function* viewStatisticsByOrderStatusReportWatcherSaga() {
+  yield takeLatest(actions.VIEW_STATISTIC_VIEW_BY_ORDER_REPORT_BEGIN, viewStatisticViewByOrderReportFunc);
+}
+
+
 
 
 

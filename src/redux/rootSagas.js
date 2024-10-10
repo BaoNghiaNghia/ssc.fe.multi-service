@@ -74,7 +74,10 @@ import {
     viewStatisticUserPointWatcherSaga,
     viewStatisticTotalOrderWatcherSaga,
     viewStatisticOrderByDaysWatcherSaga,
-    setCategoryInNewOrderWatcherSaga
+    setCategoryInNewOrderWatcherSaga,
+    subscribeStatisticsByOrderStatusReportWatcherSaga,
+    likeStatisticsByOrderStatusReportWatcherSaga,
+    viewStatisticsByOrderStatusReportWatcherSaga
 } from './reports/sagas';
 
 import {
@@ -430,5 +433,8 @@ export default function* rootSaga() {
         updateSettingViewWatcherSaga(),
         setCategoryInNewOrderWatcherSaga(),
         fetchListSubscribeInChannelByDayWatcherSaga(),
+        subscribeStatisticsByOrderStatusReportWatcherSaga(),
+        likeStatisticsByOrderStatusReportWatcherSaga(),
+        viewStatisticsByOrderStatusReportWatcherSaga()
     ]);
 }
