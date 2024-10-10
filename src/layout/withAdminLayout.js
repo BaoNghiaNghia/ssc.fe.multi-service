@@ -16,6 +16,8 @@ import TopMenu from './TopMenu';
 import { Div, TopMenuSearch } from './style';
 import AuthInfo from '../components/utilities/auth-info/info';
 import { changeRtlMode, changeLayoutMode, changeMenuMode } from '../redux/themeLayout/actionCreator';
+import { FilterCalendar } from '../components/buttons/calendar-button/FilterCalendar';
+import actions from '../redux/reports/actions';
 
 const { darkTheme } = require('../config/theme/themeVariables');
 
@@ -53,7 +55,7 @@ const ThemeLayout = (WrappedComponent) => {
 
     render() {
       const { collapsed, hide, searchHide, activeSearch, customizerAction } = this.state;
-      const { ChangeLayoutMode, rtl, topMenu, changeRtl, changeLayout, changeMenuMode } = this.props;
+      const { ChangeLayoutMode, rtl, topMenu, changeRtl, changeLayout, changeMenuMode, fromDate, toDate, location  } = this.props;
 
       const left = !rtl ? 'left' : 'right';
       const darkMode = ChangeLayoutMode;
@@ -97,6 +99,9 @@ const ThemeLayout = (WrappedComponent) => {
           hide: true,
         });
       };
+
+      // Check if the current route contains 'admin/tong-quan'
+      const isAdminTongQuan = location.pathname.includes('admin/tong-quan');
 
       const footerStyle = {
         padding: '20px 30px 18px',
@@ -230,7 +235,7 @@ const ThemeLayout = (WrappedComponent) => {
                 </Col>
                 <Col lg={!topMenu ? 14 : 15} md={8} sm={0} xs={0}>
                   {topMenu && window.innerWidth > 991 ? <TopMenu /> : (
-                    <>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center', gap: 50 }}>
                       {/* <HeaderSearch rtl={rtl} darkMode={darkMode} /> */}
                       <div style={{ display: 'inline-flex', alignItems: 'center', alignContent: 'center' }}>
                         <span style={{ marginRight: '15px', fontWeight: '500', paddingLeft: '10px', color: 'gray' }}>Nền tảng: </span>
@@ -269,7 +274,12 @@ const ThemeLayout = (WrappedComponent) => {
                           </li>
                         </ul>
                       </GalleryNav> */}
-                    </>
+                      {isAdminTongQuan ? (
+                        <div className='page-header-actions'>
+                          <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate} />
+                        </div>
+                      ) : null}
+                    </div>
                   )}
                 </Col>
                 <Col lg={6} md={10} sm={4} xs={0}>
@@ -497,6 +507,8 @@ const ThemeLayout = (WrappedComponent) => {
       ChangeLayoutMode: state.ChangeLayoutMode.data,
       rtl: state.ChangeLayoutMode.rtlData,
       topMenu: state.ChangeLayoutMode.topMenu,
+      fromDate: state?.reports?.filterRange?.from,
+      toDate: state?.reports?.filterRange?.to,
     };
   };
 
@@ -515,6 +527,9 @@ const ThemeLayout = (WrappedComponent) => {
     changeRtl: propTypes.func,
     changeLayout: propTypes.func,
     changeMenuMode: propTypes.func,
+    fromDate: propTypes.string,
+    toDate: propTypes.string,
+    location: propTypes.func,
   };
 
   return connect(mapStateToProps, mapStateToDispatch)(LayoutComponent);

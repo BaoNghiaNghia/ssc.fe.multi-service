@@ -532,9 +532,9 @@ function Overview() {
         ghost
         title={<span style={{ marginRight: '20px' }}>Tổng quan {typeService}</span>}
         buttons={[
-          <div key="1" className="page-header-actions">
-            <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate} />
-          </div>,
+          // <div key="1" className="page-header-actions">
+          //   <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate} />
+          // </div>,
           <div key="2" className="page-header-actions">
             <GalleryNav>
               <ul>

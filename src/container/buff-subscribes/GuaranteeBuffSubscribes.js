@@ -397,7 +397,9 @@ function GuaranteeBuffSubscribes() {
         ghost
         title="Subscribes - Quét bảo hành"
         buttons={[
-          <FilterCalendar actionPicker={actions.setRangeDateWarrantyFilterBegin} fromDate={filterRange?.from} toDate={filterRange?.to}/>
+          <div className='page-header-actions'>
+            <FilterCalendar actionPicker={actions.setRangeDateWarrantyFilterBegin} fromDate={filterRange?.from} toDate={filterRange?.to}/>
+          </div>
         ]}
       />
       <Main>
