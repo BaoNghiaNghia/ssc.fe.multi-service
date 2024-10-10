@@ -574,20 +574,17 @@ const ReportsReducer = (state = initialState, action) => {
     case COMMENT_STATISTIC_ORDER_AMOUNT_BEGIN:
       return {
         ...state,
-        chartLoading: true,
       };
 
     case COMMENT_STATISTIC_ORDER_AMOUNT_SUCCESS:
       return {
         ...state,
-        chartLoading: false,
         orderAmountComment: data,
       };
 
     case COMMENT_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
-        chartLoading: false,
         orderAmountComment: [],
         error: err
       };
@@ -869,20 +866,17 @@ const ReportsReducer = (state = initialState, action) => {
     case LIKE_STATISTIC_ORDER_AMOUNT_BEGIN:
       return {
         ...state,
-        loading: true,
       };
 
     case LIKE_STATISTIC_ORDER_AMOUNT_SUCCESS:
       return {
         ...state,
-        loading: false,
         orderAmountLike: data,
       };
 
     case LIKE_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
-        loading: false,
         orderAmountLike: [],
         error: err
       };
@@ -1242,20 +1236,17 @@ const ReportsReducer = (state = initialState, action) => {
     case VIEW_STATISTIC_ORDER_AMOUNT_BEGIN:
       return {
         ...state,
-        loading: true,
       };
 
     case VIEW_STATISTIC_ORDER_AMOUNT_SUCCESS:
       return {
         ...state,
-        loading: false,
         orderAmountLike: data,
       };
 
     case VIEW_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
-        loading: false,
         orderAmountLike: [],
         error: err
       };
@@ -1577,20 +1568,17 @@ const ReportsReducer = (state = initialState, action) => {
     case SUBSCRIBE_STATISTIC_ORDER_AMOUNT_BEGIN:
       return {
         ...state,
-        loading: true,
       };
 
     case SUBSCRIBE_STATISTIC_ORDER_AMOUNT_SUCCESS:
       return {
         ...state,
-        loading: false,
         orderAmountSubscribe: data,
       };
 
     case SUBSCRIBE_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
-        loading: false,
         orderAmountSubscribe: [],
         error: err
       };

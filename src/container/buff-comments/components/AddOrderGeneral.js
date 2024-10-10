@@ -65,7 +65,6 @@ function AddOrderGeneral() {
   );
 
   const validateVideoLink = async (link) => {
-    const category = categoryNewOrder;
     const serviceId = detailService?.service_id;
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
 
@@ -88,11 +87,10 @@ function AddOrderGeneral() {
     let status = 'success';
     let help = '';
 
-    const category = categoryNewOrder;
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
 
     try {
-      if (category === 'Subscribers') {
+      if (categoryNewOrder === 'Subscribers') {
         if (!isYouTubeValidUrl(value)) {
           return { status: false, help: 'Đường dẫn Youtube không hợp lệ' };
         }
@@ -112,7 +110,7 @@ function AddOrderGeneral() {
       } else {
         const validData = responseValidVideo.data.data;
 
-        if (category === 'Subscribers') {
+        if (categoryNewOrder === 'Subscribers') {
           const jumpStep = validData?.jump_step_response?.jump_step;
           const existingErrorsQuantity = formCreateOrder.getFieldError('quantity') || [];
 
@@ -130,7 +128,7 @@ function AddOrderGeneral() {
           }
         }
 
-        const mapping = category === 'Subscribers'
+        const mapping = (categoryNewOrder === 'Subscribers')
           ? {
             'Video subscribe': 'exist_video',
             'Kênh': 'valid_channel',
@@ -848,7 +846,7 @@ function AddOrderGeneral() {
                 <Col sm={16}>
                   <Form.Item
                     name="category"
-                    label="Phân loại "
+                    label="Phân loại"
                     style={{ marginBottom: '0px' }}
                   >
                     <Select
@@ -869,7 +867,7 @@ function AddOrderGeneral() {
                         dispatch(reportActions.setCategoryInNewOrderBegin(values));
 
                         if (categoryNewOrder !== values) {
-                          dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
+                          dispatch(serviceSettingsAction.modalDetailServiceBegin());
                           setHelpMessage({});
                           formCreateOrder.resetFields(['link', 'service_id']);
 
