@@ -1488,11 +1488,11 @@ function* viewStatisticOrderByDaysFunc(params) {
 function* setCategoryInNewOrderFunc(params) {
   try {
     yield put(
-      actions.validateYoutubeVideoLinkSuccess(params?.payload)
+      actions.setCategoryInNewOrderSuccess(params?.payload)
     );
   } catch (err) {
     yield put(
-      actions.validateYoutubeVideoLinkErr({ error: err || 'Can not change category' })
+      actions.setCategoryInNewOrderErr({ error: err || 'Can not change category' })
     );
   }
 }

@@ -33,17 +33,17 @@ function AddOrderGeneral() {
   const dispatch = useDispatch();
   const [formCreateOrder] = Form.useForm();
 
-  const { postLoading, listService, isOpenCreateOrder, detailService } = useSelector((state) => {
+  const { postLoading, listService, isOpenCreateOrder, detailService, categoryNewOrder } = useSelector((state) => {
     return {
       postLoading: state.settingService.postLoading,
       listService: state?.settingService?.listService?.items,
       isOpenCreateOrder: state?.reports?.isOpenCreateOrder,
-      detailService: state?.settingService?.detailService
+      detailService: state?.settingService?.detailService,
+      categoryNewOrder: state?.reports.categoryNewOrder,
     };
   });
 
   const [stateCurr, setStateCurr] = useState({
-    selectedCategory: INITIALIZE_SERVICE_SELECTED,
     listServiceCollection: listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED),
     amountChange: 0,
     orderType: 'single',
@@ -65,7 +65,7 @@ function AddOrderGeneral() {
   );
 
   const validateVideoLink = async (link) => {
-    const category = stateCurr?.selectedCategory;
+    const category = categoryNewOrder;
     const serviceId = detailService?.service_id;
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
 
@@ -76,19 +76,19 @@ function AddOrderGeneral() {
       'Views': () => validateYoutubeLinkViewVideoAPI({ link, service_id: serviceId }),
     };
 
-    if (!(category in categoryApiMap)) {
+    if (!(categoryNewOrder in categoryApiMap)) {
       console.log('Chưa chọn dịch vụ');
       return { status: false, help: 'Chưa chọn dịch vụ' };
     }
 
-    return categoryApiMap[category]();
+    return categoryApiMap[categoryNewOrder]();
   };
 
   const handleValidateLink = async (value) => {
     let status = 'success';
     let help = '';
 
-    const category = stateCurr?.selectedCategory;
+    const category = categoryNewOrder;
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
 
     try {
@@ -243,7 +243,7 @@ function AddOrderGeneral() {
 
   const handleOk = () => {
     try {
-      switch (stateCurr?.selectedCategory) {
+      switch (categoryNewOrder) {
         case 'Comments':
           handleSubmitComment();
           break;
@@ -272,9 +272,10 @@ function AddOrderGeneral() {
   const handleCancel = () => {
     setStateCurr({
       ...stateCurr,
-      selectedCategory: INITIALIZE_SERVICE_SELECTED,
       listServiceCollection: listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED)
     });
+
+    dispatch(reportActions.setCategoryInNewOrderBegin(INITIALIZE_SERVICE_SELECTED));
 
     setHelpMessage({});
 
@@ -737,12 +738,13 @@ function AddOrderGeneral() {
     const findCategory = listService?.filter(itemService => itemService?.service_id === serviceSelected);
 
     if (findCategory?.length > 0) {
-      if (findCategory[0]?.category !== stateCurr?.selectedCategory) {
+      if (findCategory[0]?.category !== categoryNewOrder) {
         setStateCurr({
           ...stateCurr,
-          selectedCategory: findCategory[0]?.category,
           amountChange: 0
         });
+
+        dispatch(reportActions.setCategoryInNewOrderBegin(findCategory[0]?.category));
 
         setHelpMessage({});
 
@@ -774,18 +776,12 @@ function AddOrderGeneral() {
   }
 
   const handleSearchService = (searchServiceText) => {
-    setStateCurr({
-      ...stateCurr,
-      selectedCategory: ''
-    });
+    dispatch(reportActions.setCategoryInNewOrderBegin(INITIALIZE_SERVICE_SELECTED));
     dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
   }
 
   const handleClearServiceSelected = () => {
-    setStateCurr({
-      ...stateCurr,
-      selectedCategory: null
-    });
+    dispatch(reportActions.setCategoryInNewOrderBegin(INITIALIZE_SERVICE_SELECTED));
     dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
   }
 
@@ -823,7 +819,6 @@ function AddOrderGeneral() {
       <Form layout="vertical" form={formCreateOrder}>
         <Row gutter={15}>
           <Col
-            // sm={!isEmpty(detailService) ? 16 : 24}
             sm={16}
           >
             <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px' }}>
@@ -836,7 +831,6 @@ function AddOrderGeneral() {
                     style={{ marginBottom: '0px' }}
                   >
                     <Select
-                      defaultActiveFirstOption
                       size='small'
                       className='full-height-dropdown'
                       style={{ width: '100%' }}
@@ -854,7 +848,7 @@ function AddOrderGeneral() {
                 <Col sm={16}>
                   <Form.Item
                     name="category"
-                    initialValue={stateCurr?.selectedCategory}
+                    initialValue={categoryNewOrder}
                     label="Phân loại "
                     style={{ marginBottom: '0px' }}
                   >
@@ -870,11 +864,12 @@ function AddOrderGeneral() {
                         setStateCurr({
                           ...stateCurr,
                           listServiceCollection: listService?.filter(service => service?.category === values),
-                          selectedCategory: values,
                           amountChange: 0
                         });
 
-                        if (stateCurr?.selectedCategory !== values) {
+                        dispatch(reportActions.setCategoryInNewOrderBegin(values));
+
+                        if (categoryNewOrder !== values) {
                           dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
                           setHelpMessage({});
                           formCreateOrder.resetFields(['link', 'service_id']);
@@ -998,7 +993,7 @@ function AddOrderGeneral() {
                 </Col>
               </Row>
               {
-                !isEmpty(detailService) ? switchServiceSelection(stateCurr?.selectedCategory) : null
+                !isEmpty(detailService) ? switchServiceSelection(categoryNewOrder) : null
               }
             </Card>
           </Col>
@@ -1032,7 +1027,7 @@ function AddOrderGeneral() {
                         <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
                           <span style={{ fontSize: '0.9em' }}>Giá </span>
                           <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
-                          <span style={{ fontSize: '0.9em' }}>/ 10 {stateCurr?.selectedCategory} </span>
+                          <span style={{ fontSize: '0.9em' }}>/ 10 {categoryNewOrder} </span>
                         </div>
                       </Col>
                     </Row>
@@ -1041,11 +1036,11 @@ function AddOrderGeneral() {
                 <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
                   <div style={{ padding: '5px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px' }}>
-                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: <strong>{numberWithCommas(detailService?.min)}</strong> {stateCurr?.selectedCategory}</p>
-                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: <strong>{numberWithCommas(detailService?.max)}</strong> {stateCurr?.selectedCategory}</p>
+                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: <strong>{numberWithCommas(detailService?.min)}</strong> {categoryNewOrder}</p>
+                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: <strong>{numberWithCommas(detailService?.max)}</strong> {categoryNewOrder}</p>
                     </div>
                     {
-                      stateCurr?.selectedCategory === 'Views' ? (
+                      categoryNewOrder === 'Views' ? (
                         <div style={{ borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px', paddingTop: '5px' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
