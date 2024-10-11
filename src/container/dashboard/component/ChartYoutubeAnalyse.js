@@ -74,7 +74,7 @@ const ChartYoutubeAnalyse = ({
                     speed: 350
                 }
             },
-            fontFamily: 'Be Vietnam Pro, sans-serif', // Update font family for chart
+            fontFamily: 'Inter, sans-serif', // Update font family for chart
         },
         colors: ["#005473", "#ff8800"],
         stroke: {
@@ -94,7 +94,7 @@ const ChartYoutubeAnalyse = ({
             categories: Array.isArray(chartData?.wave_date) ? chartData.wave_date : [], // Ensure wave_date is an array
             labels: {
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Apply updated font
+                    fontFamily: 'Inter, sans-serif', // Apply updated font
                 }
             }
         },
@@ -102,7 +102,7 @@ const ChartYoutubeAnalyse = ({
             title: {
                 text: `% / ${typeService}`,
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Apply updated font
+                    fontFamily: 'Inter, sans-serif', // Apply updated font
                 }
             },
             labels: {
@@ -110,7 +110,7 @@ const ChartYoutubeAnalyse = ({
                     return numberWithCommas(value || 0);
                 },
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Apply updated font
+                    fontFamily: 'Inter, sans-serif', // Apply updated font
                 }
             },
         },
@@ -130,7 +130,7 @@ const ChartYoutubeAnalyse = ({
             labels: {
                 useSeriesColors: true,
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Apply updated font
+                    fontFamily: 'Inter, sans-serif', // Apply updated font
                 }
             }
         },
@@ -145,7 +145,7 @@ const ChartYoutubeAnalyse = ({
                 },
             },
             style: {
-                fontFamily: 'Be Vietnam Pro, sans-serif', // Apply updated font for tooltip
+                fontFamily: 'Inter, sans-serif', // Apply updated font for tooltip
             }
         },
         noData: {
@@ -155,7 +155,7 @@ const ChartYoutubeAnalyse = ({
             style: {
                 color: 'black',
                 fontSize: '16px',
-                fontFamily: 'Be Vietnam Pro, sans-serif', // Updated font
+                fontFamily: 'Inter, sans-serif', // Updated font
             },
             offsetY: 4
         },
@@ -169,7 +169,7 @@ const ChartYoutubeAnalyse = ({
                 return `${valueFormatted} %`;
             },
             style: {
-                fontFamily: 'Be Vietnam Pro, sans-serif', // Apply updated font
+                fontFamily: 'Inter, sans-serif', // Apply updated font
             },
             position: "top"
         },
@@ -179,7 +179,7 @@ const ChartYoutubeAnalyse = ({
     const loadingOverlayStyles = {
         text: {
             color: 'white', // Adjust text color for better readability against the gradient
-            fontFamily: 'Be Vietnam Pro, sans-serif', // Updated font
+            fontFamily: 'Inter, sans-serif', // Updated font
             fontSize: '16px',
             fontWeight: 'bold',
         }

@@ -41,7 +41,7 @@ const ChartSubscribeInChannelByDay = ({
             height: 250,
             width: '100%',
             type: 'area',
-            fontFamily: 'Be Vietnam Pro, sans-serif', // Custom font for the chart
+            fontFamily: 'Inter, sans-serif', // Custom font for the chart
             dropShadow: {
                 enabled: true,
                 color: '#000',
@@ -99,7 +99,7 @@ const ChartSubscribeInChannelByDay = ({
             categories: Array.isArray(chartData?.wave_date) ? chartData.wave_date : [], // Ensure wave_date is an array
             labels: {
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Apply custom font to x-axis labels
+                    fontFamily: 'Inter, sans-serif', // Apply custom font to x-axis labels
                     fontSize: '12px',
                     fontWeight: 400
                 }
@@ -109,14 +109,14 @@ const ChartSubscribeInChannelByDay = ({
             title: {
                 text: `subscribe / ngày`,
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Custom font for y-axis title
+                    fontFamily: 'Inter, sans-serif', // Custom font for y-axis title
                     fontSize: '14px',
                     fontWeight: 500
                 }
             },
             labels: {
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Custom font for y-axis labels
+                    fontFamily: 'Inter, sans-serif', // Custom font for y-axis labels
                     fontSize: '12px',
                     fontWeight: 400
                 },
@@ -131,7 +131,7 @@ const ChartSubscribeInChannelByDay = ({
             floating: true,
             offsetY: -25,
             offsetX: -5,
-            fontFamily: 'Be Vietnam Pro, sans-serif', // Custom font for legend
+            fontFamily: 'Inter, sans-serif', // Custom font for legend
             fontSize: '12px',
             fontWeight: 400
         },
@@ -140,7 +140,7 @@ const ChartSubscribeInChannelByDay = ({
                 show: true,
                 format: FORMAT_DATESTRING,
                 style: {
-                    fontFamily: 'Be Vietnam Pro, sans-serif', // Custom font for tooltips
+                    fontFamily: 'Inter, sans-serif', // Custom font for tooltips
                     fontSize: '12px'
                 }
             },
@@ -157,7 +157,7 @@ const ChartSubscribeInChannelByDay = ({
             style: {
                 color: 'black',
                 fontSize: '16px',
-                fontFamily: 'Be Vietnam Pro, sans-serif',
+                fontFamily: 'Inter, sans-serif',
             },
             offsetY: 4
         },
@@ -172,7 +172,7 @@ const ChartSubscribeInChannelByDay = ({
                 return `${valueFormatted}`;
             },
             style: {
-                fontFamily: 'Be Vietnam Pro, sans-serif', // Custom font for data labels
+                fontFamily: 'Inter, sans-serif', // Custom font for data labels
                 fontSize: '12px',
                 fontWeight: 400
             },

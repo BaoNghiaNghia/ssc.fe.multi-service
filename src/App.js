@@ -57,7 +57,7 @@ const ProviderConfig = () => {
         limit={5}
         theme='light'
         toastStyle={{
-          fontFamily: "'Be Vietnam Pro', sans-serif"
+          fontFamily: "'Inter', sans-serif"
         }}
       />
       <ThemeProvider theme={{ ...theme, rtl, topMenu, darkMode }}>
