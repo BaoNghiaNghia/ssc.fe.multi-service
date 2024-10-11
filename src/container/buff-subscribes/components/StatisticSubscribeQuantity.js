@@ -165,7 +165,7 @@ function StatisticSubscribeQuantity({ setState, orderState }) {
                   margin: 0,
                   padding: 0,
                   color: detailOrderSubscribe?.priority ? 'green' : 'darkslategray',
-                  fontFamily: 'Poppins, sans-serif',
+                  
                   fontWeight: 600,
                   textShadow: detailOrderSubscribe?.priority ? `1px 1px 3px yellowgreen` : 'none'
                 }}

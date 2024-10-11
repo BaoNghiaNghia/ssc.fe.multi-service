@@ -187,7 +187,7 @@ const performanceStatementTags = (performance) => {
             fontSize: '0.8em',
             fontWeight: 800,
             padding:'0 5px',
-            fontFamily: 'Poppins, sans-serif',
+            
             borderRadius: '5px',
             textShadow: `1px 1px 2px ${performanceColorBack(performance)?.blurColor}`,
             backgroundColor: performanceColorBack(performance)?.backgroundColor,
@@ -202,7 +202,7 @@ const performanceStatementTags = (performance) => {
           style={{ 
             fontSize: '0.8em',
             fontWeight: 700,
-            fontFamily: 'Poppins, sans-serif',
+            
             padding:'0 5px',
             borderRadius: '5px',
             backgroundColor: '#ebebeb',

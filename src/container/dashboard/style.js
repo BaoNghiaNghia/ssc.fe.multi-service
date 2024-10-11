@@ -184,7 +184,6 @@ const Focard = Styled.div`
             }
             h1 {
                 padding: 0;
-                font-family: "Poppins", sans-serif !important;
                 font-size: 30px;
                 font-weight: 600;
                 margin-bottom: 4px;
@@ -994,7 +993,6 @@ const CardBarChartCenter = Styled.div`
     h1{
         text-align: center !important;
         font-weight: bold;
-        font-family: 'Poppins', sans-serif;
         margin-bottom: 0px;
         padding-bottom: 0px;
     }
@@ -1011,7 +1009,6 @@ const CardBarChartCenter = Styled.div`
         text-align: center !important;
         font-size: 11px;
         font-weight: 500;
-        font-family: 'Poppins', sans-serif,
         margin-bottom: 0px;
         padding-bottom: 0px;
     }
@@ -1074,7 +1071,6 @@ const CardBarChart2 = Styled.div`
         }
     }
     & > span{
-        font-family: 'Poppins', sans-serif,
         color: ${({ theme }) => theme['heading-color']};
     }
     p{

@@ -11,7 +11,7 @@ import { numberWithCommas } from '../../../utility/utility';
 import viewActions from '../../../redux/buffView/actions';
 
 const badgeGreenStyle = {
-  fontFamily: 'Poppins, sans-serif',
+  
   borderRadius: '7px ',
   fontSize: '0.8em',
   color: '#009500',

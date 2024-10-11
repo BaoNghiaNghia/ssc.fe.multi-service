@@ -72,7 +72,7 @@ function TaskDurationEveryMinutes({ title }) {
       style: {
           color: 'black',
           fontSize: '17px',
-          fontFamily: 'Poppins, sans-serif',
+          
       },
     },
     series: [

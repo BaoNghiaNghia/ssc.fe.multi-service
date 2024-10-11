@@ -245,7 +245,7 @@ function GuaranteeBuffComment() {
                 <a href={video_link} color='black' target="_blank" rel="noopener noreferrer" style={{ color: 'black !important' }}>
                   {
                     video_title ? (
-                      <span style={{ margin: 0, padding: 0, color: priority ? '#00ad00' : 'black', fontFamily: 'Poppins, sans-serif', }}>{ `${video_title?.substring(0, 30)  }...` }</span>
+                      <span style={{ margin: 0, padding: 0, color: priority ? '#00ad00' : 'black'}}>{ `${video_title?.substring(0, 30)  }...` }</span>
                     ) : (
                       <span>{video_link}</span>
                     )
@@ -433,7 +433,7 @@ function GuaranteeBuffComment() {
                       }}
                     >
                       <RiScan2Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                      <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét đơn</span>
+                      <span style={{ fontWeight: 600, margin: 0, padding: 0 }}>Quét đơn</span>
                     </Button>
                   </Col>
                 </Row>
@@ -470,7 +470,7 @@ function GuaranteeBuffComment() {
                         }}
                       >
                         <RiScan2Fill size={18} style={{ marginRight: '7px', padding: 0 }} />
-                        <span style={{ fontWeight: 600, fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Quét đơn</span>
+                        <span style={{ fontWeight: 600,  margin: 0, padding: 0 }}>Quét đơn</span>
                       </Button>
                     </div>
                   ) }}

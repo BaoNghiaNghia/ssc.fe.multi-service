@@ -497,7 +497,7 @@ function Overview() {
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span>
                       {
-                        typeService === SERVICE_TYPE.VIEW.title ? 'Thiết bị' : 'Máy'
+                        typeService === SERVICE_TYPE.VIEW.title ? 'Thiết bị ' : 'Máy '
                       }
                       {typeService}
                     </span>

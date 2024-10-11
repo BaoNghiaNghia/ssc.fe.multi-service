@@ -306,7 +306,7 @@ function PendingBuffComment() {
                       margin: 0,
                       padding: 0,
                       color: priority ? 'green' : 'darkslategray',
-                      fontFamily: 'Poppins, sans-serif',
+                      
                       fontWeight:600,
                       textShadow: priority ? `1px 1px 3px yellowgreen ` : 'none'
                     }}
@@ -750,7 +750,7 @@ function PendingBuffComment() {
                             }}
                           >
                             <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                            <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Đặt hàng</span>
+                            <span style={{ fontWeight: 600, margin: 0, padding: 0 }}>Đặt hàng</span>
                           </Button>
                         )
                       }
@@ -794,7 +794,7 @@ function PendingBuffComment() {
                               }}
                             >
                               <RiShoppingBag3Fill size={15} style={{ marginRight: '7px', padding: 0 }} />
-                              <span style={{ fontWeight: 600,fontFamily: 'Poppins, sans-serif', margin: 0, padding: 0 }}>Đặt hàng</span>
+                              <span style={{ fontWeight: 600, margin: 0, padding: 0 }}>Đặt hàng</span>
                             </Button>
                           ) : null
                       }
