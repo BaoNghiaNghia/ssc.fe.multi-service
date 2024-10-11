@@ -1626,7 +1626,7 @@ function* changeServiceTypeFunc(params) {
       yield put(actions.viewStatisticOrderByDaysBegin(initialFilter));
 
       // Fetch list computer
-      yield put(actionBuffView.listComputerRunViewBegin(initServerPagination));
+      yield put(actionBuffView.fetchListDevicesRunViewBegin(initServerPagination));
     }
   } catch (err) {
     yield put(
@@ -1713,7 +1713,7 @@ function* setRangeDateFilterFunc(params) {
       yield put(actions.viewStatisticOrderByDaysBegin(initialFilter));
 
       // Fetch list computer
-      yield put(actionBuffView.listComputerRunViewBegin(initServerPagination));
+      yield put(actionBuffView.fetchListDevicesRunViewBegin(initServerPagination));
     }
     
     if (isType === SERVICE_TYPE.COMMENT.title) {

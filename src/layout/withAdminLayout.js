@@ -242,38 +242,6 @@ const ThemeLayout = (WrappedComponent) => {
                         <FaYoutube color="red" fontSize={20} style={{ marginRight: '7px' }} />
                         <span style={{ fontSize: '16px', fontWeight: '700', color: 'black' }}>Youtube</span>
                       </div>
-                      {/* <GalleryNav>
-                        <ul>
-                          <li>
-                            <Link
-                              // className={typeService === SERVICE_TYPE.SUBSCRIBE.title ? 'active' : 'deactivate'}
-                              // onClick={() => handleChange(SERVICE_TYPE.SUBSCRIBE.title)}
-                              to="#"
-                              style={{ display: 'inline-flex', alignItems: 'center' }}
-                            >
-                              <GrNotification fontSize={15} className='pr-3'/> <span>Subscribe</span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              // className={typeService === SERVICE_TYPE.COMMENT.title ? 'active' : 'deactivate'}
-                              // onClick={() => handleChange(SERVICE_TYPE.COMMENT.title)}
-                              to="#"
-                            >
-                              <FaRegCommentDots fontSize={15} className='mr-3'/> <span>Comment</span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              // className={typeService === SERVICE_TYPE.LIKE.title ? 'active' : 'deactivate'}
-                              // onClick={() => handleChange(SERVICE_TYPE.LIKE.title)}
-                              to="#"
-                            >
-                              <AiOutlineLike fontSize={17} className='mr-3'/> <span>Like</span>
-                            </Link>
-                          </li>
-                        </ul>
-                      </GalleryNav> */}
                       {isAdminTongQuan ? (
                         <div className='page-header-actions'>
                           <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate} />
@@ -370,15 +338,6 @@ const ThemeLayout = (WrappedComponent) => {
               </Layout>
             </Layout>
           </Layout>
-          {/* <Link
-            to="#"
-            className="customizer-trigger"
-            onClick={() => {
-              showCustomizer();
-            }}
-          >
-            <FeatherIcon icon="settings" />
-          </Link> */}
           <div className={`${customizerAction ? 'customizer-wrapper show' : 'customizer-wrapper'}`}>
             <div className="customizer">
               <div className="customizer__head">

@@ -54,12 +54,12 @@ function* listDevicesRunViewFunc(params) {
   } catch (error) {
     const errorMessage = error;
 
-    yield put(actions.fetchListDevicesRunViewErr({ error: errorMessage || 'Fetch list devices view failed' }));
+    yield put(actions.fetchListDevicesRunViewErr({ error: errorMessage || 'View - Fetch list devices view failed' }));
 
     if (errorMessage?.response?.data?.message) {
       toast.error(errorMessage?.response?.data?.message);
     } else {
-      toast.error('Fetch list devices view failed');
+      toast.error('View - Fetch list devices view failed');
     }
   } finally { /* empty */ }
 }
