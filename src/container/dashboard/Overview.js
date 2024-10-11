@@ -208,11 +208,11 @@ function Overview() {
               fontWeight: 700,
               fontSize: '0.7em',
               color: '#333', /* Darker text color for better visibility */
-              background: 'linear-gradient(90deg, #FFD700, #FFB600)', /* Gradient golden background */
+              background: 'linear-gradient(90deg, #FFB600, #FFD700, #FFB600, #ffe246)', /* Gradient golden background */
               padding: '1px 4px',
-              borderRadius: '2px',
+              borderRadius: '4px',
               zIndex: 10, /* Keeps the text above the card content */
-              boxShadow: '0px 1px 5px rgba(0, 0, 0, 0.2)',
+              boxShadow: '0px 1px 5px #683c0033',
               textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)' /* Added shadow to make text pop */
             }}
           >
