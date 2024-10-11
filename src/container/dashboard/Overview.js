@@ -203,7 +203,7 @@ function Overview() {
           <span
             style={{
               position: 'absolute',
-              top: '5px',
+              top: '15px',
               left: '-7px',
               fontWeight: 700,
               fontSize: '0.7em',
