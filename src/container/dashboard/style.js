@@ -182,15 +182,17 @@ const Focard = Styled.div`
             @media only screen and (max-width: 767px){
                 padding: 0 15px 0;
             }
-            h1{
+            h1 {
                 padding: 0;
-                font-size: 23px;
+                font-family: "Poppins", sans-serif !important;
+                font-size: 30px;
                 font-weight: 600;
                 margin-bottom: 4px;
-                @media only screen and (max-width: 767px){
+                @media only screen and (max-width: 767px) {
                     font-size: 24px;
                 }
             }
+
             p{
                 margin-bottom: 0;
             }
