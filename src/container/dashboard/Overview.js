@@ -495,7 +495,12 @@ function Overview() {
               <div className="card-chunk">
                 <CardBarChart2>
                   <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span>Máy {typeService}</span>
+                    <span>
+                      {
+                        typeService === SERVICE_TYPE.VIEW.title ? 'Thiết bị' : 'Máy'
+                      }
+                      {typeService}
+                    </span>
                     <TbServer2 fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
                   <Heading as="h4">
