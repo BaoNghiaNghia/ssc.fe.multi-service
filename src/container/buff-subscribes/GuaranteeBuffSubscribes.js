@@ -159,7 +159,7 @@ function GuaranteeBuffSubscribes() {
         channel_id,
         channel_thumbnail,
         channel_title,
-        link
+        video_link
        } = value;
 
       const findUser = userList?.filter((item) => item.id === user_id);
@@ -209,7 +209,7 @@ function GuaranteeBuffSubscribes() {
                 placement="topLeft"
               >
                 <a
-                  href={link}
+                  href={video_link}
                   color="black"
                   target="_blank"
                   rel="noopener noreferrer"
