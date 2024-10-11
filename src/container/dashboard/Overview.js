@@ -22,7 +22,6 @@ import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
 import Heading from '../../components/heading/heading';
-import { FilterCalendar } from '../../components/buttons/calendar-button/FilterCalendar';
 import actions from '../../redux/reports/actions';
 import actionsBuffComment from '../../redux/buffComment/actions';
 import { numberWithCommas, numberWithCommasCurrency } from '../../utility/utility';
@@ -40,8 +39,7 @@ function Overview() {
 
   const { 
     fromDate,
-    toDate, 
-    profitToday, 
+    toDate,
     typeService, 
     computerThread, 
     accountStatus,
@@ -49,20 +47,17 @@ function Overview() {
     orderAmountSubscribe,
     orderAmountLike,
     taskOfTool,
-    accountOnComputer,
-    quantityRunByDay,
     performance,
     totalOrder,
     listComputerComment,
     listComputerLike,
-    listComputerView,
+    listDevicesView,
     listComputerSubscribe,
     orderByDays
   } = useSelector((state) => {
     return {
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
-      profitToday: state?.reports?.profitToday,
       typeService: state?.reports?.typeService,
       computerThread: state?.reports?.computerThread,
       taskOfTool: state?.reports?.taskOfTool,
@@ -71,12 +66,10 @@ function Overview() {
       orderAmountComment: state?.reports?.orderAmountComment,
       orderAmountSubscribe: state?.reports?.orderAmountSubscribe,
       orderAmountLike: state?.reports?.orderAmountLike,
-      accountOnComputer: state?.reports?.accountOnComputer,
-      quantityRunByDay: state?.reports?.quantityRunByDay,
       totalOrder: state?.reports?.totalOrder,
       listComputerComment: state?.buffComment?.listComputer,
       listComputerLike: state?.buffLike?.listComputer,
-      listComputerView: state?.buffView?.listComputer,
+      listDevicesView: state?.buffView?.listDevices,
       listComputerSubscribe: state?.buffSubscribe?.listComputer,
       orderByDays: state?.reports?.orderByDays
     };
@@ -160,7 +153,7 @@ function Overview() {
         return listComputerSubscribe?.meta?.total || 'N/A';
 
       case SERVICE_TYPE.VIEW.title:
-        return listComputerView?.meta?.total || 'N/A';
+        return listDevicesView?.meta?.total || 'N/A';
 
       default:
         return 0;
@@ -532,10 +525,7 @@ function Overview() {
         ghost
         title={<span style={{ marginRight: '20px' }}>Tổng quan {typeService}</span>}
         buttons={[
-          // <div key="1" className="page-header-actions">
-          //   <FilterCalendar actionPicker={actions.setRangeDateFilterBegin} fromDate={fromDate} toDate={toDate} />
-          // </div>,
-          <div key="2" className="page-header-actions">
+          <div key="1" className="page-header-actions">
             <GalleryNav>
               <ul>
                 {services.map(({ type, icon: Icon, label }) => (

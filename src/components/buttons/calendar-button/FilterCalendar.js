@@ -10,7 +10,7 @@ const FilterCalendar = ({ actionPicker, fromDate, toDate }) => {
 
   return (
     <Popover 
-      placement="bottomRight"
+      placement="bottomLeft"
       title="Lọc theo khoảng thời gian"
       content={content}
       action="hover"
