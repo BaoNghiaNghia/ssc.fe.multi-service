@@ -3,7 +3,7 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 // import FeatherIcon from 'feather-icons-react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Skeleton, Tooltip, Button } from 'antd';
+import { Row, Col, Skeleton, Tooltip, Button, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
@@ -199,7 +199,26 @@ function Overview() {
   const generalHeaderStatistic = () => {
     return (
       <Row gutter={6}>
-        <Col xxl={8} md={8} sm={24} xs={24}>
+        <Col xxl={8} md={8} sm={24} xs={24} style={{ position: 'relative' }}>
+          <span
+            style={{
+              position: 'absolute',
+              top: '5px',
+              left: '-7px',
+              fontWeight: 700,
+              fontSize: '0.7em',
+              color: '#333', /* Darker text color for better visibility */
+              background: 'linear-gradient(90deg, #FFD700, #FFB600)', /* Gradient golden background */
+              padding: '1px 4px',
+              borderRadius: '2px',
+              zIndex: 10, /* Keeps the text above the card content */
+              boxShadow: '0px 1px 5px rgba(0, 0, 0, 0.2)',
+              textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)' /* Added shadow to make text pop */
+            }}
+          >
+            Hôm nay
+          </span>
+
           <Cards
             headless
             border 
@@ -222,7 +241,9 @@ function Overview() {
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           Subscribe
                         </span>
-                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todaySubscribePoint))}</Heading>
+                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>
+                          {numberWithCommasCurrency(Math.round(todaySubscribePoint))}
+                        </Heading>
                       </Tooltip>
                     </Col>
                     <Col sm="6">
@@ -230,7 +251,9 @@ function Overview() {
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           Comment
                         </span>
-                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todayCommentPoint))}</Heading>
+                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>
+                          {numberWithCommasCurrency(Math.round(todayCommentPoint))}
+                        </Heading>
                       </Tooltip>
                     </Col>
                     <Col sm="6">
@@ -238,7 +261,9 @@ function Overview() {
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           Like
                         </span>
-                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todayLikePoint))}</Heading>
+                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>
+                          {numberWithCommasCurrency(Math.round(todayLikePoint))}
+                        </Heading>
                       </Tooltip>
                     </Col>
                   </Row>
@@ -247,6 +272,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
+
         <Col xxl={4} md={8} sm={6} xs={6}>
           <Cards
             headless 

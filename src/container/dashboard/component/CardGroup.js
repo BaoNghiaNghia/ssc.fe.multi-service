@@ -44,7 +44,6 @@ function CardGroup() {
             <Cards bodypadding="5px" headless title={`Tổng ${typeService}`} gradient='120deg, #d4fc79 0%, #96e6a1 100%'>
               <div className="focard-details growth-downward">
                 <Heading as="h1" color="#136400"><strong>{ numberWithCommas(todayRun || 0) }</strong></Heading>
-                {/* <span style={{ fontSize: '0.7em', color: 'white', padding: 0, margin: 0 }}>{filterRange?.from} - {filterRange?.to}</span> */}
               </div>
             </Cards>
           </div>
@@ -82,7 +81,6 @@ function CardGroup() {
           >
             <div className="ratio-content">
               <Heading as="h1">{getValueByKey(statisticComment, '-1') || 0 }</Heading>
-              {/* <Progress percent={80} className="progress-success" /> */}
             </div>
           </Cards>
         </RatioCard>
