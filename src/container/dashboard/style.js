@@ -184,7 +184,7 @@ const Focard = Styled.div`
             }
             h1 {
                 padding: 0;
-                font-size: 30px;
+                font-size: 27px;
                 font-weight: 600;
                 margin-bottom: 4px;
                 @media only screen and (max-width: 767px) {
@@ -1174,7 +1174,7 @@ const RatioCard = Styled.div`
     .ratio-content{
         h1{
             margin-bottom: 2px;
-            font-size: 23px;
+            font-size: 27px;
             font-weight: 600;
         }
         .ant-progress{
