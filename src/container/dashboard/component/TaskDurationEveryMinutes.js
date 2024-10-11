@@ -20,18 +20,6 @@ const moreContent = (
       <FeatherIcon size={16} icon="book-open" />
       <span>PDF</span>
     </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
   </>
 );
 function TaskDurationEveryMinutes({ title }) {
@@ -51,28 +39,45 @@ function TaskDurationEveryMinutes({ title }) {
     chart: {
       type: 'line',
       height: 160,
+      style: {
+        fontFamily: 'Inter', // Set the default font for the chart
+      },
     },
     title: {
       text: '',
+      style: {
+        fontFamily: 'Inter', // Apply to title
+      },
     },
     xAxis: {
       categories: durationReport,
       title: {
         text: 'Thời gian',
+        style: {
+          fontFamily: 'Inter', // Apply to x-axis title
+        },
       },
-      visible: false
+      visible: false,
+      labels: {
+        style: {
+          fontFamily: 'Inter', // Apply to x-axis labels
+        },
+      },
     },
     yAxis: {
       min: 0,
       title: {
         text: `Thời gian (phút)`,
-      },
-      align: "center",
-      verticalAlign: "middle",
-      style: {
+        style: {
+          fontFamily: 'Inter', // Apply to y-axis title
           color: 'black',
-          fontSize: '17px',
-          
+          fontSize: '13px',
+        },
+      },
+      labels: {
+        style: {
+          fontFamily: 'Inter', // Apply to y-axis labels
+        },
       },
     },
     series: [
@@ -80,69 +85,58 @@ function TaskDurationEveryMinutes({ title }) {
         lineWidth: 1,
         data: taskDurationInMinutes?.map((rp) => Math.round(rp?.duration)),
         name: `Thời gian ${typeService}`,
-        color: '#008000'
+        color: '#008000',
       },
     ],
     legend: {
-      enabled: false
+      enabled: false,
+      itemStyle: {
+        fontFamily: 'Inter', // Apply to legend
+      },
+    },
+    tooltip: {
+      valueDecimals: 0,
+      style: {
+        fontFamily: 'Inter', // Apply to tooltip
+      },
     },
     plotOptions: {
       area: {
         fillColor: {
-            linearGradient: {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 1
-            }
+          linearGradient: {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 1,
+          },
         },
         marker: {
-            radius: 2
+          radius: 2,
         },
         lineWidth: 1,
         states: {
-            hover: {
-                lineWidth: 1
-            }
+          hover: {
+            lineWidth: 1,
+          },
         },
-        threshold: null
-      }
+        threshold: null,
+      },
     },
     accessibility: {
       screenReaderSection: {
-          beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
-      }
+        beforeChartFormat:
+          '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>',
+      },
     },
-    tooltip: {
-        valueDecimals: 0
-    }
+    credits: {
+      enabled: false, // Disable the credits
+    },
   };
 
 
   return (
     <RevenueWrapper>
       <Cards
-        // isbutton={
-        //   <div className="card-nav">
-        //     <ul>
-        //       <li className={state.revenue === 'week' ? 'active' : 'deactivate'}>
-        //         <Link onClick={() => handleActiveChangeRevenue('week')} to="#">
-        //           Week
-        //         </Link>
-        //       </li>
-        //       <li className={state.revenue === 'month' ? 'active' : 'deactivate'}>
-        //         <Link onClick={() => handleActiveChangeRevenue('month')} to="#">
-        //           Month
-        //         </Link>
-        //       </li>
-        //       <li className={state.revenue === 'year' ? 'active' : 'deactivate'}>
-        //         <Link onClick={() => handleActiveChangeRevenue('year')} to="#">
-        //           Year
-        //         </Link>
-        //       </li>
-        //     </ul>
-        //   </div>
-        // }
         more={moreContent}
         title={
           <div style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -158,23 +152,6 @@ function TaskDurationEveryMinutes({ title }) {
           </div>
         ) : (
           <div className="performance-lineChart">
-            {/* {performanceDatasets &&
-              performanceDatasets.map((item, key) => {
-                return (
-                  <li key={key + 1} className="custom-label">
-                    <strong className={item.amountClass}>{item.amount}</strong>
-                    <div>
-                      <span
-                        style={{
-                          backgroundColor: item.borderColor,
-                        }}
-                      />
-                      {item.label}
-                    </div>
-                  </li>
-                )
-              })} */}
-
             <HighchartsReact highcharts={Highcharts} options={optionTaskSuccess} />
           </div>
         )}

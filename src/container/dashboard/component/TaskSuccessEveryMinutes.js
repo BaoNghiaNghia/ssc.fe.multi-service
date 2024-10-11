@@ -20,18 +20,6 @@ const moreContent = (
       <FeatherIcon size={16} icon="book-open" />
       <span>PDF</span>
     </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
   </>
 );
 function TaskSuccessEveryMinutes({ title }) {
@@ -49,32 +37,49 @@ function TaskSuccessEveryMinutes({ title }) {
     chart: {
       type: 'line',
       height: 160,
+      style: {
+        fontFamily: 'Inter', // Set the default font for the chart
+      },
     },
     title: {
       text: '',
+      style: {
+        fontFamily: 'Inter', // Apply to title
+      },
     },
     xAxis: {
       categories: durationReport,
       title: {
         text: 'Thời gian',
+        style: {
+          fontFamily: 'Inter', // Apply to x-axis title
+        },
       },
       visible: false,
       labels: {
-        format: '{value} km'
+        format: '{value} km',
+        style: {
+          fontFamily: 'Inter', // Apply to x-axis labels
+        },
       },
       minRange: 5,
     },
     yAxis: {
       min: 0,
       title: {
-        text: `Lượt ${typeService}`,
-      },
-      align: "center",
-      verticalAlign: "middle",
-      style: {
+        text: `Lượt ${typeService}`, // Set the y-axis title text
+        align: 'middle',
+        style: {
+          fontFamily: 'Inter', // Apply to y-axis title
           color: 'black',
-          fontSize: '17px',
-          
+          fontSize: '12px',
+        },
+      },
+      labels: {
+        style: {
+          fontFamily: 'Inter', // Apply to y-axis labels
+          fontSize: '13px'
+        },
       },
     },
     series: [
@@ -85,52 +90,63 @@ function TaskSuccessEveryMinutes({ title }) {
         color: '#008000',
         fillOpacity: 0.5,
         marker: {
-            enabled: false
+          enabled: false,
         },
-        threshold: null
+        threshold: null,
       },
     ],
     legend: {
-      enabled: false
+      enabled: false,
+      itemStyle: {
+        fontFamily: 'Inter', // Apply to legend
+      },
+    },
+    tooltip: {
+      valueDecimals: 0,
+      style: {
+        fontFamily: 'Inter', // Apply to tooltip
+      },
     },
     plotOptions: {
       area: {
-          fillColor: {
-              linearGradient: {
-                  x1: 0,
-                  y1: 0,
-                  x2: 0,
-                  y2: 1
-              },
-              stops: [
-                  [0, Highcharts.getOptions().colors[0]],
-                  [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-              ]
+        fillColor: {
+          linearGradient: {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 1,
           },
-          marker: {
-              radius: 2
+          stops: [
+            [0, Highcharts.getOptions().colors[0]],
+            [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')],
+          ],
+        },
+        marker: {
+          radius: 2,
+        },
+        lineWidth: 1,
+        states: {
+          hover: {
+            lineWidth: 1,
           },
-          lineWidth: 1,
-          states: {
-              hover: {
-                  lineWidth: 1
-              }
-          },
-          threshold: null
-      }
-  },
-  accessibility: {
-    screenReaderSection: {
-        beforeChartFormat: '<{headingTagName}>' +
-            '{chartTitle}</{headingTagName}><div>{chartSubtitle}</div>' +
-            '<div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>' +
-            '{yAxisDescription}</div>'
-    }
-  },
-    tooltip: {
-        valueDecimals: 0,
-    }
+        },
+        threshold: null,
+      },
+    },
+    accessibility: {
+      screenReaderSection: {
+        beforeChartFormat:
+          '<{headingTagName}>' +
+          '{chartTitle}</{headingTagName}><div>{chartSubtitle}</div>' +
+          '<div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>' +
+          '{yAxisDescription}</div>',
+      },
+    },
+    credits: {
+      enabled: false, // Disable the credits
+    },
   };
+  
 
 
   return (
