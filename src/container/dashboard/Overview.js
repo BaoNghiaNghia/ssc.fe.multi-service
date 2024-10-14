@@ -137,7 +137,20 @@ function Overview() {
   const todayCommentPoint = findObjectByValue(orderAmountComment, 'is_current', true)?.total || 0;
   const todayLikePoint = findObjectByValue(orderAmountLike, 'is_current', true)?.total || 0;
 
-  const todayOrderCount = findObjectByValue(orderByDays, 'is_current', true)?.comments || 0;
+  const todayOrderCount = () => {
+    const currentOrder = findObjectByValue(orderByDays, 'is_current', true) || {};
+    const serviceKeyMap = {
+      [SERVICE_TYPE.COMMENT.title]: 'comments',
+      [SERVICE_TYPE.LIKE.title]: 'likes',
+      [SERVICE_TYPE.SUBSCRIBE.title]: 'subscribes',
+      [SERVICE_TYPE.VIEW.title]: 'views'
+    };
+  
+    const count = currentOrder[serviceKeyMap[typeService]] || 0;
+    
+    return numberWithCommas(Math.abs(Number(count)));
+  };
+  
 
   const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
 
@@ -483,7 +496,7 @@ function Overview() {
                     <span>Tổng {typeService} <br/> order</span>
                     <TbSquareRoundedPercentage fontSize={17} style={{ marginTop: '3px' }}/>
                   </span>
-                  <Heading as="h4">{numberWithCommas(Math.abs(Number(todayOrderCount)) || 0)}</Heading>
+                  <Heading as="h4">{todayOrderCount()}</Heading>
                 </CardBarChart2>
               </div>
             </EChartCard>
