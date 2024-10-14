@@ -92,12 +92,12 @@ function EditSubscribeComputer({ setState, computerState }) {
                     !loading ? (
                         <>
                             <Row gutter="10">
-                                <Col sm={12}>
+                                <Col sm={16}>
                                     <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn">
                                         <Input size='small' addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server subscribe' />
                                     </Form.Item>
                                 </Col>
-                                <Col sm={12}>
+                                <Col sm={8}>
                                     <Form.Item name="ip" style={{ margin: '0px' }} label="IP">
                                         <Input size='small' addonBefore={<MdOutlineNumbers />} style={{ width: '100%' }} placeholder='Địa chỉ IP' />
                                     </Form.Item>

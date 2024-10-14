@@ -56,7 +56,7 @@ function DetailSubscribesComputer({ setState, computerState }) {
                         !isLoading ? (
                             <>
                                 <Row gutter="10">
-                                    <Col sm={12}>
+                                    <Col sm={16}>
                                         <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn" rules={[{
                                             required: true,
                                             message: 'Trường không được trống'
@@ -64,7 +64,7 @@ function DetailSubscribesComputer({ setState, computerState }) {
                                             <Input size='small' disabled addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server subscribe' />
                                         </Form.Item>
                                     </Col>
-                                    <Col sm={12}>
+                                    <Col sm={8}>
                                         <Form.Item name="ip" style={{ margin: '0px' }} label="IP" rules={[{
                                             required: true,
                                             message: 'Trường không được trống'
