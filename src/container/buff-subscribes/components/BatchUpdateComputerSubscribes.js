@@ -69,7 +69,7 @@ function BatchUpdateComputerSubscribe({ setState, computerState }) {
                         <MdAddchart fontSize={40} color='#a1a1a1' style={{ margin: '0 15px 0 0', padding: '5px', border: '1px solid #c5c5c5', borderRadius: '10px' }} />
                         <div>
                             <p style={{ fontSize: '1.1em', marginBottom: '2px', fontWeight: '700' }}>Cập nhật {selectedRowKeys?.length} Subscribe Server</p>
-                            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy chạy comment</p>
+                            <p style={{ fontSize: '0.8em', marginBottom: '0px' }}>Cập nhật thông tin máy chạy subscribe</p>
                         </div>
                     </div>
                 }
@@ -90,7 +90,7 @@ function BatchUpdateComputerSubscribe({ setState, computerState }) {
                                 <Row gutter="10">
                                     <Col sm={12}>
                                         <Form.Item name="link" style={{ margin: '0px' }} label="Đường dẫn">
-                                            <Input size='small' addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server comment' />
+                                            <Input size='small' addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server subscribe' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={12}>
@@ -122,7 +122,7 @@ function BatchUpdateComputerSubscribe({ setState, computerState }) {
                                     </Col>
                                     <Col sm={8}>
                                         <Form.Item name="limit_per_day" style={{ margin: 0 }} label="Giới hạn mỗi ngày">
-                                            <InputNumber type='number' addonAfter="comment" size='small' style={{ width: '100%' }} placeholder='Giới hạn comment mỗi ngày ' />
+                                            <InputNumber type='number' addonAfter="subscribe" size='small' style={{ width: '100%' }} placeholder='Giới hạn subscribe mỗi ngày ' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>

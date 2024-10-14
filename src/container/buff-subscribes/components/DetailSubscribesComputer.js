@@ -61,7 +61,7 @@ function DetailSubscribesComputer({ setState, computerState }) {
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <Input size='small' disabled addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server comment' />
+                                            <Input size='small' disabled addonBefore={<LuLink2 />} style={{ width: '100%' }} placeholder='Liên kết server subscribe' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={12}>
@@ -80,7 +80,7 @@ function DetailSubscribesComputer({ setState, computerState }) {
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <Input size='small' disabled style={{ width: '100%' }} placeholder='Tên máy comment' />
+                                            <Input size='small' disabled style={{ width: '100%' }} placeholder='Tên máy subscribe' />
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>
@@ -122,7 +122,7 @@ function DetailSubscribesComputer({ setState, computerState }) {
                                             required: true,
                                             message: 'Trường không được trống'
                                         }]}>
-                                            <InputNumber type='number' disabled addonAfter="comment" size='small' style={{ width: '100%' }} placeholder='Giới hạn comment mỗi ngày ' />
+                                            <InputNumber type='number' disabled addonAfter="subscribe" size='small' style={{ width: '100%' }} placeholder='Giới hạn subscribe mỗi ngày ' />
                                         </Form.Item>
                                     </Col>
                                 </Row>
