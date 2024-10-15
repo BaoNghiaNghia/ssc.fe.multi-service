@@ -773,7 +773,7 @@ function PendingBuffSubscribes() {
                 <Row gutter={15} className="justify-content-center" style={{ marginBottom: '15px' }}>
                   <Col lg={6} xs={6}>
                     <div className="table-search-box">
-                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} patterns placeholder="Tìm kiếm Order ID, Video ID"/>
+                      <AutoComplete onSearch={debounce(handleSearch, 500)} dataSource={notData} patterns placeholder="Tìm kiếm Order ID, Channel ID"/>
                     </div>
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
