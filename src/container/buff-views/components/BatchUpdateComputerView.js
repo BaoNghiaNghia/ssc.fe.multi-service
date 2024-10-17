@@ -17,10 +17,9 @@ function BatchUpdateComputerView({ setState, computerState }) {
     const { isBatchUpdateViewServer, selectedRowKeys } = computerState;
     const [formDetailComputerCmt] = Form.useForm();
 
-    const { isLoading, detailComputerView } = useSelector(state => {
+    const { isLoading } = useSelector(state => {
         return {
-            isLoading: state?.buffView?.loading,
-            detailComputerView: state?.buffView?.detailComputerView
+            isLoading: state?.buffView?.loading
         };
     });
 

@@ -290,9 +290,9 @@ function GmailManagement() {
           case SERVICE_TYPE.VIEW.title:
             return (
               <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'flex-start'}}>
-                <Badge color={VIEW_STATUS_TYPE[live].color} dot style={{ marginRight: '5px' }} />
-                <span>{VIEW_STATUS_TYPE[live].describe}</span>
-                <Badge count={`${live.toString()}`} showZero color={VIEW_STATUS_TYPE[live].color} style={{ marginLeft: '5px' }} />
+                <Badge color={VIEW_STATUS_TYPE[live]?.color} dot style={{ marginRight: '5px' }} />
+                <span>{VIEW_STATUS_TYPE[live]?.describe}</span>
+                <Badge count={`${live?.toString()}`} showZero color={VIEW_STATUS_TYPE[live]?.color} style={{ marginLeft: '5px' }} />
               </div>
             );
 
