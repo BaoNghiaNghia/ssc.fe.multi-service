@@ -417,7 +417,7 @@ export const ROLE_GENERAL = {
 }
 
 export const REGEX_VALIDATE_YOUTUBE_VIDEO_LINK =  /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-export const REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK = /^(https?:\/\/)?(www\.)?(youtube\.com)\/(channel\/[a-zA-Z0-9_-]+|c\/[a-zA-Z0-9%_-]+|@([a-zA-Z0-9_]+))$/;
+export const REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK = /^(https?:\/\/)?(www\.)?(youtube\.com|studio\.youtube\.com)\/(channel\/[a-zA-Z0-9_-]+|c\/[a-zA-Z0-9%_-]+|@([a-zA-Z0-9_%\-]+))$/;
 
 export const REGEX_VALIDATE_YOUTUBE_ALL_LINK = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
 
@@ -536,7 +536,7 @@ export const generateIconService = (service) => {
 export const badgeGreenStyle = {
   border: '1.3px solid #00ab00',
   borderRadius: '7px ',
-  padding: '2px 7px',
+  padding: '1px 7px',
   fontSize: '0.7em',
   color: '#00ab00',
   fontWeight: 'bold',
@@ -545,7 +545,7 @@ export const badgeGreenStyle = {
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px',
-  marginBottom: '2px'
+  marginBottom: '3px'
 }
 
 export const badgeGrayStyle = {
@@ -564,7 +564,7 @@ export const badgeGrayStyle = {
 export const badgeOrangeStyle = {
   border: '1.3px solid orange',
   borderRadius: '7px ',
-  padding: '2px 7px',
+  padding: '1px 7px',
   fontSize: '0.7em',
   color: 'orange',
   fontWeight: 'bold',
@@ -573,13 +573,13 @@ export const badgeOrangeStyle = {
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px',
-  marginBottom: '2px'
+  marginBottom: '3px'
 }
 
 export const badgeRedStyle = {
   border: '1.3px solid red',
   borderRadius: '7px ',
-  padding: '2px 7px',
+  padding: '1px 7px',
   fontSize: '0.7em',
   color: 'red',
   fontWeight: 'bold',
@@ -588,7 +588,7 @@ export const badgeRedStyle = {
   alignContemt: 'center',
   justifyContent: 'center',
   marginRight: '5px',
-  marginBottom: '2px'
+  marginBottom: '3px'
 }
 
 // Define your icon constants

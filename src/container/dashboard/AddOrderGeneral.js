@@ -279,7 +279,47 @@ function AddOrderGeneral() {
   const formCreateCommentService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Chi tiết đơn hàng</Divider>
+        <Row gutter="10" style={{ marginBottom: '7px', alignItems: 'center', alignContent: 'center' }}>
+          <Col sm={15}>
+            <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
+              Chi tiết đơn hàng
+            </Divider>
+          </Col>
+          <Col sm={9}>
+            <Radio.Group
+              value={stateCurr.orderType}
+              size='small'
+              onChange={(e) =>
+                setStateCurr((prevState) => ({ ...prevState, orderType: e.target.value }))
+              }
+              buttonStyle="solid"
+              style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
+            >
+              <Radio.Button value="single" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {singleOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>1 đơn</span>
+                </span>
+              </Radio.Button>
+              <Radio.Button value="multiple" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {multiplOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>Nhiều đơn</span>
+                </span>
+              </Radio.Button>
+            </Radio.Group>
+          </Col>
+        </Row>
         <Row gutter="10">
           <Col sm={24}>
             <Form.Item
@@ -534,7 +574,47 @@ function AddOrderGeneral() {
   const formCreateLikeService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>Chi tiết đơn hàng</Divider>
+        <Row gutter="10" style={{ marginBottom: '7px', alignItems: 'center', alignContent: 'center' }}>
+          <Col sm={15}>
+            <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
+              Chi tiết đơn hàng
+            </Divider>
+          </Col>
+          <Col sm={9}>
+            <Radio.Group
+              value={stateCurr.orderType}
+              size='small'
+              onChange={(e) =>
+                setStateCurr((prevState) => ({ ...prevState, orderType: e.target.value }))
+              }
+              buttonStyle="solid"
+              style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
+            >
+              <Radio.Button value="single" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {singleOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>1 đơn</span>
+                </span>
+              </Radio.Button>
+              <Radio.Button value="multiple" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {multiplOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>Nhiều đơn</span>
+                </span>
+              </Radio.Button>
+            </Radio.Group>
+          </Col>
+        </Row>
         <Row gutter="10" style={{ marginBottom: '7px' }}>
           <Col sm={19}>
             <Form.Item
