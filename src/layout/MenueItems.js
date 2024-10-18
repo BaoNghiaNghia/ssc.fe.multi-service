@@ -12,7 +12,7 @@ import { useSelector , useDispatch } from 'react-redux';
 import { NavTitle } from './style';
 import reportActions from '../redux/reports/actions';
 import { COLOR_GENERAL, ROLE_GENERAL } from '../variables';
-import AddOrderGeneral from '../container/buff-comments/components/AddOrderGeneral';
+import AddOrderGeneral from '../container/dashboard/AddOrderGeneral';
 
 function MenuItems({ darkMode, toggleCollapsed, topMenu, events }) {
   const { path } = useRouteMatch();

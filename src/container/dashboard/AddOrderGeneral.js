@@ -12,19 +12,19 @@ import { TiTick } from "react-icons/ti";
 import { isEmpty } from 'lodash';
 
 import { toast } from 'react-toastify';
-import actionsComment from '../../../redux/buffComment/actions';
-import actionsLike from '../../../redux/buffLike/actions';
-import actionsSubscribe from '../../../redux/buffSubscribe/actions';
-import actionsView from '../../../redux/buffView/actions';
+import actionsComment from '../../redux/buffComment/actions';
+import actionsLike from '../../redux/buffLike/actions';
+import actionsSubscribe from '../../redux/buffSubscribe/actions';
+import actionsView from '../../redux/buffView/actions';
 
-import reportActions from '../../../redux/reports/actions';
-import serviceSettingsAction from '../../../redux/serviceSettings/actions';
-import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, INITIALIZE_SERVICE_SELECTED, badgeGrayStyle, singleOrderIcon, multiplOrderIcon, badgeGreenStyle, badgeRedStyle, badgeOrangeStyle } from '../../../variables';
-import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
+import reportActions from '../../redux/reports/actions';
+import serviceSettingsAction from '../../redux/serviceSettings/actions';
+import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../utility/utility';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, INITIALIZE_SERVICE_SELECTED, badgeGrayStyle, singleOrderIcon, multiplOrderIcon, badgeGreenStyle, badgeRedStyle, badgeOrangeStyle } from '../../variables';
+import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../config/api/Reports';
 
-import EmptyBackground from '../../../static/img/empty_bg_2.png';
-import EmptyBackgroundVideo from '../../../static/videos/empty_video.mp4';
+import EmptyBackground from '../../static/img/empty_bg_2.png';
+import EmptyBackgroundVideo from '../../static/videos/empty_video.mp4';
 
 
 const { Option } = Select;
@@ -535,7 +535,7 @@ function AddOrderGeneral() {
               allowClear
               rows={7}
               style={{ fontWeight: '500' }}
-              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+              placeholder={`Link k | Số lượng \nLink k | Số lượng \nLink k | Số lượng \nLink k | Số lượng \n...`}
             />
           </Form.Item>
         )}
@@ -932,7 +932,7 @@ function AddOrderGeneral() {
                                       itemService?.geo ? (
                                         <Tooltip title={itemService?.geo?.toUpperCase()}>
                                           <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                            <img src={require(`../../../static/img/flag/${itemService?.geo}.png`)} alt="" width="14px" height="14px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
+                                            <img src={require(`../../static/img/flag/${itemService?.geo}.png`)} alt="" width="14px" height="14px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
                                           </span>
                                         </Tooltip>
                                       ) : null
@@ -1014,7 +1014,7 @@ function AddOrderGeneral() {
                               detailService?.geo ? (
                                 <Tooltip title={detailService?.geo?.toUpperCase()}>
                                   <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                    <img src={require(`../../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
+                                    <img src={require(`../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
                                     <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
                                   </span>
                                 </Tooltip>
