@@ -47,7 +47,7 @@ function AddOrderGeneral() {
   const [stateCurr, setStateCurr] = useState({
     listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder),
     amountChange: 0,
-    orderType: 'single',
+    orderType: 'single', // 'single' and 'multiple'
     duplicateCounts: {},
   });
 
@@ -83,6 +83,22 @@ function AddOrderGeneral() {
 
     return categoryApiMap[categoryNewOrder]();
   };
+
+  const handleCancelAndResetForm = () => {
+    setStateCurr({
+      ...stateCurr,
+      listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder)
+    });
+
+    dispatch(reportActions.setCategoryInNewOrderBegin(categoryNewOrder));
+
+    setHelpMessage({});
+
+    formCreateOrder.resetFields();
+    dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+
+    dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
+  }
 
   const handleValidateLink = async (value) => {
     let status = 'success';
@@ -178,56 +194,146 @@ function AddOrderGeneral() {
   }, [dispatch]);
 
   const handleSubmitComment = () => {
-    formCreateOrder.validateFields()
-      .then((values) => {
-        const rows = values?.comments?.split('\n');
-        const nonEmptyRows = rows.filter(row => row.trim().length > 0);
-        values.comments = nonEmptyRows.join('\n'); 
-        dispatch(actionsComment.createOrderCommentAdminBegin(values));
-        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+    if (stateCurr.orderType === 'single') {
+      formCreateOrder.validateFields()
+        .then((values) => {
+          const rows = values?.comments?.split('\n');
+          const nonEmptyRows = rows.filter(row => row.trim().length > 0);
+          values.comments = nonEmptyRows.join('\n'); 
+          dispatch(actionsComment.createOrderCommentAdminBegin(values));
+          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+  
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    } else if (stateCurr.orderType === 'multiple') {
+      formCreateOrder.validateFields()
+        .then((values) => {
+          const listOrders = values?.list_order;
+          const ordersArray = listOrders
+            .split('\n')
+            .filter(line => line.trim())
+            .map(line => {
+              const [link, quantity] = line.split('|').map(item => item.trim());
+              return { link, quantity: Number(quantity) };
+            });
 
-        formCreateOrder.resetFields();
-      })
-      .catch((err) => {
-        console.error("handle Real Error: ", err);
-      });
+          console.log('Converted Orders Array:', ordersArray);
+  
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    }
   }
 
   const handleSubmitLike = () => {
-    formCreateOrder.validateFields()
-      .then((values) => {
-        dispatch(actionsLike.createOrderLikeAdminBegin(values));
-        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+    if (stateCurr.orderType === 'single') {
+      formCreateOrder.validateFields()
+        .then((values) => {
+          dispatch(actionsLike.createOrderLikeAdminBegin(values));
+          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+  
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    } else if (stateCurr.orderType === 'multiple') {
+      
+      formCreateOrder.validateFields()
+        .then((values) => {
+          const listOrders = values?.list_order;
+          const ordersArray = listOrders
+            .split('\n')
+            .filter(line => line.trim())
+            .map(line => {
+              const [link, quantity] = line.split('|').map(item => item.trim());
+              return { link, quantity: Number(quantity) };
+            });
 
-        formCreateOrder.resetFields();
-      })
-      .catch((err) => {
-        console.error("handle Real Error: ", err);
-      });
+          console.log('Converted Orders Array:', ordersArray);
+  
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    }
   }
 
   const handleSubmitSubscribe = () => {
-    formCreateOrder.validateFields()
-      .then((values) => {
-        dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(values));
-        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-        formCreateOrder.resetFields();
-      })
-      .catch((err) => {
-        console.error("handle Real Error: ", err);
-      });
+    if (stateCurr.orderType === 'single') {
+      formCreateOrder.validateFields()
+        .then((values) => {
+          console.log('--- show data subscribe ----', values)
+          dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(values));
+          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    } else if (stateCurr.orderType === 'multiple') {
+      formCreateOrder.validateFields()
+        .then((values) => {
+          const listOrders = values?.list_order;
+  
+          const ordersArray = values?.list_order.split('\n')
+            .filter(line => line.trim())
+            .map(line => {
+              const [link, quantity] = line.split('|').map(item => item.trim());
+              return { 
+                link, 
+                quantity: Number(quantity),
+                platform: values?.platform,
+                category: values?.category,
+                service_id: values?.service_id
+              };
+            });
+          
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    }
   }
 
   const handleSubmitView = () => {
-    formCreateOrder.validateFields()
-      .then((values) => {
-        dispatch(actionsView.createOrderViewAdminBegin(values));
-        dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-        formCreateOrder.resetFields();
-      })
-      .catch((err) => {
-        console.error("handle Real Error: ", err);
-      });
+    if (stateCurr.orderType === 'single') {
+      formCreateOrder.validateFields()
+        .then((values) => {
+          dispatch(actionsView.createOrderViewAdminBegin(values));
+          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    } else if (stateCurr.orderType === 'multiple') {
+      formCreateOrder.validateFields()
+        .then((values) => {
+          const listOrders = values?.list_order;
+          const ordersArray = listOrders
+            .split('\n')
+            .filter(line => line.trim())
+            .map(line => {
+              const [link, quantity] = line.split('|').map(item => item.trim());
+              return { link, quantity: Number(quantity) };
+            });
+
+          console.log('Converted Orders Array:', ordersArray);
+  
+          handleCancelAndResetForm();
+        })
+        .catch((err) => {
+          console.error("handle Real Error: ", err);
+        });
+    }
   }
 
   const handleOk = () => {
@@ -256,23 +362,6 @@ function AddOrderGeneral() {
       console.log(err);
     }
   };
-
-
-  const handleCancel = () => {
-    setStateCurr({
-      ...stateCurr,
-      listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder)
-    });
-
-    dispatch(reportActions.setCategoryInNewOrderBegin(categoryNewOrder));
-
-    setHelpMessage({});
-
-    formCreateOrder.resetFields();
-    dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-
-    dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
-  }
 
   const validateCommentCount = stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange <= detailService?.max;
 
@@ -320,95 +409,120 @@ function AddOrderGeneral() {
             </Radio.Group>
           </Col>
         </Row>
-        <Row gutter="10">
-          <Col sm={24}>
-            <Form.Item
-              name="link"
-              label="Liên kết"
-              style={{ marginBottom: '7px' }}
-              hasFeedback
-              help={helpMessage.link}
-              rules={[
-                {
-                  required: true,
-                  message: 'Trường không được trống'
-                },
-                {
-                  validator: async (_, link) => {
-                    if (link) {
-                      const { status, help } = await handleValidateLink(link);
-                      if (!status) { return Promise.reject(help); }
-                    }
-                  },
-                },
-              ]}
-            >
-              <Input
-                allowClear
-                size='small'
-                style={{ fontWeight: 'bold' }}
-                placeholder='Thêm liên kết'
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter="10">
-          <Col sm={24}>
-            <Form.Item
-              name="comments"
-              label="Comment"
-              style={{ marginBottom: '7px' }}
-              rules={[
-                {
-                  required: true,
-                  message: 'Trường không được trống'
-                },
-                {
-                  validator: async (_, comments) => {
-                    const minComment = detailService?.min;
-                    const maxComment = detailService?.max;
-                    const count = comments?.split('\n')?.length;
+        {stateCurr.orderType === 'single' && (
+          <>
+            <Row gutter="10">
+              <Col sm={24}>
+                <Form.Item
+                  name="link"
+                  label="Liên kết"
+                  style={{ marginBottom: '7px' }}
+                  hasFeedback
+                  help={helpMessage.link}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Trường không được trống'
+                    },
+                    {
+                      validator: async (_, link) => {
+                        if (link) {
+                          const { status, help } = await handleValidateLink(link);
+                          if (!status) { return Promise.reject(help); }
+                        }
+                      },
+                    },
+                  ]}
+                >
+                  <Input
+                    allowClear
+                    size='small'
+                    style={{ fontWeight: 'bold' }}
+                    placeholder='Thêm liên kết'
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter="10">
+              <Col sm={24}>
+                <Form.Item
+                  name="comments"
+                  label="Comment"
+                  style={{ marginBottom: '7px' }}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Trường không được trống'
+                    },
+                    {
+                      validator: async (_, comments) => {
+                        const minComment = detailService?.min;
+                        const maxComment = detailService?.max;
+                        const count = comments?.split('\n')?.length;
 
-                    if (minComment != null && maxComment != null) {
-                      if (count < minComment) {
-                        return Promise.reject(`Cần ít nhất ${minComment} comments`);
-                      } if (count > maxComment) {
-                        return Promise.reject(`Vượt quá  ${maxComment} comments`);
-                      }
+                        if (minComment != null && maxComment != null) {
+                          if (count < minComment) {
+                            return Promise.reject(`Cần ít nhất ${minComment} comments`);
+                          } if (count > maxComment) {
+                            return Promise.reject(`Vượt quá  ${maxComment} comments`);
+                          }
+                        }
+                      },
                     }
-                  },
-                }
-              ]}
-              onChange={({ target: { value } }) => {
-                const amountChange = handleCountValidateCommentString(value);
-                const duplicates = countDuplicateLines(value.split('\n')); // Count duplicates
-                setStateCurr(prev => ({
-                  ...prev,
-                  amountChange,
-                  duplicateCounts: duplicates // Store duplicates in state
-                }));
-                formCreateOrder.setFieldsValue({ comments: value });
-              }}
-            >
-              <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
-              <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary, display: 'flex', justifyContent: 'space-between', marginTop: '3px' }}>
-                <span style={{ color: (validateCommentCount) ? 'green' : 'red', display: 'inline-flex', alignItems: 'center' }}>
-                  <span>{stateCurr?.amountChange} comments</span>
-                  {validateCommentCount ? <TiTick fontSize={17} style={{ marginLeft: '3px' }} /> : null}
-                </span>
-                <span>Ít nhất: {numberWithCommas(detailService?.min || 0)} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)}</span>
-              </span>
+                  ]}
+                  onChange={({ target: { value } }) => {
+                    const amountChange = handleCountValidateCommentString(value);
+                    const duplicates = countDuplicateLines(value.split('\n')); // Count duplicates
+                    setStateCurr(prev => ({
+                      ...prev,
+                      amountChange,
+                      duplicateCounts: duplicates // Store duplicates in state
+                    }));
+                    formCreateOrder.setFieldsValue({ comments: value });
+                  }}
+                >
+                  <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
+                  <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary, display: 'flex', justifyContent: 'space-between', marginTop: '3px' }}>
+                    <span style={{ color: (validateCommentCount) ? 'green' : 'red', display: 'inline-flex', alignItems: 'center' }}>
+                      <span>{stateCurr?.amountChange} comments</span>
+                      {validateCommentCount ? <TiTick fontSize={17} style={{ marginLeft: '3px' }} /> : null}
+                    </span>
+                    <span>Ít nhất: {numberWithCommas(detailService?.min || 0)} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)}</span>
+                  </span>
 
-              {stateCurr?.duplicateCounts && Object.entries(stateCurr.duplicateCounts).map(([comment, count]) => (
-                <>
-                  <div key={comment} style={{ fontSize: '0.8em', color: 'gray' }}>
-                    <span style={{ fontStyle: 'italic' }}>&ldquo;{comment}&ldquo;</span>: Trùng {count - 1} lần
-                  </div>
-                </>
-              ))}
-            </Form.Item>
-          </Col>
-        </Row>
+                  {stateCurr?.duplicateCounts && Object.entries(stateCurr.duplicateCounts).map(([comment, count]) => (
+                    <>
+                      <div key={comment} style={{ fontSize: '0.8em', color: 'gray' }}>
+                        <span style={{ fontStyle: 'italic' }}>&ldquo;{comment}&ldquo;</span>: Trùng {count - 1} lần
+                      </div>
+                    </>
+                  ))}
+                </Form.Item>
+              </Col>
+            </Row>
+          </>
+        )}
+
+        {stateCurr.orderType === 'multiple' && (
+          <Form.Item
+            name="list_order"
+            label="Danh sách đơn"
+            rules={[
+              {
+                required: true,
+                message: 'Trường không được trống',
+              },
+            ]}
+          >
+            <TextArea
+              size="small"
+              allowClear
+              rows={7}
+              style={{ fontWeight: '500' }}
+              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+            />
+          </Form.Item>
+        )}
       </>
     )
   }
@@ -563,7 +677,7 @@ function AddOrderGeneral() {
               allowClear
               rows={7}
               style={{ fontWeight: '500' }}
-              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+              placeholder={`Link kênh | Số lượng \nLink kênh | Số lượng \nLink kênh | Số lượng \nLink kênh | Số lượng \n...`}
             />
           </Form.Item>
         )}
@@ -615,164 +729,253 @@ function AddOrderGeneral() {
             </Radio.Group>
           </Col>
         </Row>
-        <Row gutter="10" style={{ marginBottom: '7px' }}>
-          <Col sm={19}>
-            <Form.Item
-              name="link"
-              label="Liên kết"
-              hasFeedback
-              help={helpMessage.link}
-              rules={[
-                {
-                  required: true,
-                  message: 'Trường không được trống'
-                },
-                {
-                  validator: async (_, link) => {
-                    if (link) {
-                      const { status, help } = await handleValidateLink(link);
-                      if (!status) { return Promise.reject(help); }
-                    }
-                  },
-                },
-              ]}
-            >
-              <Input size='small' allowClear style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
-            </Form.Item>
-          </Col>
-          <Col sm={5}>
-            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement='left'>
-              <Form.Item
-                name="quantity"
-                label="Số like"
-                hasFeedback
-                rules={[
-                  {
-                    required: true,
-                    message: 'Trường không được trống'
-                  },
-                  {
-                    type: 'number',
-                    min: detailService?.min,
-                    message: `Số like phải lớn hơn hoặc bằng ${detailService?.min}`
-                  },
-                  {
-                    type: 'number',
-                    max: detailService?.max,
-                    message: `Số like phải nhỏ hơn hoặc bằng ${detailService?.max}`
-                  }
-                ]}
-              >
-                <InputNumber
-                  size='small'
-                  style={{ width: '100%' }}
-                  onChange={(value) => {
-                    setStateCurr({
-                      ...stateCurr,
-                      amountChange: value
-                    });
-                  }}
-                  min={detailService?.min}
-                  max={detailService?.max}
-                  placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
-                />
-              </Form.Item>
-            </Tooltip>
-          </Col>
-        </Row>
+        {stateCurr.orderType === 'single' && (
+          <>
+            <Row gutter="10" style={{ marginBottom: '7px' }}>
+              <Col sm={19}>
+                <Form.Item
+                  name="link"
+                  label="Liên kết"
+                  hasFeedback
+                  help={helpMessage.link}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Trường không được trống'
+                    },
+                    {
+                      validator: async (_, link) => {
+                        if (link) {
+                          const { status, help } = await handleValidateLink(link);
+                          if (!status) { return Promise.reject(help); }
+                        }
+                      },
+                    },
+                  ]}
+                >
+                  <Input size='small' allowClear style={{ fontWeight: 'bold' }} placeholder='Thêm liên kết' />
+                </Form.Item>
+              </Col>
+              <Col sm={5}>
+                <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement='left'>
+                  <Form.Item
+                    name="quantity"
+                    label="Số like"
+                    hasFeedback
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Trường không được trống'
+                      },
+                      {
+                        type: 'number',
+                        min: detailService?.min,
+                        message: `Số like phải lớn hơn hoặc bằng ${detailService?.min}`
+                      },
+                      {
+                        type: 'number',
+                        max: detailService?.max,
+                        message: `Số like phải nhỏ hơn hoặc bằng ${detailService?.max}`
+                      }
+                    ]}
+                  >
+                    <InputNumber
+                      size='small'
+                      style={{ width: '100%' }}
+                      onChange={(value) => {
+                        setStateCurr({
+                          ...stateCurr,
+                          amountChange: value
+                        });
+                      }}
+                      min={detailService?.min}
+                      max={detailService?.max}
+                      placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
+                    />
+                  </Form.Item>
+                </Tooltip>
+              </Col>
+            </Row>
+          </>
+        )}
+
+        {stateCurr.orderType === 'multiple' && (
+          <Form.Item
+            name="list_order"
+            label="Danh sách đơn"
+            rules={[
+              {
+                required: true,
+                message: 'Trường không được trống',
+              },
+            ]}
+          >
+            <TextArea
+              size="small"
+              allowClear
+              rows={7}
+              style={{ fontWeight: '500' }}
+              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+            />
+          </Form.Item>
+        )}
       </>
     );
   }
   const formCreateViewService = () => {
     return (
       <>
-        <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
-          Chi tiết đơn hàng
-        </Divider>
-        <Row gutter="10" style={{ marginBottom: '7px' }}>
-          {/* Link input field */}
-          <Col sm={19}>
-            <Form.Item
-              name="link"
-              label="Liên kết"
-              hasFeedback
-              help={helpMessage.link}
-              rules={[
-                {
-                  required: true,
-                  message: 'Trường không được trống'
-                },
-                {
-                  validator: async (_, link) => {
-                    if (link) {
-                      const { status, help } = await handleValidateLink(link);
-                      if (!status) {
-                        return Promise.reject(new Error(help));
-                      }
-                    }
-                    return Promise.resolve();
-                  },
-                },
-              ]}
-            >
-              <Input
-                size="small"
-                allowClear
-
-                style={{ fontWeight: 'bold' }}
-                placeholder="Thêm liên kết"
-              />
-            </Form.Item>
+        <Row gutter="10" style={{ marginBottom: '7px', alignItems: 'center', alignContent: 'center' }}>
+          <Col sm={15}>
+            <Divider style={{ fontSize: '0.9em', color: 'gray', paddingTop: '10px', margin: '0px' }}>
+              Chi tiết đơn hàng
+            </Divider>
           </Col>
-
-          {/* Quantity input field */}
-          <Col sm={5}>
-            <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
-              <Form.Item
-                name="quantity"
-                label="Số lượng"
-                hasFeedback
-                rules={[
-                  {
-                    required: true,
-                    message: 'Trường này không được trống',
-                  },
-                  {
-                    validator: (_, value) => {
-                      const minQuantity = detailService?.min;
-                      const maxQuantity = detailService?.max;
-
-                      if (value === undefined || value === null || Number.isNaN(Number(value))) {
-                        return Promise.reject('Giá trị phải là số hợp lệ');
-                      }
-
-                      if (value < minQuantity) {
-                        return Promise.reject(`Số lượng tối thiểu là ${minQuantity}`);
-                      }
-                      if (value > maxQuantity) {
-                        return Promise.reject(`Số lượng tối đa là ${maxQuantity}`);
-                      }
-
-                      return Promise.resolve();
-                    },
-                  },
-                ]}
-              >
-                <InputNumber
-                  size="small"
-                  onChange={(value) => {
-                    setStateCurr({
-                      ...stateCurr,
-                      amountChange: value
-                    });
-                  }}
-                  style={{ width: '100%' }}
-                  placeholder="Nhập số lượng"
-                />
-              </Form.Item>
-            </Tooltip>
+          <Col sm={9}>
+            <Radio.Group
+              value={stateCurr.orderType}
+              size='small'
+              onChange={(e) =>
+                setStateCurr((prevState) => ({ ...prevState, orderType: e.target.value }))
+              }
+              buttonStyle="solid"
+              style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
+            >
+              <Radio.Button value="single" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {singleOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>1 đơn</span>
+                </span>
+              </Radio.Button>
+              <Radio.Button value="multiple" style={{ 
+                fontWeight: 400,
+                fontSize: '12px',
+                padding: '0 8px',
+                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+              }}>
+                <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {multiplOrderIcon}
+                  <span style={{ marginLeft: '5px' }}>Nhiều đơn</span>
+                </span>
+              </Radio.Button>
+            </Radio.Group>
           </Col>
         </Row>
+
+        {stateCurr.orderType === 'single' && (
+          <>
+            <Row gutter="10" style={{ marginBottom: '7px' }}>
+              {/* Link input field */}
+              <Col sm={19}>
+                <Form.Item
+                  name="link"
+                  label="Liên kết"
+                  hasFeedback
+                  help={helpMessage.link}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Trường không được trống'
+                    },
+                    {
+                      validator: async (_, link) => {
+                        if (link) {
+                          const { status, help } = await handleValidateLink(link);
+                          if (!status) {
+                            return Promise.reject(new Error(help));
+                          }
+                        }
+                        return Promise.resolve();
+                      },
+                    },
+                  ]}
+                >
+                  <Input
+                    size="small"
+                    allowClear
+
+                    style={{ fontWeight: 'bold' }}
+                    placeholder="Thêm liên kết"
+                  />
+                </Form.Item>
+              </Col>
+
+              {/* Quantity input field */}
+              <Col sm={5}>
+                <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
+                  <Form.Item
+                    name="quantity"
+                    label="Số lượng"
+                    hasFeedback
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Trường này không được trống',
+                      },
+                      {
+                        validator: (_, value) => {
+                          const minQuantity = detailService?.min;
+                          const maxQuantity = detailService?.max;
+
+                          if (value === undefined || value === null || Number.isNaN(Number(value))) {
+                            return Promise.reject('Giá trị phải là số hợp lệ');
+                          }
+
+                          if (value < minQuantity) {
+                            return Promise.reject(`Số lượng tối thiểu là ${minQuantity}`);
+                          }
+                          if (value > maxQuantity) {
+                            return Promise.reject(`Số lượng tối đa là ${maxQuantity}`);
+                          }
+
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                  >
+                    <InputNumber
+                      size="small"
+                      onChange={(value) => {
+                        setStateCurr({
+                          ...stateCurr,
+                          amountChange: value
+                        });
+                      }}
+                      style={{ width: '100%' }}
+                      placeholder="Nhập số lượng"
+                    />
+                  </Form.Item>
+                </Tooltip>
+              </Col>
+            </Row>
+          </>
+        )}
+
+        {stateCurr.orderType === 'multiple' && (
+          <Form.Item
+            name="list_order"
+            label="Danh sách đơn"
+            rules={[
+              {
+                required: true,
+                message: 'Trường không được trống',
+              },
+            ]}
+          >
+            <TextArea
+              size="small"
+              allowClear
+              rows={7}
+              style={{ fontWeight: '500' }}
+              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+            />
+          </Form.Item>
+        )}
       </>
     );
   };
@@ -872,10 +1075,10 @@ function AddOrderGeneral() {
         </Row>
       }
       onOk={handleOk}
-      onCancel={handleCancel}
+      onCancel={handleCancelAndResetForm}
       style={{ backgroundColor: 'gray' }}
       footer={[
-        <Button key="back" onClick={handleCancel}>
+        <Button key="back" onClick={handleCancelAndResetForm}>
           Hủy
         </Button>,
         <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
@@ -1198,7 +1401,7 @@ function AddOrderGeneral() {
               </Col>
             ) : (
               <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
-                <Card size="small" style={{ border: '1px solid #dddddd59', padding: 0, height: '-webkit-fill-available' }}>
+                <Card size="small" style={{ padding: 0, height: '-webkit-fill-available' }}>
                   {/* <div className="text-center">
                     <Image src={EmptyBackground} preview={false} width="86%" />
                   </div> */}
@@ -1206,7 +1409,7 @@ function AddOrderGeneral() {
                     loop
                     muted
                     autoPlay
-                    style={{ width: '100%', height: 'auto' }}
+                    style={{ width: '100%', height: 'auto', border: 'none', outline: 'none' }}
                   >
                     <source src={EmptyBackgroundVideo} type="video/mp4" />
                     Your browser does not support the video tag.
