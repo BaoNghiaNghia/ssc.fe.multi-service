@@ -1,7 +1,7 @@
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Form, Input, Button, Modal, Divider, Select, Badge, Tooltip, Card, Image, InputNumber, Radio } from 'antd';
 import { MdAddchart, MdCancel } from "react-icons/md";
@@ -35,6 +35,8 @@ const REGEX_MULTIPLE_ORDER_FORMAT = /^https?:\/\/[^\s/$.?#].[^\s]*\s\|\s\d+$/;
 function AddOrderGeneral() {
   const dispatch = useDispatch();
   const [formCreateOrder] = Form.useForm();
+
+  const lineCountRef = useRef(null);
 
   const { postLoading, listService, isOpenCreateOrder, detailService, categoryNewOrder } = useSelector((state) => {
     return {
@@ -338,6 +340,30 @@ function AddOrderGeneral() {
     }
   }
 
+  const handleChangeTextArea = (event) => {
+    const { value } = event.target;
+    const lines = value.split('\n').filter(line => line.trim() !== '');
+
+    if (lines.length < 2) {
+      if (lineCountRef.current) {
+        lineCountRef.current.innerText = `Số lượng: 0 / 100`;
+      }
+      return;
+    }
+
+    const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+    if (hasInvalidLine || lines.length > 100) {
+      if (lineCountRef.current) {
+        lineCountRef.current.innerText = `Số lượng: ${lines.length} / 100`;
+      }
+      return;
+    }
+
+    if (lineCountRef.current) {
+      lineCountRef.current.innerText = `Số lượng: ${lines.length} / 100`;
+    }
+  };
+
   const handleOk = () => {
     try {
       switch (categoryNewOrder) {
@@ -507,45 +533,51 @@ function AddOrderGeneral() {
         )}
 
         {stateCurr.orderType === 'multiple' && (
-          <Form.Item
-            name="list_order"
-            label="Danh sách đơn"
-            rules={[
-              {
-                required: true,
-                message: 'Trường không được trống',
-              },
-              {
-                validator: (_, value) => {
-                  if (!value || value.trim() === '') {
-                    return Promise.reject('Trường không được trống');
-                  }
-
-                  const lines = value.split('\n').filter(line => line.trim() !== '');
-                  if (lines.length < 2) {
-                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
-                  }
-
-                  // Check each line using Array.prototype.some
-                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
-                  if (hasInvalidLine) {
-                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
-                  }
-
-                  return Promise.resolve();
+          <>
+            <Form.Item
+              name="list_order"
+              label="Danh sách đơn"
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống',
                 },
-              },
-            ]}
-          >
-            <TextArea
-              size="small"
-              allowClear
-              rows={7}
-              style={{ fontWeight: '500' }}
-              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
-            />
-          </Form.Item>
+                {
+                  validator: (_, value) => {
+                    const lines = value.split('\n').filter(line => line.trim() !== '');
+                    const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                    if (hasInvalidLine) {
+                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                    }
 
+                    if (lines.length < 2) {
+                      return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                    }
+                    if (lines.length > 100) {
+                      return Promise.reject('Không quá 100 dòng');
+                    }
+
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <TextArea
+                size="small"
+                allowClear
+                rows={7}
+                style={{ fontWeight: '500' }}
+                placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+                onChange={handleChangeTextArea}
+              />
+            </Form.Item>
+            <div
+              ref={lineCountRef}
+              style={{ marginTop: '8px' }}
+            >
+              Số lượng: 0 / 100
+            </div>
+          </>
         )}
       </>
     )
@@ -686,43 +718,51 @@ function AddOrderGeneral() {
         )}
 
         {stateCurr.orderType === 'multiple' && (
-          <Form.Item
-            name="list_order"
-            label="Danh sách đơn"
-            rules={[
-              {
-                required: true,
-                message: 'Trường không được trống',
-              },
-              {
-                validator: (_, value) => {
-                  if (!value || value.trim() === '') {
-                    return Promise.reject('Trường không được trống');
-                  }
-
-                  const lines = value.split('\n').filter(line => line.trim() !== '');
-                  if (lines.length < 2) {
-                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
-                  }
-
-                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
-                  if (hasInvalidLine) {
-                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
-                  }
-
-                  return Promise.resolve();
+          <>
+            <Form.Item
+              name="list_order"
+              label="Danh sách đơn"
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống',
                 },
-              },
-            ]}
-          >
-            <TextArea
-              size="small"
-              allowClear
-              rows={7}
-              style={{ fontWeight: '500' }}
-              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
-            />
-          </Form.Item>
+                {
+                  validator: (_, value) => {
+                    const lines = value.split('\n').filter(line => line.trim() !== '');
+                    const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                    if (hasInvalidLine) {
+                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                    }
+
+                    if (lines.length < 2) {
+                      return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                    }
+                    if (lines.length > 100) {
+                      return Promise.reject('Không quá 100 dòng');
+                    }
+
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <TextArea
+                size="small"
+                allowClear
+                rows={7}
+                style={{ fontWeight: '500' }}
+                placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+                onChange={handleChangeTextArea}
+              />
+            </Form.Item>
+            <div
+              ref={lineCountRef}
+              style={{ marginTop: '8px' }}
+            >
+              Số lượng: 0 / 100
+            </div>
+          </>
         )}
       </>
     );
@@ -843,44 +883,51 @@ function AddOrderGeneral() {
         )}
 
         {stateCurr.orderType === 'multiple' && (
-          <Form.Item
-            name="list_order"
-            label="Danh sách đơn"
-            rules={[
-              {
-                required: true,
-                message: 'Trường không được trống',
-              },
-              {
-                validator: (_, value) => {
-                  if (!value || value.trim() === '') {
-                    return Promise.reject('Trường không được trống');
-                  }
-
-                  const lines = value.split('\n').filter(line => line.trim() !== '');
-                  if (lines.length < 2) {
-                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
-                  }
-
-                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
-                  if (hasInvalidLine) {
-                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
-                  }
-
-                  return Promise.resolve();
+          <>
+            <Form.Item
+              name="list_order"
+              label="Danh sách đơn"
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống',
                 },
-              },
-            ]}
-          >
-            <TextArea
-              size="small"
-              allowClear
-              rows={7}
-              style={{ fontWeight: '500' }}
-              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
-            />
-          </Form.Item>
+                {
+                  validator: (_, value) => {
+                    const lines = value.split('\n').filter(line => line.trim() !== '');
+                    const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                    if (hasInvalidLine) {
+                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                    }
 
+                    if (lines.length < 2) {
+                      return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                    }
+                    if (lines.length > 100) {
+                      return Promise.reject('Không quá 100 dòng');
+                    }
+
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <TextArea
+                size="small"
+                allowClear
+                rows={7}
+                style={{ fontWeight: '500' }}
+                placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+                onChange={handleChangeTextArea}
+              />
+            </Form.Item>
+            <div
+              ref={lineCountRef}
+              style={{ marginTop: '8px' }}
+            >
+              Số lượng: 0 / 100
+            </div>
+          </>
         )}
       </>
     );
@@ -1020,43 +1067,51 @@ function AddOrderGeneral() {
         )}
 
         {stateCurr.orderType === 'multiple' && (
-          <Form.Item
-            name="list_order"
-            label="Danh sách đơn"
-            rules={[
-              {
-                required: true,
-                message: 'Trường không được trống',
-              },
-              {
-                validator: (_, value) => {
-                  if (!value || value.trim() === '') {
-                    return Promise.reject('Trường không được trống');
-                  }
-
-                  const lines = value.split('\n').filter(line => line.trim() !== '');
-                  if (lines.length < 2) {
-                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
-                  }
-
-                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
-                  if (hasInvalidLine) {
-                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
-                  }
-
-                  return Promise.resolve();
+          <>
+            <Form.Item
+              name="list_order"
+              label="Danh sách đơn"
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống',
                 },
-              },
-            ]}
-          >
-            <TextArea
-              size="small"
-              allowClear
-              rows={7}
-              style={{ fontWeight: '500' }}
-              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
-            />
-          </Form.Item>
+                {
+                  validator: (_, value) => {
+                    const lines = value.split('\n').filter(line => line.trim() !== '');
+                    const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                    if (hasInvalidLine) {
+                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                    }
+
+                    if (lines.length < 2) {
+                      return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                    }
+                    if (lines.length > 100) {
+                      return Promise.reject('Không quá 100 dòng');
+                    }
+
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <TextArea
+                size="small"
+                allowClear
+                rows={7}
+                style={{ fontWeight: '500' }}
+                placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
+                onChange={handleChangeTextArea}
+              />
+            </Form.Item>
+            <div
+              ref={lineCountRef}
+              style={{ marginTop: '8px' }}
+            >
+              Số lượng: 0 / 100
+            </div>
+          </>
         )}
       </>
     );
