@@ -233,7 +233,7 @@ function SettingAndService() {
             </Tooltip>
           </Row>
           <Row>
-            <Col style={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}>
+            <Col style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
               {
                 enabled ? (
                   <span className="label" style={badgeGreenStyle}>

@@ -492,7 +492,7 @@ function Member() {
                 </Tooltip>
               </Row>
               <Row>
-                <Col>
+                <Col style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                   {
                     enabled ? (
                       <span className="label" style={badgeGreenStyle}>

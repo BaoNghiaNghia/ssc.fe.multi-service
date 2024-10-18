@@ -544,7 +544,8 @@ export const badgeGreenStyle = {
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
-  marginRight: '5px'
+  marginRight: '5px',
+  marginBottom: '2px'
 }
 
 export const badgeGrayStyle = {
@@ -571,7 +572,8 @@ export const badgeOrangeStyle = {
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
-  marginRight: '5px'
+  marginRight: '5px',
+  marginBottom: '2px'
 }
 
 export const badgeRedStyle = {
@@ -585,7 +587,8 @@ export const badgeRedStyle = {
   alignItems: 'center',
   alignContemt: 'center',
   justifyContent: 'center',
-  marginRight: '5px'
+  marginRight: '5px',
+  marginBottom: '2px'
 }
 
 // Define your icon constants

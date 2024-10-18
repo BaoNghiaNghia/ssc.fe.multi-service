@@ -225,7 +225,7 @@ function FilterOrderComment({ orderState, setState }) {
                                   </Row>
                                   <span style={{ color: 'gray', fontSize: '0.8em', margin: 0, padding: 0 }}>{itemService?.description}</span>
                                   <Row>
-                                    <Col style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                    <Col style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                                       {
                                         itemService?.enabled ? (
                                           <span className="label" style={badgeGreenStyle}>

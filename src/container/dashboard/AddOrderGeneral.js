@@ -20,7 +20,7 @@ import actionsView from '../../redux/buffView/actions';
 import reportActions from '../../redux/reports/actions';
 import serviceSettingsAction from '../../redux/serviceSettings/actions';
 import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, INITIALIZE_SERVICE_SELECTED, badgeGrayStyle, singleOrderIcon, multiplOrderIcon, badgeGreenStyle, badgeRedStyle, badgeOrangeStyle } from '../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, badgeGrayStyle, singleOrderIcon, multiplOrderIcon, badgeGreenStyle, badgeRedStyle, badgeOrangeStyle } from '../../variables';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../config/api/Reports';
 
 import EmptyBackground from '../../static/img/empty_bg_2.png';
@@ -45,7 +45,7 @@ function AddOrderGeneral() {
   });
 
   const [stateCurr, setStateCurr] = useState({
-    listServiceCollection: listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED),
+    listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder),
     amountChange: 0,
     orderType: 'single',
     duplicateCounts: {},
@@ -431,16 +431,16 @@ function AddOrderGeneral() {
                     required: true,
                     message: 'Trường không được trống',
                   },
-                  // {
-                  //   validator: async (_, link) => {
-                  //     if (link) {
-                  //       const { status, help } = await handleValidateLink(link);
-                  //       if (!status) {
-                  //         return Promise.reject(help);
-                  //       }
-                  //     }
-                  //   },
-                  // },
+                  {
+                    validator: async (_, link) => {
+                      if (link) {
+                        const { status, help } = await handleValidateLink(link);
+                        if (!status) {
+                          return Promise.reject(help);
+                        }
+                      }
+                    },
+                  },
                 ]}
               >
                 <Input
@@ -511,8 +511,6 @@ function AddOrderGeneral() {
           <Form.Item
             name="list_order"
             label="Danh sách đơn"
-            hasFeedback
-            help={helpMessage.link}
             rules={[
               {
                 required: true,
@@ -525,7 +523,7 @@ function AddOrderGeneral() {
               allowClear
               rows={7}
               style={{ fontWeight: '500' }}
-              placeholder={`Link k | Số lượng \nLink k | Số lượng \nLink k | Số lượng \nLink k | Số lượng \n...`}
+              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
             />
           </Form.Item>
         )}
@@ -934,7 +932,7 @@ function AddOrderGeneral() {
                                     <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
                                   </div>
                                   <div style={{ color: 'gray', fontSize: '0.8em' }}>{itemService?.description}</div>
-                                  <div style={{ display: 'flex', alignContent: 'center', alignItems:'center', paddingBottom: '8px'  }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', paddingBottom: '8px'  }}>
                                     {
                                       itemService?.enabled ? (
                                         <span className="label" style={badgeGreenStyle}>
@@ -1056,42 +1054,46 @@ function AddOrderGeneral() {
                       ) : null
                     }
 
-                    <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '4px 0px' }}>{detailService?.description}</p>
-                    {
-                      detailService?.enabled ? (
-                        <span className="label" style={badgeGreenStyle}>
-                          <Badge color='green' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
-                          Đang hoạt động
-                        </span>
-                      ) : (
-                        <span className="label" style={badgeRedStyle}>
-                          <Badge color='red' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
-                          Đang tắt
-                        </span>
-                      )
-                    }
-                    <span className="label" style={badgeGreenStyle}>Bảo hành</span>
-                    <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
-                    {
-                      detailService?.priority ? (
-                        <span className="label" style={badgeOrangeStyle}>
-                          <FaLocationArrow color='orange' fontSize={8} style={{ margin: '0 5px 0 0', padding: 0 }} />
-                          Ưu tiên
-                        </span>
-                      ) : <></>
-                    }
-                    {
-                      detailService?.service_view_type ? (
-                        <span className="label" style={badgeGrayStyle}>
-                          <div
-                            style={{ width: '15px', height: '15px', marginRight: '5px' }}
-                            // eslint-disable-next-line react/no-danger
-                            dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
-                          />
-                          View {SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}
-                        </span>
-                      ) : null
-                    }
+                    <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '6px 0px' }}>{detailService?.description}</p>
+
+                    <span style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>  
+                      {
+                        detailService?.service_view_type ? (
+                          <span className="label" style={badgeGrayStyle}>
+                            <div
+                              style={{ width: '18px', height: '17px', marginRight: '5px' }}
+                              // eslint-disable-next-line react/no-danger
+                              dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
+                            />
+                            View {SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}
+                          </span>
+                        ) : null
+                      }
+                      {
+                        detailService?.enabled ? (
+                          <span className="label" style={badgeGreenStyle}>
+                            <Badge color='green' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                            Đang hoạt động
+                          </span>
+                        ) : (
+                          <span className="label" style={badgeRedStyle}>
+                            <Badge color='red' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                            Đang tắt
+                          </span>
+                        )
+                      }
+                      <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                      
+                      {
+                        detailService?.priority ? (
+                          <span className="label" style={badgeOrangeStyle}>
+                            <FaLocationArrow color='orange' fontSize={8} style={{ margin: '0 5px 0 0', padding: 0 }} />
+                            Ưu tiên
+                          </span>
+                        ) : <></>
+                      }
+                      <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                    </span>
                   </div>
                 </Card>
                 {

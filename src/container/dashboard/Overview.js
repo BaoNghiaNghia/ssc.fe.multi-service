@@ -219,12 +219,12 @@ function Overview() {
           <span
             style={{
               position: 'absolute',
-              bottom: '20px',
+              bottom: '21px',
               left: '12%',
               fontWeight: 700,
               fontSize: '0.7em',
-              color: '#333', /* Darker text color for better visibility */
-              background: 'linear-gradient(90deg, #FFB600, #FFD700, #FFB600, #ffe246)', /* Gradient golden background */
+              color: '#4B0082',
+              background: 'linear-gradient(90deg, #FFA500, #FFCC00, #FFD700, #FFE700, #FFDD33)', /* Gradient golden background */
               padding: '1px 4px',
               borderRadius: '4px',
               zIndex: 10, /* Keeps the text above the card content */

@@ -54,7 +54,7 @@ const ProviderConfig = () => {
         position="bottom-center"
         autoClose={3000}
         hideProgressBar="true"
-        limit={5}
+        limit={3}
         theme='light'
         toastStyle={{
           fontFamily: "'Inter', sans-serif"

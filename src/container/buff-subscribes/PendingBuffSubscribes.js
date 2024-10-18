@@ -185,7 +185,7 @@ function PendingBuffSubscribes() {
         }));
       } else {
         dispatch(actionsSubscribe.fetchListOrderSubscribeBegin({
-          video_ids: arraySearchValidate.join(","),
+          channel_ids: arraySearchValidate.join(","),
           page: currentPage,
           limit: limitPage,
         }));
