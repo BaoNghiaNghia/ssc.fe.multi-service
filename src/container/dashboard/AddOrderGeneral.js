@@ -163,7 +163,6 @@ function AddOrderGeneral() {
         status = isValid ? 'success' : 'error';
       }
     } catch (error) {
-      console.log('---- show error -----', error);
       toast.error(error?.response?.data?.message || 'Lỗi xác thực liên kết YouTube');
       status = 'error';
       help = 'Lỗi xác thực liên kết YouTube';
@@ -174,8 +173,6 @@ function AddOrderGeneral() {
     return { status: status === 'success', help };
   };
 
-
-
   useEffect(() => {
     dispatch(serviceSettingsAction.fetchListServiceBegin());
   }, [dispatch]);
@@ -183,16 +180,9 @@ function AddOrderGeneral() {
   const handleSubmitComment = () => {
     formCreateOrder.validateFields()
       .then((values) => {
-        console.log(values);
-
-        // Split the input into rows
         const rows = values?.comments?.split('\n');
-
-        // Filter out empty rows
         const nonEmptyRows = rows.filter(row => row.trim().length > 0);
-
-        values.comments = nonEmptyRows.join('\n');
-
+        values.comments = nonEmptyRows.join('\n'); 
         dispatch(actionsComment.createOrderCommentAdminBegin(values));
         dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
 
@@ -271,10 +261,10 @@ function AddOrderGeneral() {
   const handleCancel = () => {
     setStateCurr({
       ...stateCurr,
-      listServiceCollection: listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED)
+      listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder)
     });
 
-    dispatch(reportActions.setCategoryInNewOrderBegin(INITIALIZE_SERVICE_SELECTED));
+    dispatch(reportActions.setCategoryInNewOrderBegin(categoryNewOrder));
 
     setHelpMessage({});
 
@@ -775,12 +765,12 @@ function AddOrderGeneral() {
   }
 
   const handleSearchService = (searchServiceText) => {
-    dispatch(reportActions.setCategoryInNewOrderBegin(INITIALIZE_SERVICE_SELECTED));
+    dispatch(reportActions.setCategoryInNewOrderBegin(categoryNewOrder));
     dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
   }
 
   const handleClearServiceSelected = () => {
-    dispatch(reportActions.setCategoryInNewOrderBegin(INITIALIZE_SERVICE_SELECTED));
+    dispatch(reportActions.setCategoryInNewOrderBegin(categoryNewOrder));
     dispatch(serviceSettingsAction.modalDetailServiceBegin({}));
   }
 
@@ -921,7 +911,7 @@ function AddOrderGeneral() {
                       onClear={() => handleClearServiceSelected()}
                     >
                       {
-                        (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === INITIALIZE_SERVICE_SELECTED))?.map((itemService, index) => {
+                        (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === categoryNewOrder))?.map((itemService, index) => {
                           return <>
                             {
                               itemService?.enabled ? (
