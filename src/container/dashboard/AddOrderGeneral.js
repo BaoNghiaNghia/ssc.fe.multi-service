@@ -30,6 +30,8 @@ import EmptyBackgroundVideo from '../../static/videos/empty_video.mp4';
 const { Option } = Select;
 const { TextArea } = Input;
 
+const REGEX_MULTIPLE_ORDER_FORMAT = /^https?:\/\/[^\s/$.?#].[^\s]*\s\|\s\d+$/;
+
 function AddOrderGeneral() {
   const dispatch = useDispatch();
   const [formCreateOrder] = Form.useForm();
@@ -174,7 +176,7 @@ function AddOrderGeneral() {
           if (key === 'Livestream') return true;
           return mappedObj[key];
         });
-        
+
         help = createCustomHelp(mappedObj);
         status = isValid ? 'success' : 'error';
       }
@@ -199,10 +201,10 @@ function AddOrderGeneral() {
         .then((values) => {
           const rows = values?.comments?.split('\n');
           const nonEmptyRows = rows.filter(row => row.trim().length > 0);
-          values.comments = nonEmptyRows.join('\n'); 
+          values.comments = nonEmptyRows.join('\n');
           dispatch(actionsComment.createOrderCommentAdminBegin(values));
           dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-  
+
           handleCancelAndResetForm();
         })
         .catch((err) => {
@@ -221,7 +223,7 @@ function AddOrderGeneral() {
             });
 
           console.log('Converted Orders Array:', ordersArray);
-  
+
           handleCancelAndResetForm();
         })
         .catch((err) => {
@@ -236,14 +238,14 @@ function AddOrderGeneral() {
         .then((values) => {
           dispatch(actionsLike.createOrderLikeAdminBegin(values));
           dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-  
+
           handleCancelAndResetForm();
         })
         .catch((err) => {
           console.error("handle Real Error: ", err);
         });
     } else if (stateCurr.orderType === 'multiple') {
-      
+
       formCreateOrder.validateFields()
         .then((values) => {
           const listOrders = values?.list_order;
@@ -256,7 +258,7 @@ function AddOrderGeneral() {
             });
 
           console.log('Converted Orders Array:', ordersArray);
-  
+
           handleCancelAndResetForm();
         })
         .catch((err) => {
@@ -281,20 +283,20 @@ function AddOrderGeneral() {
       formCreateOrder.validateFields()
         .then((values) => {
           const listOrders = values?.list_order;
-  
+
           const ordersArray = values?.list_order.split('\n')
             .filter(line => line.trim())
             .map(line => {
               const [link, quantity] = line.split('|').map(item => item.trim());
-              return { 
-                link, 
+              return {
+                link,
                 quantity: Number(quantity),
                 platform: values?.platform,
                 category: values?.category,
                 service_id: values?.service_id
               };
             });
-          
+
           handleCancelAndResetForm();
         })
         .catch((err) => {
@@ -327,7 +329,7 @@ function AddOrderGeneral() {
             });
 
           console.log('Converted Orders Array:', ordersArray);
-  
+
           handleCancelAndResetForm();
         })
         .catch((err) => {
@@ -384,22 +386,22 @@ function AddOrderGeneral() {
               buttonStyle="solid"
               style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
             >
-              <Radio.Button value="single" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="single" style={{
+                fontWeight: (stateCurr.orderType === 'single' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'single' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {singleOrderIcon}
                   <span style={{ marginLeft: '5px' }}>1 đơn</span>
                 </span>
               </Radio.Button>
-              <Radio.Button value="multiple" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="multiple" style={{
+                fontWeight: (stateCurr.orderType === 'multiple' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'multiple' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {multiplOrderIcon}
@@ -409,6 +411,7 @@ function AddOrderGeneral() {
             </Radio.Group>
           </Col>
         </Row>
+
         {stateCurr.orderType === 'single' && (
           <>
             <Row gutter="10">
@@ -512,6 +515,26 @@ function AddOrderGeneral() {
                 required: true,
                 message: 'Trường không được trống',
               },
+              {
+                validator: (_, value) => {
+                  if (!value || value.trim() === '') {
+                    return Promise.reject('Trường không được trống');
+                  }
+
+                  const lines = value.split('\n').filter(line => line.trim() !== '');
+                  if (lines.length < 2) {
+                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                  }
+
+                  // Check each line using Array.prototype.some
+                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                  if (hasInvalidLine) {
+                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
+                  }
+
+                  return Promise.resolve();
+                },
+              },
             ]}
           >
             <TextArea
@@ -522,6 +545,7 @@ function AddOrderGeneral() {
               placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
             />
           </Form.Item>
+
         )}
       </>
     )
@@ -546,22 +570,22 @@ function AddOrderGeneral() {
               buttonStyle="solid"
               style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
             >
-              <Radio.Button value="single" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="single" style={{
+                fontWeight: (stateCurr.orderType === 'single' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'single' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {singleOrderIcon}
                   <span style={{ marginLeft: '5px' }}>1 đơn</span>
                 </span>
               </Radio.Button>
-              <Radio.Button value="multiple" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="multiple" style={{
+                fontWeight: (stateCurr.orderType === 'multiple' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'multiple' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {multiplOrderIcon}
@@ -670,6 +694,25 @@ function AddOrderGeneral() {
                 required: true,
                 message: 'Trường không được trống',
               },
+              {
+                validator: (_, value) => {
+                  if (!value || value.trim() === '') {
+                    return Promise.reject('Trường không được trống');
+                  }
+
+                  const lines = value.split('\n').filter(line => line.trim() !== '');
+                  if (lines.length < 2) {
+                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                  }
+
+                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                  if (hasInvalidLine) {
+                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
+                  }
+
+                  return Promise.resolve();
+                },
+              },
             ]}
           >
             <TextArea
@@ -677,7 +720,7 @@ function AddOrderGeneral() {
               allowClear
               rows={7}
               style={{ fontWeight: '500' }}
-              placeholder={`Link kênh | Số lượng \nLink kênh | Số lượng \nLink kênh | Số lượng \nLink kênh | Số lượng \n...`}
+              placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
             />
           </Form.Item>
         )}
@@ -704,22 +747,22 @@ function AddOrderGeneral() {
               buttonStyle="solid"
               style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
             >
-              <Radio.Button value="single" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="single" style={{
+                fontWeight: (stateCurr.orderType === 'single' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'single' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {singleOrderIcon}
                   <span style={{ marginLeft: '5px' }}>1 đơn</span>
                 </span>
               </Radio.Button>
-              <Radio.Button value="multiple" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="multiple" style={{
+                fontWeight: (stateCurr.orderType === 'multiple' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'multiple' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {multiplOrderIcon}
@@ -808,6 +851,25 @@ function AddOrderGeneral() {
                 required: true,
                 message: 'Trường không được trống',
               },
+              {
+                validator: (_, value) => {
+                  if (!value || value.trim() === '') {
+                    return Promise.reject('Trường không được trống');
+                  }
+
+                  const lines = value.split('\n').filter(line => line.trim() !== '');
+                  if (lines.length < 2) {
+                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                  }
+
+                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                  if (hasInvalidLine) {
+                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
+                  }
+
+                  return Promise.resolve();
+                },
+              },
             ]}
           >
             <TextArea
@@ -818,6 +880,7 @@ function AddOrderGeneral() {
               placeholder={`Link video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \nLink video | Số lượng \n...`}
             />
           </Form.Item>
+
         )}
       </>
     );
@@ -841,22 +904,22 @@ function AddOrderGeneral() {
               buttonStyle="solid"
               style={{ display: 'flex', justifyContent: 'flex-end', border: 'none', marginTop: '5px' }}
             >
-              <Radio.Button value="single" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="single" style={{
+                fontWeight: (stateCurr.orderType === 'single' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'single' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'single' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {singleOrderIcon}
                   <span style={{ marginLeft: '5px' }}>1 đơn</span>
                 </span>
               </Radio.Button>
-              <Radio.Button value="multiple" style={{ 
-                fontWeight: 400,
+              <Radio.Button value="multiple" style={{
+                fontWeight: (stateCurr.orderType === 'multiple' ? 800 : 400),
                 fontSize: '12px',
                 padding: '0 8px',
-                border: (stateCurr.orderType === 'multiple' ?  'none' : '1px solid #80808087'),
+                border: (stateCurr.orderType === 'multiple' ? 'none' : '1px solid #80808087'),
               }}>
                 <span style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                   {multiplOrderIcon}
@@ -964,6 +1027,25 @@ function AddOrderGeneral() {
               {
                 required: true,
                 message: 'Trường không được trống',
+              },
+              {
+                validator: (_, value) => {
+                  if (!value || value.trim() === '') {
+                    return Promise.reject('Trường không được trống');
+                  }
+
+                  const lines = value.split('\n').filter(line => line.trim() !== '');
+                  if (lines.length < 2) {
+                    return Promise.reject('Phải có ít nhất 2 đơn hàng');
+                  }
+
+                  const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
+                  if (hasInvalidLine) {
+                    return Promise.reject('Mỗi dòng phải có định dạng: Link video | Số lượng');
+                  }
+
+                  return Promise.resolve();
+                },
               },
             ]}
           >
@@ -1215,7 +1297,7 @@ function AddOrderGeneral() {
                                     <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
                                   </div>
                                   <div style={{ color: 'gray', fontSize: '0.8em' }}>{itemService?.description}</div>
-                                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', paddingBottom: '8px'  }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', paddingBottom: '8px' }}>
                                     {
                                       itemService?.enabled ? (
                                         <span className="label" style={badgeGreenStyle}>
@@ -1239,7 +1321,7 @@ function AddOrderGeneral() {
                                         </span>
                                       ) : <></>
                                     }
-                                     {
+                                    {
                                       itemService?.service_view_type ? (
                                         <span className="label" style={badgeGrayStyle}>
                                           <div
@@ -1339,7 +1421,7 @@ function AddOrderGeneral() {
 
                     <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '6px 0px' }}>{detailService?.description}</p>
 
-                    <span style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>  
+                    <span style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                       {
                         detailService?.service_view_type ? (
                           <span className="label" style={badgeGrayStyle}>
@@ -1366,7 +1448,7 @@ function AddOrderGeneral() {
                         )
                       }
                       <span className="label" style={badgeGreenStyle}>Bảo hành</span>
-                      
+
                       {
                         detailService?.priority ? (
                           <span className="label" style={badgeOrangeStyle}>

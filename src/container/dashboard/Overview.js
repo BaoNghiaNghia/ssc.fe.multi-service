@@ -221,7 +221,7 @@ function Overview() {
             style={{
               position: 'absolute',
               bottom: '21px',
-              left: '12%',
+              left: '11%',
               fontWeight: 700,
               fontSize: '0.7em',
               color: '#4B0082',
@@ -240,9 +240,9 @@ function Overview() {
               position: 'absolute',
               top: '3px',
               right: '5px',
-              fontWeight: 700,
+              fontWeight: 900,
               fontSize: '0.9em',
-              color: 'black',
+              color: 'green',
               background: 'white',
               padding: '2px 2px 0 2px',
               borderRadius: '2px 8px 2px 4px',
@@ -252,7 +252,7 @@ function Overview() {
           >
             <Tooltip placement='bottom' title={
               <ul>
-                <li><strong>Nghìn Tỷ (T)</strong>: Cho số lớn hơn hoặc bằng 1 nghìn tỷ.</li>
+                {/* <li><strong>Nghìn Tỷ (T)</strong>: Cho số lớn hơn hoặc bằng 1 nghìn tỷ.</li> */}
                 <li><strong>Tỷ (Tỷ)</strong>: Cho số lớn hơn hoặc bằng 1 tỷ nhưng nhỏ hơn 1 nghìn tỷ.</li>
                 <li><strong>Triệu (Tr)</strong>: Cho số lớn hơn hoặc bằng 1 triệu nhưng nhỏ hơn 1 tỷ.</li>
                 <li><strong>Nghìn (N)</strong>: Cho số lớn hơn hoặc bằng 1 nghìn nhưng nhỏ hơn 1 triệu.</li>
