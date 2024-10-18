@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Skeleton, Tooltip, Button, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from "react-icons/ai";
+import { IoInformationSharp } from "react-icons/io5";
 import { FaRegCommentDots } from "react-icons/fa";
 import FeatherIcon from 'feather-icons-react';
 import { HiOutlineDotsVertical } from "react-icons/hi";
@@ -233,6 +234,33 @@ function Overview() {
             }}
           >
             Hôm nay
+          </span>
+          <span
+            style={{
+              position: 'absolute',
+              top: '3px',
+              right: '5px',
+              fontWeight: 700,
+              fontSize: '0.9em',
+              color: '#4B0082',
+              background: 'white', /* Gradient golden background */
+              padding: '2px 2px 0 2px',
+              borderRadius: '2px 8px 2px 4px',
+              zIndex: 10, /* Keeps the text above the card content */
+              boxShadow: '0px 1px 3px #683c0016',
+              // textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)' /* Added shadow to make text pop */
+            }}
+          >
+            <Tooltip placement='bottom' title={
+              <ul>
+                <li><strong>Nghìn Tỷ (T)</strong>: Cho số lớn hơn hoặc bằng 1 nghìn tỷ.</li>
+                <li><strong>Tỷ (Tỷ)</strong>: Cho số lớn hơn hoặc bằng 1 tỷ nhưng nhỏ hơn 1 nghìn tỷ.</li>
+                <li><strong>Triệu (Tr)</strong>: Cho số lớn hơn hoặc bằng 1 triệu nhưng nhỏ hơn 1 tỷ.</li>
+                <li><strong>Nghìn (N)</strong>: Cho số lớn hơn hoặc bằng 1 nghìn nhưng nhỏ hơn 1 triệu.</li>
+              </ul>
+            }>
+              <IoInformationSharp fontSize={18}/>
+            </Tooltip>
           </span>
 
           <Cards
