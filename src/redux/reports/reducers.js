@@ -23,6 +23,7 @@ const initialState = {
   taskDurationInMinutes: [],
   orderAmountComment: [],
   orderAmountLike: [],
+  orderAmountView: [],
   orderAmountSubscribe: [],
   accountStatus: {},
   computerThread: {},
@@ -1241,13 +1242,13 @@ const ReportsReducer = (state = initialState, action) => {
     case VIEW_STATISTIC_ORDER_AMOUNT_SUCCESS:
       return {
         ...state,
-        orderAmountLike: data,
+        orderAmountView: data,
       };
 
     case VIEW_STATISTIC_ORDER_AMOUNT_ERR:
       return {
         ...state,
-        orderAmountLike: [],
+        orderAmountView: [],
         error: err
       };
 

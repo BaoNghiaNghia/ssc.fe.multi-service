@@ -46,6 +46,7 @@ function Overview() {
     orderAmountComment,
     orderAmountSubscribe,
     orderAmountLike,
+    orderAmountView,
     taskOfTool,
     performance,
     totalOrder,
@@ -66,6 +67,7 @@ function Overview() {
       orderAmountComment: state?.reports?.orderAmountComment,
       orderAmountSubscribe: state?.reports?.orderAmountSubscribe,
       orderAmountLike: state?.reports?.orderAmountLike,
+      orderAmountView: state?.reports?.orderAmountView,
       totalOrder: state?.reports?.totalOrder,
       listComputerComment: state?.buffComment?.listComputer,
       listComputerLike: state?.buffLike?.listComputer,
@@ -89,6 +91,7 @@ function Overview() {
     dispatch(actions.commentStatisticOrderAmountBegin(initialFilter));
     dispatch(actions.likeStatisticOrderAmountBegin(initialFilter));
     dispatch(actions.subscribeStatisticOrderAmountBegin(initialFilter));
+    dispatch(actions.viewStatisticOrderAmountBegin(initialFilter));
 
     if (typeService === SERVICE_TYPE.COMMENT.title) {
       dispatch(actions.commentStatisticTaskDurationInMinuteBegin());
@@ -136,6 +139,7 @@ function Overview() {
   const todaySubscribePoint = findObjectByValue(orderAmountSubscribe, 'is_current', true)?.total || 0;
   const todayCommentPoint = findObjectByValue(orderAmountComment, 'is_current', true)?.total || 0;
   const todayLikePoint = findObjectByValue(orderAmountLike, 'is_current', true)?.total || 0;
+  const todayViewPoint = findObjectByValue(orderAmountView, 'is_current', true)?.total || 0;
 
   const todayOrderCount = () => {
     const currentOrder = findObjectByValue(orderByDays, 'is_current', true) || {};
@@ -150,9 +154,8 @@ function Overview() {
     
     return numberWithCommas(Math.abs(Number(count)));
   };
-  
 
-  const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint;
+  const todayPoint = todayCommentPoint + todaySubscribePoint + todayLikePoint + todayViewPoint;
 
   const listServer = () => {
     switch(typeService) {
@@ -216,8 +219,8 @@ function Overview() {
           <span
             style={{
               position: 'absolute',
-              top: '15px',
-              left: '-7px',
+              bottom: '20px',
+              left: '12%',
               fontWeight: 700,
               fontSize: '0.7em',
               color: '#333', /* Darker text color for better visibility */
@@ -241,7 +244,7 @@ function Overview() {
               <div className="card-chunk text-center">
                 <CardBarChartCenter>
                   <Row style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                    <Col sm="6">
+                    <Col sm="5">
                       <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayPoint))} ${VIETNAMES_CURRENCY}`}>
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           Tổng point (<span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{VIETNAMES_CURRENCY}</span>)
@@ -249,7 +252,7 @@ function Overview() {
                         <Heading as="h2" textShadow="1px 1px 2px #75f500" weight={700} color={todayPoint >= 0 ? 'green' : '#f96a00'}>{numberWithCommasCurrency(Math.round(todayPoint))}</Heading>
                       </Tooltip>
                     </Col>
-                    <Col sm="6">
+                    <Col sm="5">
                       <Tooltip placement='top' title={`${numberWithCommas(Math.round(todaySubscribePoint))} ${VIETNAMES_CURRENCY}`}>
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           Subscribe
@@ -259,7 +262,7 @@ function Overview() {
                         </Heading>
                       </Tooltip>
                     </Col>
-                    <Col sm="6">
+                    <Col sm="5">
                       <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayCommentPoint))} ${VIETNAMES_CURRENCY}`}>
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           Comment
@@ -269,13 +272,23 @@ function Overview() {
                         </Heading>
                       </Tooltip>
                     </Col>
-                    <Col sm="6">
+                    <Col sm="5">
                       <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayLikePoint))} ${VIETNAMES_CURRENCY}`}>
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           Like
                         </span>
                         <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>
                           {numberWithCommasCurrency(Math.round(todayLikePoint))}
+                        </Heading>
+                      </Tooltip>
+                    </Col>
+                    <Col sm="4">
+                      <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayLikePoint))} ${VIETNAMES_CURRENCY}`}>
+                        <span style={{ fontWeight: 600, fontSize: '1em' }}>
+                          View
+                        </span>
+                        <Heading as="h4" textShadow="1px 1px 2px #75f5007a" color={todayPoint >= 0 ? 'green' : '#f96a00'}>
+                          {numberWithCommasCurrency(Math.round(todayViewPoint))}
                         </Heading>
                       </Tooltip>
                     </Col>

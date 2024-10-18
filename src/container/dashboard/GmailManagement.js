@@ -276,7 +276,7 @@ function GmailManagement() {
 
   if (listAccountgGmail?.length) {
     listAccountgGmail?.map((value, key) => {
-      const { channel_id, computer, email, live, total_task, _id, device_profile } = value;
+      const { channel_id, email, live, total_task, _id } = value;
 
       const liveColumn = () => {
         switch (typeService) {
@@ -312,7 +312,7 @@ function GmailManagement() {
             </span>
           </span>
         ),
-        computer: handleShowComputerDevices(value),  // Pass the correct value here
+        computer: handleShowComputerDevices(value),
         live: liveColumn(),
         total_task: (
           <>
@@ -365,30 +365,7 @@ function GmailManagement() {
               >
                 <FeatherIcon icon="eye" size={16} />
               </Button>
-            </Tooltip>
-
-
-            {/* <Tooltip title="Chỉnh sửa">
-              <Button className="btn-icon" type="primary" to="#" shape="circle" 
-                onClick={() => {
-                  if (typeService === SERVICE_TYPE.COMMENT.title) {
-                    dispatch(gmailActions.detailAccountGmailCommentBegin(_id));
-                  } else if (typeService === SERVICE_TYPE.LIKE.title) {
-                    dispatch(gmailActions.detailAccountGmailLikeBegin(_id));
-                  } else if (typeService === SERVICE_TYPE.SUBSCRIBE.title) {
-                    console.log('--- subscribe ---')
-                  }
-                  setState({
-                    ...state,
-                    dataRow: value,
-                    isUpdateAccountGmailModal: true
-                  });
-                }}
-              >
-                <FeatherIcon icon="edit" size={16} />
-              </Button>
-            </Tooltip> */}
-            
+            </Tooltip>    
             <Tooltip title="Xóa">
               <Button className="btn-icon" type="primary" to="#" shape="circle"
                 onClick={() => {
