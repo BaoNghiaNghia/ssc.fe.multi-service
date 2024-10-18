@@ -24,6 +24,7 @@ import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TY
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../../config/api/Reports';
 
 import EmptyBackground from '../../../static/img/empty_bg_2.png';
+import EmptyBackgroundVideo from '../../../static/videos/empty_video.mp4';
 
 
 const { Option } = Select;
@@ -1125,10 +1126,19 @@ function AddOrderGeneral() {
               </Col>
             ) : (
               <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
-                <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px', height: '-webkit-fill-available' }}>
-                  <div className="text-center">
+                <Card size="small" style={{ border: '1px solid #dddddd59', padding: 0, height: '-webkit-fill-available' }}>
+                  {/* <div className="text-center">
                     <Image src={EmptyBackground} preview={false} width="86%" />
-                  </div>
+                  </div> */}
+                  <video
+                    loop
+                    muted
+                    autoPlay
+                    style={{ width: '100%', height: 'auto' }}
+                  >
+                    <source src={EmptyBackgroundVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                 </Card>
               </Col>
             )

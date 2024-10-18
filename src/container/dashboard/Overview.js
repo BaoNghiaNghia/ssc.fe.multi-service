@@ -486,7 +486,7 @@ function Overview() {
           </Cards>
         </Col>
         <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
-          <Cards headless gradient='64deg, white, white' >
+          <Cards headless gradient='160deg, white, #f6fdff' >
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
@@ -501,7 +501,7 @@ function Overview() {
           </Cards>
         </Col>
         <Col xxl={12} md={12} sm={8} xs={8} style={{ display: 'flex' }}>
-          <Cards headless gradient='64deg, white, white' >
+          <Cards headless gradient='160deg, white, #f6fdff' >
             <EChartCard>
               <div className="card-chunk">
                 <CardBarChart2>
