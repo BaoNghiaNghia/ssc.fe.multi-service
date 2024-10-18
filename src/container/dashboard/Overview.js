@@ -225,12 +225,12 @@ function Overview() {
               fontWeight: 700,
               fontSize: '0.7em',
               color: '#4B0082',
-              background: 'linear-gradient(90deg, #FFA500, #FFCC00, #FFD700, #FFE700, #FFDD33)', /* Gradient golden background */
+              background: 'linear-gradient(90deg, #FFA500, #FFCC00, #FFD700, #FFE700, #FFDD33)',
               padding: '1px 4px',
               borderRadius: '4px',
-              zIndex: 10, /* Keeps the text above the card content */
+              zIndex: 10,
               boxShadow: '0px 1px 5px #683c0033',
-              textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)' /* Added shadow to make text pop */
+              textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)'
             }}
           >
             Hôm nay
@@ -242,13 +242,12 @@ function Overview() {
               right: '5px',
               fontWeight: 700,
               fontSize: '0.9em',
-              color: '#4B0082',
-              background: 'white', /* Gradient golden background */
+              color: 'black',
+              background: 'white',
               padding: '2px 2px 0 2px',
               borderRadius: '2px 8px 2px 4px',
-              zIndex: 10, /* Keeps the text above the card content */
+              zIndex: 10,
               boxShadow: '0px 1px 3px #683c0016',
-              // textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)' /* Added shadow to make text pop */
             }}
           >
             <Tooltip placement='bottom' title={
@@ -311,7 +310,7 @@ function Overview() {
                       </Tooltip>
                     </Col>
                     <Col sm="4">
-                      <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayLikePoint))} ${VIETNAMES_CURRENCY}`}>
+                      <Tooltip placement='top' title={`${numberWithCommas(Math.round(todayViewPoint))} ${VIETNAMES_CURRENCY}`}>
                         <span style={{ fontWeight: 600, fontSize: '1em' }}>
                           View
                         </span>
