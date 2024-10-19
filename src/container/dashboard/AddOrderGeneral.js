@@ -89,9 +89,10 @@ function AddOrderGeneral() {
   const handleCancelAndResetForm = () => {
     setStateCurr({
       ...stateCurr,
-      listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder)
+      listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder),
+      orderType: 'single'
     });
-
+    
     dispatch(reportActions.setCategoryInNewOrderBegin(categoryNewOrder));
 
     setHelpMessage({});
@@ -214,12 +215,14 @@ function AddOrderGeneral() {
             })
             .catch((err) => {
                 console.error("handle Real Error: ", err);
-                // Optionally display error to the user
             });
     } else if (stateCurr.orderType === 'multiple') {
         formCreateOrder.validateFields()
             .then((values) => {
                 const listOrders = values?.list_order;
+                const rows = values?.comments?.split('\n') || [];
+                const nonEmptyRows = rows.filter(row => row.trim().length > 0);
+
                 const ordersArray = listOrders
                     .split('\n')
                     .filter(line => line.trim())
@@ -227,13 +230,14 @@ function AddOrderGeneral() {
                         const [link, quantity] = line.split('|').map(item => item.trim());
                         return {
                           link,
-                          quantity: Number(quantity),
+                          // quantity: Number(quantity),
                           platform: values?.platform,
                           category: values?.category,
-                          service_id: values?.service_id
+                          service_id: values?.service_id,
+                          comments: nonEmptyRows.join('\n')
                         };
                     });
-
+                    console.log('--- data nè -0--', ordersArray);
                 dispatch(actionsComment.createOrderCommentAdminBegin({ 
                   orderType: stateCurr.orderType, 
                   ordersArray
@@ -243,7 +247,6 @@ function AddOrderGeneral() {
             })
             .catch((err) => {
                 console.error("handle Real Error: ", err);
-                // Optionally display error to the user
             });
     }
 };
@@ -288,7 +291,7 @@ function AddOrderGeneral() {
         })
         .catch((err) => {
             console.error("handle Real Error: ", err);
-            // Optionally display error to the user
+            
         });
 };
 
@@ -377,7 +380,7 @@ function AddOrderGeneral() {
         })
         .catch((err) => {
             console.error("handle Real Error: ", err);
-            // Optionally display error to the user
+            
         });
   };
 

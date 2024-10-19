@@ -278,7 +278,7 @@ function* createOrderLikeFunc(params) {
     } else if (orderType === 'multiple') {
       const responses = yield all(ordersArray.map(order => call(callWithCounting, order)));
 
-      toast.info(`Thành công ${successCount}. Thất bại ${failureCount}`);
+      toast.info(`Thành công ${successCount} đơn. Thất bại ${failureCount} đơn`);
 
       responses.forEach((response, index) => {
         if (response.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
@@ -292,7 +292,7 @@ function* createOrderLikeFunc(params) {
     const errorMessage = error.response?.data?.message || 'Create order like failed';
     yield put(actions.createOrderLikeAdminErr({ error: errorMessage }));
 
-    toast.error(`Tạo đơn hàng like không thành công. Thành công ${successCount}. Thất bại ${failureCount}. ${errorMessage}`);
+    toast.error(`Tạo đơn hàng like không thành công. Thành công ${successCount} đơn. Thất bại ${failureCount} đơn. ${errorMessage}`);
   }
 }
 

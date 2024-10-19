@@ -261,7 +261,7 @@ function* updateManyOrderCommentFunc(params) {
 }
 
 function* createOrderCommentFunc(params) {
-  const { commentType, commentsArray, commentSingle } = params?.payload || {};
+  const { orderType, ordersArray, orderSingle } = params?.payload || {};
   
   let successCount = 0;
   let failureCount = 0;
@@ -285,8 +285,8 @@ function* createOrderCommentFunc(params) {
   }
 
   try {
-    if (commentType === 'single') {
-      const response = yield call(createOrderCommentAPI, commentSingle);
+    if (orderType === 'single') {
+      const response = yield call(createOrderCommentAPI, orderSingle);
 
       if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
         yield put(actions.createOrderCommentAdminSuccess(response?.data?.data));
@@ -294,10 +294,10 @@ function* createOrderCommentFunc(params) {
 
         toast.success('Tạo order comment thành công');
       }
-    } else if (commentType === 'multiple') {
-      const responses = yield all(commentsArray.map(comment => call(callWithCounting, comment)));
+    } else if (orderType === 'multiple') {
+      const responses = yield all(ordersArray.map(orderItem => call(callWithCounting, orderItem)));
 
-      toast.info(`Thành công ${successCount}. Thất bại ${failureCount}`);
+      toast.info(`Thành công ${successCount} đơn. Thất bại ${failureCount} đơn`);
 
       responses.forEach((response, index) => {
         if (response.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
@@ -312,7 +312,7 @@ function* createOrderCommentFunc(params) {
 
     yield put(actions.createOrderCommentAdminErr({ error: errorMessage }));
     
-    toast.error(`Tạo đơn hàng comment không thành công. Thành công ${successCount}. Thất bại ${failureCount} đơn. ${errorMessage}`);
+    toast.error(`Tạo đơn hàng comment không thành công. Thành công ${successCount} đơn. Thất bại ${failureCount} đơn. ${errorMessage}`);
   }
 }
 
