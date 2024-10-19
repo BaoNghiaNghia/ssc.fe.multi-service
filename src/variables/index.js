@@ -421,6 +421,8 @@ export const REGEX_VALIDATE_YOUTUBE_CHANNEL_LINK = /^(https?:\/\/)?(www\.)?(yout
 
 export const REGEX_VALIDATE_YOUTUBE_ALL_LINK = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
 
+export const REGEX_MULTIPLE_ORDER_FORMAT = /^https?:\/\/[^\s/$.?#].[^\s]*\s*\|\s*\d+$/;
+
 export const REGION_IDENTIFIER = [
   {
       shortcode: "vn",

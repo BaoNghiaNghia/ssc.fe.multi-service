@@ -20,7 +20,7 @@ import actionsView from '../../redux/buffView/actions';
 import reportActions from '../../redux/reports/actions';
 import serviceSettingsAction from '../../redux/serviceSettings/actions';
 import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUrl, numberWithCommas, validateYouTubeChannelUrl, validateYouTubeUrl } from '../../utility/utility';
-import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, badgeGrayStyle, singleOrderIcon, multiplOrderIcon, badgeGreenStyle, badgeRedStyle, badgeOrangeStyle } from '../../variables';
+import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, badgeGrayStyle, singleOrderIcon, multiplOrderIcon, badgeGreenStyle, badgeRedStyle, badgeOrangeStyle, REGEX_MULTIPLE_ORDER_FORMAT } from '../../variables';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../config/api/Reports';
 
 import EmptyBackground from '../../static/img/empty_bg_2.png';
@@ -29,8 +29,6 @@ import EmptyBackgroundVideo from '../../static/videos/empty_video.mp4';
 
 const { Option } = Select;
 const { TextArea } = Input;
-
-const REGEX_MULTIPLE_ORDER_FORMAT = /^https?:\/\/[^\s/$.?#].[^\s]*\s\|\s\d+$/;
 
 function AddOrderGeneral() {
   const dispatch = useDispatch();
@@ -107,15 +105,15 @@ function AddOrderGeneral() {
   const handleValidateLink = async (value) => {
     let status = 'success';
     let help = '';
-
+  
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
-
+  
     try {
       if (categoryNewOrder === 'Subscribers') {
         if (!isYouTubeValidUrl(value)) {
           return { status: false, help: 'Đường dẫn Youtube không hợp lệ' };
         }
-
+  
         if (!quantity || quantity === 0) {
           toast.warning('Cần nhập thêm số lượng subscribe');
           return { status: false, help: '' };
@@ -123,32 +121,32 @@ function AddOrderGeneral() {
       } else if (!validateYouTubeUrl(value)) {
         return { status: false, help: 'Đường dẫn video Youtube không hợp lệ' };
       }
-
+  
       const responseValidVideo = await validateVideoLink(value);
       if (responseValidVideo?.data?.error_code !== 0) {
         status = 'error';
         help = 'Đường dẫn video Youtube không hợp lệ';
       } else {
         const validData = responseValidVideo.data.data;
-
+  
         if (categoryNewOrder === 'Subscribers') {
           const jumpStep = validData?.jump_step_response?.jump_step;
-          const existingErrorsQuantity = formCreateOrder.getFieldError('quantity') || [];
-
-          if (typeof jumpStep === 'number' && typeof quantity === 'number' && existingErrorsQuantity?.length === 0) {
+          let existingErrorsQuantity = formCreateOrder.getFieldError('quantity') || [];
+  
+          const messageErrorNotFullfil = `Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`;
+          existingErrorsQuantity = existingErrorsQuantity.filter((error) => error !== messageErrorNotFullfil);
+  
+          if (typeof jumpStep === 'number' && typeof quantity === 'number') {
             const validJumpStep = quantity % jumpStep;
-
-            const messageErrorNotFullfil = [`Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`];
-
-            const errors = validJumpStep !== 0 ? messageErrorNotFullfil : existingErrorsQuantity;
-
+  
+            const errors = validJumpStep !== 0 ? [messageErrorNotFullfil] : [];
             formCreateOrder.setFields([{ name: 'quantity', errors }]);
           } else {
-            formCreateOrder.setFields([{ name: 'quantity', existingErrorsQuantity }]);
+            formCreateOrder.setFields([{ name: 'quantity', errors: existingErrorsQuantity }]);
             console.log('validData or jump_step_response is not defined or jump_step is not a valid number.');
           }
         }
-
+  
         const mapping = (categoryNewOrder === 'Subscribers')
           ? {
             'Video subscribe': 'exist_video',
@@ -165,7 +163,7 @@ function AddOrderGeneral() {
             'Đường dẫn': 'is_valid_link',
             'Video tồn tại': 'is_exist_video',
           };
-
+  
         const mappedObj = Object.keys(mapping).reduce((acc, title) => {
           const mappedKey = mapping[title];
           if (validData[mappedKey] !== undefined) {
@@ -173,12 +171,12 @@ function AddOrderGeneral() {
           }
           return acc;
         }, {});
-
+  
         const isValid = Object.keys(mappedObj).every((key) => {
           if (key === 'Livestream') return true;
           return mappedObj[key];
         });
-
+  
         help = createCustomHelp(mappedObj);
         status = isValid ? 'success' : 'error';
       }
@@ -187,12 +185,12 @@ function AddOrderGeneral() {
       status = 'error';
       help = 'Lỗi xác thực liên kết YouTube';
     }
-
+  
     setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
-
+  
     return { status: status === 'success', help };
   };
-
+  
   useEffect(() => {
     dispatch(serviceSettingsAction.fetchListServiceBegin());
   }, [dispatch]);
@@ -270,42 +268,65 @@ function AddOrderGeneral() {
   }
 
   const handleSubmitSubscribe = () => {
-    if (stateCurr.orderType === 'single') {
-      formCreateOrder.validateFields()
-        .then((values) => {
-          console.log('--- show data subscribe ----', values)
-          dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(values));
-          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-          handleCancelAndResetForm();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
-    } else if (stateCurr.orderType === 'multiple') {
-      formCreateOrder.validateFields()
-        .then((values) => {
-          const listOrders = values?.list_order;
-
-          const ordersArray = values?.list_order.split('\n')
-            .filter(line => line.trim())
-            .map(line => {
-              const [link, quantity] = line.split('|').map(item => item.trim());
-              return {
-                link,
-                quantity: Number(quantity),
-                platform: values?.platform,
-                category: values?.category,
-                service_id: values?.service_id
-              };
+    try {
+      if (stateCurr.orderType === 'single') {
+        formCreateOrder.validateFields()
+          .then((values) => {
+            dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(values));
+            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            handleCancelAndResetForm();
+          })
+          .catch((err) => {
+            console.error("handle Real Error: ", err);
+          });
+      } else if (stateCurr.orderType === 'multiple') {
+        formCreateOrder.validateFields()
+          .then((values) => {
+            const ordersArray = values?.list_order.split('\n')
+              .filter(line => line.trim())
+              .map(line => {
+                const [link, quantity] = line.split('|').map(item => item.trim());
+                return {
+                  link,
+                  quantity: Number(quantity),
+                  platform: values?.platform,
+                  category: values?.category,
+                  service_id: values?.service_id
+                };
+              });
+    
+            let successCount = 0;
+            let failureCount = 0;
+    
+            const dispatchPromises = ordersArray.map(order => {
+              return dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(order))
+                .then(() => {
+                  successCount += 1;
+                })
+                .catch(() => {
+                  failureCount += 1;
+                });
             });
-
-          handleCancelAndResetForm();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
+    
+            Promise.all(dispatchPromises)
+              .then(() => {
+                console.log(`Orders dispatched successfully: ${successCount}`);
+                console.log(`Orders failed to dispatch: ${failureCount}`);
+                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                handleCancelAndResetForm();
+              })
+              .catch(err => {
+                console.error("Error processing dispatches: ", err);
+              });
+          })
+          .catch((err) => {
+            console.error("handle Real Error: ", err);
+          });
+      }
+    } catch (e) {
+      console.log('---- error when submit subscribe -----', e)
     }
-  }
+  };
 
   const handleSubmitView = () => {
     if (stateCurr.orderType === 'single') {
@@ -547,7 +568,7 @@ function AddOrderGeneral() {
                     const lines = value.split('\n').filter(line => line.trim() !== '');
                     const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
                     if (hasInvalidLine) {
-                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                      return Promise.reject('Đơn phải có định dạng: URL | Số lượng');
                     }
 
                     if (lines.length < 2) {
@@ -732,7 +753,7 @@ function AddOrderGeneral() {
                     const lines = value.split('\n').filter(line => line.trim() !== '');
                     const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
                     if (hasInvalidLine) {
-                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                      return Promise.reject('Đơn phải có định dạng: URL | Số lượng');
                     }
 
                     if (lines.length < 2) {
@@ -897,7 +918,7 @@ function AddOrderGeneral() {
                     const lines = value.split('\n').filter(line => line.trim() !== '');
                     const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
                     if (hasInvalidLine) {
-                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                      return Promise.reject('Đơn phải có định dạng: URL | Số lượng');
                     }
 
                     if (lines.length < 2) {
@@ -1081,7 +1102,7 @@ function AddOrderGeneral() {
                     const lines = value.split('\n').filter(line => line.trim() !== '');
                     const hasInvalidLine = lines.some(line => !REGEX_MULTIPLE_ORDER_FORMAT.test(line));
                     if (hasInvalidLine) {
-                      return Promise.reject('Mỗi dòng phải có định dạng: URL | Số lượng');
+                      return Promise.reject('Đơn phải có định dạng: URL | Số lượng');
                     }
 
                     if (lines.length < 2) {
@@ -1194,7 +1215,7 @@ function AddOrderGeneral() {
 
   return (
     <Modal
-      width='900px'
+      width='50%'
       open={isOpenCreateOrder}
       centered
       title={
