@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
@@ -360,38 +360,62 @@ function* updateManyOrderSubscribeFunc(params) {
 }
 
 function* createOrderSubscribeFunc(params) {
-  try {
-    const response = yield call(createOrderSubscribeAPI, params?.payload);
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.createOrderSubscribeAdminSuccess(response?.data?.data)
-      );
-      yield put(
-        actions.fetchListOrderSubscribeBegin({
-          page: 1,
-          limit: DEFAULT_PERPAGE
-        })
-      );
+  // eslint-disable-next-line no-unsafe-optional-chaining
+  const { orderType, ordersArray, orderSingle } = params?.payload;
 
-      toast.success('Tạo order subscribe thành công');
+  let successCount = 0;
+  let failureCount = 0;
+
+  function* callWithCounting(order) {
+    try {
+      const response = yield call(createOrderSubscribeAPI, order);
+
+      if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+        successCount += 1;
+        return response;
+      } 
+        failureCount += 1;
+        return { status: 'error', response };
+      
+    } catch (error) {
+      failureCount += 1;
+      console.error(`Error processing order ${order}:`, error);
+      return { status: 'error', error };
+    }
+  }
+
+  try {
+    if (orderType === 'single') {
+      const response = yield call(createOrderSubscribeAPI, orderSingle);
+
+      if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+        yield put(actions.createOrderSubscribeAdminSuccess(response?.data?.data));
+        yield put(actions.fetchListOrderSubscribeBegin({ page: 1, limit: DEFAULT_PERPAGE }));
+
+        toast.success('Tạo order subscribe thành công');
+      }
+    } else if (orderType === 'multiple') {
+      const responses = yield all(ordersArray.map(order => call(callWithCounting, order)));
+
+      toast.info(`Thành công ${successCount}. Thất bại ${failureCount}`);
+
+      responses.forEach((response, index) => {
+        if (response.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+          console.log(`Order ${index + 1} succeeded:`, response?.data);
+        } else {
+          console.error(`Order ${index + 1} failed:`, response.error || response.response);
+        }
+      });
     }
   } catch (error) {
-    const errorMessage = error;
+    const errorMessage = error.response?.data?.data?.error || error.response?.data?.message || 'Create order subscribe failed';
+    yield put(actions.createOrderSubscribeAdminErr({ error: errorMessage }));
 
-    yield put(
-      actions.createOrderSubscribeAdminErr({ error: errorMessage || 'Create order subscribe failed' })
-    );
-
-    if (errorMessage?.response?.data?.data?.error) {
-      toast.error(errorMessage?.response?.data?.data?.error);
-    } else if (errorMessage?.response?.data?.message) {
-      toast.error(errorMessage?.response?.data?.message);
-    } else {
-      toast.error('Tạo đơn hàng subscribe không thành công');
-    }
-  } finally { /* empty */ }
+    toast.error(`Tạo đơn hàng subscribe không thành công. Thành công ${successCount}. Thất bại ${failureCount} đơn. ${errorMessage} đơn`);
+  }
 }
+
+
 
 function* fetchListOrderSubscribeFunc(params) {
   try {

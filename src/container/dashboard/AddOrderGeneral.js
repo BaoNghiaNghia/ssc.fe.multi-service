@@ -197,169 +197,190 @@ function AddOrderGeneral() {
 
   const handleSubmitComment = () => {
     if (stateCurr.orderType === 'single') {
-      formCreateOrder.validateFields()
-        .then((values) => {
-          const rows = values?.comments?.split('\n');
-          const nonEmptyRows = rows.filter(row => row.trim().length > 0);
-          values.comments = nonEmptyRows.join('\n');
-          dispatch(actionsComment.createOrderCommentAdminBegin(values));
-          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+        formCreateOrder.validateFields()
+            .then((values) => {
+              const rows = values?.comments?.split('\n') || [];
+              const nonEmptyRows = rows.filter(row => row.trim().length > 0);
+              values.comments = nonEmptyRows.join('\n');
 
-          handleCancelAndResetForm();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
-    } else if (stateCurr.orderType === 'multiple') {
-      formCreateOrder.validateFields()
-        .then((values) => {
-          const listOrders = values?.list_order;
-          const ordersArray = listOrders
-            .split('\n')
-            .filter(line => line.trim())
-            .map(line => {
-              const [link, quantity] = line.split('|').map(item => item.trim());
-              return { link, quantity: Number(quantity) };
+              const payload = {
+                orrderSingle: values,
+                orderType: stateCurr.orderType,
+              };
+
+              dispatch(actionsComment.createOrderCommentAdminBegin(payload));
+              dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+              handleCancelAndResetForm();
+            })
+            .catch((err) => {
+                console.error("handle Real Error: ", err);
+                // Optionally display error to the user
             });
+    } else if (stateCurr.orderType === 'multiple') {
+        formCreateOrder.validateFields()
+            .then((values) => {
+                const listOrders = values?.list_order;
+                const ordersArray = listOrders
+                    .split('\n')
+                    .filter(line => line.trim())
+                    .map(line => {
+                        const [link, quantity] = line.split('|').map(item => item.trim());
+                        return {
+                          link,
+                          quantity: Number(quantity),
+                          platform: values?.platform,
+                          category: values?.category,
+                          service_id: values?.service_id
+                        };
+                    });
 
-          console.log('Converted Orders Array:', ordersArray);
-
-          handleCancelAndResetForm();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
+                dispatch(actionsComment.createOrderCommentAdminBegin({ 
+                  orderType: stateCurr.orderType, 
+                  ordersArray
+                }));
+                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                handleCancelAndResetForm();
+            })
+            .catch((err) => {
+                console.error("handle Real Error: ", err);
+                // Optionally display error to the user
+            });
     }
-  }
+};
+
 
   const handleSubmitLike = () => {
-    if (stateCurr.orderType === 'single') {
-      formCreateOrder.validateFields()
+    formCreateOrder.validateFields()
         .then((values) => {
-          dispatch(actionsLike.createOrderLikeAdminBegin(values));
-          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            const { orderType } = stateCurr;
 
-          handleCancelAndResetForm();
+            if (orderType === 'single') {
+              const payload = {
+                orrderSingle: values,
+                orderType: stateCurr.orderType,
+              };
+                dispatch(actionsLike.createOrderLikeAdminBegin(payload));
+                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                handleCancelAndResetForm();
+            } else if (orderType === 'multiple') {
+                const listOrders = values?.list_order;
+                const ordersArray = listOrders
+                    .split('\n')
+                    .filter(line => line.trim())
+                    .map(line => {
+                        const [link, quantity] = line.split('|').map(item => item.trim());
+                        return {
+                          link,
+                          quantity: Number(quantity),
+                          platform: values?.platform,
+                          category: values?.category,
+                          service_id: values?.service_id
+                        };
+                    });
+
+                dispatch(actionsLike.createOrderLikeAdminBegin({ 
+                  orderType: stateCurr.orderType, 
+                  ordersArray
+                }));
+                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                handleCancelAndResetForm();
+            }
         })
         .catch((err) => {
-          console.error("handle Real Error: ", err);
+            console.error("handle Real Error: ", err);
+            // Optionally display error to the user
         });
-    } else if (stateCurr.orderType === 'multiple') {
+};
 
-      formCreateOrder.validateFields()
-        .then((values) => {
-          const listOrders = values?.list_order;
-          const ordersArray = listOrders
-            .split('\n')
-            .filter(line => line.trim())
-            .map(line => {
-              const [link, quantity] = line.split('|').map(item => item.trim());
-              return { link, quantity: Number(quantity) };
-            });
-
-          console.log('Converted Orders Array:', ordersArray);
-
-          handleCancelAndResetForm();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
-    }
-  }
 
   const handleSubmitSubscribe = () => {
     try {
-      if (stateCurr.orderType === 'single') {
         formCreateOrder.validateFields()
-          .then((values) => {
-            dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(values));
-            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-            handleCancelAndResetForm();
-          })
-          .catch((err) => {
-            console.error("handle Real Error: ", err);
-          });
-      } else if (stateCurr.orderType === 'multiple') {
-        formCreateOrder.validateFields()
-          .then((values) => {
-            const ordersArray = values?.list_order.split('\n')
-              .filter(line => line.trim())
-              .map(line => {
-                const [link, quantity] = line.split('|').map(item => item.trim());
-                return {
-                  link,
-                  quantity: Number(quantity),
-                  platform: values?.platform,
-                  category: values?.category,
-                  service_id: values?.service_id
-                };
-              });
-    
-            let successCount = 0;
-            let failureCount = 0;
-    
-            const dispatchPromises = ordersArray.map(order => {
-              return dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(order))
-                .then(() => {
-                  successCount += 1;
-                })
-                .catch(() => {
-                  failureCount += 1;
-                });
+            .then((values) => {
+                
+                if (stateCurr.orderType === 'single') {
+                    const payload = {
+                        orrderSingle: values,
+                        orderType: stateCurr.orderType,
+                    };
+                    dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(payload));
+                    dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                    handleCancelAndResetForm();
+                } else if (stateCurr.orderType === 'multiple') {
+                    const ordersArray = values?.list_order.split('\n')
+                        .filter(line => line.trim())
+                        .map(line => {
+                            const [link, quantity] = line.split('|').map(item => item.trim());
+                            return {
+                                link,
+                                quantity: Number(quantity),
+                                platform: values?.platform,
+                                category: values?.category,
+                                service_id: values?.service_id
+                            };
+                        });
+                    
+                    dispatch(actionsSubscribe.createOrderSubscribeAdminBegin({ 
+                      orderType: stateCurr.orderType, 
+                      ordersArray
+                    }));
+                    dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                    handleCancelAndResetForm();
+                }
+            })
+            .catch((err) => {
+                console.error("Validation Error: ", err);
             });
-    
-            Promise.all(dispatchPromises)
-              .then(() => {
-                console.log(`Orders dispatched successfully: ${successCount}`);
-                console.log(`Orders failed to dispatch: ${failureCount}`);
-                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                handleCancelAndResetForm();
-              })
-              .catch(err => {
-                console.error("Error processing dispatches: ", err);
-              });
-          })
-          .catch((err) => {
-            console.error("handle Real Error: ", err);
-          });
-      }
     } catch (e) {
-      console.log('---- error when submit subscribe -----', e)
+        console.log('---- error when submit subscribe -----', e);
     }
   };
 
+
+
   const handleSubmitView = () => {
-    if (stateCurr.orderType === 'single') {
-      formCreateOrder.validateFields()
+    formCreateOrder.validateFields()
         .then((values) => {
-          dispatch(actionsView.createOrderViewAdminBegin(values));
-          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-          handleCancelAndResetForm();
+            const { orderType } = stateCurr;
+
+            if (orderType === 'single') {
+              const payload = {
+                orrderSingle: values,
+                orderType: stateCurr.orderType,
+              };
+              dispatch(actionsView.createOrderViewAdminBegin(payload));
+              dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+              handleCancelAndResetForm();
+            } else if (orderType === 'multiple') {
+                const listOrders = values?.list_order;
+                const ordersArray = listOrders
+                    .split('\n')
+                    .filter(line => line.trim())
+                    .map(line => {
+                        const [link, quantity] = line.split('|').map(item => item.trim());
+                        return {
+                          link,
+                          quantity: Number(quantity),
+                          platform: values?.platform,
+                          category: values?.category,
+                          service_id: values?.service_id
+                        };
+                    });
+
+                dispatch(actionsView.createOrderViewAdminBegin({ 
+                  orderType: stateCurr.orderType, 
+                  ordersArray
+                }));
+                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                handleCancelAndResetForm();
+            }
         })
         .catch((err) => {
-          console.error("handle Real Error: ", err);
+            console.error("handle Real Error: ", err);
+            // Optionally display error to the user
         });
-    } else if (stateCurr.orderType === 'multiple') {
-      formCreateOrder.validateFields()
-        .then((values) => {
-          const listOrders = values?.list_order;
-          const ordersArray = listOrders
-            .split('\n')
-            .filter(line => line.trim())
-            .map(line => {
-              const [link, quantity] = line.split('|').map(item => item.trim());
-              return { link, quantity: Number(quantity) };
-            });
+  };
 
-          console.log('Converted Orders Array:', ordersArray);
-
-          handleCancelAndResetForm();
-        })
-        .catch((err) => {
-          console.error("handle Real Error: ", err);
-        });
-    }
-  }
 
   const handleChangeTextArea = (event) => {
     const { value } = event.target;
@@ -493,63 +514,6 @@ function AddOrderGeneral() {
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter="10">
-              <Col sm={24}>
-                <Form.Item
-                  name="comments"
-                  label="Comment"
-                  style={{ marginBottom: '7px' }}
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Trường không được trống'
-                    },
-                    {
-                      validator: async (_, comments) => {
-                        const minComment = detailService?.min;
-                        const maxComment = detailService?.max;
-                        const count = comments?.split('\n')?.length;
-
-                        if (minComment != null && maxComment != null) {
-                          if (count < minComment) {
-                            return Promise.reject(`Cần ít nhất ${minComment} comments`);
-                          } if (count > maxComment) {
-                            return Promise.reject(`Vượt quá  ${maxComment} comments`);
-                          }
-                        }
-                      },
-                    }
-                  ]}
-                  onChange={({ target: { value } }) => {
-                    const amountChange = handleCountValidateCommentString(value);
-                    const duplicates = countDuplicateLines(value.split('\n')); // Count duplicates
-                    setStateCurr(prev => ({
-                      ...prev,
-                      amountChange,
-                      duplicateCounts: duplicates // Store duplicates in state
-                    }));
-                    formCreateOrder.setFieldsValue({ comments: value });
-                  }}
-                >
-                  <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
-                  <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary, display: 'flex', justifyContent: 'space-between', marginTop: '3px' }}>
-                    <span style={{ color: (validateCommentCount) ? 'green' : 'red', display: 'inline-flex', alignItems: 'center' }}>
-                      <span>{stateCurr?.amountChange} comments</span>
-                      {validateCommentCount ? <TiTick fontSize={17} style={{ marginLeft: '3px' }} /> : null}
-                    </span>
-                    <span>Ít nhất: {numberWithCommas(detailService?.min || 0)} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)}</span>
-                  </span>
-
-                  {stateCurr?.duplicateCounts && Object.entries(stateCurr.duplicateCounts).map(([comment, count]) => (
-                    <>
-                      <div key={comment} style={{ fontSize: '0.8em', color: 'gray' }}>
-                        <span style={{ fontStyle: 'italic' }}>&ldquo;{comment}&ldquo;</span>: Trùng {count - 1} lần
-                      </div>
-                    </>
-                  ))}
-                </Form.Item>
-              </Col>
-            </Row>
           </>
         )}
 
@@ -594,12 +558,77 @@ function AddOrderGeneral() {
             </Form.Item>
             <div
               ref={lineCountRef}
-              style={{ marginTop: '8px' }}
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                fontSize: '0.8em',
+                fontWeight: 700,
+                color: 'gray',
+                alignSelf: 'center',
+              }}
             >
               Số lượng: 0 / 100
             </div>
           </>
         )}
+
+        <Row gutter="10">
+          <Col sm={24}>
+            <Form.Item
+              name="comments"
+              label="Comment"
+              style={{ marginBottom: '7px' }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Trường không được trống'
+                },
+                {
+                  validator: async (_, comments) => {
+                    const minComment = detailService?.min;
+                    const maxComment = detailService?.max;
+                    const count = comments?.split('\n')?.length;
+
+                    if (minComment != null && maxComment != null) {
+                      if (count < minComment) {
+                        return Promise.reject(`Cần ít nhất ${minComment} comments`);
+                      } if (count > maxComment) {
+                        return Promise.reject(`Vượt quá  ${maxComment} comments`);
+                      }
+                    }
+                  },
+                }
+              ]}
+              onChange={({ target: { value } }) => {
+                const amountChange = handleCountValidateCommentString(value);
+                const duplicates = countDuplicateLines(value.split('\n')); // Count duplicates
+                setStateCurr(prev => ({
+                  ...prev,
+                  amountChange,
+                  duplicateCounts: duplicates // Store duplicates in state
+                }));
+                formCreateOrder.setFieldsValue({ comments: value });
+              }}
+            >
+              <Input.TextArea placeholder={"Comment 1 \nComment 2 \nComment 3 \nComment 4 \nComment 5 \nComment 6 \n..."} rows={7} />
+              <span style={{ fontSize: '0.8em', fontWeight: 'bold', color: COLOR_GENERAL.primary, display: 'flex', justifyContent: 'space-between', marginTop: '3px' }}>
+                <span style={{ color: (validateCommentCount) ? 'green' : 'red', display: 'inline-flex', alignItems: 'center' }}>
+                  <span>{stateCurr?.amountChange} comments</span>
+                  {validateCommentCount ? <TiTick fontSize={17} style={{ marginLeft: '3px' }} /> : null}
+                </span>
+                <span>Ít nhất: {numberWithCommas(detailService?.min || 0)} - Nhiều nhất: {numberWithCommas(detailService?.max || 0)}</span>
+              </span>
+
+              {stateCurr?.duplicateCounts && Object.entries(stateCurr.duplicateCounts).map(([comment, count]) => (
+                <>
+                  <div key={comment} style={{ fontSize: '0.8em', color: 'gray' }}>
+                    <span style={{ fontStyle: 'italic' }}>&ldquo;{comment}&ldquo;</span>: Trùng {count - 1} lần
+                  </div>
+                </>
+              ))}
+            </Form.Item>
+          </Col>
+        </Row>
       </>
     )
   }
@@ -779,7 +808,14 @@ function AddOrderGeneral() {
             </Form.Item>
             <div
               ref={lineCountRef}
-              style={{ marginTop: '8px' }}
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                fontSize: '0.8em',
+                fontWeight: 700,
+                color: 'gray',
+                alignSelf: 'center',
+              }}
             >
               Số lượng: 0 / 100
             </div>
@@ -944,7 +980,14 @@ function AddOrderGeneral() {
             </Form.Item>
             <div
               ref={lineCountRef}
-              style={{ marginTop: '8px' }}
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                fontSize: '0.8em',
+                fontWeight: 700,
+                color: 'gray',
+                alignSelf: 'center',
+              }}
             >
               Số lượng: 0 / 100
             </div>
@@ -1128,7 +1171,14 @@ function AddOrderGeneral() {
             </Form.Item>
             <div
               ref={lineCountRef}
-              style={{ marginTop: '8px' }}
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                fontSize: '0.8em',
+                fontWeight: 700,
+                color: 'gray',
+                alignSelf: 'center',
+              }}
             >
               Số lượng: 0 / 100
             </div>

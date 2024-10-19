@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
@@ -261,38 +261,61 @@ function* updateManyOrderCommentFunc(params) {
 }
 
 function* createOrderCommentFunc(params) {
-  try {
-    const response = yield call(createOrderCommentAPI, params?.payload);
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.createOrderCommentAdminSuccess(response?.data?.data)
-      );
-      yield put(
-        actions.fetchListOrderCommentBegin({
-          page: 1,
-          limit: DEFAULT_PERPAGE
-        })
-      );
+  const { commentType, commentsArray, commentSingle } = params?.payload || {};
+  
+  let successCount = 0;
+  let failureCount = 0;
 
-      toast.success('Tạo order comment thành công');
+  function* callWithCounting(comment) {
+    try {
+      const response = yield call(createOrderCommentAPI, comment);
+
+      if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+        successCount += 1;
+        return response;
+      } 
+        failureCount += 1;
+        return { status: 'error', response };
+      
+    } catch (error) {
+      failureCount += 1;
+      console.error(`Error processing comment ${comment}:`, error);
+      return { status: 'error', error };
+    }
+  }
+
+  try {
+    if (commentType === 'single') {
+      const response = yield call(createOrderCommentAPI, commentSingle);
+
+      if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+        yield put(actions.createOrderCommentAdminSuccess(response?.data?.data));
+        yield put(actions.fetchListOrderCommentBegin({ page: 1, limit: DEFAULT_PERPAGE }));
+
+        toast.success('Tạo order comment thành công');
+      }
+    } else if (commentType === 'multiple') {
+      const responses = yield all(commentsArray.map(comment => call(callWithCounting, comment)));
+
+      toast.info(`Thành công ${successCount}. Thất bại ${failureCount}`);
+
+      responses.forEach((response, index) => {
+        if (response.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+          console.log(`Comment ${index + 1} succeeded:`, response?.data);
+        } else {
+          console.error(`Comment ${index + 1} failed:`, response.error || response.response);
+        }
+      });
     }
   } catch (error) {
-    const errorMessage = error;
+    const errorMessage = error?.response?.data?.data?.error || error?.response?.data?.message || 'Create order comment failed';
 
-    yield put(
-      actions.createOrderCommentAdminErr({ error: errorMessage || 'Create order comment failed' })
-    );
-
-    if (errorMessage?.response?.data?.data?.error) {
-      toast.error(errorMessage?.response?.data?.data?.error);
-    } else if (errorMessage?.response?.data?.message) {
-      toast.error(errorMessage?.response?.data?.message);
-    } else {
-      toast.error('Tạo đơn hàng comment không thành công');
-    }
-  } finally { /* empty */ }
+    yield put(actions.createOrderCommentAdminErr({ error: errorMessage }));
+    
+    toast.error(`Tạo đơn hàng comment không thành công. Thành công ${successCount}. Thất bại ${failureCount} đơn. ${errorMessage}`);
+  }
 }
+
 
 function* fetchListOrderCommentFunc(params) {
   try {

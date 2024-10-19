@@ -216,7 +216,7 @@ function Overview() {
   const generalHeaderStatistic = () => {
     return (
       <Row gutter={6}>
-        <Col xxl={8} md={8} sm={24} xs={24} style={{ position: 'relative' }}>
+        <Col xxl={12} md={8} sm={24} xs={24} style={{ position: 'relative' }}>
           <span
             style={{
               position: 'absolute',
@@ -326,7 +326,7 @@ function Overview() {
           </Cards>
         </Col>
 
-        <Col xxl={4} md={8} sm={6} xs={6}>
+        <Col xxl={3} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}
@@ -363,7 +363,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={4} md={8} sm={6} xs={6}>
+        <Col xxl={3} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}
@@ -389,7 +389,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={4} md={8} sm={6} xs={6}>
+        <Col xxl={3} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}
@@ -423,7 +423,7 @@ function Overview() {
             </EChartCard>
           </Cards>
         </Col>
-        <Col xxl={4} md={8} sm={6} xs={6}>
+        <Col xxl={3} md={8} sm={6} xs={6}>
           <Cards
             headless 
             more={moreContent}

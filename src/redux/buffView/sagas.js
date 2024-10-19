@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
 import {
@@ -280,38 +280,60 @@ function* updateManyOrderViewFunc(params) {
 }
 
 function* createOrderViewFunc(params) {
-  try {
-    const response = yield call(createOrderViewAPI, params?.payload);
-    
-    if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
-      yield put(
-        actions.createOrderViewAdminSuccess(response?.data?.data)
-      );
-      yield put(
-        actions.fetchListOrderViewBegin({
-          page: 1,
-          limit: DEFAULT_PERPAGE
-        })
-      );
+  const { orderType, ordersArray, orderSingle } = params?.payload || {};
 
-      toast.success('Tạo order view thành công');
+  let successCount = 0;
+  let failureCount = 0;
+
+  function* callWithCounting(order) {
+    try {
+      const response = yield call(createOrderViewAPI, order);
+
+      if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+        successCount += 1;
+        return response;
+      } 
+        failureCount += 1;
+        return { status: 'error', response };
+      
+    } catch (error) {
+      failureCount += 1;
+      console.error(`Error processing order ${order}:`, error);
+      return { status: 'error', error };
+    }
+  }
+
+  try {
+    if (orderType === 'single') {
+      const response = yield call(createOrderViewAPI, orderSingle);
+
+      if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+        yield put(actions.createOrderViewAdminSuccess(response?.data?.data));
+        yield put(actions.fetchListOrderViewBegin({ page: 1, limit: DEFAULT_PERPAGE }));
+
+        toast.success('Tạo order view thành công');
+      }
+    } else if (orderType === 'multiple') {
+      const responses = yield all(ordersArray.map(order => call(callWithCounting, order)));
+
+      toast.info(`Thành công ${successCount}. Thất bại ${failureCount}`);
+
+      responses.forEach((response, index) => {
+        if (response.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
+          console.log(`Order ${index + 1} succeeded:`, response?.data);
+        } else {
+          console.error(`Order ${index + 1} failed:`, response.error || response.response);
+        }
+      });
     }
   } catch (error) {
-    const errorMessage = error;
+    const errorMessage = error.response?.data?.data?.error || error.response?.data?.message || 'Create order view failed';
+    yield put(actions.createOrderViewAdminErr({ error: errorMessage }));
 
-    yield put(
-      actions.createOrderViewAdminErr({ error: errorMessage || 'Create order view failed' })
-    );
-
-    if (errorMessage?.response?.data?.data?.error) {
-      toast.error(errorMessage?.response?.data?.data?.error);
-    } else if (errorMessage?.response?.data?.message) {
-      toast.error(errorMessage?.response?.data?.message);
-    } else {
-      toast.error('Tạo đơn hàng view không thành công');
-    }
-  } finally { /* empty */ }
+    toast.error(`Tạo đơn hàng view không thành công. Thành công ${successCount}. Thất bại ${failureCount}. Lỗi: ${errorMessage}`);
+  }
 }
+
 
 function* fetchListOrderViewFunc(params) {
   try {
