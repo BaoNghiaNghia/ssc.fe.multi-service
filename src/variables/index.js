@@ -428,27 +428,32 @@ export const REGION_IDENTIFIER = [
       shortcode: "vn",
       alt: "vn-flag",
       path: "static/img/flag/vn.png",
-      region: "Việt Nam"
+      region: "Việt Nam",
+      currency: "VND"
   },
   {
       shortcode: "us",
       alt: "us-flag",
       path: "static/img/flag/us.png",
-      region: "USA"
+      region: "USA",
+      currency: "USD"
   },
   {
       shortcode: "kr",
       alt: "kr-flag",
       path: "static/img/flag/kr.png",
-      region: "Hàn Quốc"
+      region: "Hàn Quốc",
+      currency: "KRW"
   },
   {
       shortcode: "jp",
       alt: "jp-flag",
       path: "static/img/flag/jp.png",
-      region: "Nhật Bản"
+      region: "Nhật Bản",
+      currency: "JPY"
   },
 ];
+
 
 export const VIEW_STATUS_TYPE = {
   0: {
