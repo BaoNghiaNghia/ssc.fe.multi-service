@@ -684,7 +684,7 @@ function PendingBuffComment() {
         buttons={[
           <TopToolBox>
             <div className="table-toolbox-menu">
-              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue={1}>
+              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue={statusBarNumber}>
                 <Radio.Button value="all">Tất cả</Radio.Button>
                 {
                   ORDER_YOUTUBE_STATUS?.map((state) => {

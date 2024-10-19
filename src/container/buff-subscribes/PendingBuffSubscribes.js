@@ -708,6 +708,8 @@ function PendingBuffSubscribes() {
     },
   };
 
+  const currentStatusLabel = ORDER_YOUTUBE_STATUS.find(item => item?.value === statusBarNumber)?.label?.toLowerCase();
+
   return (
     <>
       <DetailOrderSubscribes
@@ -748,7 +750,7 @@ function PendingBuffSubscribes() {
         buttons={[
           <TopToolBox>
             <div className="table-toolbox-menu">
-              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue={1}>
+              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue={statusBarNumber}>
                 <Radio.Button value="all">Tất cả</Radio.Button>
                 {
                   ORDER_YOUTUBE_STATUS?.map((state) => {
@@ -777,7 +779,7 @@ function PendingBuffSubscribes() {
                     </div>
                   </Col>
                   <Col xxl={18} xs={24} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderSubscribe?.meta?.total || 0)}</span> order</span>
+                    <span style={{ marginLeft: '5px' }}>Tổng cộng <span style={{ fontWeight: 'bold' }}>{numberWithCommas(listOrderSubscribe?.meta?.total || 0)}</span> đơn {currentStatusLabel}</span>
                     <div className="table-toolbox-actions">
                       <Button
                         size="small"

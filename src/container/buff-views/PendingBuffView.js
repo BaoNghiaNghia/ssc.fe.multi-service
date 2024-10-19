@@ -153,11 +153,11 @@ function PendingBuffView() {
       page: currentPage,
       limit: limitPage,
     };
-
     if (statusBarNumber !== 'all') {
       initParams = { ...initParams, status: statusBarNumber };
     }
-  
+    console.log('--- initParams ----', initParams)
+
     dispatch(actions.fetchListOrderViewBegin(initParams));
   }, [dispatch, currentPage, limitPage]);
 
@@ -665,12 +665,12 @@ function PendingBuffView() {
         buttons={[
           <TopToolBox>
             <div className="table-toolbox-menu">
-              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue={1}>
-                <Radio.Button value="all">Tất cả</Radio.Button>
+              <Radio.Group buttonStyle="outline" size='small' optionType="button" onChange={handleChangeForFilter} defaultValue={statusBarNumber}>
+                <Radio.Button value="all" key="all">Tất cả</Radio.Button>
                 {
                   ORDER_YOUTUBE_STATUS?.map((state) => {
                     return (
-                      <Radio.Button  key={state?.name} value={state?.value}>
+                      <Radio.Button key={state?.name} value={state?.value}>
                         <Badge style={{ marginRight: '5px' }} dot color={ORDER_YOUTUBE_STATUS[ORDER_YOUTUBE_STATUS.findIndex(item => item?.value === state?.value)]?.color} />
                         {state?.label}
                       </Radio.Button>
