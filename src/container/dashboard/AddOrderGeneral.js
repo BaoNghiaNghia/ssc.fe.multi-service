@@ -307,16 +307,12 @@ function AddOrderGeneral() {
             .then((values) => {
 
                 if (stateCurr.orderType === 'single') {
-                  const payload = {
+                  dispatch(actionsSubscribe.createOrderSubscribeAdminBegin({
                     orderSingle: values,
                     orderType: stateCurr.orderType,
                     from: fromDate,
                     to: toDate
-                  };
-
-                  console.log('----- data logs subscribe -----', payload);
-
-                  dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(payload));
+                  }));
                   dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                   handleCancelAndResetForm();
                 } else if (stateCurr.orderType === 'multiple') {
