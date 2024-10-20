@@ -1,6 +1,8 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
+import actionReport from '../reports/actions';
+
 import {
     likeOrderLikeAPI,
     fetchListOrderLikeAPI,
@@ -243,10 +245,21 @@ function* updateManyOrderLikeFunc(params) {
 }
 
 function* createOrderLikeFunc(params) {
-  const { orderType, ordersArray, orderSingle } = params?.payload || {};
+  const { orderType, ordersArray, orderSingle, from, to } = params?.payload || {};
 
   let successCount = 0;
   let failureCount = 0;
+
+  const initialFilter = {
+    start_date: `${from  } 00:00:00`,
+    end_date: `${to  } 23:59:59`,
+    status: 1
+  };
+
+  const initServerPagination = {
+    page: 1,
+    limit: DEFAULT_PERPAGE
+  };
 
   function* callWithCounting(order) {
     try {
@@ -266,6 +279,33 @@ function* createOrderLikeFunc(params) {
     }
   }
 
+  function* handleRouteSpecificActions() {
+    const currentRoute = window.location.pathname;
+    if (currentRoute.includes('/admin/tong-quan')) {
+      yield put(actionReport.likeStatisticLikeByOrderReportBegin());
+      yield put(actionReport.likeStatisticTaskSuccessInMinuteBegin());
+      yield put(actionReport.likeStatisticTaskDurationInMinuteBegin());
+      yield put(actionReport.likeStatisticOrderAmountBegin(initialFilter));
+      yield put(actionReport.likeStatisticAccountStatusLikeBegin(initialFilter));
+      yield put(actionReport.likeStatisticPerformanceLikeBegin(initialFilter));
+      yield put(actionReport.likeStatisticLikeByDayBegin(initialFilter));
+      yield put(actionReport.likeStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actionReport.likeStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actionReport.likeStatisticByStatusOrderBegin(initialFilter));
+      yield put(actionReport.likeStatisticRunningOrderBegin(initialFilter));
+      yield put(actionReport.likeStatisticTaskOfToolBegin(initialFilter));
+      yield put(actionReport.likeStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actionReport.likeStatisticUserPointBegin(initialFilter));
+      yield put(actionReport.likeStatisticTotalOrderBegin(initialFilter));
+      yield put(actionReport.likeStatisticOrderByDaysBegin(initialFilter));
+
+      yield put(actions.listComputerRunLikeBegin(initServerPagination));
+    } else if (currentRoute.includes('/admin/like/danh-sach-don')) {
+      yield put(actions.fetchListOrderLikeBegin({ page: 1, limit: DEFAULT_PERPAGE }));
+    }
+  }
+
   try {
     if (orderType === 'single') {
       const response = yield call(createOrderLikeAPI, orderSingle);
@@ -274,6 +314,8 @@ function* createOrderLikeFunc(params) {
         yield put(actions.createOrderLikeAdminSuccess(response?.data?.data));
         yield put(actions.fetchListOrderLikeBegin({ page: 1, limit: DEFAULT_PERPAGE }));
         toast.success('Tạo order like thành công');
+
+        yield* handleRouteSpecificActions();
       }
     } else if (orderType === 'multiple') {
       const responses = yield all(ordersArray.map(order => call(callWithCounting, order)));
@@ -287,6 +329,8 @@ function* createOrderLikeFunc(params) {
           console.error(`Order ${index + 1} failed:`, response.error || response.response);
         }
       });
+
+      yield* handleRouteSpecificActions();
     }
   } catch (error) {
     const errorMessage = error.response?.data?.message || 'Create order like failed';

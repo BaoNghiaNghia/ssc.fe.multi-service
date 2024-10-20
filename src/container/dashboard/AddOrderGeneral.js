@@ -36,13 +36,15 @@ function AddOrderGeneral() {
 
   const lineCountRef = useRef(null);
 
-  const { postLoading, listService, isOpenCreateOrder, detailService, categoryNewOrder } = useSelector((state) => {
+  const { postLoading, listService, isOpenCreateOrder, detailService, categoryNewOrder, fromDate, toDate } = useSelector((state) => {
     return {
       postLoading: state.settingService.postLoading,
       listService: state?.settingService?.listService?.items,
       isOpenCreateOrder: state?.reports?.isOpenCreateOrder,
       detailService: state?.settingService?.detailService,
       categoryNewOrder: state?.reports.categoryNewOrder,
+      fromDate: state?.reports?.filterRange?.from,
+      toDate: state?.reports?.filterRange?.to,
     };
   });
 
@@ -204,17 +206,17 @@ function AddOrderGeneral() {
               const nonEmptyRows = rows.filter(row => row.trim().length > 0);
               values.comments = nonEmptyRows.join('\n');
 
-              const payload = {
-                orrderSingle: values,
+              dispatch(actionsComment.createOrderCommentAdminBegin({
+                orderSingle: values,
                 orderType: stateCurr.orderType,
-              };
-
-              dispatch(actionsComment.createOrderCommentAdminBegin(payload));
+                from: fromDate,
+                to: toDate
+              }));
               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
               handleCancelAndResetForm();
             })
             .catch((err) => {
-                console.error("handle Real Error: ", err);
+              toast.error(err);
             });
     } else if (stateCurr.orderType === 'multiple') {
         formCreateOrder.validateFields()
@@ -237,16 +239,17 @@ function AddOrderGeneral() {
                           comments: nonEmptyRows.join('\n')
                         };
                     });
-                    console.log('--- data nè -0--', ordersArray);
                 dispatch(actionsComment.createOrderCommentAdminBegin({ 
                   orderType: stateCurr.orderType, 
-                  ordersArray
+                  ordersArray,
+                  from: fromDate,
+                  to: toDate
                 }));
                 dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                 handleCancelAndResetForm();
             })
             .catch((err) => {
-                console.error("handle Real Error: ", err);
+                toast.error(err);
             });
     }
 };
@@ -258,11 +261,12 @@ function AddOrderGeneral() {
             const { orderType } = stateCurr;
 
             if (orderType === 'single') {
-              const payload = {
-                orrderSingle: values,
-                orderType: stateCurr.orderType,
-              };
-                dispatch(actionsLike.createOrderLikeAdminBegin(payload));
+                dispatch(actionsLike.createOrderLikeAdminBegin({
+                  orderSingle: values,
+                  orderType: stateCurr.orderType,
+                  from: fromDate,
+                  to: toDate
+                }));
                 dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                 handleCancelAndResetForm();
             } else if (orderType === 'multiple') {
@@ -283,15 +287,16 @@ function AddOrderGeneral() {
 
                 dispatch(actionsLike.createOrderLikeAdminBegin({ 
                   orderType: stateCurr.orderType, 
-                  ordersArray
+                  ordersArray,
+                  from: fromDate,
+                  to: toDate
                 }));
                 dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                 handleCancelAndResetForm();
             }
         })
         .catch((err) => {
-            console.error("handle Real Error: ", err);
-            
+            toast.error(err);
         });
 };
 
@@ -300,15 +305,20 @@ function AddOrderGeneral() {
     try {
         formCreateOrder.validateFields()
             .then((values) => {
-                
+
                 if (stateCurr.orderType === 'single') {
-                    const payload = {
-                        orrderSingle: values,
-                        orderType: stateCurr.orderType,
-                    };
-                    dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(payload));
-                    dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                    handleCancelAndResetForm();
+                  const payload = {
+                    orderSingle: values,
+                    orderType: stateCurr.orderType,
+                    from: fromDate,
+                    to: toDate
+                  };
+
+                  console.log('----- data logs subscribe -----', payload);
+
+                  dispatch(actionsSubscribe.createOrderSubscribeAdminBegin(payload));
+                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                  handleCancelAndResetForm();
                 } else if (stateCurr.orderType === 'multiple') {
                     const ordersArray = values?.list_order.split('\n')
                         .filter(line => line.trim())
@@ -325,7 +335,9 @@ function AddOrderGeneral() {
                     
                     dispatch(actionsSubscribe.createOrderSubscribeAdminBegin({ 
                       orderType: stateCurr.orderType, 
-                      ordersArray
+                      ordersArray,
+                      from: fromDate,
+                      to: toDate
                     }));
                     dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                     handleCancelAndResetForm();
@@ -334,8 +346,8 @@ function AddOrderGeneral() {
             .catch((err) => {
                 console.error("Validation Error: ", err);
             });
-    } catch (e) {
-        console.log('---- error when submit subscribe -----', e);
+    } catch (err) {
+      toast.error(err);
     }
   };
 
@@ -347,11 +359,12 @@ function AddOrderGeneral() {
             const { orderType } = stateCurr;
 
             if (orderType === 'single') {
-              const payload = {
-                orrderSingle: values,
+              dispatch(actionsView.createOrderViewAdminBegin({
+                orderSingle: values,
                 orderType: stateCurr.orderType,
-              };
-              dispatch(actionsView.createOrderViewAdminBegin(payload));
+                from: fromDate,
+                to: toDate
+              }));
               dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
               handleCancelAndResetForm();
             } else if (orderType === 'multiple') {
@@ -372,15 +385,16 @@ function AddOrderGeneral() {
 
                 dispatch(actionsView.createOrderViewAdminBegin({ 
                   orderType: stateCurr.orderType, 
-                  ordersArray
+                  ordersArray,
+                  from: fromDate,
+                  to: toDate
                 }));
                 dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                 handleCancelAndResetForm();
             }
         })
         .catch((err) => {
-            console.error("handle Real Error: ", err);
-            
+          toast.error(err);
         });
   };
 

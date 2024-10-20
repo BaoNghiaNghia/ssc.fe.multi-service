@@ -1,6 +1,8 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
+import actionReport from '../reports/actions';
+
 import {
     viewOrderViewAPI,
     fetchListOrderViewAPI,
@@ -280,10 +282,21 @@ function* updateManyOrderViewFunc(params) {
 }
 
 function* createOrderViewFunc(params) {
-  const { orderType, ordersArray, orderSingle } = params?.payload || {};
+  const { orderType, ordersArray, orderSingle, from, to } = params?.payload || {};
 
   let successCount = 0;
   let failureCount = 0;
+
+  const initialFilter = {
+    start_date: `${from  } 00:00:00`,
+    end_date: `${to  } 23:59:59`,
+    status: 1
+  };
+
+  const initServerPagination = {
+    page: 1,
+    limit: DEFAULT_PERPAGE
+  };
 
   function* callWithCounting(order) {
     try {
@@ -303,6 +316,33 @@ function* createOrderViewFunc(params) {
     }
   }
 
+  function* handleRouteSpecificActions() {
+    const currentRoute = window.location.pathname;
+    if (currentRoute.includes('/admin/tong-quan')) {
+      yield put(actionReport.viewStatisticViewByOrderReportBegin());
+      yield put(actionReport.viewStatisticTaskSuccessInMinuteBegin());
+      yield put(actionReport.viewStatisticTaskDurationInMinuteBegin());
+      yield put(actionReport.viewStatisticOrderAmountBegin(initialFilter));
+      yield put(actionReport.viewStatisticAccountStatusViewBegin(initialFilter));
+      yield put(actionReport.viewStatisticPerformanceViewBegin(initialFilter));
+      yield put(actionReport.viewStatisticViewByDayBegin(initialFilter));
+      yield put(actionReport.viewStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actionReport.viewStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actionReport.viewStatisticByStatusOrderBegin(initialFilter));
+      yield put(actionReport.viewStatisticRunningOrderBegin(initialFilter));
+      yield put(actionReport.viewStatisticTaskOfToolBegin(initialFilter));
+      yield put(actionReport.viewStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actionReport.viewStatisticUserPointBegin(initialFilter));
+      yield put(actionReport.viewStatisticTotalOrderBegin(initialFilter));
+      yield put(actionReport.viewStatisticOrderByDaysBegin(initialFilter));
+
+      yield put(actions.listComputerRunViewBegin(initServerPagination));
+    } else if (currentRoute.includes('/admin/view/danh-sach-don')) {
+      yield put(actions.fetchListOrderViewBegin({ page: 1, limit: DEFAULT_PERPAGE }));
+    }
+  }
+
   try {
     if (orderType === 'single') {
       const response = yield call(createOrderViewAPI, orderSingle);
@@ -312,6 +352,7 @@ function* createOrderViewFunc(params) {
         yield put(actions.fetchListOrderViewBegin({ page: 1, limit: DEFAULT_PERPAGE }));
 
         toast.success('Tạo order view thành công');
+        yield* handleRouteSpecificActions();
       }
     } else if (orderType === 'multiple') {
       const responses = yield all(ordersArray.map(order => call(callWithCounting, order)));
@@ -325,6 +366,7 @@ function* createOrderViewFunc(params) {
           console.error(`Order ${index + 1} failed:`, response.error || response.response);
         }
       });
+      yield* handleRouteSpecificActions();
     }
   } catch (error) {
     const errorMessage = error.response?.data?.data?.error || error.response?.data?.message || 'Create order view failed';

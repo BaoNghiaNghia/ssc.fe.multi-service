@@ -1,6 +1,7 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
+import actionReport from '../reports/actions';
 import {
   fetchAdminSettingAPI,
   fetchListOrderSubscribeAPI,
@@ -360,11 +361,21 @@ function* updateManyOrderSubscribeFunc(params) {
 }
 
 function* createOrderSubscribeFunc(params) {
-  // eslint-disable-next-line no-unsafe-optional-chaining
-  const { orderType, ordersArray, orderSingle } = params?.payload;
+  const { orderType, ordersArray, orderSingle, from, to } = params?.payload || {};
 
   let successCount = 0;
   let failureCount = 0;
+
+  const initialFilter = {
+    start_date: `${from  } 00:00:00`,
+    end_date: `${to  } 23:59:59`,
+    status: 1
+  };
+
+  const initServerPagination = {
+    page: 1,
+    limit: DEFAULT_PERPAGE
+  };
 
   function* callWithCounting(order) {
     try {
@@ -376,11 +387,37 @@ function* createOrderSubscribeFunc(params) {
       } 
         failureCount += 1;
         return { status: 'error', response };
-      
     } catch (error) {
       failureCount += 1;
       console.error(`Error processing order ${order}:`, error);
       return { status: 'error', error };
+    }
+  }
+
+  function* handleRouteSpecificActions() {
+    const currentRoute = window.location.pathname;
+    if (currentRoute.includes('/admin/tong-quan')) {
+      yield put(actionReport.subscribeStatisticSubscribeByOrderReportBegin());
+      yield put(actionReport.subscribeStatisticTaskSuccessInMinuteBegin());
+      yield put(actionReport.subscribeStatisticTaskDurationInMinuteBegin());
+      yield put(actionReport.subscribeStatisticOrderAmountBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticAccountStatusSubscribeBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticPerformanceSubscribeBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticSubscribeByDayBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actionReport.subscribeStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticByStatusOrderBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticRunningOrderBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticTaskOfToolBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticUserPointBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticTotalOrderBegin(initialFilter));
+      yield put(actionReport.subscribeStatisticOrderByDaysBegin(initialFilter));
+
+      yield put(actions.listComputerRunSubscribeBegin(initServerPagination));
+    } else if (currentRoute.includes('/admin/subscribe/danh-sach-don')) {
+      yield put(actions.fetchListOrderSubscribeBegin({ page: 1, limit: DEFAULT_PERPAGE }));
     }
   }
 
@@ -393,6 +430,7 @@ function* createOrderSubscribeFunc(params) {
         yield put(actions.fetchListOrderSubscribeBegin({ page: 1, limit: DEFAULT_PERPAGE }));
 
         toast.success('Tạo order subscribe thành công');
+        yield* handleRouteSpecificActions();
       }
     } else if (orderType === 'multiple') {
       const responses = yield all(ordersArray.map(order => call(callWithCounting, order)));
@@ -406,6 +444,7 @@ function* createOrderSubscribeFunc(params) {
           console.error(`Order ${index + 1} failed:`, response.error || response.response);
         }
       });
+      yield* handleRouteSpecificActions();
     }
   } catch (error) {
     const errorMessage = error.response?.data?.data?.error || error.response?.data?.message || 'Create order subscribe failed';
@@ -414,8 +453,6 @@ function* createOrderSubscribeFunc(params) {
     toast.error(`Tạo đơn hàng subscribe không thành công. Thành công ${successCount} đơn. Thất bại ${failureCount} đơn.`);
   }
 }
-
-
 
 function* fetchListOrderSubscribeFunc(params) {
   try {

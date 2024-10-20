@@ -1,6 +1,7 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actions from "./actions";
+import actionReport from '../reports/actions';
 import {
     commentOrderCommentAPI,
     fetchListOrderCommentAPI,
@@ -261,10 +262,21 @@ function* updateManyOrderCommentFunc(params) {
 }
 
 function* createOrderCommentFunc(params) {
-  const { orderType, ordersArray, orderSingle } = params?.payload || {};
-  
+  const { orderType, ordersArray, orderSingle, from, to } = params?.payload || {};
+
   let successCount = 0;
   let failureCount = 0;
+
+  const initialFilter = {
+    start_date: `${from  } 00:00:00`,
+    end_date: `${to  } 23:59:59`,
+    status: 1
+  };
+
+  const initServerPagination = {
+    page: 1,
+    limit: DEFAULT_PERPAGE
+  };
 
   function* callWithCounting(comment) {
     try {
@@ -284,6 +296,33 @@ function* createOrderCommentFunc(params) {
     }
   }
 
+  function* handleRouteSpecificActions() {
+    const currentRoute = window.location.pathname;
+    if (currentRoute.includes('/admin/tong-quan')) {
+      yield put(actionReport.commentStatisticCommentByOrderReportBegin());
+      yield put(actionReport.commentStatisticTaskSuccessInMinuteBegin());
+      yield put(actionReport.commentStatisticTaskDurationInMinuteBegin());
+      yield put(actionReport.commentStatisticOrderAmountBegin(initialFilter));
+      yield put(actionReport.commentStatisticAccountStatusCommentBegin(initialFilter));
+      yield put(actionReport.commentStatisticPerformanceCommentBegin(initialFilter));
+      yield put(actionReport.commentStatisticCommentByDayBegin(initialFilter));
+      yield put(actionReport.commentStatisticComputerThreadBegin(initialFilter));
+
+      yield put(actionReport.commentStatisticAccountOnComputerBegin(initialFilter));
+      yield put(actionReport.commentStatisticByStatusOrderBegin(initialFilter));
+      yield put(actionReport.commentStatisticRunningOrderBegin(initialFilter));
+      yield put(actionReport.commentStatisticTaskOfToolBegin(initialFilter));
+      yield put(actionReport.commentStatisticRunningUserOrderBegin(initialFilter));
+      yield put(actionReport.commentStatisticUserPointBegin(initialFilter));
+      yield put(actionReport.commentStatisticTotalOrderBegin(initialFilter));
+      yield put(actionReport.commentStatisticOrderByDaysBegin(initialFilter));
+
+      yield put(actions.listComputerRunCommentBegin(initServerPagination));
+    } else if (currentRoute.includes('/admin/comment/danh-sach-don')) {
+      yield put(actions.fetchListOrderCommentBegin({ page: 1, limit: DEFAULT_PERPAGE }));
+    }
+  }
+
   try {
     if (orderType === 'single') {
       const response = yield call(createOrderCommentAPI, orderSingle);
@@ -293,6 +332,7 @@ function* createOrderCommentFunc(params) {
         yield put(actions.fetchListOrderCommentBegin({ page: 1, limit: DEFAULT_PERPAGE }));
 
         toast.success('Tạo order comment thành công');
+        yield* handleRouteSpecificActions();
       }
     } else if (orderType === 'multiple') {
       const responses = yield all(ordersArray.map(orderItem => call(callWithCounting, orderItem)));
@@ -306,6 +346,8 @@ function* createOrderCommentFunc(params) {
           console.error(`Comment ${index + 1} failed:`, response.error || response.response);
         }
       });
+
+      yield* handleRouteSpecificActions();
     }
   } catch (error) {
     const errorMessage = error?.response?.data?.data?.error || error?.response?.data?.message || 'Create order comment failed';

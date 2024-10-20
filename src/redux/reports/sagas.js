@@ -1667,8 +1667,6 @@ function* setRangeDateFilterFunc(params) {
     };
 
     if (isType === SERVICE_TYPE.SUBSCRIBE.title) {
-      console.log('----- range filter with subscribe ------');
-
       yield put(actions.subscribeStatisticSubscribeByOrderReportBegin());
       yield put(actions.subscribeStatisticTaskSuccessInMinuteBegin());
       yield put(actions.subscribeStatisticTaskDurationInMinuteBegin());
@@ -1692,8 +1690,6 @@ function* setRangeDateFilterFunc(params) {
     }
 
     if (isType === SERVICE_TYPE.VIEW.title) {
-      console.log('----- range filter with view ------');
-
       yield put(actions.viewStatisticViewByOrderReportBegin());
       yield put(actions.viewStatisticTaskSuccessInMinuteBegin());
       yield put(actions.viewStatisticTaskDurationInMinuteBegin());
