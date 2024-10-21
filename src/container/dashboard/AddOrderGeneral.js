@@ -722,7 +722,7 @@ function AddOrderGeneral() {
               </Form.Item>
             </Col>
             <Col sm={5}>
-              <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
+              <Tooltip title={`Min: ${numberWithCommas(detailService?.min)} & Max: ${numberWithCommas(detailService?.max)}`} placement="left">
                 <Form.Item
                   name="quantity"
                   label="Số subscribe"
@@ -765,7 +765,7 @@ function AddOrderGeneral() {
                         }));
                       }
                     }}
-                    placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
+                    placeholder={`Min: ${numberWithCommas(detailService?.min)} & Max: ${numberWithCommas(detailService?.max)}`}
                   />
                 </Form.Item>
               </Tooltip>
@@ -903,7 +903,7 @@ function AddOrderGeneral() {
                 </Form.Item>
               </Col>
               <Col sm={5}>
-                <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement='left'>
+                <Tooltip title={`Min: ${numberWithCommas(detailService?.min)} & Max: ${numberWithCommas(detailService?.max)}`} placement='left'>
                   <Form.Item
                     name="quantity"
                     label="Số like"
@@ -936,7 +936,7 @@ function AddOrderGeneral() {
                       }}
                       min={detailService?.min}
                       max={detailService?.max}
-                      placeholder={`Min: ${detailService?.min} & Max: ${detailService?.max}`}
+                      placeholder={`Min: ${numberWithCommas(detailService?.min)} & Max: ${numberWithCommas(detailService?.max)}`}
                     />
                   </Form.Item>
                 </Tooltip>
@@ -1087,7 +1087,7 @@ function AddOrderGeneral() {
 
               {/* Quantity input field */}
               <Col sm={5}>
-                <Tooltip title={`Min: ${detailService?.min} & Max: ${detailService?.max}`} placement="left">
+                <Tooltip title={`Min: ${numberWithCommas(detailService?.min)} & Max: ${numberWithCommas(detailService?.max)}`} placement="left">
                   <Form.Item
                     name="quantity"
                     label="Số lượng"
@@ -1609,7 +1609,7 @@ function AddOrderGeneral() {
                       </div>
                     </Card>
                     {
-                      (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0 && stateCurr?.amountChange <= detailService?.max) ? (
+                      (stateCurr.orderType === 'single' && stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0 && stateCurr?.amountChange <= detailService?.max) ? (
                         <Card
                           size="small"
                           style={{
