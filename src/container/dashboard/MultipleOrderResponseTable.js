@@ -10,6 +10,11 @@ const { Link } = Typography;
 const MultipleOrderResponseTable = ({ data }) => {
   const successColumns = [
     {
+      title: 'No.',
+      key: 'index',
+      render: (text, record, index) => <span>{index + 1}</span>, // Add index starting from 1
+    },
+    {
       title: 'Order ID',
       dataIndex: ['result', 'order_id'],
       key: 'orderID',
@@ -68,6 +73,11 @@ const MultipleOrderResponseTable = ({ data }) => {
 
   const failedColumns = [
     {
+      title: 'No.',
+      key: 'index',
+      render: (text, record, index) => <span>{index + 1}</span>, // Add index starting from 1
+    },
+    {
       title: 'Đường dẫn',
       dataIndex: ['order', 'link'],
       key: 'orderLink',
@@ -87,36 +97,44 @@ const MultipleOrderResponseTable = ({ data }) => {
   ];
 
   return (
-    <div>
-      {data.success && data.success.length > 0 && (
-        <>
-          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-            <FaCircleCheck style={{ color: 'green', marginBottom: '7px', marginRight: '7px' }}/>
-            <h3 style={{ fontWeight: 700 }}>Thành công</h3>
+    <>
+      <div>
+        Tổng cộng: <strong>{(data?.success?.length || 0) + (data?.failed?.length || 0)}</strong> đơn. 
+        Thành công <strong>{data?.success?.length || 0}</strong> đơn. 
+        Thất bại <strong>{data?.failed?.length || 0}</strong> đơn.
+      </div>
+
+      <div>
+        {data?.success?.length > 0 && (
+          <>
+            <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+              <FaCircleCheck style={{ color: 'green', marginBottom: '7px', marginRight: '7px' }}/>
+              <h3 style={{ fontWeight: 700 }}>Thành công {data?.success?.length > 0 ? <>(<>{data?.success?.length}</>)</> : null}</h3>
+            </div>
+            <Table
+              dataSource={data?.success}
+              columns={successColumns}
+              rowKey={(record) => record?.result?.id}
+              pagination={false}
+            />
+          </>
+        )}
+        {data?.failed?.length > 0 && (
+          <div style={{ marginTop: '20px' }}>
+            <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+              <AiFillCloseCircle style={{ color: 'red', marginBottom: '7px', marginRight: '7px' }}/>
+              <h3 style={{ fontWeight: 700 }}>Thất bại {data?.failed?.length > 0 ? <>(<>{data?.failed?.length}</>)</> : null}</h3>
+            </div>
+            <Table
+              dataSource={data?.failed}
+              columns={failedColumns}
+              rowKey={(record) => record?.order?.link}
+              pagination={false}
+            />
           </div>
-          <Table
-            dataSource={data.success}
-            columns={successColumns}
-            rowKey={(record) => record.result.id}
-            pagination={false}
-          />
-        </>
-      )}
-      {data.failed && data.failed.length > 0 && (
-        <div style={{ marginTop: '20px' }}>
-          <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-            <AiFillCloseCircle style={{ color: 'red', marginBottom: '7px', marginRight: '7px' }}/>
-            <h3 style={{ fontWeight: 700 }}>Thất bại</h3>
-          </div>
-          <Table
-            dataSource={data.failed}
-            columns={failedColumns}
-            rowKey={(record) => record.order.link}
-            pagination={false}
-          />
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

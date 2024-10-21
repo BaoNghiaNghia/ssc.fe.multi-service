@@ -216,6 +216,10 @@ function AddOrderGeneral() {
 
           if (stateCurr.orderType === 'single') {
             payload.orderSingle = values;
+
+            dispatch(actionsComment.createOrderCommentAdminBegin(payload));
+            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            handleCancelAndResetForm();
           } else if (stateCurr.orderType === 'multiple') {
             const listOrders = values?.list_order;
             const ordersArray = listOrders
@@ -233,11 +237,9 @@ function AddOrderGeneral() {
                 };
               });
             payload.ordersArray = ordersArray;
-          }
 
-          dispatch(actionsComment.createOrderCommentAdminBegin(payload));
-          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-          handleCancelAndResetForm();
+            dispatch(actionsComment.createOrderCommentAdminBegin(payload));
+          }
         })
         .catch((err) => {
           toast.error(err);
@@ -283,8 +285,6 @@ function AddOrderGeneral() {
               from: fromDate,
               to: toDate
             }));
-            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-            handleCancelAndResetForm();
           }
         })
         .catch((err) => {
@@ -330,8 +330,6 @@ function AddOrderGeneral() {
               from: fromDate,
               to: toDate
             }));
-            // dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-            // handleCancelAndResetForm();
           }
         })
         .catch((err) => {
@@ -379,8 +377,6 @@ function AddOrderGeneral() {
               from: fromDate,
               to: toDate
             }));
-            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-            handleCancelAndResetForm();
           }
         })
         .catch((err) => {
@@ -1295,14 +1291,22 @@ function AddOrderGeneral() {
       onOk={handleOk}
       onCancel={handleCancelAndResetForm}
       style={{ backgroundColor: 'gray' }}
-      footer={[
-        <Button key="back" onClick={handleCancelAndResetForm}>
-          Hủy
-        </Button>,
-        <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
-          Xác nhận
-        </Button>
-      ]}
+      footer={
+        Object.keys(respMultipleOrder).length > 0
+          ? [
+              <Button key="back" onClick={handleCancelAndResetForm}>
+                Hủy
+              </Button>
+            ]
+          : [
+            <Button key="back" onClick={handleCancelAndResetForm}>
+              Hủy
+            </Button>,
+            <Button key="submit" type="primary" loading={postLoading} onClick={handleOk}>
+              Xác nhận
+            </Button>,
+          ]
+      }
     >
 
       {
