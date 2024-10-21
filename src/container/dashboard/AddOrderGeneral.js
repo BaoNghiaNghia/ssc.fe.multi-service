@@ -199,105 +199,98 @@ function AddOrderGeneral() {
   }, [dispatch]);
 
   const handleSubmitComment = () => {
-    if (stateCurr.orderType === 'single') {
-        formCreateOrder.validateFields()
-            .then((values) => {
-              const rows = values?.comments?.split('\n') || [];
-              const nonEmptyRows = rows.filter(row => row.trim().length > 0);
-              values.comments = nonEmptyRows.join('\n');
-
-              dispatch(actionsComment.createOrderCommentAdminBegin({
-                orderSingle: values,
-                orderType: stateCurr.orderType,
-                from: fromDate,
-                to: toDate
-              }));
-              dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-              handleCancelAndResetForm();
-            })
-            .catch((err) => {
-              toast.error(err);
-            });
-    } else if (stateCurr.orderType === 'multiple') {
-        formCreateOrder.validateFields()
-            .then((values) => {
-                const listOrders = values?.list_order;
-                const rows = values?.comments?.split('\n') || [];
-                const nonEmptyRows = rows.filter(row => row.trim().length > 0);
-
-                const ordersArray = listOrders
-                    .split('\n')
-                    .filter(line => line.trim())
-                    .map(line => {
-                        const [link, quantity] = line.split('|').map(item => item.trim());
-                        return {
-                          link,
-                          // quantity: Number(quantity),
-                          platform: values?.platform,
-                          category: values?.category,
-                          service_id: values?.service_id,
-                          comments: nonEmptyRows.join('\n')
-                        };
-                    });
-                dispatch(actionsComment.createOrderCommentAdminBegin({ 
-                  orderType: stateCurr.orderType, 
-                  ordersArray,
-                  from: fromDate,
-                  to: toDate
-                }));
-                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                handleCancelAndResetForm();
-            })
-            .catch((err) => {
-                toast.error(err);
-            });
-    }
-};
-
-
-  const handleSubmitLike = () => {
-    formCreateOrder.validateFields()
+    try {
+      formCreateOrder.validateFields()
         .then((values) => {
-            const { orderType } = stateCurr;
-
-            if (orderType === 'single') {
-                dispatch(actionsLike.createOrderLikeAdminBegin({
-                  orderSingle: values,
-                  orderType: stateCurr.orderType,
-                  from: fromDate,
-                  to: toDate
-                }));
-                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                handleCancelAndResetForm();
-            } else if (orderType === 'multiple') {
-                const listOrders = values?.list_order;
-                const ordersArray = listOrders
-                    .split('\n')
-                    .filter(line => line.trim())
-                    .map(line => {
-                        const [link, quantity] = line.split('|').map(item => item.trim());
-                        return {
-                          link,
-                          quantity: Number(quantity),
-                          platform: values?.platform,
-                          category: values?.category,
-                          service_id: values?.service_id
-                        };
-                    });
-
-                dispatch(actionsLike.createOrderLikeAdminBegin({ 
-                  orderType: stateCurr.orderType, 
-                  ordersArray,
-                  from: fromDate,
-                  to: toDate
-                }));
-                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                handleCancelAndResetForm();
-            }
+          const rows = values?.comments?.split('\n') || [];
+          const nonEmptyRows = rows.filter(row => row.trim().length > 0);
+          values.comments = nonEmptyRows.join('\n');
+  
+          const payload = {
+            orderType: stateCurr.orderType,
+            from: fromDate,
+            to: toDate
+          };
+  
+          if (stateCurr.orderType === 'single') {
+            payload.orderSingle = values;
+          } else if (stateCurr.orderType === 'multiple') {
+            const listOrders = values?.list_order;
+            const ordersArray = listOrders
+              .split('\n')
+              .filter(line => line.trim())
+              .map(line => {
+                const [link, quantity] = line.split('|').map(item => item.trim());
+                return {
+                  link,
+                  // quantity: Number(quantity),
+                  platform: values?.platform,
+                  category: values?.category,
+                  service_id: values?.service_id,
+                  comments: values.comments
+                };
+              });
+            payload.ordersArray = ordersArray;
+          }
+  
+          dispatch(actionsComment.createOrderCommentAdminBegin(payload));
+          dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+          handleCancelAndResetForm();
         })
         .catch((err) => {
-            toast.error(err);
+          toast.error(err);
         });
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const handleSubmitLike = () => {
+    try {
+      formCreateOrder.validateFields()
+          .then((values) => {
+              const { orderType } = stateCurr;
+  
+              if (orderType === 'single') {
+                  dispatch(actionsLike.createOrderLikeAdminBegin({
+                    orderSingle: values,
+                    orderType: stateCurr.orderType,
+                    from: fromDate,
+                    to: toDate
+                  }));
+                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                  handleCancelAndResetForm();
+              } else if (orderType === 'multiple') {
+                  const listOrders = values?.list_order;
+                  const ordersArray = listOrders
+                      .split('\n')
+                      .filter(line => line.trim())
+                      .map(line => {
+                          const [link, quantity] = line.split('|').map(item => item.trim());
+                          return {
+                            link,
+                            quantity: Number(quantity),
+                            platform: values?.platform,
+                            category: values?.category,
+                            service_id: values?.service_id
+                          };
+                      });
+                  dispatch(actionsLike.createOrderLikeAdminBegin({ 
+                    orderType: stateCurr.orderType, 
+                    ordersArray,
+                    from: fromDate,
+                    to: toDate
+                  }));
+                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                  handleCancelAndResetForm();
+              }
+          })
+          .catch((err) => {
+              toast.error(err);
+          });
+    } catch (err) {
+      toast.error(err);
+    }
 };
 
 
@@ -350,48 +343,52 @@ function AddOrderGeneral() {
 
 
   const handleSubmitView = () => {
-    formCreateOrder.validateFields()
-        .then((values) => {
-            const { orderType } = stateCurr;
-
-            if (orderType === 'single') {
-              dispatch(actionsView.createOrderViewAdminBegin({
-                orderSingle: values,
-                orderType: stateCurr.orderType,
-                from: fromDate,
-                to: toDate
-              }));
-              dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-              handleCancelAndResetForm();
-            } else if (orderType === 'multiple') {
-                const listOrders = values?.list_order;
-                const ordersArray = listOrders
-                    .split('\n')
-                    .filter(line => line.trim())
-                    .map(line => {
-                        const [link, quantity] = line.split('|').map(item => item.trim());
-                        return {
-                          link,
-                          quantity: Number(quantity),
-                          platform: values?.platform,
-                          category: values?.category,
-                          service_id: values?.service_id
-                        };
-                    });
-
-                dispatch(actionsView.createOrderViewAdminBegin({ 
-                  orderType: stateCurr.orderType, 
-                  ordersArray,
+    try {
+      formCreateOrder.validateFields()
+          .then((values) => {
+              const { orderType } = stateCurr;
+  
+              if (orderType === 'single') {
+                dispatch(actionsView.createOrderViewAdminBegin({
+                  orderSingle: values,
+                  orderType: stateCurr.orderType,
                   from: fromDate,
                   to: toDate
                 }));
                 dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
                 handleCancelAndResetForm();
-            }
-        })
-        .catch((err) => {
-          toast.error(err);
-        });
+              } else if (orderType === 'multiple') {
+                  const listOrders = values?.list_order;
+                  const ordersArray = listOrders
+                      .split('\n')
+                      .filter(line => line.trim())
+                      .map(line => {
+                          const [link, quantity] = line.split('|').map(item => item.trim());
+                          return {
+                            link,
+                            quantity: Number(quantity),
+                            platform: values?.platform,
+                            category: values?.category,
+                            service_id: values?.service_id
+                          };
+                      });
+  
+                  dispatch(actionsView.createOrderViewAdminBegin({ 
+                    orderType: stateCurr.orderType, 
+                    ordersArray,
+                    from: fromDate,
+                    to: toDate
+                  }));
+                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+                  handleCancelAndResetForm();
+              }
+          })
+          .catch((err) => {
+            toast.error(err);
+          });
+    } catch (err) {
+      toast.error(err);
+    }
   };
 
 
