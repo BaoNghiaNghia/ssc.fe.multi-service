@@ -364,6 +364,8 @@ function* createOrderSubscribeFunc(params) {
   const { orderType, ordersArray, orderSingle, from, to } = params?.payload || {};
 
   let successCount = 0;
+  const objectSuccess = [];
+  const objectFailed = [];
   let failureCount = 0;
 
   const initialFilter = {
@@ -377,19 +379,33 @@ function* createOrderSubscribeFunc(params) {
     limit: DEFAULT_PERPAGE
   };
 
-  function* callWithCounting(order) {
+ function* callWithCounting(order) {
     try {
       const response = yield call(createOrderSubscribeAPI, order);
 
       if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
         successCount += 1;
+        objectSuccess.push({
+          order,
+          result: response?.data?.data
+        });
         return response;
-      } 
-        failureCount += 1;
-        return { status: 'error', response };
+      }
+      
+      failureCount += 1;
+      objectFailed.push({
+        order,
+        result: response?.data?.data || null
+      });
+
+      return { status: 'error', response };
     } catch (error) {
       failureCount += 1;
-      console.error(`Error processing order ${order}:`, error);
+      objectFailed.push({
+        order,
+        result: error?.response?.data || null
+      });
+
       return { status: 'error', error };
     }
   }
@@ -446,6 +462,12 @@ function* createOrderSubscribeFunc(params) {
       });
       yield* handleRouteSpecificActions();
     }
+
+    yield put(actionReport.setResponseMultipleOrderCreated({
+      success: objectSuccess,
+      failed: objectFailed
+    }));
+
   } catch (error) {
     const errorMessage = error.response?.data?.data?.error || error.response?.data?.message || 'Create order subscribe failed';
     yield put(actions.createOrderSubscribeAdminErr({ error: errorMessage }));

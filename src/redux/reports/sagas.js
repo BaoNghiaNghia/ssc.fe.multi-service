@@ -1640,6 +1640,9 @@ function* toggleStateModalCreateOrderFunc(params) {
     yield put(
       actions.toggleModalCreateOrderSuccess(!params?.payload)
     );
+
+    // Reset all data of multiple order created, when init modal. 
+    yield put(actions.setResponseMultipleOrderCreated({}));
   } catch (err) {
     yield put(
       actions.toggleModalCreateOrderErr({ error: err || 'Toggle modal create order failed' })

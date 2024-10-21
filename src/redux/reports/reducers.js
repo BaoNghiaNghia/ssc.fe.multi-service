@@ -38,6 +38,7 @@ const initialState = {
   ratioSubSvg: 0,
   countError: {},
   orderByDays: [],
+  respMultipleOrder: {},
   loading: false,
   error: null
 };
@@ -339,11 +340,18 @@ const {
   VALIDATE_YOUTUBE_VIDEO_LINK_ERR,
   VALIDATE_YOUTUBE_VIDEO_LINK_SUCCESS,
 
+  RESPONSE_MULTIPLE_ORDER_CREATED,
 } = actions;
 
 const ReportsReducer = (state = initialState, action) => {
   const { type, data, err } = action;
   switch (type) {
+    case RESPONSE_MULTIPLE_ORDER_CREATED:
+      return {
+        ...state,
+        respMultipleOrder: action?.payload
+      };
+
     case COMMENT_STATISTIC_ORDER_BY_DAYS_BEGIN:
       return {
         ...state,

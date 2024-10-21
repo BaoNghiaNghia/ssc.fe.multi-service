@@ -98,7 +98,6 @@ const actions = {
     FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_ERR: 'FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_ERR',
 
 
-
     fetchListSubscribeInChannelByDayBegin: (payload) => {
         return {
           type: actions.FETCH_LIST_SUBSCRIBE_IN_CHANNEL_BY_DAY_BEGIN,

@@ -12,7 +12,9 @@ import { TiTick } from "react-icons/ti";
 import { isEmpty } from 'lodash';
 
 import { toast } from 'react-toastify';
+import MultipleOrderResponseTable from './MultipleOrderResponseTable';
 import actionsComment from '../../redux/buffComment/actions';
+
 import actionsLike from '../../redux/buffLike/actions';
 import actionsSubscribe from '../../redux/buffSubscribe/actions';
 import actionsView from '../../redux/buffView/actions';
@@ -23,7 +25,6 @@ import { countDuplicateLines, handleCountValidateCommentString, isYouTubeValidUr
 import { COLOR_GENERAL, VIETNAMES_CURRENCY, LIST_SERVICE_SUPPLY, SERVICE_VIEW_TYPE, badgeGrayStyle, singleOrderIcon, multiplOrderIcon, badgeGreenStyle, badgeRedStyle, badgeOrangeStyle, REGEX_MULTIPLE_ORDER_FORMAT } from '../../variables';
 import { validateYoutubeLinkCommentVideoAPI, validateYoutubeLinkLikeVideoAPI, validateYoutubeLinkSubscribeVideoAPI, validateYoutubeLinkViewVideoAPI } from '../../config/api/Reports';
 
-import EmptyBackground from '../../static/img/empty_bg_2.png';
 import EmptyBackgroundVideo from '../../static/videos/empty_video.mp4';
 
 
@@ -36,7 +37,7 @@ function AddOrderGeneral() {
 
   const lineCountRef = useRef(null);
 
-  const { postLoading, listService, isOpenCreateOrder, detailService, categoryNewOrder, fromDate, toDate } = useSelector((state) => {
+  const { postLoading, listService, isOpenCreateOrder, detailService, categoryNewOrder, fromDate, toDate, respMultipleOrder } = useSelector((state) => {
     return {
       postLoading: state.settingService.postLoading,
       listService: state?.settingService?.listService?.items,
@@ -45,6 +46,7 @@ function AddOrderGeneral() {
       categoryNewOrder: state?.reports.categoryNewOrder,
       fromDate: state?.reports?.filterRange?.from,
       toDate: state?.reports?.filterRange?.to,
+      respMultipleOrder: state?.reports?.respMultipleOrder
     };
   });
 
@@ -94,7 +96,7 @@ function AddOrderGeneral() {
       listServiceCollection: listService?.filter(service => service?.category === categoryNewOrder),
       orderType: 'single'
     });
-    
+
     dispatch(reportActions.setCategoryInNewOrderBegin(categoryNewOrder));
 
     setHelpMessage({});
@@ -108,15 +110,15 @@ function AddOrderGeneral() {
   const handleValidateLink = async (value) => {
     let status = 'success';
     let help = '';
-  
+
     const quantity = Number(formCreateOrder.getFieldValue('quantity'));
-  
+
     try {
       if (categoryNewOrder === 'Subscribers') {
         if (!isYouTubeValidUrl(value)) {
           return { status: false, help: 'Đường dẫn Youtube không hợp lệ' };
         }
-  
+
         if (!quantity || quantity === 0) {
           toast.warning('Cần nhập thêm số lượng subscribe');
           return { status: false, help: '' };
@@ -124,24 +126,24 @@ function AddOrderGeneral() {
       } else if (!validateYouTubeUrl(value)) {
         return { status: false, help: 'Đường dẫn video Youtube không hợp lệ' };
       }
-  
+
       const responseValidVideo = await validateVideoLink(value);
       if (responseValidVideo?.data?.error_code !== 0) {
         status = 'error';
         help = 'Đường dẫn video Youtube không hợp lệ';
       } else {
         const validData = responseValidVideo.data.data;
-  
+
         if (categoryNewOrder === 'Subscribers') {
           const jumpStep = validData?.jump_step_response?.jump_step;
           let existingErrorsQuantity = formCreateOrder.getFieldError('quantity') || [];
-  
+
           const messageErrorNotFullfil = `Số subscribe phải là bội số của ${numberWithCommas(jumpStep)}`;
           existingErrorsQuantity = existingErrorsQuantity.filter((error) => error !== messageErrorNotFullfil);
-  
+
           if (typeof jumpStep === 'number' && typeof quantity === 'number') {
             const validJumpStep = quantity % jumpStep;
-  
+
             const errors = validJumpStep !== 0 ? [messageErrorNotFullfil] : [];
             formCreateOrder.setFields([{ name: 'quantity', errors }]);
           } else {
@@ -149,7 +151,7 @@ function AddOrderGeneral() {
             console.log('validData or jump_step_response is not defined or jump_step is not a valid number.');
           }
         }
-  
+
         const mapping = (categoryNewOrder === 'Subscribers')
           ? {
             'Video subscribe': 'exist_video',
@@ -166,7 +168,7 @@ function AddOrderGeneral() {
             'Đường dẫn': 'is_valid_link',
             'Video tồn tại': 'is_exist_video',
           };
-  
+
         const mappedObj = Object.keys(mapping).reduce((acc, title) => {
           const mappedKey = mapping[title];
           if (validData[mappedKey] !== undefined) {
@@ -174,12 +176,12 @@ function AddOrderGeneral() {
           }
           return acc;
         }, {});
-  
+
         const isValid = Object.keys(mappedObj).every((key) => {
           if (key === 'Livestream') return true;
           return mappedObj[key];
         });
-  
+
         help = createCustomHelp(mappedObj);
         status = isValid ? 'success' : 'error';
       }
@@ -188,12 +190,12 @@ function AddOrderGeneral() {
       status = 'error';
       help = 'Lỗi xác thực liên kết YouTube';
     }
-  
+
     setHelpMessage((prevHelp) => ({ ...prevHelp, link: help }));
-  
+
     return { status: status === 'success', help };
   };
-  
+
   useEffect(() => {
     dispatch(serviceSettingsAction.fetchListServiceBegin());
   }, [dispatch]);
@@ -205,13 +207,13 @@ function AddOrderGeneral() {
           const rows = values?.comments?.split('\n') || [];
           const nonEmptyRows = rows.filter(row => row.trim().length > 0);
           values.comments = nonEmptyRows.join('\n');
-  
+
           const payload = {
             orderType: stateCurr.orderType,
             from: fromDate,
             to: toDate
           };
-  
+
           if (stateCurr.orderType === 'single') {
             payload.orderSingle = values;
           } else if (stateCurr.orderType === 'multiple') {
@@ -232,7 +234,7 @@ function AddOrderGeneral() {
               });
             payload.ordersArray = ordersArray;
           }
-  
+
           dispatch(actionsComment.createOrderCommentAdminBegin(payload));
           dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
           handleCancelAndResetForm();
@@ -248,144 +250,142 @@ function AddOrderGeneral() {
   const handleSubmitLike = () => {
     try {
       formCreateOrder.validateFields()
-          .then((values) => {
-              const { orderType } = stateCurr;
-  
-              if (orderType === 'single') {
-                  dispatch(actionsLike.createOrderLikeAdminBegin({
-                    orderSingle: values,
-                    orderType: stateCurr.orderType,
-                    from: fromDate,
-                    to: toDate
-                  }));
-                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                  handleCancelAndResetForm();
-              } else if (orderType === 'multiple') {
-                  const listOrders = values?.list_order;
-                  const ordersArray = listOrders
-                      .split('\n')
-                      .filter(line => line.trim())
-                      .map(line => {
-                          const [link, quantity] = line.split('|').map(item => item.trim());
-                          return {
-                            link,
-                            quantity: Number(quantity),
-                            platform: values?.platform,
-                            category: values?.category,
-                            service_id: values?.service_id
-                          };
-                      });
-                  dispatch(actionsLike.createOrderLikeAdminBegin({ 
-                    orderType: stateCurr.orderType, 
-                    ordersArray,
-                    from: fromDate,
-                    to: toDate
-                  }));
-                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                  handleCancelAndResetForm();
-              }
-          })
-          .catch((err) => {
-              toast.error(err);
-          });
-    } catch (err) {
-      toast.error(err);
-    }
-};
+        .then((values) => {
+          const { orderType } = stateCurr;
 
-
-  const handleSubmitSubscribe = () => {
-    try {
-        formCreateOrder.validateFields()
-            .then((values) => {
-
-                if (stateCurr.orderType === 'single') {
-                  dispatch(actionsSubscribe.createOrderSubscribeAdminBegin({
-                    orderSingle: values,
-                    orderType: stateCurr.orderType,
-                    from: fromDate,
-                    to: toDate
-                  }));
-                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                  handleCancelAndResetForm();
-                } else if (stateCurr.orderType === 'multiple') {
-                    const ordersArray = values?.list_order.split('\n')
-                        .filter(line => line.trim())
-                        .map(line => {
-                            const [link, quantity] = line.split('|').map(item => item.trim());
-                            return {
-                                link,
-                                quantity: Number(quantity),
-                                platform: values?.platform,
-                                category: values?.category,
-                                service_id: values?.service_id
-                            };
-                        });
-                    
-                    dispatch(actionsSubscribe.createOrderSubscribeAdminBegin({ 
-                      orderType: stateCurr.orderType, 
-                      ordersArray,
-                      from: fromDate,
-                      to: toDate
-                    }));
-                    dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                    handleCancelAndResetForm();
-                }
-            })
-            .catch((err) => {
-                console.error("Validation Error: ", err);
-            });
+          if (orderType === 'single') {
+            dispatch(actionsLike.createOrderLikeAdminBegin({
+              orderSingle: values,
+              orderType: stateCurr.orderType,
+              from: fromDate,
+              to: toDate
+            }));
+            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            handleCancelAndResetForm();
+          } else if (orderType === 'multiple') {
+            const listOrders = values?.list_order;
+            const ordersArray = listOrders
+              .split('\n')
+              .filter(line => line.trim())
+              .map(line => {
+                const [link, quantity] = line.split('|').map(item => item.trim());
+                return {
+                  link,
+                  quantity: Number(quantity),
+                  platform: values?.platform,
+                  category: values?.category,
+                  service_id: values?.service_id
+                };
+              });
+            dispatch(actionsLike.createOrderLikeAdminBegin({
+              orderType: stateCurr.orderType,
+              ordersArray,
+              from: fromDate,
+              to: toDate
+            }));
+            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            handleCancelAndResetForm();
+          }
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
     } catch (err) {
       toast.error(err);
     }
   };
 
 
+  const handleSubmitSubscribe = () => {
+    try {
+      formCreateOrder.validateFields()
+        .then((values) => {
+
+          if (stateCurr.orderType === 'single') {
+            dispatch(actionsSubscribe.createOrderSubscribeAdminBegin({
+              orderSingle: values,
+              orderType: stateCurr.orderType,
+              from: fromDate,
+              to: toDate
+            }));
+            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            handleCancelAndResetForm();
+          } else if (stateCurr.orderType === 'multiple') {
+            const ordersArray = values?.list_order.split('\n')
+              .filter(line => line.trim())
+              .map(line => {
+                const [link, quantity] = line.split('|').map(item => item.trim());
+                return {
+                  link,
+                  quantity: Number(quantity),
+                  platform: values?.platform,
+                  category: values?.category,
+                  service_id: values?.service_id
+                };
+              });
+
+            dispatch(actionsSubscribe.createOrderSubscribeAdminBegin({
+              orderType: stateCurr.orderType,
+              ordersArray,
+              from: fromDate,
+              to: toDate
+            }));
+            // dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            // handleCancelAndResetForm();
+          }
+        })
+        .catch((err) => {
+          console.error("Validation Error: ", err);
+        });
+    } catch (err) {
+      toast.error(err);
+    }
+  };
 
   const handleSubmitView = () => {
     try {
       formCreateOrder.validateFields()
-          .then((values) => {
-              const { orderType } = stateCurr;
-  
-              if (orderType === 'single') {
-                dispatch(actionsView.createOrderViewAdminBegin({
-                  orderSingle: values,
-                  orderType: stateCurr.orderType,
-                  from: fromDate,
-                  to: toDate
-                }));
-                dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                handleCancelAndResetForm();
-              } else if (orderType === 'multiple') {
-                  const listOrders = values?.list_order;
-                  const ordersArray = listOrders
-                      .split('\n')
-                      .filter(line => line.trim())
-                      .map(line => {
-                          const [link, quantity] = line.split('|').map(item => item.trim());
-                          return {
-                            link,
-                            quantity: Number(quantity),
-                            platform: values?.platform,
-                            category: values?.category,
-                            service_id: values?.service_id
-                          };
-                      });
-  
-                  dispatch(actionsView.createOrderViewAdminBegin({ 
-                    orderType: stateCurr.orderType, 
-                    ordersArray,
-                    from: fromDate,
-                    to: toDate
-                  }));
-                  dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
-                  handleCancelAndResetForm();
-              }
-          })
-          .catch((err) => {
-            toast.error(err);
-          });
+        .then((values) => {
+          const { orderType } = stateCurr;
+
+          if (orderType === 'single') {
+            dispatch(actionsView.createOrderViewAdminBegin({
+              orderSingle: values,
+              orderType: stateCurr.orderType,
+              from: fromDate,
+              to: toDate
+            }));
+            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            handleCancelAndResetForm();
+          } else if (orderType === 'multiple') {
+            const listOrders = values?.list_order;
+            const ordersArray = listOrders
+              .split('\n')
+              .filter(line => line.trim())
+              .map(line => {
+                const [link, quantity] = line.split('|').map(item => item.trim());
+                return {
+                  link,
+                  quantity: Number(quantity),
+                  platform: values?.platform,
+                  category: values?.category,
+                  service_id: values?.service_id
+                };
+              });
+
+            dispatch(actionsView.createOrderViewAdminBegin({
+              orderType: stateCurr.orderType,
+              ordersArray,
+              from: fromDate,
+              to: toDate
+            }));
+            dispatch(reportActions.toggleModalCreateOrderBegin(isOpenCreateOrder));
+            handleCancelAndResetForm();
+          }
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
     } catch (err) {
       toast.error(err);
     }
@@ -1304,340 +1304,347 @@ function AddOrderGeneral() {
         </Button>
       ]}
     >
-      <Form layout="vertical" form={formCreateOrder}>
-        <Row gutter={15}>
-          <Col
-            sm={16}
-          >
-            <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px' }}>
-              <Row gutter="10">
-                <Col sm={8}>
-                  <Form.Item
-                    name="platform"
-                    initialValue='youtube'
-                    label="Nền tảng"
-                    style={{ marginBottom: '0px' }}
-                  >
-                    <Select
-                      size='small'
-                      className='full-height-dropdown'
-                      style={{ width: '100%' }}
-                      placeholder="Tìm theo ID hoặc tên của dịch vụ"
-                    >
-                      <Option key={1} value='youtube'>
-                        <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                          <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
-                          <span style={{ fontSize: '12px', fontWeight: '500' }}>Youtube</span>
-                        </div>
-                      </Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col sm={16}>
-                  <Form.Item
-                    name="category"
-                    initialValue={categoryNewOrder}
-                    label="Phân loại"
-                    style={{ marginBottom: '0px' }}
-                  >
-                    <Select
-                      showSearch
-                      size='small'
-                      className='full-height-dropdown'
-                      style={{ width: '100%' }}
-                      placeholder="Chọn loại dịch vụ"
-                      onChange={(values) => {
-                        const childService = listService?.filter(service => service?.category === values);
 
-                        setStateCurr({
-                          ...stateCurr,
-                          listServiceCollection: listService?.filter(service => service?.category === values),
-                          amountChange: 0
-                        });
+      {
+        Object.keys(respMultipleOrder).length > 0 ? (
+          <MultipleOrderResponseTable
+            data={respMultipleOrder}
+          />
+        ) : (
+          <Form layout="vertical" form={formCreateOrder}>
+            <Row gutter={15}>
+              <Col
+                sm={16}
+              >
+                <Card size="small" style={{ border: '1px solid #dddddd59', padding: '5px' }}>
+                  <Row gutter="10">
+                    <Col sm={8}>
+                      <Form.Item
+                        name="platform"
+                        initialValue='youtube'
+                        label="Nền tảng"
+                        style={{ marginBottom: '0px' }}
+                      >
+                        <Select
+                          size='small'
+                          className='full-height-dropdown'
+                          style={{ width: '100%' }}
+                          placeholder="Tìm theo ID hoặc tên của dịch vụ"
+                        >
+                          <Option key={1} value='youtube'>
+                            <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                              <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+                              <span style={{ fontSize: '12px', fontWeight: '500' }}>Youtube</span>
+                            </div>
+                          </Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col sm={16}>
+                      <Form.Item
+                        name="category"
+                        initialValue={categoryNewOrder}
+                        label="Phân loại"
+                        style={{ marginBottom: '0px' }}
+                      >
+                        <Select
+                          showSearch
+                          size='small'
+                          className='full-height-dropdown'
+                          style={{ width: '100%' }}
+                          placeholder="Chọn loại dịch vụ"
+                          onChange={(values) => {
+                            const childService = listService?.filter(service => service?.category === values);
 
-                        dispatch(reportActions.setCategoryInNewOrderBegin(values));
+                            setStateCurr({
+                              ...stateCurr,
+                              listServiceCollection: listService?.filter(service => service?.category === values),
+                              amountChange: 0
+                            });
 
-                        if (categoryNewOrder !== values) {
-                          dispatch(serviceSettingsAction.modalDetailServiceBegin());
-                          setHelpMessage({});
-                          formCreateOrder.resetFields(['link', 'service_id']);
+                            dispatch(reportActions.setCategoryInNewOrderBegin(values));
 
-                          if (childService?.length === 0) {
-                            toast.info('Không có dịch vụ phù hợp')
-                          }
-                        }
-                      }}
-                    >
-                      {
-                        LIST_SERVICE_SUPPLY?.map((itemService, index) => {
-                          return (
-                            <Option key={index} value={itemService?.category}>
-                              <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
-                                <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
-                                <span style={{ fontSize: '12px', fontWeight: '500', marginRight: '7px' }}>{itemService?.platform}</span>
-                                <span style={{ padding: '0 5px' }}>-</span>
-                                <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.category}</span>
-                                <span style={{ padding: '0 5px' }}>|</span>
-                                <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.type}</span>
-                              </div>
-                            </Option>
-                          );
-                        })
-                      }
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter="10">
-                <Col sm={24}>
-                  <Form.Item
-                    name="service_id"
-                    label="Dịch vụ"
-                    style={{ marginBottom: '0px' }}
-                    rules={[{
-                      required: true,
-                      message: 'Chưa chọn dịch vụ'
-                    }]}
-                  >
-                    <Select
-                      allowClear
-                      showSearch
-                      size='middle'
-                      className='full-height-dropdown'
-                      placeholder="Tìm theo ID của dịch vụ"
-                      onSearch={(text) => handleSearchService(text)}
-                      onChange={(serviceSelected) => handleChangeService(serviceSelected)}
-                      onClear={() => handleClearServiceSelected()}
-                    >
-                      {
-                        (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === categoryNewOrder))?.map((itemService, index) => {
-                          return <>
-                            {
-                              itemService?.enabled ? (
-                                <Option key={index} value={itemService?.service_id} style={{ padding: '15px 0px', borderBottom: '1px dashed #cbcbcb' }}>
-                                  <div style={{ display: 'flex', alignItems: 'center', height: '20px', paddingTop: '5px' }}>
-                                    <FaYoutube color="red" fontSize={20} style={{ margin: '0px 7px 0 0' }} />
-                                    {
-                                      itemService?.geo ? (
-                                        <Tooltip title={itemService?.geo?.toUpperCase()}>
-                                          <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                            <img src={require(`../../static/img/flag/${itemService?.geo}.png`)} alt="" width="14px" height="14px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
-                                          </span>
-                                        </Tooltip>
-                                      ) : null
-                                    }
-                                    <span style={{ fontWeight: 'bold', marginRight: '3px' }}>{itemService?.service_id}</span>
+                            if (categoryNewOrder !== values) {
+                              dispatch(serviceSettingsAction.modalDetailServiceBegin());
+                              setHelpMessage({});
+                              formCreateOrder.resetFields(['link', 'service_id']);
+
+                              if (childService?.length === 0) {
+                                toast.info('Không có dịch vụ phù hợp')
+                              }
+                            }
+                          }}
+                        >
+                          {
+                            LIST_SERVICE_SUPPLY?.map((itemService, index) => {
+                              return (
+                                <Option key={index} value={itemService?.category}>
+                                  <div style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center' }}>
+                                    <FaYoutube color="red" fontSize={16} style={{ marginTop: '0px', marginRight: '7px' }} />
+                                    <span style={{ fontSize: '12px', fontWeight: '500', marginRight: '7px' }}>{itemService?.platform}</span>
                                     <span style={{ padding: '0 5px' }}>-</span>
-                                    <span style={{ fontWeight: 500 }}>{`${itemService?.name?.substring(0, 37)}...`}</span>
-                                    <span style={{ padding: '0 5px' }}>-</span>
-                                    <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
-                                  </div>
-                                  <div style={{ color: 'gray', fontSize: '0.8em' }}>{itemService?.description}</div>
-                                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', paddingBottom: '8px' }}>
-                                    {
-                                      itemService?.enabled ? (
-                                        <span className="label" style={badgeGreenStyle}>
-                                          <Badge color='green' dot style={{ marginRight: '5px' }} />
-                                          Đang hoạt động
-                                        </span>
-                                      ) : (
-                                        <span className="label" style={badgeRedStyle}>
-                                          <Badge color='red' dot style={{ marginRight: '5px' }} />
-                                          Đang tắt
-                                        </span>
-                                      )
-                                    }
-                                    <span className="label" style={badgeGreenStyle}>Bảo hành</span>
-                                    <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
-                                    {
-                                      itemService?.priority ? (
-                                        <span className="label" style={badgeOrangeStyle}>
-                                          <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
-                                          Ưu tiên
-                                        </span>
-                                      ) : <></>
-                                    }
-                                    {
-                                      itemService?.service_view_type ? (
-                                        <span className="label" style={badgeGrayStyle}>
-                                          <div
-                                            style={{ width: '15px', height: '15px', marginRight: '5px' }}
-                                            // eslint-disable-next-line react/no-danger
-                                            dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type)?.svg }}
-                                          />
-                                          View {SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type).description}
-                                        </span>
-                                      ) : null
-                                    }
+                                    <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.category}</span>
+                                    <span style={{ padding: '0 5px' }}>|</span>
+                                    <span style={{ fontSize: '12px', fontWeight: '500' }}>{itemService?.type}</span>
                                   </div>
                                 </Option>
-                              ) : null
-                            }
-                          </>;
-                        })
-                      }
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
+                              );
+                            })
+                          }
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  <Row gutter="10">
+                    <Col sm={24}>
+                      <Form.Item
+                        name="service_id"
+                        label="Dịch vụ"
+                        style={{ marginBottom: '0px' }}
+                        rules={[{
+                          required: true,
+                          message: 'Chưa chọn dịch vụ'
+                        }]}
+                      >
+                        <Select
+                          allowClear
+                          showSearch
+                          size='middle'
+                          className='full-height-dropdown'
+                          placeholder="Tìm theo ID của dịch vụ"
+                          onSearch={(text) => handleSearchService(text)}
+                          onChange={(serviceSelected) => handleChangeService(serviceSelected)}
+                          onClear={() => handleClearServiceSelected()}
+                        >
+                          {
+                            (stateCurr?.listServiceCollection || listService?.filter(service => service?.category === categoryNewOrder))?.map((itemService, index) => {
+                              return <>
+                                {
+                                  itemService?.enabled ? (
+                                    <Option key={index} value={itemService?.service_id} style={{ padding: '15px 0px', borderBottom: '1px dashed #cbcbcb' }}>
+                                      <div style={{ display: 'flex', alignItems: 'center', height: '20px', paddingTop: '5px' }}>
+                                        <FaYoutube color="red" fontSize={20} style={{ margin: '0px 7px 0 0' }} />
+                                        {
+                                          itemService?.geo ? (
+                                            <Tooltip title={itemService?.geo?.toUpperCase()}>
+                                              <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                                <img src={require(`../../static/img/flag/${itemService?.geo}.png`)} alt="" width="14px" height="14px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
+                                              </span>
+                                            </Tooltip>
+                                          ) : null
+                                        }
+                                        <span style={{ fontWeight: 'bold', marginRight: '3px' }}>{itemService?.service_id}</span>
+                                        <span style={{ padding: '0 5px' }}>-</span>
+                                        <span style={{ fontWeight: 500 }}>{`${itemService?.name?.substring(0, 37)}...`}</span>
+                                        <span style={{ padding: '0 5px' }}>-</span>
+                                        <span style={{ fontWeight: '800', color: '#009ef7' }}>{numberWithCommas(itemService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
+                                      </div>
+                                      <div style={{ color: 'gray', fontSize: '0.8em' }}>{itemService?.description}</div>
+                                      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', paddingBottom: '8px' }}>
+                                        {
+                                          itemService?.enabled ? (
+                                            <span className="label" style={badgeGreenStyle}>
+                                              <Badge color='green' dot style={{ marginRight: '5px' }} />
+                                              Đang hoạt động
+                                            </span>
+                                          ) : (
+                                            <span className="label" style={badgeRedStyle}>
+                                              <Badge color='red' dot style={{ marginRight: '5px' }} />
+                                              Đang tắt
+                                            </span>
+                                          )
+                                        }
+                                        <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                                        <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
+                                        {
+                                          itemService?.priority ? (
+                                            <span className="label" style={badgeOrangeStyle}>
+                                              <FaLocationArrow color='orange' style={{ marginRight: '5px' }} />
+                                              Ưu tiên
+                                            </span>
+                                          ) : <></>
+                                        }
+                                        {
+                                          itemService?.service_view_type ? (
+                                            <span className="label" style={badgeGrayStyle}>
+                                              <div
+                                                style={{ width: '15px', height: '15px', marginRight: '5px' }}
+                                                // eslint-disable-next-line react/no-danger
+                                                dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type)?.svg }}
+                                              />
+                                              View {SERVICE_VIEW_TYPE.find(item => item.type === itemService?.service_view_type).description}
+                                            </span>
+                                          ) : null
+                                        }
+                                      </div>
+                                    </Option>
+                                  ) : null
+                                }
+                              </>;
+                            })
+                          }
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  {
+                    !isEmpty(detailService) ? switchServiceSelection(categoryNewOrder) : null
+                  }
+                </Card>
+              </Col>
               {
-                !isEmpty(detailService) ? switchServiceSelection(categoryNewOrder) : null
-              }
-            </Card>
-          </Col>
-          {
-            !isEmpty(detailService) ? (
-              <Col sm={8}>
-                <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
-                  <div style={{ padding: '5px' }}>
-                    <Row style={{ margin: 0, padding: 0 }}>
-                      <Col style={{ margin: 0, padding: 0 }}>
-                        <p style={{ fontWeight: 600, color: 'green', fontSize: '1.1em' }}>{detailService?.name}</p>
-                        <div className='my-2' style={{ borderTop: '1px dashed #e7e7e7' }}>
-                          <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
-                            Platform: &nbsp;<FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} /> Youtube
-                          </p>
-                          <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
-                            GEO: &nbsp;
-                            {
-                              detailService?.geo ? (
-                                <Tooltip title={detailService?.geo?.toUpperCase()}>
-                                  <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
-                                    <img src={require(`../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
-                                    <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
-                                  </span>
-                                </Tooltip>
-                              ) : 'Không có'
-                            }
-                          </p>
-                          <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
-                          <span style={{ fontSize: '0.9em' }}>Giá </span>
-                          <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
-                          <span style={{ fontSize: '0.9em' }}>/ 10 {categoryNewOrder} </span>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Card>
-                <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
-                  <div style={{ padding: '5px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px' }}>
-                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: <strong>{numberWithCommas(detailService?.min)}</strong> {categoryNewOrder}</p>
-                      <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: <strong>{numberWithCommas(detailService?.max)}</strong> {categoryNewOrder}</p>
-                    </div>
-                    {
-                      categoryNewOrder === 'Views' ? (
-                        <div style={{ borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px', paddingTop: '5px' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                              Loại view (MIN):
+                !isEmpty(detailService) ? (
+                  <Col sm={8}>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
+                      <div style={{ padding: '5px' }}>
+                        <Row style={{ margin: 0, padding: 0 }}>
+                          <Col style={{ margin: 0, padding: 0 }}>
+                            <p style={{ fontWeight: 600, color: 'green', fontSize: '1.1em' }}>{detailService?.name}</p>
+                            <div className='my-2' style={{ borderTop: '1px dashed #e7e7e7' }}>
+                              <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                                Platform: &nbsp;<FaYoutube color="red" fontSize={20} style={{ marginTop: '2px', marginRight: '7px' }} /> Youtube
+                              </p>
+                              <p className="label" style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
+                                GEO: &nbsp;
+                                {
+                                  detailService?.geo ? (
+                                    <Tooltip title={detailService?.geo?.toUpperCase()}>
+                                      <span style={{ display: 'inline-flex', alignContent: 'center', alignItems: 'center', marginRight: '7px' }}>
+                                        <img src={require(`../../static/img/flag/${detailService?.geo}.png`)} alt="" width="17px" height="17px" style={{ outline: '2px solid #d3d3d3', borderRadius: '10px' }} />
+                                        <span style={{ marginLeft: '6px' }}>{detailService?.geo?.toUpperCase()}</span>
+                                      </span>
+                                    </Tooltip>
+                                  ) : 'Không có'
+                                }
+                              </p>
+                              <p style={{ fontWeight: 'bold', marginRight: '7px' }}>ID: &nbsp;{detailService?.service_id}</p>
                             </div>
-                            <span style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '5px' }}>
-                              <div
-                                style={{ width: '19px', height: '19px', marginRight: '5px' }}
-                                // eslint-disable-next-line react/no-danger
-                                dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
-                              />
-                              <span style={{ fontWeight: 600 }}>{SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}</span>
-                            </span>
-                          </div>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
-                            <div>Thời gian xem (MIN):</div>
-                            <div><strong>{numberWithCommas(detailService?.min_view_time)}</strong> phút</div>
-                          </div>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
-                            <div>Thời gian xem (MAX):</div>
-                            <div><strong>{numberWithCommas(detailService?.max_view_time)}</strong> phút</div>
-                          </div>
+                            <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center', borderTop: '1px dashed #e7e7e7', paddingTop: '7px' }}>
+                              <span style={{ fontSize: '0.9em' }}>Giá </span>
+                              <span style={{ fontWeight: '800', color: '#009ef7', padding: '0px 10px' }}>{numberWithCommas(detailService?.price_per_10 || 0)} {VIETNAMES_CURRENCY}</span>
+                              <span style={{ fontSize: '0.9em' }}>/ 10 {categoryNewOrder} </span>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card>
+                    <Card size="small" style={{ marginBottom: '15px', border: '1px solid #9d9d9d' }}>
+                      <div style={{ padding: '5px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px' }}>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Min: <strong>{numberWithCommas(detailService?.min)}</strong> {categoryNewOrder}</p>
+                          <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '0px' }}>Max: <strong>{numberWithCommas(detailService?.max)}</strong> {categoryNewOrder}</p>
                         </div>
-                      ) : null
-                    }
+                        {
+                          categoryNewOrder === 'Views' ? (
+                            <div style={{ borderBottom: '1px dashed #e7e7e7', paddingBottom: '8px', paddingTop: '5px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                  Loại view (MIN):
+                                </div>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '5px' }}>
+                                  <div
+                                    style={{ width: '19px', height: '19px', marginRight: '5px' }}
+                                    // eslint-disable-next-line react/no-danger
+                                    dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
+                                  />
+                                  <span style={{ fontWeight: 600 }}>{SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}</span>
+                                </span>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
+                                <div>Thời gian xem (MIN):</div>
+                                <div><strong>{numberWithCommas(detailService?.min_view_time)}</strong> phút</div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', margin: '0px', padding: '0px', color: 'gray' }}>
+                                <div>Thời gian xem (MAX):</div>
+                                <div><strong>{numberWithCommas(detailService?.max_view_time)}</strong> phút</div>
+                              </div>
+                            </div>
+                          ) : null
+                        }
 
-                    <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '6px 0px' }}>{detailService?.description}</p>
+                        <p style={{ color: 'gray', fontSize: '0.8em', margin: '0px', padding: '6px 0px' }}>{detailService?.description}</p>
 
-                    <span style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                      {
-                        detailService?.service_view_type ? (
-                          <span className="label" style={badgeGrayStyle}>
-                            <div
-                              style={{ width: '18px', height: '17px', marginRight: '5px' }}
-                              // eslint-disable-next-line react/no-danger
-                              dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
-                            />
-                            View {SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}
-                          </span>
-                        ) : null
-                      }
-                      {
-                        detailService?.enabled ? (
-                          <span className="label" style={badgeGreenStyle}>
-                            <Badge color='green' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
-                            Đang hoạt động
-                          </span>
-                        ) : (
-                          <span className="label" style={badgeRedStyle}>
-                            <Badge color='red' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
-                            Đang tắt
-                          </span>
-                        )
-                      }
-                      <span className="label" style={badgeGreenStyle}>Bảo hành</span>
+                        <span style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                          {
+                            detailService?.service_view_type ? (
+                              <span className="label" style={badgeGrayStyle}>
+                                <div
+                                  style={{ width: '18px', height: '17px', marginRight: '5px' }}
+                                  // eslint-disable-next-line react/no-danger
+                                  dangerouslySetInnerHTML={{ __html: SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type)?.svg }}
+                                />
+                                View {SERVICE_VIEW_TYPE.find(item => item.type === detailService?.service_view_type).description}
+                              </span>
+                            ) : null
+                          }
+                          {
+                            detailService?.enabled ? (
+                              <span className="label" style={badgeGreenStyle}>
+                                <Badge color='green' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                                Đang hoạt động
+                              </span>
+                            ) : (
+                              <span className="label" style={badgeRedStyle}>
+                                <Badge color='red' dot style={{ margin: '0 5px 0 0', padding: 0, fontSize: '10px' }} />
+                                Đang tắt
+                              </span>
+                            )
+                          }
+                          <span className="label" style={badgeGreenStyle}>Bảo hành</span>
 
-                      {
-                        detailService?.priority ? (
-                          <span className="label" style={badgeOrangeStyle}>
-                            <FaLocationArrow color='orange' fontSize={8} style={{ margin: '0 5px 0 0', padding: 0 }} />
-                            Ưu tiên
-                          </span>
-                        ) : <></>
-                      }
-                      <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
-                    </span>
-                  </div>
-                </Card>
-                {
-                  (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0 && stateCurr?.amountChange <= detailService?.max) ? (
-                    <Card
-                      size="small"
-                      style={{
-                        border: '3px solid #dddddd7a',
-                        backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
-                        color: 'black'
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}>
-                        <FaMoneyBillWave color="green" style={{ fontSize: '19px', marginLeft: '6px', }} />
-                        <span style={{ fontWeight: '800', color: '#00a10e', padding: '0px 10px', fontSize: '15px' }}>
-                          {numberWithCommas((stateCurr?.amountChange ?? 1) * (detailService?.price_per_10 ?? 1) / 10 || 0)} {VIETNAMES_CURRENCY}
+                          {
+                            detailService?.priority ? (
+                              <span className="label" style={badgeOrangeStyle}>
+                                <FaLocationArrow color='orange' fontSize={8} style={{ margin: '0 5px 0 0', padding: 0 }} />
+                                Ưu tiên
+                              </span>
+                            ) : <></>
+                          }
+                          <span className="label" style={badgeGreenStyle}>Đề xuất sử dụng</span>
                         </span>
                       </div>
                     </Card>
-                  ) : null
-                }
-              </Col>
-            ) : (
-              <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
-                <Card size="small" style={{ padding: 0, height: '-webkit-fill-available' }}>
-                  {/* <div className="text-center">
-                    <Image src={EmptyBackground} preview={false} width="86%" />
-                  </div> */}
-                  <video
-                    loop
-                    muted
-                    autoPlay
-                    style={{ width: '100%', height: 'auto', border: 'none', outline: 'none' }}
-                  >
-                    <source src={EmptyBackgroundVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </Card>
-              </Col>
-            )
-          }
-        </Row>
-      </Form>
+                    {
+                      (stateCurr?.amountChange >= detailService?.min && stateCurr?.amountChange > 0 && stateCurr?.amountChange <= detailService?.max) ? (
+                        <Card
+                          size="small"
+                          style={{
+                            border: '3px solid #dddddd7a',
+                            backgroundImage: 'linear-gradient(151deg, rgb(255 255 255) 0%, #e3e3e36e 100%)',
+                            color: 'black'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}>
+                            <FaMoneyBillWave color="green" style={{ fontSize: '19px', marginLeft: '6px', }} />
+                            <span style={{ fontWeight: '800', color: '#00a10e', padding: '0px 10px', fontSize: '15px' }}>
+                              {numberWithCommas((stateCurr?.amountChange ?? 1) * (detailService?.price_per_10 ?? 1) / 10 || 0)} {VIETNAMES_CURRENCY}
+                            </span>
+                          </div>
+                        </Card>
+                      ) : null
+                    }
+                  </Col>
+                ) : (
+                  <Col sm={8} style={{ display: 'flex', alignItems: 'center' }}>
+                    <Card size="small" style={{ padding: 0, height: '-webkit-fill-available' }}>
+                      <video
+                        loop
+                        muted
+                        autoPlay
+                        style={{ width: '100%', height: 'auto', border: 'none', outline: 'none' }}
+                      >
+                        <source src={EmptyBackgroundVideo} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </Card>
+                  </Col>
+                )
+              }
+            </Row>
+          </Form>
+        )
+      }
+
     </Modal>
   );
 }

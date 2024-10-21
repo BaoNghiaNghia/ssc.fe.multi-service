@@ -286,6 +286,8 @@ function* createOrderViewFunc(params) {
 
   let successCount = 0;
   let failureCount = 0;
+  const objectSuccess = [];
+  const objectFailed = [];
 
   const initialFilter = {
     start_date: `${from  } 00:00:00`,
@@ -304,14 +306,27 @@ function* createOrderViewFunc(params) {
 
       if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
         successCount += 1;
+        objectSuccess.push({
+          order,
+          result: response?.data?.data
+        });
         return response;
-      } 
-        failureCount += 1;
-        return { status: 'error', response };
+      }
       
+      failureCount += 1;
+      objectFailed.push({
+        order,
+        result: response?.data?.data || null
+      });
+
+      return { status: 'error', response };
     } catch (error) {
       failureCount += 1;
-      console.error(`Error processing order ${order}:`, error);
+      objectFailed.push({
+        order,
+        result: error?.response?.data || null
+      });
+
       return { status: 'error', error };
     }
   }
@@ -368,6 +383,11 @@ function* createOrderViewFunc(params) {
       });
       yield* handleRouteSpecificActions();
     }
+
+    yield put(actionReport.setResponseMultipleOrderCreated({
+      success: objectSuccess,
+      failed: objectFailed
+    }));
   } catch (error) {
     const errorMessage = error.response?.data?.data?.error || error.response?.data?.message || 'Create order view failed';
     yield put(actions.createOrderViewAdminErr({ error: errorMessage }));

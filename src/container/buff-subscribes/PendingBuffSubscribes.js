@@ -265,34 +265,6 @@ function PendingBuffSubscribes() {
               <Tooltip
                 title={
                   <Row gutter={10}>
-                    {/* <Col sm={24} style={{ position: 'relative' }}>
-                      <div style={{ position: 'relative' }}>
-                        <Image
-                          src={`https://img.youtube.com/vi/${channel_id}/default.jpg`}
-                          alt={`Thumbnail for ${channel_title}`}
-                          preview={false}
-                          style={{ borderRadius: '5px', marginBottom: '10px', width: '' }}
-                        />
-                
-                        <PlayCircleOutlined
-                          style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            fontSize: '30px',
-                            color: 'white',
-                            transform: 'translate(-50%, -50%)',
-                            cursor: 'pointer',
-                            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
-                          }}
-                        />
-                      </div>
-                    </Col>
-                    <Col sm={24}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-                        <strong>{channel_title || '...'}</strong>
-                      </span>
-                    </Col> */}
                     <Col sm={24}>
                       <span style={{ marginRight: '5px' }}>Đến kênh</span>
                       <span style={{ display: 'inline-flex', alignItems: 'center' }}>

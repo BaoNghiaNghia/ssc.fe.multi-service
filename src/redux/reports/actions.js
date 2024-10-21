@@ -287,7 +287,16 @@ const actions = {
   SET_CATEGORY_IN_NEW_ORDER_BEGIN: 'SET_CATEGORY_IN_NEW_ORDER_BEGIN',
   SET_CATEGORY_IN_NEW_ORDER_SUCCESS: 'SET_CATEGORY_IN_NEW_ORDER_SUCCESS',
   SET_CATEGORY_IN_NEW_ORDER_ERR: 'SET_CATEGORY_IN_NEW_ORDER_ERR',
+
   
+  RESPONSE_MULTIPLE_ORDER_CREATED: 'RESPONSE_MULTIPLE_ORDER_CREATED',
+
+  setResponseMultipleOrderCreated: (payload) => {
+      return {
+        type: actions.RESPONSE_MULTIPLE_ORDER_CREATED,
+        payload
+      };
+  },
 
   setCategoryInNewOrderBegin: (payload) => {
     return {

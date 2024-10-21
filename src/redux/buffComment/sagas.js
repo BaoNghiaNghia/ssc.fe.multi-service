@@ -266,6 +266,8 @@ function* createOrderCommentFunc(params) {
 
   let successCount = 0;
   let failureCount = 0;
+  const objectSuccess = [];
+  const objectFailed = [];
 
   const initialFilter = {
     start_date: `${from  } 00:00:00`,
@@ -278,20 +280,33 @@ function* createOrderCommentFunc(params) {
     limit: DEFAULT_PERPAGE
   };
 
-  function* callWithCounting(comment) {
+  function* callWithCounting(order) {
     try {
-      const response = yield call(createOrderCommentAPI, comment);
+      const response = yield call(createOrderCommentAPI, order);
 
       if (response?.status === MESSSAGE_STATUS_CODE.SUCCESS.code) {
         successCount += 1;
+        objectSuccess.push({
+          order,
+          result: response?.data?.data
+        });
         return response;
-      } 
-        failureCount += 1;
-        return { status: 'error', response };
+      }
       
+      failureCount += 1;
+      objectFailed.push({
+        order,
+        result: response?.data?.data || null
+      });
+
+      return { status: 'error', response };
     } catch (error) {
       failureCount += 1;
-      console.error(`Error processing comment ${comment}:`, error);
+      objectFailed.push({
+        order,
+        result: error?.response?.data || null
+      });
+
       return { status: 'error', error };
     }
   }
@@ -349,6 +364,11 @@ function* createOrderCommentFunc(params) {
 
       yield* handleRouteSpecificActions();
     }
+
+    yield put(actionReport.setResponseMultipleOrderCreated({
+      success: objectSuccess,
+      failed: objectFailed
+    }));
   } catch (error) {
     const errorMessage = error?.response?.data?.data?.error || error?.response?.data?.message || 'Create order comment failed';
 
